@@ -43,7 +43,7 @@ setup(name='deform',
       zip_safe=False,
       tests_require = requires,
       install_requires = requires,
-      test_suite="deformed",
+      test_suite="deform",
       entry_points = """\
       """
       )
