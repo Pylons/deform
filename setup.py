@@ -23,7 +23,6 @@ CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
 requires = [
     'colander',
-    'peppercorn',
     ]
 
 setup(name='deform',
@@ -34,7 +33,7 @@ setup(name='deform',
         "Intended Audience :: Developers",
         "Programming Language :: Python",
         ],
-      keywords='web forms schema validation',
+      keywords='web forms form generation schema validation',
       author="Agendaless Consulting",
       author_email="repoze-dev@lists.repoze.org",
       url="http://www.repoze.org",
