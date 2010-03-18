@@ -4,9 +4,10 @@ from colander import SchemaNode
 # application domain definitions
 #
 #   appstruct: the raw application data structure (complex Python objects)
-#   cstruct: a set of mappings, sequences, and strings
-#   schema: can serialize an appstruct to a cstruct and deserialize a cstruct
-#     to an appstruct
+#   cstruct: a set of mappings, sequences, and strings (colander structures)
+#   schema: can serialize an appstruct to a cstruct and deserialize a
+#     cstruct to an appstruct (object derived from
+#     ``colander.SchemaNode`` or ``colander.Schema``)
 
 # widget domain definitions
 #
@@ -36,6 +37,8 @@ from colander import SchemaNode
 #     for each structure in the schema, create a widget node
 #     pass a pstruct to the root widget node's ``deserialize`` method to
 #       generate a cstruct
+
+# widgets
 
 class Widget(object):
     def __init__(self, schema):
@@ -123,18 +126,14 @@ class Form(Widget):
             out.append(widget.serialize(value.get(name)))
         out.append('</form>')
         return '\n'.join(out)
+
+# data types
         
 class Mapping(colander.Mapping):
     widget_type = MappingWidget
 
 class Sequence(colander.Sequence):
     widget_type = SequenceWidget
-
-class MappingSchema(colander.MappingSchema):
-    schema_type = Mapping
-
-class SequenceSchema(colander.SequenceSchema):
-    schema_type = Sequence
 
 class String(colander.String):
     widget_type = TextInput
@@ -148,10 +147,21 @@ class Float(colander.Integer):
 class Boolean(colander.Boolean):
     widget_type = CheckboxWidget
 
+# schema nodes
+
+class MappingSchema(colander.MappingSchema):
+    schema_type = Mapping
+
+Schema = MappingSchema
+
+class SequenceSchema(colander.SequenceSchema):
+    schema_type = Sequence
+
 if __name__ == '__main__':
     cstruct = {
         'name': 'project1',
         'title': 'Cool project',
+        'cool': 'true',
         'series': {
             'name':'date series 1',
             'dates': [{'month':'10', 'day':'12', 'year':'2008'},
@@ -174,10 +184,12 @@ if __name__ == '__main__':
     class MySchema(MappingSchema):
         name = SchemaNode(String())
         title = SchemaNode(String())
+        cool = SchemaNode(Boolean())
         series = SeriesSchema()
 
     schema = MySchema()
     form = Form(schema)
+
     # add form
     print form.serialize(
         {'series':{'dates':[{'day':'', 'month':'', 'year':''}]}})
