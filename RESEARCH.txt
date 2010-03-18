@@ -1,0 +1,22 @@
+Hudson Structured Form Submission
+
+    http://wiki.hudson-ci.org/display/HUDSON/Structured+Form+Submission
+
+    Hudson submits structured JSON form info as a hidden field.  <div>
+    tags in the form represent implied structure.
+
+JQuery Remote Form Validation
+
+    http://john.beynon.org.uk/2009/02/11/jquery-validation-remote-attribute/
+
+    Client-side rule-based validation system that can validate fields
+    based on a callback.
+
+Zope field marshalling to convert flat stuff to structure
+
+IRC Topics
+
+    Use setTimeout rather than (plus?) onBlur for field validation
+
+    Accessibility?
+
