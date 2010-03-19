@@ -1,5 +1,6 @@
 import colander
-from colander import SchemaNode
+from colander import SchemaNode # API
+from colander import Invalid # API
 
 # application domain definitions
 #
@@ -41,89 +42,154 @@ from colander import SchemaNode
 # widgets
 
 class Widget(object):
+    default = None
     def __init__(self, schema):
         self.schema = schema
+        self.name = self.schema.name
         self.widgets = []
+        if not self.schema.required:
+            self.default = self.schema.serialize(self.schema.default)
         for node in schema.nodes:
-            widget_type = getattr(node.typ, 'widget_type', TextInput)
+            widget_type = getattr(node.typ, 'widget_type', TextInputWidget)
             widget = widget_type(node)
             self.widgets.append(widget)
 
-    def serialize(self, value=None):
+    def serialize(self, cstruct=None):
         """
         Serialize a cstruct value to a form rendering and return the
         rendering.  The result of this method should always be a
         string (containing HTML).
         """
-        return value
+        raise NotImplementedError
 
-    def deserialize(self, value=None):
+    def deserialize(self, pstruct=None):
         """
         Deserialize a pstruct value to a cstruct value and return the
         cstruct value.
         """
+        raise NotImplementedError
+
+class TextInputWidget(Widget):
+    def _default(self, value):
+        if value is None:
+            return ''
         return value
 
-class TextInput(Widget):
-    def serialize(self, value=None):
+    def serialize(self, cstruct=None):
         name = self.schema.name
-        if value is None:
-            return '<input type="text" name="%s"/>' % name
+        value = self._default(cstruct)
         return '<input type="text" name="%s" value="%s"/>' % (name, value)
 
+    def deserialize(self, pstruct):
+        if not pstruct:
+            pstruct = ''
+        return pstruct
+
 class CheckboxWidget(Widget):
-    def serialize(self, value=None):
+    def serialize(self, cstruct=None):
         name = self.schema.name
-        if value is None:
-            return '<input type="checkbox" name="%s"/>' % name
-        if value == 'true':
+        if cstruct == 'true':
             return '<input type="checkbox" name="%s" checked="true"/>' % name
         else:
             return '<input type="checkbox" name="%s"/>' % name
 
-    def deserialize(self, value=None):
-        if value == 'true':
+    def deserialize(self, pstruct):
+        if pstruct == 'true':
             return 'true'
         return 'false'
 
 class MappingWidget(Widget):
-    def serialize(self, value=None):
-        if value is None:
-            value = {}
+    def serialize(self, cstruct=None):
+        if cstruct is None:
+            cstruct = {}
         out = []
         out.append('<input type="hidden" name="__start__" '
                    'value="%s:mapping">' % self.schema.name)
         for widget in self.widgets:
-            name = widget.schema.name
-            out.append(widget.serialize(value.get(name)))
+            name = widget.name
+            out.append(widget.serialize(cstruct.get(name)))
         out.append('<input type="hidden" name="__end__" '
                    'value="%s:mapping">' % self.schema.name)
         return '\n'.join(out)
 
+    def deserialize(self, pstruct):
+
+        result = {}
+        error = None
+
+        for num, widget in enumerate(self.widgets):
+            name = widget.name
+            substruct = pstruct.get(name)
+            try:
+                if substruct is None:
+                    substruct = widget.default
+                    if substruct is None:
+                        raise Invalid(self, '%r required but missing' % name)
+                result[name] = widget.deserialize(substruct)
+            except Invalid, e:
+                if error is None:
+                    error = Invalid(self)
+                e.pos = num
+                error.add(e)
+        if error is not None:
+            raise error
+
+        return result
+
 class SequenceWidget(Widget):
-    def serialize(self, value=None):
-        if value is None:
-            value = []
+    def serialize(self, cstruct=None):
+        if cstruct is None:
+            cstruct = []
         out = []
         out.append('<input type="hidden" name="__start__" '
                    'value="%s:sequence">' % self.schema.name)
-        for item in value:
+        for item in cstruct:
             widget = self.widgets[0]
             out.append(widget.serialize(item))
         out.append('<input type="hidden" name="__end__" '
                    'value="%s:sequence">' % self.schema.name)
         return '\n'.join(out)
 
-class Form(Widget):
-    def serialize(self, value=None):
-        if value is None:
-            value = {}
+    def deserialize(self, pstruct):
+        if pstruct is None:
+            pstruct = []
+        error = None
+        result = []
+        for num, substruct in enumerate(pstruct):
+            try:
+                val = self.widgets[0].deserialize(substruct)
+                result.append(val)
+            except Invalid, e:
+                if error is None:
+                    error = Invalid(self)
+                e.pos = num
+                error.add(e)
+
+        if error is not None:
+            raise error
+
+        return result
+        
+
+class Form(MappingWidget):
+    def __init__(self, schema, action='.', method='POST'):
+        self.action = action
+        self.method = method
+        MappingWidget.__init__(self, schema)
+
+    def serialize(self, cstruct=None):
+        if cstruct is None:
+            cstruct = {}
         out = []
-        out.append('<form name="%s" method="POST" action="." '
-                   'encoding="multipart/form-data">' % self.schema.name)
+        out.append('<form name="%s" method="%s" action="%s" '
+                   'encoding="multipart/form-data">' % (
+                       self.schema.name,
+                       self.method,
+                       self.action,
+                       ))
         for widget in self.widgets:
             name = widget.schema.name
-            out.append(widget.serialize(value.get(name)))
+            out.append(widget.serialize(cstruct.get(name)))
         out.append('</form>')
         return '\n'.join(out)
 
@@ -136,13 +202,13 @@ class Sequence(colander.Sequence):
     widget_type = SequenceWidget
 
 class String(colander.String):
-    widget_type = TextInput
+    widget_type = TextInputWidget
 
 class Integer(colander.Integer):
-    widget_type = TextInput
+    widget_type = TextInputWidget
 
 class Float(colander.Integer):
-    widget_type = TextInput
+    widget_type = TextInputWidget
 
 class Boolean(colander.Boolean):
     widget_type = CheckboxWidget
@@ -156,83 +222,4 @@ Schema = MappingSchema
 
 class SequenceSchema(colander.SequenceSchema):
     schema_type = Sequence
-
-if __name__ == '__main__':
-    cstruct = {
-        'name': 'project1',
-        'title': 'Cool project',
-        'cool': 'true',
-        'series': {
-            'name':'date series 1',
-            'dates': [{'month':'10', 'day':'12', 'year':'2008'},
-                      {'month':'10', 'day':'12', 'year':'2009'}],
-            }
-        }
-
-    class DateSchema(MappingSchema):
-        month = SchemaNode(Integer())
-        year = SchemaNode(Integer())
-        day = SchemaNode(Integer())
-
-    class DatesSchema(SequenceSchema):
-        date = DateSchema()
-
-    class SeriesSchema(MappingSchema):
-        name = SchemaNode(String())
-        dates = DatesSchema()
-
-    class MySchema(MappingSchema):
-        name = SchemaNode(String())
-        title = SchemaNode(String())
-        cool = SchemaNode(Boolean())
-        series = SeriesSchema()
-
-    schema = MySchema()
-    form = Form(schema)
-
-    # add form
-    print form.serialize(
-        {'series':{'dates':[{'day':'', 'month':'', 'year':''}]}})
-    """
-    <form name="" method="POST" action="." encoding="multipart/form-data">
-    <input type="text" name="name"/>
-    <input type="text" name="title"/>
-    <input type="hidden" name="__start__" value="series:mapping">
-    <input type="text" name="name"/>
-    <input type="hidden" name="__start__" value="dates:sequence">
-    <input type="hidden" name="__start__" value="date:mapping">
-    <input type="text" name="month" value=""/>
-    <input type="text" name="year" value=""/>
-    <input type="text" name="day" value=""/>
-    <input type="hidden" name="__end__" value="date:mapping">
-    <input type="hidden" name="__end__" value="dates:sequence">
-    <input type="hidden" name="__end__" value="series:mapping">
-    </form>
-    """
-
-    # edit form
-    print form.serialize(cstruct)
-    """
-    <form name="" method="POST" action="." encoding="multipart/form-data">
-    <input type="text" name="name" value="project1"/>
-    <input type="text" name="title" value="Cool project"/>
-    <input type="hidden" name="__start__" value="series:mapping">
-    <input type="text" name="name" value="date series 1"/>
-    <input type="hidden" name="__start__" value="dates:sequence">
-    <input type="hidden" name="__start__" value="date:mapping">
-    <input type="text" name="month" value="10"/>
-    <input type="text" name="year" value="2008"/>
-    <input type="text" name="day" value="12"/>
-    <input type="hidden" name="__end__" value="date:mapping">
-    <input type="hidden" name="__start__" value="date:mapping">
-    <input type="text" name="month" value="10"/>
-    <input type="text" name="year" value="2009"/>
-    <input type="text" name="day" value="12"/>
-    <input type="hidden" name="__end__" value="date:mapping">
-    <input type="hidden" name="__end__" value="dates:sequence">
-    <input type="hidden" name="__end__" value="series:mapping">
-    </form>
-    """
-    
-    
 
