@@ -11,24 +11,26 @@ class ValidationError(Exception):
         self.cstruct = cstruct
         self.invalid_exc = e
 
+def make_default_renderer():
+    defaultdir = resource_filename('deform', 'templates') + '/'
+    loader = template.ChameleonZPTTemplateLoader([defaultdir])
+
+    def renderer(template, **kw):
+        return loader.load(template)(**kw)
+
+    return renderer
+
+default_renderer = make_default_renderer()
+
 class Widget(object):
     error = None
     default = None
     hidden = False
 
-    def _make_default_renderer(self):
-        defaultdir = resource_filename('deform', 'templates') + '/'
-        loader = template.ChameleonZPTTemplateLoader([defaultdir])
-
-        def renderer(template, **kw):
-            return loader.load(template)(**kw)
-
-        return renderer
-
     def __init__(self, schema, renderer=None):
         self.schema = schema
         if renderer is None:
-            renderer = self._make_default_renderer()
+            renderer = default_renderer
         self.renderer = renderer
         self.name = self.schema.name
         self.title = self.schema.title
