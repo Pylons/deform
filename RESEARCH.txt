@@ -1,22 +1,44 @@
-Hudson Structured Form Submission
+General
 
-    http://wiki.hudson-ci.org/display/HUDSON/Structured+Form+Submission
+    JQuery Remote Form Validation
 
-    Hudson submits structured JSON form info as a hidden field.  <div>
-    tags in the form represent implied structure.
+        http://john.beynon.org.uk/2009/02/11/jquery-validation-remote-attribute/
 
-JQuery Remote Form Validation
+        Client-side rule-based validation system that can validate
+        fields based on a callback.
 
-    http://john.beynon.org.uk/2009/02/11/jquery-validation-remote-attribute/
+    IRC Topics
 
-    Client-side rule-based validation system that can validate fields
-    based on a callback.
+        Use setTimeout rather than (plus?) onBlur for field validation
 
-Zope field marshalling to convert flat stuff to structure
+        Accessibility?
 
-IRC Topics
+Order-Reliance
 
-    Use setTimeout rather than (plus?) onBlur for field validation
+    RFC
 
-    Accessibility?
+        http://www.w3.org/TR/html401/interact/forms.html#h-17.13.4.1
+
+        (wrt application/x-www-form-urlencoded)
+
+        """ The control names/values are listed in the order they
+        appear in the document. The name is separated from the value
+        by `=' and name/value pairs are separated from each other by
+        `&'. """
+
+        http://www.w3.org/TR/html401/interact/forms.html#h-17.13.4.2
+
+        """ A "multipart/form-data" message contains a series of parts,
+        each representing a successful control. The parts are sent to the
+        processing agent in the same order the corresponding controls
+        appear in the document stream. """
+
+    Hudson Structured Form Submission
+
+        http://wiki.hudson-ci.org/display/HUDSON/Structured+Form+Submission
+
+        Hudson submits structured JSON form info as a hidden field.  <div>
+        tags in the form represent implied structure.
+
+    Zope field marshalling to convert flat stuff to structure
 

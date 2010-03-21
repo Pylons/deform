@@ -23,12 +23,14 @@ CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
 requires = [
     'colander',
+    'chameleon',
+    'peppercorn',
     ]
 
 setup(name='deform',
       version='0.0',
       description='Another form generation library',
-      long_description=README + '\n\n' +  CHANGES,
+      long_description=README + '\n\n' + CHANGES,
       classifiers=[
         "Intended Audience :: Developers",
         "Programming Language :: Python",
@@ -41,10 +43,8 @@ setup(name='deform',
       packages=find_packages(),
       include_package_data=True,
       zip_safe=False,
-      tests_require = requires,
-      install_requires = requires,
+      tests_require=requires + ['BeautifulSoup'],
+      install_requires=requires,
       test_suite="deform",
-      entry_points = """\
-      """
+      entry_points="""""",
       )
-

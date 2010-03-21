@@ -1,0 +1,73 @@
+/* - - - - - - - - - - - - - - - - - - - - -
+
+Title : Wufoo Form Structure
+Author : Infinity Box Inc.
+URL : http://wufoo.com
+
+- - - - - - - - - - - - - - - - - - - - - */
+
+html{
+	background:#eee;
+}
+body{
+	margin:17px 0 15px 0;
+	padding:0;
+	text-align:center;
+	font-size:small;
+	font-family:"Lucida Grande", Tahoma, Arial, Verdana, sans-serif;
+}
+
+#container{
+	text-align:left;
+	background:#fff;
+	border:1px solid #ccc;
+	-webkit-box-shadow:rgba(0,0,0,.2) 0px 0px 5px;
+	-moz-box-shadow:rgba(0,0,0,.2) 0px 0px 5px;
+}
+#container, #bottom{
+	margin:0 auto;
+	width:640px;
+}
+#bottom{
+	width:650px;
+	height:10px !important;
+	margin-bottom:10px;
+	display:block !important;
+}
+
+form.wufoo{
+	margin:20px 20px 0 20px;
+	padding:0 0 20px 0;
+}
+
+/* ----- LOGO ----- */
+
+h1{
+	margin:0;
+	padding:0;
+	min-height:0;
+	background-color:#dedede;
+	text-indent:-9000px;
+	text-decoration:none;
+}
+h1 a{
+	min-height:40px;
+	height:40px;
+	display:block;
+	background:url(../images/wflogo.png) no-repeat left top;
+	overflow:hidden;
+}
+* html h1 a{
+	_background-image: none;
+	_filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../images/wflogo.png", sizingMethod="crop");
+}
+img, a img{
+	border:none;
+	-ms-interpolation-mode: bicubic;
+}
+* html #bottom{ 
+	_behavior: url(../images/iepngfix.htc);
+}
+.hide{
+	display:none !important;
+}

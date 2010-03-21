@@ -1,4 +1,8 @@
-License
+Some CSS and code in this package (in the ``static`` directory) is
+provided via a `Creative Commons
+<http://creativecommons.org/licenses/by/3.0/>`_ license.
+
+The remainder is provided under this license:
 
   A copyright notice accompanies this license document that identifies
   the copyright holders.
