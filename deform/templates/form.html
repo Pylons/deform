@@ -32,7 +32,7 @@
       <p tal:condition="w.description" class="instruct">
         <small>${w.description}</small>
       </p>
-      <p tal:condition="w.error" class="error">${w.error}</p>
+      <p tal:condition="w.error" class="error">${w.error.msg}</p>
     </li>
 
     <li class="buttons">
