@@ -8,7 +8,12 @@ from deform.schema import String
 from deform.schema import Boolean
 from deform.schema import Integer
 from deform.widget import Form
-from deform.widget import ValidationError
+from deform.widget import FormValidationError
+
+LONG_DESC = """
+The name of the thing.  This is a pretty long line, and hopefully I won't
+need to type too much more of it because it's pretty boring to type this kind
+of thing """
 
 def form_view(request):
     class DateSchema(MappingSchema):
@@ -24,8 +29,9 @@ def form_view(request):
         dates = DatesSchema()
 
     class MySchema(MappingSchema):
-        name = SchemaNode(String(), description='Name')
-        title = SchemaNode(String(), validator=OneOf(('a', 'b')))
+        name = SchemaNode(String(), description=LONG_DESC)
+        title = SchemaNode(String(), validator=OneOf(('a', 'b')),
+                           description=LONG_DESC)
         cool = SchemaNode(Boolean(), default=True)
         series = SeriesSchema()
 
@@ -34,11 +40,12 @@ def form_view(request):
 
     if 'submit' in request.POST:
         fields = request.POST.items()
+##         import pprint
+##         pprint.pprint(fields)
         try:
             form.validate(fields)
-        except ValidationError, e:
-            cstruct = e.cstruct
-            return {'form':form.serialize(cstruct)}
+        except FormValidationError, e:
+            return {'form':e.serialize()}
         return {'form':'OK'}
             
     return {'form':form.serialize()}

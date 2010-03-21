@@ -68,7 +68,7 @@ class TestFunctional(unittest.TestCase):
         self.assertEqual(inputs[3]['name'], 'title')
         self.assertEqual(inputs[3]['value'], '')
         self.assertEqual(inputs[4]['name'], 'cool')
-        self.assertEqual(inputs[4].get('checked'), None)
+        self.assertEqual(inputs[4].get('checked'), 'true')
         self.assertEqual(inputs[5]['name'], '__start__')
         self.assertEqual(inputs[5]['value'], 'series:mapping')
         self.assertEqual(inputs[6]['name'], 'name')
@@ -84,7 +84,7 @@ class TestFunctional(unittest.TestCase):
         schema = self._makeSchema()
         form = self._makeForm(schema)
         html = form.serialize(
-            {'cool':'true',
+            {'cool':'false',
              'series':{'dates':[{'day':'21', 'month':'3', 'year':'2010'}]}})
         soup = self._soupify(html)
         form = soup.form
@@ -103,7 +103,7 @@ class TestFunctional(unittest.TestCase):
         self.assertEqual(inputs[3]['name'], 'title')
         self.assertEqual(inputs[3]['value'], '')
         self.assertEqual(inputs[4]['name'], 'cool')
-        self.assertEqual(inputs[4].get('checked'), 'true')
+        self.assertEqual(inputs[4].get('checked'), None)
         self.assertEqual(inputs[5]['name'], '__start__')
         self.assertEqual(inputs[5]['value'], 'series:mapping')
         self.assertEqual(inputs[6]['name'], 'name')
@@ -142,18 +142,18 @@ class TestFunctional(unittest.TestCase):
                     {'dates': [{'year': '2008', 'day': '12', 'month': '10'},
                                {'year': '2009', 'day': '12', 'month': '10'}],
                      'name': 'date series 1'},
-                    'cool': 'true',
+                    'cool': 'false',
                     'name': 'project1',
                     'title': 'Cool project'}
         self.assertEqual(result, expected)
 
     def test_validate(self):
-        from deform.widget import ValidationError
+        from deform.widget import FormValidationError
         schema = self._makeSchema()
         form = self._makeForm(schema)
         try:
             form.validate([])
-        except ValidationError, ve:
+        except FormValidationError, ve:
             e = ve.invalid_exc
         self.assertEqual(form.error, e)
         self.assertEqual(form.widgets[0].error, e.children[0])
@@ -163,7 +163,7 @@ class TestFunctional(unittest.TestCase):
                          e.children[2].children[0])
         self.assertEqual(
             ve.cstruct,
-            {'series': {'dates': [], 'name': ''}, 'cool': 'true', 'name': '',
+            {'series': {'dates': [], 'name': ''}, 'cool': 'false', 'name': '',
              'title': ''})
         
         

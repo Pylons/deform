@@ -3,11 +3,15 @@ import peppercorn
 
 from deform import template
 
-class ValidationError(Exception):
-    def __init__(self, cstruct, e):
+class FormValidationError(Exception):
+    def __init__(self, form, cstruct, e):
         Exception.__init__(self)
+        self.form = form
         self.cstruct = cstruct
         self.invalid_exc = e
+
+    def serialize(self):
+        return self.form.serialize(self.cstruct)
 
 class Widget(object):
     error = None
@@ -56,7 +60,7 @@ class Widget(object):
             return self.schema.deserialize(cstruct)
         except colander.Invalid, e:
             self.handle_error(e)
-            raise ValidationError(cstruct, e)
+            raise FormValidationError(self, cstruct, e)
 
     def handle_error(self, error):
         self.error = error
@@ -78,22 +82,24 @@ class TextInputWidget(Widget):
             pstruct = self.default
         if pstruct is None:
             pstruct = ''
+        pstruct = pstruct.strip()
         return pstruct
 
 class CheckboxWidget(Widget):
     def serialize(self, cstruct=None):
         name = self.schema.name
+        if cstruct is None:
+            cstruct = self.default
         if cstruct == 'true':
-            return '<input type="checkbox" name="%s" checked="true"/>' % name
+            return ('<input type="checkbox" name="%s" value="true" '
+                    'checked="true"/>' % name)
         else:
-            return '<input type="checkbox" name="%s"/>' % name
+            return '<input type="checkbox" name="%s" value="true"/>' % name
 
     def deserialize(self, pstruct):
         if pstruct is None:
-            pstruct = self.default
-        if pstruct == 'true':
-            return 'true'
-        return 'false'
+            pstruct = 'false'
+        return (pstruct == 'true') and 'true' or 'false'
 
 class MappingWidget(Widget):
     def serialize(self, cstruct=None):
