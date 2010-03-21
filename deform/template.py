@@ -1,4 +1,5 @@
 import os
+from pkg_resources import resource_filename
 
 from chameleon.zpt import language
 from chameleon.zpt.template import PageTemplateFile
@@ -40,4 +41,15 @@ class ChameleonZPTTemplateLoader(object):
                 self.notexists[path] = True
 
         raise TemplateError("Can not find template %s" % filename)
+
+def make_default_renderer():
+    defaultdir = resource_filename('deform', 'templates') + '/'
+    loader = ChameleonZPTTemplateLoader([defaultdir])
+
+    def renderer(template, **kw):
+        return loader.load(template)(**kw)
+
+    return renderer
+
+default_renderer = make_default_renderer()
 

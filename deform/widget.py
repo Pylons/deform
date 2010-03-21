@@ -1,5 +1,3 @@
-from pkg_resources import resource_filename
-
 import colander
 import peppercorn
 
@@ -11,17 +9,6 @@ class ValidationError(Exception):
         self.cstruct = cstruct
         self.invalid_exc = e
 
-def make_default_renderer():
-    defaultdir = resource_filename('deform', 'templates') + '/'
-    loader = template.ChameleonZPTTemplateLoader([defaultdir])
-
-    def renderer(template, **kw):
-        return loader.load(template)(**kw)
-
-    return renderer
-
-default_renderer = make_default_renderer()
-
 class Widget(object):
     error = None
     default = None
@@ -30,7 +17,7 @@ class Widget(object):
     def __init__(self, schema, renderer=None):
         self.schema = schema
         if renderer is None:
-            renderer = default_renderer
+            renderer = template.default_renderer
         self.renderer = renderer
         self.name = self.schema.name
         self.title = self.schema.title
