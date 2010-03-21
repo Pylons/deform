@@ -5,6 +5,12 @@ import peppercorn
 
 from deform import template
 
+class ValidationError(Exception):
+    def __init__(self, cstruct, e):
+        Exception.__init__(self)
+        self.cstruct = cstruct
+        self.invalid_exc = e
+
 class Widget(object):
     error = None
     default = None
@@ -61,7 +67,7 @@ class Widget(object):
             return self.schema.deserialize(cstruct)
         except colander.Invalid, e:
             self.handle_error(e)
-            raise
+            raise ValidationError(cstruct, e)
 
     def handle_error(self, error):
         self.error = error

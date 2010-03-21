@@ -147,3 +147,25 @@ class TestFunctional(unittest.TestCase):
                     'title': 'Cool project'}
         self.assertEqual(result, expected)
 
+    def test_validate(self):
+        from deform.widget import ValidationError
+        schema = self._makeSchema()
+        form = self._makeForm(schema)
+        try:
+            form.validate([])
+        except ValidationError, ve:
+            e = ve.invalid_exc
+        self.assertEqual(form.error, e)
+        self.assertEqual(form.widgets[0].error, e.children[0])
+        self.assertEqual(form.widgets[1].error, e.children[1])
+        self.assertEqual(form.widgets[3].error, e.children[2])
+        self.assertEqual(form.widgets[3].widgets[0].error,
+                         e.children[2].children[0])
+        self.assertEqual(
+            ve.cstruct,
+            {'series': {'dates': [], 'name': ''}, 'cool': 'true', 'name': '',
+             'title': ''})
+        
+        
+        
+        
