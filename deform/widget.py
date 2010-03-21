@@ -41,9 +41,6 @@ class Widget(object):
         rendering.  The result of this method should always be a
         string (containing HTML).
         """
-        template = getattr(self, 'template', None)
-        if template is not None:
-            return self.renderer(self.template, widget=self, cstruct=cstruct)
         raise NotImplementedError
 
     def deserialize(self, pstruct=None):
@@ -74,12 +71,12 @@ class TextInputWidget(Widget):
     def serialize(self, cstruct=None):
         name = self.schema.name
         if cstruct is None:
+            cstruct = self.default
+        if cstruct is None:
             cstruct = ''
         return '<input type="text" name="%s" value="%s"/>' % (name, cstruct)
 
     def deserialize(self, pstruct):
-        if pstruct is None:
-            pstruct = self.default
         if pstruct is None:
             pstruct = ''
         pstruct = pstruct.strip()
