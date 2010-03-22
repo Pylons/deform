@@ -9,6 +9,7 @@ from deform.schema import Boolean
 from deform.schema import Integer
 from deform.widget import Form
 from deform.widget import FormValidationError
+from deform.widget import RadioChoiceWidget
 
 LONG_DESC = """
 The name of the thing.  This is a pretty long line, and hopefully I won't
@@ -34,15 +35,17 @@ def form_view(request):
                            description=LONG_DESC)
         cool = SchemaNode(Boolean(), default=True)
         series = SeriesSchema()
+        color = SchemaNode(String(), validator=OneOf(('red', 'blue')))
 
     schema = MySchema()
+    schema['color'].widget_type = RadioChoiceWidget
+
     form = Form(schema, buttons=('submit',))
     form['title'].size = 40
+    form['color'].values = (('red', 'Red'),('green', 'Green'),('blue', 'Blue'))
 
     if 'submit' in request.POST:
         fields = request.POST.items()
-##         import pprint
-##         pprint.pprint(fields)
         try:
             form.validate(fields)
         except FormValidationError, e:

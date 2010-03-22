@@ -110,6 +110,33 @@ class CheckboxWidget(Widget):
             pstruct = self.false_val
         return (pstruct == self.true_val) and self.true_val or self.false_val
 
+class RadioChoiceWidget(Widget):
+    values = ()
+
+    def serialize(self, cstruct=None):
+        out = []
+        if cstruct is None:
+            cstruct = self.default
+        for value, description in self.values:
+            out.append('<div>')
+            if value == cstruct:
+                out.append(
+                    '<input type="radio" name="%s" value="%s" '
+                    'checked="true"/>' % (self.schema.name, value))
+            else:
+                out.append(
+                    '<input type="radio" name="%s" value="%s"/>' % (
+                        self.schema.name, value))
+            out.append('<label for="%s">%s</label>' % (self.schema.name,
+                                                       description))
+            out.append('</div>')
+        return '\n'.join(out)
+
+    def deserialize(self, pstruct):
+        if pstruct is None:
+            pstruct = ''
+        return pstruct
+
 class MappingWidget(Widget):
     template = 'mapping.html'
     error_class = None
@@ -140,6 +167,7 @@ class MappingWidget(Widget):
         return result
 
 class SequenceWidget(Widget):
+    hidden = True
     def serialize(self, cstruct=None):
         out = []
 
@@ -148,8 +176,8 @@ class SequenceWidget(Widget):
 
         out.append('<input type="hidden" name="__start__" '
                    'value="%s:sequence">' % self.schema.name)
+        widget = self.widgets[0]
         for item in cstruct:
-            widget = self.widgets[0]
             out.append(widget.serialize(item))
         out.append('<input type="hidden" name="__end__" '
                    'value="%s:sequence">' % self.schema.name)
