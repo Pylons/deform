@@ -37,6 +37,7 @@ def form_view(request):
 
     schema = MySchema()
     form = Form(schema, buttons=('submit',))
+    form['title'].size = 40
 
     if 'submit' in request.POST:
         fields = request.POST.items()

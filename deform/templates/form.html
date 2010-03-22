@@ -29,10 +29,10 @@
              >${w.title}<span tal:condition="w.required" class="req">*</span>
       </label>
       <div tal:content="structure w.serialize(cstruct.get(w.name))"/>
-      <p tal:condition="w.description" class="instruct">
+      <p tal:condition="w.description and not w.hidden" class="instruct">
         <small>${w.description}</small>
       </p>
-      <p tal:condition="w.error" class="error">${w.error.msg}</p>
+      <p tal:condition="w.error and not w.hidden" class="error">${w.error.msg}</p>
     </li>
 
     <li class="buttons">

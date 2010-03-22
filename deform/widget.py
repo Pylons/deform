@@ -36,6 +36,12 @@ class Widget(object):
             widget = widget_type(node, renderer=renderer)
             self.widgets.append(widget)
 
+    def __getitem__(self, name):
+        for widget in self.widgets:
+            if widget.name == name:
+                return widget
+        raise KeyError(name)
+
     def serialize(self, cstruct=None):
         """
         Serialize a cstruct value to a form rendering and return the
@@ -69,13 +75,15 @@ class Widget(object):
                     widget.handle_error(e)
 
 class TextInputWidget(Widget):
+    template = 'textinput.html'
+    size = None
     def serialize(self, cstruct=None):
         name = self.schema.name
         if cstruct is None:
             cstruct = self.default
         if cstruct is None:
             cstruct = ''
-        return '<input type="text" name="%s" value="%s"/>' % (name, cstruct)
+        return self.renderer(self.template, widget=self, cstruct=cstruct)
 
     def deserialize(self, pstruct):
         if pstruct is None:
@@ -102,6 +110,7 @@ class CheckboxWidget(Widget):
 class MappingWidget(Widget):
     template = 'mapping.html'
     error_class = None
+    hidden = True
 
     def serialize(self, cstruct=None):
         """
