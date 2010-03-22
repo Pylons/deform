@@ -25,11 +25,7 @@ class Boolean(colander.Boolean):
 # schema nodes
 
 class SchemaNode(colander.SchemaNode):
-    def _set_widget_type(self, typ):
-        self.typ.widget_type = typ
-    def _get_widget_type(self):
-        return self.typ.widget_type
-    widget_type = property(_get_widget_type, _set_widget_type)
+    pass
 
 class MappingSchema(colander.MappingSchema):
     schema_type = Mapping

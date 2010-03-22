@@ -1,12 +1,14 @@
 from colander import OneOf
 from paste.httpserver import serve
 from repoze.bfg.configuration import Configurator
+
 from deform.schema import MappingSchema
 from deform.schema import SequenceSchema
 from deform.schema import SchemaNode
 from deform.schema import String
 from deform.schema import Boolean
 from deform.schema import Integer
+
 from deform.widget import Form
 from deform.widget import FormValidationError
 from deform.widget import RadioChoiceWidget
@@ -16,27 +18,27 @@ The name of the thing.  This is a pretty long line, and hopefully I won't
 need to type too much more of it because it's pretty boring to type this kind
 of thing """
 
+class DateSchema(MappingSchema):
+    month = SchemaNode(Integer())
+    year = SchemaNode(Integer())
+    day = SchemaNode(Integer())
+
+class DatesSchema(SequenceSchema):
+    date = DateSchema()
+
+class SeriesSchema(MappingSchema):
+    name = SchemaNode(String())
+    dates = DatesSchema()
+
+class MySchema(MappingSchema):
+    name = SchemaNode(String(), description=LONG_DESC)
+    title = SchemaNode(String(), validator=OneOf(('a', 'b')),
+                       description=LONG_DESC)
+    cool = SchemaNode(Boolean(), default=True)
+    series = SeriesSchema()
+    color = SchemaNode(String(), validator=OneOf(('red', 'blue')))
+
 def form_view(request):
-    class DateSchema(MappingSchema):
-        month = SchemaNode(Integer())
-        year = SchemaNode(Integer())
-        day = SchemaNode(Integer())
-
-    class DatesSchema(SequenceSchema):
-        date = DateSchema()
-
-    class SeriesSchema(MappingSchema):
-        name = SchemaNode(String())
-        dates = DatesSchema()
-
-    class MySchema(MappingSchema):
-        name = SchemaNode(String(), description=LONG_DESC)
-        title = SchemaNode(String(), validator=OneOf(('a', 'b')),
-                           description=LONG_DESC)
-        cool = SchemaNode(Boolean(), default=True)
-        series = SeriesSchema()
-        color = SchemaNode(String(), validator=OneOf(('red', 'blue')))
-
     schema = MySchema()
     schema['color'].widget_type = RadioChoiceWidget
 

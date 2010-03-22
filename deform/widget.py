@@ -32,7 +32,9 @@ class Widget(object):
         if not self.schema.required:
             self.default = self.schema.serialize(self.schema.default)
         for node in schema.nodes:
-            widget_type = getattr(node.typ, 'widget_type', TextInputWidget)
+            widget_type = getattr(node, 'widget_type', None)
+            if widget_type is None:
+                widget_type = getattr(node.typ, 'widget_type', TextInputWidget)
             widget = widget_type(node, renderer=renderer)
             self.widgets.append(widget)
 
@@ -118,7 +120,8 @@ class RadioChoiceWidget(Widget):
         if cstruct is None:
             cstruct = self.default
         for value, description in self.values:
-            out.append('<div>')
+            out.append('<label for="%s">%s</label>' % (self.schema.name,
+                                                       description))
             if value == cstruct:
                 out.append(
                     '<input type="radio" name="%s" value="%s" '
@@ -127,9 +130,6 @@ class RadioChoiceWidget(Widget):
                 out.append(
                     '<input type="radio" name="%s" value="%s"/>' % (
                         self.schema.name, value))
-            out.append('<label for="%s">%s</label>' % (self.schema.name,
-                                                       description))
-            out.append('</div>')
         return '\n'.join(out)
 
     def deserialize(self, pstruct):
@@ -168,6 +168,8 @@ class MappingWidget(Widget):
 
 class SequenceWidget(Widget):
     hidden = True
+    error_class = None
+
     def serialize(self, cstruct=None):
         out = []
 
@@ -189,8 +191,9 @@ class SequenceWidget(Widget):
         if pstruct is None:
             pstruct = []
 
+        widget = self.widgets[0]
         for num, substruct in enumerate(pstruct):
-            val = self.widgets[0].deserialize(substruct)
+            val = widget.deserialize(substruct)
             result.append(val)
 
         return result
