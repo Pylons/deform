@@ -17,6 +17,7 @@ class Widget(object):
     error = None
     default = None
     hidden = False
+    error_class = 'error'
 
     def __init__(self, schema, renderer=None):
         self.schema = schema
@@ -99,18 +100,18 @@ class CheckboxWidget(Widget):
         return (pstruct == 'true') and 'true' or 'false'
 
 class MappingWidget(Widget):
+    template = 'mapping.html'
+    error_class = None
+
     def serialize(self, cstruct=None):
+        """
+        Serialize a cstruct value to a form rendering and return the
+        rendering.  The result of this method should always be a
+        string (containing HTML).
+        """
         if cstruct is None:
             cstruct = {}
-        out = []
-        out.append('<input type="hidden" name="__start__" '
-                   'value="%s:mapping">' % self.schema.name)
-        for widget in self.widgets:
-            name = widget.name
-            out.append(widget.serialize(cstruct.get(name)))
-        out.append('<input type="hidden" name="__end__" '
-                   'value="%s:mapping">' % self.schema.name)
-        return '\n'.join(out)
+        return self.renderer(self.template, widget=self, cstruct=cstruct)
 
     def deserialize(self, pstruct):
 
@@ -178,12 +179,3 @@ class Form(MappingWidget):
             self.buttons.append(button)
         MappingWidget.__init__(self, schema, renderer=renderer)
 
-    def serialize(self, cstruct=None):
-        """
-        Serialize a cstruct value to a form rendering and return the
-        rendering.  The result of this method should always be a
-        string (containing HTML).
-        """
-        if cstruct is None:
-            cstruct = {}
-        return self.renderer(self.template, widget=self, cstruct=cstruct)

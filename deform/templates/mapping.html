@@ -1,0 +1,30 @@
+<div>
+
+  <ul>
+
+    <li class="section first" tal:condition="widget.title">
+      <h3>${widget.title}</h3>
+      <div tal:condition="widget.description">${widget.description}</div>
+    </li>
+
+    <input type="hidden" name="__start__" value="${widget.name}:mapping"/>
+
+    <li tal:repeat="w widget.widgets" 
+        tal:attributes="class w.error and w.error_class">
+      <label tal:condition="not w.hidden"
+             class="desc"
+             for="${w.name}" 
+             >${w.title}<span tal:condition="w.required" class="req">*</span>
+      </label>
+      <div tal:content="structure w.serialize(cstruct.get(w.name))"/>
+      <p tal:condition="w.description" class="instruct">
+        <small>${w.description}</small>
+      </p>
+      <p tal:condition="w.error" class="error">${w.error.msg}</p>
+    </li>
+
+    <input type="hidden" name="__end__" value="${widget.name}:mapping"/>
+
+  </ul>
+
+</div>

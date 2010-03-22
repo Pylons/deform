@@ -22,7 +22,7 @@
     </li>
 
     <li tal:repeat="w widget.widgets" 
-        tal:attributes="class w.error and 'error' or None">
+        tal:attributes="class w.error and w.error_class">
       <label tal:condition="not w.hidden"
              class="desc"
              for="${w.name}" 
