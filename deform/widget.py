@@ -92,20 +92,23 @@ class TextInputWidget(Widget):
         return pstruct
 
 class CheckboxWidget(Widget):
+    true_val = 'true'
+    false_val = 'false'
     def serialize(self, cstruct=None):
         name = self.schema.name
         if cstruct is None:
             cstruct = self.default
-        if cstruct == 'true':
-            return ('<input type="checkbox" name="%s" value="true" '
-                    'checked="true"/>' % name)
+        if cstruct == self.true_val:
+            return ('<input type="checkbox" name="%s" value="%s" '
+                    'checked="true"/>' % (name, self.true_val))
         else:
-            return '<input type="checkbox" name="%s" value="true"/>' % name
+            return '<input type="checkbox" name="%s" value="%s"/>' % (
+                name, self.true_val)
 
     def deserialize(self, pstruct):
         if pstruct is None:
-            pstruct = 'false'
-        return (pstruct == 'true') and 'true' or 'false'
+            pstruct = self.false_val
+        return (pstruct == self.true_val) and self.true_val or self.false_val
 
 class MappingWidget(Widget):
     template = 'mapping.html'
