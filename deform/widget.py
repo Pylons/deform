@@ -5,6 +5,93 @@ from deform import template
 from deform import exception
 
 class Widget(object):
+    """
+    A widget is the building block for forms and form elements.  The
+    :class:`deform.widget.Widget` class is never instantiated
+    directly: it is the abstract class from which all other widget
+    (and form) types within :mod:`deform.widget` derive.  It should
+    likely also be subclassed by application-developer-defined
+    widgets.
+
+    Each widget instance is associated with a schema element instance.
+    Widget instances related to schema instances are created when a
+    :class:`deform.widget.Form` object is created (a Form object takes
+    a schema object as a required input).
+
+    All widgets have the following attributes:
+
+    ``error``
+
+        The exception raised by the last attempted validation of the
+        schema element associated with this widget.  By default, this
+        attribute is ``None``.  If non-None, this attribute is usually
+        an instance of the exception class :class:`colander.Invalid`,
+        which has a ``msg`` attribute providing a human-readable
+        validation error message.
+
+    ``default``
+
+        The (serialized) default value provided by the schema object
+        associated with this widget.  By default this is ``None``.  If
+        the schema object has a default, the ``default`` attribute of
+        the associated widget will be automatically set to the
+        serialized default value of the schema element at widget
+        construction time.
+
+    ``hidden``
+
+        An attribute indicating the hidden state of this widget.  The
+        default is ``False``.  If this attribute is not ``False``, the
+        widget will not be rendered in the form (although, if this
+        widget is a container widget, its children will be; it is not
+        a recursive flag).
+
+    ``error_class``
+
+        The name of the CSS class attached to various tags in the form
+        renderering indicating an error condition for this widget.  By
+        default, this is ``error``.
+
+    ``renderer``
+
+        The template :term:`renderer` associated with this form.  If a
+        renderer is not passed to the constructor, the default deform
+        renderer will be used (only templates from
+        ``deform/templates`` will be used).
+
+    ``name``
+
+        The name of this widget.  By default, it is the same as the
+        name of the associated schema element.  Changing this
+        attribute is discouraged; it is mostly just an alias for use
+        in templates.
+
+    ``required``
+
+        The required state of the schema element associated with this
+        widget.  Changing this attribute is discouraged; it is mostly
+        just an alias for use in templates.
+
+    ``title``
+
+        The title of this widget, which shows up in various places
+        within the generated form.  By default, it is the same as the
+        associated schema element's title attribute.
+
+    ``description``
+
+        The description of this widget, which shows up in various
+        places within the generated form (such as in an associated
+        tooltip).  By default, it is the same as the associated schema
+        element's description attribute.
+
+    ``widgets``
+
+        A sequence representing the child widgets of this widget.
+        Each child widget relates to a child schema node of the
+        associated schema element.
+        
+    """
     error = None
     default = None
     hidden = False
@@ -129,7 +216,7 @@ class Widget(object):
 
 class TextInputWidget(Widget):
     """
-    Renders an <input style="text"/> widget.
+    Renders an <input type="text"/> widget.
 
     **Attributes**
 
@@ -156,7 +243,7 @@ class TextInputWidget(Widget):
 
 class CheckboxWidget(Widget):
     """
-    Renders an <input style="text"/> widget.
+    Renders an <input type="checkbox"/> widget.
 
     **Attributes**
 

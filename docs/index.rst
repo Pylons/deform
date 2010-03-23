@@ -19,7 +19,7 @@ cstruct
 schema
    can serialize an appstruct to a cstruct and deserialize a cstruct
    to an appstruct (object derived from :class:`colander.SchemaNode`
-   or one of the colander *Schema classes).
+   or one of the colander Schema classes).
 
 Widget Domain Definitions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -68,6 +68,11 @@ Deserialization
               v          v          v
           peppercorn   widget    schema
 
+.. toctree::
+   :maxdepth: 2
+
+   api.rst
+   glossary.rst
 
 Indices and tables
 ------------------
