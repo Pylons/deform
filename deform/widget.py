@@ -2,16 +2,7 @@ import colander
 import peppercorn
 
 from deform import template
-
-class FormValidationError(Exception):
-    def __init__(self, form, cstruct, e):
-        Exception.__init__(self)
-        self.form = form
-        self.cstruct = cstruct
-        self.invalid_exc = e
-
-    def serialize(self):
-        return self.form.serialize(self.cstruct)
+from deform import exceptions
 
 class Widget(object):
     error = None
@@ -39,6 +30,9 @@ class Widget(object):
             self.widgets.append(widget)
 
     def __getitem__(self, name):
+        """ Return the subwidget of this widget named ``name`` or
+        raise a :exc:`KeyError` if a subwidget does not exist named
+        ``name``."""
         for widget in self.widgets:
             if widget.name == name:
                 return widget
@@ -46,27 +40,84 @@ class Widget(object):
 
     def serialize(self, cstruct=None):
         """
-        Serialize a cstruct value to a form rendering and return the
-        rendering.  The result of this method should always be a
-        string (containing HTML).
+        Serialize a :term:`cstruct` value to a form rendering and
+        return the rendering.  The result of this method should always
+        be a string (containing HTML).
         """
         raise NotImplementedError
 
     def deserialize(self, pstruct=None):
         """
-        Deserialize a pstruct value to a cstruct value and return the
-        cstruct value.
+        Deserialize a :term:`pstruct` value to a :term:`cstruct` value
+        and return the :term:`cstruct` value.
         """
         raise NotImplementedError
 
     def validate(self, fields):
+        """
+        Validate the set of fields returned by a form submission
+        against the schema associated with this form.  ``fields``
+        should be a *document-ordered* sequence of two-tuples that
+        represent the form submission data.  Each two-tuple should be
+        in the form ``(key, value)``.
+
+        Using WebOb, you can compute a suitable value for ``fields``
+        via::
+
+          request.POST.items()
+
+        Using cgi.FieldStorage named ``fs``, you can compute a
+        suitable value for ``fields`` via::
+
+          fields = []
+          if fs.list:
+              for field in fs.list:
+                  if field.filename:
+                      fields.append((field.name, field))
+                  else:
+                      fields.append((field.name, field.value))
+
+        Equivalent ways of computing ``fields`` should be available to
+        any web framework.
+
+        When the ``validate`` method is called:
+
+        - if the fields are successfully validated, a data structure
+          represented by the deserialization of the data as per the
+          schema is returned.  It will be a mapping.
+
+        - If the fields cannot be successfully validated, a
+          :exc:`deform.exceptions.FormValidationError` is raised.
+
+        The ``serialize`` method of a
+        :exc:`deform.exceptions.FormValidationError` exception can be
+        used to reserialize the form in such a way that the user will
+        see error markers in the form HTML.  Therefore, the typical
+        usage of ``validate`` in the wild is often something like this
+        (at least in terms of code found within the body of a
+        :mod:`repoze.bfg` view function, the particulars may differ in
+        your web framework)::
+
+          from webob.exc import HTTPFound
+
+          if 'submit' in request.POST:  # the form was submitted
+              fields = request.POST.items()
+              try:
+                  deserialized = form.validate(fields)
+                  do_something(deserialized)
+                  return HTTPFound(location='http://example.com/success')
+              except FormValidationError, e:
+                  return {'form':e.serialize()}
+          else:
+              return {'form':form.serialize()} # the form just needs rendering
+        """
         pstruct = peppercorn.parse(fields)
         cstruct = self.deserialize(pstruct)
         try:
             return self.schema.deserialize(cstruct)
         except colander.Invalid, e:
             self.handle_error(e)
-            raise FormValidationError(self, cstruct, e)
+            raise exceptions.FormValidationError(self, cstruct, e)
 
     def handle_error(self, error):
         self.error = error
@@ -201,7 +252,7 @@ class SequenceWidget(Widget):
 class Button(object):
     def __init__(self, name='', title=None, value=None):
         if title is None:
-            title = name
+            title = name.capitalize()
         if value is None:
             value = name
         self.name = name
