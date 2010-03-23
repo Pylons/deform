@@ -13,6 +13,7 @@
 
 <!-- JavaScript -->
 <script type="text/javascript" src="static/scripts/wufoo.js"></script>
+<script type="text/javascript" src="static/scripts/deform.js"></script>
 
 <!-- CSS -->
 <link rel="stylesheet" href="static/css/structure.css" type="text/css" />

@@ -1,3 +1,4 @@
+import urllib
 import colander
 import peppercorn
 
@@ -337,11 +338,17 @@ class SequenceWidget(Widget):
         if cstruct is None:
             cstruct = []
 
-        out.append('<input type="hidden" name="__start__" '
-                   'value="%s:sequence">' % self.schema.name)
         widget = self.widgets[0]
+        prototype = widget.serialize(None)
+        if isinstance(prototype, unicode):
+            prototype = prototype.encode('utf-8')
+        prototype = urllib.quote(prototype)
+        out.append('<input type="hidden" name="__start__" '
+                   'value="%s:sequence" prototype="%s">' % (
+                       (self.schema.name, prototype)))
         for item in cstruct:
             out.append(widget.serialize(item))
+        out.append("""<div onClick="add_new_item(this)">Add %s</div>""" % self.title)
         out.append('<input type="hidden" name="__end__" '
                    'value="%s:sequence">' % self.schema.name)
         return '\n'.join(out)
