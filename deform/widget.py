@@ -229,7 +229,6 @@ class TextInputWidget(Widget):
     template = 'textinput.html'
     size = None
     def serialize(self, cstruct=None):
-        name = self.schema.name
         if cstruct is None:
             cstruct = self.default
         if cstruct is None:
@@ -346,10 +345,10 @@ class SequenceWidget(Widget):
         out.append('<input type="hidden" name="__start__" '
                    'value="%s:sequence" prototype="%s">' % (
                        (self.schema.name, prototype)))
-        for item in cstruct:
-            out.append(widget.serialize(item))
         out.append("""<div onclick="add_new_item(this)">Add %s</div>""" %
                    self.title)
+        for item in cstruct:
+            out.append(widget.serialize(item))
         out.append('<input type="hidden" name="__end__" '
                    'value="%s:sequence">' % self.schema.name)
         return '\n'.join(out)

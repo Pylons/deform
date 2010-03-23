@@ -49,6 +49,8 @@ def form_view(request):
 
     if 'submit' in request.POST:
         fields = request.POST.items()
+        import pprint
+        pprint.pprint(fields)
         try:
             form.validate(fields)
         except FormValidationError, e:
