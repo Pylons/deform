@@ -128,6 +128,16 @@ class Widget(object):
                     widget.handle_error(e)
 
 class TextInputWidget(Widget):
+    """
+    Renders an <input style="text"/> widget.
+
+    **Attributes**
+
+    size
+        The size, in columns, of the text input field.  Defaults to
+        ``None``, meaning that the ``size`` is not included in the
+        widget output (uses browser default size).
+    """
     template = 'textinput.html'
     size = None
     def serialize(self, cstruct=None):
@@ -145,6 +155,19 @@ class TextInputWidget(Widget):
         return pstruct
 
 class CheckboxWidget(Widget):
+    """
+    Renders an <input style="text"/> widget.
+
+    **Attributes**
+
+    true_val
+        The value which should be returned during deserialization if
+        the box is checked.  Default: ``true``.
+
+    false_val
+        The value which should be returned during deserialization if
+        the box was left unchecked.  Default: ``false``.
+    """
     true_val = 'true'
     false_val = 'false'
     def serialize(self, cstruct=None):
@@ -250,7 +273,35 @@ class SequenceWidget(Widget):
         return result
 
 class Button(object):
-    def __init__(self, name='', title=None, value=None):
+    """
+    A class representing a form submit button.  A sequence of
+    :class:`deform.widget.Button` objects may be passed to the
+    constructor of a :class:`deform.form.Form` class when it is
+    created to represent the buttons renderered at the bottom of the
+    form.
+
+    Arguments:
+
+    ``name``
+
+        The string or unicode value used as the ``name`` of the button
+        when rendered (the ``name`` attribute of the button or input
+        tag resulting from a form rendering).  Default: ``submit``.
+
+    ``title``
+
+        The value used as the title of the button when rendered (shows
+        up in the button inner text).  Default: capitalization of
+        whatever is passed as ``name``.  E.g. if ``name`` is passed as
+        ``submit``, ``title`` will be ``Submit``.
+
+    ``value``
+
+        The value used as the value of the button when rendered (the
+        ``value`` attribute of the button or input tag resulting from
+        a form rendering).  Default: same as ``name`` passed.
+    """
+    def __init__(self, name='submit', title=None, value=None):
         if title is None:
             title = name.capitalize()
         if value is None:
@@ -264,6 +315,39 @@ class Form(MappingWidget):
 
     def __init__(self, schema, renderer=None, action='.', method='POST',
                  buttons=()):
+        """
+        Arguments:
+
+        ``schema``
+
+            A :class:`deform.schema.SchemaNode` object representing a
+            schema to be rendered.  Required.
+
+        ``renderer``
+
+            A :term:`renderer` callable.  Defaults to ``None``, which
+            causes the default renderer to be used.
+
+        ``action``
+
+            The form action (inserted into the ``action`` attribute of
+            the form's form tag when rendered).  Default ``.`` (single
+            dot).
+
+        ``method``
+
+            The form method (inserted into the ``method`` attribute of
+            the form's form tag when rendered).  Default: ``POST``.
+
+        ``buttons``
+
+            A sequence of strings or :class:`deform.widget.Button`
+            objects representing submit buttons that will be placed at
+            the bottom of the form.  If any string is passed in the
+            sequence, it is converted to
+            :class:`deform.widget.Button` objects.
+
+        """
         self.action = action
         self.method = method
         self.buttons = []
