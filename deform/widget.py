@@ -348,7 +348,8 @@ class SequenceWidget(Widget):
                        (self.schema.name, prototype)))
         for item in cstruct:
             out.append(widget.serialize(item))
-        out.append("""<div onClick="add_new_item(this)">Add %s</div>""" % self.title)
+        out.append("""<div onclick="add_new_item(this)">Add %s</div>""" %
+                   self.title)
         out.append('<input type="hidden" name="__end__" '
                    'value="%s:sequence">' % self.schema.name)
         return '\n'.join(out)
