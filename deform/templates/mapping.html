@@ -1,12 +1,15 @@
-<ul>
+<fieldset>
 
-    <li class="section" tal:condition="widget.title">
-      <h3>${widget.title}</h3>
+  <legend tal:condition="widget.title">${widget.title}</legend>
+
+  <ul>
+    
+    <li class="section" tal:condition="widget.description">
       <div tal:condition="widget.description">${widget.description}</div>
     </li>
-
+    
     <input type="hidden" name="__start__" value="${widget.name}:mapping"/>
-
+    
     <li tal:repeat="w widget.widgets" 
         tal:attributes="class w.error and w.error_class">
       <label tal:condition="not w.hidden"
@@ -20,7 +23,9 @@
       </p>
       <p tal:condition="w.error and not w.hidden" class="error">${w.error.msg}</p>
     </li>
-
+    
     <input type="hidden" name="__end__" value="${widget.name}:mapping"/>
-
-</ul>
+    
+  </ul>
+  
+</fieldset>

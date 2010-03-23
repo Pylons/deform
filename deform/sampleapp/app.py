@@ -2,6 +2,8 @@ from colander import OneOf
 from paste.httpserver import serve
 from repoze.bfg.configuration import Configurator
 
+from deform.exception import FormValidationError
+
 from deform.schema import MappingSchema
 from deform.schema import SequenceSchema
 from deform.schema import SchemaNode
@@ -10,7 +12,6 @@ from deform.schema import Boolean
 from deform.schema import Integer
 
 from deform.widget import Form
-from deform.widget import FormValidationError
 from deform.widget import RadioChoiceWidget
 
 LONG_DESC = """

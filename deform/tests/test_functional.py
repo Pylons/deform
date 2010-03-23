@@ -146,7 +146,7 @@ class TestFunctional(unittest.TestCase):
         self.assertEqual(result, expected)
 
     def test_validate(self):
-        from deform.exceptions import FormValidationError
+        from deform.exception import FormValidationError
         schema = self._makeSchema()
         form = self._makeForm(schema)
         try:

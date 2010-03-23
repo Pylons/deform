@@ -2,7 +2,7 @@ import colander
 import peppercorn
 
 from deform import template
-from deform import exceptions
+from deform import exception
 
 class Widget(object):
     error = None
@@ -87,10 +87,10 @@ class Widget(object):
           schema is returned.  It will be a mapping.
 
         - If the fields cannot be successfully validated, a
-          :exc:`deform.exceptions.FormValidationError` is raised.
+          :exc:`deform.exception.FormValidationError` is raised.
 
         The ``serialize`` method of a
-        :exc:`deform.exceptions.FormValidationError` exception can be
+        :exc:`deform.exception.FormValidationError` exception can be
         used to reserialize the form in such a way that the user will
         see error markers in the form HTML.  Therefore, the typical
         usage of ``validate`` in the wild is often something like this
@@ -106,7 +106,7 @@ class Widget(object):
                   deserialized = form.validate(fields)
                   do_something(deserialized)
                   return HTTPFound(location='http://example.com/success')
-              except FormValidationError, e:
+              except deform.exception.FormValidationError, e:
                   return {'form':e.serialize()}
           else:
               return {'form':form.serialize()} # the form just needs rendering
@@ -117,7 +117,7 @@ class Widget(object):
             return self.schema.deserialize(cstruct)
         except colander.Invalid, e:
             self.handle_error(e)
-            raise exceptions.FormValidationError(self, cstruct, e)
+            raise exception.FormValidationError(self, cstruct, e)
 
     def handle_error(self, error):
         self.error = error
