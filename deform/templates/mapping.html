@@ -21,7 +21,8 @@
       <p tal:condition="w.description and not w.hidden" class="instruct">
         <small>${w.description}</small>
       </p>
-      <p tal:condition="w.error and not w.hidden" class="error">${w.error.msg}</p>
+      <p tal:condition="w.error and not w.hidden" class="error"
+         >${w.error.msg}</p>
     </li>
     
     <input type="hidden" name="__end__" value="${widget.name}:mapping"/>
