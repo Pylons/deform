@@ -183,12 +183,12 @@ class Widget(object):
         see error markers in the form HTML.  Therefore, the typical
         usage of ``validate`` in the wild is often something like this
         (at least in terms of code found within the body of a
-        :mod:`repoze.bfg` view function, the particulars may differ in
-        your web framework)::
+        :mod:`repoze.bfg` view function, the particulars will differ
+        in your web framework)::
 
           from webob.exc import HTTPFound
 
-          if 'submit' in request.POST:  # the form was submitted
+          if 'submit' in request.POST:  # the form submission needs validation
               fields = request.POST.items()
               try:
                   deserialized = form.validate(fields)
@@ -325,15 +325,11 @@ class CheckedPasswordWidget(Widget):
         passwd = pstruct.get('password') or ''
         confirm = pstruct.get('confirm') or ''
         self._confirm = confirm
-        if '' in (passwd, confirm):
-            self.error = colander.Invalid(
-                self.schema,
-                'one of passwd/confirm not supplied')
         if passwd != confirm:
             self.error = colander.Invalid(
                 self.schema,
                 'Password did not match confirmation')
-        return passwd or ''
+        return passwd
 
 class MappingWidget(Widget):
     template = 'mapping.html'
@@ -375,7 +371,13 @@ class SequenceWidget(Widget):
             cstruct = []
 
         widget = self.widgets[0]
-        prototype = widget.serialize(None)
+        proto_out = []
+        proto_out.append('<div class="removeable"/>')
+        proto_out.append('<span onclick="javascript:remove_parent(this);" '
+                         'title="Remove">X</span>')
+        proto_out.append(widget.serialize(None))
+        proto_out.append('</div>')
+        prototype = '\n'.join(proto_out)
         if isinstance(prototype, unicode):
             prototype = prototype.encode('utf-8')
         prototype = urllib.quote(prototype)
@@ -385,7 +387,11 @@ class SequenceWidget(Widget):
         out.append("""<div onclick="add_new_item(this)">Add %s</div>""" %
                    self.title)
         for item in cstruct:
+            out.append('<div class="removeable"/>')
+            out.append('<span onclick="remove_parent(this);" '
+                       'title="Remove">X</span>')
             out.append(widget.serialize(item))
+            out.append('</div>')
         out.append('<input type="hidden" name="__end__" '
                    'value="%s:sequence">' % self.schema.name)
         return '\n'.join(out)

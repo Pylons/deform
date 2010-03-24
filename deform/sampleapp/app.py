@@ -27,6 +27,7 @@ class DateSchema(MappingSchema):
 
 class DatesSchema(SequenceSchema):
     date = DateSchema()
+    #date = SchemaNode(String())
 
 class SeriesSchema(MappingSchema):
     name = SchemaNode(String())

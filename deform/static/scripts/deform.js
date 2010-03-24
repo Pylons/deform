@@ -19,3 +19,7 @@ function add_new_item(source) {
     node.innerHTML = html;
     insert_after(node.firstChild, last_sibling(source));
 }
+
+function remove_parent(source) {
+    source.parentNode.parentNode.removeChild(source.parentNode);
+}
