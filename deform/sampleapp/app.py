@@ -1,4 +1,5 @@
-from colander import OneOf
+import colander
+
 from paste.httpserver import serve
 from repoze.bfg.configuration import Configurator
 
@@ -11,8 +12,8 @@ from deform.schema import String
 from deform.schema import Boolean
 from deform.schema import Integer
 
-from deform.widget import Form
-from deform.widget import RadioChoiceWidget
+from deform import widget
+
 
 LONG_DESC = """
 The name of the thing.  This is a pretty long line, and hopefully I won't
@@ -33,17 +34,19 @@ class SeriesSchema(MappingSchema):
 
 class MySchema(MappingSchema):
     name = SchemaNode(String(), description=LONG_DESC)
-    title = SchemaNode(String(), validator=OneOf(('a', 'b')),
+    title = SchemaNode(String(), validator=colander.OneOf(('a', 'b')),
                        description=LONG_DESC)
+    password = SchemaNode(String(), validator=colander.Length(5))
     cool = SchemaNode(Boolean(), default=True)
     series = SeriesSchema()
-    color = SchemaNode(String(), validator=OneOf(('red', 'blue')))
+    color = SchemaNode(String(), validator=colander.OneOf(('red', 'blue')))
 
 def form_view(request):
     schema = MySchema()
-    schema['color'].widget_type = RadioChoiceWidget
+    schema['color'].widget_type = widget.RadioChoiceWidget
+    schema['password'].widget_type = widget.CheckedPasswordWidget
 
-    form = Form(schema, buttons=('submit',))
+    form = widget.Form(schema, buttons=('submit',))
     form['title'].size = 40
     form['color'].values = (('red', 'Red'),('green', 'Green'),('blue', 'Blue'))
 

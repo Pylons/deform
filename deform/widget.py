@@ -298,6 +298,43 @@ class RadioChoiceWidget(Widget):
             pstruct = ''
         return pstruct
 
+class CheckedPasswordWidget(Widget):
+    _confirm = ''
+    def serialize(self, cstruct=None):
+        if cstruct is None:
+            cstruct = self.default
+        if cstruct is None:
+            cstruct = ''
+        out = []
+        name = self.schema.name
+        out.append(
+            '<input type="hidden" name="__start__" value="%s:mapping"' % name)
+        out.append('<label for="password">Password</label>')
+        out.append(
+            '<input type="password" name="password" value="%s"/>' % cstruct)
+        out.append('<label for="confirm">Confirm Password</label>')
+        out.append('<input type="password" name="confirm" value="%s"/>'
+                   % self._confirm)
+        out.append(
+            '<input type="hidden" name="__end__" value="%s:mapping"' % name)
+        return '\n'.join(out)
+        
+    def deserialize(self, pstruct):
+        if pstruct is None:
+            pstruct = {}
+        passwd = pstruct.get('password') or ''
+        confirm = pstruct.get('confirm') or ''
+        self._confirm = confirm
+        if '' in (passwd, confirm):
+            self.error = colander.Invalid(
+                self.schema,
+                'one of passwd/confirm not supplied')
+        if passwd != confirm:
+            self.error = colander.Invalid(
+                self.schema,
+                'Password did not match confirmation')
+        return passwd or ''
+
 class MappingWidget(Widget):
     template = 'mapping.html'
     error_class = None
