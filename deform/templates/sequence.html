@@ -1,0 +1,12 @@
+<div>
+  <!-- structure.html -->
+  <input type="hidden" name="__start__" value="${widget.schema.name}:sequence"
+         tal:attributes="prototype widget.prototype()"/>
+  <div onclick="add_new_item(this);">Add ${widget.title}</div>
+  <div tal:repeat="item cstruct">
+    <span tal:replace="structure 
+        widget.renderer(widget.item_template, widget=widget.item_widget, 
+        cstruct=item)"/>
+  </div>
+  <input type="hidden" name="__end__" value="${widget.schema.name}:sequence"/>
+</div>

@@ -363,38 +363,26 @@ class MappingWidget(Widget):
 class SequenceWidget(Widget):
     hidden = True
     error_class = None
+    template = 'sequence.html'
+    item_template = 'sequence_item.html'
+
+    def __init__(self, schema, renderer=None):
+        Widget.__init__(self, schema, renderer=renderer)
+        self.item_widget = self.widgets[0]
+
+    def prototype(self):
+        widget = self.widgets[0]
+        template = self.item_template
+        proto = self.renderer(template, widget=widget, cstruct=None)
+        if isinstance(proto, unicode):
+            proto = proto.encode('utf-8')
+        proto = urllib.quote(proto)
+        return proto
 
     def serialize(self, cstruct=None):
-        out = []
-
         if cstruct is None:
             cstruct = []
-
-        widget = self.widgets[0]
-        proto_out = []
-        proto_out.append('<div class="removeable"/>')
-        proto_out.append('<span onclick="javascript:remove_parent(this);" '
-                         'title="Remove">X</span>')
-        proto_out.append(widget.serialize(None))
-        proto_out.append('</div>')
-        prototype = '\n'.join(proto_out)
-        if isinstance(prototype, unicode):
-            prototype = prototype.encode('utf-8')
-        prototype = urllib.quote(prototype)
-        out.append('<input type="hidden" name="__start__" '
-                   'value="%s:sequence" prototype="%s">' % (
-                       (self.schema.name, prototype)))
-        out.append("""<div onclick="add_new_item(this)">Add %s</div>""" %
-                   self.title)
-        for item in cstruct:
-            out.append('<div class="removeable"/>')
-            out.append('<span onclick="remove_parent(this);" '
-                       'title="Remove">X</span>')
-            out.append(widget.serialize(item))
-            out.append('</div>')
-        out.append('<input type="hidden" name="__end__" '
-                   'value="%s:sequence">' % self.schema.name)
-        return '\n'.join(out)
+        return self.renderer(self.template, widget=self, cstruct=cstruct)
 
     def deserialize(self, pstruct):
         result = []
@@ -402,7 +390,7 @@ class SequenceWidget(Widget):
         if pstruct is None:
             pstruct = []
 
-        widget = self.widgets[0]
+        widget = self.item_widget
         for num, substruct in enumerate(pstruct):
             val = widget.deserialize(substruct)
             result.append(val)
