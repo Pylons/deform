@@ -257,16 +257,14 @@ class CheckboxWidget(Widget):
     """
     true_val = 'true'
     false_val = 'false'
+
+    template = 'checkbox.html'
+
     def serialize(self, cstruct=None):
         name = self.schema.name
         if cstruct is None:
             cstruct = self.default
-        if cstruct == self.true_val:
-            return ('<input type="checkbox" name="%s" value="%s" '
-                    'checked="true"/>' % (name, self.true_val))
-        else:
-            return '<input type="checkbox" name="%s" value="%s"/>' % (
-                name, self.true_val)
+        return self.renderer(self.template, widget=self, cstruct=cstruct)
 
     def deserialize(self, pstruct):
         if pstruct is None:

@@ -1,0 +1,8 @@
+<span tal:omit-tag="">
+  <input tal:condition="cstruct == widget.true_val" type="checkbox"
+         name="${widget.name}" value="${widget.true_val}"
+         checked="true"/>
+  <input tal:condition="cstruct != widget.true_val" type="checkbox"
+         name="${widget.name}" value="${widget.true_val}"/>
+</span>
+
