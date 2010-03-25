@@ -91,7 +91,9 @@ class Widget(object):
         A sequence representing the child widgets of this widget.
         Each child widget relates to a child schema node of the
         associated schema element.
-        
+
+    Subclasses of this class will have additional domain-specific
+    attributes.
     """
     error = None
     default = None
@@ -225,6 +227,9 @@ class TextInputWidget(Widget):
         The size, in columns, of the text input field.  Defaults to
         ``None``, meaning that the ``size`` is not included in the
         widget output (uses browser default size).
+
+    template
+        The template name used to render the input widget.
     """
     template = 'textinput.html'
     size = None
@@ -254,6 +259,10 @@ class CheckboxWidget(Widget):
     false_val
         The value which should be returned during deserialization if
         the box was left unchecked.  Default: ``false``.
+
+    template
+        The template name used to render the input widget.
+
     """
     true_val = 'true'
     false_val = 'false'
@@ -271,6 +280,22 @@ class CheckboxWidget(Widget):
         return (pstruct == self.true_val) and self.true_val or self.false_val
 
 class RadioChoiceWidget(Widget):
+    """
+    Renders a sequence of <input type="radio"/> buttons based on a predefined
+    set of values.
+
+    **Attributes**
+
+    values
+        A sequence of two-tuples indicating allowable, displayed
+        values, e.g. ( ('true', 'True'), ('false', 'False') ).  The
+        first element in the tuple is the value that should be
+        returned when the form is posted.  The second is the display
+        value.
+
+    template
+        The template name used to render the input widget.
+    """
     template = 'radio_choice.html'
     values = ()
 
@@ -285,6 +310,15 @@ class RadioChoiceWidget(Widget):
         return pstruct
 
 class CheckedPasswordWidget(Widget):
+    """
+    Renders two password input fields: 'password' and 'confirm'.
+    Validates that the 'password' value matches the 'confirm' value.
+
+    **Attributes**
+
+    template
+        The template name used to render the input widget.
+    """
     template = 'checked_password.html'
     confirm = ''
     def serialize(self, cstruct=None):
@@ -307,17 +341,24 @@ class CheckedPasswordWidget(Widget):
         return passwd
 
 class MappingWidget(Widget):
+    """
+    Renders a mapping.
+
+    **Attributes**
+
+    template
+        The template name used to render the mapping.
+
+    item_template
+        The template name used to render each value in the mapping.
+
+    """
     template = 'mapping.html'
     item_template = 'mapping_item.html'
     error_class = None
     hidden = True
 
     def serialize(self, cstruct=None):
-        """
-        Serialize a cstruct value to a form rendering and return the
-        rendering.  The result of this method should always be a
-        string (containing HTML).
-        """
         if cstruct is None:
             cstruct = {}
         return self.renderer(self.template, widget=self, cstruct=cstruct)
@@ -337,6 +378,18 @@ class MappingWidget(Widget):
         return result
 
 class SequenceWidget(Widget):
+    """
+    Renders a mapping.
+
+    **Attributes**
+
+    template
+        The template name used to render the sequence.
+
+    item_template
+        The template name used to render each value in the sequence.
+
+    """
     hidden = True
     error_class = None
     template = 'sequence.html'
