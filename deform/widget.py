@@ -369,9 +369,8 @@ class SequenceWidget(Widget):
         self.item_widget = self.widgets[0]
 
     def prototype(self):
-        widget = self.widgets[0]
         template = self.item_template
-        proto = self.renderer(template, widget=widget, cstruct=None)
+        proto = self.renderer(template, widget=self.item_widget, cstruct=None)
         if isinstance(proto, unicode):
             proto = proto.encode('utf-8')
         proto = urllib.quote(proto)
