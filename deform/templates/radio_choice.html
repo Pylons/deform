@@ -1,0 +1,7 @@
+<span tal:repeat="(value, description) widget.values" tal:omit-tag="">
+  <label for="${widget.name}">${description}</label>
+  <input tal:attributes="checked value == cstruct"
+         type="radio"
+         name="${widget.name}"
+         value="${value}"/>
+</span>

@@ -261,7 +261,6 @@ class CheckboxWidget(Widget):
     template = 'checkbox.html'
 
     def serialize(self, cstruct=None):
-        name = self.schema.name
         if cstruct is None:
             cstruct = self.default
         return self.renderer(self.template, widget=self, cstruct=cstruct)
@@ -272,24 +271,13 @@ class CheckboxWidget(Widget):
         return (pstruct == self.true_val) and self.true_val or self.false_val
 
 class RadioChoiceWidget(Widget):
+    template = 'radio_choice.html'
     values = ()
 
     def serialize(self, cstruct=None):
-        out = []
         if cstruct is None:
             cstruct = self.default
-        for value, description in self.values:
-            out.append('<label for="%s">%s</label>' % (self.schema.name,
-                                                       description))
-            if value == cstruct:
-                out.append(
-                    '<input type="radio" name="%s" value="%s" '
-                    'checked="true"/>' % (self.schema.name, value))
-            else:
-                out.append(
-                    '<input type="radio" name="%s" value="%s"/>' % (
-                        self.schema.name, value))
-        return '\n'.join(out)
+        return self.renderer(self.template, widget=self, cstruct=cstruct)
 
     def deserialize(self, pstruct):
         if pstruct is None:
@@ -297,32 +285,21 @@ class RadioChoiceWidget(Widget):
         return pstruct
 
 class CheckedPasswordWidget(Widget):
-    _confirm = ''
+    template = 'checked_password.html'
+    confirm = ''
     def serialize(self, cstruct=None):
         if cstruct is None:
             cstruct = self.default
         if cstruct is None:
             cstruct = ''
-        out = []
-        name = self.schema.name
-        out.append(
-            '<input type="hidden" name="__start__" value="%s:mapping"' % name)
-        out.append('<label for="password">Password</label>')
-        out.append(
-            '<input type="password" name="password" value="%s"/>' % cstruct)
-        out.append('<label for="confirm">Confirm Password</label>')
-        out.append('<input type="password" name="confirm" value="%s"/>'
-                   % self._confirm)
-        out.append(
-            '<input type="hidden" name="__end__" value="%s:mapping"' % name)
-        return '\n'.join(out)
+        return self.renderer(self.template, widget=self, cstruct=cstruct)
         
     def deserialize(self, pstruct):
         if pstruct is None:
             pstruct = {}
         passwd = pstruct.get('password') or ''
         confirm = pstruct.get('confirm') or ''
-        self._confirm = confirm
+        self.confirm = confirm
         if passwd != confirm:
             self.error = colander.Invalid(
                 self.schema,
@@ -331,6 +308,7 @@ class CheckedPasswordWidget(Widget):
 
 class MappingWidget(Widget):
     template = 'mapping.html'
+    item_template = 'mapping_item.html'
     error_class = None
     hidden = True
 

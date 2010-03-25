@@ -23,20 +23,11 @@
       <div tal:condition="widget.description">${widget.description}</div>
     </li>
 
-    <li tal:repeat="w widget.widgets" 
-        tal:attributes="class w.error and w.error_class">
-      <label tal:condition="not w.hidden"
-             class="desc"
-             for="${w.name}" 
-             >${w.title}<span tal:condition="w.required" class="req">*</span>
-      </label>
-      <div tal:content="structure w.serialize(cstruct.get(w.name))"/>
-      <p tal:condition="w.description and not w.hidden" class="instruct">
-        <small>${w.description}</small>
-      </p>
-      <p tal:condition="w.error and not w.hidden" class="error"
-         >${w.error.msg}</p>
-    </li>
+    <div 
+       tal:define="rndr widget.renderer;
+                   tmpl widget.item_template"
+       tal:repeat="w widget.widgets"
+       tal:replace="structure rndr(tmpl,widget=w,cstruct=cstruct.get(w.name))"/>
 
     <li class="buttons">
       <tal:block repeat="button widget.buttons">
