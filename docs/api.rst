@@ -78,6 +78,10 @@ Template-Related
 
 .. automodule:: deform.template
 
+.. function:: make_renderer
+
 .. attribute:: default_renderer
 
-   The default template renderer.
+   The default ZPT template renderer (uses the ``deform/templates/``
+   directory as a template source).
+

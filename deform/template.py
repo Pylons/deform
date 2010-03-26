@@ -42,14 +42,17 @@ class ChameleonZPTTemplateLoader(object):
 
         raise TemplateError("Can not find template %s" % filename)
 
-def make_default_renderer():
-    defaultdir = resource_filename('deform', 'templates') + '/'
-    loader = ChameleonZPTTemplateLoader([defaultdir])
+def make_renderer(*dirs):
+    """ Return a Chameleon ZPT renderer which uses the filesystem
+    directories listed as ``dirs`` as template source directories."""
+    
+    loader = ChameleonZPTTemplateLoader(dirs)
 
     def renderer(template, **kw):
         return loader.load(template)(**kw)
 
     return renderer
 
-default_renderer = make_default_renderer()
+default_dir = resource_filename('deform', 'templates/')
+default_renderer = make_renderer(default_dir)
 
