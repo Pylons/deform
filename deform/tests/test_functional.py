@@ -67,7 +67,7 @@ class TestFunctional(unittest.TestCase):
         self.assertEqual(inputs[3]['name'], 'title')
         self.assertEqual(inputs[3]['value'], '')
         self.assertEqual(inputs[4]['name'], 'cool')
-        self.assertEqual(inputs[4].get('checked'), 'true')
+        self.assertEqual(inputs[4].get('checked'), 'True')
         self.assertEqual(inputs[5]['name'], '__start__')
         self.assertEqual(inputs[5]['value'], 'series:mapping')
         self.assertEqual(inputs[6]['name'], 'name')
