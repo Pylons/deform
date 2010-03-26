@@ -439,8 +439,9 @@ class SequenceWidget(Widget):
             pstruct = []
 
         self.sequence_widgets = []
+        item_widget = self.widgets[0]
         for num, substruct in enumerate(pstruct):
-            widget = self.item_widget.clone()
+            widget = item_widget.clone()
             val = widget.deserialize(substruct)
             result.append(val)
             self.sequence_widgets.append(widget)
