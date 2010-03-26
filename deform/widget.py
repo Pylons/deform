@@ -422,9 +422,15 @@ class SequenceWidget(Widget):
         if cstruct is None:
             cstruct = []
         if self.sequence_widgets:
+            # this serialization is assumed to be performed as a
+            # result of a validation failure (``deserialize`` was
+            # previously run)
+            assert(len(cstruct) == len(self.sequence_widgets))
             subwidgets = zip(cstruct, self.sequence_widgets)
         else:
-            subwidgets = [ self.item_widget.clone() for val in cstruct ]
+            # this serialization is being performed as a result of a
+            # first-time rendering
+            subwidgets = [ (val, self.item_widget.clone()) for val in cstruct ]
         return self.renderer(self.template, widget=self, cstruct=cstruct,
                              subwidgets=subwidgets)
 
