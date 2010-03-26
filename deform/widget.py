@@ -389,7 +389,7 @@ class MappingWidget(Widget):
 
 class SequenceWidget(Widget):
     """
-    Renders a mapping.
+    Renders a sequence (0 .. N widgets, each the same as the other).
 
     **Attributes**
 
