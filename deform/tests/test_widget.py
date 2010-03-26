@@ -196,6 +196,174 @@ class TestTextInputWidget(unittest.TestCase):
         result = widget.deserialize(None)
         self.assertEqual(result, '')
 
+class TestCheckboxWidget(unittest.TestCase):
+    def _makeOne(self, schema, renderer=None):
+        from deform.widget import CheckboxWidget
+        return CheckboxWidget(schema, renderer=renderer)
+    
+    def test_serialize_None(self):
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        widget = self._makeOne(schema, renderer=renderer)
+        widget.default = 'default'
+        widget.serialize(None)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['widget'], widget)
+        self.assertEqual(renderer.kw['cstruct'], 'default')
+
+    def test_serialize_not_None(self):
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        widget = self._makeOne(schema, renderer=renderer)
+        cstruct = 'abc'
+        widget.serialize(cstruct)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['widget'], widget)
+        self.assertEqual(renderer.kw['cstruct'], cstruct)
+        
+    def test_deserialize_None(self):
+        schema = DummySchema()
+        widget = self._makeOne(schema)
+        result = widget.deserialize(None)
+        self.assertEqual(result, 'false')
+
+    def test_deserialize_true_val(self):
+        schema = DummySchema()
+        widget = self._makeOne(schema)
+        result = widget.deserialize('true')
+        self.assertEqual(result, 'true')
+
+    def test_deserialize_false_val(self):
+        schema = DummySchema()
+        widget = self._makeOne(schema)
+        result = widget.deserialize('false')
+        self.assertEqual(result, 'false')
+
+class TestRadioChoiceWidget(unittest.TestCase):
+    def _makeOne(self, schema, renderer=None):
+        from deform.widget import RadioChoiceWidget
+        return RadioChoiceWidget(schema, renderer=renderer)
+    
+    def test_serialize_None(self):
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        widget = self._makeOne(schema, renderer=renderer)
+        widget.default = 'default'
+        widget.serialize(None)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['widget'], widget)
+        self.assertEqual(renderer.kw['cstruct'], 'default')
+
+    def test_serialize_not_None(self):
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        widget = self._makeOne(schema, renderer=renderer)
+        cstruct = 'abc'
+        widget.serialize(cstruct)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['widget'], widget)
+        self.assertEqual(renderer.kw['cstruct'], cstruct)
+        
+    def test_deserialize_None(self):
+        schema = DummySchema()
+        widget = self._makeOne(schema)
+        result = widget.deserialize(None)
+        self.assertEqual(result, '')
+
+    def test_deserialize_other(self):
+        schema = DummySchema()
+        widget = self._makeOne(schema)
+        result = widget.deserialize('true')
+        self.assertEqual(result, 'true')
+
+class TestCheckedPasswordWidget(unittest.TestCase):
+    def _makeOne(self, schema, renderer=None):
+        from deform.widget import CheckedPasswordWidget
+        return CheckedPasswordWidget(schema, renderer=renderer)
+    
+    def test_serialize_None(self):
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        widget = self._makeOne(schema, renderer=renderer)
+        widget.default = 'default'
+        widget.serialize(None)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['widget'], widget)
+        self.assertEqual(renderer.kw['cstruct'], 'default')
+
+    def test_serialize_None_no_default(self):
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        widget = self._makeOne(schema, renderer=renderer)
+        widget.serialize(None)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['widget'], widget)
+        self.assertEqual(renderer.kw['cstruct'], '')
+
+    def test_deserialize_None(self):
+        schema = DummySchema()
+        widget = self._makeOne(schema)
+        result = widget.deserialize(None)
+        self.assertEqual(result, '')
+
+    def test_deserialize_nonmatching(self):
+        schema = DummySchema()
+        widget = self._makeOne(schema)
+        result = widget.deserialize({'password':'password', 'confirm':'not'})
+        self.assertEqual(result, 'password')
+        self.assertEqual(widget.error.msg,
+                         'Password did not match confirmation')
+
+    def test_deserialize_matching(self):
+        schema = DummySchema()
+        widget = self._makeOne(schema)
+        result = widget.deserialize({'password':'password',
+                                     'confirm':'password'})
+        self.assertEqual(result, 'password')
+        self.assertEqual(widget.error, None)
+
+class TestMappingWidget(unittest.TestCase):
+    def _makeOne(self, schema, renderer=None):
+        from deform.widget import MappingWidget
+        return MappingWidget(schema, renderer=renderer)
+    
+    def test_serialize_None(self):
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        widget = self._makeOne(schema, renderer=renderer)
+        widget.serialize(None)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['widget'], widget)
+        self.assertEqual(renderer.kw['cstruct'], {})
+
+    def test_serialize_not_None(self):
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        widget = self._makeOne(schema, renderer=renderer)
+        cstruct = {'a':1}
+        widget.serialize(cstruct)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['widget'], widget)
+        self.assertEqual(renderer.kw['cstruct'], cstruct)
+
+    def test_deserialize_None(self):
+        schema = DummySchema()
+        widget = self._makeOne(schema)
+        result = widget.deserialize(None)
+        self.assertEqual(result, {})
+
+    def test_deserialize_non_None(self):
+        schema = DummySchema()
+        widget = self._makeOne(schema)
+        inner_schema = DummySchema()
+        inner_schema.name = 'a'
+        inner = DummyWidget()
+        inner.name = 'a'
+        widget.widgets = [inner]
+        pstruct = {'a':1}
+        result = widget.deserialize(pstruct)
+        self.assertEqual(result, {'a':1})
+
 class DummyRenderer(object):
     def __call__(self, template, **kw):
         self.template = template
@@ -205,6 +373,9 @@ class DummyWidget(object):
     name = 'name'
     def clone(self):
         return self
+
+    def deserialize(self, pstruct):
+        return pstruct
 
 class DummySchema(object):
     typ = None

@@ -391,8 +391,8 @@ class MappingWidget(Widget):
 
         for num, widget in enumerate(self.widgets):
             name = widget.name
-            substruct = pstruct.get(name)
-            result[name] = widget.deserialize(substruct)
+            value = pstruct.get(name)
+            result[name] = widget.deserialize(value)
 
         return result
 
