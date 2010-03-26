@@ -112,8 +112,10 @@ class Widget(object):
 
     def clone(self):
         """
-        Clone this widget and any of its subwidgets.  Return the
-        cloned widget.
+        Clone this widget and any of its subwidgets.  Attempt to
+        preserve arbitrary attributes assigned to the widget by
+        copying the values in the ``__dict__`` of the widget during
+        the clone process.  Return the cloned widget.
         """
         widget = self.__class__(self.schema, renderer=self.renderer)
         widget.__dict__.update(self.__dict__)
@@ -198,7 +200,7 @@ class Widget(object):
                   deserialized = form.validate(fields)
                   do_something(deserialized)
                   return HTTPFound(location='http://example.com/success')
-              except deform.exception.ValidationFailure, e:
+              except ValidationFailure, e:
                   return {'form':e.serialize()}
           else:
               return {'form':form.serialize()} # the form just needs rendering
