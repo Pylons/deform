@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+  <head>
+  <meta name="google-site-verification" content="U-XX7_-4vDnEUcadgPvt2ALTRvUJx7S-UIaixzZdN1I" />
+    <title>BFG</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!--[if IE 6]>
+        <link rel="stylesheet" href="http://bfg.repoze.org/static/css/fixie6.css" type="text/css" />
+        <![endif]-->
+    <!--[if IE 7]>
+        <link rel="stylesheet" href="http://bfg.repoze.org/static/css/fixie7.css" type="text/css" />
+        <![endif]-->
+    
+    <script type="text/javascript" charset="utf-8">
+            var curvyCornersVerbose = false;
+    </script>
+    <script type="text/javascript" src="http://bfg.repoze.org/static/js/curvycorners.js"></script>
+
+    
+
+    
+      <link rel="stylesheet" type="text/css" href="http://bfg.repoze.org/static/css/default.css" />
+
+<!-- JavaScript -->
+<script type="text/javascript" src="/static/scripts/wufoo.js"></script>
+<script type="text/javascript" src="/static/scripts/deform.js"></script>
+
+<!-- CSS -->
+<!--<link rel="stylesheet" href="static/css/structure.css" type="text/css" />-->
+<link rel="stylesheet" href="/static/css/form.css" type="text/css" />
+<!--<link rel="stylesheet" href="/static/css/theme.css" type="text/css" />-->
+    
+
+  </head>
+
+  <body>
+
+    <div id="container">
+
+      <div id="header_container">
+          <div id="header">
+                <div id="login_info">
+                    
+          </div>
+              
+          <div id="searchbox">
+            <form action="http://bfg.repoze.org/searchresults" method="post">
+                <input class="search_box" type="text" name="text" value="" />
+                <input class="search_button" type="submit" value="search" />
+            </form>
+          </div>
+          
+          <div id="title">
+            <a href="http://bfg.repoze.org">
+                <img id="bfglogo" src="http://bfg.repoze.org/static/images/site/logo.png" alt="BFG Logo" title="BANG!" height="60" border="0" />
+            </a>
+          </div>
+
+          <div id="navcontainer">
+            <ul id="navlist">
+              <li>
+                  <a href="http://bfg.repoze.org/" id="notcurrent">Home</a>
+                </li>
+               <li>
+                  <a href="http://bfg.repoze.org/book" id="notcurrent">Book</a>
+                </li>
+               <li>
+                  <a href="http://bfg.repoze.org/documentation" id="notcurrent">Docs</a>
+                </li>
+               <li>
+                  <a href="http://bfg.repoze.org/trac" id="notcurrent">Software</a>
+                </li>
+               <li>
+                  <a href="http://bfg.repoze.org/community" id="notcurrent">Community</a>
+                </li>
+               <li>
+                  <a href="http://bfg.repoze.org/pastebin" id="current">Pastes</a>
+                </li>
+               <li>
+                  <a href="http://bfg.repoze.org/tutorialbin" id="notcurrent">Tutorials</a>
+                </li>
+               <li>
+                  <a href="http://bfg.repoze.org/login" id="notcurrent">Log In</a>
+                </li>
+              
+            </ul>
+          </div>
+
+
+
+      </div>
+      </div>
+      <div id="bar">
+      </div>
+
+      <div>
+
+    <div id="content">
+
+      <div id="subnav">
+        <div class="news">
+          <div class="header">Previous Pastes</div>
+          <ul>
+            <li>
+              <a href="http://bfg.repoze.org/pastebin/709">rafrombrc on 03/25/10 (as)</a>
+            </li> <li>
+              <a href="http://bfg.repoze.org/pastebin/708">Chris Rossi on 03/23/10 (pytb)</a>
+            </li> <li>
+              <a href="http://bfg.repoze.org/pastebin/707">Tom Willis on 03/19/10 (bash)</a>
+            </li> <li>
+              <a href="http://bfg.repoze.org/pastebin/706">chrism on 03/18/10 (python)</a>
+            </li> <li>
+              <a href="http://bfg.repoze.org/pastebin/705">chrism on 03/18/10 (python)</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <div id="one">
+        
+        <h1>BFG Paste Bin</h1>
+        
+        
+        <div class="left">
+             <div class="bfgform">
+               <span tal:replace="structure form"/>
+             </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+      <div id="footer">
+        Copyright &copy; 2008-2009
+            <a href="http://agendaless.com">Agendaless Consulting</a> and contributors<br />
+        Design by <a href="http://www.electrosoup.co.uk">ElectroSoup</a>
+      </div>
+      
+    </div>
+
+</body>
+</html>

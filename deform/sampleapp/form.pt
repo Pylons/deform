@@ -16,7 +16,7 @@
 <script type="text/javascript" src="static/scripts/deform.js"></script>
 
 <!-- CSS -->
-<link rel="stylesheet" href="static/css/structure.css" type="text/css" />
+<!--<link rel="stylesheet" href="static/css/structure.css" type="text/css" />-->
 <link rel="stylesheet" href="static/css/form.css" type="text/css" />
 <link rel="stylesheet" href="static/css/theme.css" type="text/css" />
 

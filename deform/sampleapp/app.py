@@ -64,9 +64,11 @@ def form_view(request):
     return {'form':form.serialize()}
 
 if __name__ == '__main__':
-    config = Configurator()
+    settings = dict(reload_templates=True)
+    config = Configurator(settings=settings)
     config.begin()
     config.add_view(form_view, renderer='form.pt')
+    config.add_view(form_view, name='bfg', renderer='bfg.pt')
     config.add_static_view('static', 'deform:static')
     config.end()
     app = config.make_wsgi_app()
