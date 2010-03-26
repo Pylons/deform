@@ -54,7 +54,7 @@ class Widget(object):
         The template :term:`renderer` associated with this form.  If a
         renderer is not passed to the constructor, the default deform
         renderer will be used (only templates from
-        ``deform/templates`` will be used).
+        ``deform/templates/`` will be used).
 
     name
         The name of this widget.  By default, it is the same as the
@@ -237,7 +237,7 @@ class TextInputWidget(Widget):
         If true, during deserialization, strip the value of leading
         and trailing whitespace (default ``True``).
     """
-    template = 'textinput.html'
+    template = 'textinput'
     size = None
     strip = True
 
@@ -276,7 +276,7 @@ class CheckboxWidget(Widget):
     true_val = 'true'
     false_val = 'false'
 
-    template = 'checkbox.html'
+    template = 'checkbox'
 
     def serialize(self, cstruct=None):
         if cstruct is None:
@@ -305,7 +305,7 @@ class RadioChoiceWidget(Widget):
     template
         The template name used to render the input widget.
     """
-    template = 'radio_choice.html'
+    template = 'radio_choice'
     values = ()
 
     def serialize(self, cstruct=None):
@@ -328,7 +328,7 @@ class CheckedPasswordWidget(Widget):
     template
         The template name used to render the input widget.
     """
-    template = 'checked_password.html'
+    template = 'checked_password'
     confirm = ''
     def serialize(self, cstruct=None):
         if cstruct is None:
@@ -359,11 +359,11 @@ class MappingWidget(Widget):
         The template name used to render the mapping.
 
     item_template
-        The template name used to render each value in the mapping.
+        The template name used to render each item in the mapping.
 
     """
-    template = 'mapping.html'
-    item_template = 'mapping_item.html'
+    template = 'mapping'
+    item_template = 'mapping_item'
     error_class = None
     hidden = True
 
@@ -402,8 +402,8 @@ class SequenceWidget(Widget):
     """
     hidden = True
     error_class = None
-    template = 'sequence.html'
-    item_template = 'sequence_item.html'
+    template = 'sequence'
+    item_template = 'sequence_item'
     sequence_widgets = ()
 
     def prototype(self):
@@ -492,40 +492,39 @@ class Button(object):
         self.value = value
 
 class Form(MappingWidget):
-    template = 'form.html'
+    template = 'form'
+    """
+    The top-level widget; represents an entire form.
 
+    Arguments:
+
+    schema
+        A :class:`deform.schema.SchemaNode` object representing a
+        schema to be rendered.  Required.
+
+    renderer
+        A :term:`renderer` callable.  Defaults to ``None``, which
+        causes the default renderer to be used.
+
+    action
+        The form action (inserted into the ``action`` attribute of
+        the form's form tag when rendered).  Default ``.`` (single
+        dot).
+
+    method
+        The form method (inserted into the ``method`` attribute of
+        the form's form tag when rendered).  Default: ``POST``.
+
+    buttons
+        A sequence of strings or :class:`deform.widget.Button`
+        objects representing submit buttons that will be placed at
+        the bottom of the form.  If any string is passed in the
+        sequence, it is converted to
+        :class:`deform.widget.Button` objects.
+
+    """
     def __init__(self, schema, renderer=None, action='.', method='POST',
                  buttons=()):
-        """
-        The top-level widget; represents an entire form.
-        
-        Arguments:
-
-        schema
-            A :class:`deform.schema.SchemaNode` object representing a
-            schema to be rendered.  Required.
-
-        renderer
-            A :term:`renderer` callable.  Defaults to ``None``, which
-            causes the default renderer to be used.
-
-        action
-            The form action (inserted into the ``action`` attribute of
-            the form's form tag when rendered).  Default ``.`` (single
-            dot).
-
-        method
-            The form method (inserted into the ``method`` attribute of
-            the form's form tag when rendered).  Default: ``POST``.
-
-        buttons
-            A sequence of strings or :class:`deform.widget.Button`
-            objects representing submit buttons that will be placed at
-            the bottom of the form.  If any string is passed in the
-            sequence, it is converted to
-            :class:`deform.widget.Button` objects.
-
-        """
         self.action = action
         self.method = method
         self.buttons = []

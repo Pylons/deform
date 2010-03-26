@@ -47,12 +47,16 @@ def make_renderer(*dirs):
     filesystem directories listed as ``dirs`` as template source
     directories.  The order in which the directories are listed is the
     order in which they are checked for the template provided to the
-    renderer."""
+    renderer.
+
+    The returned renderer callable accepts a template name *without*
+    the ``.pt`` file extension.
+    """
     
     loader = ChameleonZPTTemplateLoader(dirs)
 
-    def renderer(template, **kw):
-        return loader.load(template)(**kw)
+    def renderer(template_name, **kw):
+        return loader.load(template_name + '.pt')(**kw)
 
     return renderer
 

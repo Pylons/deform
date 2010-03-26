@@ -17,7 +17,7 @@ class TestChameleonZPTTemplateLoader(unittest.TestCase):
         import os
         fixtures = os.path.join(os.path.dirname(__file__), 'fixtures')
         loader = self._makeOne(search_path=[fixtures])
-        result = loader.load('test.html')
+        result = loader.load('test.pt')
         self.failUnless(result)
 
     def test_load_notexists(self):
@@ -25,27 +25,27 @@ class TestChameleonZPTTemplateLoader(unittest.TestCase):
         from deform.template import TemplateError
         fixtures = os.path.join(os.path.dirname(__file__), 'fixtures')
         loader = self._makeOne(search_path=[fixtures])
-        self.assertRaises(TemplateError, loader.load, 'doesnt.html')
+        self.assertRaises(TemplateError, loader.load, 'doesnt')
         self.failUnless(
-            os.path.join(fixtures, 'doesnt.html') in loader.notexists)
+            os.path.join(fixtures, 'doesnt') in loader.notexists)
 
     def test_load_negative_cache(self):
         import os
         fixtures = os.path.join(os.path.dirname(__file__), 'fixtures')
-        path = os.path.join(fixtures, 'test.html')
+        path = os.path.join(fixtures, 'test.pt')
         loader = self._makeOne(search_path=[fixtures], auto_reload=True)
         loader.notexists[path] = True
-        result = loader.load('test.html')
+        result = loader.load('test.pt')
         self.failUnless(result)
 
     def test_load_negative_cache2(self):
         import os
         from deform.template import TemplateError
         fixtures = os.path.join(os.path.dirname(__file__), 'fixtures')
-        path = os.path.join(fixtures, 'test.html')
+        path = os.path.join(fixtures, 'test.pt')
         loader = self._makeOne(search_path=[fixtures], auto_reload=False)
         loader.notexists[path] = True
-        self.assertRaises(TemplateError, loader.load, 'test.html')
+        self.assertRaises(TemplateError, loader.load, 'test')
 
 class Test_make_renderer(unittest.TestCase):
     def _callFUT(self, *dirs):
@@ -56,7 +56,7 @@ class Test_make_renderer(unittest.TestCase):
         from pkg_resources import resource_filename
         default_dir = resource_filename('deform', 'tests/fixtures/')
         renderer = self._callFUT(default_dir)
-        result = renderer('test.html', **{})
+        result = renderer('test', **{})
         self.assertEqual(result, u'<div>Test</div>')
 
 class Test_default_renderer(unittest.TestCase):
@@ -65,7 +65,7 @@ class Test_default_renderer(unittest.TestCase):
         return default_renderer(template, **kw)
     
     def test_call_defaultdir(self):
-        result = self._callFUT('checkbox.html',
+        result = self._callFUT('checkbox',
                                **{'cstruct':None, 'widget':DummyWidget()})
         self.assertEqual(result,
                          u'<input type="checkbox" name="name" value="true" />')
