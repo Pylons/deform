@@ -110,14 +110,24 @@ class Widget(object):
         self.description = self.schema.description
         self.required = self.schema.required
         self.widgets = []
-        if not self.schema.required:
+        if not schema.required:
             self.default = self.schema.serialize(self.schema.default)
-        for node in schema.nodes:
+        for node in self.schema.nodes:
             widget_type = getattr(node, 'widget_type', None)
             if widget_type is None:
                 widget_type = getattr(node.typ, 'widget_type', TextInputWidget)
             widget = widget_type(node, renderer=renderer)
             self.widgets.append(widget)
+
+    def clone(self):
+        """
+        Clone this widget and any of its subwidgets.  Return the
+        cloned widget.
+        """
+        widget = self.__class__(self.schema, renderer=self.renderer)
+        widget.__dict__.update(self.__dict__)
+        widget.widgets = [ w.clone() for w in self.widgets ]
+        return widget
 
     def __getitem__(self, name):
         """ Return the subwidget of this widget named ``name`` or
@@ -398,6 +408,7 @@ class SequenceWidget(Widget):
     def __init__(self, schema, renderer=None):
         Widget.__init__(self, schema, renderer=renderer)
         self.item_widget = self.widgets[0]
+        self.sequence_widgets = []
 
     def prototype(self):
         template = self.item_template
@@ -410,7 +421,12 @@ class SequenceWidget(Widget):
     def serialize(self, cstruct=None):
         if cstruct is None:
             cstruct = []
-        return self.renderer(self.template, widget=self, cstruct=cstruct)
+        if self.sequence_widgets:
+            subwidgets = zip(cstruct, self.sequence_widgets)
+        else:
+            subwidgets = [ self.item_widget.clone() for val in cstruct ]
+        return self.renderer(self.template, widget=self, cstruct=cstruct,
+                             subwidgets=subwidgets)
 
     def deserialize(self, pstruct):
         result = []
@@ -418,12 +434,21 @@ class SequenceWidget(Widget):
         if pstruct is None:
             pstruct = []
 
-        widget = self.item_widget
         for num, substruct in enumerate(pstruct):
+            widget = self.item_widget.clone()
             val = widget.deserialize(substruct)
             result.append(val)
+            self.sequence_widgets.append(widget)
 
         return result
+
+    def handle_error(self, error):
+        self.error = error
+        # XXX exponential time
+        for e in error.children:
+            for num, widget in enumerate(self.sequence_widgets):
+                if e.pos == num:
+                    widget.handle_error(e)
 
 class Button(object):
     """
