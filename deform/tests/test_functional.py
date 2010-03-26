@@ -1,14 +1,5 @@
 import unittest
 
-def invalid_exc(func, *arg, **kw):
-    from colander import Invalid
-    try:
-        func(*arg, **kw)
-    except Invalid, e:
-        return e
-    else:
-        raise AssertionError('Invalid not raised') # pragma: no cover
-
 class TestFunctional(unittest.TestCase):
     def _makeSchema(self):
         from deform.schema import MappingSchema
