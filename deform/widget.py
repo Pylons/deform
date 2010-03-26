@@ -242,6 +242,10 @@ class TextInputWidget(Widget):
 
     template
         The template name used to render the input widget.
+
+    strip
+        If true, during deserialization, strip the value of leading
+        and trailing whitespace (default ``True``).
     """
     template = 'textinput.html'
     size = None
