@@ -48,7 +48,7 @@ master_doc = 'index'
 
 # General substitutions.
 project = 'deform'
-copyright = '2009, Repoze Developers <repoze-dev@lists.repoze.org>'
+copyright = '2010, Repoze Developers <repoze-dev@lists.repoze.org>'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
