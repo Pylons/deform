@@ -231,7 +231,7 @@ class Widget(object):
 
 class TextInputWidget(Widget):
     """
-    Renders an <input type="text"/> widget.
+    Renders an ``<input type="text"/>`` widget.
 
     **Attributes**
 
@@ -267,7 +267,7 @@ class TextInputWidget(Widget):
 
 class CheckboxWidget(Widget):
     """
-    Renders an <input type="checkbox"/> widget.
+    Renders an ``<input type="checkbox"/>`` widget.
 
     **Attributes**
 
@@ -300,8 +300,8 @@ class CheckboxWidget(Widget):
 
 class RadioChoiceWidget(Widget):
     """
-    Renders a sequence of <input type="radio"/> buttons based on a predefined
-    set of values.
+    Renders a sequence of ``<input type="radio"/>`` buttons based on a
+    predefined set of values.
 
     **Attributes**
 
@@ -361,7 +361,7 @@ class CheckedPasswordWidget(Widget):
 
 class MappingWidget(Widget):
     """
-    Renders a mapping.
+    Renders a mapping into a set of fields.
 
     **Attributes**
 
@@ -398,7 +398,8 @@ class MappingWidget(Widget):
 
 class SequenceWidget(Widget):
     """
-    Renders a sequence (0 .. N widgets, each the same as the other).
+    Renders a sequence (0 .. N widgets, each the same as the other)
+    into a set of fields.
 
     **Attributes**
 

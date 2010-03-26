@@ -2,7 +2,7 @@ Deform
 ======
 
 Another form generation library.  Uses :mod:`Colander` as a schema
-library and :mod:`Peppercorn` as a form post deserialization library.
+library and :mod:`Peppercorn` as a form field deserialization library.
 
 Definitions
 -----------

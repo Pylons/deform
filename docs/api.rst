@@ -41,8 +41,8 @@ Exception-Related
 .. autoclass:: Invalid
    :members:
 
-Schema-Related
---------------
+Type-Related
+------------
 
 .. automodule:: deform.schema
 
@@ -64,13 +64,16 @@ Schema-Related
 .. autoclass:: Boolean
    :members:
 
+Schema-Related
+--------------
+
 .. autoclass:: SchemaNode
    :members:
 
-.. autoclass:: MappingSchema
+.. autoclass:: Schema
    :members:
 
-.. autoclass:: Schema
+.. autoclass:: MappingSchema
    :members:
 
 .. autoclass:: SequenceSchema
@@ -81,10 +84,10 @@ Template-Related
 
 .. automodule:: deform.template
 
-.. function:: make_renderer
+.. autofunction:: make_renderer
 
 .. attribute:: default_renderer
 
-   The default ZPT template renderer (uses the ``deform/templates/``
-   directory as a template source).
+   The default ZPT template :term:`renderer` (uses the
+   ``deform/templates/`` directory as a template source).
 

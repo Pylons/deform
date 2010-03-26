@@ -43,8 +43,11 @@ class ChameleonZPTTemplateLoader(object):
         raise TemplateError("Can not find template %s" % filename)
 
 def make_renderer(*dirs):
-    """ Return a Chameleon ZPT renderer which uses the filesystem
-    directories listed as ``dirs`` as template source directories."""
+    """ Return a Chameleon ZPT :term:`renderer` which uses the
+    filesystem directories listed as ``dirs`` as template source
+    directories.  The order in which the directories are listed is the
+    order in which they are checked for the template provided to the
+    renderer."""
     
     loader = ChameleonZPTTemplateLoader(dirs)
 
