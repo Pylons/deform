@@ -21,8 +21,7 @@ class Widget(object):
 
     All widgets have the following attributes:
 
-    ``error``
-
+    error
         The exception raised by the last attempted validation of the
         schema element associated with this widget.  By default, this
         attribute is ``None``.  If non-None, this attribute is usually
@@ -31,8 +30,7 @@ class Widget(object):
         which has a ``msg`` attribute providing a human-readable
         validation error message.
 
-    ``default``
-
+    default
         The (serialized) default value provided by the schema object
         associated with this widget.  By default this is ``None``.  If
         the schema object has a default, the ``default`` attribute of
@@ -40,55 +38,47 @@ class Widget(object):
         serialized default value of the schema element at widget
         construction time.
 
-    ``hidden``
-
+    hidden
         An attribute indicating the hidden state of this widget.  The
         default is ``False``.  If this attribute is not ``False``, the
         widget will not be rendered in the form (although, if this
         widget is a container widget, its children will be; it is not
         a recursive flag).
 
-    ``error_class``
-
+    error_class
         The name of the CSS class attached to various tags in the form
         renderering indicating an error condition for this widget.  By
         default, this is ``error``.
 
-    ``renderer``
-
+    renderer
         The template :term:`renderer` associated with this form.  If a
         renderer is not passed to the constructor, the default deform
         renderer will be used (only templates from
         ``deform/templates`` will be used).
 
-    ``name``
-
+    name
         The name of this widget.  By default, it is the same as the
         name of the associated schema element.  Changing this
         attribute is discouraged; it is mostly just an alias for use
         in templates.
 
-    ``required``
-
+    required
         The required state of the schema element associated with this
         widget.  Changing this attribute is discouraged; it is mostly
         just an alias for use in templates.
 
-    ``title``
-
+    title
         The title of this widget, which shows up in various places
         within the generated form.  By default, it is the same as the
         associated schema element's title attribute.
 
-    ``description``
-
+    description
         The description of this widget, which shows up in various
         places within the generated form (such as in an associated
         tooltip).  By default, it is the same as the associated schema
         element's description attribute.
 
-    ``widgets``
-
+    widgets
         A sequence representing the child widgets of this widget.
         Each child widget relates to a child schema node of the
         associated schema element.
@@ -476,21 +466,18 @@ class Button(object):
 
     Arguments:
 
-    ``name``
-
+    name
         The string or unicode value used as the ``name`` of the button
         when rendered (the ``name`` attribute of the button or input
         tag resulting from a form rendering).  Default: ``submit``.
 
-    ``title``
-
+    title
         The value used as the title of the button when rendered (shows
         up in the button inner text).  Default: capitalization of
         whatever is passed as ``name``.  E.g. if ``name`` is passed as
         ``submit``, ``title`` will be ``Submit``.
 
-    ``value``
-
+    value
         The value used as the value of the button when rendered (the
         ``value`` attribute of the button or input tag resulting from
         a form rendering).  Default: same as ``name`` passed.
@@ -510,31 +497,28 @@ class Form(MappingWidget):
     def __init__(self, schema, renderer=None, action='.', method='POST',
                  buttons=()):
         """
+        The top-level widget; represents an entire form.
+        
         Arguments:
 
-        ``schema``
-
+        schema
             A :class:`deform.schema.SchemaNode` object representing a
             schema to be rendered.  Required.
 
-        ``renderer``
-
+        renderer
             A :term:`renderer` callable.  Defaults to ``None``, which
             causes the default renderer to be used.
 
-        ``action``
-
+        action
             The form action (inserted into the ``action`` attribute of
             the form's form tag when rendered).  Default ``.`` (single
             dot).
 
-        ``method``
-
+        method
             The form method (inserted into the ``method`` attribute of
             the form's form tag when rendered).  Default: ``POST``.
 
-        ``buttons``
-
+        buttons
             A sequence of strings or :class:`deform.widget.Button`
             objects representing submit buttons that will be placed at
             the bottom of the form.  If any string is passed in the
