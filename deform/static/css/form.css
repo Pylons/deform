@@ -12,7 +12,8 @@ Last Updated : July 2, 2009
 	font-family:"Lucida Grande", Tahoma, Arial, sans-serif;
 }
 .wufoo li{
-	width:62%;
+/* 	width:62%; */
+	width:75%;
 }
 form ul{
 	margin:0;
@@ -24,13 +25,15 @@ form li{
 	display:block;
 	margin:0;
 	padding:6px 5px 9px 9px;
-	clear:both;
+        clear: left;
+/* 	clear:both; */
 }
 form li:after, form li div:after{
-	content:"."; 
+	content:".";
 	display:block;
-	height:0; 
-	clear:both; 
+	height:0;
+/* 	clear:both; */
+        clear:left;
 	visibility:hidden;
 }
 * html form li{height: 1%;}
@@ -46,10 +49,10 @@ form li span{
 	float:left;
 }
 
-.center, 
+.center,
 form li span.center input.text, form li span.center label,
 form li.name span label,
-form li.date input.text, form li.date span label, 
+form li.date input.text, form li.date span label,
 form li.phone input.text, form li.phone span label,
 form li.time input.text, form li.time span label{
 	text-align:center;
@@ -85,24 +88,24 @@ form li div span.left, form li div span.right{
 	margin:0;
 	width:47%;
 }
-form li div span.full input, 
-form li div span.full select, 
-form li div span.left input, 
+form li div span.full input,
+form li div span.full select,
+form li div span.left input,
 form li div span.right input,
 form li div span.left select,
 form li div span.right select{
 	width:100%;
 }
 
-.left{
-	float:left;
-}
-.right{
-	float:right;
-}
-.clear{
-	clear:both !important;
-}
+/* .left{ */
+/* 	float:left; */
+/* } */
+/* .right{ */
+/* 	float:right; */
+/* } */
+/* .clear{ */
+/* 	clear:both !important; */
+/* } */
 
 /* ----- INFO ----- */
 
@@ -567,7 +570,8 @@ form .instruct{
 	top:0;
 	left:0;
 	z-index:1000;
-	width:42%;
+/* 	width:42%; */
+	width:25%;
 	margin:0 0 0 8px;
 	padding:8px 10px 10px 10px;
 	border:1px solid #e6e6e6;
