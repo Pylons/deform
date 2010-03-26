@@ -404,15 +404,12 @@ class SequenceWidget(Widget):
     error_class = None
     template = 'sequence.html'
     item_template = 'sequence_item.html'
-
-    def __init__(self, schema, renderer=None):
-        Widget.__init__(self, schema, renderer=renderer)
-        self.item_widget = self.widgets[0]
-        self.sequence_widgets = []
+    sequence_widgets = ()
 
     def prototype(self):
+        item_widget = self.widgets[0]
         template = self.item_template
-        proto = self.renderer(template, widget=self.item_widget, cstruct=None)
+        proto = self.renderer(template, widget=item_widget, cstruct=None)
         if isinstance(proto, unicode):
             proto = proto.encode('utf-8')
         proto = urllib.quote(proto)
@@ -421,6 +418,7 @@ class SequenceWidget(Widget):
     def serialize(self, cstruct=None):
         if cstruct is None:
             cstruct = []
+        item_widget = self.widgets[0]
         if self.sequence_widgets:
             # this serialization is assumed to be performed as a
             # result of a validation failure (``deserialize`` was
@@ -430,7 +428,7 @@ class SequenceWidget(Widget):
         else:
             # this serialization is being performed as a result of a
             # first-time rendering
-            subwidgets = [ (val, self.item_widget.clone()) for val in cstruct ]
+            subwidgets = [ (val, item_widget.clone()) for val in cstruct ]
         return self.renderer(self.template, widget=self, cstruct=cstruct,
                              subwidgets=subwidgets)
 
@@ -440,6 +438,7 @@ class SequenceWidget(Widget):
         if pstruct is None:
             pstruct = []
 
+        self.sequence_widgets = []
         for num, substruct in enumerate(pstruct):
             widget = self.item_widget.clone()
             val = widget.deserialize(substruct)
