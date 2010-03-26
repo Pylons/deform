@@ -1,14 +1,5 @@
 import unittest
 
-def invalid_exc(func, *arg, **kw):
-    from deform.exception import Invalid
-    try:
-        func(*arg, **kw)
-    except Invalid, e:
-        return e
-    else:
-        raise AssertionError('Invalid not raised') # pragma: no cover
-
 def validation_failure_exc(func, *arg, **kw):
     from deform.exception import ValidationFailure
     try:
@@ -364,10 +355,161 @@ class TestMappingWidget(unittest.TestCase):
         result = widget.deserialize(pstruct)
         self.assertEqual(result, {'a':1})
 
+class TestButton(unittest.TestCase):
+    def _makeOne(self, **kw):
+        from deform.widget import Button
+        return Button(**kw)
+
+    def test_ctor_title_None(self):
+        button = self._makeOne()
+        self.assertEqual(button.title, 'Submit')
+
+    def test_ctor_value_None(self):
+        button = self._makeOne()
+        self.assertEqual(button.value, 'submit')
+
+    def test_ctor(self):
+        button = self._makeOne(name='name', title='title', value='value')
+        self.assertEqual(button.value, 'value')
+        self.assertEqual(button.name, 'name')
+        self.assertEqual(button.title, 'title')
+
+class TestSequenceWidget(unittest.TestCase):
+    def _makeOne(self, schema, **kw):
+        from deform.widget import SequenceWidget
+        return SequenceWidget(schema, **kw)
+
+    def test_prototype_unicode(self):
+        import urllib
+        renderer = DummyRenderer(u'abc')
+        schema = DummySchema()
+        widget = self._makeOne(schema, renderer=renderer)
+        widget.widgets=[None]
+        result = widget.prototype()
+        self.assertEqual(type(result), str)
+        self.assertEqual(urllib.unquote(result), 'abc')
+
+    def test_prototype_str(self):
+        import urllib
+        renderer = DummyRenderer('abc')
+        schema = DummySchema()
+        widget = self._makeOne(schema, renderer=renderer)
+        widget.widgets=[None]
+        result = widget.prototype()
+        self.assertEqual(type(result), str)
+        self.assertEqual(urllib.unquote(result), 'abc')
+
+    def test_serialize_None(self):
+        renderer = DummyRenderer('abc')
+        schema = DummySchema()
+        widget = self._makeOne(schema, renderer=renderer)
+        inner = DummyWidget()
+        widget.widgets=[inner]
+        result = widget.serialize()
+        self.assertEqual(result, 'abc')
+        self.assertEqual(len(renderer.kw['subwidgets']), 0)
+        self.assertEqual(renderer.kw['widget'], widget)
+        self.assertEqual(renderer.kw['cstruct'], [])
+        self.assertEqual(renderer.template, widget.template)
+
+    def test_serialize_not_None(self):
+        renderer = DummyRenderer('abc')
+        schema = DummySchema()
+        widget = self._makeOne(schema, renderer=renderer)
+        inner = DummyWidget()
+        widget.widgets=[inner]
+        result = widget.serialize(['123'])
+        self.assertEqual(result, 'abc')
+        self.assertEqual(len(renderer.kw['subwidgets']), 1)
+        self.assertEqual(renderer.kw['subwidgets'][0], ('123', inner))
+        self.assertEqual(renderer.kw['widget'], widget)
+        self.assertEqual(renderer.kw['cstruct'], ['123'])
+        self.assertEqual(renderer.template, widget.template)
+
+    def test_serialize_with_sequence_widgets(self):
+        renderer = DummyRenderer('abc')
+        schema = DummySchema()
+        widget = self._makeOne(schema, renderer=renderer)
+        inner = DummyWidget()
+        widget.widgets=[inner]
+        sequence_widget = DummyWidget()
+        widget.sequence_widgets = [sequence_widget]
+        result = widget.serialize(['123'])
+        self.assertEqual(result, 'abc')
+        self.assertEqual(len(renderer.kw['subwidgets']), 1)
+        self.assertEqual(renderer.kw['subwidgets'][0], ('123', sequence_widget))
+        self.assertEqual(renderer.kw['widget'], widget)
+        self.assertEqual(renderer.kw['cstruct'], ['123'])
+        self.assertEqual(renderer.template, widget.template)
+
+    def test_deserialize_None(self):
+        schema = DummySchema()
+        widget = self._makeOne(schema)
+        inner = DummyWidget()
+        widget.widgets = [inner]
+        result = widget.deserialize(None)
+        self.assertEqual(result, [])
+        self.assertEqual(widget.sequence_widgets, [])
+        
+    def test_deserialize_not_None(self):
+        schema = DummySchema()
+        widget = self._makeOne(schema)
+        inner = DummyWidget()
+        widget.widgets = [inner]
+        result = widget.deserialize(['123'])
+        self.assertEqual(result, ['123'])
+        self.assertEqual(len(widget.sequence_widgets), 1)
+        self.assertEqual(widget.sequence_widgets[0], inner)
+
+    def test_handle_error(self):
+        schema = DummySchema()
+        widget = self._makeOne(schema)
+        inner = DummyWidget()
+        inner_invalid = DummyInvalid()
+        inner_invalid.pos = 0
+        error = DummyInvalid(inner_invalid)
+        widget.sequence_widgets = [inner]
+        widget.handle_error(error)
+        self.assertEqual(widget.error, error)
+        self.assertEqual(inner.error, inner_invalid)
+
+class TestForm(unittest.TestCase):
+    def _makeOne(self, schema, **kw):
+        from deform.widget import Form
+        return Form(schema, **kw)
+
+    def test_ctor_string_buttons(self):
+        schema = DummySchema()
+        form = self._makeOne(schema, buttons=('a', 'b'))
+        self.assertEqual(form.buttons[0].name, 'a')
+        self.assertEqual(form.buttons[1].name, 'b')
+
+    def test_ctor_nonstring_buttons(self):
+        schema = DummySchema()
+        form = self._makeOne(schema, buttons=(None, None))
+        self.assertEqual(form.buttons[0], None)
+        self.assertEqual(form.buttons[1], None)
+    
+    def test_ctor_defaults(self):
+        schema = DummySchema()
+        form = self._makeOne(schema)
+        self.assertEqual(form.action, '.')
+        self.assertEqual(form.method, 'POST')
+
+    def test_ctor_nondefaults(self):
+        schema = DummySchema()
+        form = self._makeOne(schema, action='action', method='method')
+        self.assertEqual(form.action, 'action')
+        self.assertEqual(form.method, 'method')
+
 class DummyRenderer(object):
+    def __init__(self, result=''):
+        self.result = result
+    
     def __call__(self, template, **kw):
         self.template = template
         self.kw = kw
+        return self.result
         
 class DummyWidget(object):
     name = 'name'
@@ -376,6 +518,9 @@ class DummyWidget(object):
 
     def deserialize(self, pstruct):
         return pstruct
+
+    def handle_error(self, error):
+        self.error = error
 
 class DummySchema(object):
     typ = None
