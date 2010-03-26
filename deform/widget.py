@@ -26,7 +26,8 @@ class Widget(object):
         The exception raised by the last attempted validation of the
         schema element associated with this widget.  By default, this
         attribute is ``None``.  If non-None, this attribute is usually
-        an instance of the exception class :class:`colander.Invalid`,
+        an instance of the exception class
+        :exc:`deform.exception.Invalid` or :exc:`colander.Invalid`,
         which has a ``msg`` attribute providing a human-readable
         validation error message.
 
@@ -187,10 +188,10 @@ class Widget(object):
           schema is returned.  It will be a mapping.
 
         - If the fields cannot be successfully validated, a
-          :exc:`deform.exception.FormValidationError` is raised.
+          :exc:`deform.exception.ValidationFailure` is raised.
 
         The ``serialize`` method of a
-        :exc:`deform.exception.FormValidationError` exception can be
+        :exc:`deform.exception.ValidationFailure` exception can be
         used to reserialize the form in such a way that the user will
         see error markers in the form HTML.  Therefore, the typical
         usage of ``validate`` in the wild is often something like this
@@ -199,6 +200,7 @@ class Widget(object):
         in your web framework)::
 
           from webob.exc import HTTPFound
+          from deform.exception import ValidationFailure
 
           if 'submit' in request.POST:  # the form submission needs validation
               fields = request.POST.items()
@@ -206,7 +208,7 @@ class Widget(object):
                   deserialized = form.validate(fields)
                   do_something(deserialized)
                   return HTTPFound(location='http://example.com/success')
-              except deform.exception.FormValidationError, e:
+              except deform.exception.ValidationFailure, e:
                   return {'form':e.serialize()}
           else:
               return {'form':form.serialize()} # the form just needs rendering
@@ -215,9 +217,9 @@ class Widget(object):
         cstruct = self.deserialize(pstruct)
         try:
             return self.schema.deserialize(cstruct)
-        except colander.Invalid, e:
+        except colander.Invalid, e: # not exception.Invalid; must use superclass
             self.handle_error(e)
-            raise exception.FormValidationError(self, cstruct, e)
+            raise exception.ValidationFailure(self, cstruct, e)
 
     def handle_error(self, error):
         self.error = error
@@ -243,6 +245,8 @@ class TextInputWidget(Widget):
     """
     template = 'textinput.html'
     size = None
+    strip = True
+
     def serialize(self, cstruct=None):
         if cstruct is None:
             cstruct = self.default
@@ -253,7 +257,8 @@ class TextInputWidget(Widget):
     def deserialize(self, pstruct):
         if pstruct is None:
             pstruct = ''
-        pstruct = pstruct.strip()
+        if self.strip:
+            pstruct = pstruct.strip()
         return pstruct
 
 class CheckboxWidget(Widget):
@@ -345,7 +350,7 @@ class CheckedPasswordWidget(Widget):
         confirm = pstruct.get('confirm') or ''
         self.confirm = confirm
         if passwd != confirm:
-            self.error = colander.Invalid(
+            self.error = exception.Invalid(
                 self.schema,
                 'Password did not match confirmation')
         return passwd

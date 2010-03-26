@@ -35,7 +35,10 @@ Exception-Related
 
 .. automodule:: deform.exception
 
-.. autoclass:: FormValidationError
+.. autoclass:: ValidationFailure
+   :members:
+
+.. autoclass:: Invalid
    :members:
 
 Schema-Related

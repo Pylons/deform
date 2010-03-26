@@ -3,7 +3,7 @@ import colander
 from paste.httpserver import serve
 from repoze.bfg.configuration import Configurator
 
-from deform.exception import FormValidationError
+from deform.exception import ValidationFailure
 
 from deform.schema import MappingSchema
 from deform.schema import SequenceSchema
@@ -57,7 +57,7 @@ def form_view(request):
         pprint.pprint(fields)
         try:
             form.validate(fields)
-        except FormValidationError, e:
+        except ValidationFailure, e:
             return {'form':e.serialize()}
         return {'form':'OK'}
             

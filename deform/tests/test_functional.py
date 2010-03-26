@@ -137,13 +137,13 @@ class TestFunctional(unittest.TestCase):
         self.assertEqual(result, expected)
 
     def test_validate(self):
-        from deform.exception import FormValidationError
+        from deform.exception import ValidationFailure
         schema = self._makeSchema()
         form = self._makeForm(schema)
         try:
             form.validate([])
-        except FormValidationError, ve:
-            e = ve.invalid_exc
+        except ValidationFailure, ve:
+            e = ve.error
         self.assertEqual(form.error, e)
         self.assertEqual(form.widgets[0].error, e.children[0])
         self.assertEqual(form.widgets[1].error, e.children[1])
