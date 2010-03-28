@@ -116,6 +116,48 @@ class TestField(unittest.TestCase):
         self.assertEqual(e.field, field)
         self.assertEqual(e.error, invalid)
 
+    def test_render(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        field.widget = DummyWidget()
+        self.assertEqual(field.render('abc'), 'abc')
+        
+
+class TestForm(unittest.TestCase):
+    def _makeOne(self, schema, **kw):
+        from deform.form import Form
+        return Form(schema, **kw)
+        
+    def test_ctor_buttons_strings(self):
+        from deform.widget import FormWidget
+        schema = DummySchema()
+        form = self._makeOne(schema, renderer='abc', action='action',
+                             method='method', buttons=('button',))
+        self.assertEqual(form.schema, schema)
+        self.assertEqual(form.renderer, 'abc')
+        self.assertEqual(form.action, 'action')
+        self.assertEqual(form.method, 'method')
+        self.assertEqual(form.widget.__class__, FormWidget)
+        self.assertEqual(len(form.buttons), 1)
+        button = form.buttons[0]
+        self.assertEqual(button.name, 'button')
+        self.assertEqual(button.value, 'button')
+        self.assertEqual(button.title, 'Button')
+
+    def test_ctor_buttons_notstrings(self):
+        from deform.widget import FormWidget
+        schema = DummySchema()
+        form = self._makeOne(schema, renderer='abc', action='action',
+                             method='method', buttons=(None,))
+        self.assertEqual(form.schema, schema)
+        self.assertEqual(form.renderer, 'abc')
+        self.assertEqual(form.action, 'action')
+        self.assertEqual(form.method, 'method')
+        self.assertEqual(form.widget.__class__, FormWidget)
+        self.assertEqual(len(form.buttons), 1)
+        button = form.buttons[0]
+        self.assertEqual(button, None)
+
 class TestButton(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.form import Button
@@ -146,9 +188,6 @@ class DummyField(object):
         self.cloned = True
         return self
 
-    def deserialize(self, pstruct):
-        return pstruct
-
 class DummySchema(object):
     typ = None
     name = 'name'
@@ -160,8 +199,6 @@ class DummySchema(object):
     sdefault = 'sdefault'
     def __init__(self, exc=None):
         self.exc = exc
-    def serialize(self, value):
-        return value
     def deserialize(self, value):
         if self.exc:
             raise self.exc
@@ -171,13 +208,12 @@ class DummyType(object):
     def __init__(self, maker=None):
         self.default_widget_maker = maker
         
-class DummyInvalid(object):
-    def __init__(self, *children):
-        self.children = children
-        
 class DummyWidget(object):
     def deserialize(self, field, pstruct):
         return pstruct
+
+    def serialize(self, field, cstruct=None):
+        return cstruct
 
     def handle_error(self, field, e):
         self.error = e

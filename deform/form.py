@@ -179,9 +179,9 @@ class Form(Field):
         :class:`deform.widget.Button` objects.
 
     """
-    def __init__(self, schema, renderer=template.default_renderer,
-                 action='.', method='POST', buttons=()):
-        Field.__init__(self, schema)
+    def __init__(self, schema, renderer=None, action='.', method='POST',
+                 buttons=()):
+        Field.__init__(self, schema, renderer=renderer)
         _buttons = []
         for button in buttons:
             if isinstance(button, basestring):

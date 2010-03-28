@@ -45,7 +45,7 @@ class TestChameleonZPTTemplateLoader(unittest.TestCase):
         path = os.path.join(fixtures, 'test.pt')
         loader = self._makeOne(search_path=[fixtures], auto_reload=False)
         loader.notexists[path] = True
-        self.assertRaises(TemplateError, loader.load, 'test')
+        self.assertRaises(TemplateError, loader.load, 'test.pt')
 
 class Test_make_renderer(unittest.TestCase):
     def _callFUT(self, *dirs):
