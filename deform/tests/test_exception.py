@@ -1,18 +1,18 @@
 import unittest
 
 class TestValidationFailure(unittest.TestCase):
-    def _makeOne(self, widget, cstruct, error):
+    def _makeOne(self, field, cstruct, error):
         from deform.exception import ValidationFailure
-        return ValidationFailure(widget, cstruct, error)
+        return ValidationFailure(field, cstruct, error)
 
-    def test_serialize(self):
+    def test_render(self):
         form = DummyForm()
         cstruct = {}
         e = self._makeOne(form, cstruct, None)
-        result = e.serialize()
+        result = e.render()
         self.assertEqual(result, cstruct)
 
 class DummyForm(object):
-    def serialize(self, cstruct):
+    def render(self, cstruct):
         return cstruct
     

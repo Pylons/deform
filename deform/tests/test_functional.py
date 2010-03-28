@@ -31,17 +31,17 @@ class TestFunctional(unittest.TestCase):
         return schema
 
     def _makeForm(self, schema):
-        from deform.widget import Form
+        from deform.form import Form
         return Form(schema)
 
     def _soupify(self, html):
         from BeautifulSoup import BeautifulSoup
         return BeautifulSoup(html)
 
-    def test_serialize_empty(self):
+    def test_render_empty(self):
         schema = self._makeSchema()
         form = self._makeForm(schema)
-        html = form.serialize()
+        html = form.render()
         soup = self._soupify(html)
         form = soup.form
         self.assertEqual(form['action'], '.')
@@ -70,10 +70,10 @@ class TestFunctional(unittest.TestCase):
         self.assertEqual(inputs[9]['name'], '__end__')
         self.assertEqual(inputs[9]['value'], 'series:mapping')
 
-    def test_serialize_not_empty(self):
+    def test_render_not_empty(self):
         schema = self._makeSchema()
         form = self._makeForm(schema)
-        html = form.serialize(
+        html = form.render(
             {'cool':'false',
              'series':{'dates':[{'day':'21', 'month':'3', 'year':'2010'}]}})
         soup = self._soupify(html)
@@ -114,7 +114,7 @@ class TestFunctional(unittest.TestCase):
         self.assertEqual(inputs[14]['name'], '__end__')
         self.assertEqual(inputs[14]['value'], 'series:mapping')
 
-    def test_deserialize(self):
+    def test_widget_deserialize(self):
         filled = {
             'name': 'project1',
             'title': 'Cool project',
@@ -126,7 +126,7 @@ class TestFunctional(unittest.TestCase):
             }
         schema = self._makeSchema()
         form = self._makeForm(schema)
-        result = form.deserialize(filled)
+        result = form.widget.deserialize(form, filled)
         expected = {'series':
                     {'dates': [{'year': '2008', 'day': '12', 'month': '10'},
                                {'year': '2009', 'day': '12', 'month': '10'}],
@@ -145,10 +145,10 @@ class TestFunctional(unittest.TestCase):
         except ValidationFailure, ve:
             e = ve.error
         self.assertEqual(form.error, e)
-        self.assertEqual(form.widgets[0].error, e.children[0])
-        self.assertEqual(form.widgets[1].error, e.children[1])
-        self.assertEqual(form.widgets[3].error, e.children[2])
-        self.assertEqual(form.widgets[3].widgets[0].error,
+        self.assertEqual(form.children[0].error, e.children[0])
+        self.assertEqual(form.children[1].error, e.children[1])
+        self.assertEqual(form.children[3].error, e.children[2])
+        self.assertEqual(form.children[3].children[0].error,
                          e.children[2].children[0])
         self.assertEqual(
             ve.cstruct,

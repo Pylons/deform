@@ -30,9 +30,9 @@ class Field(object):
 
     error = None
 
-    def __init__(self, schema, renderer=template.default_renderer):
+    def __init__(self, schema, renderer=None):
         self.schema = schema
-        self.renderer = renderer
+        self.renderer = renderer or template.default_renderer
         self.name = schema.name
         self.title = schema.title
         self.description = schema.description

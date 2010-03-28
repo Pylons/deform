@@ -66,7 +66,7 @@ class Test_default_renderer(unittest.TestCase):
     
     def test_call_defaultdir(self):
         result = self._callFUT('checkbox',
-                               **{'cstruct':None, 'widget':DummyWidget()})
+                               **{'cstruct':None, 'field':DummyField()})
         self.assertEqual(result,
                          u'<input type="checkbox" name="name" value="true" />')
 
@@ -74,4 +74,8 @@ class DummyWidget(object):
     name = 'name'
     true_val = 'true'
     false_val = 'false'
+    
+class DummyField(object):
+    widget = DummyWidget()
+    name = 'name'
     

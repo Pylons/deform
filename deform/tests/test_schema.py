@@ -10,7 +10,7 @@ class TestMappingSchema(unittest.TestCase):
         my_schema = MyMappingSchema()
         self.assertEqual(my_schema.__class__, SchemaNode)
         self.assertEqual(my_schema.typ.__class__, Mapping)
-        self.assertEqual(len(my_schema.nodes), 1)
+        self.assertEqual(len(my_schema.children), 1)
         
         
 class TestSequenceSchema(unittest.TestCase):
@@ -23,6 +23,6 @@ class TestSequenceSchema(unittest.TestCase):
         my_schema = MyMappingSchema()
         self.assertEqual(my_schema.__class__, SchemaNode)
         self.assertEqual(my_schema.typ.__class__, Sequence)
-        self.assertEqual(len(my_schema.nodes), 1)
+        self.assertEqual(len(my_schema.children), 1)
         
         

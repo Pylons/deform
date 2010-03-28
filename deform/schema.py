@@ -27,9 +27,6 @@ class Boolean(colander.Boolean):
 class SchemaNode(colander.SchemaNode):
     pass
 
-class SequenceSchemaNode(SchemaNode):
-    pass
-
 class MappingSchema(colander.MappingSchema):
     schema_type = Mapping
     node_type = SchemaNode
@@ -38,7 +35,7 @@ Schema = MappingSchema
 
 class SequenceSchema(colander.SequenceSchema):
     schema_type = Sequence
-    node_type = SequenceSchemaNode
+    node_type = SchemaNode
     
 
     
