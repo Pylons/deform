@@ -222,59 +222,63 @@ class TestCheckedPasswordWidget(unittest.TestCase):
         self.assertEqual(field.error, None)
 
 class TestMappingWidget(unittest.TestCase):
-    def _makeOne(self, schema, renderer=None):
+    def _makeOne(self, **kw):
         from deform.widget import MappingWidget
-        return MappingWidget(schema, renderer=renderer)
+        return MappingWidget(**kw)
     
     def test_serialize_None(self):
         renderer = DummyRenderer()
         schema = DummySchema()
-        widget = self._makeOne(schema, renderer=renderer)
-        widget.serialize(None)
+        field = DummyField(schema, renderer)
+        widget = self._makeOne()
+        widget.serialize(field, None)
         self.assertEqual(renderer.template, widget.template)
-        self.assertEqual(renderer.kw['widget'], widget)
+        self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], {})
 
     def test_serialize_not_None(self):
         renderer = DummyRenderer()
         schema = DummySchema()
-        widget = self._makeOne(schema, renderer=renderer)
+        field = DummyField(schema, renderer)
+        widget = self._makeOne()
         cstruct = {'a':1}
-        widget.serialize(cstruct)
+        widget.serialize(field, cstruct)
         self.assertEqual(renderer.template, widget.template)
-        self.assertEqual(renderer.kw['widget'], widget)
+        self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], cstruct)
 
     def test_deserialize_None(self):
-        schema = DummySchema()
-        widget = self._makeOne(schema)
-        result = widget.deserialize(None)
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, None)
         self.assertEqual(result, {})
 
     def test_deserialize_non_None(self):
-        schema = DummySchema()
-        widget = self._makeOne(schema)
-        inner_schema = DummySchema()
-        inner_schema.name = 'a'
-        inner = DummyWidget()
-        inner.name = 'a'
-        widget.widgets = [inner]
+        widget = self._makeOne()
+        field = DummyField()
+        inner_field = DummyField()
+        inner_field.name = 'a'
+        inner_widget = DummyWidget()
+        inner_widget.name = 'a'
+        inner_field.widget = inner_widget
+        field.children = [inner_field]
         pstruct = {'a':1}
-        result = widget.deserialize(pstruct)
+        result = widget.deserialize(field, pstruct)
         self.assertEqual(result, {'a':1})
 
 class TestSequenceWidget(unittest.TestCase):
-    def _makeOne(self, schema, **kw):
+    def _makeOne(self, **kw):
         from deform.widget import SequenceWidget
-        return SequenceWidget(schema, **kw)
+        return SequenceWidget(**kw)
 
     def test_prototype_unicode(self):
         import urllib
         renderer = DummyRenderer(u'abc')
         schema = DummySchema()
-        widget = self._makeOne(schema, renderer=renderer)
-        widget.widgets=[None]
-        result = widget.prototype()
+        field = DummyField(schema, renderer)
+        widget = self._makeOne()
+        field.children=[None]
+        result = widget.prototype(field)
         self.assertEqual(type(result), str)
         self.assertEqual(urllib.unquote(result), 'abc')
 
@@ -282,85 +286,92 @@ class TestSequenceWidget(unittest.TestCase):
         import urllib
         renderer = DummyRenderer('abc')
         schema = DummySchema()
-        widget = self._makeOne(schema, renderer=renderer)
-        widget.widgets=[None]
-        result = widget.prototype()
+        field = DummyField(schema, renderer)
+        widget = self._makeOne()
+        field.children=[None]
+        result = widget.prototype(field)
         self.assertEqual(type(result), str)
         self.assertEqual(urllib.unquote(result), 'abc')
 
     def test_serialize_None(self):
         renderer = DummyRenderer('abc')
         schema = DummySchema()
-        widget = self._makeOne(schema, renderer=renderer)
-        inner = DummyWidget()
-        widget.widgets=[inner]
-        result = widget.serialize()
+        field = DummyField(schema, renderer)
+        inner = DummyField()
+        field.children=[inner]
+        widget = self._makeOne()
+        result = widget.serialize(field)
         self.assertEqual(result, 'abc')
-        self.assertEqual(len(renderer.kw['subwidgets']), 0)
-        self.assertEqual(renderer.kw['widget'], widget)
+        self.assertEqual(len(renderer.kw['subfields']), 0)
+        self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], [])
         self.assertEqual(renderer.template, widget.template)
 
     def test_serialize_not_None(self):
         renderer = DummyRenderer('abc')
         schema = DummySchema()
-        widget = self._makeOne(schema, renderer=renderer)
-        inner = DummyWidget()
-        widget.widgets=[inner]
-        result = widget.serialize(['123'])
+        field = DummyField(schema, renderer) 
+        inner = DummyField()
+        field.children = [inner]
+        widget = self._makeOne()
+        result = widget.serialize(field, ['123'])
         self.assertEqual(result, 'abc')
-        self.assertEqual(len(renderer.kw['subwidgets']), 1)
-        self.assertEqual(renderer.kw['subwidgets'][0], ('123', inner))
-        self.assertEqual(renderer.kw['widget'], widget)
+        self.assertEqual(len(renderer.kw['subfields']), 1)
+        self.assertEqual(renderer.kw['subfields'][0], ('123', inner))
+        self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], ['123'])
         self.assertEqual(renderer.template, widget.template)
 
     def test_serialize_with_sequence_widgets(self):
         renderer = DummyRenderer('abc')
         schema = DummySchema()
-        widget = self._makeOne(schema, renderer=renderer)
-        inner = DummyWidget()
-        widget.widgets=[inner]
-        sequence_widget = DummyWidget()
-        widget.sequence_widgets = [sequence_widget]
-        result = widget.serialize(['123'])
+        field = DummyField(schema, renderer)
+        widget = self._makeOne()
+        inner = DummyField()
+        field.children = [inner]
+        sequence_field = DummyField()
+        field.sequence_fields = [sequence_field]
+        result = widget.serialize(field, ['123'])
         self.assertEqual(result, 'abc')
-        self.assertEqual(len(renderer.kw['subwidgets']), 1)
-        self.assertEqual(renderer.kw['subwidgets'][0], ('123', sequence_widget))
-        self.assertEqual(renderer.kw['widget'], widget)
+        self.assertEqual(len(renderer.kw['subfields']), 1)
+        self.assertEqual(renderer.kw['subfields'][0], ('123', sequence_field))
+        self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], ['123'])
         self.assertEqual(renderer.template, widget.template)
 
     def test_deserialize_None(self):
-        schema = DummySchema()
-        widget = self._makeOne(schema)
-        inner = DummyWidget()
-        widget.widgets = [inner]
-        result = widget.deserialize(None)
+        field = DummyField()
+        inner_field = DummyField()
+        field.children = [inner_field]
+        widget = self._makeOne()
+        result = widget.deserialize(field, None)
         self.assertEqual(result, [])
-        self.assertEqual(widget.sequence_widgets, [])
+        self.assertEqual(field.sequence_fields, [])
         
     def test_deserialize_not_None(self):
-        schema = DummySchema()
-        widget = self._makeOne(schema)
-        inner = DummyWidget()
-        widget.widgets = [inner]
-        result = widget.deserialize(['123'])
+        field = DummyField()
+        inner_field = DummyField()
+        inner_field.widget = DummyWidget()
+        field.children = [inner_field]
+        widget = self._makeOne()
+        result = widget.deserialize(field, ['123'])
         self.assertEqual(result, ['123'])
-        self.assertEqual(len(widget.sequence_widgets), 1)
-        self.assertEqual(widget.sequence_widgets[0], inner)
+        self.assertEqual(len(field.sequence_fields), 1)
+        self.assertEqual(field.sequence_fields[0], inner_field)
 
     def test_handle_error(self):
-        schema = DummySchema()
-        widget = self._makeOne(schema)
-        inner = DummyWidget()
+        field = DummyField()
+        widget = self._makeOne()
+        inner_widget = DummyWidget()
         inner_invalid = DummyInvalid()
         inner_invalid.pos = 0
         error = DummyInvalid(inner_invalid)
-        widget.sequence_widgets = [inner]
-        widget.handle_error(error)
-        self.assertEqual(widget.error, error)
-        self.assertEqual(inner.error, inner_invalid)
+        inner_field = DummyField()
+        inner_field.widget = inner_widget
+        field.sequence_fields = [inner_field]
+        widget.handle_error(field, error)
+        self.assertEqual(field.error, error)
+        self.assertEqual(inner_widget.error, inner_invalid)
 
 class TestFormWidget(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -382,37 +393,15 @@ class DummyRenderer(object):
         
 class DummyWidget(object):
     name = 'name'
-    def clone(self):
-        return self
-
-    def deserialize(self, pstruct):
+    def deserialize(self, field, pstruct):
         return pstruct
 
-    def handle_error(self, error):
+    def handle_error(self, field, error):
         self.error = error
 
 class DummySchema(object):
-    typ = None
-    name = 'name'
-    title = 'title'
-    description = 'description'
-    required = True
-    nodes = ()
-    default = 'default'
-    def __init__(self, exc=None):
-        self.exc = exc
-    def serialize(self, value):
-        return value
-    def deserialize(self, value):
-        if self.exc:
-            raise self.exc
-        return value
+    pass
 
-class DummyWidgetType(object):
-    def __init__(self, node, renderer=None):
-        self.node = node
-        self.renderer = renderer
-        
 class DummyInvalid(object):
     pos = 0
     def __init__(self, *children):
@@ -421,7 +410,12 @@ class DummyInvalid(object):
 class DummyField(object):
     default = None
     error = None
+    children = ()
     def __init__(self, schema=None, renderer=None):
         self.schema = schema
         self.renderer = renderer
+
+    def clone(self):
+        return self
+    
         
