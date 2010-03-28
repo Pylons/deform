@@ -1,9 +1,6 @@
-import colander
+from colander import Invalid # API shim
 
-class Invalid(colander.Invalid):
-    """ An exception indicating an individual schema node or widget
-    deserialization did not succeed.
-    """
+Invalid = Invalid # prevent pyflakes from whining
 
 class ValidationFailure(Exception):
     """
@@ -23,23 +20,21 @@ class ValidationFailure(Exception):
        :meth:`deform.widget.Widget.deserialize`.
 
     ``error``
-       The :class:`deform.exception.Invalid` exception raised by
-       :meth:`deform.schema.SchemaNode.deserialize` which caused this
-       exception to need to be raised.
-
+       The original :class:`deform.exception.Invalid` exception raised
+       by :meth:`deform.schema.SchemaNode.deserialize` which caused
+       this exception to need to be raised.
     """
-    def __init__(self, widget, cstruct, error):
+    def __init__(self, field, cstruct, error):
         Exception.__init__(self)
-        self.widget = widget
+        self.field = field
         self.cstruct = cstruct
         self.error = error
 
-    def serialize(self):
+    def render(self):
         """
         Used to reserialize the form in such a way that the user will
         see error markers in the form HTML.  This method accepts no
         arguments and returns text representing the HTML of a form
         rendering.
         """
-        return self.widget.serialize(self.cstruct)
-
+        return self.field.render(self.cstruct)

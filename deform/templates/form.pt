@@ -1,36 +1,36 @@
 <form
-  tal:attributes="id widget.name or None"
-  action="${widget.action}"
+  tal:attributes="id field.name or None"
+  action="${field.action}"
   class="wufoo"
-  method="${widget.method}"
+  method="${field.method}"
   enctype="multipart/form-data"
   accept-charset="utf-8">
 
   <!-- form.html -->
 
   <input type="hidden" name="_charset_" />
-  <input type="hidden" name="__deform__" value="${widget.name}"/>
+  <input type="hidden" name="__deform__" value="${field.name}"/>
   <ul>
 
-    <li id="errorLi" tal:condition="widget.error">
+    <li id="errorLi" tal:condition="field.error">
       <h3 id="errorMsgLbl">There was a problem with your submission</h3>
       <p id="errorMsg">Errors have been <strong>highlighted</strong> below.
       </p>
     </li>
 
-    <li class="section first" tal:condition="widget.title">
-      <h3>${widget.title}</h3>
-      <div tal:condition="widget.description">${widget.description}</div>
+    <li class="section first" tal:condition="field.title">
+      <h3>${field.title}</h3>
+      <div tal:condition="field.description">${field.description}</div>
     </li>
 
     <div 
-       tal:define="rndr widget.renderer;
-                   tmpl widget.item_template"
-       tal:repeat="w widget.widgets"
-       tal:replace="structure rndr(tmpl,widget=w,cstruct=cstruct.get(w.name))"/>
+       tal:define="rndr field.renderer;
+                   tmpl field.widget.item_template"
+       tal:repeat="f field.children"
+       tal:replace="structure rndr(tmpl,field=f,cstruct=cstruct.get(f.name))"/>
 
     <li class="buttons">
-      <tal:block repeat="button widget.buttons">
+      <tal:block repeat="button field.buttons">
           <button 
              name="${button.name}"
              type="submit"

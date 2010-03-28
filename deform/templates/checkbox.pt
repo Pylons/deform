@@ -1,4 +1,4 @@
 <input type="checkbox"
-       name="${widget.name}" value="${widget.true_val}"
-       tal:attributes="checked cstruct == widget.true_val"/>
+       name="${field.name}" value="${field.widget.true_val}"
+       tal:attributes="checked cstruct == field.widget.true_val"/>
 

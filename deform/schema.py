@@ -5,26 +5,29 @@ from deform import widget
 # data types
 
 class Mapping(colander.Mapping):
-    widget_type = widget.MappingWidget
+    default_widget_maker = widget.MappingWidget
 
 class Sequence(colander.Sequence):
-    widget_type = widget.SequenceWidget
+    default_widget_maker = widget.SequenceWidget
 
 class String(colander.String):
-    widget_type = widget.TextInputWidget
+    default_widget_maker = widget.TextInputWidget
 
 class Integer(colander.Integer):
-    widget_type = widget.TextInputWidget
+    default_widget_maker = widget.TextInputWidget
 
 class Float(colander.Integer):
-    widget_type = widget.TextInputWidget
+    default_widget_maker = widget.TextInputWidget
 
 class Boolean(colander.Boolean):
-    widget_type = widget.CheckboxWidget
+    default_widget_maker = widget.CheckboxWidget
 
 # schema nodes
 
 class SchemaNode(colander.SchemaNode):
+    pass
+
+class SequenceSchemaNode(SchemaNode):
     pass
 
 class MappingSchema(colander.MappingSchema):
@@ -35,7 +38,7 @@ Schema = MappingSchema
 
 class SequenceSchema(colander.SequenceSchema):
     schema_type = Sequence
-    node_type = SchemaNode
+    node_type = SequenceSchemaNode
     
 
     

@@ -13,6 +13,7 @@ from deform.schema import Boolean
 from deform.schema import Integer
 
 from deform import widget
+from deform import form
 
 
 LONG_DESC = """
@@ -44,24 +45,23 @@ class MySchema(MappingSchema):
 
 def form_view(request):
     schema = MySchema()
-    schema['color'].widget_type = widget.RadioChoiceWidget
-    schema['password'].widget_type = widget.CheckedPasswordWidget
-
-    form = widget.Form(schema, buttons=('submit',))
-    form['title'].size = 40
-    form['color'].values = (('red', 'Red'),('green', 'Green'),('blue', 'Blue'))
+    myform = form.Form(schema, buttons=('submit',))
+    myform['password'].widget = widget.CheckedPasswordWidget()
+    myform['title'].widget = widget.TextInputWidget(size=40)
+    myform['color'].widget = widget.RadioChoiceWidget(
+        values=(('red', 'Red'),('green', 'Green'),('blue', 'Blue')))
 
     if 'submit' in request.POST:
         fields = request.POST.items()
         import pprint
         pprint.pprint(fields)
         try:
-            form.validate(fields)
+            myform.validate(fields)
         except ValidationFailure, e:
-            return {'form':e.serialize()}
+            return {'form':e.render()}
         return {'form':'OK'}
             
-    return {'form':form.serialize()}
+    return {'form':myform.render()}
 
 if __name__ == '__main__':
     settings = dict(reload_templates=True)

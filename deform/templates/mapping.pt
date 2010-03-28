@@ -1,16 +1,16 @@
 <fieldset>
   <!-- mapping.html -->
-  <legend tal:condition="widget.title">${widget.title}</legend>
+  <legend tal:condition="field.title">${field.title}</legend>
   <ul>
-    <li class="section" tal:condition="widget.description">
-      <div>${widget.description}</div>
+    <li class="section" tal:condition="field.description">
+      <div>${field.description}</div>
     </li>
-    <input type="hidden" name="__start__" value="${widget.name}:mapping"/>
+    <input type="hidden" name="__start__" value="${field.name}:mapping"/>
     <div
-       tal:define="rndr widget.renderer;
-                   tmpl widget.item_template"
-       tal:repeat="w widget.widgets"
-       tal:replace="structure rndr(tmpl,widget=w,cstruct=cstruct.get(w.name))"/>
-    <input type="hidden" name="__end__" value="${widget.name}:mapping"/>
+       tal:define="rndr field.renderer;
+                   tmpl field.widget.item_template"
+       tal:repeat="f field.children"
+       tal:replace="structure rndr(tmpl,field=f,cstruct=cstruct.get(f.name))"/>
+    <input type="hidden" name="__end__" value="${field.name}:mapping"/>
   </ul>
 </fieldset>

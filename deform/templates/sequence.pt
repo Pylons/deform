@@ -1,13 +1,13 @@
 <div>
   <!-- sequence.html -->
-  <input type="hidden" name="__start__" value="${widget.schema.name}:sequence"
-         tal:attributes="prototype widget.prototype()"/>
-  <div onclick="add_new_item(this);">Add ${widget.title}</div>
-  <div tal:repeat="(item, w) subwidgets">
-    <span tal:define="rndr widget.renderer;
-                      tmpl widget.item_template"
-          tal:replace="structure rndr(tmpl, widget=w, cstruct=item)"/>
+  <input type="hidden" name="__start__" value="${field.name}:sequence"
+         tal:attributes="prototype field.widget.prototype(field)"/>
+  <div onclick="add_new_item(this);">Add ${field.title}</div>
+  <div tal:repeat="(item, f) subfields">
+    <span tal:define="rndr field.renderer;
+                      tmpl field.widget.item_template"
+          tal:replace="structure rndr(tmpl, field=f, cstruct=item)"/>
   </div>
-  <input type="hidden" name="__end__" value="${widget.schema.name}:sequence"/>
+  <input type="hidden" name="__end__" value="${field.name}:sequence"/>
 
 </div>
