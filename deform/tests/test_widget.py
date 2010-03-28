@@ -133,87 +133,93 @@ class TestCheckboxWidget(unittest.TestCase):
         self.assertEqual(result, 'false')
 
 class TestRadioChoiceWidget(unittest.TestCase):
-    def _makeOne(self, schema, renderer=None):
+    def _makeOne(self, **kw):
         from deform.widget import RadioChoiceWidget
-        return RadioChoiceWidget(schema, renderer=renderer)
+        return RadioChoiceWidget(**kw)
     
     def test_serialize_None(self):
         renderer = DummyRenderer()
         schema = DummySchema()
-        widget = self._makeOne(schema, renderer=renderer)
-        widget.default = 'default'
-        widget.serialize(None)
+        field = DummyField(schema, renderer)
+        field.default = 'default'
+        widget = self._makeOne()
+        widget.serialize(field, None)
         self.assertEqual(renderer.template, widget.template)
-        self.assertEqual(renderer.kw['widget'], widget)
+        self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], 'default')
 
     def test_serialize_not_None(self):
         renderer = DummyRenderer()
         schema = DummySchema()
-        widget = self._makeOne(schema, renderer=renderer)
+        field = DummyField(schema, renderer)
+        widget = self._makeOne()
         cstruct = 'abc'
-        widget.serialize(cstruct)
+        widget.serialize(field, cstruct)
         self.assertEqual(renderer.template, widget.template)
-        self.assertEqual(renderer.kw['widget'], widget)
+        self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], cstruct)
         
     def test_deserialize_None(self):
-        schema = DummySchema()
-        widget = self._makeOne(schema)
-        result = widget.deserialize(None)
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, None)
         self.assertEqual(result, '')
 
     def test_deserialize_other(self):
-        schema = DummySchema()
-        widget = self._makeOne(schema)
-        result = widget.deserialize('true')
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, 'true')
         self.assertEqual(result, 'true')
 
 class TestCheckedPasswordWidget(unittest.TestCase):
-    def _makeOne(self, schema, renderer=None):
+    def _makeOne(self, **kw):
         from deform.widget import CheckedPasswordWidget
-        return CheckedPasswordWidget(schema, renderer=renderer)
+        return CheckedPasswordWidget(**kw)
     
     def test_serialize_None(self):
         renderer = DummyRenderer()
         schema = DummySchema()
-        widget = self._makeOne(schema, renderer=renderer)
-        widget.default = 'default'
-        widget.serialize(None)
+        field = DummyField(schema, renderer)
+        field.default = 'default'
+        widget = self._makeOne()
+        widget.serialize(field, None)
         self.assertEqual(renderer.template, widget.template)
-        self.assertEqual(renderer.kw['widget'], widget)
+        self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], 'default')
 
     def test_serialize_None_no_default(self):
         renderer = DummyRenderer()
         schema = DummySchema()
-        widget = self._makeOne(schema, renderer=renderer)
-        widget.serialize(None)
+        field = DummyField(schema, renderer)
+        field.default = None
+        widget = self._makeOne()
+        widget.serialize(field, None)
         self.assertEqual(renderer.template, widget.template)
-        self.assertEqual(renderer.kw['widget'], widget)
+        self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], '')
 
     def test_deserialize_None(self):
-        schema = DummySchema()
-        widget = self._makeOne(schema)
-        result = widget.deserialize(None)
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, None)
         self.assertEqual(result, '')
 
     def test_deserialize_nonmatching(self):
-        schema = DummySchema()
-        widget = self._makeOne(schema)
-        result = widget.deserialize({'password':'password', 'confirm':'not'})
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field,
+                                    {'password':'password', 'confirm':'not'})
         self.assertEqual(result, 'password')
-        self.assertEqual(widget.error.msg,
+        self.assertEqual(field.error.msg,
                          'Password did not match confirmation')
 
     def test_deserialize_matching(self):
-        schema = DummySchema()
-        widget = self._makeOne(schema)
-        result = widget.deserialize({'password':'password',
-                                     'confirm':'password'})
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, {'password':'password',
+                                            'confirm':'password'})
         self.assertEqual(result, 'password')
-        self.assertEqual(widget.error, None)
+        self.assertEqual(field.error, None)
 
 class TestMappingWidget(unittest.TestCase):
     def _makeOne(self, schema, renderer=None):
@@ -356,34 +362,14 @@ class TestSequenceWidget(unittest.TestCase):
         self.assertEqual(widget.error, error)
         self.assertEqual(inner.error, inner_invalid)
 
-class TestForm(unittest.TestCase):
-    def _makeOne(self, schema, **kw):
-        from deform.widget import Form
-        return Form(schema, **kw)
+class TestFormWidget(unittest.TestCase):
+    def _makeOne(self, **kw):
+        from deform.widget import FormWidget
+        return FormWidget(**kw)
 
-    def test_ctor_string_buttons(self):
-        schema = DummySchema()
-        form = self._makeOne(schema, buttons=('a', 'b'))
-        self.assertEqual(form.buttons[0].name, 'a')
-        self.assertEqual(form.buttons[1].name, 'b')
-
-    def test_ctor_nonstring_buttons(self):
-        schema = DummySchema()
-        form = self._makeOne(schema, buttons=(None, None))
-        self.assertEqual(form.buttons[0], None)
-        self.assertEqual(form.buttons[1], None)
-    
-    def test_ctor_defaults(self):
-        schema = DummySchema()
-        form = self._makeOne(schema)
-        self.assertEqual(form.action, '.')
-        self.assertEqual(form.method, 'POST')
-
-    def test_ctor_nondefaults(self):
-        schema = DummySchema()
-        form = self._makeOne(schema, action='action', method='method')
-        self.assertEqual(form.action, 'action')
-        self.assertEqual(form.method, 'method')
+    def test_template(self):
+        form = self._makeOne()
+        self.assertEqual(form.template, 'form')
 
 class DummyRenderer(object):
     def __init__(self, result=''):
@@ -434,6 +420,7 @@ class DummyInvalid(object):
         
 class DummyField(object):
     default = None
+    error = None
     def __init__(self, schema=None, renderer=None):
         self.schema = schema
         self.renderer = renderer
