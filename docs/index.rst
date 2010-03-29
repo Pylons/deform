@@ -12,6 +12,12 @@ Alternate templating languages may be used, as long as all templates
 are translated from the native Chameleon templates to your templating
 system of choice and a :term:`renderer` is supplied to :mod:`deform`.
 
+The design of :mod:`deform` is a shameless rip-off of the `formish
+<http://ish.io/projects/show/formish>`_ form generation library.  It
+differs from formish mostly in ways that make it possible to use
+:term:`Peppercorn` to ease sequence and form deserialization
+operations.
+
 Serialization
 -------------
 
