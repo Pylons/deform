@@ -25,8 +25,8 @@ class Boolean(colander.Boolean):
 class FileData(object):
     """
     A type representing file data; used to shuttle data back and forth
-    between an application and a file upload widget
-    (e.g. the :class:`deform.widget.FileUploadWidget` widget).
+    between an application and the
+    :class:`deform.widget.FileUploadWidget` widget.
 
     This type passes the value obtained during deserialization back to
     the caller unchanged.  It serializes from a dictionary containing
