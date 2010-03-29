@@ -15,6 +15,12 @@ Widget-Related
 .. autoclass:: CheckboxWidget
    :members:
 
+.. autoclass:: CheckedInputWidget
+   :members:
+
+.. autoclass:: CheckedPasswordWidget
+   :members:
+
 .. autoclass:: RadioChoiceWidget
    :members:
 
@@ -24,13 +30,24 @@ Widget-Related
 .. autoclass:: SequenceWidget
    :members:
 
-.. autoclass:: Button
+.. autoclass:: FileUploadWidget
    :members:
 
-.. autoclass:: FileUpload
+.. autoclass:: FormWidget
+   :members:
+
+Form-Related
+------------
+
+.. automodule:: deform.form
+
+.. autoclass:: Field
    :members:
 
 .. autoclass:: Form
+   :members:
+
+.. autoclass:: Button
    :members:
 
 Exception-Related

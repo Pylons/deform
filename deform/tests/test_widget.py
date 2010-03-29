@@ -176,10 +176,11 @@ class TestRadioChoiceWidget(unittest.TestCase):
         result = widget.deserialize(field, 'true')
         self.assertEqual(result, 'true')
 
-class TestCheckedPasswordWidget(unittest.TestCase):
+class TestCheckedInputWidget(unittest.TestCase):
+    mismatch_message = 'Fields did not match'
     def _makeOne(self, **kw):
-        from deform.widget import CheckedPasswordWidget
-        return CheckedPasswordWidget(**kw)
+        from deform.widget import CheckedInputWidget
+        return CheckedInputWidget(**kw)
     
     def test_serialize_None(self):
         renderer = DummyRenderer()
@@ -213,20 +214,25 @@ class TestCheckedPasswordWidget(unittest.TestCase):
         widget = self._makeOne()
         field = DummyField()
         result = widget.deserialize(field,
-                                    {'password':'password', 'confirm':'not'})
+                                    {'value':'password', 'confirm':'not'})
         self.assertEqual(result, 'password')
-        self.assertEqual(field.error.msg,
-                         'Password did not match confirmation')
+        self.assertEqual(field.error.msg, self.mismatch_message)
 
     def test_deserialize_matching(self):
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field, {'password':'password',
+        result = widget.deserialize(field, {'value':'password',
                                             'confirm':'password'})
         self.assertEqual(result, 'password')
         self.assertEqual(field.error, None)
+    
 
-
+class TestCheckedPasswordWidget(TestCheckedInputWidget):
+    mismatch_message = 'Password did not match confirm'
+    def _makeOne(self, **kw):
+        from deform.widget import CheckedPasswordWidget
+        return CheckedPasswordWidget(**kw)
+    
 class TestFileUploadWidget(unittest.TestCase):
     def _makeOne(self, tmpstore, **kw):
         from deform.widget import FileUploadWidget

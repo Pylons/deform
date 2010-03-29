@@ -1,0 +1,15 @@
+<div tal:omit-tag="">
+  <input type="hidden" name="__start__" value="${field.name}:mapping"/>
+  <div>
+    <label for="value">Value</label>
+    <input type="text" name="value" value="${cstruct}"
+           tal:attributes="size field.widget.size"/>
+  </div>
+  <div>
+    <label for="confirm">Confirm Value</label>
+    <input type="text" name="confirm" value="${confirm}"
+           tal:attributes="size field.widget.size"/>
+  </div>
+  <input type="hidden" name="__end__" value="${field.name}:mapping"/>
+</div>
+

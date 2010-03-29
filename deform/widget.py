@@ -191,21 +191,22 @@ class RadioChoiceWidget(Widget):
             pstruct = ''
         return pstruct
 
-class CheckedPasswordWidget(Widget):
+class CheckedInputWidget(Widget):
     """
-    Renders two password input fields: 'password' and 'confirm'.
-    Validates that the 'password' value matches the 'confirm' value.
+    Renders two text input fields: 'value' and 'confirm'.
+    Validates that the 'value' value matches the 'confirm' value.
 
     **Attributes/Arguments**
 
     template
         The template name used to render the input widget.
     size
-        The ``size`` attribute of the password input field (default:
-        ``None``).
+        The ``size`` attribute of the input fields (default:
+        ``None``, default browser size).
     """
-    template = 'checked_password'
+    template = 'checked_input'
     size = None
+    mismatch_message = 'Fields did not match'
 
     def serialize(self, field, cstruct=None):
         if cstruct is None:
@@ -219,14 +220,31 @@ class CheckedPasswordWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct is None:
             pstruct = {}
-        passwd = pstruct.get('password') or ''
+        value = pstruct.get('value') or ''
         confirm = pstruct.get('confirm') or ''
         field.confirm = confirm
-        if passwd != confirm:
+        if value != confirm:
             field.error = exception.Invalid(
                 field.schema,
-                'Password did not match confirmation')
-        return passwd
+                self.mismatch_message)
+        return value
+
+class CheckedPasswordWidget(CheckedInputWidget):
+    """
+    Renders two password input fields: 'password' and 'confirm'.
+    Validates that the 'password' value matches the 'confirm' value.
+
+    **Attributes/Arguments**
+
+    template
+        The template name used to render the input widget.
+    size
+        The ``size`` attribute of the password input field (default:
+        ``None``).
+    """
+    template = 'checked_password'
+    mismatch_message = 'Password did not match confirm'
+    size = None
 
 class MappingWidget(Widget):
     """
