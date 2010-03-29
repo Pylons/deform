@@ -134,13 +134,13 @@ class Field(object):
           form = Form(schema)
           
           if 'submit' in request.POST:  # the form submission needs validation
-              fields = request.POST.items()
+              controls = request.POST.items()
               try:
-                  deserialized = form.validate(fields)
+                  deserialized = form.validate(controls)
                   do_something(deserialized)
                   return HTTPFound(location='http://example.com/success')
-              except exception.Invalid, e:
-                  return {'form':form.render(e.cstruct)}
+              except ValidationFailure, e:
+                  return {'form':e.render()}
           else:
               return {'form':form.render()} # the form just needs rendering
         """
