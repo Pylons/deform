@@ -1,49 +1,33 @@
 Deform
 ======
 
-Another form generation library.  Uses :mod:`Colander` as a schema
-library and :mod:`Peppercorn` as a form field deserialization library.
+:mod:`deform` is a form generation library.  Uses :term:`Colander` as
+a schema library and :term:`Peppercorn` as a form control
+deserialization library, :term:`Chameleon` to perform HTML templating.
+:mod:`deform` depends *only* on Peppercorn, Colander and Chameleon.
+It may be used in any web framework as a result.
 
-Definitions
------------
-
-Application Domain Definitions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-appstruct
-   the raw application data structure (complex Python objects)
-
-cstruct
-   a set of mappings, sequences, and strings (colander serialization)
-
-schema
-   can serialize an appstruct to a cstruct and deserialize a cstruct
-   to an appstruct (object derived from :class:`colander.SchemaNode`
-   or one of the colander Schema classes).
-
-Widget Domain Definitions
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-form fields
-    a sequence of form fields (e.g. the rfc 2388 def of "field")
-
-pstruct
-    the data deserialized by :term:`Peppercorn` from a set of form fields.
-
-widget
-    serializes a cstruct to a form and deserializes a pstruct to
-    a cstruct
-
-Serialization and Deserialization
----------------------------------
+Alternate templating languages may be used, as long as all templates
+are translated from the native Chameleon templates to your templating
+system of choice and a :term:`renderer` is supplied to :mod:`deform`.
 
 Serialization
-~~~~~~~~~~~~~
+-------------
 
-- For each structure in the schema, create a widget node.
+High-level overview of how "serialization" (converting application
+data to a form rendering) works:
 
-- Pass a cstruct to the root widget node's ``serialize`` method to
-  generate a form
+- For each structure in the :term:`schema`, create a :term:`field`.  A
+  tree of fields is created, mirroring the nodes in the schema.
+
+- Each field knows about its associated schema element; each field
+  also knows about a :term:`widget`.
+
+- Pass an :term:`appstruct` to the root schema node's ``serialize``
+  method to obtain a :term:`cstruct`.
+
+- Pass the resulting :term:`cstruct` to the root widget's
+  ``serialize`` method to generate a form.
 
 .. code-block:: text
 
@@ -53,20 +37,95 @@ Serialization
            schema      widget
  
 Deserialization
-~~~~~~~~~~~~~~~
+---------------
 
-- For each structure in the schema, create a widget node.
+High-level overview of how "deserialization" (converting form control
+data resulting from a form submission to application data) works:
 
-- Pass a pstruct to the root widget node's ``deserialize`` method to
-  generate a cstruct.
+- For each structure in the :term:`schema`, create a :term:`field`.
+
+- Each field knows about its associated schema element; each field
+  also knows about a :term:`widget`.
+
+- Pass a set of :term:`form controls` to :term:`Peppercorn` in order
+  to obtain a :term:`pstruct`.
+
+- Pass the resulting :term:`pstruct` to the root widget node's
+  ``deserialize`` method to generate a :term:`cstruct`.
+
+- Pass the resulting :term:`cstruct` to the root schema node's
+  ``deserialize`` method to generate an :term:`appstruct`.  This may
+  result in a validation error.  If a validation error occurs, the
+  form may be rerendered with error markers in place.
 
 .. code-block:: text
 
+   formcontrols -> pstruct -> cstruct -> appstruct
+                |          |          |
+                v          v          v
+            peppercorn   widget    schema
 
-   formfields -> pstruct -> cstruct -> appstruct
-              |          |          |
-              v          v          v
-          peppercorn   widget    schema
+Example App
+-----------
+
+Here's an example `repoze.bfg <http://bfg.repoze.org>`_ application
+demonstrating how one might use :mod:`deform` to render a form.
+
+.. code-block:: python
+   :linenos:
+
+   import colander
+
+   from paste.httpserver import serve
+   from repoze.bfg.configuration import Configurator
+
+   from deform.exception import ValidationFailure
+
+   from deform.schema import MappingSchema
+   from deform.schema import SequenceSchema
+   from deform.schema import SchemaNode
+   from deform.schema import String
+   from deform.schema import Boolean
+   from deform.schema import Integer
+
+   from deform import widget
+   from deform import form
+
+   class DateSchema(MappingSchema):
+       month = SchemaNode(Integer())
+       year = SchemaNode(Integer())
+       day = SchemaNode(Integer())
+
+   class DatesSchema(SequenceSchema):
+       date = DateSchema()
+
+   class MySchema(MappingSchema):
+       name = SchemaNode(String(), description=LONG_DESC)
+       title = SchemaNode(String(), validator=colander.Length((max=20)),
+                          description=LONG_DESC)
+       password = SchemaNode(String(), validator=colander.Length(min=5))
+       is_cool = SchemaNode(Boolean(), default=True)
+       dates = DatesSchema()
+       color = SchemaNode(String(), validator=colander.OneOf(('red', 'blue')))
+
+   def form_view(request):
+       schema = MySchema()
+       myform = form.Form(schema, buttons=('submit',))
+
+       myform['password'].widget = widget.CheckedPasswordWidget()
+       myform['title'].widget = widget.TextInputWidget(size=40)
+       myform['color'].widget = widget.RadioChoiceWidget(
+           values=(('red', 'Red'),('green', 'Green'),('blue', 'Blue')))
+
+       if 'submit' in request.POST:
+           controls = request.POST.items()
+           try:
+               myform.validate(controls)
+           except ValidationFailure, e:
+               return {'form':e.render()}
+           return {'form':'OK'}
+               
+       return {'form':myform.render()}
 
 .. toctree::
    :maxdepth: 2
