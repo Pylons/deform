@@ -27,6 +27,9 @@ Widget-Related
 .. autoclass:: Button
    :members:
 
+.. autoclass:: FileUpload
+   :members:
+
 .. autoclass:: Form
    :members:
 
@@ -62,6 +65,9 @@ Type-Related
    :members:
 
 .. autoclass:: Boolean
+   :members:
+
+.. autoclass:: FileData
    :members:
 
 Schema-Related
