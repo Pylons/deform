@@ -337,6 +337,8 @@ class FileUploadWidget(Widget):
 
     template
         The template name used to render the file upload.
+    size
+        The ``size`` attribute of the input field (default ``None``).
     """
     template = 'file_upload'
     size = None
