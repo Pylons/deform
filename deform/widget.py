@@ -111,6 +111,23 @@ class TextInputWidget(Widget):
             pstruct = pstruct.strip()
         return pstruct
 
+class PasswordWidget(TextInputWidget):
+    """
+    Renders a single <input type="password"/> input field.
+
+    **Attributes/Arguments**
+
+    template
+        The template name used to render the input widget.
+    size
+        The ``size`` attribute of the password input field (default:
+        ``None``).
+    strip
+        If true, during deserialization, strip the value of leading
+        and trailing whitespace (default ``True``).
+    """
+    template = 'password'
+
 class CheckboxWidget(Widget):
     """
     Renders an ``<input type="checkbox"/>`` widget.
@@ -183,8 +200,13 @@ class CheckedPasswordWidget(Widget):
 
     template
         The template name used to render the input widget.
+    size
+        The ``size`` attribute of the password input field (default:
+        ``None``).
     """
     template = 'checked_password'
+    size = None
+
     def serialize(self, field, cstruct=None):
         if cstruct is None:
             cstruct = field.default

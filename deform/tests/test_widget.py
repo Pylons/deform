@@ -87,6 +87,11 @@ class TestTextInputWidget(unittest.TestCase):
         result = widget.deserialize(field, None)
         self.assertEqual(result, '')
 
+class TestPasswordWidget(TestTextInputWidget):
+    def _makeOne(self, **kw):
+        from deform.widget import PasswordWidget
+        return PasswordWidget(**kw)
+
 class TestCheckboxWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import CheckboxWidget
