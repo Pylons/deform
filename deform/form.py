@@ -78,32 +78,32 @@ class Field(object):
     def render(self, cstruct=None):
         return self.widget.serialize(self, cstruct)
 
-    def validate(self, fields):
+    def validate(self, controls):
         """
-        Validate the set of fields returned by a form submission
-        against the schema associated with this field.  ``fields``
+        Validate the set of controls returned by a form submission
+        against the schema associated with this field.  ``controls``
         should be a *document-ordered* sequence of two-tuples that
         represent the form submission data.  Each two-tuple should be
         in the form ``(key, value)``.  ``node`` should be the schema
         node associated with this widget.
 
-        Using WebOb, you can compute a suitable value for ``fields``
+        Using WebOb, you can compute a suitable value for ``controls``
         via::
 
           request.POST.items()
 
         Using cgi.FieldStorage named ``fs``, you can compute a
-        suitable value for ``fields`` via::
+        suitable value for ``controls`` via::
 
-          fields = []
+          controls = []
           if fs.list:
-              for field in fs.list:
-                  if field.filename:
-                      fields.append((field.name, field))
+              for control in fs.list:
+                  if control.filename:
+                      controls.append((control.name, control))
                   else:
-                      fields.append((field.name, field.value))
+                      controls.append((control.name, control.value))
 
-        Equivalent ways of computing ``fields`` should be available to
+        Equivalent ways of computing ``controls`` should be available to
         any web framework.
 
         When the ``validate`` method is called:
@@ -144,7 +144,7 @@ class Field(object):
           else:
               return {'form':form.render()} # the form just needs rendering
         """
-        pstruct = peppercorn.parse(fields)
+        pstruct = peppercorn.parse(controls)
         cstruct = self.widget.deserialize(self, pstruct)
         try:
             return self.schema.deserialize(cstruct)
