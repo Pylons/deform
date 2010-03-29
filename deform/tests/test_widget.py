@@ -221,6 +221,84 @@ class TestCheckedPasswordWidget(unittest.TestCase):
         self.assertEqual(result, 'password')
         self.assertEqual(field.error, None)
 
+
+class TestFileUploadWidget(unittest.TestCase):
+    def _makeOne(self, tmpstore, **kw):
+        from deform.widget import FileUploadWidget
+        return FileUploadWidget(tmpstore, **kw)
+    
+    def test_serialize_None(self):
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+        field.default = 'default'
+        tmpstore = DummyTmpStore()
+        widget = self._makeOne(tmpstore)
+        widget.serialize(field, None)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], 'default')
+
+    def test_serialize_None_no_default(self):
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+        field.default = None
+        tmpstore = DummyTmpStore()
+        widget = self._makeOne(tmpstore)
+        widget.serialize(field, None)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], {})
+
+    def test_deserialize_no_file_selected_no_previous_file(self):
+        schema = DummySchema()
+        field = DummyField(schema)
+        tmpstore = DummyTmpStore()
+        widget = self._makeOne(tmpstore)
+        result = widget.deserialize(field, {})
+        self.assertEqual(result, None)
+
+    def test_deserialize_no_file_selected_with_previous_file(self):
+        schema = DummySchema()
+        field = DummyField(schema)
+        tmpstore = DummyTmpStore()
+        tmpstore['uid'] = 'abc'
+        widget = self._makeOne(tmpstore)
+        result = widget.deserialize(field, {'uid':'uid'})
+        self.assertEqual(result, 'abc')
+
+    def test_deserialize_file_selected_no_previous_file(self):
+        schema = DummySchema()
+        field = DummyField(schema)
+        upload = DummyUpload()
+        tmpstore = DummyTmpStore()
+        widget = self._makeOne(tmpstore)
+        result = widget.deserialize(field, {'upload':upload})
+        uid = tmpstore.keys()[0]
+        self.assertEqual(result['uid'], uid)
+        self.assertEqual(result['fp'], 'fp')
+        self.assertEqual(result['filename'], 'filename')
+        self.assertEqual(result['mimetype'], 'mimetype')
+        self.assertEqual(result['size'], 'size')
+        self.assertEqual(result['preview_url'], 'preview_url')
+        self.assertEqual(tmpstore[uid], result)
+
+    def test_deserialize_file_selected_with_previous_file(self):
+        schema = DummySchema()
+        field = DummyField(schema)
+        upload = DummyUpload()
+        tmpstore = DummyTmpStore()
+        widget = self._makeOne(tmpstore)
+        result = widget.deserialize(field, {'upload':upload, 'uid':'uid'})
+        self.assertEqual(result['uid'], 'uid')
+        self.assertEqual(result['fp'], 'fp')
+        self.assertEqual(result['filename'], 'filename')
+        self.assertEqual(result['mimetype'], 'mimetype')
+        self.assertEqual(result['size'], 'size')
+        self.assertEqual(result['preview_url'], 'preview_url')
+        self.assertEqual(tmpstore['uid'], result)
+
 class TestMappingWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import MappingWidget
@@ -417,5 +495,14 @@ class DummyField(object):
 
     def clone(self):
         return self
-    
         
+class DummyTmpStore(dict):
+    def preview_url(self, uid):
+        return 'preview_url'
+
+class DummyUpload(object):
+    file = 'fp'
+    filename = 'filename'
+    type = 'mimetype'
+    length = 'size'
+    

@@ -1,3 +1,5 @@
+import random
+import string
 import urllib
 
 from deform import exception
@@ -46,7 +48,8 @@ class Widget(object):
 
     def serialize(self, field, cstruct=None):
         """
-        Serialize a :term:`cstruct` value to a form rendering and
+        Serialize a :term:`cstruct` value (a value resulting from a
+        :term:`Colander` schema serialization) to a form rendering and
         return the rendering.  The result of this method should always
         be a string (containing HTML).  The ``field`` argument is the
         field object to which this widget is attached.
@@ -55,9 +58,11 @@ class Widget(object):
 
     def deserialize(self, field, pstruct=None):
         """
-        Deserialize a :term:`pstruct` value to a :term:`cstruct` value
-        and return the :term:`cstruct` value.  The ``field`` argument
-        is the field object to which this widget is attached.
+        Deserialize a :term:`pstruct` value (a value resulting from
+        the ``parse`` method of the :term:`Peppercorn` package) to a
+        :term:`cstruct` value and return the :term:`cstruct` value.
+        The ``field`` argument is the field object to which this
+        widget is attached.
         """
         raise NotImplementedError
 
@@ -238,6 +243,17 @@ class MappingWidget(Widget):
 
         return result
 
+class FormWidget(MappingWidget):
+    template = 'form'
+    """
+    The top-level widget; represents an entire form.
+
+    **Attributes/Arguments**
+
+    template
+        The template name used to render the form widget.
+    """
+
 class SequenceWidget(Widget):
     """
     Renders a sequence (0 .. N widgets, each the same as the other)
@@ -312,14 +328,69 @@ class SequenceWidget(Widget):
                 if e.pos == num:
                     subfield.widget.handle_error(subfield, e)
 
-class FormWidget(MappingWidget):
-    template = 'form'
+class FileUploadWidget(Widget):
     """
-    The top-level widget; represents an entire form.
+    Represent a file upload.  Meant to work with a
+    :class:`deform.schema.FileData` schema node.
 
     **Attributes/Arguments**
 
     template
-        The template name used to render the form widget.
+        The template name used to render the file upload.
     """
+    template = 'file_upload'
+    size = None
+
+    def __init__(self, tmpstore, **kw):
+        Widget.__init__(self, **kw)
+        self.tmpstore = tmpstore
+
+    def random_id(self):
+        return ''.join(
+            [random.choice(string.uppercase+string.digits) for i in range(10)])
+
+    def serialize(self, field, cstruct=None):
+        if cstruct is None:
+            cstruct = field.default
+        if cstruct is None:
+            cstruct = {}
+
+        return field.renderer(self.template, field=field, cstruct=cstruct)
+
+    def deserialize(self, field, pstruct):
+        upload = pstruct.get('upload')
+        uid = pstruct.get('uid')
+
+        if hasattr(upload, 'file'):
+            # the upload control had a file selected
+            data = {}
+            data['fp'] = upload.file
+            data['filename'] = upload.filename
+            data['mimetype'] = upload.type
+            data['size']  = upload.length
+            if uid is None:
+                # no previous file exists
+                while 1:
+                    uid = self.random_id()
+                    data['uid'] = uid
+                    if self.tmpstore.get(uid) is None:
+                        data['preview_url'] = self.tmpstore.preview_url(uid)
+                        self.tmpstore[uid] = data
+                        break
+            else:
+                # a previous file exists
+                data['uid'] = uid
+                data['preview_url'] = self.tmpstore.preview_url(uid)
+                self.tmpstore[uid] = data
+        else:
+            # the upload control had no file selected
+            if uid is None:
+                # no previous file exists
+                return None
+            else:
+                # a previous file exists
+                data = self.tmpstore[uid]
+
+        return data
+
 

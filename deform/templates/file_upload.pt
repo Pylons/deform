@@ -1,0 +1,17 @@
+<div class="fileupload">
+
+  <input type="hidden" name="__start__" value="${field.name}:mapping"/>
+
+  <div class="replaces" tal:condition="cstruct.get('uid')">
+
+    <input type="hidden" name="uid" value="${cstruct['uid']}"/>
+    <span tal:content="cstruct.get('filename')"/>
+
+  </div>
+
+  <input type="file" name="upload" tal:attributes="size field.widget.size"
+         class="fileupload_control"/>
+
+  <input type="hidden" name="__end__" value="${field.name}:mapping"/>
+
+</div>
