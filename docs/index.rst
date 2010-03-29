@@ -71,6 +71,8 @@ Example App
 Here's an example `repoze.bfg <http://bfg.repoze.org>`_ application
 demonstrating how one might use :mod:`deform` to render a form.
 
+Here's the Python code:
+
 .. code-block:: python
    :linenos:
 
@@ -101,7 +103,7 @@ demonstrating how one might use :mod:`deform` to render a form.
 
    class MySchema(MappingSchema):
        name = SchemaNode(String(), description=LONG_DESC)
-       title = SchemaNode(String(), validator=colander.Length((max=20)),
+       title = SchemaNode(String(), validator=colander.Length(max=20),
                           description=LONG_DESC)
        password = SchemaNode(String(), validator=colander.Length(min=5))
        is_cool = SchemaNode(Boolean(), default=True)
@@ -126,6 +128,46 @@ demonstrating how one might use :mod:`deform` to render a form.
            return {'form':'OK'}
                
        return {'form':myform.render()}
+
+   if __name__ == '__main__':
+       settings = dict(reload_templates=True)
+       config = Configurator(settings=settings)
+       config.begin()
+       config.add_view(form_view, renderer='form.pt')
+       config.add_static_view('static', 'deform:static')
+       config.end()
+       app = config.make_wsgi_app()
+       serve(app)
+
+Here's the Chameleon ZPT template named ``form.pt``, placed in the
+same directory:
+
+.. code-block:: python
+   :linenos:
+
+   <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+   <html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+   <title>
+     Deform Sample Form App
+   </title>
+   <!-- Meta Tags -->
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   <!-- JavaScript -->
+   <script type="text/javascript" src="static/scripts/wufoo.js"></script>
+   <script type="text/javascript" src="static/scripts/deform.js"></script>
+   <!-- CSS -->
+   <link rel="stylesheet" href="static/css/form.css" type="text/css" />
+   <link rel="stylesheet" href="static/css/theme.css" type="text/css" />
+   </head>
+   <body id="public">
+   <div id="container">
+   <h1>Sample Form</h1>
+   <span tal:replace="structure form"/>
+   </div>
+   </body>
+   </html>
 
 .. toctree::
    :maxdepth: 2
