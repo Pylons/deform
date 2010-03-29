@@ -92,6 +92,11 @@ class TestPasswordWidget(TestTextInputWidget):
         from deform.widget import PasswordWidget
         return PasswordWidget(**kw)
 
+class TestTextAreaWidget(TestTextInputWidget):
+    def _makeOne(self, **kw):
+        from deform.widget import TextAreaWidget
+        return TextAreaWidget(**kw)
+
 class TestCheckboxWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import CheckboxWidget

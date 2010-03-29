@@ -12,6 +12,9 @@ Widget-Related
 .. autoclass:: TextInputWidget
    :members:
 
+.. autoclass:: TextAreaWidget
+   :members:
+
 .. autoclass:: CheckboxWidget
    :members:
 

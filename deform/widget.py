@@ -111,6 +111,35 @@ class TextInputWidget(Widget):
             pstruct = pstruct.strip()
         return pstruct
 
+class TextAreaWidget(TextInputWidget):
+    """
+    Renders a ``<textarea>`` widget.
+
+    **Attributes/Arguments**
+
+    cols
+        The size, in columns, of the text input field.  Defaults to
+        ``None``, meaning that the ``cols`` is not included in the
+        widget output (uses browser default cols).
+
+    rows
+        The size, in rows, of the text input field.  Defaults to
+        ``None``, meaning that the ``rows`` is not included in the
+        widget output (uses browser default cols).
+
+    template
+        The template name used to render the input widget.
+
+    strip
+        If true, during deserialization, strip the value of leading
+        and trailing whitespace (default ``True``).
+    """
+    template = 'textarea'
+    cols = None
+    rows = None
+    strip = True
+    
+
 class PasswordWidget(TextInputWidget):
     """
     Renders a single <input type="password"/> input field.

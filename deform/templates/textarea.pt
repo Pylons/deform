@@ -1,0 +1,2 @@
+<textarea tal:attributes="rows field.widget.rows;
+                          cols field.widget.cols;">${cstruct}</textarea>
