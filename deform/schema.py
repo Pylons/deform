@@ -22,6 +22,9 @@ class Float(colander.Integer):
 class Boolean(colander.Boolean):
     default_widget_maker = widget.CheckboxWidget
 
+class Date(colander.Date):
+    default_widget_maker = widget.DatePartsWidget
+
 class FileData(object):
     """
     A type representing file data; used to shuttle data back and forth

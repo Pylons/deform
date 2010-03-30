@@ -465,3 +465,42 @@ class FileUploadWidget(Widget):
         return data
 
 
+class DatePartsWidget(Widget):
+    """
+    
+    Renders a set of ``<input type='text'/>`` controls based on the
+    year, month, and day parts of the serialization of a
+    :class:`deform.schema.Date` object or a string in the format
+    ``YYYY-MM-DD``.  This widget is meant to be used with the
+    :class:`deform.schema.Date` type; validation likely won't work as
+    you expect if you use it agains a bare String object.
+
+    **Attributes/Arguments**
+
+    template
+        The template name used to render the input widget.
+
+    size
+        The size (in columns) of each date part input control.
+    """
+    template = 'dateparts'
+    size = None
+
+    def serialize(self, field, cstruct=None):
+        if cstruct is None:
+            cstruct = field.default
+        if cstruct is None:
+            year = ''
+            month = ''
+            day = ''
+        else:
+            year, month, day = cstruct.split('-', 2)
+        return field.renderer(self.template, field=field, cstruct=cstruct,
+                              year=year, month=month, day=day)
+
+    def deserialize(self, field, pstruct):
+        if pstruct is None:
+            return ''
+        else:
+            return '%(year)s-%(month)s-%(day)s' % pstruct
+    

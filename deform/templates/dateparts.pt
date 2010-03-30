@@ -1,0 +1,15 @@
+<div>
+  <input type="hidden" name="__start__" value="${field.name}:mapping"/>
+  <label>Year</label>
+  <input type="text" name="year" value="${year}" 
+         tal:attributes="size field.widget.size"/>
+  <label>Month</label>
+  <input type="text" name="month" value="${month}" 
+         tal:attributes="size field.widget.size"/>
+  <label>Day</label>
+  <input type="text" name="day" value="${day}" 
+         tal:attributes="size field.widget.size"/>
+  <input type="hidden" name="__end__" value="${field.name}:mapping"/>
+</div>
+
+

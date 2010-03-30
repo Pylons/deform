@@ -315,6 +315,59 @@ class TestFileUploadWidget(unittest.TestCase):
         self.assertEqual(result['preview_url'], 'preview_url')
         self.assertEqual(tmpstore['uid'], result)
 
+class TestDatePartsWidget(unittest.TestCase):
+    def _makeOne(self, **kw):
+        from deform.widget import DatePartsWidget
+        return DatePartsWidget(**kw)
+
+    def test_serialize_None(self):
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+        field.default = '2010-12-1'
+        widget = self._makeOne()
+        widget.serialize(field, None)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['year'], '2010')
+        self.assertEqual(renderer.kw['month'], '12')
+        self.assertEqual(renderer.kw['day'], '1')
+
+    def test_serialize_None_no_default(self):
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+        widget = self._makeOne()
+        widget.serialize(field, None)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['year'], '')
+        self.assertEqual(renderer.kw['month'], '')
+        self.assertEqual(renderer.kw['day'], '')
+
+    def test_serialize_not_None(self):
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+        widget = self._makeOne()
+        widget.serialize(field, '2010-12-1')
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['year'], '2010')
+        self.assertEqual(renderer.kw['month'], '12')
+        self.assertEqual(renderer.kw['day'], '1')
+
+    def test_deserialize_not_None(self):
+        schema = DummySchema()
+        field = DummyField(schema, None)
+        widget = self._makeOne()
+        result = widget.deserialize(field, {'year':'1', 'month':'2', 'day':'3'})
+        self.assertEqual(result, '1-2-3')
+
+    def test_deserialize_None(self):
+        schema = DummySchema()
+        field = DummyField(schema, None)
+        widget = self._makeOne()
+        result = widget.deserialize(field, None)
+        self.assertEqual(result, '')
+
 class TestMappingWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import MappingWidget

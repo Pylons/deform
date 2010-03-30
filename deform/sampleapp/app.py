@@ -10,7 +10,7 @@ from deform.schema import SequenceSchema
 from deform.schema import SchemaNode
 from deform.schema import String
 from deform.schema import Boolean
-from deform.schema import Integer
+from deform.schema import Date
 from deform.schema import FileData
 
 from deform import widget
@@ -28,13 +28,8 @@ class MemoryTmpStore(dict):
 
 memory = MemoryTmpStore()
 
-class DateSchema(MappingSchema):
-    month = SchemaNode(Integer())
-    year = SchemaNode(Integer())
-    day = SchemaNode(Integer())
-
 class DatesSchema(SequenceSchema):
-    date = DateSchema()
+    date = SchemaNode(Date())
     #date = SchemaNode(String())
 
 class SeriesSchema(MappingSchema):
@@ -74,7 +69,7 @@ def form_view(request):
             return {'form':e.render()}
         return {'form':'OK'}
             
-    return {'form':myform.render({'uploads':[{'filename':'abc', 'uid':'uid'}]})}
+    return {'form':myform.render()}
 
 if __name__ == '__main__':
     settings = dict(reload_templates=True)
