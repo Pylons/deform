@@ -27,7 +27,7 @@ class Field(object):
         A string incorporating the ``order`` attribute that can be
         used as a unique identifier in HTML code (often for ``id``
         attributes of field-related elements).  An example oid is
-        ``field0``.
+        ``deform_field0``.
 
     name
         An alias for self.schema.name
