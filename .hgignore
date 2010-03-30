@@ -2,3 +2,6 @@ syntax: glob
 
 *.egg
 *.egg-info
+env
+dist
+
