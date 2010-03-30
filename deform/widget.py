@@ -443,8 +443,8 @@ class FileUploadWidget(Widget):
                 # no previous file exists
                 while 1:
                     uid = self.random_id()
-                    data['uid'] = uid
                     if self.tmpstore.get(uid) is None:
+                        data['uid'] = uid
                         data['preview_url'] = self.tmpstore.preview_url(uid)
                         self.tmpstore[uid] = data
                         break
