@@ -67,7 +67,7 @@ class Field(object):
     def __init__(self, schema, renderer=None, counter=None):
         self.counter = counter or itertools.count()
         self.order = self.counter.next()
-        self.oid = 'field%s' % self.order
+        self.oid = 'deform_field%s' % self.order
         self.schema = schema
         self.renderer = renderer or template.default_renderer
         self.name = schema.name
