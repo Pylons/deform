@@ -1,2 +1,3 @@
 <textarea tal:attributes="rows field.widget.rows;
-                          cols field.widget.cols;">${cstruct}</textarea>
+                          cols field.widget.cols;"
+          id="${field.oid}">${cstruct}</textarea>

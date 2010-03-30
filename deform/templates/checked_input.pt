@@ -1,14 +1,14 @@
-<div tal:omit-tag="">
+<div>
   <input type="hidden" name="__start__" value="${field.name}:mapping"/>
   <div>
-    <label for="value">Value</label>
+    <label for="${field.oid}">Value</label>
     <input type="text" name="value" value="${cstruct}"
-           tal:attributes="size field.widget.size"/>
+           tal:attributes="size field.widget.size" id="${field.oid}"/>
   </div>
   <div>
-    <label for="confirm">Confirm Value</label>
+    <label for="${field.oid}-confirm">Confirm Value</label>
     <input type="text" name="confirm" value="${confirm}"
-           tal:attributes="size field.widget.size"/>
+           tal:attributes="size field.widget.size" id="${field.oid}-confirm"/>
   </div>
   <input type="hidden" name="__end__" value="${field.name}:mapping"/>
 </div>

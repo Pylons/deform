@@ -24,6 +24,8 @@ class TestField(unittest.TestCase):
         self.assertEqual(field.title, 'title')
         self.assertEqual(field.default, 'sdefault')
         self.assertEqual(field.required, True)
+        self.assertEqual(field.order, 0)
+        self.assertEqual(field.oid, 'field0')
         self.assertEqual(field.children, [])
 
     def test_ctor_with_children_in_schema(self):
@@ -69,6 +71,8 @@ class TestField(unittest.TestCase):
         field.foo = 1
         result = field.clone()
         self.failIf(result is field)
+        self.assertEqual(result.order, 1)
+        self.assertEqual(result.oid, 'field1')
         self.assertEqual(result.renderer, 'abc')
         self.assertEqual(result.schema, schema)
         self.assertEqual(result.foo, 1)
@@ -121,7 +125,6 @@ class TestField(unittest.TestCase):
         field = self._makeOne(schema)
         field.widget = DummyWidget()
         self.assertEqual(field.render('abc'), 'abc')
-        
 
 class TestForm(unittest.TestCase):
     def _makeOne(self, schema, **kw):
@@ -180,6 +183,7 @@ class TestButton(unittest.TestCase):
 
 class DummyField(object):
     name = 'name'
+    oid = 'oid'
     def __init__(self, schema=None, renderer=None):
         self.schema = schema
         self.renderer = renderer

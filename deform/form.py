@@ -1,3 +1,4 @@
+import itertools
 import colander
 import peppercorn
 
@@ -12,14 +13,47 @@ class Field(object):
     
     All field objects have the following attributes:
 
+    schema
+        The schema node associated with this field.
+
+    widget
+        The widget associated with this field.
+
+    order
+        An integer indicating the relative order of this field's
+        construction to its children and parents.
+
+    oid
+        A string incorporating the ``order`` attribute that can be
+        used as a unique identifier in HTML code (often for ``id``
+        attributes of field-related elements).  An example oid is
+        ``field0``.
+
+    name
+        An alias for self.schema.name
+    
+    title
+        An alias for self.schema.title
+
+    description
+        An alias for self.schema.description
+
+    required
+        An alias for self.schema.required
+
+    default
+        An alias for self.schema.sdefault
+
+    children
+        Child fields of this field.
+
     error
         The exception raised by the last attempted validation of the
         schema element associated with this field.  By default, this
         attribute is ``None``.  If non-None, this attribute is usually
         an instance of the exception class
-        :exc:`deform.exception.Invalid` or :exc:`colander.Invalid`,
-        which has a ``msg`` attribute providing a human-readable
-        validation error message.
+        :exc:`deform.exception.Invalid`, which has a ``msg`` attribute
+        providing a human-readable validation error message.
 
     renderer
         The template :term:`renderer` associated with the form.  If a
@@ -30,7 +64,10 @@ class Field(object):
 
     error = None
 
-    def __init__(self, schema, renderer=None):
+    def __init__(self, schema, renderer=None, counter=None):
+        self.counter = counter or itertools.count()
+        self.order = self.counter.next()
+        self.oid = 'field%s' % self.order
         self.schema = schema
         self.renderer = renderer or template.default_renderer
         self.name = schema.name
@@ -39,7 +76,8 @@ class Field(object):
         self.required = schema.required
         self.children = []
         for child in schema.children:
-            self.children.append(Field(child, renderer=renderer))
+            self.children.append(Field(child,renderer=renderer,
+                                       counter=self.counter))
 
     def __getitem__(self, name):
         """ Return the subfield of this field named ``name`` or raise
@@ -51,9 +89,14 @@ class Field(object):
 
     def clone(self):
         """ Clone the field and its subfields, retaining attribute
-        information.  Return the cloned field."""
+        information.  Return the cloned field.  The ``order``
+        attribute of the node is not cloned; instead the field
+        receives a new order attribute; it will be a number larger
+        than the last renderered field of this set."""
         cloned = self.__class__(self.schema)
         cloned.__dict__.update(self.__dict__)
+        cloned.order = cloned.counter.next()
+        cloned.oid = 'field%s' % cloned.order
         cloned.children = [ field.clone() for field in self.children ]
         return cloned
 
@@ -76,6 +119,17 @@ class Field(object):
         return self.schema.sdefault
 
     def render(self, cstruct=None):
+        """ Render the field to HTML.  This method is usually called
+        when the field is a :class:`deform.form.Form` object, used to
+        render the form in its entirety.
+
+        Calling this method is the same as calling::
+
+           field.widget.serialize(field, cstruct)
+
+        See the documentation for
+        :method:`deform.widget.Widget.serialize` .
+        """
         return self.widget.serialize(self, cstruct)
 
     def validate(self, controls):

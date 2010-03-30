@@ -3,7 +3,7 @@
   <span onclick="javascript:remove_parent(this);" title="Remove">X</span>
   <label tal:condition="not field.widget.hidden"
          class="desc"
-         for="${field.name}"
+         for="${field.oid}"
          >${field.title}<span tal:condition="field.required" class="req"
                                >*</span>
   </label>

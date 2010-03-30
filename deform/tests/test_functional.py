@@ -45,10 +45,6 @@ class TestFunctional(unittest.TestCase):
         soup = self._soupify(html)
         form = soup.form
         self.assertEqual(form['action'], '.')
-        labels = form.findAll('label')
-        self.assertEqual(labels[0]['for'], 'name')
-        self.assertEqual(labels[1]['for'], 'title')
-        self.assertEqual(labels[2]['for'], 'cool')
         inputs = form.findAll('input')
         self.assertEqual(inputs[0]['name'], '_charset_')
         self.assertEqual(inputs[1]['name'], '__deform__')
@@ -79,10 +75,6 @@ class TestFunctional(unittest.TestCase):
         soup = self._soupify(html)
         form = soup.form
         self.assertEqual(form['action'], '.')
-        labels = form.findAll('label')
-        self.assertEqual(labels[0]['for'], 'name')
-        self.assertEqual(labels[1]['for'], 'title')
-        self.assertEqual(labels[2]['for'], 'cool')
         inputs = form.findAll('input')
         self.assertEqual(inputs[0]['name'], '_charset_')
         self.assertEqual(inputs[1]['name'], '__deform__')

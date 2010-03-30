@@ -1,7 +1,8 @@
 <span tal:repeat="(value, description) field.widget.values" tal:omit-tag="">
-  <label for="${field.name}">${description}</label>
+  <label for="${field.oid}">${description}</label>
   <input tal:attributes="checked value == cstruct"
          type="radio"
          name="${field.name}"
-         value="${value}"/>
+         value="${value}"
+         id="${field.oid}"/>
 </span>
