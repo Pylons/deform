@@ -36,6 +36,9 @@ Widget-Related
 .. autoclass:: FileUploadWidget
    :members:
 
+.. autoclass:: DatePartsWidget
+   :members:
+
 .. autoclass:: FormWidget
    :members:
 
