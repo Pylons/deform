@@ -916,6 +916,6 @@ img.deform_closebutton {
    height: 1em;
 }
 
-a:visited {
+a.deform_add:visited {
    color: blue;
 }
