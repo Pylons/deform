@@ -3,7 +3,7 @@
   <input type="hidden" name="__start__" value="${field.name}:sequence"
          tal:attributes="prototype field.widget.prototype(field)"/>
   <div onclick="add_new_item(this);">${field.title} 
-      <a href="#" class="deform_add"><small>(add)</small></a></div>
+      <a href="javascript:deform_add(this);"><small>(add)</small></a></div>
   <div tal:repeat="(item, f) subfields">
     <span tal:define="rndr field.renderer;
                       tmpl field.widget.item_template"
