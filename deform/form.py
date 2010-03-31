@@ -135,7 +135,7 @@ class Field(object):
            field.widget.serialize(field, cstruct)
 
         See the documentation for
-        :method:`deform.widget.Widget.serialize` .
+        :meth:`deform.widget.Widget.serialize` .
         """
         return self.widget.serialize(self, cstruct)
 
