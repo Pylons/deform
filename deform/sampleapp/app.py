@@ -44,14 +44,17 @@ class MySchema(schema.MappingSchema):
 
 def form_view(request):
     schema = MySchema()
+    # create a form; it will have a single button named submit.
     myform = form.Form(schema, buttons=('submit',))
 
+    # associate widgets with fields in the form
     myform['password'].widget = widget.CheckedPasswordWidget()
     myform['title'].widget = widget.TextInputWidget(size=40)
     myform['color'].widget = widget.RadioChoiceWidget(
         values=(('red', 'Red'),('green', 'Green'),('blue', 'Blue')))
     myform['uploads']['file'].widget = widget.FileUploadWidget(memory)
 
+    # handle the request
     if 'submit' in request.POST:
         # this was a form submission
         fields = request.POST.items()
