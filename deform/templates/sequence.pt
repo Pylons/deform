@@ -1,5 +1,4 @@
 <div>
-  <!-- sequence.html -->
   <input type="hidden" name="__start__" value="${field.name}:sequence"
          tal:attributes="prototype field.widget.prototype(field)"/>
   <div onclick="add_new_item(this);">${field.title} 

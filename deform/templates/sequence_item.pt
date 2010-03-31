@@ -1,5 +1,4 @@
 <li tal:attributes="class field.error and field.widget.error_class">
-  <!-- sequence_item.html -->
   <label tal:condition="not field.widget.hidden"
          class="desc"
          for="${field.oid}"

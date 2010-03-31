@@ -1,5 +1,4 @@
-<fieldset>
-  <!-- mapping.html -->
+<fieldset class="deform_mapping_fieldset">
   <legend tal:condition="field.title">${field.title}</legend>
   <ul>
     <li class="section" tal:condition="field.description">
