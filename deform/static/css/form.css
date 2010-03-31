@@ -906,3 +906,16 @@ form li.paging-context{
 .hideMarkers .marker, .nopagelabel .pgStyle1 b, .nopagelabel .pgStyle2 em, .hideSecondary #previousPageButton{
 	display:none !important;
 }
+
+/* chrism additions*/
+
+img.deform_closebutton {
+   border: 0;
+   cursor: pointer;
+   width: 1em;
+   height: 1em;
+}
+
+a:visited {
+   color: blue;
+}

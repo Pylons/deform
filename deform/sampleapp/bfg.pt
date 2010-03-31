@@ -25,11 +25,9 @@
 <!-- JavaScript -->
 <script type="text/javascript" src="/static/scripts/wufoo.js"></script>
 <script type="text/javascript" src="/static/scripts/deform.js"></script>
-
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> 
 <!-- CSS -->
-<!--<link rel="stylesheet" href="static/css/structure.css" type="text/css" />-->
 <link rel="stylesheet" href="/static/css/form.css" type="text/css" />
-<!--<link rel="stylesheet" href="/static/css/theme.css" type="text/css" />-->
     
 
   </head>

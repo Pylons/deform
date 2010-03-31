@@ -34,6 +34,10 @@ class Widget(object):
         renderering indicating an error condition for the field
         associated with this widget.  By default, this is ``error``.
 
+    static_url
+        The URL to static resources required by the widget.
+        Default: ``/static``
+
     Particular widget types accept keyword arguments that are attached
     to the widget as attributes.  These are documented as
     'Attributes/Arguments' within the documentation of each concrete
@@ -42,6 +46,7 @@ class Widget(object):
 
     hidden = False
     error_class = 'error'
+    static_url = '/static'
 
     def __init__(self, **kw):
         self.__dict__.update(kw)
