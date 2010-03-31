@@ -1,21 +1,12 @@
-import colander
-
 from paste.httpserver import serve
 from repoze.bfg.configuration import Configurator
+import colander
+import pprint
 
-from deform.exception import ValidationFailure
-
-from deform.schema import MappingSchema
-from deform.schema import SequenceSchema
-from deform.schema import SchemaNode
-from deform.schema import String
-from deform.schema import Boolean
-from deform.schema import Date
-from deform.schema import FileData
-
+from deform import schema
 from deform import widget
 from deform import form
-
+from deform import exception
 
 LONG_DESC = """
 The name of the thing.  This is a pretty long line, and hopefully I won't
@@ -28,25 +19,27 @@ class MemoryTmpStore(dict):
 
 memory = MemoryTmpStore()
 
-class DatesSchema(SequenceSchema):
-    date = SchemaNode(Date())
-    #date = SchemaNode(String())
+class DatesSchema(schema.SequenceSchema):
+    date = schema.SchemaNode(schema.Date())
 
-class SeriesSchema(MappingSchema):
-    name = SchemaNode(String())
+class SeriesSchema(schema.MappingSchema):
+    name = schema.SchemaNode(schema.String())
     dates = DatesSchema()
 
-class FileUploads(SequenceSchema):
-    file = SchemaNode(FileData())
+class FileUploads(schema.SequenceSchema):
+    file = schema.SchemaNode(schema.FileData())
 
-class MySchema(MappingSchema):
-    name = SchemaNode(String(), description=LONG_DESC)
-    title = SchemaNode(String(), validator=colander.OneOf(('a', 'b')),
-                       description=LONG_DESC)
-    password = SchemaNode(String(), validator=colander.Length(5))
-    cool = SchemaNode(Boolean(), default=True)
+class MySchema(schema.MappingSchema):
+    name = schema.SchemaNode(schema.String(), description=LONG_DESC)
+    title = schema.SchemaNode(schema.String(),
+                              validator=colander.Length(max=10),
+                              description=LONG_DESC)
+    password = schema.SchemaNode(schema.String(),
+                                 validator=colander.Length(min=5))
+    cool = schema.SchemaNode(schema.Boolean(), default=True)
     series = SeriesSchema()
-    color = SchemaNode(String(), validator=colander.OneOf(('red', 'blue')))
+    color = schema.SchemaNode(schema.String(),
+                              validator=colander.OneOf(('red', 'blue')))
     uploads = FileUploads()
 
 def form_view(request):
@@ -60,15 +53,17 @@ def form_view(request):
     myform['uploads']['file'].widget = widget.FileUploadWidget(memory)
 
     if 'submit' in request.POST:
+        # this was a form submission
         fields = request.POST.items()
-        import pprint
-        pprint.pprint(fields)
         try:
-            myform.validate(fields)
-        except ValidationFailure, e:
+            converted = myform.validate(fields)
+        except exception.ValidationFailure, e:
+            # validation failed
             return {'form':e.render()}
-        return {'form':'OK'}
-            
+        # validation succeeded
+        return {'form':pprint.pprint(converted)}
+
+    # this was not a form submission; render the form "normally"
     return {'form':myform.render()}
 
 if __name__ == '__main__':
