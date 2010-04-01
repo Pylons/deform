@@ -42,8 +42,19 @@ class MySchema(schema.MappingSchema):
                               validator=colander.OneOf(('red', 'blue')))
     uploads = FileUploads()
 
+def validate_form(form, value):
+    if value['name'] != value['title']:
+        exc = exception.Invalid(form, 'Name does not match title')
+        exc['title'] = 'Does not match title'
+        exc['name'] = 'Does not match name'
+        raise exc
+
 def form_view(request):
-    schema = MySchema()
+    # Create a schema; when the form is submitted, we want to assert
+    # that the name must match the title; we use a validator for the
+    # entire form by assigning it a validator
+    schema = MySchema(validator=validate_form)
+
     # create a form; it will have a single button named submit.
     myform = form.Form(schema, buttons=('submit',))
 
@@ -64,7 +75,7 @@ def form_view(request):
             # validation failed
             return {'form':e.render()}
         # validation succeeded
-        return {'form':pprint.pprint(converted)}
+        return {'form':pprint.pformat(converted)}
 
     # this was not a form submission; render the form "normally"
     return {'form':myform.render()}
