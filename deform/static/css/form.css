@@ -481,7 +481,10 @@ textarea.large{
 
 /* ----- ERRORS ----- */
 
-#errorLi{
+/* errorLi, errorMsgLbl, and errorMsg used to be id statements rather
+than class statements(chrism) */
+
+.errorLi{
 	width:99%;
 	margin:15px auto 0 auto;
 	background:#fff !important;
@@ -492,18 +495,18 @@ textarea.large{
 	-webkit-border-radius:20px;
 	-moz-border-radius:20px;
 }
-#errorMsgLbl{
+.errorMsgLbl{
 	margin:0 0 5px 0;
 	padding:0;
 	font-size:125%;
 	color:#DF0000 !important;
 }
-#errorMsg{
+.errorMsg{
 	margin:0 0 2px 0;
 	color:#000 !important;
 	font-size:100%;
 }
-#errorMsg strong{
+.errorMsg strong{
 	padding:2px 3px;
 	background-color: #FFDFDF !important;
 	color:red !important;
@@ -919,3 +922,4 @@ img.deform_closebutton {
 a.deform_add:visited {
    color: blue;
 }
+
