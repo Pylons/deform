@@ -14,9 +14,9 @@
     <input type="hidden" name="__deform__" value="${field.name}"/>
     <ul>
       
-      <li id="errorLi" tal:condition="field.error">
-        <h3 id="errorMsgLbl">There was a problem with your submission</h3>
-        <p id="errorMsg">Errors have been <strong>highlighted</strong> below.
+      <li class="errorLi" tal:condition="field.error">
+        <h3 class="errorMsgLbl">There was a problem with your submission</h3>
+        <p class="errorMsg">Errors have been <strong>highlighted</strong> below.
         </p>
       </li>
       
