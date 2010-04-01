@@ -54,6 +54,7 @@ class FileData(object):
         filename
             Filename of this file (not a full filesystem path, just the
             filename itself).
+
         uid
             Unique string id for this file.  Needs to be unique enough to
             disambiguate it from other files that may use the same
@@ -78,10 +79,13 @@ class FileData(object):
             particular, the calling code must be willing to translate
             a ``None`` ``fp`` value returned from a deserialization
             into the file data via the ``uid`` in the deserialization.
+
         mimetype
             File content type (e.g. ``application/octet-stream``).
+
         size
             File content length (integer).
+
         preview_url
             URL which provides an image preview of this file's data.
 
