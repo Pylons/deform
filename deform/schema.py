@@ -24,6 +24,7 @@ class Boolean(colander.Boolean):
 
 class Date(colander.Date):
     default_widget_maker = widget.DatePartsWidget
+    err_template = 'Invalid date'
 
 class FileData(object):
     """
