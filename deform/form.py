@@ -65,6 +65,10 @@ class Field(object):
         :exc:`deform.exception.Invalid`, which has a ``msg`` attribute
         providing a human-readable validation error message.
 
+    errormsg
+        The ``msg`` attribute of the ``error`` attached to this field
+        or ``None`` if the ``error`` attached to this field is ``None``.
+
     renderer
         The template :term:`renderer` associated with the form.  If a
         renderer is not passed to the constructor, the default deform
@@ -129,6 +133,7 @@ class Field(object):
         """ The serialized schema default """
         return self.schema.sdefault
 
+    @property
     def errormsg(self):
         """ Return the ``msg`` attribute of the ``error`` attached to
         this field.  If the ``error`` attribute is ``None``,

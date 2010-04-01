@@ -130,13 +130,13 @@ class TestField(unittest.TestCase):
     def test_errormsg_error_None(self):
         schema = DummySchema()
         field = self._makeOne(schema)
-        self.assertEqual(field.errormsg(), None)
+        self.assertEqual(field.errormsg, None)
             
     def test_errormsg_error_not_None(self):
         schema = DummySchema()
         field = self._makeOne(schema)
         field.error = DummyInvalid('abc')
-        self.assertEqual(field.errormsg(), 'abc')
+        self.assertEqual(field.errormsg, 'abc')
 
 class TestForm(unittest.TestCase):
     def _makeOne(self, schema, **kw):
