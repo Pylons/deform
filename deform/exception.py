@@ -1,6 +1,6 @@
 from colander import Invalid # API shim
 
-Invalid = Invalid # prevent pyflakes from whining
+Invalid = Invalid # prevent PyFlakes from whining
 
 class ValidationFailure(Exception):
     """
@@ -11,9 +11,9 @@ class ValidationFailure(Exception):
 
     **Attributes**
 
-    ``widget``
-       The widget that :meth:`deform.widget.Widget.validate` was
-       called on (usually a :class:`deform.widget.Form` object).
+    ``field``
+       The field :meth:`deform.form.Field.validate` was
+       called on (usually a :class:`deform.form.Form` object).
 
     ``cstruct``
        The unvalidatable :term:`cstruct` that was returned from
