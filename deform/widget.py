@@ -259,7 +259,7 @@ class CheckedInputWidget(Widget):
         field.confirm = confirm
         if value != confirm:
             field.error = exception.Invalid(
-                field.schema,
+                field,
                 self.mismatch_message)
         return value
 
