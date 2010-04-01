@@ -27,6 +27,7 @@ class TestField(unittest.TestCase):
         self.assertEqual(field.order, 0)
         self.assertEqual(field.oid, 'deform_field0')
         self.assertEqual(field.children, [])
+        self.assertEqual(field.typ, schema.typ)
 
     def test_ctor_with_children_in_schema(self):
         from deform.form import Field
