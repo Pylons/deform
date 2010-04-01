@@ -51,6 +51,9 @@ class Field(object):
     default
         An alias for self.schema.sdefault
 
+    typ
+        An alias for self.schema.typ
+
     children
         Child fields of this field.
 
@@ -76,6 +79,7 @@ class Field(object):
         self.order = self.counter.next()
         self.oid = 'deform_field%s' % self.order
         self.schema = schema
+        self.typ = self.schema.typ # required by Invalid exception
         self.renderer = renderer or template.default_renderer
         self.name = schema.name
         self.title = schema.title
