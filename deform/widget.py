@@ -300,6 +300,7 @@ class MappingWidget(Widget):
     template = 'mapping'
     item_template = 'mapping_item'
     hidden = True
+    error_class = None
 
     def serialize(self, field, cstruct=None):
         if cstruct is None:
@@ -328,7 +329,10 @@ class FormWidget(MappingWidget):
     **Attributes/Arguments**
 
     template
-        The template name used to render the form widget.
+        The template name used to render the form.
+
+    item_template
+        The template name used to render each item in the form.
     """
 
 class SequenceWidget(Widget):
@@ -348,6 +352,7 @@ class SequenceWidget(Widget):
     hidden = True
     template = 'sequence'
     item_template = 'sequence_item'
+    error_class = None
 
     def prototype(self, field):
         item_field = field.children[0]
