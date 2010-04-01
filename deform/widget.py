@@ -153,9 +153,11 @@ class PasswordWidget(TextInputWidget):
 
     template
         The template name used to render the input widget.
+
     size
         The ``size`` attribute of the password input field (default:
         ``None``).
+
     strip
         If true, during deserialization, strip the value of leading
         and trailing whitespace (default ``True``).
@@ -234,6 +236,7 @@ class CheckedInputWidget(Widget):
 
     template
         The template name used to render the input widget.
+
     size
         The ``size`` attribute of the input fields (default:
         ``None``, default browser size).
@@ -272,6 +275,7 @@ class CheckedPasswordWidget(CheckedInputWidget):
 
     template
         The template name used to render the input widget.
+
     size
         The ``size`` attribute of the password input field (default:
         ``None``).
@@ -295,7 +299,6 @@ class MappingWidget(Widget):
     """
     template = 'mapping'
     item_template = 'mapping_item'
-    error_class = None
     hidden = True
 
     def serialize(self, field, cstruct=None):
@@ -343,7 +346,6 @@ class SequenceWidget(Widget):
 
     """
     hidden = True
-    error_class = None
     template = 'sequence'
     item_template = 'sequence_item'
 
@@ -411,6 +413,7 @@ class FileUploadWidget(Widget):
 
     template
         The template name used to render the file upload.
+
     size
         The ``size`` attribute of the input field (default ``None``).
     """
