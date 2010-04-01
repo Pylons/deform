@@ -129,6 +129,12 @@ class Field(object):
         """ The serialized schema default """
         return self.schema.sdefault
 
+    def errormsg(self):
+        """ Return the ``msg`` attribute of the ``error`` attached to
+        this field.  If the ``error`` attribute is ``None``,
+        the return value will be ``None``."""
+        return getattr(self.error, 'msg', None)
+
     def render(self, cstruct=None):
         """ Render the field to HTML.  This method is usually called
         when the field is a :class:`deform.form.Form` object, used to

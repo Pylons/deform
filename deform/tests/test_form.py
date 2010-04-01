@@ -127,6 +127,17 @@ class TestField(unittest.TestCase):
         field.widget = DummyWidget()
         self.assertEqual(field.render('abc'), 'abc')
 
+    def test_errormsg_error_None(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        self.assertEqual(field.errormsg(), None)
+            
+    def test_errormsg_error_not_None(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        field.error = DummyInvalid('abc')
+        self.assertEqual(field.errormsg(), 'abc')
+
 class TestForm(unittest.TestCase):
     def _makeOne(self, schema, **kw):
         from deform.form import Form
@@ -223,3 +234,7 @@ class DummyWidget(object):
     def handle_error(self, field, e):
         self.error = e
 
+class DummyInvalid(object):
+    def __init__(self, msg=None):
+        self.msg = msg
+        
