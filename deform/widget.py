@@ -9,9 +9,8 @@ class Widget(object):
     A widget is the building block for rendering logic.  The
     :class:`deform.widget.Widget` class is never instantiated
     directly: it is the abstract class from which all other widget
-    (and form) types within :mod:`deform.widget` derive.  It should
-    likely also be subclassed by application-developer-defined
-    widgets.
+    types within :mod:`deform.widget` derive.  It should likely also
+    be subclassed by application-developer-defined widgets.
 
     A widget instance is attached to a field during normal operation.
     A widget is not meant to carry any state.  Instead, widget
@@ -484,13 +483,14 @@ class FileUploadWidget(Widget):
 
 class DatePartsWidget(Widget):
     """
-    
     Renders a set of ``<input type='text'/>`` controls based on the
     year, month, and day parts of the serialization of a
     :class:`deform.schema.Date` object or a string in the format
-    ``YYYY-MM-DD``.  This widget is meant to be used with the
-    :class:`deform.schema.Date` type; validation likely won't work as
-    you expect if you use it agains a bare String object.
+    ``YYYY-MM-DD``.  This widget is usually meant to be used as widget
+    which renders a :class:`deform.schema.Date` type; validation
+    likely won't work as you expect if you use it against a
+    :class:`deform.schema.String` object, but it is possible to use it
+    with one if you use a proper validator.
 
     **Attributes/Arguments**
 
