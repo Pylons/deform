@@ -78,7 +78,8 @@ def form_view(request):
         return {'form':pprint.pformat(converted)}
 
     # this was not a form submission; render the form "normally"
-    return {'form':myform.render()}
+    defaults = {'uploads':[{'uid':'/communities/myfile', 'filename':'myfile'}]}
+    return {'form':myform.render(defaults)}
 
 if __name__ == '__main__':
     settings = dict(reload_templates=True)

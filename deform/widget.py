@@ -438,6 +438,10 @@ class FileUploadWidget(Widget):
             cstruct = field.default
         if cstruct is None:
             cstruct = {}
+        if cstruct:
+            uid = cstruct['uid']
+            if not uid in self.tmpstore:
+                self.tmpstore[uid] = cstruct
 
         return field.renderer(self.template, field=field, cstruct=cstruct)
 

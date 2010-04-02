@@ -243,17 +243,18 @@ class TestFileUploadWidget(unittest.TestCase):
         from deform.widget import FileUploadWidget
         return FileUploadWidget(tmpstore, **kw)
     
-    def test_serialize_None(self):
+    def test_serialize_None_with_default(self):
         renderer = DummyRenderer()
         schema = DummySchema()
         field = DummyField(schema, renderer)
-        field.default = 'default'
+        field.default = {'uid':'abc'}
         tmpstore = DummyTmpStore()
         widget = self._makeOne(tmpstore)
         widget.serialize(field, None)
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
-        self.assertEqual(renderer.kw['cstruct'], 'default')
+        self.assertEqual(renderer.kw['cstruct'], field.default)
+        self.assertEqual(tmpstore['abc'], field.default)
 
     def test_serialize_None_no_default(self):
         renderer = DummyRenderer()
@@ -266,6 +267,28 @@ class TestFileUploadWidget(unittest.TestCase):
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], {})
+
+    def test_serialize_uid_not_in_tmpstore(self):
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+        tmpstore = DummyTmpStore()
+        widget = self._makeOne(tmpstore)
+        cstruct = {'uid':'uid'}
+        widget.serialize(field, cstruct)
+        self.assertEqual(tmpstore['uid'], cstruct)
+
+    def test_serialize_uid_in_tmpstore(self):
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+        tmpstore = DummyTmpStore()
+        existing = {'uid':'santa'}
+        tmpstore['uid'] = existing 
+        widget = self._makeOne(tmpstore)
+        cstruct = {'uid':'notsanta'}
+        widget.serialize(field, cstruct)
+        self.assertEqual(tmpstore['uid'], existing)
 
     def test_deserialize_no_file_selected_no_previous_file(self):
         schema = DummySchema()
