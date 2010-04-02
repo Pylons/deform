@@ -140,28 +140,34 @@ class Field(object):
         the return value will be ``None``."""
         return getattr(self.error, 'msg', None)
 
-    def render(self, cstruct=None):
-        """ Render the field to HTML.  This method is usually called
-        when the field is a :class:`deform.form.Form` object, used to
-        render the form in its entirety.
+    def render(self, appstruct=None):
+        """ Render the field (or form) to HTML using ``appstruct`` as
+        a set of default values.  ``appstruct`` is typically a
+        dictionary of application values matching the schema used by
+        this form, or ``None``.
 
         Calling this method is the same as calling::
 
-           field.widget.serialize(field, cstruct)
+           cstruct = form.schema.pserialize(appstruct)
+           form.widget.serialize(field, cstruct)
 
         See the documentation for
+        :meth:`deform.schema.SchemaNode.pserialize` and
         :meth:`deform.widget.Widget.serialize` .
         """
+        if appstruct is None:
+            appstruct = {}
+        cstruct = self.schema.pserialize(appstruct)
         return self.widget.serialize(self, cstruct)
 
     def validate(self, controls):
         """
         Validate the set of controls returned by a form submission
-        against the schema associated with this field.  ``controls``
-        should be a *document-ordered* sequence of two-tuples that
-        represent the form submission data.  Each two-tuple should be
-        in the form ``(key, value)``.  ``node`` should be the schema
-        node associated with this widget.
+        against the schema associated with this field or form.
+        ``controls`` should be a *document-ordered* sequence of
+        two-tuples that represent the form submission data.  Each
+        two-tuple should be in the form ``(key, value)``.  ``node``
+        should be the schema node associated with this widget.
 
         Using WebOb, you can compute a suitable value for ``controls``
         via::
@@ -227,6 +233,7 @@ class Field(object):
         except colander.Invalid, e:
             self.widget.handle_error(self, e)
             raise exception.ValidationFailure(self, cstruct, e)
+
 
 class Form(Field):
     """

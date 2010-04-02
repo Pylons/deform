@@ -94,6 +94,17 @@ class TestField(unittest.TestCase):
         field.children = [child]
         self.assertRaises(KeyError, field.__getitem__, 'nope')
 
+    def test_errormsg_error_None(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        self.assertEqual(field.errormsg, None)
+            
+    def test_errormsg_error_not_None(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        field.error = DummyInvalid('abc')
+        self.assertEqual(field.errormsg, 'abc')
+
     def test_validate_succeeds(self):
         fields = [
             ('name', 'Name'),
@@ -127,16 +138,6 @@ class TestField(unittest.TestCase):
         field.widget = DummyWidget()
         self.assertEqual(field.render('abc'), 'abc')
 
-    def test_errormsg_error_None(self):
-        schema = DummySchema()
-        field = self._makeOne(schema)
-        self.assertEqual(field.errormsg, None)
-            
-    def test_errormsg_error_not_None(self):
-        schema = DummySchema()
-        field = self._makeOne(schema)
-        field.error = DummyInvalid('abc')
-        self.assertEqual(field.errormsg, 'abc')
 
 class TestForm(unittest.TestCase):
     def _makeOne(self, schema, **kw):
@@ -219,6 +220,12 @@ class DummySchema(object):
         if self.exc:
             raise self.exc
         return value
+
+    def serialize(self, value):
+        return value
+
+    pdeserialize = deserialize
+    pserialize = serialize
 
 class DummyType(object):
     def __init__(self, maker=None):

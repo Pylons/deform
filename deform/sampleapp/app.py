@@ -1,7 +1,10 @@
-from paste.httpserver import serve
+import datetime
+import pprint
+
 from repoze.bfg.configuration import Configurator
 import colander
-import pprint
+
+from paste.httpserver import serve
 
 from deform import schema
 from deform import widget
@@ -55,31 +58,39 @@ def form_view(request):
     # entire form by assigning it a validator
     schema = MySchema(validator=validate_form)
 
-    # create a form; it will have a single button named submit.
+    # Create a form; it will have a single button named submit.
     myform = form.Form(schema, buttons=('submit',))
 
-    # associate widgets with fields in the form
+    # Associate widgets with fields in the form
     myform['password'].widget = widget.CheckedPasswordWidget()
     myform['title'].widget = widget.TextInputWidget(size=40)
     myform['color'].widget = widget.RadioChoiceWidget(
         values=(('red', 'Red'),('green', 'Green'),('blue', 'Blue')))
     myform['uploads']['file'].widget = widget.FileUploadWidget(memory)
 
-    # handle the request
+    # Handle the request
     if 'submit' in request.POST:
-        # this was a form submission
+        # This was a form submission
         fields = request.POST.items()
         try:
             converted = myform.validate(fields)
         except exception.ValidationFailure, e:
-            # validation failed
+            # Validation failed
             return {'form':e.render()}
-        # validation succeeded
+        # Validation succeeded
         return {'form':pprint.pformat(converted)}
 
-    # this was not a form submission; render the form "normally"
-    defaults = {'uploads':[{'uid':'/communities/myfile', 'filename':'myfile'}]}
-    return {'form':myform.render(defaults)}
+    # This was not a form submission; render the form "normally".
+    appstruct = {'name':'Fred',
+                'series':{'name':'series 1',
+                          'dates':[datetime.datetime.now()]},
+                'uploads':[{'uid':'/communities/myfile', 'filename':'myfile'}]}
+    # We turn this into an "edit" form by passing an "appstruct"
+    # (default application values related to the schema) to the
+    # "render" method.  If this were an "add" form, we'd wouldn't
+    # supply an appstruct, allowing the form to render without
+    # prefilled fields.
+    return {'form':myform.render(appstruct)}
 
 if __name__ == '__main__':
     settings = dict(reload_templates=True)

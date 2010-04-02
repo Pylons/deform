@@ -7,15 +7,10 @@ class TestFunctional(unittest.TestCase):
         from deform.schema import SchemaNode
         from deform.schema import String
         from deform.schema import Boolean
-        from deform.schema import Integer
+        from deform.schema import Date
     
-        class DateSchema(MappingSchema):
-            month = SchemaNode(Integer())
-            year = SchemaNode(Integer())
-            day = SchemaNode(Integer())
-
         class DatesSchema(SequenceSchema):
-            date = DateSchema()
+            date = SchemaNode(Date())
 
         class SeriesSchema(MappingSchema):
             name = SchemaNode(String())
@@ -67,11 +62,16 @@ class TestFunctional(unittest.TestCase):
         self.assertEqual(inputs[9]['value'], 'series:mapping')
 
     def test_render_not_empty(self):
+        import datetime
         schema = self._makeSchema()
         form = self._makeForm(schema)
-        html = form.render(
-            {'cool':'false',
-             'series':{'dates':[{'day':'21', 'month':'3', 'year':'2010'}]}})
+        appstruct =  {
+            'cool':False,
+            'series':{
+                'dates':[datetime.date(2010, 3, 21)],
+                }
+            }
+        html = form.render(appstruct)
         soup = self._soupify(html)
         form = soup.form
         self.assertEqual(form['action'], '.')
@@ -93,10 +93,10 @@ class TestFunctional(unittest.TestCase):
         self.assertEqual(inputs[7]['value'], 'dates:sequence')
         self.assertEqual(inputs[8]['name'], '__start__')
         self.assertEqual(inputs[8]['value'], 'date:mapping')
-        self.assertEqual(inputs[9]['name'], 'month')
-        self.assertEqual(inputs[9]['value'], '3')
-        self.assertEqual(inputs[10]['name'], 'year')
-        self.assertEqual(inputs[10]['value'], '2010')
+        self.assertEqual(inputs[9]['name'], 'year')
+        self.assertEqual(inputs[9]['value'], '2010')
+        self.assertEqual(inputs[10]['name'], 'month')
+        self.assertEqual(inputs[10]['value'], '03')
         self.assertEqual(inputs[11]['name'], 'day')
         self.assertEqual(inputs[11]['value'], '21')
         self.assertEqual(inputs[12]['name'], '__end__')
@@ -120,8 +120,7 @@ class TestFunctional(unittest.TestCase):
         form = self._makeForm(schema)
         result = form.widget.deserialize(form, filled)
         expected = {'series':
-                    {'dates': [{'year': '2008', 'day': '12', 'month': '10'},
-                               {'year': '2009', 'day': '12', 'month': '10'}],
+                    {'dates': ['2008-10-12', '2009-10-12'],
                      'name': 'date series 1'},
                     'cool': 'false',
                     'name': 'project1',

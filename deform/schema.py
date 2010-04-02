@@ -116,6 +116,9 @@ class FileData(object):
             raise colander.Invalid(node, 'Required')
         return value
 
+    pserialize = serialize
+    pdeserialize = deserialize
+
 # schema nodes
 
 class SchemaNode(colander.SchemaNode):
