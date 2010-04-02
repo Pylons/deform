@@ -243,6 +243,7 @@ class CheckedInputWidget(Widget):
     template = 'checked_input'
     size = None
     mismatch_message = 'Fields did not match'
+    subject = 'Value'
 
     def serialize(self, field, cstruct=None):
         if cstruct is None:
@@ -251,7 +252,7 @@ class CheckedInputWidget(Widget):
             cstruct = ''
         confirm = getattr(field, 'confirm', '')
         return field.renderer(self.template, field=field, cstruct=cstruct,
-                              confirm=confirm)
+                              confirm=confirm, subject=self.subject)
         
     def deserialize(self, field, pstruct):
         if pstruct is None:
