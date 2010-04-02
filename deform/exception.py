@@ -38,3 +38,7 @@ class ValidationFailure(Exception):
         rendering.
         """
         return self.field.render(self.cstruct)
+
+class TemplateError(Exception):
+    pass
+

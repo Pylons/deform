@@ -4,6 +4,8 @@ from pkg_resources import resource_filename
 from chameleon.zpt import language
 from chameleon.zpt.template import PageTemplateFile
 
+from deform.exception import TemplateError
+
 def cache(func):
     def load(self, *args):
         template = self.registry.get(args)
@@ -11,9 +13,6 @@ def cache(func):
             self.registry[args] = template = func(self, *args)
         return template
     return load
-
-class TemplateError(Exception):
-    pass
 
 class ChameleonZPTTemplateLoader(object):
     parser = language.Parser()

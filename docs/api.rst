@@ -1,6 +1,71 @@
 API Documentation
 =================
 
+Form-Related
+------------
+
+.. automodule:: deform
+
+.. autoclass:: Field
+   :members:
+
+.. autoclass:: Form
+   :members:
+
+.. autoclass:: Button
+   :members:
+
+Type-Related
+------------
+
+.. autoclass:: Mapping
+   :members:
+
+.. autoclass:: Sequence
+   :members:
+
+.. autoclass:: String
+   :members:
+
+.. autoclass:: Integer
+   :members:
+
+.. autoclass:: Float
+   :members:
+
+.. autoclass:: Boolean
+   :members:
+
+.. autoclass:: FileData
+   :members:
+
+Schema-Related
+--------------
+
+.. autoclass:: SchemaNode
+   :members:
+
+.. autoclass:: Schema
+   :members:
+
+.. autoclass:: MappingSchema
+   :members:
+
+.. autoclass:: SequenceSchema
+   :members:
+
+Exception-Related
+-----------------
+
+.. autoclass:: ValidationFailure
+   :members:
+
+.. autoclass:: Invalid
+   :members:
+
+.. autoclass:: TemplateError
+   :members:
+
 Widget-Related
 --------------
 
@@ -40,72 +105,6 @@ Widget-Related
    :members:
 
 .. autoclass:: FormWidget
-   :members:
-
-Form-Related
-------------
-
-.. automodule:: deform.form
-
-.. autoclass:: Field
-   :members:
-
-.. autoclass:: Form
-   :members:
-
-.. autoclass:: Button
-   :members:
-
-Exception-Related
------------------
-
-.. automodule:: deform.exception
-
-.. autoclass:: ValidationFailure
-   :members:
-
-.. autoclass:: Invalid
-   :members:
-
-Type-Related
-------------
-
-.. automodule:: deform.schema
-
-.. autoclass:: Mapping
-   :members:
-
-.. autoclass:: Sequence
-   :members:
-
-.. autoclass:: String
-   :members:
-
-.. autoclass:: Integer
-   :members:
-
-.. autoclass:: Float
-   :members:
-
-.. autoclass:: Boolean
-   :members:
-
-.. autoclass:: FileData
-   :members:
-
-Schema-Related
---------------
-
-.. autoclass:: SchemaNode
-   :members:
-
-.. autoclass:: Schema
-   :members:
-
-.. autoclass:: MappingSchema
-   :members:
-
-.. autoclass:: SequenceSchema
    :members:
 
 Template-Related
