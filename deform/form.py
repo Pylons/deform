@@ -169,13 +169,14 @@ class Field(object):
         two-tuple should be in the form ``(key, value)``.  ``node``
         should be the schema node associated with this widget.
 
-        Using WebOb, you can compute a suitable value for ``controls``
-        via::
+        For example, using WebOb, you can compute a suitable value for
+        ``controls`` via::
 
           request.POST.items()
 
-        Using cgi.FieldStorage named ``fs``, you can compute a
-        suitable value for ``controls`` via::
+        Or, if you're using a ``cgi.FieldStorage`` object named
+        ``fs``, you can compute a suitable value for ``controls``
+        via::
 
           controls = []
           if fs.list:
