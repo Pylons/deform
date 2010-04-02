@@ -17,13 +17,14 @@ def cache(func):
 class ChameleonZPTTemplateLoader(object):
     parser = language.Parser()
 
-    def __init__(self, search_path=None, auto_reload=False):
+    def __init__(self, search_path=None, auto_reload=False, encoding='utf-8'):
         if search_path is None:
             search_path = []
         if isinstance(search_path, basestring):
             search_path = [search_path]
         self.search_path = search_path
         self.auto_reload = auto_reload
+        self.encoding = encoding
         self.registry = {}
         self.notexists = {}
 
@@ -35,7 +36,8 @@ class ChameleonZPTTemplateLoader(object):
                 raise TemplateError("Can not find template %s" % filename)
             try:
                 return PageTemplateFile(path, parser=self.parser,
-                                        auto_reload=self.auto_reload)
+                                        auto_reload=self.auto_reload,
+                                        encoding=self.encoding)
             except OSError:
                 self.notexists[path] = True
 
