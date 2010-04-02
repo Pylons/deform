@@ -37,7 +37,7 @@ class ValidationFailure(Exception):
         arguments and returns text representing the HTML of a form
         rendering.
         """
-        return self.field.render(self.cstruct)
+        return self.field.widget.serialize(self.field, self.cstruct)
 
 class TemplateError(Exception):
     pass
