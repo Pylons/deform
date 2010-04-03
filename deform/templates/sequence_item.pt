@@ -6,7 +6,7 @@
                                >*</span>
   <img class="deform_closebutton" 
        src="${field.widget.static_url}/images/close.png" 
-       alt="Remove" onclick="javascript:remove_parent(this.parentNode);"/>
+       alt="Remove" onclick="javascript:$(this).parent().parent().remove();"/>
 
   </label>
   <span tal:replace="structure field.widget.serialize(field, cstruct)"/>

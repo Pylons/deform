@@ -1,23 +1,9 @@
-function last_sibling(node) {
-    var tempObj=node.parentNode.lastChild;
-    // nodeType 1 == element
-    while(tempObj.nodeType != 1 && tempObj.previousSibling != null) {
-        tempObj=tempObj.previousSibling;
-    }
-    return (tempObj.nodeType == 1) ? tempObj: false;
-}
-
-function insert_after(node, target) {
-    target.parentNode.insertBefore(node, target);
-}
-    
-function add_new_item(source) {
+function add_new_item(protonode, before) {
     // - Clone the prototype node.
     // - Find all the labels in the prototype node.
     // - For each label referencing an id, find the node with that id.
     // - Change the label reference and the node id to a random string. 
-    // - Add the cloned node to the sequence.
-    var protonode = source.previousElementSibling;
+    // - Add the cloned node to the sequence before the "before" node
     var code = protonode.attributes['prototype'].value;
     var html = decodeURIComponent(code);
     var $node = $(html);
@@ -31,11 +17,7 @@ function add_new_item(source) {
             label.htmlFor = genid;
         };
     };
-    insert_after($node[0], last_sibling(source));
-}
-
-function remove_parent(source) {
-    source.parentNode.parentNode.removeChild(source.parentNode);
+    $node.insertBefore(before);
 }
 
 function randomString(length) {
@@ -51,4 +33,3 @@ function randomString(length) {
     }
     return str;
 }
-

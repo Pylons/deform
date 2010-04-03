@@ -1,13 +1,26 @@
-<div>
+<div class="deform_sequence">
   <input type="hidden" name="__start__" value="${field.name}:sequence"
+         class="deform_prototype" 
          tal:attributes="prototype field.widget.prototype(field)"/>
-  <div onclick="add_new_item(this);">${field.title} 
-      <a href="javascript:deform_add(this);"><small>(add)</small></a></div>
-  <div tal:repeat="(item, f) subfields">
+  <div>
+    ${field.title} 
+    <a href="#" 
+       onclick="javascript:add_new_item($(this).parents('.deform_sequence').children()[0],
+                $(this).parents('.deform_sequence').find('.insert_target')[0]);
+                return false;"><small>(add)</small></a>
+  </div>
+
+  <div tal:repeat="tup subfields">
     <span tal:define="rndr field.renderer;
                       tmpl field.widget.item_template"
-          tal:replace="structure rndr(tmpl, field=f, cstruct=item)"/>
+          tal:replace="structure rndr(tmpl, field=tup[1], cstruct=tup[0])"/>
+    <span tal:condition="repeat['tup'].end" class="insert_target"/>
   </div>
+
+  <div tal:condition="not subfields">
+    <span tal:condition="not subfields" class="insert_target"/>
+  </div>
+
   <input type="hidden" name="__end__" value="${field.name}:sequence"/>
 
 </div>
