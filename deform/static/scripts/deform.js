@@ -1,4 +1,4 @@
-function add_new_item(protonode, before) {
+function dfAddNewItem(protonode, before) {
     // - Clone the prototype node and add it before the "before" node.
 
     // In order to avoid breaking accessibility:

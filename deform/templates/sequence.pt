@@ -12,7 +12,7 @@
      class="dfSeqAdd"
      title="Add new ${field.title}"
      onclick="javascript:
-              add_new_item($(this).parent().children('.dfProto')[0],
+              dfAddNewItem($(this).parent().children('.dfProto')[0],
               $(this).parent().children('.dfInsertBefore')[0]);
               return false;">
     <small>(add)</small>
