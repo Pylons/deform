@@ -1,26 +1,28 @@
-<div class="deform_sequence">
+<div class="dfSeq"
+     tal:define="rndr field.renderer;
+                 tmpl field.widget.item_template">
+  <!-- sequence -->
+
+  ${field.title}
   <input type="hidden" name="__start__" value="${field.name}:sequence"
-         class="deform_prototype" 
+         class="dfProto" 
          tal:attributes="prototype field.widget.prototype(field)"/>
-  <div>
-    ${field.title} 
-    <a href="#" 
-       onclick="javascript:add_new_item($(this).parents('.deform_sequence').children()[0],
-                $(this).parents('.deform_sequence').find('.insert_target')[0]);
-                return false;"><small>(add)</small></a>
-  </div>
 
-  <div tal:repeat="tup subfields">
-    <span tal:define="rndr field.renderer;
-                      tmpl field.widget.item_template"
-          tal:replace="structure rndr(tmpl, field=tup[1], cstruct=tup[0])"/>
-    <span tal:condition="repeat['tup'].end" class="insert_target"/>
-  </div>
+  <a href="#"
+     class="dfSeqAdd"
+     title="Add new ${field.title}"
+     onclick="javascript:
+              add_new_item($(this).parent().children('.dfProto')[0],
+              $(this).parent().children('.dfInsertBefore')[0]);
+              return false;">
+    <small>(add)</small>
+  </a>
 
-  <div tal:condition="not subfields">
-    <span tal:condition="not subfields" class="insert_target"/>
-  </div>
+  <div tal:repeat="tup subfields"
+       tal:content="structure rndr(tmpl, field=tup[1], cstruct=tup[0])"/>
 
+  <span class="dfInsertBefore"/>
+  
   <input type="hidden" name="__end__" value="${field.name}:sequence"/>
-
+  <!-- /sequence -->
 </div>

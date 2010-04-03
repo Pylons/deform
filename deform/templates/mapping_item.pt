@@ -1,5 +1,5 @@
 <li tal:attributes="class field.error and field.widget.error_class">
-  <!-- mapping_item.html -->
+  <!-- mapping_item -->
   <label tal:condition="not field.widget.hidden"
          class="desc"
          for="${field.oid}"
@@ -13,4 +13,5 @@
   </p>
   <p tal:condition="field.error and not field.widget.hidden" 
      class="${field.widget.error_class}">${field.error.msg}</p>
+  <!-- /mapping_item -->
 </li>

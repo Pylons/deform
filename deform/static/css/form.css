@@ -912,14 +912,14 @@ form li.paging-context{
 
 /* chrism additions*/
 
-img.deform_closebutton {
+img.dfClosebutton {
    border: 0;
    cursor: pointer;
    width: 1em;
    height: 1em;
 }
 
-a.deform_add:visited {
+a.dfSeqAdd:visited {
    color: blue;
 }
 

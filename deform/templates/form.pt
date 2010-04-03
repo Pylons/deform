@@ -6,7 +6,7 @@
   enctype="multipart/form-data"
   accept-charset="utf-8">
 
-  <fieldset class="deform_form_fieldset">
+  <fieldset class="dfFormFieldset">
 
     <legend tal:condition="field.title">${field.title}</legend>
 

@@ -1,4 +1,5 @@
-<fieldset class="deform_mapping_fieldset">
+<fieldset class="dfMappingFieldset">
+  <!-- mapping -->
   <legend tal:condition="field.title">${field.title}</legend>
   <ul>
     <li class="errorLi" tal:condition="field.errormsg">
@@ -16,4 +17,5 @@
        tal:replace="structure rndr(tmpl,field=f,cstruct=cstruct.get(f.name))"/>
     <input type="hidden" name="__end__" value="${field.name}:mapping"/>
   </ul>
+  <!-- /mapping -->
 </fieldset>
