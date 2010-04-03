@@ -1,19 +1,38 @@
 function add_new_item(protonode, before) {
-    // - Clone the prototype node.
-    // - Find all the labels in the prototype node.
+    // - Clone the prototype node and add it before the "before" node.
+
+    // In order to avoid breaking accessibility:
+    //
+    // - Find all the label tags within the prototype node.
     // - For each label referencing an id, find the node with that id.
     // - Change the label reference and the node id to a random string. 
-    // - Add the cloned node to the sequence before the "before" node
+
     var code = protonode.attributes['prototype'].value;
     var html = decodeURIComponent(code);
     var $node = $(html);
     var $labels = $node.find('label');
+    var labeled = {};
+
+    // find all labels for each id
     for (var i = 0; i < $labels.length; i++) {
         var label = $labels.get(i);
         var labelid = label.htmlFor;
         if (labelid) {
-            genid = randomString(10);
-            $node.find('#' + labelid).attr('id', genid);
+            var tmp = labeled[labelid] || [];
+            tmp.push(label);
+            labeled[labelid] = tmp;
+        };
+    };
+
+    // for each labelid, find the node it points to and replace its id
+    // with a generated id; also set the for= attribute of the labels
+    // which reference to the same generated id
+    for (labelid in labeled) {
+        var labels = labeled[labelid];
+        var genid = randomString(10);
+        $node.find('#' + labelid).attr('id', genid);
+        for (var i = 0; i < labels.length; i++) {
+            var label = labels[i];
             label.htmlFor = genid;
         };
     };
