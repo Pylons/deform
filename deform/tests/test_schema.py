@@ -9,6 +9,25 @@ def invalid_exc(func, *arg, **kw):
     else:
         raise AssertionError('Invalid not raised') # pragma: no cover
 
+class TestString(unittest.TestCase):
+    def _makeOne(self, **kw):
+        from deform.schema import String
+        return String(**kw)
+
+    def test_serialize_value_is_unicode(self):
+        node = DummySchemaNode()
+        typ = self._makeOne()
+        result = typ.serialize(node, u'unicode')
+        self.failUnless(isinstance(result, unicode))
+        self.assertEqual(result, u'unicode')
+
+    def test_serialize_value_is_str(self):
+        node = DummySchemaNode()
+        typ = self._makeOne()
+        result = typ.serialize(node, 'str')
+        self.failUnless(isinstance(result, unicode))
+        self.assertEqual(result, u'str')
+
 class TestMappingSchema(unittest.TestCase):
     def test_construction(self):
         from deform.schema import MappingSchema

@@ -12,6 +12,11 @@ class Sequence(colander.Sequence):
 
 class String(colander.String):
     default_widget_maker = widget.TextInputWidget
+    # Widgets can (and should) deal with Unicode rather than an
+    # encoded string.  The colander base widget serializes to ``str``;
+    # we override that here, causing ``serialize`` to return a
+    # ``unicode`` object by aliasing serialize to deserialize.
+    serialize = colander.String.deserialize
 
 class Integer(colander.Integer):
     default_widget_maker = widget.TextInputWidget
