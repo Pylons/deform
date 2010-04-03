@@ -148,16 +148,16 @@ class Field(object):
 
         Calling this method is the same as calling::
 
-           cstruct = form.schema.pserialize(appstruct)
+           cstruct = form.schema.serialize(appstruct)
            form.widget.serialize(field, cstruct)
 
         See the documentation for
-        :meth:`deform.schema.SchemaNode.pserialize` and
+        :meth:`deform.schema.SchemaNode.serialize` and
         :meth:`deform.widget.Widget.serialize` .
         """
         if appstruct is None:
             appstruct = {}
-        cstruct = self.schema.pserialize(appstruct)
+        cstruct = self.schema.serialize(appstruct)
         return self.widget.serialize(self, cstruct)
 
     def validate(self, controls):

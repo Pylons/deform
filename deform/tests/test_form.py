@@ -224,9 +224,6 @@ class DummySchema(object):
     def serialize(self, value):
         return value
 
-    pdeserialize = deserialize
-    pserialize = serialize
-
 class DummyType(object):
     def __init__(self, maker=None):
         self.default_widget_maker = maker
