@@ -1,15 +1,15 @@
 /* - - - Custom Theme - - - */
 
 /* ----- Logo ----- */
-h1 a {
-	background-image:url('../images/wflogo.png'); 
-	min-height:0;
-	height:40px;
-}
-* html h1 a {/* IE6 png Support */
-	background-image: none;
-	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../images/wflogo.png", sizingMethod="crop");
-}
+/* h1 a { */
+/* 	background-image:url('../images/wflogo.png');  */
+/* 	min-height:0; */
+/* 	height:40px; */
+/* } */
+/* * html h1 a {/\* IE6 png Support *\/ */
+/* 	background-image: none; */
+/* 	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../images/wflogo.png", sizingMethod="crop"); */
+/* } */
 
 /* ----- Backgrounds ----- */
 html{
