@@ -40,7 +40,8 @@ function add_new_item(protonode, before) {
 }
 
 function randomString(length) {
-    var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz'.split('');
+    var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';
+    chars = chars.split('');
     
     if (! length) {
         length = Math.floor(Math.random() * chars.length);
