@@ -11,9 +11,10 @@ from deform.schema import MappingSchema # API
 from deform.schema import Schema # API
 from deform.schema import SequenceSchema # API
 
+from deform.field import Field # API
+
 from deform.form import Form # API
 from deform.form import Button # API
-from deform.form import Field # API
 
 from deform.exception import Invalid # API
 from deform.exception import ValidationFailure # API

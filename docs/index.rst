@@ -88,17 +88,16 @@ Here's the Python code:
    from paste.httpserver import serve
    from repoze.bfg.configuration import Configurator
 
-   from deform.exception import ValidationFailure
-
-   from deform.schema import MappingSchema
-   from deform.schema import SequenceSchema
-   from deform.schema import SchemaNode
-   from deform.schema import String
-   from deform.schema import Boolean
-   from deform.schema import Integer
+   from deform import ValidationFailure
+   from deform import MappingSchema
+   from deform import SequenceSchema
+   from deform import SchemaNode
+   from deform import String
+   from deform import Boolean
+   from deform import Integer
+   from deform import Form
 
    from deform import widget
-   from deform import form
 
    class DateSchema(MappingSchema):
        month = SchemaNode(Integer())
@@ -119,7 +118,7 @@ Here's the Python code:
 
    def form_view(request):
        schema = MySchema()
-       myform = form.Form(schema, buttons=('submit',))
+       myform = Form(schema, buttons=('submit',))
 
        myform['password'].widget = widget.CheckedPasswordWidget()
        myform['title'].widget = widget.TextInputWidget(size=40)
