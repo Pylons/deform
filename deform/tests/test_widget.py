@@ -41,6 +41,14 @@ class TestWidget(unittest.TestCase):
         self.assertEqual(inner_field.error, inner_error)
         self.assertEqual(outer_field.error, outer_error)
 
+    def test_handle_error_already_has_error(self):
+        widget = self._makeOne()
+        widget.error = 'abc'
+        field = DummyField()
+        error = DummyInvalid()
+        widget.handle_error(field, error)
+        self.assertEqual(widget.error, 'abc')
+
 class TestTextInputWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import TextInputWidget
@@ -577,6 +585,14 @@ class TestSequenceWidget(unittest.TestCase):
         widget.handle_error(field, error)
         self.assertEqual(field.error, error)
         self.assertEqual(inner_widget.error, inner_invalid)
+
+    def test_handle_error_already_has_error(self):
+        widget = self._makeOne()
+        widget.error = 'abc'
+        field = DummyField()
+        error = DummyInvalid()
+        widget.handle_error(field, error)
+        self.assertEqual(widget.error, 'abc')
 
 class TestFormWidget(unittest.TestCase):
     def _makeOne(self, **kw):
