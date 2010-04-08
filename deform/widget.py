@@ -2,7 +2,7 @@ import random
 import string
 import urllib
 
-from deform import exception
+from deform.exception import Invalid
 
 class Widget(object):
     """
@@ -71,7 +71,8 @@ class Widget(object):
         raise NotImplementedError
 
     def handle_error(self, field, error):
-        field.error = error
+        if field.error is None:
+            field.error = error
         # XXX exponential time
         for e in error.children:
             for num, subfield in enumerate(field.children):
@@ -261,9 +262,7 @@ class CheckedInputWidget(Widget):
         confirm = pstruct.get('confirm') or ''
         field.confirm = confirm
         if value != confirm:
-            field.error = exception.Invalid(
-                field,
-                self.mismatch_message)
+            raise Invalid(field.schema, self.mismatch_message, value)
         return value
 
 class CheckedPasswordWidget(CheckedInputWidget):
@@ -308,7 +307,7 @@ class MappingWidget(Widget):
         return field.renderer(self.template, field=field, cstruct=cstruct)
 
     def deserialize(self, field, pstruct):
-
+        error = None
         result = {}
 
         if pstruct is None:
@@ -316,8 +315,17 @@ class MappingWidget(Widget):
 
         for num, subfield in enumerate(field.children):
             name = subfield.name
-            value = pstruct.get(name)
-            result[name] = subfield.widget.deserialize(subfield, value)
+            subval = pstruct.get(name)
+            try:
+                result[name] = subfield.widget.deserialize(subfield, subval)
+            except Invalid, e:
+                result[name] = e.value
+                if error is None:
+                    error = Invalid(field.schema, value=result)
+                error.add(e, num)
+
+        if error is not None:
+            raise error
 
         return result
 
@@ -385,6 +393,7 @@ class SequenceWidget(Widget):
 
     def deserialize(self, field, pstruct):
         result = []
+        error = None
 
         if pstruct is None:
             pstruct = []
@@ -394,14 +403,25 @@ class SequenceWidget(Widget):
 
         for num, substruct in enumerate(pstruct):
             subfield = item_field.clone()
-            val = subfield.widget.deserialize(subfield, substruct)
-            result.append(val)
+            try:
+                subval = subfield.widget.deserialize(subfield, substruct)
+            except Invalid, e:
+                subval = e.value
+                if error is None:
+                    error = Invalid(field.schema, value=result)
+                error.add(e, num)
+
+            result.append(subval)
             field.sequence_fields.append(subfield)
+
+        if error is not None:
+            raise error
 
         return result
 
     def handle_error(self, field, error):
-        field.error = error
+        if field.error is None:
+            field.error = error
         # XXX exponential time
         sequence_fields = getattr(field, 'sequence_fields', [])
         for e in error.children:

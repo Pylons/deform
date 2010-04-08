@@ -116,7 +116,23 @@ class TestField(unittest.TestCase):
         result = field.validate(fields)
         self.assertEqual(result, {'name':'Name', 'title':'Title'})
 
-    def test_validate_fails(self):
+    def test_validate_fails_widgeterror(self):
+        from deform.exception import Invalid
+        fields = [
+            ('name', 'Name'),
+            ('title', 'Title'),
+            ]
+        invalid = Invalid(None, None, dict(fields))
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        field.widget = DummyWidget(exc=invalid)
+        e = validation_failure_exc(field.validate, fields)
+        self.assertEqual(field.widget.error, invalid)
+        self.assertEqual(e.cstruct, dict(fields))
+        self.assertEqual(e.field, field)
+        self.assertEqual(e.error, invalid)
+
+    def test_validate_fails_schemaerror(self):
         from deform.exception import Invalid
         fields = [
             ('name', 'Name'),
@@ -131,6 +147,23 @@ class TestField(unittest.TestCase):
         self.assertEqual(e.cstruct, {'name':'Name', 'title':'Title'})
         self.assertEqual(e.field, field)
         self.assertEqual(e.error, invalid)
+
+    def test_validate_fails_widgeterror_and_schemaerror(self):
+        from deform.exception import Invalid
+        fields = [
+            ('name', 'Name'),
+            ('title', 'Title'),
+            ]
+        widget_invalid = Invalid(None, None, dict(fields))
+        schema_invalid = Invalid(None, None)
+        schema = DummySchema(schema_invalid)
+        field = self._makeOne(schema)
+        field.widget = DummyWidget(exc=widget_invalid)
+        e = validation_failure_exc(field.validate, fields)
+        self.assertEqual(field.widget.error, schema_invalid)
+        self.assertEqual(e.cstruct, dict(fields))
+        self.assertEqual(e.field, field)
+        self.assertEqual(e.error, schema_invalid)
 
     def test_render(self):
         schema = DummySchema()
@@ -175,7 +208,12 @@ class DummyType(object):
         self.default_widget_maker = maker
         
 class DummyWidget(object):
+    def __init__(self, exc=None):
+        self.exc = exc
+
     def deserialize(self, field, pstruct):
+        if self.exc is not None:
+            raise self.exc
         return pstruct
 
     def serialize(self, field, cstruct=None):

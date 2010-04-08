@@ -1,5 +1,14 @@
 import unittest
 
+def invalid_exc(func, *arg, **kw):
+    from colander import Invalid
+    try:
+        func(*arg, **kw)
+    except Invalid, e:
+        return e
+    else:
+        raise AssertionError('Invalid not raised') # pragma: no cover
+
 class TestWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import Widget
@@ -218,10 +227,10 @@ class TestCheckedInputWidget(unittest.TestCase):
     def test_deserialize_nonmatching(self):
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field,
+        e = invalid_exc(widget.deserialize, field,
                                     {'value':'password', 'confirm':'not'})
-        self.assertEqual(result, 'password')
-        self.assertEqual(field.error.msg, self.mismatch_message)
+        self.assertEqual(e.value, 'password')
+        self.assertEqual(e.msg, self.mismatch_message)
 
     def test_deserialize_matching(self):
         widget = self._makeOne()
@@ -436,6 +445,21 @@ class TestMappingWidget(unittest.TestCase):
         result = widget.deserialize(field, pstruct)
         self.assertEqual(result, {'a':1})
 
+    def test_deserialize_error(self):
+        from colander import Invalid
+        widget = self._makeOne()
+        field = DummyField()
+        inner_field = DummyField()
+        inner_field.name = 'a'
+        inner_widget = DummyWidget(exc=Invalid(inner_field, 'wrong', value='a'))
+        inner_widget.name = 'a'
+        inner_field.widget = inner_widget
+        field.children = [inner_field]
+        pstruct = {'a':1}
+        e = invalid_exc(widget.deserialize, field, pstruct)
+        self.assertEqual(e.value, {'a':'a'})
+        self.assertEqual(e.children[0].value, 'a')
+
 class TestSequenceWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import SequenceWidget
@@ -529,6 +553,17 @@ class TestSequenceWidget(unittest.TestCase):
         self.assertEqual(len(field.sequence_fields), 1)
         self.assertEqual(field.sequence_fields[0], inner_field)
 
+    def test_deserialize_error(self):
+        from colander import Invalid
+        field = DummyField()
+        inner_field = DummyField()
+        inner_field.widget = DummyWidget(exc=Invalid(inner_field, 'wrong', 'a'))
+        field.children = [inner_field]
+        widget = self._makeOne()
+        e = invalid_exc(widget.deserialize, field, ['123'])
+        self.assertEqual(e.value, ['a'])
+        self.assertEqual(e.children[0].value, 'a')
+
     def test_handle_error(self):
         field = DummyField()
         widget = self._makeOne()
@@ -563,7 +598,12 @@ class DummyRenderer(object):
         
 class DummyWidget(object):
     name = 'name'
+    def __init__(self, exc=None):
+        self.exc = exc
+
     def deserialize(self, field, pstruct):
+        if self.exc:
+            raise self.exc
         return pstruct
 
     def handle_error(self, field, error):
