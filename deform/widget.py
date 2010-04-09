@@ -516,13 +516,21 @@ class DatePartsWidget(Widget):
     **Attributes/Arguments**
 
     template
-        The template name used to render the input widget.
+        The template name used to render the input widget.  Default:
+        ``dateparts``.
 
     size
         The size (in columns) of each date part input control.
+        Default: ``None`` (let browser decide).
+
+    assume_y2k
+        If a year is provided in 2-digit form, assume it means
+        2000+year.  Default: ``True``.
+        
     """
     template = 'dateparts'
     size = None
+    assume_y2k = True
 
     def serialize(self, field, cstruct=None):
         if cstruct is None:
@@ -540,5 +548,8 @@ class DatePartsWidget(Widget):
         if pstruct is None:
             return ''
         else:
+            if self.assume_y2k:
+                year = pstruct['year']
+                if len(year) == 2:
+                    pstruct['year'] = '20' + year
             return '%(year)s-%(month)s-%(day)s' % pstruct
-    
