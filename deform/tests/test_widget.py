@@ -425,6 +425,14 @@ class TestDatePartsWidget(unittest.TestCase):
         result = widget.deserialize(field, None)
         self.assertEqual(result, '')
 
+    def test_deserialize_incomplete(self):
+        schema = DummySchema()
+        field = DummyField(schema, None)
+        widget = self._makeOne()
+        e = invalid_exc(widget.deserialize,
+                        field, {'year':'1', 'month':'', 'day':''})
+        self.assertEqual(e.msg, 'Incomplete')
+
 class TestMappingWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import MappingWidget

@@ -552,4 +552,8 @@ class DatePartsWidget(Widget):
                 year = pstruct['year']
                 if len(year) == 2:
                     pstruct['year'] = '20' + year
-            return '%(year)s-%(month)s-%(day)s' % pstruct
+            result = '%(year)s-%(month)s-%(day)s' % pstruct
+            if (not pstruct['year'] or not pstruct['month']
+                or not pstruct['day']):
+                raise Invalid(field.schema, 'Incomplete', result)
+            return result
