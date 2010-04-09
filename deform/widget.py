@@ -37,10 +37,11 @@ class Widget(object):
         The URL to static resources required by the widget.
         Default: ``/static``
 
-    Particular widget types accept keyword arguments that are attached
-    to the widget as attributes.  These are documented as
-    'Attributes/Arguments' within the documentation of each concrete
-    widget implementation subclass.
+    These attributes are accepted as keyword arguments to all widget
+    constructors.  Particular widget types also accept other keyword
+    arguments that get attached to the widget as attributes.  These
+    are documented as 'Attributes/Arguments' within the documentation
+    of each concrete widget implementation subclass.
     """
 
     hidden = False
@@ -92,7 +93,8 @@ class TextInputWidget(Widget):
         widget output (uses browser default size).
 
     template
-        The template name used to render the input widget.
+        The template name used to render the widget.  Default:
+        ``textinput``.
 
     strip
         If true, during deserialization, strip the value of leading
@@ -133,7 +135,8 @@ class TextAreaWidget(TextInputWidget):
         widget output (uses browser default cols).
 
     template
-        The template name used to render the input widget.
+        The template name used to render the widget.  Default:
+        ``textarea``.
 
     strip
         If true, during deserialization, strip the value of leading
@@ -152,7 +155,8 @@ class PasswordWidget(TextInputWidget):
     **Attributes/Arguments**
 
     template
-        The template name used to render the input widget.
+        The template name used to render the widget.  Default:
+        ``password``.
 
     size
         The ``size`` attribute of the password input field (default:
@@ -179,7 +183,8 @@ class CheckboxWidget(Widget):
         the box was left unchecked.  Default: ``false``.
 
     template
-        The template name used to render the input widget.
+        The template name used to render the widget.  Default:
+        ``checkbox``.
 
     """
     true_val = 'true'
@@ -212,7 +217,8 @@ class RadioChoiceWidget(Widget):
         value.
 
     template
-        The template name used to render the input widget.
+        The template name used to render the widget.  Default:
+        ``radio_choice``.
     """
     template = 'radio_choice'
     values = ()
@@ -235,7 +241,8 @@ class CheckedInputWidget(Widget):
     **Attributes/Arguments**
 
     template
-        The template name used to render the input widget.
+        The template name used to render the widget.  Default:
+        ``checked_input``.
 
     size
         The ``size`` attribute of the input fields (default:
@@ -273,7 +280,8 @@ class CheckedPasswordWidget(CheckedInputWidget):
     **Attributes/Arguments**
 
     template
-        The template name used to render the input widget.
+        The template name used to render the widget.  Default:
+        ``checked_password``.
 
     size
         The ``size`` attribute of the password input field (default:
@@ -290,10 +298,12 @@ class MappingWidget(Widget):
     **Attributes/Arguments**
 
     template
-        The template name used to render the mapping.
+        The template name used to render the widget.  Default:
+        ``mapping``.
 
     item_template
         The template name used to render each item in the mapping.
+        Default: ``mapping_item``.
 
     """
     template = 'mapping'
@@ -330,18 +340,21 @@ class MappingWidget(Widget):
         return result
 
 class FormWidget(MappingWidget):
-    template = 'form'
     """
     The top-level widget; represents an entire form.
 
     **Attributes/Arguments**
 
     template
-        The template name used to render the form.
+        The template name used to render the widget.  Default:
+        ``form``.
 
     item_template
         The template name used to render each item in the form.
+        Default: ``mapping_item``.
+        
     """
+    template = 'form'
 
 class SequenceWidget(Widget):
     """
@@ -351,10 +364,12 @@ class SequenceWidget(Widget):
     **Attributes/Arguments**
 
     template
-        The template name used to render the sequence.
+        The template name used to render the widget.  Default:
+        ``sequence``.
 
     item_template
         The template name used to render each value in the sequence.
+        Default: ``sequence_item``.
 
     """
     hidden = True
@@ -437,7 +452,8 @@ class FileUploadWidget(Widget):
     **Attributes/Arguments**
 
     template
-        The template name used to render the file upload.
+        The template name used to render the widget.  Default:
+        ``file_upload``.
 
     size
         The ``size`` attribute of the input field (default ``None``).
