@@ -6,10 +6,11 @@
          title="${field.description}"
          for="${field.oid}"
          >${field.title}<span tal:condition="field.required" class="req"
-                               >*</span>
+                              id="req-${field.oid}">*</span>
   </label>
   <span tal:replace="structure field.widget.serialize(field, cstruct)"/>
-  <p tal:condition="field.error and not field.widget.hidden" 
+  <p tal:condition="field.error and not field.widget.hidden"
+     id="error-${field.oid}"
      class="${field.widget.error_class}">${field.error.msg}</p>
   <!-- /mapping_item -->
 </li>
