@@ -25,7 +25,7 @@ class TestField(unittest.TestCase):
         self.assertEqual(field.default, 'sdefault')
         self.assertEqual(field.required, True)
         self.assertEqual(field.order, 0)
-        self.assertEqual(field.oid, 'deform_field0')
+        self.assertEqual(field.oid, 'deformField0')
         self.assertEqual(field.children, [])
         self.assertEqual(field.typ, schema.typ)
 
