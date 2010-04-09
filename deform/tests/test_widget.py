@@ -409,6 +409,15 @@ class TestDatePartsWidget(unittest.TestCase):
                                     {'year':'01', 'month':'2', 'day':'3'})
         self.assertEqual(result, '2001-2-3')
 
+    def test_deserialize_dont_assume_y2k_2digit(self):
+        schema = DummySchema()
+        field = DummyField(schema, None)
+        widget = self._makeOne()
+        widget.assume_y2k = False
+        result = widget.deserialize(field,
+                                    {'year':'01', 'month':'2', 'day':'3'})
+        self.assertEqual(result, '01-2-3')
+
     def test_deserialize_None(self):
         schema = DummySchema()
         field = DummyField(schema, None)
