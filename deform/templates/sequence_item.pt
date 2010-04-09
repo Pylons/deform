@@ -1,7 +1,9 @@
-<li tal:attributes="class field.error and field.widget.error_class">
+<li tal:attributes="class field.error and field.widget.error_class"
+    title="${field.description}">
   <!-- sequence_item -->
   <label class="desc"
          for="${field.oid}"
+         title="${field.description}"
          >${field.title}<span tal:condition="field.required" class="req"
                                >*</span>
     <img class="dfClosebutton" 
@@ -10,10 +12,6 @@
 
   </label>
   <span tal:replace="structure field.widget.serialize(field, cstruct)"/>
-  <p tal:condition="field.description and not field.widget.hidden" 
-     class="instruct">
-    <small>${field.description}</small>
-  </p>
   <p tal:condition="field.error and not field.widget.hidden"
      class="error">${field.error.msg}</p>
   <!-- /sequence_item -->

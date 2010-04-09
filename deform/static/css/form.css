@@ -13,7 +13,7 @@ Last Updated : July 2, 2009
 }
 .wufoo li{
 /* 	width:62%; */
-	width:75%;
+	width:85%;
 }
 form ul{
 	margin:0;
@@ -569,7 +569,7 @@ form li.focused, form li:hover{
 	position:relative; /* Makes Instructs z-index stay on top in IE. */
 }
 form .instruct{
-	position:absolute;
+ 	position:absolute;
 	top:0;
 	left:0;
 	z-index:1000;

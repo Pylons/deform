@@ -1,16 +1,14 @@
-<li tal:attributes="class field.error and field.widget.error_class">
+<li tal:attributes="class field.error and field.widget.error_class"
+    title="${field.description}">
   <!-- mapping_item -->
   <label tal:condition="not field.widget.hidden"
          class="desc"
+         title="${field.description}"
          for="${field.oid}"
          >${field.title}<span tal:condition="field.required" class="req"
                                >*</span>
   </label>
   <span tal:replace="structure field.widget.serialize(field, cstruct)"/>
-  <p tal:condition="field.description and not field.widget.hidden" 
-     class="instruct">
-    <small>${field.description}</small>
-  </p>
   <p tal:condition="field.error and not field.widget.hidden" 
      class="${field.widget.error_class}">${field.error.msg}</p>
   <!-- /mapping_item -->
