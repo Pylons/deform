@@ -9,7 +9,7 @@ TODOs
 
 - [_] Add Date, Time, and DateTime widget, with pickers.
 
-- [_] Add a single-select widget.
+- [X] Add a single-select widget.
 
 - [_] Add a multi-select widget.
 

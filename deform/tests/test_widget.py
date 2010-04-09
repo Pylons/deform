@@ -198,6 +198,45 @@ class TestRadioChoiceWidget(unittest.TestCase):
         result = widget.deserialize(field, 'true')
         self.assertEqual(result, 'true')
 
+class TestSingleSelectWidget(unittest.TestCase):
+    def _makeOne(self, **kw):
+        from deform.widget import SingleSelectWidget
+        return SingleSelectWidget(**kw)
+    
+    def test_serialize_None(self):
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+        field.default = 'default'
+        widget = self._makeOne()
+        widget.serialize(field, None)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], 'default')
+
+    def test_serialize_not_None(self):
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+        widget = self._makeOne()
+        cstruct = 'abc'
+        widget.serialize(field, cstruct)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], cstruct)
+        
+    def test_deserialize_None(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, None)
+        self.assertEqual(result, '')
+
+    def test_deserialize_other(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, 'true')
+        self.assertEqual(result, 'true')
+
 class TestCheckedInputWidget(unittest.TestCase):
     mismatch_message = 'Fields did not match'
     def _makeOne(self, **kw):

@@ -233,6 +233,36 @@ class RadioChoiceWidget(Widget):
             pstruct = ''
         return pstruct
 
+class SingleSelectWidget(Widget):
+    """
+    Renders ``<select>`` field based on a predefined set of values.
+
+    **Attributes/Arguments**
+
+    values
+        A sequence of two-tuples indicating allowable, displayed
+        values, e.g. ( ('true', 'True'), ('false', 'False') ).  The
+        first element in the tuple is the value that should be
+        returned when the form is posted.  The second is the display
+        value.
+
+    template
+        The template name used to render the widget.  Default:
+        ``select_choice``.
+    """
+    template = 'select_choice'
+    values = ()
+
+    def serialize(self, field, cstruct=None):
+        if cstruct is None:
+            cstruct = field.default
+        return field.renderer(self.template, field=field, cstruct=cstruct)
+
+    def deserialize(self, field, pstruct):
+        if pstruct is None:
+            pstruct = ''
+        return pstruct
+
 class CheckedInputWidget(Widget):
     """
     Renders two text input fields: 'value' and 'confirm'.

@@ -1,0 +1,5 @@
+<select name="${field.name}">
+ <option tal:repeat="(value, description) field.widget.values"
+         tal:attributes="selected value == cstruct"
+         value="${value}">${description}</option>
+</select>
