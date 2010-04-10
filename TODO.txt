@@ -11,11 +11,13 @@ TODOs
 
 - [X] Add a single-select widget.
 
-- [_] Add a multi-select widget.
+- [X] Add a multi-select checkbox widget.
 
 - [_] Add a "combo-box" widget.
 
       o Mixes free-form input with a drop-down.
+
+- [_] Add a multi-select widget using dual lists.
 
 - [_] Add "fixed-lentgh" string widgets
 
