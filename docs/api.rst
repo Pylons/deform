@@ -89,6 +89,12 @@ Widget-Related
 .. autoclass:: CheckedPasswordWidget
    :members:
 
+.. autoclass:: CheckboxChoiceWidget
+   :members:
+
+.. autoclass:: SingleSelectWidget
+   :members:
+
 .. autoclass:: RadioChoiceWidget
    :members:
 
