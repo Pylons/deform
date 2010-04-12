@@ -10,9 +10,9 @@ def validation_failure_exc(func, *arg, **kw):
         raise AssertionError('Form error not raised') # pragma: no cover
 
 class TestField(unittest.TestCase):
-    def _makeOne(self, schema, renderer=None):
+    def _makeOne(self, schema, **kw):
         from deform.field import Field
-        return Field(schema, renderer=renderer)
+        return Field(schema, **kw)
 
     def test_ctor_defaults(self):
         from deform.template import default_renderer
@@ -20,6 +20,7 @@ class TestField(unittest.TestCase):
         field = self._makeOne(schema)
         self.assertEqual(field.schema, schema)
         self.assertEqual(field.renderer, default_renderer)
+        self.assertEqual(field.translate, None)
         self.assertEqual(field.name, 'name')
         self.assertEqual(field.title, 'title')
         self.assertEqual(field.default, 'sdefault')
@@ -34,12 +35,13 @@ class TestField(unittest.TestCase):
         schema = DummySchema()
         node = DummySchema()
         schema.children = [node]
-        field = self._makeOne(schema, renderer='abc')
+        field = self._makeOne(schema, renderer='abc', translate='def')
         self.assertEqual(len(field.children), 1)
         child_field = field.children[0]
         self.assertEqual(child_field.__class__, Field)
         self.assertEqual(child_field.schema, node)
         self.assertEqual(child_field.renderer, 'abc')
+        self.assertEqual(child_field.translate, 'def')
 
     def test_ctor_schema_required(self):
         schema = DummySchema()

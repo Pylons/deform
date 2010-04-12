@@ -20,6 +20,27 @@ class TestChameleonZPTTemplateLoader(unittest.TestCase):
         result = loader.load('test.pt')
         self.failUnless(result)
 
+    def test_load_with_translate(self):
+        import os
+        fixtures = os.path.join(os.path.dirname(__file__), 'fixtures')
+        loader = self._makeOne(search_path=[fixtures], translate='abc')
+        result = loader.load('test.pt')
+        self.assertEqual(result.translate, 'abc')
+
+    def test_load_with_encoding(self):
+        import os
+        fixtures = os.path.join(os.path.dirname(__file__), 'fixtures')
+        loader = self._makeOne(search_path=[fixtures], encoding='utf-16')
+        result = loader.load('test.pt')
+        self.assertEqual(result.encoding, 'utf-16')
+
+    def test_load_with_auto_reload(self):
+        import os
+        fixtures = os.path.join(os.path.dirname(__file__), 'fixtures')
+        loader = self._makeOne(search_path=[fixtures], auto_reload=True)
+        result = loader.load('test.pt')
+        self.assertEqual(result.auto_reload, True)
+
     def test_load_notexists(self):
         import os
         from deform.template import TemplateError
@@ -48,16 +69,25 @@ class TestChameleonZPTTemplateLoader(unittest.TestCase):
         self.assertRaises(TemplateError, loader.load, 'test.pt')
 
 class Test_make_renderer(unittest.TestCase):
-    def _callFUT(self, *dirs):
+    def _callFUT(self, dirs, **kw):
         from deform.template import make_renderer
-        return make_renderer(*dirs)
+        return make_renderer(dirs, **kw)
 
-    def test_it(self):
+    def test_functional(self):
         from pkg_resources import resource_filename
         default_dir = resource_filename('deform', 'tests/fixtures/')
-        renderer = self._callFUT(default_dir)
-        result = renderer('test', **{})
+        renderer = self._callFUT((default_dir,))
+        result = renderer('test')
         self.assertEqual(result, u'<div>Test</div>')
+
+    def test_it(self):
+        renderer = self._callFUT(('dir',), auto_reload=True, encoding='utf-16',
+                                 translate='translate')
+        self.assertEqual(renderer.loader.auto_reload, True)
+        self.assertEqual(renderer.loader.search_path, ('dir',))
+        self.assertEqual(renderer.loader.encoding, 'utf-16')
+        self.assertEqual(renderer.loader.translate, 'translate')
+        
 
 class Test_default_renderer(unittest.TestCase):
     def _callFUT(self, template, **kw):

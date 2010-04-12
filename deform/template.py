@@ -90,8 +90,8 @@ def make_renderer(search_path,
     def renderer(template_name, **kw):
         return loader.load(template_name + '.pt')(**kw)
 
+    renderer.loader = loader # for testing
     return renderer
 
 default_dir = resource_filename('deform', 'templates/')
 default_renderer = make_renderer((default_dir,))
-
