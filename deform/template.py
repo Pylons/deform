@@ -94,4 +94,4 @@ def make_renderer(search_path,
     return renderer
 
 default_dir = resource_filename('deform', 'templates/')
-default_renderer = make_renderer((default_dir,))
+default_renderer = make_renderer((default_dir,), auto_reload=True)
