@@ -211,8 +211,8 @@ class RadioChoiceWidget(Widget):
 
     values
         A sequence of two-tuples indicating allowable, displayed
-        values, e.g. ( ('true', 'True'), ('false', 'False') ).  The
-        first element in the tuple is the value that should be
+        values, e.g. ``( ('true', 'True'), ('false', 'False') )``.
+        The first element in the tuple is the value that should be
         returned when the form is posted.  The second is the display
         value.
 
@@ -241,8 +241,8 @@ class SingleSelectWidget(Widget):
 
     values
         A sequence of two-tuples indicating allowable, displayed
-        values, e.g. ( ('true', 'True'), ('false', 'False') ).  The
-        first element in the tuple is the value that should be
+        values, e.g. ``( ('true', 'True'), ('false', 'False') )``.
+        The first element in the tuple is the value that should be
         returned when the form is posted.  The second is the display
         value.
 
@@ -272,8 +272,8 @@ class CheckboxChoiceWidget(Widget):
 
     values
         A sequence of two-tuples indicating allowable, displayed
-        values, e.g. ( ('true', 'True'), ('false', 'False') ).  The
-        first element in the tuple is the value that should be
+        values, e.g. ``( ('true', 'True'), ('false', 'False') )``.
+        The first element in the tuple is the value that should be
         returned when the form is posted.  The second is the display
         value.
 
