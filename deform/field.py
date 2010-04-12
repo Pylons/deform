@@ -78,20 +78,23 @@ class Field(object):
 
     error = None
 
-    def __init__(self, schema, renderer=None, counter=None):
+    def __init__(self, schema, renderer=None, translate=None, counter=None):
         self.counter = counter or itertools.count()
         self.order = self.counter.next()
         self.oid = 'deformField%s' % self.order
         self.schema = schema
         self.typ = self.schema.typ # required by Invalid exception
         self.renderer = renderer or template.default_renderer
+        self.translate = translate
         self.name = schema.name
         self.title = schema.title
         self.description = schema.description
         self.required = schema.required
         self.children = []
         for child in schema.children:
-            self.children.append(Field(child,renderer=renderer,
+            self.children.append(Field(child,
+                                       renderer=renderer,
+                                       translate=translate,
                                        counter=self.counter))
 
     def __getitem__(self, name):

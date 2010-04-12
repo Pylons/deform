@@ -23,7 +23,7 @@ CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
 requires = [
     'colander',
-    'chameleon',
+    'chameleon>=1.2.1',
     'peppercorn',
     ]
 

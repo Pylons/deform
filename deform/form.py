@@ -28,9 +28,10 @@ class Form(field.Field):
         :class:`deform.form.Button` objects.
 
     """
-    def __init__(self, schema, renderer=None, action='.', method='POST',
-                 buttons=()):
-        field.Field.__init__(self, schema, renderer=renderer)
+    def __init__(self, schema, action='.', method='POST',
+                 buttons=(), renderer=None, translate=None):
+        field.Field.__init__(self, schema, renderer=renderer,
+                             translate=translate)
         _buttons = []
         for button in buttons:
             if isinstance(button, basestring):
