@@ -910,16 +910,16 @@ form li.paging-context{
 	display:none !important;
 }
 
-/* chrism additions*/
+/* deform additions*/
 
-img.dfClosebutton {
+img.deformClosebutton {
    border: 0;
    cursor: pointer;
    width: 1em;
    height: 1em;
 }
 
-a.dfSeqAdd:visited {
+a.deformSeqAdd:visited {
    color: blue;
 }
 

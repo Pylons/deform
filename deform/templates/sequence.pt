@@ -5,15 +5,15 @@
 
   ${field.title}
   <input type="hidden" name="__start__" value="${field.name}:sequence"
-         class="dfProto" 
+         class="deformProto" 
          tal:attributes="prototype field.widget.prototype(field)"/>
 
   <a href="#"
-     class="dfSeqAdd"
+     class="deformSeqAdd"
      title="Add new ${field.title}"
      onclick="javascript:
-              dfAddNewItem($(this).parent().children('.dfProto')[0],
-              $(this).parent().children('.dfInsertBefore')[0]);
+              deformAddNewItem($(this).parent().children('.deformProto')[0],
+              $(this).parent().children('.deformInsertBefore')[0]);
               return false;">
     <small>(add)</small>
   </a>
@@ -21,7 +21,7 @@
   <div tal:repeat="tup subfields"
        tal:content="structure rndr(tmpl, field=tup[1], cstruct=tup[0])"/>
 
-  <span class="dfInsertBefore"/>
+  <span class="deformInsertBefore"/>
   
   <input type="hidden" name="__end__" value="${field.name}:sequence"/>
   <!-- /sequence -->

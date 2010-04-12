@@ -1,4 +1,4 @@
-function dfAddNewItem(protonode, before) {
+function deformAddNewItem(protonode, before) {
     // - Clone the prototype node and add it before the "before" node.
 
     // In order to avoid breaking accessibility:
@@ -52,4 +52,8 @@ function randomString(length) {
         str += chars[Math.floor(Math.random() * chars.length)];
     }
     return str;
+}
+
+function deformFocusFirstInput() {
+    $('@id ^= deformField').first().focus();
 }
