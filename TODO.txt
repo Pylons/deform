@@ -32,7 +32,7 @@ TODOs
 
       o Does a lookup and shows author, title, etc..
 
-- [_] Make forms automagically put the cursor into the first field of a form.
+- [X] Make forms automagically put the cursor into the first field of a form.
 
 - [_] Readonly widget variants
 

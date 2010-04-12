@@ -55,5 +55,13 @@ function randomString(length) {
 }
 
 function deformFocusFirstInput() {
-    $('@id ^= deformField').first().focus();
-}
+    var input = $(':input').filter('[id ^= deformField]').first();
+    if (input) {
+        var raw = input.get(0);
+        if (raw.type === 'text' || raw.type === 'file' || 
+            raw.type == 'password' || raw.type == 'text' || 
+            raw.type == 'textarea') { 
+            input.focus();
+        };
+    };
+};
