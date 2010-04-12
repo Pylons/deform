@@ -24,6 +24,9 @@ Type-Related
 .. autoclass:: Sequence
    :members:
 
+.. autoclass:: Set
+   :members:
+
 .. autoclass:: String
    :members:
 

@@ -28,6 +28,44 @@ class TestString(unittest.TestCase):
         self.failUnless(isinstance(result, unicode))
         self.assertEqual(result, u'str')
 
+class TestSet(unittest.TestCase):
+    def _makeOne(self, **kw):
+        from deform.schema import Set
+        return Set(**kw)
+
+    def test_serialize(self):
+        node = DummySchemaNode()
+        typ = self._makeOne()
+        provided = []
+        result = typ.serialize(node, provided)
+        self.failUnless(result is provided)
+
+    def test_deserialize_no_iter(self):
+        node = DummySchemaNode()
+        typ = self._makeOne()
+        e = invalid_exc(typ.deserialize, node, 'str')
+        self.assertEqual(e.msg, "'str' is not iterable")
+
+    def test_deserialize_empty_required_no_default(self):
+        node = DummySchemaNode()
+        typ = self._makeOne()
+        e = invalid_exc(typ.deserialize, node, ())
+        self.assertEqual(e.msg, "Required")
+
+    def test_deserialize_empty_required_with_default(self):
+        node = DummySchemaNode()
+        typ = self._makeOne()
+        node.default = ('abc',)
+        node.required = False
+        result = typ.deserialize(node, ())
+        self.assertEqual(result, set(('abc',)))
+
+    def test_deserialize_valid(self):
+        node = DummySchemaNode()
+        typ = self._makeOne()
+        result = typ.deserialize(node, ('a',))
+        self.assertEqual(result, set(('a',)))
+
 class TestMappingSchema(unittest.TestCase):
     def test_construction(self):
         from deform.schema import MappingSchema

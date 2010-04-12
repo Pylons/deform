@@ -38,10 +38,12 @@ class Widget(object):
         Default: ``/static``
 
     These attributes are accepted as keyword arguments to all widget
-    constructors.  Particular widget types also accept other keyword
-    arguments that get attached to the widget as attributes.  These
-    are documented as 'Attributes/Arguments' within the documentation
-    of each concrete widget implementation subclass.
+    constructors.
+
+    Particular widget types also accept other keyword arguments that
+    get attached to the widget as attributes.  These are documented as
+    'Attributes/Arguments' within the documentation of each concrete
+    widget implementation subclass.
     """
 
     hidden = False
@@ -287,6 +289,8 @@ class CheckboxChoiceWidget(Widget):
     def serialize(self, field, cstruct=None):
         if cstruct is None:
             cstruct = field.default
+        if cstruct is None:
+            cstruct = ()
         return field.renderer(self.template, field=field, cstruct=cstruct)
 
     def deserialize(self, field, pstruct):

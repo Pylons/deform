@@ -1,10 +1,15 @@
-<tal:loop tal:repeat="choice field.widget.values">
- <tal:def tal:define="(value, description) choice">
-  <label for="${field.oid}-${repeat.choice.index}">${description}</label>
-  <input tal:attributes="checked value in cstruct"
-         type="checkbox"
-         name="${field.name}"
-         value="${value}"
-         id="${field.oid}-${repeat.choice.index}"/>
- <tal:def>
-</tal:loop>
+<div>
+  <input type="hidden" name="__start__" value="${field.name}:sequence"/>
+    <tal:loop tal:repeat="choice field.widget.values">
+     <tal:def tal:define="(value, description) choice">
+      <label for="${field.oid}-${repeat.choice.index}">${description}</label>
+        <input tal:attributes="checked value in cstruct"
+               type="checkbox"
+               name="checkbox"
+               value="${value}"
+               id="${field.oid}-${repeat.choice.index}"/>
+     </tal:def>
+    </tal:loop>
+  <input type="hidden" name="__end__" value="${field.name}:sequence"/>
+</div>
+

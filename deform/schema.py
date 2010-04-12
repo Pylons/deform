@@ -121,6 +121,20 @@ class FileData(object):
             raise colander.Invalid(node, 'Required')
         return value
 
+class Set(object):
+    default_widget_maker = widget.CheckboxChoiceWidget
+    def deserialize(self, node, value):
+        if not hasattr(value, '__iter__'):
+            raise colander.Invalid(node, '%r is not iterable' % (value,))
+        if not value:
+            if node.required:
+                raise colander.Invalid(node, 'Required')
+            value = node.default
+        return set(value)
+
+    def serialize(self, node, value):
+        return value
+
 # schema nodes
 
 class SchemaNode(colander.SchemaNode):
