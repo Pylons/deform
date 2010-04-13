@@ -23,5 +23,8 @@ class TestAPI(unittest.TestCase):
         from deform import Invalid
         from deform import ValidationFailure
         from deform import TemplateError
+
+        from deform import MessageFactory
+        
         
         
