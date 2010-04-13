@@ -460,8 +460,8 @@ class MappingWidget(Widget):
     """
     template = 'mapping'
     readonly_template = 'readonly/mapping'
-    item_template = 'sequence_item'
-    readonly_item_template = 'readonly/sequence_item'
+    item_template = 'mapping_item'
+    readonly_item_template = 'readonly/mapping_item'
     hidden = True
     error_class = None
 
