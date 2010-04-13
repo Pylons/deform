@@ -1,0 +1,7 @@
+<li title="${field.description}">
+  <!-- sequence_item -->
+  <span class="desc" title="${field.description}">${field.title}</span>
+  <span tal:replace="structure
+        field.widget.serialize(field, cstruct, readonly=True)"/>
+  <!-- /sequence_item -->
+</li>

@@ -1,0 +1,12 @@
+<div class="dfSeq"
+     tal:define="rndr field.renderer;
+                 tmpl field.widget.readonly_item_template">
+  <!-- sequence -->
+
+  ${field.title}
+
+  <div tal:repeat="tup subfields"
+       tal:content="structure rndr(tmpl, field=tup[1], cstruct=tup[0])"/>
+
+  <!-- /sequence -->
+</div>

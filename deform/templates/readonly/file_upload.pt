@@ -1,0 +1,9 @@
+<div class="fileupload">
+
+  <div class="replaces" tal:condition="cstruct.get('uid')">
+    <span tal:content="cstruct.get('filename')"/>
+  </div>
+
+  <p><em> Read-only. </em></p>
+
+</div>

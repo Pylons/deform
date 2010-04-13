@@ -80,6 +80,9 @@ Widget-Related
 .. autoclass:: TextInputWidget
    :members:
 
+.. autoclass:: HiddenWidget
+   :members:
+
 .. autoclass:: TextAreaWidget
    :members:
 

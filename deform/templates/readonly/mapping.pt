@@ -1,0 +1,15 @@
+<div class="dfMappingFieldset">
+  <!-- mapping -->
+  <p tal:condition="field.title">${field.title}</p>
+  <ul>
+    <li class="section" tal:condition="field.description">
+      <div>${field.description}</div>
+    </li>
+    <div tal:define="rndr field.renderer;
+                     tmpl field.widget.readonly_item_template"
+         tal:repeat="f field.children"
+         tal:replace="structure
+                        rndr(tmpl,field=f,cstruct=cstruct.get(f.name))"/>
+  </ul>
+  <!-- /mapping -->
+</div>

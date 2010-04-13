@@ -170,8 +170,16 @@ class TestField(unittest.TestCase):
     def test_render(self):
         schema = DummySchema()
         field = self._makeOne(schema)
-        field.widget = DummyWidget()
+        widget = field.widget = DummyWidget()
         self.assertEqual(field.render('abc'), 'abc')
+        self.assertEqual(widget.rendered, 'writable')
+
+    def test_render_readonly(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        widget = field.widget = DummyWidget()
+        self.assertEqual(field.render('abc', readonly=True), 'abc')
+        self.assertEqual(widget.rendered, 'readonly')
 
 
 
@@ -210,6 +218,7 @@ class DummyType(object):
         self.default_widget_maker = maker
         
 class DummyWidget(object):
+    rendered = None
     def __init__(self, exc=None):
         self.exc = exc
 
@@ -218,7 +227,8 @@ class DummyWidget(object):
             raise self.exc
         return pstruct
 
-    def serialize(self, field, cstruct=None):
+    def serialize(self, field, cstruct=None, readonly=True):
+        self.rendered = readonly and 'readonly' or 'writable'
         return cstruct
 
     def handle_error(self, field, e):

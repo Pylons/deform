@@ -148,7 +148,7 @@ class Field(object):
         the return value will be ``None``."""
         return getattr(self.error, 'msg', None)
 
-    def render(self, appstruct=None):
+    def render(self, appstruct=None, readonly=False):
         """ Render the field (or form) to HTML using ``appstruct`` as
         a set of default values.  ``appstruct`` is typically a
         dictionary of application values matching the schema used by
@@ -166,7 +166,7 @@ class Field(object):
         if appstruct is None:
             appstruct = {}
         cstruct = self.schema.serialize(appstruct)
-        return self.widget.serialize(self, cstruct)
+        return self.widget.serialize(self, cstruct, readonly=readonly)
 
     def validate(self, controls):
         """

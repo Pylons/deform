@@ -1,0 +1,7 @@
+<ul>
+<li tal:repeat="(value, description) field.widget.values">
+  <span>${description}</span>
+  <em tal:condition="value == cstruct">Selected</em>
+  <em tal:condition="value != cstruct">Not Selected</em>
+</li>
+</ul>

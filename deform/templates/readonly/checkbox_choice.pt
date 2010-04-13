@@ -1,0 +1,12 @@
+<div>
+    <tal:loop tal:repeat="choice field.widget.values">
+     <tal:def tal:define="(value, description) choice">
+      <span>${description}</span>
+        <em id="${field.oid}-${repeat.choice.index}"
+            tal:condition="value in cstruct">Yes</em>
+        <em id="${field.oid}-${repeat.choice.index}"
+            tal:condition="value not in cstruct">No</em>
+     </tal:def>
+    </tal:loop>
+</div>
+
