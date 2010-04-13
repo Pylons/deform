@@ -74,6 +74,11 @@ class Field(object):
         renderer is not passed to the constructor, the default deform
         renderer will be used (only templates from
         ``deform/templates/`` will be used).
+
+    translate
+        A callable which can be used to translate internationalized
+        strings.  XXX: how?
+
     """
 
     error = None
