@@ -1,4 +1,5 @@
 import unittest
+from deform.i18n import DeformMessageFactory as _
 
 def invalid_exc(func, *arg, **kw):
     from colander import Invalid
@@ -397,7 +398,7 @@ class TestCheckboxChoiceWidget(unittest.TestCase):
         self.assertEqual(result, ('abc',))
 
 class TestCheckedInputWidget(unittest.TestCase):
-    mismatch_message = 'Fields did not match'
+    mismatch_message = _('field-mismatch', u'Fields did not match')
     def _makeOne(self, **kw):
         from deform.widget import CheckedInputWidget
         return CheckedInputWidget(**kw)

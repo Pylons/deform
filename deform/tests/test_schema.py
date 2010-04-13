@@ -28,6 +28,17 @@ class TestString(unittest.TestCase):
         self.failUnless(isinstance(result, unicode))
         self.assertEqual(result, u'str')
 
+class TestDate(unittest.TestCase):
+    def _makeOne(self, *arg, **kw):
+        from deform.schema import Date
+        return Date(*arg, **kw)
+
+    def test_deserialize_invalid(self):
+        node = DummySchemaNode(None)
+        typ = self._makeOne()
+        e = invalid_exc(typ.deserialize, node, '10-10-10-10')
+        self.assertEqual(e.msg, 'invalid-date')
+
 class TestSet(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.schema import Set
@@ -44,13 +55,13 @@ class TestSet(unittest.TestCase):
         node = DummySchemaNode()
         typ = self._makeOne()
         e = invalid_exc(typ.deserialize, node, 'str')
-        self.assertEqual(e.msg, "'str' is not iterable")
+        self.assertEqual(e.msg, 'not-iterable')
 
     def test_deserialize_empty_required_no_default(self):
         node = DummySchemaNode()
         typ = self._makeOne()
         e = invalid_exc(typ.deserialize, node, ())
-        self.assertEqual(e.msg, "Required")
+        self.assertEqual(e.msg, 'required')
 
     def test_deserialize_empty_required_with_default(self):
         node = DummySchemaNode()
@@ -99,7 +110,7 @@ class TestFileData(unittest.TestCase):
         typ = self._makeOne()
         node = DummySchemaNode()
         e = invalid_exc(typ.deserialize, node, None)
-        self.assertEqual(e.msg, 'Required')
+        self.assertEqual(e.msg, 'required')
         
     def test_deserialize_notrequired_None(self):
         typ = self._makeOne()

@@ -69,6 +69,11 @@ Exception-Related
 .. autoclass:: TemplateError
    :members:
 
+Internationalization (i18n) -Related
+------------------------------------
+
+.. autoclass:: MessageFactory
+
 Widget-Related
 --------------
 

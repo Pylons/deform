@@ -1,6 +1,7 @@
 import colander
 
 from deform import widget
+from deform.i18n import DeformMessageFactory as _
 
 # data types
 
@@ -29,7 +30,7 @@ class Boolean(colander.Boolean):
 
 class Date(colander.Date):
     default_widget_maker = widget.DatePartsWidget
-    err_template = 'Invalid date'
+    err_template = _('invalid-date', 'Invalid date')
 
 class FileData(object):
     """
@@ -118,17 +119,20 @@ class FileData(object):
 
     def deserialize(self, node, value):
         if not value and node.required:
-            raise colander.Invalid(node, 'Required')
+            raise colander.Invalid(node, _(u'required', 'Required'))
         return value
 
 class Set(object):
     default_widget_maker = widget.CheckboxChoiceWidget
     def deserialize(self, node, value):
         if not hasattr(value, '__iter__'):
-            raise colander.Invalid(node, '%r is not iterable' % (value,))
+            raise colander.Invalid(
+                node,
+                _('not-iterable', '${value} is not iterable', {'value':value})
+                )
         if not value:
             if node.required:
-                raise colander.Invalid(node, 'Required')
+                raise colander.Invalid(node, _(u'required', 'Required'))
             value = node.default
         return set(value)
 

@@ -3,6 +3,7 @@ import string
 import urllib
 
 from deform.exception import Invalid
+from deform.i18n import DeformMessageFactory as _
 
 class Widget(object):
     """
@@ -386,11 +387,15 @@ class CheckedInputWidget(Widget):
     size
         The ``size`` attribute of the input fields (default:
         ``None``, default browser size).
+
+    mismatch_message
+        The message to be displayed when the value in the primary
+        field doesn't match the value in the confirm field.
     """
     template = 'checked_input'
     readonly_template = 'readonly/checked_input'
     size = None
-    mismatch_message = 'Fields did not match'
+    mismatch_message = _('field-mismatch', 'Fields did not match')
     subject = 'Value'
 
     def serialize(self, field, cstruct=None, readonly=False):
