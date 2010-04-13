@@ -2,6 +2,7 @@
     title="${field.description}">
   <!-- sequence_item -->
   <label class="desc"
+         tal:condition="not field.widget.hidden"
          for="${field.oid}"
          title="${field.description}"
          >${field.title}<span tal:condition="field.required" class="req"
