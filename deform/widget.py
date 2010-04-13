@@ -59,7 +59,9 @@ class Widget(object):
         :term:`Colander` schema serialization) to a form rendering and
         return the rendering.  The result of this method should always
         be a string (containing HTML).  The ``field`` argument is the
-        field object to which this widget is attached.
+        field object to which this widget is attached.  The
+        ``readonly`` argument serializes a readonly rendering of the
+        cstruct data to HTML.
         """
         raise NotImplementedError
 
@@ -139,7 +141,7 @@ class HiddenWidget(Widget):
     template = 'hidden'
     hidden = True
 
-    def serialize(self, field, cstruct=None):
+    def serialize(self, field, cstruct=None, readonly=False):
         if cstruct is None:
             cstruct = field.default
         if cstruct is None:

@@ -159,6 +159,9 @@ class Field(object):
            cstruct = form.schema.serialize(appstruct)
            form.widget.serialize(field, cstruct)
 
+        The ``readonly`` argument causes the rendering to be entirely
+        read-only (no input elements at all).
+
         See the documentation for
         :meth:`deform.schema.SchemaNode.serialize` and
         :meth:`deform.widget.Widget.serialize` .
