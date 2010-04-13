@@ -30,7 +30,7 @@ class Boolean(colander.Boolean):
 
 class Date(colander.Date):
     default_widget_maker = widget.DatePartsWidget
-    err_template = _('invalid-date', 'Invalid date')
+    err_template = 'Invalid date'
 
 class FileData(object):
     """

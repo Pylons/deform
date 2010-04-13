@@ -37,7 +37,7 @@ class TestDate(unittest.TestCase):
         node = DummySchemaNode(None)
         typ = self._makeOne()
         e = invalid_exc(typ.deserialize, node, '10-10-10-10')
-        self.assertEqual(e.msg, 'invalid-date')
+        self.assertEqual(e.msg, 'Invalid date')
 
 class TestSet(unittest.TestCase):
     def _makeOne(self, **kw):
