@@ -10,7 +10,7 @@
 
   <a href="#"
      class="deformSeqAdd"
-     title="Add new ${field.title}"
+     title="Add new ${field.children[0].title}"
      onclick="javascript:
               deformAddNewItem($(this).parent().children('.deformProto')[0],
               $(this).parent().children('.deformInsertBefore')[0]);
