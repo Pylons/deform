@@ -1,4 +1,4 @@
-<div class="dfSeq"
+<div class="deformSeq"
      tal:define="rndr field.renderer;
                  tmpl field.widget.item_template">
   <!-- sequence -->

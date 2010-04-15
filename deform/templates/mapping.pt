@@ -1,4 +1,4 @@
-<fieldset class="dfMappingFieldset">
+<fieldset class="deformMappingFieldset">
   <!-- mapping -->
   <legend tal:condition="field.title">${field.title}</legend>
   <ul>

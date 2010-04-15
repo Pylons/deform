@@ -1,4 +1,4 @@
-<div class="dfMappingFieldset">
+<div class="deformMappingFieldset">
   <!-- mapping -->
   <p tal:condition="field.title">${field.title}</p>
   <ul>
