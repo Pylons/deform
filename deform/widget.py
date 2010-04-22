@@ -3,7 +3,7 @@ import string
 import urllib
 
 from deform.exception import Invalid
-from deform.i18n import DeformMessageFactory as _
+from deform.i18n import _
 
 class Widget(object):
     """
@@ -395,7 +395,7 @@ class CheckedInputWidget(Widget):
     template = 'checked_input'
     readonly_template = 'readonly/checked_input'
     size = None
-    mismatch_message = _('field-mismatch', 'Fields did not match')
+    mismatch_message = _('Fields did not match')
     subject = 'Value'
 
     def serialize(self, field, cstruct=None, readonly=False):
@@ -439,7 +439,7 @@ class CheckedPasswordWidget(CheckedInputWidget):
     """
     template = 'checked_password'
     readonly_template = 'readonly/checked_password'
-    mismatch_message = 'Password did not match confirm'
+    mismatch_message = _('Password did not match confirm')
     size = None
 
 class MappingWidget(Widget):
@@ -761,5 +761,5 @@ class DatePartsWidget(Widget):
             result = '%(year)s-%(month)s-%(day)s' % pstruct
             if (not pstruct['year'] or not pstruct['month']
                 or not pstruct['day']):
-                raise Invalid(field.schema, 'Incomplete', result)
+                raise Invalid(field.schema, _('Incomplete'), result)
             return result

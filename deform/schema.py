@@ -1,7 +1,7 @@
 import colander
 
 from deform import widget
-from deform.i18n import DeformMessageFactory as _
+from deform.i18n import _
 
 # data types
 
@@ -103,11 +103,18 @@ class FileData(object):
         display mimetype information.
         """
         if not hasattr(value, 'get'):
-            raise colander.Invalid(node, '%s is not a dictionary' % repr(value))
+            mapping = {'value':repr(value)}
+            raise colander.Invalid(
+                node,
+                _('${value} is not a dictionary', mapping=mapping)
+                )
         for n in ('filename', 'uid'):
             if not n in value:
-                raise colander.Invalid(node,
-                                       '%s has no %s key' % (repr(value), n))
+                mapping = {'value':repr(value), 'key':n}
+                raise colander.Invalid(
+                    node,
+                    _('${value} has no ${key} key', mapping=mapping)
+                    )
         result = {}
         result['filename'] = value['filename']
         result['uid'] = value['uid']
@@ -119,7 +126,7 @@ class FileData(object):
 
     def deserialize(self, node, value):
         if not value and node.required:
-            raise colander.Invalid(node, _(u'required', 'Required'))
+            raise colander.Invalid(node, _('Required'))
         return value
 
 class Set(object):
@@ -128,11 +135,11 @@ class Set(object):
         if not hasattr(value, '__iter__'):
             raise colander.Invalid(
                 node,
-                _('not-iterable', '${value} is not iterable', {'value':value})
+                _('${value} is not iterable', mapping={'value':value})
                 )
         if not value:
             if node.required:
-                raise colander.Invalid(node, _(u'required', 'Required'))
+                raise colander.Invalid(node, _('Required'))
             value = node.default
         return set(value)
 

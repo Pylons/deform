@@ -1,5 +1,4 @@
 import unittest
-from deform.i18n import DeformMessageFactory as _
 
 def invalid_exc(func, *arg, **kw):
     from colander import Invalid
@@ -398,7 +397,6 @@ class TestCheckboxChoiceWidget(unittest.TestCase):
         self.assertEqual(result, ('abc',))
 
 class TestCheckedInputWidget(unittest.TestCase):
-    mismatch_message = _('field-mismatch', u'Fields did not match')
     def _makeOne(self, **kw):
         from deform.widget import CheckedInputWidget
         return CheckedInputWidget(**kw)
@@ -470,7 +468,7 @@ class TestCheckedInputWidget(unittest.TestCase):
         e = invalid_exc(widget.deserialize, field,
                                     {'value':'password', 'confirm':'not'})
         self.assertEqual(e.value, 'password')
-        self.assertEqual(e.msg, self.mismatch_message)
+        self.assertEqual(e.msg, 'Fields did not match')
 
     def test_deserialize_matching(self):
         widget = self._makeOne()
@@ -482,10 +480,18 @@ class TestCheckedInputWidget(unittest.TestCase):
 
 
 class TestCheckedPasswordWidget(TestCheckedInputWidget):
-    mismatch_message = 'Password did not match confirm'
     def _makeOne(self, **kw):
         from deform.widget import CheckedPasswordWidget
         return CheckedPasswordWidget(**kw)
+
+    def test_deserialize_nonmatching(self):
+        widget = self._makeOne()
+        field = DummyField()
+        e = invalid_exc(widget.deserialize, field,
+                                    {'value':'password', 'confirm':'not'})
+        self.assertEqual(e.value, 'password')
+        self.assertEqual(e.msg, 'Password did not match confirm')
+
 
 class TestFileUploadWidget(unittest.TestCase):
     def _makeOne(self, tmpstore, **kw):

@@ -1,2 +1,2 @@
-from zope.i18nmessageid import MessageFactory
-DeformMessageFactory = MessageFactory('deform')
+from internatl import TranslationStringFactory
+_ = TranslationStringFactory('deform')

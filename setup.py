@@ -24,7 +24,7 @@ CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 requires = [
     'colander',
     'chameleon>=1.2.1',
-    'zope.i18nmessageid',
+    'internatl',
     'peppercorn',
     ]
 

@@ -12,7 +12,7 @@ from deform.schema import MappingSchema # API
 from deform.schema import Schema # API
 from deform.schema import SequenceSchema # API
 
-from deform.i18n import MessageFactory # API
+from deform.i18n import _ # API
 
 from deform.field import Field # API
 

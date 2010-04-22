@@ -55,13 +55,13 @@ class TestSet(unittest.TestCase):
         node = DummySchemaNode()
         typ = self._makeOne()
         e = invalid_exc(typ.deserialize, node, 'str')
-        self.assertEqual(e.msg, 'not-iterable')
+        self.assertEqual(e.msg, '${value} is not iterable')
 
     def test_deserialize_empty_required_no_default(self):
         node = DummySchemaNode()
         typ = self._makeOne()
         e = invalid_exc(typ.deserialize, node, ())
-        self.assertEqual(e.msg, 'required')
+        self.assertEqual(e.msg, 'Required')
 
     def test_deserialize_empty_required_with_default(self):
         node = DummySchemaNode()
@@ -110,7 +110,7 @@ class TestFileData(unittest.TestCase):
         typ = self._makeOne()
         node = DummySchemaNode()
         e = invalid_exc(typ.deserialize, node, None)
-        self.assertEqual(e.msg, 'required')
+        self.assertEqual(e.msg, 'Required')
         
     def test_deserialize_notrequired_None(self):
         typ = self._makeOne()
@@ -129,19 +129,19 @@ class TestFileData(unittest.TestCase):
         typ = self._makeOne()
         node = DummySchemaNode()
         e = invalid_exc(typ.serialize, node, None)
-        self.assertEqual(e.msg, 'None is not a dictionary')
+        self.assertEqual(e.msg, '${value} is not a dictionary')
 
     def test_serialize_no_filename(self):
         typ = self._makeOne()
         node = DummySchemaNode()
         e = invalid_exc(typ.serialize, node, {'uid':'uid'})
-        self.assertEqual(e.msg, "{'uid': 'uid'} has no filename key")
+        self.assertEqual(e.msg, "${value} has no ${key} key")
 
     def test_serialize_no_uid(self):
         typ = self._makeOne()
         node = DummySchemaNode()
         e = invalid_exc(typ.serialize, node, {'filename':'filename'})
-        self.assertEqual(e.msg, "{'filename': 'filename'} has no uid key")
+        self.assertEqual(e.msg, "${value} has no ${key} key")
 
     def test_serialize_with_values(self):
         typ = self._makeOne()
