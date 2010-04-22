@@ -4,6 +4,8 @@ from pkg_resources import resource_filename
 from chameleon.zpt import language
 from chameleon.zpt.template import PageTemplateFile
 
+from internatl import ChameleonTranslate
+
 from deform.exception import TemplateError
 
 def cache(func):
@@ -49,7 +51,7 @@ class ChameleonZPTTemplateLoader(object):
 def make_renderer(search_path,
                   auto_reload=False,
                   encoding='utf-8',
-                  translate=None):
+                  translator=None):
     """
     Return a Chameleon ZPT :term:`renderer` which uses 
 
@@ -74,14 +76,16 @@ def make_renderer(search_path,
        and all non-ASCII values passed to the template should be
        expected to adhere to.  Default: ``utf-8``.
 
-    translate
+    translator
+
        A translation function used for internationalization when the
        ``i18n:translate`` attribute syntax is used in the Chameleon
-       template, or, when :mod:`zope.i18n` is active, a
-       :class:`zope.i18nmessageid.Message` is encountered in input.
-       Default: ``None`` (no translation performed).
+       template is active or a :class:`internatl.TranslationString` is
+       encountered in input.  It must accept a translation string and
+       return an interpolated translation.  Default: ``None`` (no
+       translation performed).
     """
-    
+    translate = ChameleonTranslate(translator)
     loader = ChameleonZPTTemplateLoader(search_path=search_path,
                                         auto_reload=auto_reload,
                                         encoding=encoding,

@@ -82,11 +82,11 @@ class Test_make_renderer(unittest.TestCase):
 
     def test_it(self):
         renderer = self._callFUT(('dir',), auto_reload=True, encoding='utf-16',
-                                 translate='translate')
+                                 translator=lambda *arg: 'translation')
         self.assertEqual(renderer.loader.auto_reload, True)
         self.assertEqual(renderer.loader.search_path, ('dir',))
         self.assertEqual(renderer.loader.encoding, 'utf-16')
-        self.assertEqual(renderer.loader.translate, 'translate')
+        self.assertEqual(renderer.loader.translate('a'), 'translation')
         
 
 class Test_default_renderer(unittest.TestCase):
