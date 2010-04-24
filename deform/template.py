@@ -4,7 +4,7 @@ from pkg_resources import resource_filename
 from chameleon.zpt import language
 from chameleon.zpt.template import PageTemplateFile
 
-from internatl import ChameleonTranslate
+from translationstring import ChameleonTranslate
 
 from deform.exception import TemplateError
 

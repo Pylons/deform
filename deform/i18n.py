@@ -1,2 +1,3 @@
-from internatl import TranslationStringFactory
+from translationstring import TranslationStringFactory
 _ = TranslationStringFactory('deform')
+

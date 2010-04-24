@@ -396,7 +396,8 @@ class CheckedInputWidget(Widget):
     readonly_template = 'readonly/checked_input'
     size = None
     mismatch_message = _('Fields did not match')
-    subject = 'Value'
+    subject = _('Value')
+    confirm_subject = _('Confirm Value')
 
     def serialize(self, field, cstruct=None, readonly=False):
         if cstruct is None:
@@ -406,7 +407,9 @@ class CheckedInputWidget(Widget):
         confirm = getattr(field, 'confirm', '')
         template = readonly and self.readonly_template or self.template
         return field.renderer(template, field=field, cstruct=cstruct,
-                              confirm=confirm, subject=self.subject)
+                              confirm=confirm, subject=self.subject,
+                              confirm_subject=self.confirm_subject,
+                              )
 
     def deserialize(self, field, pstruct):
         if pstruct is None:

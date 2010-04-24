@@ -24,9 +24,19 @@ CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 requires = [
     'colander',
     'chameleon>=1.2.1',
-    'internatl',
+    'translationstring',
+    'Babel',
     'peppercorn',
     ]
+
+try:
+    from babel.messages import frontend as babel
+    cmdclass = {'compile_catalog': babel.compile_catalog,
+                'extract_messages': babel.extract_messages,
+                'init_catalog': babel.init_catalog,
+                'update_catalog': babel.update_catalog}
+except ImportError:
+    cmdclass = {}
 
 setup(name='deform',
       version='0.0',
@@ -47,5 +57,6 @@ setup(name='deform',
       tests_require=requires + ['BeautifulSoup'],
       install_requires=requires,
       test_suite="deform",
+      cmdclass=cmdclass,
       entry_points="""""",
       )
