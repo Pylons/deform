@@ -6,8 +6,7 @@
            tal:attributes="size field.widget.size" id="${field.oid}"/>
   </div>
   <div>
-    <label for="${field.oid}-confirm">
-      <span>${confirm_subject}</span> </label>
+    <label for="${field.oid}-confirm">${confirm_subject}</label>
     <input type="text" name="confirm" value="${confirm}"
            tal:attributes="size field.widget.size" id="${field.oid}-confirm"/>
   </div>
