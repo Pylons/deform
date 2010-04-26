@@ -1,3 +1,12 @@
+from deform.field import Field # API
+
+from deform.form import Form # API
+from deform.form import Button # API
+
+from deform.exception import Invalid # API
+from deform.exception import ValidationFailure # API
+from deform.exception import TemplateError # API
+
 from deform.schema import Mapping # API
 from deform.schema import Sequence # API
 from deform.schema import Set # API
@@ -12,13 +21,5 @@ from deform.schema import MappingSchema # API
 from deform.schema import Schema # API
 from deform.schema import SequenceSchema # API
 
-from deform.i18n import _ # API
-
-from deform.field import Field # API
-
-from deform.form import Form # API
-from deform.form import Button # API
-
-from deform.exception import Invalid # API
-from deform.exception import ValidationFailure # API
-from deform.exception import TemplateError # API
+from deform.template import make_renderer # API
+from deform.template import default_renderer # API

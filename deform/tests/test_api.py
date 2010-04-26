@@ -24,7 +24,8 @@ class TestAPI(unittest.TestCase):
         from deform import ValidationFailure
         from deform import TemplateError
 
-        from deform import _
+        from deform import make_renderer
+        from deform import default_renderer
         
         
         

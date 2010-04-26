@@ -127,8 +127,6 @@ Widget-Related
 Template-Related
 ----------------
 
-.. automodule:: deform.template
-
 .. autofunction:: make_renderer
 
 .. attribute:: default_renderer
