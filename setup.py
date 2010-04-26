@@ -54,7 +54,9 @@ setupkw = dict(
 try:
     import babel
     babel = babel # PyFlakes
-    # if babel is installed, advertise message extractors
+    # if babel is installed, advertise message extractors (if we pass
+    # this to setup() unconditionally, and babel isn't installed,
+    # distutils warns pointlessly)
     setupkw['message_extractors'] = { ".": [
         ("**.py",   "chameleon_python", None ),
         ("**.pt",   "chameleon_xml", None ),
