@@ -28,28 +28,38 @@ requires = [
     'peppercorn',
     ]
 
-setup(name='deform',
-      version='0.0',
-      description='Another form generation library',
-      long_description=README + '\n\n' + CHANGES,
-      classifiers=[
+setupkw = dict(
+    name='deform',
+    version='0.0',
+    description='Another form generation library',
+    long_description=README + '\n\n' + CHANGES,
+    classifiers=[
         "Intended Audience :: Developers",
         "Programming Language :: Python",
         ],
-      keywords='web forms form generation schema validation',
-      author="Agendaless Consulting",
-      author_email="repoze-dev@lists.repoze.org",
-      url="http://www.repoze.org",
-      license="BSD-derived (http://www.repoze.org/LICENSE.txt)",
-      packages=find_packages(),
-      include_package_data=True,
-      zip_safe=False,
-      tests_require=requires + ['BeautifulSoup'],
-      install_requires=requires,
-      test_suite="deform",
-      entry_points="""""",
-      message_extractors = { ".": [
-            ("**.py",   "chameleon_python", None ),
-            ("**.pt",   "chameleon_xml", None ),
-            ]},
-      )
+    keywords='web forms form generation schema validation',
+    author="Agendaless Consulting",
+    author_email="repoze-dev@lists.repoze.org",
+    url="http://www.repoze.org",
+    license="BSD-derived (http://www.repoze.org/LICENSE.txt)",
+    packages=find_packages(),
+    include_package_data=True,
+    zip_safe=False,
+    tests_require=requires + ['BeautifulSoup'],
+    install_requires=requires,
+    test_suite="deform",
+    entry_points="""""",
+    )
+
+try:
+    import babel
+    babel = babel # PyFlakes
+    # if babel is installed, advertise message extractors
+    setupkw['message_extractors'] = { ".": [
+        ("**.py",   "chameleon_python", None ),
+        ("**.pt",   "chameleon_xml", None ),
+        ]}
+except ImportError:
+    pass
+
+setup(**setupkw)
