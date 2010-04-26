@@ -4,7 +4,8 @@
   class="wufoo"
   method="${field.method}"
   enctype="multipart/form-data"
-  accept-charset="utf-8">
+  accept-charset="utf-8"
+  i18n:domain="deform">
 
   <fieldset class="dfFormFieldset">
 
@@ -15,9 +16,10 @@
     <ul>
       
       <li class="errorLi" tal:condition="field.error">
-        <h3 class="errorMsgLbl">There was a problem with your submission</h3>
-        <p class="errorMsg">Errors have been <strong>highlighted</strong> below.
-        </p>
+        <h3 class="errorMsgLbl" i18n:translate=""
+            >There was a problem with your submission</h3>
+        <p class="errorMsg" i18n:translate=""
+           >Errors have been highlighted below</p>
       </li>
       
       <li class="section first" tal:condition="field.title">

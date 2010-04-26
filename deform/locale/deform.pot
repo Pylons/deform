@@ -1,0 +1,63 @@
+# Translations template for deform.
+# Copyright (C) 2010 ORGANIZATION
+# This file is distributed under the same license as the deform project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: deform 0.0\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2010-04-25 21:28-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 0.9.5\n"
+
+#: deform/schema.py:109
+msgid "${value} is not a dictionary"
+msgstr ""
+
+#: deform/schema.py:116
+msgid "${value} has no ${key} key"
+msgstr ""
+
+#: deform/schema.py:129 deform/schema.py:142
+msgid "Required"
+msgstr ""
+
+#: deform/schema.py:138
+msgid "${value} is not iterable"
+msgstr ""
+
+#: deform/widget.py:398
+msgid "Fields did not match"
+msgstr ""
+
+#: deform/widget.py:399
+msgid "Value"
+msgstr ""
+
+#: deform/widget.py:400
+msgid "Confirm Value"
+msgstr ""
+
+#: deform/widget.py:445
+msgid "Password did not match confirm"
+msgstr ""
+
+#: deform/widget.py:767
+msgid "Incomplete"
+msgstr ""
+
+#: deform/templates/form.pt:21
+msgid "Errors have been highlighted below"
+msgstr ""
+
+#: deform/templates/form.pt:19
+msgid "There was a problem with your submission"
+msgstr ""
+
