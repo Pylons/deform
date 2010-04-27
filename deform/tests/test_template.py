@@ -1,9 +1,9 @@
 import unittest
 
-class TestChameleonZPTTemplateLoader(unittest.TestCase):
+class TestZPTTemplateLoader(unittest.TestCase):
     def _makeOne(self, **kw):
-        from deform.template import ChameleonZPTTemplateLoader
-        return ChameleonZPTTemplateLoader(**kw)
+        from deform.template import ZPTTemplateLoader
+        return ZPTTemplateLoader(**kw)
 
     def test_search_path_None(self):
         loader = self._makeOne()
@@ -68,26 +68,31 @@ class TestChameleonZPTTemplateLoader(unittest.TestCase):
         loader.notexists[path] = True
         self.assertRaises(TemplateError, loader.load, 'test.pt')
 
-class Test_make_renderer(unittest.TestCase):
-    def _callFUT(self, dirs, **kw):
-        from deform.template import make_renderer
-        return make_renderer(dirs, **kw)
+class TestZPTRendererFactory(unittest.TestCase):
+    def _makeOne(self, dirs, **kw):
+        from deform.template import ZPTRendererFactory
+        return ZPTRendererFactory(dirs, **kw)
 
     def test_functional(self):
         from pkg_resources import resource_filename
         default_dir = resource_filename('deform', 'tests/fixtures/')
-        renderer = self._callFUT((default_dir,))
+        renderer = self._makeOne((default_dir,))
         result = renderer('test')
         self.assertEqual(result, u'<div>Test</div>')
 
     def test_it(self):
-        renderer = self._callFUT(('dir',), auto_reload=True, encoding='utf-16',
-                                 translator=lambda *arg: 'translation')
+        renderer = self._makeOne(
+            ('dir',),
+            auto_reload=True,
+            debug=True,
+            encoding='utf-16',
+            translator=lambda *arg: 'translation',
+            )
         self.assertEqual(renderer.loader.auto_reload, True)
+        self.assertEqual(renderer.loader.debug, True)
         self.assertEqual(renderer.loader.search_path, ('dir',))
         self.assertEqual(renderer.loader.encoding, 'utf-16')
         self.assertEqual(renderer.loader.translate('a'), 'translation')
-        
 
 class Test_default_renderer(unittest.TestCase):
     def _callFUT(self, template, **kw):

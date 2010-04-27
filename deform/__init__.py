@@ -21,5 +21,5 @@ from deform.schema import MappingSchema # API
 from deform.schema import Schema # API
 from deform.schema import SequenceSchema # API
 
-from deform.template import make_renderer # API
+from deform.template import ZPTRendererFactory # API
 from deform.template import default_renderer # API

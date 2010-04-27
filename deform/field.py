@@ -72,23 +72,13 @@ class Field(object):
     renderer
         The template :term:`renderer` associated with the form.  If a
         renderer is not passed to the constructor, the default deform
-        renderer will be used (only templates from
-        ``deform/templates/`` will be used).
-
-    translate
-        A callable which can be used to translate internationalized
-        strings.  XXX: how?
-
-    The Field class has a *class method* named
-    ``set_default_renderer`` which controls the renderer used for
-    instances of the class when no ``renderer`` arguument provided to
-    the class' constructor.
+        renderer will be used (the :term:`default_renderer`).
     """
 
     error = None
-    default_renderer = staticmethod(template.default_renderer)
+    default_renderer = template.default_renderer
 
-    def __init__(self, schema, renderer=None, translate=None, counter=None):
+    def __init__(self, schema, renderer=None, counter=None):
         self.counter = counter or itertools.count()
         self.order = self.counter.next()
         self.oid = 'deformField%s' % self.order
@@ -97,7 +87,6 @@ class Field(object):
         if renderer is None:
             renderer = self.default_renderer
         self.renderer = renderer
-        self.translate = translate
         self.name = schema.name
         self.title = schema.title
         self.description = schema.description
@@ -106,13 +95,40 @@ class Field(object):
         for child in schema.children:
             self.children.append(Field(child,
                                        renderer=renderer,
-                                       translate=translate,
                                        counter=self.counter))
 
     @classmethod
+    def set_zpt_renderer(cls, search_path, auto_reload=True,
+                         debug=True, encoding='utf-8',
+                         translator=None):
+        """ Create a :term:`Chameleon` ZPT renderer that will act as a
+        :term:`default renderer` for instances of the associated class
+        when no ``renderer`` argument is provided to the class'
+        constructor.  The arguments to this classmethod have the same
+        meaning as the arguments provided to a
+        :class:`deform.ZPTRendererFactory`.
+
+        Calling this method resets the :term:`default renderer`.
+
+        This method is effectively a shortcut for
+        ``cls.set_default_renderer(ZPTRendererFactory(...))``."""
+        cls.default_renderer = template.ZPTRendererFactory(
+            search_path,
+            auto_reload=auto_reload,
+            debug=debug,
+            encoding=encoding,
+            translator=translator,
+            )
+
+    @classmethod
     def set_default_renderer(cls, renderer):
-        """ Set the renderer used for instances of the class when no
-        ``renderer`` arguument provided to the class' constructor."""
+        """ Set the callable that will act as a default renderer for
+        instances of the associated class when no ``renderer``
+        argument is provided to the class' constructor.  Useful when
+        you'd like to use an alternate templating system.
+
+        Calling this method resets the :term:`default renderer`.
+        """
         cls.default_renderer = staticmethod(renderer)
 
     def __getitem__(self, name):

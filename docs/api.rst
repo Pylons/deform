@@ -127,7 +127,7 @@ Widget-Related
 Template-Related
 ----------------
 
-.. autofunction:: make_renderer
+.. autoclass:: ZPTRendererFactory
 
 .. attribute:: default_renderer
 

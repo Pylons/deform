@@ -24,7 +24,6 @@ class TestField(unittest.TestCase):
         field = self._makeOne(schema)
         self.assertEqual(field.schema, schema)
         self.assertEqual(field.renderer, default_renderer)
-        self.assertEqual(field.translate, None)
         self.assertEqual(field.name, 'name')
         self.assertEqual(field.title, 'title')
         self.assertEqual(field.default, 'sdefault')
@@ -39,13 +38,12 @@ class TestField(unittest.TestCase):
         schema = DummySchema()
         node = DummySchema()
         schema.children = [node]
-        field = self._makeOne(schema, renderer='abc', translate='def')
+        field = self._makeOne(schema, renderer='abc')
         self.assertEqual(len(field.children), 1)
         child_field = field.children[0]
         self.assertEqual(child_field.__class__, Field)
         self.assertEqual(child_field.schema, node)
         self.assertEqual(child_field.renderer, 'abc')
-        self.assertEqual(child_field.translate, 'def')
 
     def test_ctor_schema_required(self):
         schema = DummySchema()
@@ -61,6 +59,22 @@ class TestField(unittest.TestCase):
         try:
             cls.set_default_renderer(new)
             self.assertEqual(cls.default_renderer(), 'OK')
+        finally:
+            cls.set_default_renderer(old)
+
+    def test_set_zpt_renderer(self):
+        cls = self._getTargetClass()
+        old = cls.default_renderer
+        from pkg_resources import resource_filename
+        template_dir = resource_filename('deform', 'templates/')
+        class Field:
+            oid = None
+            name = None
+        field = Field()
+        try:
+            cls.set_zpt_renderer(template_dir)
+            self.failUnless(cls.default_renderer('hidden', field=field,
+                                                 cstruct=None))
         finally:
             cls.set_default_renderer(old)
 

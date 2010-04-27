@@ -27,11 +27,16 @@ class Form(field.Field):
         sequence, it is converted to
         :class:`deform.form.Button` objects.
 
+    renderer
+        The template :term:`renderer` associated with the form.  If a
+        renderer is not passed to the constructor, the default deform
+        renderer will be used (the class attr ``default_renderer``).
+        
+
     """
-    def __init__(self, schema, action='.', method='POST',
-                 buttons=(), renderer=None, translate=None):
-        field.Field.__init__(self, schema, renderer=renderer,
-                             translate=translate)
+    def __init__(self, schema, action='.', method='POST', buttons=(),
+                 renderer=None):
+        field.Field.__init__(self, schema, renderer=renderer)
         _buttons = []
         for button in buttons:
             if isinstance(button, basestring):

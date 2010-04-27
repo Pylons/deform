@@ -16,7 +16,8 @@ def cache(func):
         return template
     return load
 
-class ChameleonZPTTemplateLoader(object):
+class ZPTTemplateLoader(object):
+    """ A Chameleon ZPT template loader """
     parser = language.Parser()
 
     def __init__(self, search_path=None, auto_reload=True, debug=True,
@@ -50,16 +51,12 @@ class ChameleonZPTTemplateLoader(object):
 
         raise TemplateError("Can not find template %s" % filename)
 
-def make_renderer(search_path,
-                  auto_reload=True,
-                  debug=True,
-                  encoding='utf-8',
-                  translator=None):
+class ZPTRendererFactory(object):
     """
-    Return a Chameleon ZPT :term:`renderer` which uses 
+    Create a Chameleon ZPT :term:`renderer`.
 
     The returned renderer callable accepts a template name *without*
-    the ``.pt`` file extension.
+    the ``.pt`` file extension and a set of **kw values.
 
     **Arguments**
 
@@ -92,18 +89,19 @@ def make_renderer(search_path,
        an interpolated translation.  Default: ``None`` (no translation
        performed).
     """
-    translate = ChameleonTranslate(translator)
-    loader = ChameleonZPTTemplateLoader(search_path=search_path,
-                                        auto_reload=auto_reload,
-                                        debug=debug,
-                                        encoding=encoding,
-                                        translate=translate)
+    def __init__(self, search_path, auto_reload=True, debug=True,
+                 encoding='utf-8', translator=None):
+        translate = ChameleonTranslate(translator)
+        loader = ZPTTemplateLoader(search_path=search_path,
+                                   auto_reload=auto_reload,
+                                   debug=debug,
+                                   encoding=encoding,
+                                   translate=translate)
+        self.loader = loader
 
-    def renderer(template_name, **kw):
-        return loader.load(template_name + '.pt')(**kw)
+    def __call__(self, template_name, **kw):
+        return self.loader.load(template_name + '.pt')(**kw)
 
-    renderer.loader = loader # for testing
-    return renderer
 
 default_dir = resource_filename('deform', 'templates/')
-default_renderer = make_renderer((default_dir,))
+default_renderer = ZPTRendererFactory((default_dir,))

@@ -9,13 +9,11 @@ class TestForm(unittest.TestCase):
         from deform.widget import FormWidget
         schema = DummySchema()
         form = self._makeOne(schema, renderer='abc', action='action',
-                             method='method', buttons=('button',),
-                             translate='translate')
+                             method='method', buttons=('button',))
         self.assertEqual(form.schema, schema)
         self.assertEqual(form.renderer, 'abc')
         self.assertEqual(form.action, 'action')
         self.assertEqual(form.method, 'method')
-        self.assertEqual(form.translate, 'translate')
         self.assertEqual(form.widget.__class__, FormWidget)
         self.assertEqual(len(form.buttons), 1)
         button = form.buttons[0]
@@ -27,13 +25,11 @@ class TestForm(unittest.TestCase):
         from deform.widget import FormWidget
         schema = DummySchema()
         form = self._makeOne(schema, renderer='abc', action='action',
-                             method='method', buttons=(None,),
-                             translate='translate')
+                             method='method', buttons=(None,))
         self.assertEqual(form.schema, schema)
         self.assertEqual(form.renderer, 'abc')
         self.assertEqual(form.action, 'action')
         self.assertEqual(form.method, 'method')
-        self.assertEqual(form.translate, 'translate')
         self.assertEqual(form.widget.__class__, FormWidget)
         self.assertEqual(len(form.buttons), 1)
         button = form.buttons[0]
