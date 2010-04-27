@@ -79,9 +79,14 @@ class Field(object):
         A callable which can be used to translate internationalized
         strings.  XXX: how?
 
+    The Field class has a *class method* named
+    ``set_default_renderer`` which controls the renderer used for
+    instances of the class when no ``renderer`` arguument provided to
+    the class' constructor.
     """
 
     error = None
+    default_renderer = staticmethod(template.default_renderer)
 
     def __init__(self, schema, renderer=None, translate=None, counter=None):
         self.counter = counter or itertools.count()
@@ -89,7 +94,9 @@ class Field(object):
         self.oid = 'deformField%s' % self.order
         self.schema = schema
         self.typ = self.schema.typ # required by Invalid exception
-        self.renderer = renderer or template.default_renderer
+        if renderer is None:
+            renderer = self.default_renderer
+        self.renderer = renderer
         self.translate = translate
         self.name = schema.name
         self.title = schema.title
@@ -101,6 +108,12 @@ class Field(object):
                                        renderer=renderer,
                                        translate=translate,
                                        counter=self.counter))
+
+    @classmethod
+    def set_default_renderer(cls, renderer):
+        """ Set the renderer used for instances of the class when no
+        ``renderer`` arguument provided to the class' constructor."""
+        cls.default_renderer = staticmethod(renderer)
 
     def __getitem__(self, name):
         """ Return the subfield of this field named ``name`` or raise
