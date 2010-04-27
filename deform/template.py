@@ -19,14 +19,15 @@ def cache(func):
 class ChameleonZPTTemplateLoader(object):
     parser = language.Parser()
 
-    def __init__(self, search_path=None, auto_reload=False, encoding='utf-8',
-                 translate=None):
+    def __init__(self, search_path=None, auto_reload=True, debug=True,
+                 encoding='utf-8', translate=None):
         if search_path is None:
             search_path = []
         if isinstance(search_path, basestring):
             search_path = [search_path]
         self.search_path = search_path
         self.auto_reload = auto_reload
+        self.debug = debug
         self.encoding = encoding
         self.translate = translate
         self.registry = {}
@@ -41,6 +42,7 @@ class ChameleonZPTTemplateLoader(object):
             try:
                 return PageTemplateFile(path, parser=self.parser,
                                         auto_reload=self.auto_reload,
+                                        debug = self.debug,
                                         encoding=self.encoding,
                                         translate=self.translate)
             except OSError:
@@ -49,7 +51,8 @@ class ChameleonZPTTemplateLoader(object):
         raise TemplateError("Can not find template %s" % filename)
 
 def make_renderer(search_path,
-                  auto_reload=False,
+                  auto_reload=True,
+                  debug=True,
                   encoding='utf-8',
                   translator=None):
     """
@@ -68,8 +71,12 @@ def make_renderer(search_path,
       to the renderer.
 
     auto_reload
-       If true, automatically reload templates when they change.
-       Default: ``False``.
+       If true, automatically reload templates when they change (slows
+       rendering).  Default: ``True``.
+
+    debug
+       If true, show nicer tracebacks during Chameleon template rendering
+       errors (slows rendering).  Default: ``True``.
 
     encoding
        The encoding that the on-disk representation of the templates
@@ -77,17 +84,18 @@ def make_renderer(search_path,
        expected to adhere to.  Default: ``utf-8``.
 
     translator
-
        A translation function used for internationalization when the
        ``i18n:translate`` attribute syntax is used in the Chameleon
-       template is active or a :class:`internatl.TranslationString` is
-       encountered in input.  It must accept a translation string and
-       return an interpolated translation.  Default: ``None`` (no
-       translation performed).
+       template is active or a
+       :class:`translationstring.TranslationString` is encountered
+       during output.  It must accept a translation string and return
+       an interpolated translation.  Default: ``None`` (no translation
+       performed).
     """
     translate = ChameleonTranslate(translator)
     loader = ChameleonZPTTemplateLoader(search_path=search_path,
                                         auto_reload=auto_reload,
+                                        debug=debug,
                                         encoding=encoding,
                                         translate=translate)
 
@@ -98,4 +106,4 @@ def make_renderer(search_path,
     return renderer
 
 default_dir = resource_filename('deform', 'templates/')
-default_renderer = make_renderer((default_dir,), auto_reload=True)
+default_renderer = make_renderer((default_dir,))
