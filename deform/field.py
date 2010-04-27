@@ -72,7 +72,7 @@ class Field(object):
     renderer
         The template :term:`renderer` associated with the form.  If a
         renderer is not passed to the constructor, the default deform
-        renderer will be used (the :term:`default_renderer`).
+        renderer will be used (the :term:`default renderer`).
     """
 
     error = None

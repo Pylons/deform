@@ -1,16 +1,18 @@
 Deform
 ======
 
-:mod:`deform` is a form generation library.  Uses :term:`Colander` as
-a schema library and :term:`Peppercorn` as a form control
-deserialization library, and :term:`Chameleon` to perform HTML
-templating.  :mod:`deform` depends only on Peppercorn, Colander and
-Chameleon so it may be used in most web frameworks (or antiframeworks)
-as a result.
+:mod:`deform` is a form generation library.  :mod:`deform` uses
+:term:`Colander` as a schema library and :term:`Peppercorn` as a form
+control deserialization library, and :term:`Chameleon` to perform HTML
+templating.  :mod:`deform` depends only on Peppercorn, Colander,
+Chameleon and an internationalization library named translationstring,
+so it may be used in most web frameworks (or antiframeworks) as a
+result.
 
 Alternate templating languages may be used, as long as all templates
 are translated from the native Chameleon templates to your templating
-system of choice and a :term:`renderer` is supplied to :mod:`deform`.
+system of choice and a suitable :term:`renderer` is supplied to
+:mod:`deform`.
 
 The design of :mod:`deform` is a shameless rip-off of the `formish
 <http://ish.io/projects/show/formish>`_ form generation library.  It
