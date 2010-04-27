@@ -4,8 +4,10 @@
 
   <div class="replaces" tal:condition="cstruct.get('uid')">
 
-    <input type="hidden" name="uid" value="${cstruct['uid']}"/>
-    <span tal:content="cstruct.get('filename')"/>
+    <input type="hidden" name="uid" value="${cstruct['uid']}"
+           id="${field.oid}-uid"/>
+    <span tal:content="cstruct.get('filename')"
+          id="${field.oid}-filename"/>
 
   </div>
 
