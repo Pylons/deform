@@ -104,7 +104,7 @@ class TestField(unittest.TestCase):
         result = field.clone()
         self.failIf(result is field)
         self.assertEqual(result.order, 1)
-        self.assertEqual(result.oid, 'field1')
+        self.assertEqual(result.oid, 'deformField1')
         self.assertEqual(result.renderer, 'abc')
         self.assertEqual(result.schema, schema)
         self.assertEqual(result.foo, 1)

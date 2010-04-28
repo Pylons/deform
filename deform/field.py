@@ -34,7 +34,7 @@ class Field(object):
         A string incorporating the ``order`` attribute that can be
         used as a unique identifier in HTML code (often for ``id``
         attributes of field-related elements).  An example oid is
-        ``deform_field0``.
+        ``deformField0``.
 
     name
         An alias for self.schema.name
@@ -148,7 +148,7 @@ class Field(object):
         cloned = self.__class__(self.schema)
         cloned.__dict__.update(self.__dict__)
         cloned.order = cloned.counter.next()
-        cloned.oid = 'field%s' % cloned.order
+        cloned.oid = 'deformField%s' % cloned.order
         cloned.children = [ field.clone() for field in self.children ]
         return cloned
 
