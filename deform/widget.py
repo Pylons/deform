@@ -594,6 +594,8 @@ class SequenceWidget(Widget):
     category = 'structural'
 
     def prototype(self, field):
+        # we clone the item field to bump the oid (for easier
+        # automated testing; finding last node)
         item_field = field.children[0].clone()
         proto = field.renderer(self.item_template, field=item_field,
                                cstruct=None)
