@@ -2,7 +2,7 @@
 
   <input type="hidden" name="__start__" value="${field.name}:mapping"/>
 
-  <div class="replaces" tal:condition="cstruct.get('uid')">
+  <div class="deformReplaces" tal:condition="cstruct.get('uid')">
 
     <input type="hidden" name="uid" value="${cstruct['uid']}"
            id="${field.oid}-uid"/>

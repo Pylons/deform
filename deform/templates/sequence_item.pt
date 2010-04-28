@@ -1,17 +1,12 @@
 <li tal:attributes="class field.error and field.widget.error_class"
+    tal:omit-tag="field.widget.hidden"
     title="${field.description}">
   <!-- sequence_item -->
-  <label class="desc"
-         tal:condition="not field.widget.hidden"
-         for="${field.oid}"
-         title="${field.description}"
-         >${field.title}<span tal:condition="field.required" class="req"
-                              id="req-${field.oid}">*</span>
-    <img class="deformClosebutton" 
-         src="${field.widget.static_url}/images/close.png" 
-         alt="Remove" onclick="javascript:$(this).parent().parent().remove();"/>
+  <img class="deformClosebutton" 
+       tal:condition="not field.widget.hidden"
+       src="${field.widget.static_url}/images/close.png" 
+       alt="Remove" onclick="javascript:$(this).parent().remove();"/>
 
-  </label>
   <span tal:replace="structure field.widget.serialize(field, cstruct)"/>
   <p tal:condition="field.error and not field.widget.hidden"
      id="error-${field.oid}"

@@ -7,7 +7,7 @@
   accept-charset="utf-8"
   i18n:domain="deform">
 
-  <fieldset class="dfFormFieldset">
+  <fieldset class="deformFormFieldset">
 
     <legend tal:condition="field.title">${field.title}</legend>
 

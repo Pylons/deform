@@ -1,7 +1,7 @@
 <div class="wufoo"
      tal:attributes="id field.name or None">
 
-  <div class="dfFormFieldset">
+  <div class="deformFormFieldset">
 
     <span>${field.title}</span>
 

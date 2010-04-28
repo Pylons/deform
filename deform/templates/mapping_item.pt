@@ -1,7 +1,9 @@
 <li tal:attributes="class field.error and field.widget.error_class"
+    tal:omit-tag="field.widget.hidden"
     title="${field.description}">
   <!-- mapping_item -->
-  <label tal:condition="not field.widget.hidden"
+  <label tal:condition="not (field.widget.hidden or 
+                             field.widget.category == 'structural')"
          class="desc"
          title="${field.description}"
          for="${field.oid}"

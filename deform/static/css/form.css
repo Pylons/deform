@@ -917,9 +917,14 @@ img.deformClosebutton {
    cursor: pointer;
    width: 1em;
    height: 1em;
+   float: left;
+   margin: .5em;
 }
 
 a.deformSeqAdd:visited {
    color: blue;
 }
 
+div.deformReplaces {
+    float: left;
+}

@@ -26,13 +26,32 @@ class Widget(object):
         An attribute indicating the hidden state of this widget.  The
         default is ``False``.  If this attribute is not ``False``, the
         field associated with this widget will not be rendered in the
-        form (although, if te field is a container field, its
-        children will be; it is not a recursive flag).
+        form (although, if the widget is a structural widget, its
+        children will be; ``hidden`` is not a recursive flag).  No
+        label, no error message, nor any furniture such as a close
+        button when the widget is one of a sequence will exist for the
+        field in the rendered form.
+
+    category
+        A string value indicating the *category* of this widget.  This
+        attribute exists to inform structural widget rendering
+        behavior.  For example, when a text widget or another simple
+        'leaf-level' widget is rendered as a child of a mapping widget
+        using the default template mapping template, the field title
+        associated with the child widget will be rendered above the
+        field as a label by default.  This is because simple child
+        widgets are in the ``default`` category and no special action
+        is taken when a structural widget renders child widgets that
+        are in the ``default`` category.  However, if the default
+        mapping widget encounters a child widget with the category of
+        ``structural`` during rendering (the default mapping and
+        sequence widgets are in this category), it omits the title.
+        Default: ``default``
 
     error_class
         The name of the CSS class attached to various tags in the form
         renderering indicating an error condition for the field
-        associated with this widget.  By default, this is ``error``.
+        associated with this widget.  Default: ``error``.
 
     static_url
         The URL to static resources required by the widget.
@@ -48,6 +67,7 @@ class Widget(object):
     """
 
     hidden = False
+    category = 'default'
     error_class = 'error'
     static_url = '/static'
 
@@ -461,19 +481,19 @@ class MappingWidget(Widget):
 
     item_template
         The template name used to render each item in the mapping.
-        Default: ``sequence_item``.
+        Default: ``mapping_item``.
 
     readonly_item_template
         The template name used to render each item in the form.
-        Default: ``readonly/sequence_item``.
+        Default: ``readonly/mapping_item``.
 
     """
     template = 'mapping'
     readonly_template = 'readonly/mapping'
     item_template = 'mapping_item'
     readonly_item_template = 'readonly/mapping_item'
-    hidden = True
     error_class = None
+    category = 'structural'
 
     def serialize(self, field, cstruct=None, readonly=False):
         if cstruct is None:
@@ -549,13 +569,29 @@ class SequenceWidget(Widget):
         The template name used to render each value in the sequence.
         Default: ``sequence_item``.
 
+    add_subitem_text_template
+        The string used as the add link text for the widget.
+        Interpolation markers in the template will be replaced in this
+        string during serialization with a value as follows:
+
+        ``${subitem_title}``
+          The title of the subitem field
+
+        ``${subitem_description}``
+          The description of the subitem field
+
+        ``${subitem_name}``
+          The name of the subitem field
+
+        Default: ``Add ${subitem_title}``.
     """
-    hidden = True
     template = 'sequence'
     readonly_template = 'readonly/sequence'
     item_template = 'sequence_item'
     readonly_item_template = 'readonly/sequence_item'
     error_class = None
+    add_subitem_text_template = _('Add ${subitem_title}')
+    category = 'structural'
 
     def prototype(self, field):
         item_field = field.children[0]
@@ -584,8 +620,15 @@ class SequenceWidget(Widget):
             subfields = [ (val, item_field.clone()) for val in cstruct ]
 
         template = readonly and self.readonly_template or self.template
+        add_template_mapping = dict(
+            subitem_title=item_field.title,
+            subitem_description=item_field.description,
+            subitem_name=item_field.name)
+        add_subitem_text = _(self.add_subitem_text_template,
+                             mapping=add_template_mapping)
         return field.renderer(template, field=field, cstruct=cstruct,
-                              subfields=subfields)
+                              subfields=subfields, item_field=item_field,
+                              add_subitem_text=add_subitem_text)
 
     def deserialize(self, field, pstruct):
         result = []

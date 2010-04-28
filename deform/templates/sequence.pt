@@ -1,21 +1,21 @@
 <div class="deformSeq"
      tal:define="rndr field.renderer;
-                 tmpl field.widget.item_template">
+                 tmpl field.widget.item_template"
+     i18n:domain="deform">
   <!-- sequence -->
 
-  ${field.title}
   <input type="hidden" name="__start__" value="${field.name}:sequence"
          class="deformProto" 
          tal:attributes="prototype field.widget.prototype(field)"/>
 
   <a href="#"
      class="deformSeqAdd"
-     title="Add new ${field.children[0].title}"
+     title="${add_subitem_text}"
      onclick="javascript:
               deformAddNewItem($(this).parent().children('.deformProto')[0],
               $(this).parent().children('.deformInsertBefore')[0]);
               return false;">
-    <small>(add)</small>
+    <small>${add_subitem_text}</small>
   </a>
 
   <div tal:repeat="tup subfields"
