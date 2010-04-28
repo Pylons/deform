@@ -575,6 +575,14 @@ class TestFileUploadWidget(unittest.TestCase):
         result = widget.deserialize(field, {'uid':'uid'})
         self.assertEqual(result, 'abc')
 
+    def test_deserialize_no_file_selected_with_previous_file_missing(self):
+        schema = DummySchema()
+        field = DummyField(schema)
+        tmpstore = DummyTmpStore()
+        widget = self._makeOne(tmpstore)
+        result = widget.deserialize(field, {'uid':'uid'})
+        self.assertEqual(result, None)
+
     def test_deserialize_file_selected_no_previous_file(self):
         schema = DummySchema()
         field = DummyField(schema)

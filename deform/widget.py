@@ -744,8 +744,11 @@ class FileUploadWidget(Widget):
                 # no previous file exists
                 return None
             else:
-                # a previous file exists
-                data = self.tmpstore[uid]
+                # a previous file should exist
+                data = self.tmpstore.get(uid)
+                # but if it doesn't, don't blow up
+                if data is None:
+                    return None
 
         return data
 
