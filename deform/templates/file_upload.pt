@@ -1,4 +1,4 @@
-<div class="fileupload">
+<div class="deformFileupload">
 
   <input type="hidden" name="__start__" value="${field.name}:mapping"/>
 
