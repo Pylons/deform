@@ -1,7 +1,6 @@
 <div class="deformSeq"
      tal:define="rndr field.renderer;
-                 tmpl field.widget.item_template"
-     i18n:domain="deform">
+                 tmpl field.widget.item_template">
   <!-- sequence -->
 
   <input type="hidden" name="__start__" value="${field.name}:sequence"

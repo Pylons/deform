@@ -3,8 +3,6 @@
 
   <div class="deformFormFieldset">
 
-    <span>${field.title}</span>
-
       <li class="section first" tal:condition="field.title">
         <h3>${field.title}</h3>
         <div tal:condition="field.description">${field.description}</div>
