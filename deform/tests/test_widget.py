@@ -777,10 +777,12 @@ class TestSequenceWidget(unittest.TestCase):
         schema = DummySchema()
         field = DummyField(schema, renderer)
         widget = self._makeOne()
-        field.children=[None]
+        protofield = DummyField()
+        field.children=[protofield]
         result = widget.prototype(field)
         self.assertEqual(type(result), str)
         self.assertEqual(urllib.unquote(result), 'abc')
+        self.assertEqual(protofield.cloned, True)
 
     def test_prototype_str(self):
         import urllib
@@ -788,10 +790,12 @@ class TestSequenceWidget(unittest.TestCase):
         schema = DummySchema()
         field = DummyField(schema, renderer)
         widget = self._makeOne()
-        field.children=[None]
+        protofield = DummyField()
+        field.children=[protofield]
         result = widget.prototype(field)
         self.assertEqual(type(result), str)
         self.assertEqual(urllib.unquote(result), 'abc')
+        self.assertEqual(protofield.cloned, True)
 
     def test_serialize_None(self):
         renderer = DummyRenderer('abc')
@@ -975,11 +979,13 @@ class DummyField(object):
     title = 'title'
     description = 'description'
     name = 'name'
+    cloned = False
     def __init__(self, schema=None, renderer=None):
         self.schema = schema
         self.renderer = renderer
 
     def clone(self):
+        self.cloned = True
         return self
 
 class DummyTmpStore(dict):
