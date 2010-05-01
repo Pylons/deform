@@ -584,6 +584,12 @@ class SequenceWidget(Widget):
           The name of the subitem field
 
         Default: ``Add ${subitem_title}``.
+
+    render_initial_item
+        Boolean attribute indicating whether, on the first rendering
+        of a form including a sequence widget, a child widget
+        rendering should be performed.  Default: ``False``.
+
     """
     template = 'sequence'
     readonly_template = 'readonly/sequence'
@@ -591,6 +597,7 @@ class SequenceWidget(Widget):
     readonly_item_template = 'readonly/sequence_item'
     error_class = None
     add_subitem_text_template = _('Add ${subitem_title}')
+    render_initial_item = False
     category = 'structural'
 
     def prototype(self, field):
@@ -606,7 +613,10 @@ class SequenceWidget(Widget):
 
     def serialize(self, field, cstruct=None, readonly=False):
         if cstruct is None:
-            cstruct = []
+            if self.render_initial_item:
+                cstruct = [None]
+            else:
+                cstruct = []
 
         item_field = field.children[0]
 

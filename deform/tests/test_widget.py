@@ -819,6 +819,21 @@ class TestSequenceWidget(unittest.TestCase):
         self.assertEqual(renderer.kw['cstruct'], [])
         self.assertEqual(renderer.template, widget.template)
 
+    def test_serialize_None_render_initial_item(self):
+        renderer = DummyRenderer('abc')
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+        inner = DummyField()
+        field.children=[inner]
+        widget = self._makeOne()
+        widget.render_initial_item = True
+        result = widget.serialize(field)
+        self.assertEqual(result, 'abc')
+        self.assertEqual(len(renderer.kw['subfields']), 1)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], [None])
+        self.assertEqual(renderer.template, widget.template)
+
     def test_serialize_add_subitem_value(self):
         renderer = DummyRenderer('abc')
         schema = DummySchema()
