@@ -312,7 +312,7 @@ class RadioChoiceWidget(Widget):
             pstruct = ''
         return pstruct
 
-class SingleSelectWidget(Widget):
+class SelectWidget(Widget):
     """
     Renders ``<select>`` field based on a predefined set of values.
 

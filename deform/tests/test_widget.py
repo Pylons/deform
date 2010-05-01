@@ -279,10 +279,10 @@ class TestRadioChoiceWidget(unittest.TestCase):
         result = widget.deserialize(field, 'true')
         self.assertEqual(result, 'true')
 
-class TestSingleSelectWidget(unittest.TestCase):
+class TestSelectWidget(unittest.TestCase):
     def _makeOne(self, **kw):
-        from deform.widget import SingleSelectWidget
-        return SingleSelectWidget(**kw)
+        from deform.widget import SelectWidget
+        return SelectWidget(**kw)
 
     def test_serialize_None(self):
         renderer = DummyRenderer()
