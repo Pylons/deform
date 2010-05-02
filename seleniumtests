@@ -1,0 +1,13 @@
+#!/bin/sh
+# to run the deform demo selenium tests:
+#
+# create a virtualenv in a deform checkout within an "env" subdir:
+#  virtualenv --no-site-packages env
+#
+# run "seleniumtests"
+#  ./seleniumtests
+#
+env/bin/paster serve deform/demo/demo.ini &
+pid=$?
+env/bin/python deform/demo/tests/test_demo.py
+kill $pid

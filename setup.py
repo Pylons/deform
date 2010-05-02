@@ -53,7 +53,7 @@ setupkw = dict(
     demo = deform.demo.app:run
     """,
     extras_require = {
-        'demo': ['repoze.bfg', 'pygments', 'Babel'],
+        'demo': ['repoze.bfg', 'pygments', 'Babel', 'nose'],
         }
     )
 

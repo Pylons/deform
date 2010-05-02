@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import unittest
+import nose
 
 # to run:
 # console 1: java -jar selenium-server.jar
 # console 2: start the deform demo server (paster serve deformdemo.ini)
-# console 3: python setup.py nosetests (or just "nose")
+# console 3: python test_demo.py
 
 # Instead of using -browserSessionReuse as an arg to
 # selenium-server.jar to speed up tests, we rely on Nose and its
@@ -1491,3 +1492,7 @@ class SequenceOfSequences(unittest.TestCase):
                              [{'name': u'name2', 'title': u'title2'}]]}
                          )
 
+if __name__ == '__main__':
+    nose.main()
+    
+    
