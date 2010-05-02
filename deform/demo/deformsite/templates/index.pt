@@ -1,0 +1,41 @@
+<div metal:use-macro="view.macros['master']">
+  <div metal:fill-slot="main">
+    <h1>Deform Demo</h1>
+    <h3>
+      <a href="http://docs.repoze.org/deform">Deform</a> is an HTML
+      form generation system.  Each link below demonstrates a
+      capability.
+    </h3>
+
+    <ul>
+      <li tal:repeat="(title, name) demos"><a href="${name}/">${title}</a></li>
+    </ul>
+
+    <div>
+
+      <p>
+        Deform is currently not yet released, but you may check it out <a
+        href="http://svn.repoze.org/deform/trunk/">via SVN</a>:
+      </p>
+
+      <p>
+        <code>svn co http://svn.repoze.org/deform/trunk deform</code>
+      </p>
+
+      <p>
+        This demo is written using <a
+        href="http://bfg.repoze.org">repoze.bfg</a>. But please note
+        that Deform does not depend on any particular web framework,
+        we just had to write a demo application in
+        <i>something</i>. If, for some unfathomable reason, you'd like
+        to run this demo application locally, please read the <a
+        href="http://svn.repoze.org/buildouts/deformsite/README.txt"
+        >README.txt for installation of this application</a>.
+      </p>
+
+    </div>
+
+  <div style="padding-bottom: 1em;"> </div>
+  </div>
+</div>
+

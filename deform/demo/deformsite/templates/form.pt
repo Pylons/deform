@@ -1,0 +1,17 @@
+<div metal:use-macro="view.macros['master']">
+  <div metal:fill-slot="main">
+    <a href=".."><small>Up to index</small></a>
+    <h1>${title}</h1>
+    <div id="form" tal:content="structure form"/>
+    <h1>Captured</h1>
+    <div id="captured" tal:content="captured"/>
+    <h1>Code <a href="/allcode?start=${start}&amp;end=${end}#line-${start}"
+               ><small>(show in context)</small></a>
+    </h1>
+    <span tal:replace="structure code"/>
+    <script type="text/javascript">
+      deformFocusFirstInput();
+    </script>
+  </div>
+</div>
+
