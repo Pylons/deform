@@ -48,7 +48,13 @@ setupkw = dict(
     tests_require=requires + ['BeautifulSoup'],
     install_requires=requires,
     test_suite="deform",
-    entry_points="""""",
+    entry_points = """\
+    [paste.app_factory]
+    demo = deform.demo.app:run
+    """,
+    extras_require = {
+        'demo': ['repoze.bfg', 'pygments', 'Babel'],
+        }
     )
 
 try:

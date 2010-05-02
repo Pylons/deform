@@ -1,4 +1,4 @@
-# Translations template for deformsite.
+# Translations template for deform demo.
 # Copyright (C) 2010 ORGANIZATION
 # This file is distributed under the same license as the deformsite project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
@@ -17,11 +17,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.5\n"
 
-#: deformsite/__init__.py:457 deformsite/__init__.py:458
 msgid "A number between ${min} and ${max}"
 msgstr ""
 
-#: deformsite/__init__.py:467
 msgid "Submit"
 msgstr ""
 

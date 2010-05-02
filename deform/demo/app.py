@@ -25,7 +25,7 @@ import colander
 
 from translationstring import TranslationStringFactory
 
-_ = TranslationStringFactory('deformsite')
+_ = TranslationStringFactory('deform')
 css = HtmlFormatter().get_style_defs('.highlight')
 
 def translator(term):
@@ -542,12 +542,14 @@ tmpstore = MemoryTmpStore()
 
 def run(global_config, **settings):
     settings['debug_templates'] = 'true'
-    config = Configurator(settings=settings)
+    config = Configurator(package=deform.demo, settings=settings)
     config.begin()
     config.add_static_view('static', 'deform:static')
-    config.add_translation_dirs('deformsite:locale',
-                                'deform:locale',
-                                'colander:locale')
+    config.add_translation_dirs(
+        'colander:locale',
+        'deform:locale',
+        'deform.demo:locale'
+        )
     config.scan()
     config.end()
     return config.make_wsgi_app()

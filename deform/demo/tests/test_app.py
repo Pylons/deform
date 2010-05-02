@@ -4,7 +4,7 @@ import unittest
 
 # to run:
 # console 1: java -jar selenium-server.jar
-# console 2: start the deformsite server (paster serve deformsite.ini)
+# console 2: start the deform demo server (paster serve deformdemo.ini)
 # console 3: python setup.py nosetests (or just "nose")
 
 # Instead of using -browserSessionReuse as an arg to
