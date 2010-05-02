@@ -29,7 +29,7 @@
         we just had to write a demo application in
         <i>something</i>. If, for some unfathomable reason, you'd like
         to run this demo application locally, please read the <a
-        href="http://svn.repoze.org/buildouts/deformsite/README.txt"
+        href="http://svn.repoze.org/deform/trunk/deform/demo/README.txt"
         >README.txt for installation of this application</a>.
       </p>
 
