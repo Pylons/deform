@@ -327,14 +327,14 @@ class SelectWidget(Widget):
 
     template
         The template name used to render the widget.  Default:
-        ``select_choice``.
+        ``select``.
 
     readonly_template
         The template name used to render the widget in read-only mode.
-        Default: ``readonly/select_choice``.
+        Default: ``readonly/select``.
     """
-    template = 'select_choice'
-    readonly_template = 'readonly/select_choice'
+    template = 'select'
+    readonly_template = 'readonly/select'
     values = ()
 
     def serialize(self, field, cstruct=None, readonly=False):
