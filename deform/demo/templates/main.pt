@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      metal:define-macro="master"
+      tal:define="app_url request.application_url;
+                  static app_url + '/static'">
+
+  <head>
+    <title>
+      Deform Demo Site
+    </title>
+    <!-- Meta Tags -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="${static}/css/form.css" type="text/css" />
+    <link rel="stylesheet" href="${static}/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="${app_url}/pygments.css" type="text/css" />
+    <!-- JavaScript -->
+    <script type="text/javascript"
+            src="${static}/scripts/deform.js"></script>
+    <script type="text/javascript"
+            src="${static}/scripts/jquery-1.4.2.min.js"></script> 
+  </head>
+  
+  <body id="public">
+    <div id="container">
+      <span metal:define-slot="main"/>
+    </div>
+  </body>
+
+</html>

@@ -1,0 +1,7 @@
+<div metal:use-macro="view.macros['master']">
+  <div metal:fill-slot="main">
+    <a href=".."><small>Up to index</small></a>
+    <h1>Module Code</h1>
+    <span tal:replace="structure code"/>
+  </div>
+</div>
