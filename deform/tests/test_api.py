@@ -15,6 +15,7 @@ class TestAPI(unittest.TestCase):
         from deform import MappingSchema
         from deform import Schema
         from deform import SequenceSchema
+        from deform import TupleSchema
 
         from deform import Form
         from deform import Button

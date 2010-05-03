@@ -534,6 +534,23 @@ class DeformDemo(object):
         form['sneaky'].widget = deform.widget.HiddenWidget()
         return self.render_form(form)
 
+    @bfg_view(renderer='templates/form.pt', name='textareacsv')
+    @demonstrate('Text Area CSV Widget')
+    def textareacsv(self):
+        class Row(deform.TupleSchema):
+            first = deform.SchemaNode(deform.Integer())
+            second = deform.SchemaNode(deform.String())
+            third = deform.SchemaNode(deform.Float())
+        class Rows(deform.SequenceSchema):
+            row = Row()
+        class Schema(deform.Schema):
+            csv = Rows()
+        schema = Schema()
+        form = deform.Form(schema, buttons=('submit',))
+        form['csv'].widget = deform.widget.TextAreaCSVWidget()
+        appstruct = {'csv':[ (1, 'hello', 4.5), (2, 'goodbye', 5.5) ]}
+        return self.render_form(form, appstruct=appstruct)
+
 class MemoryTmpStore(dict):
     def preview_url(self, uid):
         return None

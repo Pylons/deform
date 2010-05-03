@@ -965,6 +965,117 @@ class TestFormWidget(unittest.TestCase):
         form = self._makeOne()
         self.assertEqual(form.template, 'form')
 
+class TestTextAreaCSVWidget(unittest.TestCase):
+    def _makeOne(self, **kw):
+        from deform.widget import TextAreaCSVWidget
+        return TextAreaCSVWidget(**kw)
+
+    def test_serialize_None_no_default(self):
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        field = DummyField(None, renderer=renderer)
+        widget.serialize(field, None)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], '')
+
+    def test_serialize_None_with_default(self):
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        field = DummyField(None, renderer=renderer)
+        field.default = [('a', 1)]
+        widget.serialize(field, None)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], 'a,1\r\n')
+
+    def test_serialize_with_unparseable(self):
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        field = DummyField(None, renderer=renderer)
+        field.unparseable = 'aloooo'
+        widget.serialize(field, None)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], 'aloooo')
+
+    def test_serialize_not_None(self):
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer=renderer)
+        cstruct = [('a', '1')]
+        widget.serialize(field, cstruct)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], 'a,1\r\n')
+
+    def test_serialize_not_None_readonly(self):
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer=renderer)
+        cstruct = [('a', '1')]
+        widget.serialize(field, cstruct, readonly=True)
+        self.assertEqual(renderer.template, widget.readonly_template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], 'a,1\r\n')
+
+    def test_deserialize(self):
+        widget = self._makeOne(strip=False)
+        field = DummyField()
+        pstruct = 'a,1\r\n'
+        result = widget.deserialize(field, pstruct)
+        self.assertEqual(result, [['a', '1']])
+
+    def test_deserialize_bad_csv(self):
+        import colander
+        widget = self._makeOne(strip=False)
+        field = DummyField()
+        pstruct = 'a,1\raa\r\r\n\n'
+        self.assertRaises(colander.Invalid, widget.deserialize, field, pstruct)
+        self.assertEqual(field.unparseable, pstruct)
+
+    def test_deserialize_None_not_required(self):
+        widget = self._makeOne(strip=False)
+        schema = DummySchema()
+        schema.required = False
+        field = DummyField(schema=schema)
+        result = widget.deserialize(field, None)
+        self.assertEqual(result, [])
+
+    def test_deserialize_None_required(self):
+        import colander
+        widget = self._makeOne(strip=False)
+        schema = DummySchema()
+        schema.required = True
+        field = DummyField(schema=schema)
+        self.assertRaises(colander.Invalid, widget.deserialize, field, None)
+
+    def test_handle_error_outermost_has_msg(self):
+        widget = self._makeOne()
+        error = DummyInvalid()
+        error.msg = 'msg'
+        field = DummyField()
+        widget.handle_error(field, error)
+        self.assertEqual(field.error, error)
+        
+    def test_handle_error_children_have_msgs(self):
+        widget = self._makeOne()
+        error = DummyInvalid()
+        inner_error1 = DummyInvalid()
+        inner_error1.msg = 'a'
+        inner_error1.pos = 0
+        inner_error2 = DummyInvalid()
+        inner_error2.msg = 'b'
+        inner_error2.pos = 1
+        error.children = [ inner_error1, inner_error2 ]
+        error.msg = None
+        field = DummyField()
+        field.schema = None
+        widget.handle_error(field, error)
+        self.assertEqual(field.error.msg, 'line 1: Invalid\nline 2: Invalid')
+
 class DummyRenderer(object):
     def __init__(self, result=''):
         self.result = result
@@ -994,6 +1105,8 @@ class DummyInvalid(object):
     pos = 0
     def __init__(self, *children):
         self.children = children
+    def __str__(self):
+        return 'Invalid'
 
 class DummyField(object):
     default = None

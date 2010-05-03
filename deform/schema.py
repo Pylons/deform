@@ -22,7 +22,7 @@ class String(colander.String):
 class Integer(colander.Integer):
     default_widget_maker = widget.TextInputWidget
 
-class Float(colander.Integer):
+class Float(colander.Float):
     default_widget_maker = widget.TextInputWidget
 
 class Boolean(colander.Boolean):
@@ -31,6 +31,9 @@ class Boolean(colander.Boolean):
 class Date(colander.Date):
     default_widget_maker = widget.DatePartsWidget
     err_template = 'Invalid date'
+
+class Tuple(colander.Tuple):
+    default_widget_maker = widget.Widget # null
 
 class FileData(object):
     """
@@ -161,5 +164,6 @@ class SequenceSchema(colander.SequenceSchema):
     schema_type = Sequence
     node_type = SchemaNode
     
-
-    
+class TupleSchema(colander.TupleSchema):
+    schema_type = Tuple
+    node_type = SchemaNode

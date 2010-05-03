@@ -24,6 +24,9 @@ Type-Related
 .. autoclass:: Sequence
    :members:
 
+.. autoclass:: Tuple
+   :members:
+
 .. autoclass:: Set
    :members:
 
@@ -55,6 +58,9 @@ Schema-Related
    :members:
 
 .. autoclass:: SequenceSchema
+   :members:
+
+.. autoclass:: TupleSchema
    :members:
 
 Exception-Related

@@ -1,5 +1,7 @@
+import csv
 import random
 import string
+import StringIO
 import urllib
 
 from deform.exception import Invalid
@@ -824,3 +826,81 @@ class DatePartsWidget(Widget):
                 or not pstruct['day']):
                 raise Invalid(field.schema, _('Incomplete'), result)
             return result
+
+class TextAreaCSVWidget(Widget):
+    """
+    Widget used for a sequence of scalars; allows for editing CSV
+    within a text area.  Used with a schema node which is a sequence
+    of tuples.
+    
+    **Attributes/Arguments**
+
+    cols
+        The size, in columns, of the text input field.  Defaults to
+        ``None``, meaning that the ``cols`` is not included in the
+        widget output (uses browser default cols).
+
+    rows
+        The size, in rows, of the text input field.  Defaults to
+        ``None``, meaning that the ``rows`` is not included in the
+        widget output (uses browser default cols).
+
+    template
+        The template name used to render the widget.  Default:
+        ``textarea``.
+
+    readonly_template
+        The template name used to render the widget in read-only mode.
+        Default: ``readonly/textarea``.
+    """
+    template = 'textarea'
+    readonly_template = 'readonly/textarea'
+    cols = None
+    rows = None
+
+    def serialize(self, field, cstruct=None, readonly=False):
+        if cstruct is None:
+            cstruct = field.default
+        if cstruct is None:
+            cstruct = []
+        textrows = getattr(field, 'unparseable', None)
+        if textrows is None:
+            outfile = StringIO.StringIO()
+            writer = csv.writer(outfile)
+            writer.writerows(cstruct)
+            textrows = outfile.getvalue()
+        if readonly:
+            template = self.readonly_template
+        else:
+            template = self.template
+        return field.renderer(template, field=field, cstruct=textrows)
+        
+    def deserialize(self, field, pstruct):
+        if pstruct is None:
+            pstruct = ''
+        if not pstruct.strip() and field.schema.required:
+            # prevent
+            raise Invalid(field.schema, 'Required', [])
+        else:
+            try:
+                infile = StringIO.StringIO(pstruct)
+                reader = csv.reader(infile)
+                rows = list(reader)
+            except Exception, e:
+                field.unparseable = pstruct
+                raise Invalid(field.schema, str(e))
+            return rows
+
+    def handle_error(self, field, error):
+        msgs = []
+        if error.msg:
+            field.error = error
+        else:
+            for e in error.children:
+                msgs.append('line %s: %s' % (e.pos+1, e))
+            field.error = Invalid(field.schema, '\n'.join(msgs))
+        
+
+    
+            
+    

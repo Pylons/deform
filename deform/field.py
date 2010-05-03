@@ -12,11 +12,12 @@ class Field(object):
     form rendering).
 
     A :class:`deform.form.Field` object instance is meant to last for
-    the duration of a single web request. A field may be used as a
-    scratchpad by the widget associated with the field.  Using a field
-    as a scratchpad makes it possible to build implementations of
-    state-retaining widgets while instances of those widget still only
-    need to be constructed once instead of on each request.
+    the duration of a single web request. As a result, a field object
+    is often used as a scratchpad by the widget associated with that
+    field.  Using a field as a scratchpad makes it possible to build
+    implementations of state-retaining widgets while instances of
+    those widget still only need to be constructed once instead of on
+    each request.
     
     All field objects have the following attributes:
 
