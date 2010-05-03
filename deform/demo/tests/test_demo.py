@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-import nose
 
 # to run:
 # console 1: java -jar selenium-server.jar
@@ -9,7 +8,7 @@ import nose
 # console 3: python test_demo.py
 
 # Instead of using -browserSessionReuse as an arg to
-# selenium-server.jar to speed up tests, we rely on Nose and its
+# selenium-server.jar to speed up tests, we rely on
 # setUpModule/tearDownModule functionality.
 
 browser = None
@@ -23,6 +22,12 @@ def setUpModule():
 
 def tearDownModule():
     browser.stop()
+
+def _getFile(name):
+    import os
+    path = os.path.join(os.path.abspath(os.path.dirname(__file__)), name)
+    filename = os.path.split(path)[-1]
+    return path, filename
 
 class CheckboxChoiceWidgetTests(unittest.TestCase):
     url = "/checkboxchoice/"
@@ -586,11 +591,6 @@ class HiddenFieldWidgetTests(unittest.TestCase):
 
 class FileUploadTests(unittest.TestCase):
     url = "/file/"
-    def _getFile(self, name):
-        import os
-        path = os.path.join(os.path.dirname(__file__), name)
-        filename = os.path.split(path)[-1]
-        return path, filename
 
     def test_render_default(self):
         browser.open(self.url)
@@ -615,7 +615,7 @@ class FileUploadTests(unittest.TestCase):
 
     def test_submit_filled(self):
         # submit one first
-        path, filename = self._getFile('tests.py')
+        path, filename = _getFile('tests.py')
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")
         browser.type('deformField1', path)
@@ -641,7 +641,7 @@ class FileUploadTests(unittest.TestCase):
                          filename)
 
         # resubmit after entering a new filename should change the file
-        path2, filename2 = self._getFile('__init__.py')
+        path2, filename2 = _getFile('selenium.py')
         browser.type('deformField1', path2)
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
@@ -968,12 +968,6 @@ class ReadOnlySequenceOfMappingTests(unittest.TestCase):
 
 class SequenceOfFileUploads(unittest.TestCase):
     url = "/sequence_of_fileuploads/"
-    def _getFile(self, name):
-        import os
-        path = os.path.join(os.path.dirname(__file__), name)
-        filename = os.path.split(path)[-1]
-        return path, filename
-
     def test_render_default(self):
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")
@@ -1008,7 +1002,7 @@ class SequenceOfFileUploads(unittest.TestCase):
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")
         browser.click('deformField1-seqAdd')
-        path, filename = self._getFile('test.py')
+        path, filename = _getFile('test_demo.py')
         browser.type("deformField3", path)
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
@@ -1027,7 +1021,7 @@ class SequenceOfFileUploads(unittest.TestCase):
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")
         browser.click('deformField1-seqAdd')
-        path, filename = self._getFile('test.py')
+        path, filename = _getFile('test_demo.py')
         browser.type("deformField3", path)
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
@@ -1050,7 +1044,7 @@ class SequenceOfFileUploads(unittest.TestCase):
                          filename)
 
         # resubmit after entering a new filename should change the file
-        path2, filename2 = self._getFile('__init__.py')
+        path2, filename2 = _getFile('selenium.py')
         browser.type('deformField3', path2)
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
@@ -1062,7 +1056,7 @@ class SequenceOfFileUploads(unittest.TestCase):
 
         # add a new file
         browser.click('deformField1-seqAdd')
-        path, filename = self._getFile('test.py')
+        path, filename = _getFile('test_demo.py')
         browser.type("deformField4", path)
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
@@ -1099,12 +1093,6 @@ class SequenceOfFileUploads(unittest.TestCase):
 
 class SequenceOfFileUploadsWithInitialItem(unittest.TestCase):
     url = "/sequence_of_fileuploads_with_initial_item/"
-    def _getFile(self, name):
-        import os
-        path = os.path.join(os.path.dirname(__file__), name)
-        filename = os.path.split(path)[-1]
-        return path, filename
-
     def test_render_default(self):
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")
@@ -1131,7 +1119,7 @@ class SequenceOfFileUploadsWithInitialItem(unittest.TestCase):
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")
         browser.click('deformField1-seqAdd')
-        path, filename = self._getFile('test.py')
+        path, filename = _getFile('test_demo.py')
         browser.type("dom=document.forms[0].upload[0]", path)
         browser.type("dom=document.forms[0].upload[1]", path)
         browser.click("submit")
@@ -1476,23 +1464,80 @@ class SequenceOfSequences(unittest.TestCase):
         browser.wait_for_page_to_load("30000")
         browser.click('deformField1-seqAdd')
         browser.click('deformField6-seqAdd')
-        browser.type('dom=document.forms[0].name[0]', 'name0')
-        browser.type('dom=document.forms[0].title[0]', 'title0')
-        browser.type('dom=document.forms[0].name[1]', 'name1')
-        browser.type('dom=document.forms[0].title[1]', 'title1')
-        browser.type('dom=document.forms[0].name[2]', 'name2')
-        browser.type('dom=document.forms[0].title[2]', 'title2')
+        browser.type('dom=document.forms[0].name[0]', 'name')
+        browser.type('dom=document.forms[0].title[0]', 'title')
+        browser.type('dom=document.forms[0].name[1]', 'name')
+        browser.type('dom=document.forms[0].title[1]', 'title')
+        browser.type('dom=document.forms[0].name[2]', 'name')
+        browser.type('dom=document.forms[0].title[2]', 'title')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
         captured = eval(browser.get_text('css=#captured'))
         self.assertEqual(captured,
                          {'names_and_titles_sequence': [
-                             [{'name': u'name0', 'title': u'title0'},
-                              {'name': u'name1', 'title': u'title1'}],
-                             [{'name': u'name2', 'title': u'title2'}]]}
+                             [{'name': u'name', 'title': u'title'},
+                              {'name': u'name', 'title': u'title'}],
+                             [{'name': u'name', 'title': u'title'}]]}
                          )
 
+class TextAreaCSVWidgetTests(unittest.TestCase):
+    url = "/textareacsv/"
+    def test_render_default(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        self.failUnless(browser.is_text_present("Csv"))
+        self.assertEqual(browser.get_attribute("deformField1@name"), 'csv')
+        self.assertEqual(browser.get_attribute("deformField1@rows"), '10')
+        self.assertEqual(browser.get_attribute("deformField1@cols"), '60')
+        self.assertEqual(browser.get_value("deformField1"),
+                         '1,hello,4.5\n2,goodbye,5.5')
+        self.assertEqual(browser.get_text('css=.req'), '*')
+        self.assertEqual(browser.get_text('css=#captured'), 'None')
+
+    def test_submit_default(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.click('submit')
+        browser.wait_for_page_to_load("30000")
+        self.failIf(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertEqual(browser.get_value('deformField1'),
+                         '1,hello,4.5\n2,goodbye,5.5')
+        captured = browser.get_text('css=#captured')
+        self.assertEqual(captured,
+                         u"{'csv': [(1, u'hello', 4.5), (2, u'goodbye', 5.5)]}")
+
+    def test_submit_line_error(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.type('deformField1', '1,2,3\nwrong')
+        browser.click('submit')
+        browser.wait_for_page_to_load("30000")
+        self.failUnless(browser.is_element_present('css=.errorMsgLbl'))
+        error_node = 'css=#error-deformField1'
+        self.assertEqual(browser.get_text(error_node),
+                         ('line 2: {\'1\': u\'"[\\\'wrong\\\']" has an '
+                          'incorrect number of elements (expected 3, was 1)\'}')
+                         )
+        self.assertEqual(browser.get_value('deformField1'), '1,2,3\nwrong')
+        captured = browser.get_text('css=#captured')
+        self.assertEqual(captured, "None")
+
+    def test_submit_empty(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.type('deformField1', '')
+        browser.click('submit')
+        browser.wait_for_page_to_load("30000")
+        self.failUnless(browser.is_element_present('css=.errorMsgLbl'))
+        error_node = 'css=#error-deformField1'
+        self.assertEqual(browser.get_text(error_node), 'Required')
+        self.assertEqual(browser.get_value('deformField1'), '')
+        captured = browser.get_text('css=#captured')
+        self.assertEqual(captured, "None")
+
 if __name__ == '__main__':
-    nose.main()
-    
-    
+    setUpModule()
+    try:
+        unittest.main()
+    finally:
+        tearDownModule()

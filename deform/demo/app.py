@@ -547,7 +547,7 @@ class DeformDemo(object):
             csv = Rows()
         schema = Schema()
         form = deform.Form(schema, buttons=('submit',))
-        form['csv'].widget = deform.widget.TextAreaCSVWidget()
+        form['csv'].widget = deform.widget.TextAreaCSVWidget(rows=10, cols=60)
         appstruct = {'csv':[ (1, 'hello', 4.5), (2, 'goodbye', 5.5) ]}
         return self.render_form(form, appstruct=appstruct)
 
