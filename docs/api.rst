@@ -130,6 +130,9 @@ Widget-Related
 .. autoclass:: FormWidget
    :members:
 
+.. autoclass:: TextAreaCSVWidget
+   :members:
+
 Template-Related
 ----------------
 

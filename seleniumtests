@@ -35,5 +35,5 @@
 
 # env/bin/paster serve deform/demo/demo.ini &
 # pid=$?
-env/bin/python deform/demo/tests/test_demo.py
+env/bin/python deformdemo/tests/test_demo.py
 #kill $pid

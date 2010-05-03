@@ -559,13 +559,13 @@ tmpstore = MemoryTmpStore()
 
 def run(global_config, **settings):
     settings['debug_templates'] = 'true'
-    config = Configurator(package=deform.demo, settings=settings)
+    config = Configurator(settings=settings)
     config.begin()
     config.add_static_view('static', 'deform:static')
     config.add_translation_dirs(
         'colander:locale',
         'deform:locale',
-        'deform.demo:locale'
+        'deformdemo:locale'
         )
     config.scan()
     config.end()

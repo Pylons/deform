@@ -50,7 +50,7 @@ setupkw = dict(
     test_suite="deform",
     entry_points = """\
     [paste.app_factory]
-    demo = deform.demo.app:run
+    demo = deformdemo.app:run
     """,
     extras_require = {
         'demo': ['repoze.bfg', 'pygments', 'Babel'],
