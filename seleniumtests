@@ -22,7 +22,7 @@
 #
 # start the deform demo app in one console:
 #
-#   bin/paster serve deform/demo/demo.ini
+#   bin/paster serve deformdemo/demo.ini
 #
 # start the selenium server on another console:
 #
@@ -33,7 +33,4 @@
 #  ./seleniumtests
 #
 
-# env/bin/paster serve deform/demo/demo.ini &
-# pid=$?
 env/bin/python deformdemo/tests/test_demo.py
-#kill $pid
