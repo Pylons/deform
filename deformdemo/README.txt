@@ -1,5 +1,5 @@
-deform.demo
-===========
+deformdemo
+==========
 
 Software which demonstrates the operation of the ``deform`` form
 generation package.
@@ -12,7 +12,15 @@ within a virtualenv::
 This will cause ``repoze.bfg``, ``Pygments``, ``Babel``, and a number
 of other dependencies to be installed along with deform.
 
-To subsequently start it, run:
+Get a checkout of deform:
+
+  svn co http://svn.repoze.org/svn/deform/trunk deform
+
+cd to the deform package:
+
+  cd deform
+
+To start the demo, run:
 
   bin/paster serve deformdemo/demo.ini
 
