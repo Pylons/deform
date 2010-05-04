@@ -5,6 +5,8 @@ capabilities """
 
 import inspect
 import sys
+import csv
+import StringIO
 
 from webob import Response
 from pkg_resources import resource_filename
@@ -551,11 +553,101 @@ class DeformDemo(object):
         appstruct = {'csv':[ (1, 'hello', 4.5), (2, 'goodbye', 5.5) ]}
         return self.render_form(form, appstruct=appstruct)
 
+    @bfg_view(renderer='templates/form.pt', name='widget_adapter')
+    @demonstrate('Widget Adapter')
+    def widget_adapter(self):
+        # Formish allows you to pair a widget against a type that
+        # doesn't "natively" lend itself to being representible by the
+        # widget; for example, it allows you to use a text area widget
+        # against a sequence type.  To provide this feature, Formish
+        # uses an adapter to convert the sequence data to text during
+        # serialization and from text back to a sequence during
+        # deserialization.
+        #
+        # Deform doesn't have such a feature out of the box.  This is
+        # on purpose: the feature is really too complicated and
+        # magical for civilians.  However, if you really want or need
+        # it, you can add yourself as necessary using an adapter
+        # pattern.
+        #
+        # In the demo method below, we adapt a "normal" text area
+        # widget for use against a sequence.  The resulting browser UI
+        # is the same as if we had used a TextAreaCSVWidget against
+        # the sequence as in the "textareacsv" test method.
+        #
+        # N.B.: we haven't automated the lookup of the widget adapter
+        # based on the type of the field and the type of the widget.
+        # Instead, we just construct an adapter manually.  Adding an
+        # abstraction to the lookup based on the widget and schema
+        # types being adapted is easy enough, but trying to follow the
+        # codepath of the abstraction becomes brainbending.
+        # Therefore, we don't bother to show it.
+        class Row(deform.TupleSchema):
+            first = deform.SchemaNode(deform.Integer())
+            second = deform.SchemaNode(deform.String())
+            third = deform.SchemaNode(deform.Float())
+        class Rows(deform.SequenceSchema):
+            row = Row()
+        class Schema(deform.Schema):
+            csv = Rows()
+        schema = Schema()
+        form = deform.Form(schema, buttons=('submit',))
+        inner_widget = deform.widget.TextAreaWidget(rows=10, cols=60)
+        widget = SequenceToTextWidgetAdapter(inner_widget)
+        form['csv'].widget = widget
+        appstruct = {'csv':[ (1, 'hello', 4.5), (2, 'goodbye', 5.5) ]}
+        return self.render_form(form, appstruct=appstruct)
+
 class MemoryTmpStore(dict):
     def preview_url(self, uid):
         return None
 
 tmpstore = MemoryTmpStore()
+
+class SequenceToTextWidgetAdapter(object):
+    def __init__(self, widget):
+        self.widget = widget
+
+    def __getattr__(self, name):
+        return getattr(self.widget, name)
+
+    def serialize(self, field, cstruct=None, readonly=False):
+        if cstruct is None:
+            cstruct = field.default
+        if cstruct is None:
+            cstruct = []
+        textrows = getattr(field, 'unparseable', None)
+        if textrows is None:
+            outfile = StringIO.StringIO()
+            writer = csv.writer(outfile)
+            writer.writerows(cstruct)
+            textrows = outfile.getvalue()
+        return self.widget.serialize(field, cstruct=textrows,
+                                     readonly=readonly)
+
+    def deserialize(self, field, pstruct):
+        text = self.widget.deserialize(field, pstruct)
+        if not text.strip() and field.schema.required:
+            # prevent
+            raise colander.Invalid(field.schema, 'Required', [])
+        try:
+            infile = StringIO.StringIO(text)
+            reader = csv.reader(infile)
+            rows = list(reader)
+        except Exception, e:
+            field.unparseable = pstruct
+            raise colander.Invalid(field.schema, str(e))
+        return rows
+
+    def handle_error(self, field, error):
+        msgs = []
+        if error.msg:
+            field.error = error
+        else:
+            for e in error.children:
+                msgs.append('line %s: %s' % (e.pos+1, e))
+            field.error = colander.Invalid(field.schema, '\n'.join(msgs))
+        
 
 def run(global_config, **settings):
     settings['debug_templates'] = 'true'
