@@ -177,6 +177,20 @@ same directory:
    </body>
    </html>
 
+Demo Site
+---------
+
+Visit `deformdemo.repoze.org <http://deformdemo.repoze.org>`_ to view
+an application which demonstrates most of Deform's features.  The
+source code for this application is also available in the `deform
+package within the Repoze SVN repository
+<http://svn.repoze.org/deform/trunk/deformdemo>`_.
+
+You can check the deform package out of the Repoze SVN repository via
+the following command::
+
+   svn co http://svn.repoze.org/deform/trunk deform
+
 .. toctree::
    :maxdepth: 2
 
