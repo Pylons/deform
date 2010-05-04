@@ -9,6 +9,7 @@ from deform.exception import TemplateError # API
 
 from deform.schema import Mapping # API
 from deform.schema import Sequence # API
+from deform.schema import Tuple # API
 from deform.schema import Set # API
 from deform.schema import String # API
 from deform.schema import Integer # API

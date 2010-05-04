@@ -53,10 +53,10 @@ class ZPTTemplateLoader(object):
 
 class ZPTRendererFactory(object):
     """
-    Create a Chameleon ZPT :term:`renderer`.
+    Construct a Chameleon ZPT :term:`renderer`.
 
-    The returned renderer callable accepts a template name *without*
-    the ``.pt`` file extension and a set of **kw values.
+    The resulting renderer callable accepts a template name *without*
+    the ``.pt`` file extension and a set of keyword` values.
 
     **Arguments**
 

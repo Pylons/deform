@@ -6,12 +6,15 @@ from deform.i18n import _
 # data types
 
 class Mapping(colander.Mapping):
+    __doc__ = colander.Mapping.__doc__
     default_widget_maker = widget.MappingWidget
 
 class Sequence(colander.Sequence):
+    __doc__ = colander.Sequence.__doc__
     default_widget_maker = widget.SequenceWidget
 
 class String(colander.String):
+    __doc__ = colander.String.__doc__
     default_widget_maker = widget.TextInputWidget
     # Widgets can (and should) deal with Unicode rather than an
     # encoded string.  The colander base widget serializes to ``str``;
@@ -20,22 +23,28 @@ class String(colander.String):
     serialize = colander.String.deserialize
 
 class Integer(colander.Integer):
+    __doc__ = colander.Integer.__doc__
     default_widget_maker = widget.TextInputWidget
 
 class Float(colander.Float):
+    __doc__ = colander.Float.__doc__
     default_widget_maker = widget.TextInputWidget
 
 class Decimal(colander.Decimal):
+    __doc__ = colander.Decimal.__doc__
     default_widget_maker = widget.TextInputWidget
 
 class Boolean(colander.Boolean):
+    __doc__ = colander.Boolean.__doc__
     default_widget_maker = widget.CheckboxWidget
 
 class Date(colander.Date):
+    __doc__ = colander.Date.__doc__
     default_widget_maker = widget.DatePartsWidget
     err_template = 'Invalid date'
 
 class Tuple(colander.Tuple):
+    __doc__ = colander.Tuple.__doc__
     default_widget_maker = widget.Widget # null
 
 class FileData(object):
@@ -136,6 +145,8 @@ class FileData(object):
         return value
 
 class Set(object):
+    """ A type representing a non-overlapping set of items.
+    Deserializes an iterable to a ``set`` object. """
     default_widget_maker = widget.CheckboxChoiceWidget
     def deserialize(self, node, value):
         if not hasattr(value, '__iter__'):
@@ -155,18 +166,22 @@ class Set(object):
 # schema nodes
 
 class SchemaNode(colander.SchemaNode):
+    __doc__ = colander.SchemaNode.__doc__
     pass
 
 class MappingSchema(colander.MappingSchema):
+    __doc__ = colander.MappingSchema.__doc__
     schema_type = Mapping
     node_type = SchemaNode
 
 Schema = MappingSchema
 
 class SequenceSchema(colander.SequenceSchema):
+    __doc__ = colander.SequenceSchema.__doc__
     schema_type = Sequence
     node_type = SchemaNode
     
 class TupleSchema(colander.TupleSchema):
+    __doc__ = colander.TupleSchema.__doc__
     schema_type = Tuple
     node_type = SchemaNode
