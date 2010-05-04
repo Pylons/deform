@@ -1535,6 +1535,10 @@ class TextAreaCSVWidgetTests(unittest.TestCase):
         captured = browser.get_text('css=#captured')
         self.assertEqual(captured, "None")
 
+
+class WidgetAdapterTests(TextAreaCSVWidgetTests):
+    url = "/widget_adapter/"
+
 if __name__ == '__main__':
     setUpModule()
     try:
