@@ -39,6 +39,9 @@ Type-Related
 .. autoclass:: Float
    :members:
 
+.. autoclass:: Decimal
+   :members:
+
 .. autoclass:: Boolean
    :members:
 

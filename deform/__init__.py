@@ -13,6 +13,7 @@ from deform.schema import Set # API
 from deform.schema import String # API
 from deform.schema import Integer # API
 from deform.schema import Float # API
+from deform.schema import Decimal # API
 from deform.schema import Boolean # API
 from deform.schema import Date # API
 from deform.schema import FileData # API

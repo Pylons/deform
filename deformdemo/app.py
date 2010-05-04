@@ -542,7 +542,7 @@ class DeformDemo(object):
         class Row(deform.TupleSchema):
             first = deform.SchemaNode(deform.Integer())
             second = deform.SchemaNode(deform.String())
-            third = deform.SchemaNode(deform.Float())
+            third = deform.SchemaNode(deform.Decimal())
         class Rows(deform.SequenceSchema):
             row = Row()
         class Schema(deform.Schema):
@@ -585,7 +585,7 @@ class DeformDemo(object):
         class Row(deform.TupleSchema):
             first = deform.SchemaNode(deform.Integer())
             second = deform.SchemaNode(deform.String())
-            third = deform.SchemaNode(deform.Float())
+            third = deform.SchemaNode(deform.Decimal())
         class Rows(deform.SequenceSchema):
             row = Row()
         class Schema(deform.Schema):

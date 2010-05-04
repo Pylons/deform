@@ -22,7 +22,7 @@ README = open(os.path.join(here, 'README.txt')).read()
 CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
 requires = [
-    'colander>=0.6.0', # i18n
+    'colander>=0.6.1', # decimal
     'chameleon>=1.2.3', # debug arg
     'translationstring',
     'peppercorn',

@@ -8,6 +8,7 @@ class TestAPI(unittest.TestCase):
         from deform import String
         from deform import Integer
         from deform import Float
+        from deform import Decimal
         from deform import Boolean
         from deform import Date
         from deform import FileData

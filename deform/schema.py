@@ -25,6 +25,9 @@ class Integer(colander.Integer):
 class Float(colander.Float):
     default_widget_maker = widget.TextInputWidget
 
+class Decimal(colander.Decimal):
+    default_widget_maker = widget.TextInputWidget
+
 class Boolean(colander.Boolean):
     default_widget_maker = widget.CheckboxWidget
 
