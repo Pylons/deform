@@ -881,15 +881,14 @@ class TextAreaCSVWidget(Widget):
         if not pstruct.strip() and field.schema.required:
             # prevent
             raise Invalid(field.schema, 'Required', [])
-        else:
-            try:
-                infile = StringIO.StringIO(pstruct)
-                reader = csv.reader(infile)
-                rows = list(reader)
-            except Exception, e:
-                field.unparseable = pstruct
-                raise Invalid(field.schema, str(e))
-            return rows
+        try:
+            infile = StringIO.StringIO(pstruct)
+            reader = csv.reader(infile)
+            rows = list(reader)
+        except Exception, e:
+            field.unparseable = pstruct
+            raise Invalid(field.schema, str(e))
+        return rows
 
     def handle_error(self, field, error):
         msgs = []
