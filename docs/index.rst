@@ -150,7 +150,7 @@ Here's the Python code:
 Here's the Chameleon ZPT template named ``form.pt``, placed in the
 same directory:
 
-.. code-block:: python
+.. code-block:: xml
    :linenos:
 
    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -177,6 +177,37 @@ same directory:
    </body>
    </html>
 
+Topics Needing Documentation
+----------------------------
+
+- Writing your own widget.
+
+- Discussion of how a schema is converted to a tree of Field objects.
+
+- Setting a widget on a field.
+
+- Default values in schemas.
+
+- The Form class (and thee Button class).
+
+- Internationalization
+
+- Creating a schema
+
+- form.css / structure.css / theme.css
+
+- Changing the close button image.
+
+- JS (deform.js / jquery...js / wufoo.js)
+
+- Overriding templates
+
+- Setting a default renderer
+
+- Templates
+
+- Relationship of widgets to schema items.
+
 Demo Site
 ---------
 
@@ -185,6 +216,9 @@ an application which demonstrates most of Deform's features.  The
 source code for this application is also available in the `deform
 package within the Repoze SVN repository
 <http://svn.repoze.org/deform/trunk/deformdemo>`_.
+
+Development
+-----------
 
 You can check the deform package out of the Repoze SVN repository via
 the following command::
@@ -196,6 +230,15 @@ the following command::
 
    api.rst
    glossary.rst
+
+Thanks To
+---------
+
+- The Formish guys (http://ish.io)
+
+- Fear Factory (http://fearfactory.com)
+
+- Midlake (http://midlake.net)
 
 Indices and tables
 ------------------
