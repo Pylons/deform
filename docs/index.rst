@@ -14,71 +14,22 @@ are translated from the native Chameleon templates to your templating
 system of choice and a suitable :term:`renderer` is supplied to
 :mod:`deform`.
 
-The design of :mod:`deform` is a shameless rip-off of the `formish
-<http://ish.io/projects/show/formish>`_ form generation library.  It
-differs from formish mostly in ways that make it possible to use
-:term:`Peppercorn` to ease sequence and form deserialization
-operations.
-
-Serialization
--------------
-
-High-level overview of how "serialization" (converting application
-data to a form rendering) works:
-
-- For each structure in the :term:`schema`, create a :term:`field`.  A
-  tree of fields is created, mirroring the nodes in the schema.
-
-- Each field knows about its associated schema element; each field
-  also knows about a :term:`widget`.
-
-- Pass an :term:`appstruct` to the root schema node's ``serialize``
-  method to obtain a :term:`cstruct`.
-
-- Pass the resulting :term:`cstruct` to the root widget's
-  ``serialize`` method to generate a form.
-
-.. code-block:: text
-
-   appstruct -> cstruct -> form
-              |          |
-              v          v
-           schema      widget
- 
-Deserialization
----------------
-
-High-level overview of how "deserialization" (converting form control
-data resulting from a form submission to application data) works:
-
-- For each structure in the :term:`schema`, create a :term:`field`.
-
-- Each field knows about its associated schema element; each field
-  also knows about a :term:`widget`.
-
-- Pass a set of :term:`form controls` to :term:`Peppercorn` in order
-  to obtain a :term:`pstruct`.
-
-- Pass the resulting :term:`pstruct` to the root widget node's
-  ``deserialize`` method to generate a :term:`cstruct`.
-
-- Pass the resulting :term:`cstruct` to the root schema node's
-  ``deserialize`` method to generate an :term:`appstruct`.  This may
-  result in a validation error.  If a validation error occurs, the
-  form may be rerendered with error markers in place.
-
-.. code-block:: text
-
-   formcontrols -> pstruct -> cstruct -> appstruct
-                |          |          |
-                v          v          v
-            peppercorn   widget    schema
+The design of :mod:`deform` is heavily influenced by the `formish
+<http://ish.io/projects/show/formish>`_ form generation library.  Some
+might even say it's a shameless rip-off, which would not be
+inaccurate.  It differs from formish mostly in ways that make the
+implementation (arguably) simpler and smaller.
 
 Example App
 -----------
 
-Here's an example `repoze.bfg <http://bfg.repoze.org>`_ application
-demonstrating how one might use :mod:`deform` to render a form.
+An example is worth a thousand words.  Here's an example `repoze.bfg
+<http://bfg.repoze.org>`_ application demonstrating how one might use
+:mod:`deform` to render a form.
+
+.. warning:: :mod:`deform` is not dependent on :mod:`repoze.bfg` at
+   all; we use BFG in the examples below to facilitate demonstration
+   of an actual end-to-end working application that uses Deform.
 
 Here's the Python code:
 
@@ -177,6 +128,26 @@ same directory:
    </body>
    </html>
 
+Topics
+======
+
+.. toctree::
+   :maxdepth: 2
+
+   serialization.rst
+   renderer.rst
+   api.rst
+   glossary.rst
+
+Thanks To
+---------
+
+- The Formish guys (http://ish.io)
+
+- Fear Factory (http://fearfactory.com)
+
+- Midlake (http://midlake.net)
+
 Topics Needing Documentation
 ----------------------------
 
@@ -208,6 +179,9 @@ Topics Needing Documentation
 
 - Relationship of widgets to schema items.
 
+Demonstrations and Development
+==============================
+
 Demo Site
 ---------
 
@@ -225,23 +199,8 @@ the following command::
 
    svn co http://svn.repoze.org/deform/trunk deform
 
-.. toctree::
-   :maxdepth: 2
-
-   api.rst
-   glossary.rst
-
-Thanks To
----------
-
-- The Formish guys (http://ish.io)
-
-- Fear Factory (http://fearfactory.com)
-
-- Midlake (http://midlake.net)
-
-Indices and tables
-------------------
+Index and Glossary
+==================
 
 * :ref:`genindex`
 * :ref:`modindex`
