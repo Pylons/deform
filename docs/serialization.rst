@@ -138,7 +138,7 @@ process, it might look like this:
             peppercorn   widget    schema
 
 When a user presses the submit button on any Deform form, Deform
-itself runs the resulting :term:`form control` data through the
+itself runs the resulting :term:`form controls` through the
 ``peppercorn.parse`` method.  This converts the form data into a
 mapping.  The *structure markers* in the form data indicate the
 internal structure of the mapping.
