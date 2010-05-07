@@ -153,10 +153,6 @@ Thanks To
 Topics Needing Documentation
 ----------------------------
 
-- Writing your own widget.
-
-- Discussion of how a schema is converted to a tree of Field objects.
-
 - Setting a widget on a field.
 
 - Default values in schemas.
@@ -167,19 +163,13 @@ Topics Needing Documentation
 
 - Creating a schema
 
-- form.css / structure.css / theme.css
+- Templates
 
-- Changing the close button image.
+- form.css / structure.css / theme.css
 
 - JS (deform.js / jquery...js / wufoo.js)
 
-- Overriding templates
-
-- Setting a default renderer
-
-- Templates
-
-- Relationship of widgets to schema items.
+- Changing the close button image.
 
 Demonstrations and Development
 ==============================

@@ -55,8 +55,9 @@ class Widget(object):
         renderering indicating an error condition for the field
         associated with this widget.  Default: ``error``.
 
-    These attributes are accepted as keyword arguments to all widget
-    constructors.
+    These attributes are also accepted as keyword arguments to all
+    widget constructors; if they are passed, they will override the
+    defaults.
 
     Particular widget types also accept other keyword arguments that
     get attached to the widget as attributes.  These are documented as
@@ -73,23 +74,28 @@ class Widget(object):
 
     def serialize(self, field, cstruct=None, readonly=False):
         """
-        Serialize a :term:`cstruct` value (a value resulting from a
-        :term:`Colander` schema serialization) to a form rendering and
-        return the rendering.  The result of this method should always
-        be a string (containing HTML).  The ``field`` argument is the
-        field object to which this widget is attached.  The
-        ``readonly`` argument serializes a readonly rendering of the
-        cstruct data to HTML.
+        The ``serialize`` method of a widget must serialize a
+        :term:`cstruct` value to an HTML rendering.  A :term:`cstruct`
+        value is the value which results from a :term:`Colander`
+        schema serialization for the schema node associated with this
+        widget.  ``serialize`` should return the HTML rendering: the
+        result of this method should always be a string containing
+        HTML.  The ``field`` argument is the :term:`field` object to
+        which this widget is attached.  If the ``readonly`` argument
+        is ``True``, it indicates that the result of this
+        serialization should be a read-only rendering (no form
+        controls) of the ``cstruct`` data to HTML.
         """
         raise NotImplementedError
 
     def deserialize(self, field, pstruct=None):
         """
-        Deserialize a :term:`pstruct` value (a value resulting from
-        the ``parse`` method of the :term:`Peppercorn` package) to a
-        :term:`cstruct` value and return the :term:`cstruct` value.
-        The ``field`` argument is the field object to which this
-        widget is attached.
+        The ``deserialize`` method of a widget must deserialize a
+        :term:`pstruct` value to a :term:`cstruct` value and return the
+        :term:`cstruct` value.  The ``pstruct`` argument is a value resulting
+        from the ``parse`` method of the :term:`Peppercorn` package. The
+        ``field`` argument is the field object to which this widget is
+        attached.
         """
         raise NotImplementedError
 
