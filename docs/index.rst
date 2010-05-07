@@ -134,8 +134,10 @@ Topics
 .. toctree::
    :maxdepth: 2
 
+   components.rst
    serialization.rst
    renderer.rst
+   widget.rst
    api.rst
    glossary.rst
 

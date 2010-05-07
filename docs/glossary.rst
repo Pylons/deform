@@ -34,11 +34,16 @@ Glossary
      for strutured form submission value deserialization.
 
    schema
-     A schema can serialize an :term:`appstruct` to a :term:`cstruct`
-     and deserialize a :term:`cstruct` to an :term:`appstruct` (object
-     derived from :class:`colander.SchemaNode` or one of the colander
-     Schema classes).  Schemas are offered by the :term:`Colander`
-     package in :mod:`deform`.
+     A nested collection of :term:`schema node` objects representing
+     an arrangement of data.
+
+   schema node
+     A schema node can serialize an :term:`appstruct` to a
+     :term:`cstruct` and deserialize a :term:`cstruct` to an
+     :term:`appstruct` (object derived from
+     :class:`colander.SchemaNode` or one of the colander Schema
+     classes).  Schemas are a concept used by deform, but actually
+     implemented and offered by the :term:`Colander` package.
 
    widget
      Serializes a :term:`cstruct` into a form rendering and
