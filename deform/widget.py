@@ -55,10 +55,6 @@ class Widget(object):
         renderering indicating an error condition for the field
         associated with this widget.  Default: ``error``.
 
-    static_url
-        The URL to static resources required by the widget.
-        Default: ``/static``
-
     These attributes are accepted as keyword arguments to all widget
     constructors.
 
@@ -71,7 +67,6 @@ class Widget(object):
     hidden = False
     category = 'default'
     error_class = 'error'
-    static_url = '/static'
 
     def __init__(self, **kw):
         self.__dict__.update(kw)
@@ -592,6 +587,9 @@ class SequenceWidget(Widget):
         of a form including a sequence widget, a child widget
         rendering should be performed.  Default: ``False``.
 
+    closebutton_url
+        The URL to the image representing the sequence item close
+        button.  Default: ``/static/images/close.png``
     """
     template = 'sequence'
     readonly_template = 'readonly/sequence'
@@ -601,13 +599,14 @@ class SequenceWidget(Widget):
     add_subitem_text_template = _('Add ${subitem_title}')
     render_initial_item = False
     category = 'structural'
+    closebutton_url = '/static/images/close.png'
 
     def prototype(self, field):
         # we clone the item field to bump the oid (for easier
         # automated testing; finding last node)
         item_field = field.children[0].clone()
         proto = field.renderer(self.item_template, field=item_field,
-                               cstruct=None)
+                               cstruct=None, parent=field)
         if isinstance(proto, unicode):
             proto = proto.encode('utf-8')
         proto = urllib.quote(proto)

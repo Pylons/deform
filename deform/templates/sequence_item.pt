@@ -2,10 +2,11 @@
     tal:omit-tag="field.widget.hidden"
     title="${field.description}">
   <!-- sequence_item -->
+
   <img class="deformClosebutton" 
        id="${field.oid}-close"
        tal:condition="not field.widget.hidden"
-       src="${field.widget.static_url}/images/close.png" 
+       src="${parent.widget.closebutton_url}" 
        alt="Remove" onclick="javascript:$(this).parent().remove();"/>
 
   <span tal:replace="structure field.widget.serialize(field, cstruct)"/>

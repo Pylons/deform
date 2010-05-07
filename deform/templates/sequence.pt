@@ -18,7 +18,8 @@
   </a>
 
   <div tal:repeat="tup subfields"
-       tal:content="structure rndr(tmpl, field=tup[1], cstruct=tup[0])"/>
+       tal:content="structure rndr(tmpl, field=tup[1], cstruct=tup[0],
+                                   parent=field)"/>
 
   <span class="deformInsertBefore"></span>
   
