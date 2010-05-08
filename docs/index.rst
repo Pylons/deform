@@ -1,24 +1,26 @@
 Deform
 ======
 
-:mod:`deform` is a form generation library.  :mod:`deform` uses
-:term:`Colander` as a schema library and :term:`Peppercorn` as a form
-control deserialization library, and :term:`Chameleon` to perform HTML
-templating.  :mod:`deform` depends only on Peppercorn, Colander,
-Chameleon and an internationalization library named translationstring,
-so it may be used in most web frameworks (or antiframeworks) as a
-result.
-
-Alternate templating languages may be used, as long as all templates
-are translated from the native Chameleon templates to your templating
-system of choice and a suitable :term:`renderer` is supplied to
-:mod:`deform`.
+:mod:`deform` is a form generation library.
 
 The design of :mod:`deform` is heavily influenced by the `formish
 <http://ish.io/projects/show/formish>`_ form generation library.  Some
 might even say it's a shameless rip-off, which would not be
 inaccurate.  It differs from formish mostly in ways that make the
 implementation (arguably) simpler and smaller.
+
+:mod:`deform` uses :term:`Colander` as a schema library,
+:term:`Peppercorn` as a form control deserialization library, and
+:term:`Chameleon` to perform HTML templating.
+
+:mod:`deform` depends only on Peppercorn, Colander, Chameleon and an
+internationalization library named translationstring, so it may be
+used in most web frameworks (or antiframeworks) as a result.
+
+Alternate templating languages may be used, as long as all templates
+are translated from the native Chameleon templates to your templating
+system of choice and a suitable :term:`renderer` is supplied to
+:mod:`deform`.
 
 Topics
 ======
@@ -57,8 +59,6 @@ Topics Needing Documentation
 
 - Setting a widget on a field.
 
-- The Form class (and thee Button class).
-
 - Internationalization
 
 - Templates
@@ -68,6 +68,11 @@ Topics Needing Documentation
 - JS (deform.js / jquery...js / wufoo.js)
 
 - Changing the close button image.
+
+Done, Could be Better
+---------------------
+
+- The Form class (and thee Button class) explanations.
 
 Demonstrations and Development
 ==============================
