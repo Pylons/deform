@@ -74,3 +74,8 @@ Glossary
    default renderer
      The template :term:`renderer` used when no other renderer is
      specified.  It uses the :term:`Chameleon` templating engine.
+
+   WebOb
+     `WebOb <http://pythonpaste.org/webob/>`_ is a WSGI request/response
+     library created by Ian Bicking.
+

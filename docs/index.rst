@@ -53,13 +53,9 @@ Topics Needing Documentation
 
 - Setting a widget on a field.
 
-- Default values in schemas.
-
 - The Form class (and thee Button class).
 
 - Internationalization
-
-- Creating a schema
 
 - Templates
 

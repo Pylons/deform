@@ -4,7 +4,7 @@ Basic Usage
 In this chapter, we'll walk through basic usage of Deform to render a
 form, and capture and validate input.
 
-The steps one must take to cause a form to be renderered and
+The steps a developer must take to cause a form to be renderered and
 subsequently be ready to accept form submission input are:
 
 - Define a schema
@@ -16,19 +16,19 @@ subsequently be ready to accept form submission input are:
 - Render the form.
 
 Once the form is rendered, a user will interact with the form in his
-browser, and some point, submit it.
+browser, and some point, he will submit it.
 
 When the user submits the form, the data provided by the user will
 either validate properly, or the form will need to be rerendered with
 error markers which help to inform the user of which parts need to be
 filled in "properly" (as defined by the schema). 
 
-Defining A Deform Schema
-------------------------
+Defining A Schema
+-----------------
 
 The first step to using Deform is to create a :term:`schema` which
 represents the data structure you wish to be captured via a form
-rendering.
+rendering.  
 
 For example, let's imagine you want to create a form based roughly on
 a data structure you'll obtain by reading data from a relational
@@ -112,6 +112,12 @@ Here's a schema that will help us meet those requirements:
 
    schema = People()
        
+The schemas used by Deform come from a package named :term:`Colander`.
+The canonical documentation for Colander exists at
+`http://docs.repoze.org/colander <http://docs.repoze.org/colander>`_;
+you'll need to read it to get comfy with the details of the default
+data types usable in schemas by Deform.
+
 For ease of reading, we've actually defined *five* schemas above, but
 we coalesce them all into a single ``People`` schema instance as
 ``schema`` in the last step.  A ``People`` schema is a collection of
@@ -131,14 +137,12 @@ we coalesce them all into a single ``People`` schema instance as
   ``number``.  The ``location`` must be one of ``work`` or ``home``.
   The number must be a string.
 
-.. note:: schema-related objects are usually imported from the
-   :mod:`colander` package.  The canonical documentation for Colander
-   exists at `http://docs.repoze.org/colander
-   <http://docs.repoze.org/colander>`_.  Deform is a consumer of the
-   schema services offered by Colander.
-
 Schema Node Objects
 ~~~~~~~~~~~~~~~~~~~
+
+We'll repeat and contextualize the :term:`Colander` documentation
+about schema nodes here in order to prevent you from needing to switch
+away from this page to another right now.
 
 A schema is composed of one or more *schema node* objects, each
 typically of the class :class:`colander.SchemaNode`, usually in a nested
@@ -153,7 +157,7 @@ The *validator* of a schema node is called after deserialization; it
 makes sure the deserialized value matches a constraint.  An example of
 such a validator is provided in the schema above:
 ``validator=colander.Range(0, 200)``.  A validator is not called after
-serialization, only after deserialization.
+schema node serialization, only after node deserialization.
 
 The *default* of a schema node indicates its default value if a value
 for the schema node is not found in the input data during
@@ -165,7 +169,7 @@ The *name* of a schema node is used to relate schema nodes to each
 other.  It is also used as the title if a title is not provided.
 
 The *title* of a schema node is metadata about a schema node.  It
-shows up as the legend above the form field(s) related to the schema
+shows up in the legend above the form field(s) related to the schema
 node.  By default, it is a capitalization of the *name*.
 
 The *description* of a schema node is metadata about a schema node.
@@ -212,8 +216,16 @@ which has a *type* value of :class:`colander.Tuple`.
 Instantiating a :class:`colander.SequenceSchema` creates a schema node
 which has a *type* value of :class:`colander.Sequence`.
 
-Deserializing A Data Structure Using a Schema
----------------------------------------------
+Creating Schemas Without Using a Class Statement (Imperatively)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+See `http://docs.repoze.org/colander/#defining-a-schema-imperatively
+<http://docs.repoze.org/colander/#defining-a-schema-imperatively>`_
+for information about how to create schemas without using a class
+statement.  Using classless schemas is purely a style decision.
+
+Rendering a Form and Validating Form Submission Data
+----------------------------------------------------
 
 Earlier we defined a schema:
 
@@ -248,116 +260,110 @@ Earlier we defined a schema:
 
    schema = People()
 
-Let's now use this schema to try to deserialize some concrete data
-structures to HTML.
-
-Deserializing A Valid Serialization
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: python
-   :linenos:
-
-     data = {
-            'name':'keith',
-            'age':'20',
-            'friends':[('1', 'jim'),('2', 'bob'), ('3', 'joe'), ('4', 'fred')],
-            'phones':[{'location':'home', 'number':'555-1212'},
-                      {'location':'work', 'number':'555-8989'},],
-            }
-     schema = Person()
-     deserialized = schema.deserialize(data)
-
-When ``schema.deserialize(data)`` is called, because all the data in
-the schema is valid, and the structure represented by ``data``
-conforms to the schema, ``deserialized`` will be the following:
+Let's now use this schema to try to render and validate a form.  Let's
+pretend we have some existing data already that we'd like to edit
+using the form (the form is an "edit form" as opposed to an "add
+form").  That data looks like this:
 
 .. code-block:: python
    :linenos:
 
-     {
-     'name':'keith',
-     'age':20,
-     'friends':[(1, 'jim'),(2, 'bob'), (3, 'joe'), (4, 'fred')],
-     'phones':[{'location':'home', 'number':'555-1212'},
-               {'location':'work', 'number':'555-8989'},],
-     }
+   [
+   {
+    'name':'keith',
+    'age':20,
+    'friends':['jim', 'bob', 'joe', 'fred'],
+    'phones':[{'location':'home', 'number':'555-1212'},
+              {'location':'work', 'number':'555-8989'},],
+   },
+   {
+    'name':'fred',
+    'age':23,
+    'friends':['keith', 'bob', 'joe'],
+    'phones':[{'location':'home', 'number':'555-7777'}],
+   },
+   ]
 
-Note that all the friend rankings have been converted to integers,
-likewise for the age.
-
-Deserializing An Invalid Serialization
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Below, the ``data`` structure has some problems.  The ``age`` is a
-negative number.  The rank for ``bob`` is ``t`` which is not a valid
-integer.  The ``location`` of the first phone is ``bar``, which is not
-a valid location (it is not one of "work" or "home").  What happens
-when a data structure cannot be deserialized due to a data type error
-or a validation error?
+To create a form object, we do this:
 
 .. code-block:: python
    :linenos:
 
-     import colander
+   from deform import Form
+   myform = Form(schema, buttons=('submit',))
 
-     data = {
-            'name':'keith',
-            'age':'-1',
-            'friends':[('1', 'jim'),('t', 'bob'), ('3', 'joe'), ('4', 'fred')],
-            'phones':[{'location':'bar', 'number':'555-1212'},
-                      {'location':'work', 'number':'555-8989'},],
-            }
-     schema = Person()
-     schema.deserialize(data)
+Rendering the Form
+~~~~~~~~~~~~~~~~~~
 
-The ``deserialize`` method will raise an exception, and the ``except``
-clause above will be invoked, causing an error messaage to be printed.
-It will print something like:
+Once we've created a Form object, we can render it without issue:
+
+   form = myform.render()
+
+Once the above statement runs, the ``form`` variable is now a Unicode
+object containing an HTML rendering of the edit form, useful for
+serving out to a browser.  The root tag of the rendering will be the
+``<form>`` tag representing this form (or at least a ``<div>`` tag
+that contains this form tag), so the application using it will need to
+wrap it in HTML ``<html>`` and ``<body>`` tags as necessary.  It will
+need to be inserted as "structure" without any HTML escaping.
+
+We now have an HTML rendering of a form, but before we can serve it up
+successfully to a user using a browser, we have to make sure that
+static resources used by Deform can be resolved properly. Many Deform
+widgets require access to static resources (such as images) via HTTP.
+For Deform to work properly, we'll need to arrange that files in the
+directory named ``static`` within the :mod:`deform` package can be
+resolved via a URL which lives at the same hostname and port number as
+the page which serves up tthe form itself.  For example, the URL
+``/static/images/close.png`` should be willing to return the
+``close.png`` image in the ``static/images`` directory in the
+:mod:`deform` package and ``/static/scripts/deform.js`` as
+``image/png`` content .  How you arrange to do this is dependent on
+your web framework.  It's done in :mod:`repoze.bfg` imperative
+configuration via:
+
+.. code-block:: python
+
+  config = Configurator(...)
+  ...
+  config.add_static_view('static', 'deform:static')
+  ...
+
+Validating a Form Submission
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Once the user has chewed on the form a bit, he will eventually submit
+it.  When he submits it, the logic you use to deal with the form
+validation must do a few things:
+
+- It must detect that a submit button was clicked.
+
+- It must obtain the list of :term:`form controls` from the form POST
+  data.
+
+- It must call the :meth:`deform.Form.validate` method with the list
+  of form controls.
+
+- It must be willing to catch a :exc:`deform.ValidationError`
+  exception and rerender the form if there were validation errors.
+
+For example, using the :term:`WebOb` API for the above tasks, and the
+``form`` object we created earlier, such a dance might look like this:
 
 .. code-block:: python
    :linenos:
 
-   Invalid: {'age':'-1 is less than minimum value 0',
-            'friends.1.0':'"t" is not a number',
-            'phones.0.location:'"bar" is not one of "home", "work"'}
+       if 'submit' in request.POST: # detect that the submit button was clicked
+           controls = request.POST.items() # get the form controls
+           try:
+               appstruct = myform.validate(controls)  # call validate
+           except ValidationFailure, e: # catch the exception
+               return {'form':e.render()} # rerender the form with an exception
+           return {'form':None, 'appstruct':appstruct}
 
-The above error is telling us that:
+The above set of statements is the sort of logic every web app that
+uses Deform must do.  If the validation stage does not fail, a
+variable named ``appstruct`` will exist with the data serialized from
+the form to be used in your application.  Otherwise the form will be
+rerendered.
 
-- The top-level age variable failed validation.
-
-- Bob's rank (the Friend tuple name ``bob``'s zeroth element) is not a
-  valid number.
-
-- The zeroth phone number has a bad location: it should be one of
-  "home" or "work".
-
-We can optionally catch the exception raised and obtain the raw error
-dictionary:
-
-.. code-block:: python
-   :linenos:
-
-     import colander
-
-     data = {
-            'name':'keith',
-            'age':'-1',
-            'friends':[('1', 'jim'),('t', 'bob'), ('3', 'joe'), ('4', 'fred')],
-            'phones':[{'location':'bar', 'number':'555-1212'},
-                      {'location':'work', 'number':'555-8989'},],
-            }
-     schema = Person()
-     try:
-         schema.deserialize(data)
-     except colander.Invalid, e:
-         errors = e.asdict()
-         print errors
-
-This will print something like:
-
-.. code-block:: python
-   :linenos:
-
-   {'age':'-1 is less than minimum value 0',
-    'friends.1.0':'"t" is not a number',
-    'phones.0.location:'"bar" is not one of "home", "work"'}
