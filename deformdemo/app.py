@@ -280,13 +280,14 @@ class DeformDemo(object):
     @bfg_view(renderer='templates/form.pt', name='sequence_of_mappings')
     @demonstrate('Sequence of Mapping Widgets')
     def sequence_of_mappings(self):
-        class Mapping(colander.Schema):
+        class Person(colander.Schema):
             name = colander.SchemaNode(colander.String())
-            title = colander.SchemaNode(colander.String())
-        class Sequence(colander.SequenceSchema):
-            mapping = Mapping()
+            age = colander.SchemaNode(colander.Integer(),
+                                      validator=colander.Range(0,200))
+        class People(colander.SequenceSchema):
+            person = Person()
         class Schema(colander.Schema):
-            mappings = Sequence()
+            people = People()
         schema = Schema()
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
@@ -295,16 +296,17 @@ class DeformDemo(object):
               name='sequence_of_mappings_with_initial_item')
     @demonstrate('Sequence of Mapping Widgets (With Initial Item)')
     def sequence_of_mappings_with_initial_item(self):
-        class Mapping(colander.Schema):
+        class Person(colander.Schema):
             name = colander.SchemaNode(colander.String())
-            title = colander.SchemaNode(colander.String())
-        class Sequence(colander.SequenceSchema):
-            mapping = Mapping()
+            age = colander.SchemaNode(colander.Integer(),
+                                      validator=colander.Range(0,200))
+        class People(colander.SequenceSchema):
+            person = Person()
         class Schema(colander.Schema):
-            mappings = Sequence()
+            people = People()
         schema = Schema()
         form = deform.Form(schema, buttons=('submit',))
-        form['mappings'].widget = deform.widget.SequenceWidget(
+        form['people'].widget = deform.widget.SequenceWidget(
             render_initial_item=True)
         return self.render_form(form)
 
@@ -312,22 +314,21 @@ class DeformDemo(object):
               name='readonly_sequence_of_mappings')
     @demonstrate('Read-Only Sequence of Mappings')
     def readonly_sequence_of_mappings(self):
-        class Mapping(colander.Schema):
+        class Person(colander.Schema):
             name = colander.SchemaNode(colander.String())
-            title = colander.SchemaNode(colander.String())
-        class Sequence(colander.SequenceSchema):
-            mapping = Mapping()
+            age = colander.SchemaNode(colander.Integer(),
+                                      validator=colander.Range(0,200))
+        class People(colander.SequenceSchema):
+            person = Person()
         class Schema(colander.Schema):
-            mappings = Sequence()
+            people = People()
         schema = Schema()
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(
             form,
-            appstruct={'mappings':
-                       [
-                           {'name':'name1', 'title':'title1'},
-                           {'name':'name2', 'title':'title2'},
-                        ]
+            appstruct={'people':
+                       [{'name':'name1', 'age':23},
+                        {'name':'name2', 'age':25},]
                        },
             readonly=True)
 
@@ -662,4 +663,3 @@ def run(global_config, **settings):
     config.scan()
     config.end()
     return config.make_wsgi_app()
-

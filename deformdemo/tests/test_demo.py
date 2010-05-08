@@ -962,9 +962,9 @@ class ReadOnlySequenceOfMappingTests(unittest.TestCase):
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")
         self.assertEqual(browser.get_text('deformField6'), 'name1')
-        self.assertEqual(browser.get_text('deformField7'), 'title1')
+        self.assertEqual(browser.get_text('deformField7'), '23')
         self.assertEqual(browser.get_text('deformField9'), 'name2')
-        self.assertEqual(browser.get_text('deformField10'), 'title2')
+        self.assertEqual(browser.get_text('deformField10'), '25')
 
 class SequenceOfFileUploads(unittest.TestCase):
     url = "/sequence_of_fileuploads/"
@@ -1152,7 +1152,7 @@ class SequenceOfMappings(unittest.TestCase):
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")
         self.failUnless(browser.is_element_present('css=.deformProto'))
-        self.assertEqual(browser.get_text('deformField1-addtext'),'Add Mapping')
+        self.assertEqual(browser.get_text('deformField1-addtext'),'Add Person')
         self.assertEqual(browser.get_text('css=#captured'), 'None')
 
     def test_submit_none_added(self):
@@ -1161,8 +1161,8 @@ class SequenceOfMappings(unittest.TestCase):
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
         self.assertEqual(browser.get_text('deformField1-addtext'),
-                         'Add Mapping')
-        self.assertEqual(browser.get_text('css=#captured'), "{'mappings': []}")
+                         'Add Person')
+        self.assertEqual(browser.get_text('css=#captured'), "{'people': []}")
         self.failIf(browser.is_element_present('css=.errorMsgLbl'))
 
     def test_submit_two_unfilled(self):
@@ -1189,46 +1189,46 @@ class SequenceOfMappings(unittest.TestCase):
         browser.wait_for_page_to_load("30000")
         browser.click('deformField1-seqAdd') # add one
         browser.type("name", 'name')
-        browser.type("title", 'title')
+        browser.type("age", '23')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
         self.failIf(browser.is_element_present('css=.errorMsgLbl'))
         self.assertEqual(browser.get_attribute('deformField6@name'), 'name')
         self.assertEqual(browser.get_value('deformField6'), 'name')
-        self.assertEqual(browser.get_attribute('deformField7@name'), 'title')
-        self.assertEqual(browser.get_value('deformField7'), 'title')
+        self.assertEqual(browser.get_attribute('deformField7@name'), 'age')
+        self.assertEqual(browser.get_value('deformField7'), '23')
         captured = browser.get_text('css=#captured')
         captured = eval(captured)
         self.assertEqual(captured,
-                         {'mappings': [{'name': u'name', 'title': u'title'}]})
+                         {'people': [{'name': u'name', 'age': 23}]})
 
         browser.click('deformField1-seqAdd') # add another
         name1 = 'dom=document.forms[0].name[0]'
-        title1 = 'dom=document.forms[0].title[0]'
+        age1 = 'dom=document.forms[0].age[0]'
         name2 = 'dom=document.forms[0].name[1]'
-        title2 = 'dom=document.forms[0].title[1]'
+        age2 = 'dom=document.forms[0].age[1]'
         browser.type(name1, 'name-changed')
-        browser.type(title1, 'title-changed')
+        browser.type(age1, '24')
         browser.type(name2, 'name2')
-        browser.type(title2, 'title2')
+        browser.type(age2, '26')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
         self.failIf(browser.is_element_present('css=.errorMsgLbl'))
         self.assertEqual(browser.get_attribute('deformField6@name'), 'name')
         self.assertEqual(browser.get_value('deformField6'), 'name-changed')
-        self.assertEqual(browser.get_attribute('deformField7@name'), 'title')
-        self.assertEqual(browser.get_value('deformField7'), 'title-changed')
+        self.assertEqual(browser.get_attribute('deformField7@name'), 'age')
+        self.assertEqual(browser.get_value('deformField7'), '24')
         self.assertEqual(browser.get_attribute('deformField9@name'), 'name')
         self.assertEqual(browser.get_value('deformField9'), 'name2')
-        self.assertEqual(browser.get_attribute('deformField10@name'), 'title')
-        self.assertEqual(browser.get_value('deformField10'), 'title2')
+        self.assertEqual(browser.get_attribute('deformField10@name'), 'age')
+        self.assertEqual(browser.get_value('deformField10'), '26')
         captured = browser.get_text('css=#captured')
         captured = eval(captured)
 
         self.assertEqual(
             captured,
-            {'mappings': [{'name': u'name-changed', 'title': u'title-changed'},
-                          {'name': u'name2', 'title': u'title2'}]})
+            {'people': [{'name': u'name-changed', 'age': 24},
+                        {'name': u'name2', 'age': 26}]})
 
         browser.click('deformField5-close') # remove the first mapping
         browser.click('submit')
@@ -1236,15 +1236,15 @@ class SequenceOfMappings(unittest.TestCase):
         self.failIf(browser.is_element_present('css=.errorMsgLbl'))
         self.assertEqual(browser.get_attribute('deformField6@name'), 'name')
         self.assertEqual(browser.get_value('deformField6'), 'name2')
-        self.assertEqual(browser.get_attribute('deformField7@name'), 'title')
-        self.assertEqual(browser.get_value('deformField7'), 'title2')
+        self.assertEqual(browser.get_attribute('deformField7@name'), 'age')
+        self.assertEqual(browser.get_value('deformField7'), '26')
 
         captured = browser.get_text('css=#captured')
         captured = eval(captured)
 
         self.assertEqual(
             captured,
-            {'mappings': [{'name': u'name2', 'title': u'title2'}]})
+            {'people': [{'name': u'name2', 'age': 26}]})
 
 
 class SequenceOfMappingsWithInitialItem(unittest.TestCase):
@@ -1253,11 +1253,11 @@ class SequenceOfMappingsWithInitialItem(unittest.TestCase):
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")
         self.failUnless(browser.is_element_present('css=.deformProto'))
-        self.assertEqual(browser.get_text('deformField1-addtext'),'Add Mapping')
+        self.assertEqual(browser.get_text('deformField1-addtext'),'Add Person')
         self.assertEqual(browser.get_attribute('css=#deformField6@name'),
                          'name')
         self.assertEqual(browser.get_attribute('css=#deformField7@name'),
-                         'title')
+                         'age')
         self.failIf(browser.is_element_present('css=.errorMsgLbl'))
         self.assertEqual(browser.get_text('css=#captured'), 'None')
 
@@ -1267,7 +1267,7 @@ class SequenceOfMappingsWithInitialItem(unittest.TestCase):
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
         self.assertEqual(browser.get_text('deformField1-addtext'),
-                         'Add Mapping')
+                         'Add Person')
         self.assertEqual(browser.get_text('css=#error-deformField6'),
                          'Required')
         self.assertEqual(browser.get_text('css=#error-deformField7'),
@@ -1280,34 +1280,34 @@ class SequenceOfMappingsWithInitialItem(unittest.TestCase):
         browser.wait_for_page_to_load("30000")
         browser.click('deformField1-seqAdd')
         browser.type("dom=document.forms[0].name[0]", 'name0')
-        browser.type("dom=document.forms[0].title[0]", 'title0')
+        browser.type("dom=document.forms[0].age[0]", '23')
         browser.type("dom=document.forms[0].name[1]", 'name1')
-        browser.type("dom=document.forms[0].title[1]", 'title1')
+        browser.type("dom=document.forms[0].age[1]", '25')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
         self.assertEqual(browser.get_text('deformField1-addtext'),
-                         'Add Mapping')
+                         'Add Person')
         self.assertEqual(browser.get_attribute('css=#deformField6@name'),
                          'name')
         self.assertEqual(browser.get_attribute('css=#deformField6@value'),
                          'name0')
         self.assertEqual(browser.get_attribute('css=#deformField7@name'),
-                         'title')
+                         'age')
         self.assertEqual(browser.get_attribute('css=#deformField7@value'),
-                         'title0')
+                         '23')
         self.assertEqual(browser.get_attribute('css=#deformField9@name'),
                          'name')
         self.assertEqual(browser.get_attribute('css=#deformField9@value'),
                          'name1')
         self.assertEqual(browser.get_attribute('css=#deformField10@name'),
-                         'title')
+                         'age')
         self.assertEqual(browser.get_attribute('css=#deformField10@value'),
-                         'title1')
+                         '25')
         self.failIf(browser.is_element_present('css=.errorMsgLbl'))
         captured = browser.get_text('css=#captured')
         self.assertEqual(eval(captured),
-                         {'mappings': [{'name': u'name0', 'title': u'title0'},
-                                       {'name': u'name1', 'title': u'title1'}]}
+                         {'people': [{'name': u'name0', 'age': 23},
+                                     {'name': u'name1', 'age': 25}]}
                          )
 
 class SelectWidgetTests(unittest.TestCase):
