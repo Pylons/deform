@@ -416,7 +416,8 @@ chapter, visit `http://deformdemo.repoze.org/sequence_of_mappings/
 <http://deformdemo.repoze.org/sequence_of_mappings/>`_.
 
 To see a "readonly edit form" in action that follows the schema in
-this chapter, visit `http://deformdemo.repoze.org/sequence_of_mappings/
+this chapter, visit
+`http://deformdemo.repoze.org/readonly_sequence_of_mappings/
 <http://deformdemo.repoze.org/readonly_sequence_of_mappings/>`_
 
 The application at http://deformdemo.repoze.org is a :mod:`repoze.bfg`
