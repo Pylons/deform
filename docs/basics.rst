@@ -248,7 +248,7 @@ To create a form object, we do this:
 We used the ``schema`` object (an instance of
 :class:`colander.MappingSchema`) we created in the previous section as
 the first positional parameter to the :class:`deform.Form` class; we
-passed the value ``('submit'.))`` as the value of the ``buttons``
+passed the value ``('submit',)`` as the value of the ``buttons``
 keyword argument.  This will cause a single button labeled ``Submit``
 to be injected at the bottom of the form rendering.  We chose to pass
 in the button names as a sequence of strings, but we could have also
@@ -417,7 +417,7 @@ chapter, visit `http://deformdemo.repoze.org/sequence_of_mappings/
 
 To see a "readonly edit form" in action that follows the schema in
 this chapter, visit `http://deformdemo.repoze.org/sequence_of_mappings/
-<http://deformdemo.repoze.org/sequence_of_mappings/>`_
+<http://deformdemo.repoze.org/readonly_sequence_of_mappings/>`_
 
 The application at http://deformdemo.repoze.org is a :mod:`repoze.bfg`
 application which demonstrates most of the features of Deform,
