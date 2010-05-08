@@ -148,7 +148,7 @@ class TestField(unittest.TestCase):
         self.assertEqual(result, {'name':'Name', 'title':'Title'})
 
     def test_validate_fails_widgeterror(self):
-        from deform.exception import Invalid
+        from colander import Invalid
         fields = [
             ('name', 'Name'),
             ('title', 'Title'),
@@ -164,7 +164,7 @@ class TestField(unittest.TestCase):
         self.assertEqual(e.error, invalid)
 
     def test_validate_fails_schemaerror(self):
-        from deform.exception import Invalid
+        from colander import Invalid
         fields = [
             ('name', 'Name'),
             ('title', 'Title'),
@@ -180,7 +180,7 @@ class TestField(unittest.TestCase):
         self.assertEqual(e.error, invalid)
 
     def test_validate_fails_widgeterror_and_schemaerror(self):
-        from deform.exception import Invalid
+        from colander import Invalid
         fields = [
             ('name', 'Name'),
             ('title', 'Title'),
@@ -244,7 +244,7 @@ class DummySchema(object):
 
 class DummyType(object):
     def __init__(self, maker=None):
-        self.default_widget_maker = maker
+        self.widget_maker = maker
         
 class DummyWidget(object):
     rendered = None

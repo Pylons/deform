@@ -6,6 +6,7 @@ from deform import decorator
 from deform import exception
 from deform import template
 from deform import widget
+from deform import schema
 
 class Field(object):
     """ Represents an individual form field (a visible object in a
@@ -63,7 +64,7 @@ class Field(object):
         schema element associated with this field.  By default, this
         attribute is ``None``.  If non-None, this attribute is usually
         an instance of the exception class
-        :exc:`deform.exception.Invalid`, which has a ``msg`` attribute
+        :exc:`colander.Invalid`, which has a ``msg`` attribute
         providing a human-readable validation error message.
 
     errormsg
@@ -161,7 +162,10 @@ class Field(object):
         the ``widget`` attribute of the field for the rest of the
         lifetime of this field. If a widget is assigned to a field
         before form processing, this function will not be called."""
-        widget_maker = getattr(self.schema.typ, 'default_widget_maker', None)
+        widget_maker = getattr(self.schema.typ, 'widget_maker', None)
+        if widget_maker is None:
+            widget_maker = schema.default_widget_makers.get(
+                self.schema.typ.__class__)
         if widget_maker is None:
             widget_maker = widget.TextInputWidget
         return widget_maker()
@@ -193,7 +197,7 @@ class Field(object):
         read-only (no input elements at all).
 
         See the documentation for
-        :meth:`deform.schema.SchemaNode.serialize` and
+        :meth:`colander.SchemaNode.serialize` and
         :meth:`deform.widget.Widget.serialize` .
         """
         if appstruct is None:
@@ -237,7 +241,7 @@ class Field(object):
           schema is returned.  It will be a mapping.
 
         - If the fields cannot be successfully validated, a
-          :exc:`deform.Invalid` exception is raised.
+          :exc:`colander.Invalid` exception is raised.
 
         The typical usage of ``validate`` in the wild is often
         something like this (at least in terms of code found within

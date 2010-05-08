@@ -137,8 +137,8 @@ class DeformDemo(object):
     @bfg_view(renderer='templates/form.pt', name='textinput')
     @demonstrate('Text Input Widget')
     def textinput(self):
-        class Schema(deform.Schema):
-            text = deform.SchemaNode(deform.String(),
+        class Schema(colander.Schema):
+            text = colander.SchemaNode(colander.String(),
                                      validator=colander.Length(max=100),
                                      description='Enter some text')
         schema = Schema()
@@ -149,8 +149,8 @@ class DeformDemo(object):
     @bfg_view(renderer='templates/form.pt', name='textarea')
     @demonstrate('Text Area Widget')
     def textarea(self):
-        class Schema(deform.Schema):
-            text = deform.SchemaNode(deform.String(),
+        class Schema(colander.Schema):
+            text = colander.SchemaNode(colander.String(),
                                      validator=colander.Length(max=100),
                                      description='Enter some text')
         schema = Schema()
@@ -161,9 +161,9 @@ class DeformDemo(object):
     @bfg_view(renderer='templates/form.pt', name='password')
     @demonstrate('Password Widget')
     def password(self):
-        class Schema(deform.Schema):
-            password = deform.SchemaNode(
-                deform.String(),
+        class Schema(colander.Schema):
+            password = colander.SchemaNode(
+                colander.String(),
                 validator=colander.Length(min=5, max=100),
                 description='Enter a password')
         schema = Schema()
@@ -174,9 +174,9 @@ class DeformDemo(object):
     @bfg_view(renderer='templates/form.pt', name='checkbox')
     @demonstrate('Checkbox Widget')
     def checkbox(self):
-        class Schema(deform.Schema):
-            want = deform.SchemaNode(
-                deform.Boolean(),
+        class Schema(colander.Schema):
+            want = colander.SchemaNode(
+                colander.Boolean(),
                 description='Check this box!',
                 title='I Want It!')
         schema = Schema()
@@ -189,9 +189,9 @@ class DeformDemo(object):
     def radiochoice(self):
         choices = (('habanero', 'Habanero'), ('jalapeno', 'Jalapeno'),
                    ('chipotle', 'Chipotle'))
-        class Schema(deform.Schema):
-            pepper = deform.SchemaNode(
-                deform.String(),
+        class Schema(colander.Schema):
+            pepper = colander.SchemaNode(
+                colander.String(),
                 validator=colander.OneOf([x[0] for x in choices]),
                 title='Choose your pepper',
                 description='Select a Pepper')
@@ -203,9 +203,9 @@ class DeformDemo(object):
     @bfg_view(renderer='templates/form.pt', name='checkedinput')
     @demonstrate('Checked Input Widget')
     def checkedinput(self):
-        class Schema(deform.Schema):
-            email = deform.SchemaNode(
-                deform.String(),
+        class Schema(colander.Schema):
+            email = colander.SchemaNode(
+                colander.String(),
                 title='Email Address',
                 description='Type your email address and confirm it',
                 validator=colander.Email())
@@ -220,9 +220,9 @@ class DeformDemo(object):
     @bfg_view(renderer='templates/form.pt', name='checkedpassword')
     @demonstrate('Checked Password Widget')
     def checkedpassword(self):
-        class Schema(deform.Schema):
-            password = deform.SchemaNode(
-                deform.String(),
+        class Schema(colander.Schema):
+            password = colander.SchemaNode(
+                colander.String(),
                 validator=colander.Length(min=5),
                 description='Type your password and confirm it')
         schema = Schema()
@@ -233,16 +233,16 @@ class DeformDemo(object):
     @bfg_view(renderer='templates/form.pt', name='mapping')
     @demonstrate('Mapping Widget')
     def mapping(self):
-        class Mapping(deform.Schema):
-            name = deform.SchemaNode(
-                deform.String(),
+        class Mapping(colander.Schema):
+            name = colander.SchemaNode(
+                colander.String(),
                 description='Content name')
-            date = deform.SchemaNode(
-                deform.Date(),
+            date = colander.SchemaNode(
+                colander.Date(),
                 description='Content date')
-        class Schema(deform.Schema):
-            number = deform.SchemaNode(
-                deform.Integer())
+        class Schema(colander.Schema):
+            number = colander.SchemaNode(
+                colander.Integer())
             mapping = Mapping()
         schema = Schema()
         form = deform.Form(schema, buttons=('submit',))
@@ -251,9 +251,9 @@ class DeformDemo(object):
     @bfg_view(renderer='templates/form.pt', name='sequence_of_fileuploads')
     @demonstrate('Sequence of File Upload Widgets')
     def sequence_of_fileuploads(self):
-        class Sequence(deform.SequenceSchema):
-            upload = deform.SchemaNode(deform.FileData())
-        class Schema(deform.Schema):
+        class Sequence(colander.SequenceSchema):
+            upload = colander.SchemaNode(deform.FileData())
+        class Schema(colander.Schema):
             uploads = Sequence()
         schema = Schema()
         form = deform.Form(schema, buttons=('submit',))
@@ -265,9 +265,9 @@ class DeformDemo(object):
               name='sequence_of_fileuploads_with_initial_item')
     @demonstrate('Sequence of File Upload Widgets (With Initial Item)')
     def sequence_of_fileuploads_with_initial_item(self):
-        class Sequence(deform.SequenceSchema):
-            upload = deform.SchemaNode(deform.FileData())
-        class Schema(deform.Schema):
+        class Sequence(colander.SequenceSchema):
+            upload = colander.SchemaNode(deform.FileData())
+        class Schema(colander.Schema):
             uploads = Sequence()
         schema = Schema()
         form = deform.Form(schema, buttons=('submit',))
@@ -280,12 +280,12 @@ class DeformDemo(object):
     @bfg_view(renderer='templates/form.pt', name='sequence_of_mappings')
     @demonstrate('Sequence of Mapping Widgets')
     def sequence_of_mappings(self):
-        class Mapping(deform.Schema):
-            name = deform.SchemaNode(deform.String())
-            title = deform.SchemaNode(deform.String())
-        class Sequence(deform.SequenceSchema):
+        class Mapping(colander.Schema):
+            name = colander.SchemaNode(colander.String())
+            title = colander.SchemaNode(colander.String())
+        class Sequence(colander.SequenceSchema):
             mapping = Mapping()
-        class Schema(deform.Schema):
+        class Schema(colander.Schema):
             mappings = Sequence()
         schema = Schema()
         form = deform.Form(schema, buttons=('submit',))
@@ -295,12 +295,12 @@ class DeformDemo(object):
               name='sequence_of_mappings_with_initial_item')
     @demonstrate('Sequence of Mapping Widgets (With Initial Item)')
     def sequence_of_mappings_with_initial_item(self):
-        class Mapping(deform.Schema):
-            name = deform.SchemaNode(deform.String())
-            title = deform.SchemaNode(deform.String())
-        class Sequence(deform.SequenceSchema):
+        class Mapping(colander.Schema):
+            name = colander.SchemaNode(colander.String())
+            title = colander.SchemaNode(colander.String())
+        class Sequence(colander.SequenceSchema):
             mapping = Mapping()
-        class Schema(deform.Schema):
+        class Schema(colander.Schema):
             mappings = Sequence()
         schema = Schema()
         form = deform.Form(schema, buttons=('submit',))
@@ -312,12 +312,12 @@ class DeformDemo(object):
               name='readonly_sequence_of_mappings')
     @demonstrate('Read-Only Sequence of Mappings')
     def readonly_sequence_of_mappings(self):
-        class Mapping(deform.Schema):
-            name = deform.SchemaNode(deform.String())
-            title = deform.SchemaNode(deform.String())
-        class Sequence(deform.SequenceSchema):
+        class Mapping(colander.Schema):
+            name = colander.SchemaNode(colander.String())
+            title = colander.SchemaNode(colander.String())
+        class Sequence(colander.SequenceSchema):
             mapping = Mapping()
-        class Schema(deform.Schema):
+        class Schema(colander.Schema):
             mappings = Sequence()
         schema = Schema()
         form = deform.Form(schema, buttons=('submit',))
@@ -334,14 +334,14 @@ class DeformDemo(object):
     @bfg_view(renderer='templates/form.pt', name='sequence_of_sequences')
     @demonstrate('Sequence of Sequence Widgets')
     def sequence_of_sequences(self):
-        class NameAndTitle(deform.Schema):
-            name = deform.SchemaNode(deform.String())
-            title = deform.SchemaNode(deform.String())
-        class NamesAndTitles(deform.SequenceSchema):
+        class NameAndTitle(colander.Schema):
+            name = colander.SchemaNode(colander.String())
+            title = colander.SchemaNode(colander.String())
+        class NamesAndTitles(colander.SequenceSchema):
             name_and_title = NameAndTitle(title='Name and Title')
-        class NamesAndTitlesSequences(deform.SequenceSchema):
+        class NamesAndTitlesSequences(colander.SequenceSchema):
             names_and_titles = NamesAndTitles(title='Names and Titles')
-        class Schema(deform.Schema):
+        class Schema(colander.Schema):
             names_and_titles_sequence = NamesAndTitlesSequences(
                 title='Sequence of Sequences of Names and Titles')
         schema = Schema()
@@ -356,8 +356,8 @@ class DeformDemo(object):
     @bfg_view(renderer='templates/form.pt', name='file')
     @demonstrate('File Upload Widget')
     def file(self):
-        class Schema(deform.Schema):
-            upload = deform.SchemaNode(deform.FileData())
+        class Schema(colander.Schema):
+            upload = colander.SchemaNode(deform.FileData())
         schema = Schema()
         form = deform.Form(schema, buttons=('submit',))
         form['upload'].widget = deform.widget.FileUploadWidget(tmpstore)
@@ -368,9 +368,9 @@ class DeformDemo(object):
     def date(self):
         import datetime
         from colander import Range
-        class Schema(deform.Schema):
-            date = deform.SchemaNode(
-                deform.Date(),
+        class Schema(colander.Schema):
+            date = colander.SchemaNode(
+                colander.Date(),
                 validator=Range(
                     min=datetime.date(2010, 1, 1),
                     min_err=_('${min} is earlier than earliest date ${val}')
@@ -383,16 +383,16 @@ class DeformDemo(object):
     @bfg_view(renderer='templates/form.pt', name='edit')
     @demonstrate('Edit Form')
     def edit(self):
-        class Mapping(deform.Schema):
-            name = deform.SchemaNode(
-                deform.String(),
+        class Mapping(colander.Schema):
+            name = colander.SchemaNode(
+                colander.String(),
                 description='Content name')
-            date = deform.SchemaNode(
-                deform.Date(),
+            date = colander.SchemaNode(
+                colander.Date(),
                 description='Content date')
-        class Schema(deform.Schema):
-            number = deform.SchemaNode(
-                deform.Integer())
+        class Schema(colander.Schema):
+            number = colander.SchemaNode(
+                colander.Integer())
             mapping = Mapping()
         schema = Schema()
         form = deform.Form(schema, buttons=('submit',))
@@ -412,12 +412,12 @@ class DeformDemo(object):
     @bfg_view(renderer='templates/form.pt', name='interfield')
     @demonstrate('Inter-Field Validation')
     def interfield(self):
-        class Schema(deform.Schema):
-            name = deform.SchemaNode(
-                deform.String(),
+        class Schema(colander.Schema):
+            name = colander.SchemaNode(
+                colander.String(),
                 description='Content name')
-            title = deform.SchemaNode(
-                deform.String(),
+            title = colander.SchemaNode(
+                colander.String(),
                 description='Content title (must start with content name)')
         def validator(form, value):
             if not value['title'].startswith(value['name']):
@@ -431,16 +431,16 @@ class DeformDemo(object):
     @bfg_view(renderer='templates/form.pt', name='fielddefaults')
     @demonstrate('Field Defaults')
     def fielddefaults(self):
-        class Schema(deform.Schema):
-            artist = deform.SchemaNode(
-                deform.String(),
+        class Schema(colander.Schema):
+            artist = colander.SchemaNode(
+                colander.String(),
                 default = 'Grandaddy',
                 description='Song name')
-            album = deform.SchemaNode(
-                deform.String(),
+            album = colander.SchemaNode(
+                colander.String(),
                 default='Just Like the Fambly Cat')
-            song = deform.SchemaNode(
-                deform.String(),
+            song = colander.SchemaNode(
+                colander.String(),
                 description='Song name')
         schema = Schema()
         form = deform.Form(schema, buttons=('submit',))
@@ -449,9 +449,9 @@ class DeformDemo(object):
     @bfg_view(renderer='templates/form.pt', name='unicodeeverywhere')
     @demonstrate('Unicode Everywhere')
     def unicodeeverywhere(self):
-        class Schema(deform.Schema):
-            field = deform.SchemaNode(
-                deform.String(),
+        class Schema(colander.Schema):
+            field = colander.SchemaNode(
+                colander.String(),
                 title = u'По оживлённым берегам',
                 description=(u"子曰：「學而時習之，不亦說乎？有朋自遠方來，不亦樂乎？ "
                              u"人不知而不慍，不亦君子乎？」"),
@@ -470,9 +470,9 @@ class DeformDemo(object):
             ('jalapeno', 'Jalapeno'),
             ('chipotle', 'Chipotle')
             )
-        class Schema(deform.Schema):
-            pepper = deform.SchemaNode(
-                deform.String(),
+        class Schema(colander.Schema):
+            pepper = colander.SchemaNode(
+                colander.String(),
                 )
         schema = Schema()
         form = deform.Form(schema, buttons=('submit',))
@@ -485,8 +485,8 @@ class DeformDemo(object):
     def checkboxchoice(self):
         choices = (('habanero', 'Habanero'), ('jalapeno', 'Jalapeno'),
                    ('chipotle', 'Chipotle'))
-        class Schema(deform.Schema):
-            pepper = deform.SchemaNode(
+        class Schema(colander.Schema):
+            pepper = colander.SchemaNode(
                 deform.Set(),
                 )
         schema = Schema()
@@ -500,9 +500,9 @@ class DeformDemo(object):
     def i18n(self):
         minmax = {'min':1, 'max':10}
         locale_name = get_locale_name(self.request)
-        class Schema(deform.Schema):
+        class Schema(colander.Schema):
             
-            number = deform.SchemaNode(
+            number = colander.SchemaNode(
                 colander.Integer(),
                 title=_('A number between ${min} and ${max}',
                         mapping=minmax),
@@ -510,7 +510,7 @@ class DeformDemo(object):
                               mapping=minmax),
                 validator = colander.Range(1, 10),
                 )
-            _LOCALE_ = deform.SchemaNode(deform.String(),
+            _LOCALE_ = colander.SchemaNode(colander.String(),
                                          default=locale_name)
 
         schema = Schema()
@@ -526,9 +526,9 @@ class DeformDemo(object):
     @bfg_view(renderer='templates/form.pt', name='hidden_field')
     @demonstrate('Hidden Field Widget')
     def hidden_field(self):
-        class Schema(deform.Schema):
-            sneaky = deform.SchemaNode(
-                deform.Boolean(),
+        class Schema(colander.Schema):
+            sneaky = colander.SchemaNode(
+                colander.Boolean(),
                 default=True,
                 )
         schema = Schema()
@@ -539,13 +539,13 @@ class DeformDemo(object):
     @bfg_view(renderer='templates/form.pt', name='textareacsv')
     @demonstrate('Text Area CSV Widget')
     def textareacsv(self):
-        class Row(deform.TupleSchema):
-            first = deform.SchemaNode(deform.Integer())
-            second = deform.SchemaNode(deform.String())
-            third = deform.SchemaNode(deform.Decimal())
-        class Rows(deform.SequenceSchema):
+        class Row(colander.TupleSchema):
+            first = colander.SchemaNode(colander.Integer())
+            second = colander.SchemaNode(colander.String())
+            third = colander.SchemaNode(colander.Decimal())
+        class Rows(colander.SequenceSchema):
             row = Row()
-        class Schema(deform.Schema):
+        class Schema(colander.Schema):
             csv = Rows()
         schema = Schema()
         form = deform.Form(schema, buttons=('submit',))
@@ -582,13 +582,13 @@ class DeformDemo(object):
         # types being adapted is easy enough, but trying to follow the
         # codepath of the abstraction becomes brainbending.
         # Therefore, we don't bother to show it.
-        class Row(deform.TupleSchema):
-            first = deform.SchemaNode(deform.Integer())
-            second = deform.SchemaNode(deform.String())
-            third = deform.SchemaNode(deform.Decimal())
-        class Rows(deform.SequenceSchema):
+        class Row(colander.TupleSchema):
+            first = colander.SchemaNode(colander.Integer())
+            second = colander.SchemaNode(colander.String())
+            third = colander.SchemaNode(colander.Decimal())
+        class Rows(colander.SequenceSchema):
             row = Row()
-        class Schema(deform.Schema):
+        class Schema(colander.Schema):
             csv = Rows()
         schema = Schema()
         form = deform.Form(schema, buttons=('submit',))

@@ -1503,8 +1503,10 @@ class TextAreaCSVWidgetTests(unittest.TestCase):
         self.assertEqual(browser.get_value('deformField1'),
                          '1,hello,4.5\n2,goodbye,5.5')
         captured = browser.get_text('css=#captured')
-        self.assertEqual(captured,
-                         u"{'csv': [(1, u'hello', 4.5), (2, u'goodbye', 5.5)]}")
+        self.assertEqual(
+            captured,
+            (u'{\'csv\': [(1, u\'hello\', Decimal("4.5")), '
+            u'(2, u\'goodbye\', Decimal("5.5"))]}'))
 
     def test_submit_line_error(self):
         browser.open(self.url)

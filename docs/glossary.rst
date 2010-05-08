@@ -26,11 +26,11 @@ Glossary
      A raw application data structure (complex Python objects).
 
    Colander
-     A `schema package <http://docs.repoze.org/colander>`_ used by deform
+     A `schema package <http://docs.repoze.org/colander>`_ used by Deform
      to provide serialization and validation facilities.
 
    Peppercorn
-     A `package <http://docs.repoze.org/peppercorn>`_ used by deform
+     A `package <http://docs.repoze.org/peppercorn>`_ used by Deform
      for strutured form submission value deserialization.
 
    schema
@@ -42,7 +42,7 @@ Glossary
      :term:`cstruct` and deserialize a :term:`cstruct` to an
      :term:`appstruct` (object derived from
      :class:`colander.SchemaNode` or one of the colander Schema
-     classes).  Schemas are a concept used by deform, but actually
+     classes).  Schemas are a concept used by Deform, but actually
      implemented and offered by the :term:`Colander` package.
 
    widget

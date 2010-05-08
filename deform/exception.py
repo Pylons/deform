@@ -1,7 +1,3 @@
-from colander import Invalid # API shim
-
-Invalid = Invalid # prevent PyFlakes from whining
-
 class ValidationFailure(Exception):
     """
     The exception raised by :meth:`deform.widget.Widget.validate`

@@ -9,36 +9,6 @@ def invalid_exc(func, *arg, **kw):
     else:
         raise AssertionError('Invalid not raised') # pragma: no cover
 
-class TestString(unittest.TestCase):
-    def _makeOne(self, **kw):
-        from deform.schema import String
-        return String(**kw)
-
-    def test_serialize_value_is_unicode(self):
-        node = DummySchemaNode()
-        typ = self._makeOne()
-        result = typ.serialize(node, u'unicode')
-        self.failUnless(isinstance(result, unicode))
-        self.assertEqual(result, u'unicode')
-
-    def test_serialize_value_is_str(self):
-        node = DummySchemaNode()
-        typ = self._makeOne()
-        result = typ.serialize(node, 'str')
-        self.failUnless(isinstance(result, unicode))
-        self.assertEqual(result, u'str')
-
-class TestDate(unittest.TestCase):
-    def _makeOne(self, *arg, **kw):
-        from deform.schema import Date
-        return Date(*arg, **kw)
-
-    def test_deserialize_invalid(self):
-        node = DummySchemaNode(None)
-        typ = self._makeOne()
-        e = invalid_exc(typ.deserialize, node, '10-10-10-10')
-        self.assertEqual(e.msg, 'Invalid date')
-
 class TestSet(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.schema import Set
@@ -77,30 +47,6 @@ class TestSet(unittest.TestCase):
         result = typ.deserialize(node, ('a',))
         self.assertEqual(result, set(('a',)))
 
-class TestMappingSchema(unittest.TestCase):
-    def test_construction(self):
-        from deform.schema import MappingSchema
-        from deform.schema import SchemaNode
-        from deform.schema import Mapping
-        class MyMappingSchema(MappingSchema):
-            name = SchemaNode(None)
-        my_schema = MyMappingSchema()
-        self.assertEqual(my_schema.__class__, SchemaNode)
-        self.assertEqual(my_schema.typ.__class__, Mapping)
-        self.assertEqual(len(my_schema.children), 1)
-        
-class TestSequenceSchema(unittest.TestCase):
-    def test_construction(self):
-        from deform.schema import SequenceSchema
-        from deform.schema import SchemaNode
-        from deform.schema import Sequence
-        class MyMappingSchema(SequenceSchema):
-            name = SchemaNode(None)
-        my_schema = MyMappingSchema()
-        self.assertEqual(my_schema.__class__, SchemaNode)
-        self.assertEqual(my_schema.typ.__class__, Sequence)
-        self.assertEqual(len(my_schema.children), 1)
-        
 class TestFileData(unittest.TestCase):
     def _makeOne(self):
         from deform.schema import FileData
@@ -165,4 +111,3 @@ class DummySchemaNode(object):
         self.required = default is None
         self.default = default
         self.children = []
-

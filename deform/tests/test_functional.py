@@ -2,12 +2,12 @@ import unittest
 
 class TestFunctional(unittest.TestCase):
     def _makeSchema(self):
-        from deform.schema import MappingSchema
-        from deform.schema import SequenceSchema
-        from deform.schema import SchemaNode
-        from deform.schema import String
-        from deform.schema import Boolean
-        from deform.schema import Date
+        from colander import MappingSchema
+        from colander import SequenceSchema
+        from colander import SchemaNode
+        from colander import String
+        from colander import Boolean
+        from colander import Date
     
         class DatesSchema(SequenceSchema):
             date = SchemaNode(Date())

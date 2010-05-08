@@ -184,7 +184,7 @@ or a sequence.
 
 An application eventually wants to deal in types less primitive than
 strings: a model instance or a datetime object.  An :term:`appstruct`
-is the data that an application that uses deform eventually wants to
+is the data that an application that uses Deform eventually wants to
 deal in.  Therefore, once a widget has turned a :term:`pstruct` into a
 :term:`cstruct`, the :term:`schema node` related to that widget is
 responsible for converting that cstruct to an :term:`appstruct`.  A
@@ -192,11 +192,55 @@ schema node possesses its very own ``deserialize`` method, which is
 responsible for accepting a :term:`cstruct` and returning an
 :term:`appstruct`.
 
+Raising Errors During Deserialization
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If a widget determines that a pstruct value cannot be converted
+successfully to a cstruct value during deserialization, it may raise
+an :exc:`colander.Invalid` exception.
+
+When it raises this exception, it can use the field object as a
+"scratchpad" to hold on to other data, but it must pass a ``value``
+attribute to the exception constructor.  For example:
+
+.. code-block:: python
+   :linenos:
+
+    def deserialize(self, field, pstruct):
+        if pstruct is None:
+            pstruct = {}
+        value = pstruct.get('value') or ''
+        confirm = pstruct.get('confirm') or ''
+        field.confirm = confirm
+        if value != confirm:
+            raise Invalid(field.schema, self.mismatch_message, value)
+        return value
+
+    def serialize(self, field, cstruct=None, readonly=False):
+        if cstruct is None:
+            cstruct = field.default
+        if cstruct is None:
+            cstruct = ''
+        confirm = getattr(field, 'confirm', '')
+        template = readonly and self.readonly_template or self.template
+        return field.renderer(template, field=field, cstruct=cstruct,
+                              confirm=confirm, subject=self.subject,
+                              confirm_subject=self.confirm_subject,
+                              )
+
+
+The schema element associated with this widget is expecting a single
+string as its cstruct.  The ``value`` passed to the exception
+constructor raised during the ``deserialize`` when ``value !=
+confirm`` is used as that ``cstruct`` value when the form is
+rerendered with error markers.  The ``confirm`` value is picked off
+the field value when the form is rerendered at this time.
+
 Say What?
 ---------
 
 Q: "So deform colander and peppercorn are pretty intertwingled?"
 
-A: "Colander and peppercorn are unrelated; Deform is effectively
-    something that just integrates colander and peppercorn together."
+A: "Colander and Peppercorn are unrelated; Deform is effectively
+    something that integrates colander and peppercorn together."
 

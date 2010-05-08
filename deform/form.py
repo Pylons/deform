@@ -8,7 +8,7 @@ class Form(field.Field):
     Arguments:
 
     schema
-        A :class:`deform.schema.SchemaNode` object representing a
+        A :class:`colander.SchemaNode` object representing a
         schema to be rendered.  Required.
 
     action

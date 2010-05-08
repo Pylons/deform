@@ -47,7 +47,7 @@ engine:
 
 Note the ``mako_renderer`` function we've created actually appends a
 ``.mak`` extension to the ``tmpl_name`` it is passed.  This is because
-deform pases a template name sans any extension to allow for different
+Deform pases a template name sans any extension to allow for different
 templating systems to be used as renderers.
 
 Our ``mako_renderer`` renderer is now ready to have some templates

@@ -34,19 +34,18 @@ as follows:
   is used.
 
 .. note:: The `Colander documentation
-   <http://docs.repoze.org/colander>` is another resource useful to
-   Deform developers.  In particular, it details how a :term:`schema`
-   is created and used.  Deform schemas *are* Colander schemas; they
-   are simply composed of deform-specific types.  All the Colander
-   documentation about how they work applies to creating Deform
-   schemas as well.
+   <http://docs.repoze.org/colander>` is a resource useful to Deform
+   developers.  In particular, it details how a :term:`schema` is
+   created and used.  Deform schemas are Colander schemas.  The
+   Colander documentation about how they work applies to creating
+   Deform schemas as well.
 
 A widget is related to one or more :term:`schema node` type objects.
 For example, a notional "TextInputWidget" may be responsible for
 serializing textual data related to a schema node which has
-:class:`deform.String` as its type into a text input control, while a
-notional "MappingWidget" might be responsible for serializing a
-:class:`deform.Mapping` object into a sequence of controls.  In both
+:class:`colander.String` as its type into a text input control, while
+a notional "MappingWidget" might be responsible for serializing a
+:class:`colander.Mapping` object into a sequence of controls.  In both
 cases, the data type being serialized is related to the schema node
 type to which the widget is related.
 

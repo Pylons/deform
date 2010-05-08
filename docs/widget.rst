@@ -122,7 +122,7 @@ The ``MyInputWidget`` we created in the example does not use a
 template. Any widget may use a template, but using a template is not
 required; whether a particular widget uses a template is really none
 of Deform's business.  Each of the default Deform widgets (the widget
-implementations in :mod:`deform.widgets`) happens to use a template in
+implementations in :mod:`deform.widget`) happens to use a template in
 order to make it easier for people to override how each widget looks
 when rendered without needing to change Deform-internal Python code.
 Instead of needing to change the Python code related to the widget

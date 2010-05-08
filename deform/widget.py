@@ -4,7 +4,7 @@ import string
 import StringIO
 import urllib
 
-from deform.exception import Invalid
+from colander import Invalid
 from deform.i18n import _
 
 class Widget(object):
@@ -690,7 +690,7 @@ class SequenceWidget(Widget):
 class FileUploadWidget(Widget):
     """
     Represent a file upload.  Meant to work with a
-    :class:`deform.schema.FileData` schema node.
+    :class:`deform.FileData` schema node.
 
     **Attributes/Arguments**
 
@@ -774,11 +774,11 @@ class DatePartsWidget(Widget):
     """
     Renders a set of ``<input type='text'/>`` controls based on the
     year, month, and day parts of the serialization of a
-    :class:`deform.schema.Date` object or a string in the format
+    :class:`colander.Date` object or a string in the format
     ``YYYY-MM-DD``.  This widget is usually meant to be used as widget
-    which renders a :class:`deform.schema.Date` type; validation
+    which renders a :class:`colander.Date` type; validation
     likely won't work as you expect if you use it against a
-    :class:`deform.schema.String` object, but it is possible to use it
+    :class:`colander.String` object, but it is possible to use it
     with one if you use a proper validator.
 
     **Attributes/Arguments**
