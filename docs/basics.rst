@@ -72,10 +72,10 @@ define a schema which will attempt to serialize this particular
 appstruct to a form.  Our application has these requirements of the
 resulting form:
 
-- It must be possible to add, edit and remove a person.
+- It must be possible to add and remove a person.
 
-- It must be possible to, given a person, add, edit, or remove a
-  location for that person.
+- It must be possible to change any person's name or age after they've
+  been added.
 
 Here's a schema that will help us meet those requirements:
 
