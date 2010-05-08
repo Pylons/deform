@@ -87,7 +87,16 @@ class TestField(unittest.TestCase):
         widget = field.widget
         self.assertEqual(widget, 'a widget')
 
-    def test_widget_no_maker(self):
+    def test_widget_no_maker_with_default_widget_maker(self):
+        from deform.widget import MappingWidget
+        from colander import Mapping
+        schema = DummySchema() 
+        schema.typ = Mapping()
+        field = self._makeOne(schema)
+        widget = field.widget
+        self.assertEqual(widget.__class__, MappingWidget)
+
+    def test_widget_no_maker_no_default_widget_maker(self):
         from deform.widget import TextInputWidget
         schema = DummySchema()
         schema.typ = None
