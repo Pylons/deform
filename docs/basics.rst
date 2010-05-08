@@ -71,11 +71,11 @@ useful directly to an application itself.
    and cstructs are typically only useful during intermediate parts of
    the rendering process.
 
-Usually, given some appstruct, you can divine what a Deform
-:term:`schema` that would allow you to edit the data related to the
-appstruct might look like.  Let's define a schema which will attempt
-to serialize this particular appstruct to a form.  Our application has
-these requirements of the resulting form:
+Usually, given some appstruct, you can divine a :term:`schema` that
+would allow you to edit the data related to the appstruct.  Let's
+define a schema which will attempt to serialize this particular
+appstruct to a form.  Our application has these requirements of the
+resulting form:
 
 - It must be possible to add, edit and remove a person.
 
@@ -131,8 +131,11 @@ we coalesce them all into a single ``People`` schema instance as
   ``number``.  The ``location`` must be one of ``work`` or ``home``.
   The number must be a string.
 
-Note that the schema-related objects are typically imported from the
-:mod:`colander` package.
+.. note:: schema-related objects are usually imported from the
+   :mod:`colander` package.  The canonical documentation for Colander
+   exists at `http://docs.repoze.org/colander
+   <http://docs.repoze.org/colander>`_.  Deform is a consumer of the
+   schema services offered by Colander.
 
 Schema Node Objects
 ~~~~~~~~~~~~~~~~~~~
