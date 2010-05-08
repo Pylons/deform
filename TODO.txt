@@ -1,7 +1,7 @@
 TODOs
 =====
 
-- [_] Error message translations.
+- [X] Error message translations.
 
 - [_] Add regex pattern-matching widgets.
 
@@ -34,5 +34,5 @@ TODOs
 
 - [X] Make forms automagically put the cursor into the first field of a form.
 
-- [_] Readonly widget variants
+- [X] Readonly widget variants
 
