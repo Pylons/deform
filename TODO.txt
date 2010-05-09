@@ -36,3 +36,31 @@ TODOs
 
 - [X] Readonly widget variants
 
+Topics Needing Documentation
+----------------------------
+
+- Creating a new schema type.
+
+- Associating a Colander type with a new default widget type.
+
+- Internationalization
+
+- Templates
+
+- form.css / structure.css / theme.css
+
+- JS (deform.js / jquery...js / wufoo.js)
+
+- Changing the close button image.
+
+Documentation Done, But Could be Better
+---------------------------------------
+
+- The Form class (and thee Button class) explanations.
+
+- Multiple forms on the same page (in Form API docs only).
+
+- FileUploadWidget tmpstore (in FileUploadWidget API docs only).
+
+- Form post target changing (only in API docs)
+

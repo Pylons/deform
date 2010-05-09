@@ -38,51 +38,8 @@ Topics
    interfaces.rst
    glossary.rst
 
-Topics Needing Documentation
-----------------------------
-
-- Creating a new schema type.
-
-- Associating a Colander type with a new default widget type.
-
-- Internationalization
-
-- Templates
-
-- form.css / structure.css / theme.css
-
-- JS (deform.js / jquery...js / wufoo.js)
-
-- Changing the close button image.
-
-Documentation Done, But Could be Better
----------------------------------------
-
-- The Form class (and thee Button class) explanations.
-
-- Multiple forms on the same page (in Form API docs only).
-
-- FileUploadWidget tmpstore (in FileUploadWidget API docs only).
-
-- Form post target changing (only in API docs)
-
-Thanks To
----------
-
-Without these people, this software would not exist:
-
-- The Formish guys (http://ish.io)
-
-- Fear Factory (http://fearfactory.com)
-
-- Midlake (http://midlake.net)
-
-
-Demonstrations and Development
-==============================
-
-Demo Site
----------
+Demonstration Site
+==================
 
 Visit `deformdemo.repoze.org <http://deformdemo.repoze.org>`_ to view
 an application which demonstrates most of Deform's features.  The
@@ -90,13 +47,26 @@ source code for this application is also available in the `deform
 package within the Repoze SVN repository
 <http://svn.repoze.org/deform/trunk/deformdemo>`_.
 
-Development
------------
+Support and Development
+=======================
 
-You can check the deform package out of the Repoze SVN repository via
-the following command::
+To report bugs, use the `bug tracker <http://bfg.repoze.org/trac>`_.
+
+If you've got questions that aren't answered by this documentation,
+contact the `Repoze-dev maillist
+<http://lists.repoze.org/listinfo/repoze-dev>`_ or join the `#repoze
+IRC channel <irc://irc.freenode.net/#repoze>`_.
+
+Browse and check out tagged and trunk versions of :mod:`deform`
+via the `Repoze Subversion repository
+<http://svn.repoze.org/deform/>`_.  To check out the trunk
+via Subversion, use this command::
 
    svn co http://svn.repoze.org/deform/trunk deform
+
+To find out how to become a contributor to :mod:`deform`, please see
+the `Repoze hacking documentation <http://docs.repoze.org/hacking/>`_
+or the `contributor's page <http://repoze.org/contributing.html>`_.
 
 Index and Glossary
 ==================
@@ -104,3 +74,17 @@ Index and Glossary
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+Thanks
+======
+
+Without these people, this software would not exist:
+
+- The Formish guys (http://ish.io)
+
+- Tres Seaver
+
+- Fear Factory (http://fearfactory.com)
+
+- Midlake (http://midlake.net)
+

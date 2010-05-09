@@ -14,15 +14,6 @@
     <div>
 
       <p>
-        Deform is currently not yet released, but you may check it out <a
-        href="http://svn.repoze.org/deform/trunk/">via SVN</a>:
-      </p>
-
-      <p>
-        <code>svn co http://svn.repoze.org/deform/trunk deform</code>
-      </p>
-
-      <p>
         This demo is written using <a
         href="http://bfg.repoze.org">repoze.bfg</a>. But please note
         that Deform does not depend on any particular web framework,
@@ -31,6 +22,11 @@
         to run this demo application locally, please read the <a
         href="http://svn.repoze.org/deform/trunk/deformdemo/README.txt"
         >README.txt for installation of this application</a>.
+      </p>
+
+      <p>
+        For further information, see
+        the <a href="http://docs.repoze.org/deform">Deform documentation</a>.
       </p>
 
     </div>
