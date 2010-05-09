@@ -47,6 +47,8 @@ Topics Needing Documentation
 
 - Interfield validation.
 
+- Explain ``widget_maker``.
+
 Documentation Done, But Could be Better
 ---------------------------------------
 
