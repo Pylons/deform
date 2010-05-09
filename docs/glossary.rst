@@ -18,9 +18,9 @@ Glossary
 
    pstruct
      Data deserialized by :term:`Peppercorn` to a representation
-     suitable for consumption by a :mod:`deform` deserializer.
-     Usually, when used in :mod:`deform`, a cstruct is composed
-     entirely of lists, dictionaries, strings, and file objects.
+     suitable for consumption by a :mod:`deform` widget.  Usually,
+     when used in :mod:`deform`, a pstruct is composed entirely of
+     lists, dictionaries, strings, and file objects.
 
    appstruct
      A raw application data structure (complex Python objects).
