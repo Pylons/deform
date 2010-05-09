@@ -565,7 +565,7 @@ class DeformDemo(object):
             two = colander.SchemaNode(
                 colander.String(),
                 default='',
-                title='One (required if One is not supplied)')
+                title='Two (required if One is not supplied)')
         def validator(form, value):
             if not value['one'] and not value['two']:
                 exc = colander.Invalid(
