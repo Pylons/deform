@@ -36,12 +36,16 @@ TODOs
 
 - [X] Readonly widget variants
 
+- Use case: require (email or phonenumber)
+
 Topics Needing Documentation
 ----------------------------
 
 - Associating a Colander type with a new default widget type.
 
 - Changing the close button image.
+
+- Interfield validation.
 
 Documentation Done, But Could be Better
 ---------------------------------------
