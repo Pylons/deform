@@ -5,9 +5,31 @@ class FileUploadTempStore(object):
     that implements this interface.
 
     A an object implementing the FileUploadTempStore interface should
-    implement these methods.  Effectively, the interface is a subset
-    of the ``dict`` interface plus an additional method named
-    ``preview_url``.
+    implement these methods.
+
+    Effectively, this interface is a subset of the ``dict`` interface
+    plus an additional method named ``preview_url``.  In fact, the
+    simplest possible implementation of this interface is:
+
+    .. code-block:: python
+
+       class MemoryTmpStore(dict):
+           def preview_url(self, name):
+               return None
+
+    However, the FileUploadWidget does not remove data from the tempstore
+    implementation ti uses (it doesn't have enough information to be able to
+    do so); it is job of the tempstore implementation itself to expire items
+    which haven't been accessed in a while.
+
+    Therefore, the above ``MemoryTmpStore`` implementation is
+    generally unsuitable for production, as the data put into it is
+    not automatically evicted over time and file upload data provided
+    by untrusted users is usually unsuitable for storage in RAM.  It's
+    more likely that an implementation in your application will center
+    around a sessioning library (such as Beaker) that does data
+    eviction and which stores file upload data in persistent storage.
+
     """
 
     def __setitem__(self, name, value):
@@ -30,7 +52,8 @@ class FileUploadTempStore(object):
         Return the preview URL for the item previously placed into the
         tmpstore named ``name`` or ``None`` if there is no preview for
         ``name`` available (or if this tmpstore does not support
-        previewable items).
+        previewable items).  This item should typically return a URL
+        to a thumbnail image.
         """
         
 
