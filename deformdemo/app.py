@@ -554,6 +554,29 @@ class DeformDemo(object):
         appstruct = {'csv':[ (1, 'hello', 4.5), (2, 'goodbye', 5.5) ]}
         return self.render_form(form, appstruct=appstruct)
 
+    @bfg_view(renderer='templates/form.pt', name='require_one_or_another')
+    @demonstrate('Require One Field or Another')
+    def require_one_or_another(self):
+        class Schema(colander.Schema):
+            one = colander.SchemaNode(
+                colander.String(),
+                default='',
+                title='One (required if Two is not supplied)')
+            two = colander.SchemaNode(
+                colander.String(),
+                default='',
+                title='One (required if One is not supplied)')
+        def validator(form, value):
+            if not value['one'] and not value['two']:
+                exc = colander.Invalid(
+                    form, 'A value for either "one" or "two" is required')
+                exc['one'] = 'Required if two is not supplied'
+                exc['two'] = 'Required if one is not supplied'
+                raise exc
+        schema = Schema(validator=validator)
+        form = deform.Form(schema, buttons=('submit',))
+        return self.render_form(form)
+
     @bfg_view(renderer='templates/form.pt', name="multiple_forms")
     @demonstrate('Multiple Forms on the Same Page')
     def multiple_forms(self):
