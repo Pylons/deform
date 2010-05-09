@@ -14,7 +14,7 @@ when you ask Deform to do this:
 
 - For each :term:`schema node` in the :term:`schema` provided by the
   application developer, Deform creates a :term:`field`.  This happens
-  recursively for each element in the schema.  As a result, a tree of
+  recursively for each node in the schema.  As a result, a tree of
   fields is created, mirroring the nodes in the schema.
 
 - Each field object created as a result of the prior step knows about
@@ -76,7 +76,7 @@ part that looks like so:
   
 The above example shows an example of a pair of peppercorn structure
 markers which begin and end a *mapping*.  The example uses this pair
-to means that a the widget related to the *date* element in the schema
+to means that a the widget related to the *date* node in the schema
 will be be passed a :term:`pstruct` that is a dictionary with multiple
 values during deserialization: the dictionary will include the keys
 ``day`` , ``month``, and ``year``, and the values will be the values
@@ -105,7 +105,7 @@ data resulting from a form submission to application data) works:
 
 - For each :term:`schema node` in the :term:`schema` provided by the
   application developer, Deform creates a :term:`field`.  This happens
-  recursively for each element in the schema.  As a result, a tree of
+  recursively for each node in the schema.  As a result, a tree of
   fields is created, mirroring the nodes in the schema.
 
 - Each field object created as a result of the prior step knows about
@@ -158,8 +158,8 @@ For example, if the form submitted had the following data:
       ...
      </html>
 
-There would be a ``date`` element in the root of the pstruct mapping
-which held three keys: ``day``, ``month``, and ``year``.
+There would be a ``date`` key in the root of the pstruct mapping which
+held three keys: ``day``, ``month``, and ``year``.
 
 .. note:: See the `Peppercorn documentation
    <http://docs.repoze.org/peppercorn>`_ for more information about
@@ -229,7 +229,7 @@ attribute to the exception constructor.  For example:
                               )
 
 
-The schema element associated with this widget is expecting a single
+The schema type associated with this widget is expecting a single
 string as its cstruct.  The ``value`` passed to the exception
 constructor raised during the ``deserialize`` when ``value !=
 confirm`` is used as that ``cstruct`` value when the form is
