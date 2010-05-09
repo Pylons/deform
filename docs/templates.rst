@@ -14,7 +14,7 @@ default Deform widget set, you can create some templates via copy and
 paste in your own directory that has a similar structure to the
 ``templates`` directory in the :mod:`deform` package, then use the
 :meth:`deform.Field.set_zpt_renderer` classmethod to change the
-settings associated with the default ZPT field renderer:
+settings associated with the default ZPT renderer:
 
 .. code-block:: python
 
@@ -115,8 +115,8 @@ within this directory and any of its subdirectories is a Chameleon ZPT
 template that is used by a default Deform widget.
 
 For example, ``textinput.pt`` ZPT template, which is used by the
-:class:`deform.widget.TextInputWidget` widget looks like this at the
-time of this writing:
+:class:`deform.widget.TextInputWidget` widget and which renders a text
+input control looks like this at the time of this writing:
 
 .. code-block:: xml
    :linenos:

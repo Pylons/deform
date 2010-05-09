@@ -50,9 +50,12 @@ Glossary
      deserializes a :term:`pstruct` into a :term:`cstruct`.
 
    form controls
-     A sequence of form fields (as per the the `RFC 2388
+     A sequence of browser renderings of user interface elements.
+     These are also known as "fields" as per the the `RFC 2388
      <http://www.servlets.com/rfcs/rfc2388.txt>`_ definition of
-     "field").
+     "field", however Deform uses the term :term:`field` for another
+     concept, so we call them controls within the Deform
+     documentation.
 
    Chameleon
      `chameleon <http://chameleon.repoze.org>`_ is an attribute

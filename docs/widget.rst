@@ -74,8 +74,8 @@ indicates that the result of this serialization should be a read-only
 rendering (no active form controls) of the ``cstruct`` data to HTML.
 
 Let's pretend our new ``MyInputWidget`` only needs to create a text
-input field during serialization.  Its ``serialize`` method might get
-defined as so:
+input control during serialization.  Its ``serialize`` method might
+get defined as so:
 
 .. code-block:: python
    :linenos:

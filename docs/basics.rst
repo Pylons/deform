@@ -155,8 +155,8 @@ shows up in the legend above the form field(s) related to the schema
 node.  By default, it is a capitalization of the *name*.
 
 The *description* of a schema node is metadata about a schema node.
-It shows up as a tooltip when someone hovers over one a form field.
-By default, it is empty.
+It shows up as a tooltip when someone hovers over the form control(s)
+related to a :term:`field`.  By default, it is empty.
 
 The name of a schema node that is introduced as a class-level
 attribute of a :class:`colander.MappingSchema`,
@@ -500,43 +500,68 @@ play around with the demo at
 that, although we don't actually specify a particular kind of widget
 for each of these fields, a sensible default widget is used.  This is
 true of each of the default types in :term:`Colander`.  Here is how
-they are mapped by default:
+they are mapped by default.  In the following list, the schema type
+which is the header uses the widget underneath it by default.
 
-.. code-block:: text
-   :linenos:
+:class:`colander.Mapping`
+   :class:`deform.widget.MappingWidget`
 
-    colander.Mapping:   deform.widget.MappingWidget
-    colander.Sequence:  deform.widget.SequenceWidget
-    colander.String:    deform.widget.TextInputWidget
-    colander.Integer:   deform.widget.TextInputWidget
-    colander.Float:     deform.widget.TextInputWidget
-    colander.Decimal:   deform.widget.TextInputWidget
-    colander.Boolean:   deform.widget.CheckboxWidget
-    colander.Date:      deform.widget.DatePartsWidget
-    colander.Tuple:     deform.widget.Widget
+:class:`colander.Sequence`
+    :class:`deform.widget.SequenceWidget`
+
+:class:`colander.String`
+    :class:`deform.widget.TextInputWidget`
+
+:class:`colander.Integer`
+    :class:`deform.widget.TextInputWidget`
+
+:class:`colander.Float`
+    :class:`deform.widget.TextInputWidget`
+
+:class:`colander.Decimal`
+    :class:`deform.widget.TextInputWidget`
+
+:class:`colander.Boolean`
+    :class:`deform.widget.CheckboxWidget`
+
+:class:`colander.Date`
+    :class:`deform.widget.DatePartsWidget`
+
+:class:`colander.Tuple`
+    :class:`deform.widget.Widget`
 
 If you are creating a schema that contains a type which is not in this
 list, or if you'd like to use a different widget for a particular
-field, you need to associate the field with the widget by hand.  This
-is done after the :class:`deform.Form` constructor is called with the
-schema.  For example:
+field, or you want to change the settings of the default widget
+associated with the type, you need to associate the field with the
+widget by hand.  This is done after the :class:`deform.Form`
+constructor is called with the schema.  For example:
 
 .. code-block:: python
    :linenos:
 
    from deform import Form
    myform = Form(schema, buttons=('submit',))
-   myform['people']['person']['name'] = mypackage.MyWidget()
+   myform['people']['person']['name'] = deform.widget.TextInputWidget(size=10)
 
 The above associates the String field named ``name`` in the rendered
-form with a custom widget type named ``mypackage.MyWidget``.  Any
-sensible default widget might have been used as well.
+form with the widget named :class:`deform.widget.TextInputWidget`.
+This was already the default for ``name``, but we've passed a ``size``
+argument to the explicit widget creation, meaning that the size of the
+input field will be 10em.  Not just any widget can be used with any
+schema type; the documentation for each widget usually indicates what
+type it can be used against successfully.
 
-See :ref:`writing_a_widget` for more information about writing a
-custom widget.
+A custom widget might have been used above instead.  If the existing
+widgets provided by Deform are not sufficient, see
+:ref:`writing_a_widget` for more information about writing a custom
+widget.
 
 Creating a New Schema Type
 --------------------------
 
-See the `Colander documentation about defining a new schema type
-<http://docs.repoze.org/colander/#defining-a-new-type>`_.
+Sometimes the default schema types offered by Colander may not be
+sufficient to model structures in your application.  See the `Colander
+documentation about defining a new schema type
+<http://docs.repoze.org/colander/#defining-a-new-type>`_ when this
+becomes true.
