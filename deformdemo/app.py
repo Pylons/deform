@@ -606,7 +606,7 @@ class DeformDemo(object):
 
         html = ''.join(html)
 
-        code, start, end = self.get_code(2)
+        code, start, end = self.get_code(1)
 
         # values passed to template for rendering
         return {
