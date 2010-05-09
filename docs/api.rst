@@ -9,6 +9,8 @@ Form-Related
 .. autoclass:: Field
    :members:
 
+   .. automethod:: __getitem__
+
 .. autoclass:: Form
    :members:
 
