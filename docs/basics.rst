@@ -425,3 +425,68 @@ application which demonstrates most of the features of Deform,
 including most of the widget and data types available for use within
 an application that uses Deform.  
 
+Changing the Default Widget Associated With a Field
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Let's take another look at our familiar schema:
+
+.. code-block:: python
+   :linenos:
+
+   import colander
+
+   class Person(colander.MappingSchema):
+       name = colander.SchemaNode(colander.String())
+       age = colander.SchemaNode(colander.Integer(),
+                                 validator=colander.Range(0, 200))
+
+   class People(colander.SequenceSchema):
+       person = Person()
+
+   class Schema(colander.MappingSchema):
+       people = People()
+
+   schema = Schema()
+
+This schema renders as a *sequence* of *mapping* objects.  Each
+mapping has two leaf nodes in it: a *string* and an *integer*.  If you
+play around with the demo at
+`http://deformdemo.repoze.org/sequence_of_mappings/
+<http://deformdemo.repoze.org/sequence_of_mappings/>`_ you'll notice
+that, although we don't actually specify a particular kind of widget
+for each of these fields, a sensible default widget is used.  This is
+true of each of the default types in :term:`Colander`.  Here is how
+they are mapped by default:
+
+.. code-block:: text
+   :linenos:
+
+    colander.Mapping:   deform.widget.MappingWidget
+    colander.Sequence:  deform.widget.SequenceWidget
+    colander.String:    deform.widget.TextInputWidget
+    colander.Integer:   deform.widget.TextInputWidget
+    colander.Float:     deform.widget.TextInputWidget
+    colander.Decimal:   deform.widget.TextInputWidget
+    colander.Boolean:   deform.widget.CheckboxWidget
+    colander.Date:      deform.widget.DatePartsWidget
+    colander.Tuple:     deform.widget.Widget
+
+If you are creating a schema that contains a type which is not in this
+list, or if you'd like to use a different widget for a particular
+field, you need to associate the field with the widget by hand.  This
+is done after the :class:`deform.Form` constructor is called with the
+schema.  For example:
+
+.. code-block:: python
+   :linenos:
+
+   from deform import Form
+   myform = Form(schema, buttons=('submit',))
+   myform['people']['person']['name'] = mypackage.MyWidget()
+
+The above associates the String field named ``name`` in the rendered
+form with a custom widget type named ``mypackage.MyWidget``.  Any
+sensible default widget might have been used as well.
+
+See :ref:`writing_a_widget` for more information about writing a
+custom widget.

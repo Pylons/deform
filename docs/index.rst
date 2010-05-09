@@ -5,7 +5,7 @@ Deform
 
 The design of :mod:`deform` is heavily influenced by the `formish
 <http://ish.io/projects/show/formish>`_ form generation library.  Some
-might even say it's a shameless rip-off, which would not be
+might even say it's a shameless rip-off; this would not be completely
 inaccurate.  It differs from formish mostly in ways that make the
 implementation (arguably) simpler and smaller.
 
@@ -41,11 +41,9 @@ Topics
 Topics Needing Documentation
 ----------------------------
 
-- Form post target changing.
+- Creating a new schema type.
 
 - Associating a Colander type with a new default widget type.
-
-- Setting a widget on a field.
 
 - Internationalization
 
@@ -65,6 +63,8 @@ Documentation Done, But Could be Better
 - Multiple forms on the same page (in Form API docs only).
 
 - FileUploadWidget tmpstore (in FileUploadWidget API docs only).
+
+- Form post target changing (only in API docs)
 
 Thanks To
 ---------
