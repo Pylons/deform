@@ -105,32 +105,37 @@ All widgets *must* check if the value passed as ``cstruct`` is
 this eventuality, often by attempting to use the value of
 ``field.default``, which will be the default value of the
 :term:`schema node` related to this widget, if any.  If ``cstruct`` is
-None and ``field.default`` is *also* ``None``, it means the field has
-no default value (it is a "required" field).  In this case, the widget
-is responsible for providing a default value for ``cstruct`` itself.
+``None`` and ``field.default`` is *also* ``None``, it means the field
+has no default value (it is a "required" field).  In this case, the
+widget is responsible for providing a suitable default value for
+``cstruct`` itself.  
+
 Regardless of how the widget attempts to compute the default value, it
 must still be able to return a rendering when ``cstruct`` is ``None``
-and ``field.default`` is ``None``.
-
-In the example case above, if both ``cstruct`` and ``field.default``
-are None, the widget uses the empty string as the ``cstruct`` value,
-which is appropriate for this type of "scalar" input widget; for a
-more "structural" kind of widget the default might be something else
-like an empty dictionary or list.
+and ``field.default`` is ``None``.  In the example case above, if both
+``cstruct`` and ``field.default`` are ``None``, the widget uses the
+empty string as the ``cstruct`` value, which is appropriate for this
+type of "scalar" input widget; for a more "structural" kind of widget
+the default might be something else like an empty dictionary or list.
 
 The ``MyInputWidget`` we created in the example does not use a
-template. Any widget may use a template, but using a template is not
+template. Any widget may use a template, but using one is not
 required; whether a particular widget uses a template is really none
-of Deform's business.  Each of the default Deform widgets (the widget
-implementations in :mod:`deform.widget`) happens to use a template in
-order to make it easier for people to override how each widget looks
-when rendered without needing to change Deform-internal Python code.
-Instead of needing to change the Python code related to the widget
-itself, users of the default widgets can often perform enough
-customization by replacing the template associated with the default
-widget implementation.  However, this is purely a convenience;
-templates are a widget implementation detail, not an integral part of
-the framework.
+of Deform's business: deform simply expects a widget to return a
+Unicode object containing HTML from the widget's ``serialize`` method;
+it doesn't really much care how the widget creates that Unicode
+object.
+
+Each of the default Deform widgets (the widget implementations in
+:mod:`deform.widget`) happens to use a template in order to make it
+easier for people to override how each widget looks when rendered
+without needing to change Deform-internal Python code.  Instead of
+needing to change the Python code related to the widget itself, users
+of the default widgets can often perform enough customization by
+replacing the template associated with the default widget
+implementation.  However, this is purely a convenience; templates are
+a widget set implementation detail, not an integral part of the
+core Deform framework.
 
 Note that "scalar" widgets (widgets which represent a single value as
 opposed to a collection of values) are not responsible for providing

@@ -12,15 +12,14 @@ Glossary
 
    cstruct
      Data serialized by :term:`Colander` to a representation suitable
-     for consumption by a :mod:`deform` serializer.  Usually, when
-     used in :mod:`deform`, a cstruct is composed entirely of lists,
-     dictionaries, strings, and file objects.
+     for consumption by the ``serialize`` method of a :mod:`deform`
+     widget, usually while a form is being rendered.
 
    pstruct
-     Data deserialized by :term:`Peppercorn` to a representation
-     suitable for consumption by a :mod:`deform` widget.  Usually,
-     when used in :mod:`deform`, a pstruct is composed entirely of
-     lists, dictionaries, strings, and file objects.
+     Data deserialized by :term:`Peppercorn` from one or more form
+     controls to a representation suitable for consumption by the
+     ``deserialize`` method of a :mod:`deform` widget, usually while a
+     form is being submitted.
 
    appstruct
      A raw application data structure (complex Python objects).
