@@ -1571,6 +1571,40 @@ class MultipleFormsTests(unittest.TestCase):
         captured = browser.get_text('css=#captured')
         self.assertEqual(captured, u"{'name2': u'hey'}")
 
+class RequireOneFieldOrAnotherTests(unittest.TestCase):
+    url = "/require_one_or_another/"
+    def test_render_default(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        self.assertEqual(browser.get_attribute("deformField1@name"), 'one')
+        self.assertEqual(browser.get_value('deformField1'), '')
+        self.assertEqual(browser.get_attribute("deformField2@name"), 'two')
+        self.assertEqual(browser.get_value('deformField2'), '')
+        self.failIf(browser.is_element_present('css=.errorMsgLbl'))
+
+    def test_submit_none_filled(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.click('submit')
+        browser.wait_for_page_to_load("30000")
+        self.assertEqual(browser.get_text('css=#error-deformField1'),
+                         'Required if two is not supplied')
+        self.assertEqual(browser.get_text('css=#error-deformField2'),
+                         'Required if one is not supplied')
+        captured = browser.get_text('css=#captured')
+        self.assertEqual(captured, u"None")
+        self.failUnless(browser.is_element_present('css=.errorMsgLbl'))
+
+    def test_submit_one_filled(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.type('deformField1', 'one')
+        browser.click('submit')
+        browser.wait_for_page_to_load("30000")
+        captured = browser.get_text('css=#captured')
+        self.assertEqual(captured, u"{'two': '', 'one': u'one'}")
+        self.failIf(browser.is_element_present('css=.errorMsgLbl'))
+
 if __name__ == '__main__':
     setUpModule()
     try:
