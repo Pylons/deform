@@ -30,7 +30,7 @@ requires = [
 
 setupkw = dict(
     name='deform',
-    version='0.0',
+    version='0.1',
     description='Another form generation library',
     long_description=README + '\n\n' + CHANGES,
     classifiers=[
