@@ -12,7 +12,8 @@
     <legend tal:condition="field.title">${field.title}</legend>
 
     <input type="hidden" name="_charset_" />
-    <input type="hidden" name="__deform__" value="${field.name}"/>
+    <input tal:condition="field.formid"
+           type="hidden" name="__formid__" tal:attributes="value field.formid"/>
     <ul>
       
       <li class="errorLi" tal:condition="field.error">
@@ -37,6 +38,7 @@
       <li class="buttons">
         <tal:block repeat="button field.buttons">
           <button 
+              tal:attributes="id (field.formid or '') + button.name"
               name="${button.name}"
               type="submit"
               class="btnText submit"

@@ -554,6 +554,70 @@ class DeformDemo(object):
         appstruct = {'csv':[ (1, 'hello', 4.5), (2, 'goodbye', 5.5) ]}
         return self.render_form(form, appstruct=appstruct)
 
+    @bfg_view(renderer='templates/form.pt', name="multiple_forms")
+    @demonstrate('Multiple Forms on the Same Page')
+    def multiple_forms(self):
+        import itertools
+
+        # We need to make sure the form field identifiers for the two
+        # forms do not overlap so accessibility features continue work
+        # such as focusing the field related to a legend when the
+        # legend is clicked on.
+
+        # We do so by creating an ``itertools.count`` object and
+        # passing that object as the ``counter`` keyword argument to
+        # the constructor of both forms.  As a result, the second
+        # form's element identifiers will not overlap the first
+        # form's.
+
+        counter = itertools.count() 
+        
+        class Schema1(colander.Schema):
+            name1 = colander.SchemaNode(colander.String())
+        schema1 = Schema1()
+        form1 = deform.Form(schema1, buttons=('submit',), formid='form1',
+                            counter=counter)
+
+        class Schema2(colander.Schema):
+            name2 = colander.SchemaNode(colander.String())
+        schema2 = Schema2()
+        form2 = deform.Form(schema2, buttons=('submit',), formid='form2',
+                            counter=counter)
+
+        html = []
+        captured = None
+
+        if 'submit' in self.request.POST:
+            posted_formid = self.request.POST['__formid__']
+            for (formid, form) in [('form1', form1), ('form2', form2)]:
+                if formid == posted_formid:
+                    try:
+                        controls = self.request.POST.items()
+                        captured = form.validate(controls)
+                        html.append(form.render(captured))
+                    except deform.ValidationFailure, e:
+                        # the submitted values could not be validated
+                        html.append(e.render())
+                else:
+                    html.append(form.render())
+        else:
+            for form in form1, form2:
+                html.append(form.render())
+
+        html = ''.join(html)
+
+        code, start, end = self.get_code(2)
+
+        # values passed to template for rendering
+        return {
+            'form':html,
+            'captured':repr(captured),
+            'code': code,
+            'start':start,
+            'end':end,
+            'title':'Multiple Forms on the Same Page',
+            }
+        
     @bfg_view(renderer='templates/form.pt', name='widget_adapter')
     @demonstrate('Widget Adapter')
     def widget_adapter(self):

@@ -75,6 +75,16 @@ class Field(object):
         The template :term:`renderer` associated with the form.  If a
         renderer is not passed to the constructor, the default deform
         renderer will be used (the :term:`default renderer`).
+
+    counter
+        ``None`` or an instance of ``itertools.counter`` which is used
+        to generate sequential order-related attributes such as
+        ``oid`` and ``order``.
+
+    ``renderer`` and ``counter`` are accepted as keyword arguments to
+    the :class:`deform.Field` constructor as well as being present as
+    attribute values.  If they are ``None`` (their default), suitable
+    values are used in their place.
     """
 
     error = None

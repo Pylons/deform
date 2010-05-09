@@ -41,10 +41,6 @@ Topics
 Topics Needing Documentation
 ----------------------------
 
-- FileUploadWidget tmpstore.
-
-- Multiple forms on the same page.
-
 - Form post target changing.
 
 - Associating a Colander type with a new default widget type.
@@ -61,12 +57,14 @@ Topics Needing Documentation
 
 - Changing the close button image.
 
-- 
-
 Documentation Done, But Could be Better
 ---------------------------------------
 
 - The Form class (and thee Button class) explanations.
+
+- Multiple forms on the same page (in Form API docs only).
+
+- FileUploadWidget tmpstore (in FileUploadWidget API docs only).
 
 Thanks To
 ---------

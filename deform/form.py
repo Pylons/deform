@@ -27,16 +27,27 @@ class Form(field.Field):
         sequence, it is converted to
         :class:`deform.form.Button` objects.
 
-    renderer
-        The template :term:`renderer` associated with the form.  If a
-        renderer is not passed to the constructor, the default deform
-        renderer will be used (the class attr ``default_renderer``).
-        
+    formid
+        The identifier for this form.  This value, if not ``None``,
+        will be used as the value of a hidden form input control
+        (``__formid__``) which will be placed in this form's
+        rendering.  You should pass a non-``None`` value for
+        ``formid`` when more than one Deform form is placed into a
+        single page and both share the same action.  When one of the
+        forms on the page is posted, your code will to be able to
+        decide which of those forms was posted based on the value of
+        ``__formid__``.  If this value is ``None``, a hidden
+        ``__formid__`` control will not be placed into the form's
+        rendering.
 
+    The :class:`deform.Form` constructor also accepts all the keyword
+    arguments accepted by the :class`deform.Field` class.  These
+    keywords mean the same thing in the context of a Form as they do
+    in the context of a Field.
     """
     def __init__(self, schema, action='.', method='POST', buttons=(),
-                 renderer=None):
-        field.Field.__init__(self, schema, renderer=renderer)
+                 formid=None, **kw):
+        field.Field.__init__(self, schema, **kw)
         _buttons = []
         for button in buttons:
             if isinstance(button, basestring):
@@ -45,6 +56,7 @@ class Form(field.Field):
         self.action = action
         self.method = method
         self.buttons = _buttons
+        self.formid = formid
         self.widget = widget.FormWidget()
 
 class Button(object):

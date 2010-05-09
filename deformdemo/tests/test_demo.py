@@ -1537,9 +1537,39 @@ class TextAreaCSVWidgetTests(unittest.TestCase):
         captured = browser.get_text('css=#captured')
         self.assertEqual(captured, "None")
 
-
 class WidgetAdapterTests(TextAreaCSVWidgetTests):
     url = "/widget_adapter/"
+
+class MultipleFormsTests(unittest.TestCase):
+    url = "/multiple_forms/"
+    def test_render_default(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        self.assertEqual(browser.get_attribute("deformField1@name"), 'name1')
+        self.assertEqual(browser.get_value('deformField1'), '')
+        self.assertEqual(browser.get_attribute("deformField3@name"), 'name2')
+        self.assertEqual(browser.get_value('deformField3'), '')
+        self.failIf(browser.is_element_present('css=.errorMsgLbl'))
+
+    def test_submit_first(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.type('deformField1', 'hey')
+        browser.click('form1submit')
+        browser.wait_for_page_to_load("30000")
+        self.assertEqual(browser.get_value('deformField1'), 'hey')
+        captured = browser.get_text('css=#captured')
+        self.assertEqual(captured, u"{'name1': u'hey'}")
+
+    def test_submit_second(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.type('deformField3', 'hey')
+        browser.click('form2submit')
+        browser.wait_for_page_to_load("30000")
+        self.assertEqual(browser.get_value('deformField3'), 'hey')
+        captured = browser.get_text('css=#captured')
+        self.assertEqual(captured, u"{'name2': u'hey'}")
 
 if __name__ == '__main__':
     setUpModule()

@@ -17,10 +17,11 @@ class FileUploadTempStore(object):
            def preview_url(self, name):
                return None
 
-    However, the FileUploadWidget does not remove data from the tempstore
-    implementation ti uses (it doesn't have enough information to be able to
-    do so); it is job of the tempstore implementation itself to expire items
-    which haven't been accessed in a while.
+    However, the :class:`deform.FileUploadWidget` does not remove data
+    from the tempstore implementation it uses (it doesn't have enough
+    information to be able to do so), and it is job of the tempstore
+    implementation itself to expire items which haven't been accessed
+    in a while.
 
     Therefore, the above ``MemoryTmpStore`` implementation is
     generally unsuitable for production, as the data put into it is
@@ -29,7 +30,6 @@ class FileUploadTempStore(object):
     more likely that an implementation in your application will center
     around a sessioning library (such as Beaker) that does data
     eviction and which stores file upload data in persistent storage.
-
     """
 
     def __setitem__(self, name, value):

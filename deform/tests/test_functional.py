@@ -27,7 +27,7 @@ class TestFunctional(unittest.TestCase):
 
     def _makeForm(self, schema):
         from deform.form import Form
-        return Form(schema)
+        return Form(schema, formid='myform')
 
     def _soupify(self, html):
         from BeautifulSoup import BeautifulSoup
@@ -42,8 +42,8 @@ class TestFunctional(unittest.TestCase):
         self.assertEqual(form['action'], '.')
         inputs = form.findAll('input')
         self.assertEqual(inputs[0]['name'], '_charset_')
-        self.assertEqual(inputs[1]['name'], '__deform__')
-        self.assertEqual(inputs[1]['value'], '')
+        self.assertEqual(inputs[1]['name'], '__formid__')
+        self.assertEqual(inputs[1]['value'], 'myform')
         self.assertEqual(inputs[2]['name'], 'name')
         self.assertEqual(inputs[2]['value'], '')
         self.assertEqual(inputs[3]['name'], 'title')
@@ -77,8 +77,8 @@ class TestFunctional(unittest.TestCase):
         self.assertEqual(form['action'], '.')
         inputs = form.findAll('input')
         self.assertEqual(inputs[0]['name'], '_charset_')
-        self.assertEqual(inputs[1]['name'], '__deform__')
-        self.assertEqual(inputs[1]['value'], '')
+        self.assertEqual(inputs[1]['name'], '__formid__')
+        self.assertEqual(inputs[1]['value'], 'myform')
         self.assertEqual(inputs[2]['name'], 'name')
         self.assertEqual(inputs[2]['value'], '')
         self.assertEqual(inputs[3]['name'], 'title')
