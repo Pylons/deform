@@ -1,0 +1,17 @@
+Internationalization
+====================
+
+Deform is fully internationalizable and localizable.  :term:`gettext`
+``.mo.`` files exist in the :mod:`deform` and :mod:`colander` packages
+which contain (currently incomplete) translations to various languages
+for the purpose of rendering localized error messages.
+
+See the `Internationalization demo
+<http://deformdemo.repoze.org/i18n/>`_ for an example of how deform
+error and status messages can be localized.  This demonstration uses
+the `internationalization and localization features of repoze.bfg
+<http://docs.repoze.org/bfg/1.3/narr/i18n.html>`_ to render Deform
+error messages into :term:`Chameleon` form renderings.
+
+
+

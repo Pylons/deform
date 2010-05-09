@@ -39,17 +39,7 @@ TODOs
 Topics Needing Documentation
 ----------------------------
 
-- Creating a new schema type.
-
 - Associating a Colander type with a new default widget type.
-
-- Internationalization
-
-- Templates
-
-- form.css / structure.css / theme.css
-
-- JS (deform.js / jquery...js / wufoo.js)
 
 - Changing the close button image.
 
@@ -63,4 +53,9 @@ Documentation Done, But Could be Better
 - FileUploadWidget tmpstore (in FileUploadWidget API docs only).
 
 - Form post target changing (only in API docs)
+
+- Internationalization (weak chapter)
+
+- Creating a new schema type (punts to Colander docs in basic.rst)
+
 

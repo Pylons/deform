@@ -79,3 +79,6 @@ Glossary
      `WebOb <http://pythonpaste.org/webob/>`_ is a WSGI request/response
      library created by Ian Bicking.
 
+   Gettext
+     The GNU `gettext <http://www.gnu.org/software/gettext/>`_
+     library, used by the :mod:`deform` translation machinery.

@@ -1,3 +1,55 @@
+Templates
+=========
+
+A set of :term:`Chameleon` templates is used by the default widget set
+present in :mod:`deform` to make it easier to customize the look and
+feel of form renderings.
+
+Adjusting the Chameleon Template Path
+-------------------------------------
+
+If you are comfortable using the :term:`Chameleon` templating system,
+but you simply need to override some of the templates used by the
+default Deform widget set, you can create some templates via copy and
+paste in your own directory that has a similar structure to the
+``templates`` directory in the :mod:`deform` package, then use the
+:meth:`deform.Field.set_zpt_renderer` classmethod to change the
+settings associated with the default ZPT field renderer:
+
+.. code-block:: python
+
+   from deform import Form
+
+   deform_templates = resource_filename('deform', 'templates')
+   search_path = ('/path/to/my/templates', deform_templates)
+
+   Form.set_zpt_renderer(deform_templates, search_path)
+
+This resets the rendering settings for the entire process.  If you
+don't want to change the process-wide settings, and you'd rather only
+do this for a particular form rendering, you can pass a ``renderer``
+argument to the :class:`deform.Form` constructor, e.g.:
+
+.. code-block:: python
+
+   from deform import ZPTRendererFactory
+   from deform import Form
+   from pkg_resources import resource_filename
+
+   deform_templates = resource_filename('deform', 'templates')
+   search_path = ('/path/to/my/templates', deform_templates)
+   renderer = ZPTRendererFactory(search_path)
+
+   form = Form(someschema, renderer=renderer)
+
+In either case, the system will look in ``/path/to/my/templates`` for
+a particular Chameleon template, then finally in the Deform package's
+``templates`` dir.  Any number of template directories can be put into
+the search path.
+
+See also the :class:`deform.ZPTRendererFactory` class and the
+:class:`deform.Field` class ``renderer`` argument.
+
 Creating A Renderer (Using an Alternative Templating System)
 ------------------------------------------------------------
 

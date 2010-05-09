@@ -31,9 +31,10 @@ Topics
    basics.rst
    components.rst
    serialization.rst
-   renderer.rst
+   templates.rst
    widget.rst
    app.rst
+   i18n.rst
    api.rst
    interfaces.rst
    glossary.rst
