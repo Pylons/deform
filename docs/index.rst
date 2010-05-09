@@ -35,21 +35,13 @@ Topics
    widget.rst
    app.rst
    api.rst
+   interfaces.rst
    glossary.rst
-
-Thanks To
----------
-
-Without these people, this software would not exist:
-
-- The Formish guys (http://ish.io)
-
-- Fear Factory (http://fearfactory.com)
-
-- Midlake (http://midlake.net)
 
 Topics Needing Documentation
 ----------------------------
+
+- FileUploadWidget tmpstore.
 
 - Multiple forms on the same page.
 
@@ -69,10 +61,24 @@ Topics Needing Documentation
 
 - Changing the close button image.
 
-Done, Could be Better
----------------------
+- 
+
+Documentation Done, But Could be Better
+---------------------------------------
 
 - The Form class (and thee Button class) explanations.
+
+Thanks To
+---------
+
+Without these people, this software would not exist:
+
+- The Formish guys (http://ish.io)
+
+- Fear Factory (http://fearfactory.com)
+
+- Midlake (http://midlake.net)
+
 
 Demonstrations and Development
 ==============================

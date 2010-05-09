@@ -692,6 +692,15 @@ class FileUploadWidget(Widget):
     Represent a file upload.  Meant to work with a
     :class:`deform.FileData` schema node.
 
+    This widget accepts a single required positional argument in its
+    constructor: ``tmpstore``.  This argument should be passed an
+    instance of an object that implements the
+    :class:`deform.interfaces.FileUploadTempStore` interface.  Such an
+    instance will hold on to file upload data during the validation
+    process, so the user doesn't need to reupload files if other parts
+    of the form rendering fail validation.  See also
+    :class:`deform.interfaces.FileUploadTempStore`.
+
     **Attributes/Arguments**
 
     template
