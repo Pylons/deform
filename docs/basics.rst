@@ -55,7 +55,7 @@ this data.  There won't be many people in this list, so we don't need
 any sort of paging or batching to make our way through the list; we
 can display it all on one form page.
 
-The name that Deform has a structure like the above is an
+Deform designates a structure akin to the example above as an
 :term:`appstruct`.  The term "appstruct" is shorthand for "application
 structure", because it's the kind of high-level structure that an
 application usually cares about: the data present in an appstruct is
