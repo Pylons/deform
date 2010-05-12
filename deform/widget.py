@@ -152,31 +152,6 @@ class TextInputWidget(Widget):
             pstruct = pstruct.strip()
         return pstruct
 
-class HiddenWidget(Widget):
-    """
-    Renders an ``<input type="hidden"/>`` widget.
-
-    **Attributes/Arguments**
-
-    template
-        The template name used to render the widget.  Default:
-        ``hidden``.
-    """
-    template = 'hidden'
-    hidden = True
-
-    def serialize(self, field, cstruct=None, readonly=False):
-        if cstruct is None:
-            cstruct = field.default
-        if cstruct is None:
-            cstruct = ''
-        return field.renderer(self.template, field=field, cstruct=cstruct)
-
-    def deserialize(self, field, pstruct):
-        if pstruct is None:
-            pstruct = ''
-        return pstruct
-
 class TextAreaWidget(TextInputWidget):
     """
     Renders a ``<textarea>`` widget.
@@ -212,6 +187,30 @@ class TextAreaWidget(TextInputWidget):
     rows = None
     strip = True
 
+class HiddenWidget(Widget):
+    """
+    Renders an ``<input type="hidden"/>`` widget.
+
+    **Attributes/Arguments**
+
+    template
+        The template name used to render the widget.  Default:
+        ``hidden``.
+    """
+    template = 'hidden'
+    hidden = True
+
+    def serialize(self, field, cstruct=None, readonly=False):
+        if cstruct is None:
+            cstruct = field.default
+        if cstruct is None:
+            cstruct = ''
+        return field.renderer(self.template, field=field, cstruct=cstruct)
+
+    def deserialize(self, field, pstruct):
+        if pstruct is None:
+            pstruct = ''
+        return pstruct
 
 class PasswordWidget(TextInputWidget):
     """
@@ -278,43 +277,6 @@ class CheckboxWidget(Widget):
             pstruct = self.false_val
         return (pstruct == self.true_val) and self.true_val or self.false_val
 
-class RadioChoiceWidget(Widget):
-    """
-    Renders a sequence of ``<input type="radio"/>`` buttons based on a
-    predefined set of values.
-
-    **Attributes/Arguments**
-
-    values
-        A sequence of two-tuples indicating allowable, displayed
-        values, e.g. ``( ('true', 'True'), ('false', 'False') )``.
-        The first element in the tuple is the value that should be
-        returned when the form is posted.  The second is the display
-        value.
-
-    template
-        The template name used to render the widget.  Default:
-        ``radio_choice``.
-
-    readonly_template
-        The template name used to render the widget in read-only mode.
-        Default: ``readonly/radio_choice``.
-    """
-    template = 'radio_choice'
-    readonly_template = 'readonly/radio_choice'
-    values = ()
-
-    def serialize(self, field, cstruct=None, readonly=False):
-        if cstruct is None:
-            cstruct = field.default
-        template = readonly and self.readonly_template or self.template
-        return field.renderer(template, field=field, cstruct=cstruct)
-
-    def deserialize(self, field, pstruct):
-        if pstruct is None:
-            pstruct = ''
-        return pstruct
-
 class SelectWidget(Widget):
     """
     Renders ``<select>`` field based on a predefined set of values.
@@ -351,6 +313,31 @@ class SelectWidget(Widget):
             pstruct = ''
         return pstruct
 
+class RadioChoiceWidget(SelectWidget):
+    """
+    Renders a sequence of ``<input type="radio"/>`` buttons based on a
+    predefined set of values.
+
+    **Attributes/Arguments**
+
+    values
+        A sequence of two-tuples indicating allowable, displayed
+        values, e.g. ``( ('true', 'True'), ('false', 'False') )``.
+        The first element in the tuple is the value that should be
+        returned when the form is posted.  The second is the display
+        value.
+
+    template
+        The template name used to render the widget.  Default:
+        ``radio_choice``.
+
+    readonly_template
+        The template name used to render the widget in read-only mode.
+        Default: ``readonly/radio_choice``.
+    """
+    template = 'radio_choice'
+    readonly_template = 'readonly/radio_choice'
+
 class CheckboxChoiceWidget(Widget):
     """
     Renders a sequence of ``<input type="check"/>`` buttons based on a
@@ -376,6 +363,7 @@ class CheckboxChoiceWidget(Widget):
     template = 'checkbox_choice'
     readonly_template = 'readonly/checkbox_choice'
     values = ()
+
 
     def serialize(self, field, cstruct=None, readonly=False):
         if cstruct is None:
