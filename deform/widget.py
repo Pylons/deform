@@ -187,31 +187,6 @@ class TextAreaWidget(TextInputWidget):
     rows = None
     strip = True
 
-class HiddenWidget(Widget):
-    """
-    Renders an ``<input type="hidden"/>`` widget.
-
-    **Attributes/Arguments**
-
-    template
-        The template name used to render the widget.  Default:
-        ``hidden``.
-    """
-    template = 'hidden'
-    hidden = True
-
-    def serialize(self, field, cstruct=None, readonly=False):
-        if cstruct is None:
-            cstruct = field.default
-        if cstruct is None:
-            cstruct = ''
-        return field.renderer(self.template, field=field, cstruct=cstruct)
-
-    def deserialize(self, field, pstruct):
-        if pstruct is None:
-            pstruct = ''
-        return pstruct
-
 class PasswordWidget(TextInputWidget):
     """
     Renders a single <input type="password"/> input field.
@@ -236,6 +211,31 @@ class PasswordWidget(TextInputWidget):
     """
     template = 'password'
     readonly_template = 'readonly/password'
+
+class HiddenWidget(Widget):
+    """
+    Renders an ``<input type="hidden"/>`` widget.
+
+    **Attributes/Arguments**
+
+    template
+        The template name used to render the widget.  Default:
+        ``hidden``.
+    """
+    template = 'hidden'
+    hidden = True
+
+    def serialize(self, field, cstruct=None, readonly=False):
+        if cstruct is None:
+            cstruct = field.default
+        if cstruct is None:
+            cstruct = ''
+        return field.renderer(self.template, field=field, cstruct=cstruct)
+
+    def deserialize(self, field, pstruct):
+        if pstruct is None:
+            pstruct = ''
+        return pstruct
 
 class CheckboxWidget(Widget):
     """
@@ -900,8 +900,3 @@ class TextAreaCSVWidget(Widget):
             for e in error.children:
                 msgs.append('line %s: %s' % (e.pos+1, e))
             field.error = Invalid(field.schema, '\n'.join(msgs))
-        
-
-    
-            
-    
