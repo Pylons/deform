@@ -1,11 +1,10 @@
 class FileUploadTempStore(object):
     """
     The :class:`deform.FileUploadWidget` requires as its first
-    argument a ``tmpstore``.  This should be an instance of an object
-    that implements this interface.
-
-    A an object implementing the FileUploadTempStore interface should
-    implement these methods.
+    argument a ``tmpstore``.  Such a tmpstore will implement this
+    interface: an object implementing the FileUploadTempStore
+    interface should implement the methods attached to this
+    description.
 
     Effectively, this interface is a subset of the ``dict`` interface
     plus an additional method named ``preview_url``.  In fact, the
