@@ -1,8 +1,8 @@
 Changes
 =======
 
-Next release
-------------
+0.2 (2010-05-13)
+----------------
 
 - Every form has a formid now, defaulting to ``deform``.  The formid
   is used to compute the id of the form tag as well as the button ids

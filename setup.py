@@ -13,7 +13,6 @@
 ##############################################################################
 
 import os
-import sys
 
 from setuptools import setup
 from setuptools import find_packages
@@ -31,7 +30,7 @@ requires = [
 
 setupkw = dict(
     name='deform',
-    version='0.1',
+    version='0.2',
     description='Another form generation library',
     long_description=README + '\n\n' + CHANGES,
     classifiers=[
