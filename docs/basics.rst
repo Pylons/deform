@@ -234,6 +234,8 @@ Earlier we defined a schema:
 
 Let's now use this schema to create, render and validate a form.
 
+.. _creating_a_form:
+
 Creating a Form Object
 ~~~~~~~~~~~~~~~~~~~~~~
 

@@ -34,6 +34,7 @@ Topics
    templates.rst
    widget.rst
    app.rst
+   ajax.rst
    i18n.rst
    api.rst
    interfaces.rst

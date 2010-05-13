@@ -38,13 +38,46 @@ class Form(field.Field):
         differing values of ``__formid__``.  By default, ``formid`` is
         ``deform``.
 
+    use_ajax
+       If this option is ``True``, the form will use AJAX (actually
+       AJAH); when any submit button is clicked, the DOM node related
+       to this form will be replaced with the result of the form post
+       caused by the submission.  The page will not be reloaded.  This
+       feature uses the ``jquery.form`` library ``ajaxForm`` feature
+       as per `http://jquery.malsup.com/form/
+       <http://jquery.malsup.com/form/>`_.  Default: ``False``.  If
+       this option is ``True``, the ``jquery.form.js`` library must be
+       loaded in the HTML page which embeds the form.  A copy of it
+       exists in the ``static`` directory of the ``deform`` package.
+
+    ajax_options
+       A *string* which must represent a JavaScript obejct
+       (dictionary) of extra AJAX options as per
+       `http://jquery.malsup.com/form/#options-object
+       <http://jquery.malsup.com/form/#options-object>`_.  For
+       example:
+
+       .. code-block:: python
+
+           '{"success": function (rText, sText, xhr, form) {alert(sText)};}'
+
+       Default options exist even if ``ajax_options`` is not provided.
+       By default, ``target`` points at the DOM node representing the
+       form and and ``replaceTarget`` is ``true``.  If you pass these
+       values in ``ajax_options``, the defaults will be overridden.
+
+       This option has no effect when ``use_ajax`` is False.
+
+       The default value of ``ajax_options`` is a string
+       representation of the empty object.
+
     The :class:`deform.Form` constructor also accepts all the keyword
     arguments accepted by the :class`deform.Field` class.  These
     keywords mean the same thing in the context of a Form as they do
     in the context of a Field.
     """
     def __init__(self, schema, action='.', method='POST', buttons=(),
-                 formid='deform', **kw):
+                 formid='deform', use_ajax=False, ajax_options='{}', **kw):
         field.Field.__init__(self, schema, **kw)
         _buttons = []
         for button in buttons:
@@ -55,7 +88,13 @@ class Form(field.Field):
         self.method = method
         self.buttons = _buttons
         self.formid = formid
+        self.use_ajax = use_ajax
+        self.ajax_options = Raw(ajax_options.strip())
         self.widget = widget.FormWidget()
+
+class Raw(unicode):
+    def __html__(self):
+        return self
 
 class Button(object):
     """

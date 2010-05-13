@@ -55,7 +55,9 @@ class DeformDemo(object):
 
     def render_form(self, form, appstruct=None, submitted='submit',
                     success=None, readonly=False):
+
         captured = None
+
         if submitted in self.request.POST:
             # the request represents a form submission
             try:
@@ -63,14 +65,20 @@ class DeformDemo(object):
                 controls = self.request.POST.items()
                 captured = form.validate(controls)
                 if success:
-                    success()
+                    response = success()
+                    if response is not None:
+                        return response
                 html = form.render(captured)
             except deform.ValidationFailure, e:
                 # the submitted values could not be validated
                 html = e.render()
+
         else:
             # the request requires a simple form rendering
             html = form.render(appstruct, readonly=readonly)
+
+        if self.request.is_xhr:
+            return Response(html)
 
         code, start, end = self.get_code(2)
 
@@ -92,6 +100,12 @@ class DeformDemo(object):
         code = unicode(code, 'utf-8')
         formatter = HtmlFormatter()
         return highlight(code, PythonLexer(), formatter), start, end
+
+    @bfg_view(name='thanks.html')
+    def thanks(self):
+        return Response(
+            '<html><body><p>Thanks!</p><small>'
+            '<a href="..">Up</a></small></body></html>')
 
     @bfg_view(name='allcode', renderer='templates/code.pt')
     def allcode(self):
@@ -247,6 +261,58 @@ class DeformDemo(object):
         schema = Schema()
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
+
+    @bfg_view(renderer='templates/form.pt', name='ajaxform')
+    @demonstrate('AJAX form submission (inline success)')
+    def ajaxform(self):
+        class Mapping(colander.Schema):
+            name = colander.SchemaNode(
+                colander.String(),
+                description='Content name')
+            date = colander.SchemaNode(
+                colander.Date(),
+                description='Content date')
+        class Schema(colander.Schema):
+            number = colander.SchemaNode(
+                colander.Integer())
+            mapping = Mapping()
+        schema = Schema()
+        def succeed():
+            return Response('<div id="thanks">Thanks!</div>')
+        form = deform.Form(schema, buttons=('submit',), use_ajax=True)
+        return self.render_form(form, success=succeed)
+
+    @bfg_view(renderer='templates/form.pt', name='ajaxform_redirect')
+    @demonstrate('AJAX form submission (redirect on success)')
+    def ajaxform_redirect(self):
+        class Mapping(colander.Schema):
+            name = colander.SchemaNode(
+                colander.String(),
+                description='Content name')
+            date = colander.SchemaNode(
+                colander.Date(),
+                description='Content date')
+        class Schema(colander.Schema):
+            number = colander.SchemaNode(
+                colander.Integer())
+            mapping = Mapping()
+        schema = Schema()
+        options = """
+        {success:
+          function (rText, sText, xhr, form) {
+            var loc = xhr.getResponseHeader('X-Relocate');
+            if (loc) {
+              document.location = loc;
+            };
+           }
+        }
+        """
+        def succeed():
+            location = self.request.application_url + '/thanks.html'
+            return Response(headers = [('X-Relocate', location)])
+        form = deform.Form(schema, buttons=('submit',), use_ajax=True,
+                           ajax_options=options)
+        return self.render_form(form, success=succeed)
 
     @bfg_view(renderer='templates/form.pt', name='sequence_of_fileuploads')
     @demonstrate('Sequence of File Upload Widgets')

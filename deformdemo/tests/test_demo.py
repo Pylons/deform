@@ -1605,6 +1605,98 @@ class RequireOneFieldOrAnotherTests(unittest.TestCase):
         self.assertEqual(captured, u"{'two': '', 'one': u'one'}")
         self.failIf(browser.is_element_present('css=.errorMsgLbl'))
 
+class AjaxFormTests(unittest.TestCase):
+    url = "/ajaxform/"
+    def test_render_default(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        self.failIf(browser.is_element_present('css=.errorMsgLbl'))
+        self.failUnless(browser.is_element_present('css=#req-deformField1'))
+        self.failUnless(browser.is_element_present('css=#req-deformField3'))
+        self.failUnless(browser.is_element_present('css=#req-deformField4'))
+        self.assertEqual(browser.get_text('css=#captured'), 'None')
+        self.assertEqual(browser.get_value('deformField1'), '')
+        self.assertEqual(browser.get_attribute('deformField1@name'), 'number')
+        self.assertEqual(browser.get_value('deformField3'), '')
+        self.assertEqual(browser.get_attribute('deformField3@name'), 'name')
+        self.assertEqual(browser.get_value('deformField4'), '')
+        self.assertEqual(browser.get_attribute('deformField4@name'), 'year')
+        self.assertEqual(browser.get_value('deformField4-month'), '')
+        self.assertEqual(browser.get_attribute('deformField4-month@name'),
+                         'month')
+        self.assertEqual(browser.get_value('deformField4-day'), '')
+        self.assertEqual(browser.get_attribute('deformField4-day@name'),
+                         'day')
+        self.assertEqual(browser.get_text('css=#captured'), 'None')
+
+    def test_submit_empty(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.click('submit')
+        browser.wait_for_condition(
+            'selenium.browserbot.getCurrentWindow().jQuery.active == 0',
+            "30000")
+        self.failUnless(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertEqual(browser.get_text('css=#error-deformField1'),
+                         'Required')
+        self.assertEqual(browser.get_text('css=#error-deformField3'),
+                         'Required')
+        self.assertEqual(browser.get_text('css=#error-deformField4'),
+                         'Incomplete')
+        self.assertEqual(browser.get_text('css=#captured'),
+                         'None')
+
+    def test_submit_invalid(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.type('deformField1', 'notanumber')
+        browser.click('submit')
+        browser.wait_for_condition(
+            'selenium.browserbot.getCurrentWindow().jQuery.active == 0',
+            "30000")
+        self.failUnless(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertEqual(browser.get_text('css=#error-deformField1'),
+                         '"notanumber" is not a number')
+        self.assertEqual(browser.get_text('css=#error-deformField3'),
+                         'Required')
+        self.assertEqual(browser.get_text('css=#error-deformField4'),
+                         'Incomplete')
+        self.assertEqual(browser.get_text('css=#captured'),
+                         'None')
+
+    def test_submit_success(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.type('deformField1', '1')
+        browser.type('deformField3', 'name')
+        browser.type('deformField4', '2010')
+        browser.type('deformField4-month', '1')
+        browser.type('deformField4-day', '1')
+        browser.click('submit')
+        browser.wait_for_condition(
+            'selenium.browserbot.getCurrentWindow().jQuery.active == 0',
+            "30000")
+        self.assertEqual(browser.get_text('css=#thanks'), 'Thanks!')
+
+class RedirectingAjaxFormTests(AjaxFormTests):
+    url = "/ajaxform_redirect/"
+    def test_submit_success(self):
+        import time
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.type('deformField1', '1')
+        browser.type('deformField3', 'name')
+        browser.type('deformField4', '2010')
+        browser.type('deformField4-month', '1')
+        browser.type('deformField4-day', '1')
+        browser.click('submit')
+        time.sleep(1)
+        ## browser.wait_for_condition(
+        ##     'selenium.browserbot.getCurrentWindow().jQuery.active == 0',
+        ##     "30000")
+        location = browser.get_location()
+        self.failUnless(location.endswith('thanks.html'))
+
 if __name__ == '__main__':
     setUpModule()
     try:

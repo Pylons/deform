@@ -8,7 +8,21 @@ Next release
   is used to compute the id of the form tag as well as the button ids
   in the form.  Previously, if a formid was not passed to the Form
   constructor, no id would be given to the rendered form and the
-  buttons would not be prefixed with any formid.
+  form's buttons would not be prefixed with any formid.
+
+- The ``deform.Form`` class now accepts two extra keyword arguments in
+  its constructor: ``use_ajax`` and ``ajax_options``.
+
+  If ``use_ajax`` is ``True``, the page is not reloaded when a submit
+  button is pressed.  Instead, the form is posted, and the result
+  replaces the DOM node on the page.
+
+  ``ajax_options`` is a string which allows you to pass extra options
+  to the underlying AJAX form machinery when ``use_ajax`` is True.
+
+- Added a couple Ajax examples to the demo app.
+
+- Add a rudimentary Ajax chapter to the docs.
 
 0.1 (2010-05-09)
 ----------------
