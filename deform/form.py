@@ -72,7 +72,7 @@ class Form(field.Field):
        representation of the empty object.
 
     The :class:`deform.Form` constructor also accepts all the keyword
-    arguments accepted by the :class`deform.Field` class.  These
+    arguments accepted by the :class:`deform.Field` class.  These
     keywords mean the same thing in the context of a Form as they do
     in the context of a Field.
     """
