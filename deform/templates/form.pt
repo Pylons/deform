@@ -1,5 +1,5 @@
 <form
-  tal:attributes="id field.name or None"
+  id="${field.formid}"
   action="${field.action}"
   class="wufoo"
   method="${field.method}"
@@ -11,9 +11,8 @@
 
     <legend tal:condition="field.title">${field.title}</legend>
 
-    <input type="hidden" name="_charset_" />
-    <input tal:condition="field.formid"
-           type="hidden" name="__formid__" tal:attributes="value field.formid"/>
+    <input type="hidden" name="_charset_" /> 
+    <input type="hidden" name="__formid__" value="${field.formid}"/>
     <ul>
       
       <li class="errorLi" tal:condition="field.error">
@@ -37,8 +36,8 @@
       
       <li class="buttons">
         <tal:block repeat="button field.buttons">
-          <button 
-              tal:attributes="id (field.formid or '') + button.name"
+          <button
+              id="${field.formid+button.name}"
               name="${button.name}"
               type="submit"
               class="btnText submit"
