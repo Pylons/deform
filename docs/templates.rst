@@ -18,6 +18,7 @@ settings associated with the default ZPT renderer:
 
 .. code-block:: python
 
+   from pkg_resources import resource_filename
    from deform import Form
 
    deform_templates = resource_filename('deform', 'templates')
