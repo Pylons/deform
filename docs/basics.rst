@@ -559,20 +559,14 @@ widgets provided by Deform are not sufficient, see
 :ref:`writing_a_widget` for more information about writing a custom
 widget.
 
-Creating a New Schema Type
---------------------------
-
-Sometimes the default schema types offered by Colander may not be
-sufficient to model structures in your application.  See the `Colander
-documentation about defining a new schema type
-<http://docs.repoze.org/colander/#defining-a-new-type>`_ when this
-becomes true.
+.. _masked_input:
 
 Using Text Input Masks
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~
 
-The :class:`deform.widget.TextInputWidget` widget allows for the use
-of a fixed-length text input mask.  Use of a text input mask causes
+The :class:`deform.widget.TextInputWidget` and
+:class:`deform.widget.CheckedInputWidget` widgets allow for the use of
+a fixed-length text input mask.  Use of a text input mask causes
 placeholder text to be placed in the text field input, and restricts
 the type and length of the characters input into the text field.
 
@@ -625,4 +619,13 @@ Use of a text input mask is not a replacement for server-side
 validation of the field; it is purely a UI affordance.  If the data
 must be checked at input time a separate :term:`validator` should be
 attached to the related schema node.
+
+Creating a New Schema Type
+--------------------------
+
+Sometimes the default schema types offered by Colander may not be
+sufficient to model structures in your application.  See the `Colander
+documentation about defining a new schema type
+<http://docs.repoze.org/colander/#defining-a-new-type>`_ when this
+becomes true.
 

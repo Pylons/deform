@@ -244,6 +244,25 @@ class DeformDemo(object):
         form['password'].widget = deform.widget.CheckedPasswordWidget(size=20)
         return self.render_form(form)
 
+    @bfg_view(renderer='templates/form.pt', name='checkedinput_withmask')
+    @demonstrate('Checked Input Widget (With Input Mask)')
+    def checkedinput_withmask(self):
+        class Schema(colander.Schema):
+            ssn = colander.SchemaNode(
+                colander.String(),
+                title = 'Social Security Number',
+                description='Type your Social Security Number and confirm it',
+                )
+        schema = Schema()
+        form = deform.Form(schema, buttons=('submit',))
+        form['ssn'].widget = deform.widget.CheckedInputWidget(
+            subject='SSN',
+            confirm_subject='Confirm SSN',
+            mask = '999-99-9999',
+            mask_placeholder = '#',
+            size=40)
+        return self.render_form(form)
+
     @bfg_view(renderer='templates/form.pt', name='mapping')
     @demonstrate('Mapping Widget')
     def mapping(self):

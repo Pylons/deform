@@ -6,6 +6,9 @@ Next release
 
 - Add text input mask capability to ``deform.widget.TextInputWidget``.
 
+- Add text input mask capability to
+  ``deform.widget.CheckedInputWidget``.
+
 0.2 (2010-05-13)
 ----------------
 

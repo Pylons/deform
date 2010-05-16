@@ -176,6 +176,43 @@ class CheckedInputWidgetTests(unittest.TestCase):
         self.assertEqual(browser.get_text('css=#captured'),
                          "{'email': u'user@example.com'}")
 
+class CheckedInputWidgetWithMaskTests(unittest.TestCase):
+    url = "/checkedinput_withmask/"
+    def test_render_default(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        self.assertEqual(browser.get_text('css=.req'), '*')
+        self.assertEqual(browser.get_text('css=#captured'), 'None')
+        self.assertEqual(browser.get_value('deformField1'), '')
+        self.assertEqual(browser.get_value('deformField1-confirm'), '')
+        self.failIf(browser.is_element_present('css=.errorMsgLbl'))
+
+    def test_type_bad_input(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.focus('deformField1')
+        browser.key_press('deformField1', 'a')
+        browser.focus('deformField1-confirm')
+        browser.key_press('deformField1-confirm', 'a')
+        self.assertEqual(browser.get_value('deformField1'), '')
+        self.failUnless(
+            browser.get_value('deformField1-confirm') in ('', '###-##-####'))
+
+    def test_submit_success(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.focus('deformField1')
+        for key in '140118866':
+            browser.key_press('deformField1', key)
+        browser.focus('deformField1-confirm')
+        for key in '140118866':
+            browser.key_press('deformField1-confirm', key)
+        browser.click('submit')
+        browser.wait_for_page_to_load("30000")
+        self.assertEqual(browser.get_text('css=#captured'),
+                         u"{'ssn': u'140-11-8866'}")
+        
+
 class CheckedPasswordWidgetTests(unittest.TestCase):
     url = "/checkedpassword/"
     def test_render_default(self):
@@ -1716,13 +1753,14 @@ class TextInputMaskTests(unittest.TestCase):
         browser.focus('deformField2')
         browser.key_press('deformField2', 'a')
         self.assertEqual(browser.get_value('deformField1'), '')
-        self.assertEqual(browser.get_value('deformField2'), '')
+        self.failUnless(
+            browser.get_value('deformField2') in ('', '__/__/____'))
 
     def test_submit_success(self):
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")
         browser.focus('deformField1')
-        for key in '141740312':
+        for key in '140118866':
             browser.key_press('deformField1', key)
         browser.focus('deformField2')
         for key in '10102010':
@@ -1730,7 +1768,7 @@ class TextInputMaskTests(unittest.TestCase):
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
         self.assertEqual(browser.get_text('css=#captured'),
-                         u"{'date': u'10/10/2010', 'ssn': u'141-74-0312'}")
+                         u"{'date': u'10/10/2010', 'ssn': u'140-11-8866'}")
 
 
 if __name__ == '__main__':

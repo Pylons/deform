@@ -152,7 +152,7 @@ class TextInputWidget(Widget):
 
         When this option is used, the :term:`jquery.maskedinput`
         library must be loaded into the page serving the form for the
-        mask argument to have any effect.
+        mask argument to have any effect.  See :ref:`masked_input`.
 
     mask_placeholder
         The placeholder for required nonliteral elements when a mask
@@ -430,6 +430,33 @@ class CheckedInputWidget(Widget):
     mismatch_message
         The message to be displayed when the value in the primary
         field doesn't match the value in the confirm field.
+
+    mask
+        A :term:`jquery.maskedinput` input mask, as a string.  Both
+        input fields will use this mask.
+
+        a - Represents an alpha character (A-Z,a-z)
+        9 - Represents a numeric character (0-9)
+        * - Represents an alphanumeric character (A-Z,a-z,0-9)
+
+        All other characters in the mask will be considered mask
+        literals.
+
+        Example masks:
+
+          Date: 99/99/9999
+
+          US Phone: (999) 999-9999
+
+          US SSN: 999-99-9999
+
+        When this option is used, the :term:`jquery.maskedinput`
+        library must be loaded into the page serving the form for the
+        mask argument to have any effect.  See :ref:`masked_input`.
+
+    mask_placeholder
+        The placeholder for required nonliteral elements when a mask
+        is used.  Default: ``_`` (underscore).
     """
     template = 'checked_input'
     readonly_template = 'readonly/checked_input'
@@ -437,6 +464,8 @@ class CheckedInputWidget(Widget):
     mismatch_message = _('Fields did not match')
     subject = _('Value')
     confirm_subject = _('Confirm Value')
+    mask = None
+    mask_placeholder = "_"
 
     def serialize(self, field, cstruct=None, readonly=False):
         if cstruct is None:
