@@ -567,3 +567,62 @@ sufficient to model structures in your application.  See the `Colander
 documentation about defining a new schema type
 <http://docs.repoze.org/colander/#defining-a-new-type>`_ when this
 becomes true.
+
+Using Text Input Masks
+----------------------
+
+The :class:`deform.widget.TextInputWidget` widget allows for the use
+of a fixed-length text input mask.  Use of a text input mask causes
+placeholder text to be placed in the text field input, and restricts
+the type and length of the characters input into the text field.
+
+For example:
+
+.. code-block: python
+
+   form['ssn'].widget = TextInputWidget(mask='999-99-9999')
+
+When using a text input mask:
+
+``a`` represents an alpha character (A-Z,a-z)
+
+``9`` represents a numeric character (0-9)
+
+``*`` represents an alphanumeric character (A-Z,a-z,0-9)
+
+All other characters in the mask will be considered mask literals.
+
+By default the placeholder text for non-literal characters in the
+field will be ``_`` (the underscore character).  To change this for a
+given input field, use the ``mask_placeholder`` argument to the
+TextInputWidget:
+
+.. code-block:: python
+
+   form['date'].widget = TextInputWidget(mask='99/99/9999', 
+                                         mask_placeholder="-")
+
+Example masks:
+
+Date
+    99/99/9999
+
+US Phone
+    (999) 999-9999
+
+US SSN
+    999-99-9999
+
+When this option is used, the :term:`jquery.maskedinput` library must
+be loaded into the page serving the form for the mask argument to have
+any effect.  A copy of this library is available in the
+``static/scripts`` directory of the :mod:`deform` package itself.
+
+See `http://localhost:8521/text_input_masks/
+<http://localhost:8521/text_input_masks/>`_ for a working example.
+
+Use of a text input mask is not a replacement for server-side
+validation of the field; it is purely a UI affordance.  If the data
+must be checked at input time a separate :term:`validator` should be
+attached to the related schema node.
+

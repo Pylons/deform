@@ -603,6 +603,22 @@ class DeformDemo(object):
         form['sneaky'].widget = deform.widget.HiddenWidget()
         return self.render_form(form)
 
+    @bfg_view(renderer='templates/form.pt', name='text_input_masks')
+    @demonstrate('Text Input Masks')
+    def text_input_masks(self):
+        class Schema(colander.Schema):
+            ssn = colander.SchemaNode(
+                colander.String(),
+                )
+            date = colander.SchemaNode(
+                colander.String(),
+                )
+        schema = Schema()
+        form = deform.Form(schema, buttons=('submit',))
+        form['ssn'].widget = deform.widget.TextInputWidget(mask='999-99-9999')
+        form['date'].widget = deform.widget.TextInputWidget(mask='99/99/9999')
+        return self.render_form(form)
+
     @bfg_view(renderer='templates/form.pt', name='textareacsv')
     @demonstrate('Text Area CSV Widget')
     def textareacsv(self):

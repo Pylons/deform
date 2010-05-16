@@ -131,11 +131,39 @@ class TextInputWidget(Widget):
     strip
         If true, during deserialization, strip the value of leading
         and trailing whitespace (default ``True``).
+
+    mask
+        A :term:`jquery.maskedinput` input mask, as a string.
+
+        a - Represents an alpha character (A-Z,a-z)
+        9 - Represents a numeric character (0-9)
+        * - Represents an alphanumeric character (A-Z,a-z,0-9)
+
+        All other characters in the mask will be considered mask
+        literals.
+
+        Example masks:
+
+          Date: 99/99/9999
+
+          US Phone: (999) 999-9999
+
+          US SSN: 999-99-9999
+
+        When this option is used, the :term:`jquery.maskedinput`
+        library must be loaded into the page serving the form for the
+        mask argument to have any effect.
+
+    mask_placeholder
+        The placeholder for required nonliteral elements when a mask
+        is used.  Default: ``_`` (underscore).
     """
     template = 'textinput'
     readonly_template = 'readonly/textinput'
     size = None
     strip = True
+    mask = None
+    mask_placeholder = "_"
 
     def serialize(self, field, cstruct=None, readonly=False):
         if cstruct is None:

@@ -1,4 +1,14 @@
-<input type="text" name="${field.name}" value="${cstruct}" 
-       tal:attributes="size field.widget.size"
-       id="${field.oid}"/>
+<span tal:omit-tag="">
+    <input type="text" name="${field.name}" value="${cstruct}" 
+           tal:attributes="size field.widget.size"
+           id="${field.oid}"/>
+    <script tal:condition="field.widget.mask" type="text/javascript">
+      jQuery(function($) {
+          $("#${field.oid}").mask("${field.widget.mask}", 
+                 {placeholder:"${field.widget.mask_placeholder}"});
+      });
+    </script>
+</span>
+
+
 

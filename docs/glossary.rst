@@ -84,3 +84,19 @@ Glossary
    Gettext
      The GNU `gettext <http://www.gnu.org/software/gettext/>`_
      library, used by the :mod:`deform` translation machinery.
+
+   jquery.maskedinput
+     A JQuery plugin library that allows for input masks in text
+     inputs.  For example, a mask for a US telephone number might be
+     ``(999)-999-9999``.  See also
+     `http://digitalbush.com/projects/masked-input-plugin/
+     <http://digitalbush.com/projects/masked-input-plugin/>`_.  Deform
+     supports input masks in its default
+     :class:`deform.widget.TextInputWidget` widget.
+
+   validator
+     A :term:`Colander` validator callable.  Accepts a ``node`` object
+     and a ``value`` and either raises an :exc:`colander.Invalid`
+     exception or returns ``None``.  Used in deform as the
+     ``validator=`` argument to a schema node, ensuring that the input
+     meets the requirements of the schema.

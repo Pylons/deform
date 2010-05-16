@@ -1697,6 +1697,42 @@ class RedirectingAjaxFormTests(AjaxFormTests):
         location = browser.get_location()
         self.failUnless(location.endswith('thanks.html'))
 
+class TextInputMaskTests(unittest.TestCase):
+    url = "/text_input_masks/"
+    def test_render_default(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        self.assertEqual(browser.get_attribute("deformField1@name"), 'ssn')
+        self.assertEqual(browser.get_value('deformField1'), '')
+        self.assertEqual(browser.get_attribute("deformField2@name"), 'date')
+        self.assertEqual(browser.get_value('deformField2'), '')
+        self.failIf(browser.is_element_present('css=.errorMsgLbl'))
+
+    def test_type_bad_input(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.focus('deformField1')
+        browser.key_press('deformField1', 'a')
+        browser.focus('deformField2')
+        browser.key_press('deformField2', 'a')
+        self.assertEqual(browser.get_value('deformField1'), '')
+        self.assertEqual(browser.get_value('deformField2'), '')
+
+    def test_submit_success(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.focus('deformField1')
+        for key in '141740312':
+            browser.key_press('deformField1', key)
+        browser.focus('deformField2')
+        for key in '10102010':
+            browser.key_press('deformField2', key)
+        browser.click('submit')
+        browser.wait_for_page_to_load("30000")
+        self.assertEqual(browser.get_text('css=#captured'),
+                         u"{'date': u'10/10/2010', 'ssn': u'141-74-0312'}")
+
+
 if __name__ == '__main__':
     setUpModule()
     try:

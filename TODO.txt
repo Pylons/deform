@@ -19,7 +19,8 @@ TODOs
 
 - [_] Add a multi-select widget using dual lists.
 
-- [_] Add "fixed-lentgh" string widgets
+- [X] Add "fixed-lentgh" string widgets (done by using jquery.maskedinput in 
+      text input field)
 
       o E.g., in parts of an SSN, filling in all digits in the first
         part's field jumps automatically to the second.
@@ -36,7 +37,10 @@ TODOs
 
 - [X] Readonly widget variants
 
-- Use case: require (email or phonenumber)
+- [_] Progressive form validation (show validation errors as you type)
+
+- [X] Use case: require (email or phonenumber; see
+      require_one_or_another in deformdemo).
 
 Topics Needing Documentation
 ----------------------------

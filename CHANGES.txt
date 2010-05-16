@@ -1,6 +1,11 @@
 Changes
 =======
 
+Next release
+------------
+
+- Add text input mask capability to ``deform.widget.TextInputWidget``.
+
 0.2 (2010-05-13)
 ----------------
 
