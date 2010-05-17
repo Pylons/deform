@@ -527,7 +527,7 @@ which is the header uses the widget underneath it by default.
     :class:`deform.widget.CheckboxWidget`
 
 :class:`colander.Date`
-    :class:`deform.widget.DatePartsWidget`
+    :class:`deform.widget.DateInputWidget`
 
 :class:`colander.Tuple`
     :class:`deform.widget.Widget`

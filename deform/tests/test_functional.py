@@ -91,20 +91,12 @@ class TestFunctional(unittest.TestCase):
         self.assertEqual(inputs[6]['value'], '')
         self.assertEqual(inputs[7]['name'], '__start__')
         self.assertEqual(inputs[7]['value'], 'dates:sequence')
-        self.assertEqual(inputs[8]['name'], '__start__')
-        self.assertEqual(inputs[8]['value'], 'date:mapping')
-        self.assertEqual(inputs[9]['name'], 'year')
-        self.assertEqual(inputs[9]['value'], '2010')
-        self.assertEqual(inputs[10]['name'], 'month')
-        self.assertEqual(inputs[10]['value'], '03')
-        self.assertEqual(inputs[11]['name'], 'day')
-        self.assertEqual(inputs[11]['value'], '21')
-        self.assertEqual(inputs[12]['name'], '__end__')
-        self.assertEqual(inputs[12]['value'], 'date:mapping')
-        self.assertEqual(inputs[13]['name'], '__end__')
-        self.assertEqual(inputs[13]['value'], 'dates:sequence')
-        self.assertEqual(inputs[14]['name'], '__end__')
-        self.assertEqual(inputs[14]['value'], 'series:mapping')
+        self.assertEqual(inputs[8]['name'], 'date')
+        self.assertEqual(inputs[8]['value'], '2010-03-21')
+        self.assertEqual(inputs[9]['name'], '__end__')
+        self.assertEqual(inputs[9]['value'], 'dates:sequence')
+        self.assertEqual(inputs[10]['name'], '__end__')
+        self.assertEqual(inputs[10]['value'], 'series:mapping')
 
     def test_widget_deserialize(self):
         filled = {
@@ -112,8 +104,7 @@ class TestFunctional(unittest.TestCase):
             'title': 'Cool project',
             'series': {
                 'name':'date series 1',
-                'dates': [{'month':'10', 'day':'12', 'year':'2008'},
-                          {'month':'10', 'day':'12', 'year':'2009'}],
+                'dates': ['2008-10-12', '2009-10-12'],
                 }
             }
         schema = self._makeSchema()

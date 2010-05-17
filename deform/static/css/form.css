@@ -41,7 +41,6 @@ form li:after, form li div:after{
 *+html form li div{display:inline-block;}
 
 form li div, form li span{
-	margin:0 .3em 0 0;
 	padding:0;
 	color:#444;
 }
@@ -322,7 +321,7 @@ input.text, input.search, textarea.textarea{
 	border-left:1px solid #c3c3c3;
 	border-right:1px solid #c3c3c3;
 	border-bottom:1px solid #ddd;
-	background:#fff url(../images/fieldbg.gif) repeat-x top;
+	background:#fff url(fieldbg.gif) repeat-x top;
 }
 select.select{
 	padding:1px 0 0 0;
@@ -387,12 +386,16 @@ li.file a:hover .file-name{
 
 /* ----- BUTTONS ----- */
 
-form li.buttons{
-	position:relative;
-	clear:both;
-	padding-top:10px;
-	width:97% !important;
-}
+/* form li.buttons{ */
+/* 	position:relative; */
+/* 	clear:both; */
+/* 	padding-top:10px; */
+/* 	width:97% !important; */
+/* } */
+
+/* the above conflicts with the date input css (the button stays above
+the dateinput info */
+
 form li.buttons input{
 	font-size:100%;
 	margin-right: 5px;

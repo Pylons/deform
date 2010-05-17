@@ -180,6 +180,45 @@ class TextInputWidget(Widget):
             pstruct = pstruct.strip()
         return pstruct
 
+class DateInputWidget(Widget):
+    """
+    
+    Renders an ``<input type="date"/>`` date picker widget (uses JQuery Tools
+    to paint the control if the browser is not HTML5-aware).  Most useful when
+    the schema  node is a ``colander.Date`` object.
+
+    **Attributes/Arguments**
+
+    size
+        The size, in columns, of the text input field.  Defaults to
+        ``None``, meaning that the ``size`` is not included in the
+        widget output (uses browser default size).
+
+    template
+        The template name used to render the widget.  Default:
+        ``dateinput``.
+
+    readonly_template
+        The template name used to render the widget in read-only mode.
+        Default: ``readonly/textinput``.
+    """
+    template = 'dateinput'
+    readonly_template = 'readonly/textinput'
+    size = None
+
+    def serialize(self, field, cstruct=None, readonly=False):
+        if cstruct is None:
+            cstruct = field.default
+        if cstruct is None:
+            cstruct = ''
+        template = readonly and self.readonly_template or self.template
+        return field.renderer(template, field=field, cstruct=cstruct)
+
+    def deserialize(self, field, pstruct):
+        if pstruct is None:
+            pstruct = ''
+        return pstruct
+
 class TextAreaWidget(TextInputWidget):
     """
     Renders a ``<textarea>`` widget.

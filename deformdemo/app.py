@@ -279,6 +279,7 @@ class DeformDemo(object):
             mapping = Mapping()
         schema = Schema()
         form = deform.Form(schema, buttons=('submit',))
+        form['mapping']['date'].widget = deform.widget.DatePartsWidget()
         return self.render_form(form)
 
     @bfg_view(renderer='templates/form.pt', name='ajaxform')
@@ -299,6 +300,7 @@ class DeformDemo(object):
         def succeed():
             return Response('<div id="thanks">Thanks!</div>')
         form = deform.Form(schema, buttons=('submit',), use_ajax=True)
+        form['mapping']['date'].widget = deform.widget.DatePartsWidget()
         return self.render_form(form, success=succeed)
 
     @bfg_view(renderer='templates/form.pt', name='ajaxform_redirect')
@@ -331,6 +333,7 @@ class DeformDemo(object):
             return Response(headers = [('X-Relocate', location)])
         form = deform.Form(schema, buttons=('submit',), use_ajax=True,
                            ajax_options=options)
+        form['mapping']['date'].widget = deform.widget.DatePartsWidget()
         return self.render_form(form, success=succeed)
 
     @bfg_view(renderer='templates/form.pt', name='sequence_of_fileuploads')
@@ -449,9 +452,9 @@ class DeformDemo(object):
         form['upload'].widget = deform.widget.FileUploadWidget(tmpstore)
         return self.render_form(form, success=tmpstore.clear)
 
-    @bfg_view(renderer='templates/form.pt', name='date')
+    @bfg_view(renderer='templates/form.pt', name='dateparts')
     @demonstrate('Date Parts Widget')
-    def date(self):
+    def dateparts(self):
         import datetime
         from colander import Range
         class Schema(colander.Schema):
@@ -459,12 +462,31 @@ class DeformDemo(object):
                 colander.Date(),
                 validator=Range(
                     min=datetime.date(2010, 1, 1),
-                    min_err=_('${min} is earlier than earliest date ${val}')
+                    min_err=_('${val} is earlier than earliest date ${min}')
                     )
                 )
         schema = Schema()
         form = deform.Form(schema, buttons=('submit',))
+        form['date'].widget = deform.widget.DatePartsWidget()
         return self.render_form(form)
+
+    @bfg_view(renderer='templates/form.pt', name='dateinput')
+    @demonstrate('Date Input Widget')
+    def dateinput(self):
+        import datetime
+        from colander import Range
+        class Schema(colander.Schema):
+            date = colander.SchemaNode(
+                colander.Date(),
+                validator=Range(
+                    min=datetime.date(2010, 5, 5),
+                    min_err=_('${val} is earlier than earliest date ${min}')
+                    )
+                )
+        schema = Schema()
+        form = deform.Form(schema, buttons=('submit',))
+        when = datetime.date(2010, 5, 5)
+        return self.render_form(form, appstruct={'date':when})
 
     @bfg_view(renderer='templates/form.pt', name='edit')
     @demonstrate('Edit Form')
@@ -482,6 +504,7 @@ class DeformDemo(object):
             mapping = Mapping()
         schema = Schema()
         form = deform.Form(schema, buttons=('submit',))
+        form['mapping']['date'].widget = deform.widget.DatePartsWidget()
         import datetime
         # We don't need to suppy all the values required by the schema
         # for an initial rendering, only the ones the app actually has

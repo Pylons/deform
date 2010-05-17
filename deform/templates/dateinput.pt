@@ -1,0 +1,13 @@
+<span tal:omit-tag="">
+    <input type="date" name="${field.name}" value="${cstruct}" 
+           tal:attributes="size field.widget.size"
+           id="${field.oid}"/>
+    <script type="text/javascript">
+      jQuery(function($) {
+          $("#${field.oid}").dateinput({format: 'yyyy-mm-dd'});
+      });
+    </script>
+</span>
+
+
+

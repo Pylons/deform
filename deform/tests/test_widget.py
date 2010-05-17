@@ -115,6 +115,58 @@ class TestTextInputWidget(unittest.TestCase):
         result = widget.deserialize(field, None)
         self.assertEqual(result, '')
 
+class TestDateInputWidget(unittest.TestCase):
+    def _makeOne(self, **kw):
+        from deform.widget import DateInputWidget
+        return DateInputWidget(**kw)
+
+    def test_serialize_None_no_default(self):
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        field = DummyField(None, renderer=renderer)
+        widget.serialize(field, None)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], '')
+
+    def test_serialize_None_with_default(self):
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        field = DummyField(None, renderer=renderer)
+        field.default = 'default'
+        widget.serialize(field, None)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], 'default')
+
+    def test_serialize_not_None(self):
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer=renderer)
+        cstruct = 'abc'
+        widget.serialize(field, cstruct)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], cstruct)
+
+    def test_serialize_not_None_readonly(self):
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer=renderer)
+        cstruct = 'abc'
+        widget.serialize(field, cstruct, readonly=True)
+        self.assertEqual(renderer.template, widget.readonly_template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], cstruct)
+
+    def test_deserialize_None(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, None)
+        self.assertEqual(result, '')
+
 class TestHiddenWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import HiddenWidget

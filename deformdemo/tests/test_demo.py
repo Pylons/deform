@@ -311,8 +311,58 @@ class CheckedPasswordWidgetTests(unittest.TestCase):
             browser.get_attribute('css=#deformField1-confirm@type'),
             'password')
 
+class DateInputWidgetTests(unittest.TestCase):
+    url = '/dateinput/'
+    def test_render_default(self):
+        browser.open(self.url)
+        self.failUnless(browser.is_text_present("Date"))
+        self.assertEqual(browser.get_text('css=.req'), '*')
+        self.assertEqual(browser.get_text('css=#captured'), 'None')
+        self.assertEqual(browser.get_value('deformField1'), '2010-05-05')
+        self.failIf(browser.is_element_present('css=.errorMsgLbl'))
+
+    def test_submit_empty(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.type('deformField1', '')
+        browser.click("submit")
+        browser.wait_for_page_to_load("30000")
+        self.failUnless(browser.get_text('css=.errorMsgLbl'))
+        error_node = 'css=#error-deformField1'
+        self.assertEqual(browser.get_text(error_node), 'Required')
+        self.assertEqual(browser.get_text('css=#captured'), 'None')
+        self.failUnless(browser.is_element_present('css=.errorMsgLbl'))
+
+    def test_submit_tooearly(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.focus('css=#deformField1')
+        browser.click('css=#deformField1')
+        browser.click('link=4')
+        browser.click("submit")
+        browser.wait_for_page_to_load("30000")
+        self.failUnless(browser.get_text('css=.errorMsgLbl'))
+        error_node = 'css=#error-deformField1'
+        self.assertEqual(browser.get_text(error_node),
+                         '2010-05-04 is earlier than earliest date 2010-05-05')
+        self.assertEqual(browser.get_text('css=#captured'), 'None')
+        self.failUnless(browser.is_element_present('css=.errorMsgLbl'))
+
+    def test_submit_success(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.focus('css=#deformField1')
+        browser.click('css=#deformField1')
+        browser.click('link=6')
+        browser.click("submit")
+        browser.wait_for_page_to_load("30000")
+        self.failIf(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertEqual(browser.get_text('css=#captured'),
+                         "{'date': datetime.date(2010, 5, 6)}")
+        self.assertEqual(browser.get_value('deformField1'), '2010-05-06')
+
 class DatePartsWidgetTests(unittest.TestCase):
-    url = '/date/'
+    url = '/dateparts/'
     def test_render_default(self):
         browser.open(self.url)
         self.failUnless(browser.is_text_present("Date"))
@@ -379,7 +429,7 @@ class DatePartsWidgetTests(unittest.TestCase):
         self.failUnless(browser.get_text('css=.errorMsgLbl'))
         error_node = 'css=#error-deformField1'
         self.assertEqual(browser.get_text(error_node),
-                         '2010-01-01 is earlier than earliest date 2008-01-01')
+                         '2008-01-01 is earlier than earliest date 2010-01-01')
         self.assertEqual(browser.get_text('css=#captured'), 'None')
         self.assertEqual(browser.get_value('deformField1'), '2008')
         self.assertEqual(browser.get_value('deformField1-month'), '1')

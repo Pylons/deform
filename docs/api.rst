@@ -94,6 +94,9 @@ Widget-Related
 .. autoclass:: FileUploadWidget
    :members:
 
+.. autoclass:: DateInputWidget
+   :members:
+
 .. autoclass:: DatePartsWidget
    :members:
 

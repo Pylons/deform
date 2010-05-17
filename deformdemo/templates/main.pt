@@ -14,6 +14,7 @@
     <!-- CSS -->
     <link rel="stylesheet" href="${static}/css/form.css" type="text/css" />
     <link rel="stylesheet" href="${static}/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="${static}/css/dateinput.css" type="text/css" />
     <link rel="stylesheet" href="${app_url}/pygments.css" type="text/css" />
     <!-- JavaScript -->
     <script type="text/javascript"
@@ -24,6 +25,8 @@
             src="${static}/scripts/jquery.form.js"></script> 
     <script type="text/javascript"
             src="${static}/scripts/jquery.maskedinput-1.2.2.min.js"></script> 
+    <script type="text/javascript"
+            src="${static}/scripts/jquery.tools.min.js"></script> 
   </head>
   
   <body id="public">

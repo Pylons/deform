@@ -4,6 +4,10 @@ Changes
 Next release
 ------------
 
+- Add ``deform.widget.DateInputWidget`` widget, which is a date picker
+  widget.  This has now become the default widget for the
+  ``colander.Date`` schema type, preferred to the date parts widget.
+
 - Add text input mask capability to ``deform.widget.TextInputWidget``.
 
 - Add text input mask capability to

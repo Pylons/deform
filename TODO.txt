@@ -3,11 +3,19 @@ TODOs
 
 - [X] Error message translations.
 
-- [_] Add regex pattern-matching widgets.
+- [_] Progressive form validation (show validation errors as you
+      type).  This includes (supersedes) these previously top-level
+      TODO items:
 
-- [_] Add an e-mail widget.
+      - [_] Add regex pattern-matching widgets.
 
-- [_] Add Date, Time, and DateTime widget, with pickers.
+      - [_] Add an e-mail widget.
+
+- [X] Date widget with picker (see ``deform.widget.DateInputWidget``).
+
+- [_] Time widget with picker.
+
+- [_] DateTime widget with pickers.
 
 - [X] Add a single-select widget.
 
@@ -36,8 +44,6 @@ TODOs
 - [X] Make forms automagically put the cursor into the first field of a form.
 
 - [X] Readonly widget variants
-
-- [_] Progressive form validation (show validation errors as you type)
 
 - [X] Use case: require (email or phonenumber; see
       require_one_or_another in deformdemo).
