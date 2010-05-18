@@ -422,7 +422,7 @@ use to deal with the form validation must do a few things:
 - It must call the :meth:`deform.Form.validate` method with the list
   of form controls.
 
-- It must be willing to catch a :exc:`deform.ValidationError`
+- It must be willing to catch a :exc:`deform.ValidationFailure`
   exception and rerender the form if there were validation errors.
 
 For example, using the :term:`WebOb` API for the above tasks, and the
