@@ -13,8 +13,7 @@ class Form(field.Field):
 
     action
         The form action (inserted into the ``action`` attribute of
-        the form's form tag when rendered).  Default ``.`` (single
-        dot).
+        the form's form tag when rendered).  Default: the empty string.
 
     method
         The form method (inserted into the ``method`` attribute of
@@ -76,7 +75,7 @@ class Form(field.Field):
     keywords mean the same thing in the context of a Form as they do
     in the context of a Field.
     """
-    def __init__(self, schema, action='.', method='POST', buttons=(),
+    def __init__(self, schema, action='', method='POST', buttons=(),
                  formid='deform', use_ajax=False, ajax_options='{}', **kw):
         field.Field.__init__(self, schema, **kw)
         _buttons = []

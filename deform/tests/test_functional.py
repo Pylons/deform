@@ -39,7 +39,7 @@ class TestFunctional(unittest.TestCase):
         html = form.render()
         soup = self._soupify(html)
         form = soup.form
-        self.assertEqual(form['action'], '.')
+        self.assertEqual(form['action'], '')
         inputs = form.findAll('input')
         self.assertEqual(inputs[0]['name'], '_charset_')
         self.assertEqual(inputs[1]['name'], '__formid__')
@@ -74,7 +74,7 @@ class TestFunctional(unittest.TestCase):
         html = form.render(appstruct)
         soup = self._soupify(html)
         form = soup.form
-        self.assertEqual(form['action'], '.')
+        self.assertEqual(form['action'], '')
         inputs = form.findAll('input')
         self.assertEqual(inputs[0]['name'], '_charset_')
         self.assertEqual(inputs[1]['name'], '__formid__')

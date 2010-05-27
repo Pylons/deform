@@ -13,6 +13,9 @@ Next release
 - Add text input mask capability to
   ``deform.widget.CheckedInputWidget``.
 
+- Change default form action to the empty string (rather than ``.``).
+  Thanks to Kiran.
+
 0.2 (2010-05-13)
 ----------------
 
