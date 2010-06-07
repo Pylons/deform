@@ -212,7 +212,7 @@ class DateInputWidget(Widget):
         return field.renderer(template, field=field, cstruct=cstruct)
 
     def deserialize(self, field, pstruct):
-        if pstruct is default:
+        if pstruct in ('', default):
             return default
         return pstruct
 
