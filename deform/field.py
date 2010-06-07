@@ -50,9 +50,6 @@ class Field(object):
     required
         An alias for self.schema.required
 
-    default
-        An alias for self.schema.sdefault
-
     typ
         An alias for self.schema.typ
 
@@ -180,11 +177,6 @@ class Field(object):
             widget_maker = widget.TextInputWidget
         return widget_maker()
 
-    @decorator.reify
-    def default(self):
-        """ The serialized schema default """
-        return self.schema.sdefault
-
     @property
     def errormsg(self):
         """ Return the ``msg`` attribute of the ``error`` attached to
@@ -192,7 +184,18 @@ class Field(object):
         the return value will be ``None``."""
         return getattr(self.error, 'msg', None)
 
-    def render(self, appstruct=None, readonly=False):
+    def serialize(self, cstruct, readonly=False):
+        """ Serialize the cstruct into HTML.  If ``readonly`` is
+        ``True``, render a read-only rendering (no input fields)."""
+        if cstruct is colander.null:
+            cstruct = colander.default
+        return self.widget.serialize(self, cstruct=cstruct, readonly=readonly)
+
+    def deserialize(self, pstruct):
+        """ Deserialize the pstruct into a cstruct."""
+        return self.widget.deserialize(self, pstruct)
+
+    def render(self, appstruct=colander.default, readonly=False):
         """ Render the field (or form) to HTML using ``appstruct`` as
         a set of default values.  ``appstruct`` is typically a
         dictionary of application values matching the schema used by
@@ -210,10 +213,8 @@ class Field(object):
         :meth:`colander.SchemaNode.serialize` and
         :meth:`deform.widget.Widget.serialize` .
         """
-        if appstruct is None:
-            appstruct = {}
         cstruct = self.schema.serialize(appstruct)
-        return self.widget.serialize(self, cstruct, readonly=readonly)
+        return self.serialize(cstruct, readonly=readonly)
 
     def validate(self, controls):
         """
@@ -286,7 +287,7 @@ class Field(object):
         e = None
 
         try:
-            cstruct = self.widget.deserialize(self, pstruct)
+            cstruct = self.deserialize(pstruct)
         except colander.Invalid, e:
             # fill in errors raised by widgets
             self.widget.handle_error(self, e)
@@ -302,3 +303,11 @@ class Field(object):
             raise exception.ValidationFailure(self, cstruct, e)
 
         return appstruct
+
+    def __repr__(self):
+        return '<%s.%s object at %d (schemanode %r)>' % (
+            self.__module__,
+            self.__class__.__name__,
+            id(self),
+            self.schema.name,
+            )

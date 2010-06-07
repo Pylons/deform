@@ -53,7 +53,7 @@ class DeformDemo(object):
         self.request = request
         self.macros = get_template('templates/main.pt').macros
 
-    def render_form(self, form, appstruct=None, submitted='submit',
+    def render_form(self, form, appstruct=colander.default, submitted='submit',
                     success=None, readonly=False):
 
         captured = None
@@ -683,12 +683,10 @@ class DeformDemo(object):
     def require_one_or_another(self):
         class Schema(colander.Schema):
             one = colander.SchemaNode(
-                colander.String(),
-                default='',
+                colander.String(allow_empty=True),
                 title='One (required if Two is not supplied)')
             two = colander.SchemaNode(
-                colander.String(),
-                default='',
+                colander.String(allow_empty=True),
                 title='Two (required if One is not supplied)')
         def validator(form, value):
             if not value['one'] and not value['two']:

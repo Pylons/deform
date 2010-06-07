@@ -5,6 +5,7 @@ import StringIO
 import urllib
 
 from colander import Invalid
+from colander import default
 from deform.i18n import _
 
 class Widget(object):
@@ -72,7 +73,7 @@ class Widget(object):
     def __init__(self, **kw):
         self.__dict__.update(kw)
 
-    def serialize(self, field, cstruct=None, readonly=False):
+    def serialize(self, field, cstruct, readonly=False):
         """
         The ``serialize`` method of a widget must serialize a
         :term:`cstruct` value to an HTML rendering.  A :term:`cstruct`
@@ -88,7 +89,7 @@ class Widget(object):
         """
         raise NotImplementedError
 
-    def deserialize(self, field, pstruct=None):
+    def deserialize(self, field, pstruct):
         """
         The ``deserialize`` method of a widget must deserialize a
         :term:`pstruct` value to a :term:`cstruct` value and return the
@@ -165,17 +166,15 @@ class TextInputWidget(Widget):
     mask = None
     mask_placeholder = "_"
 
-    def serialize(self, field, cstruct=None, readonly=False):
-        if cstruct is None:
-            cstruct = field.default
-        if cstruct is None:
+    def serialize(self, field, cstruct, readonly=False):
+        if cstruct is default:
             cstruct = ''
         template = readonly and self.readonly_template or self.template
         return field.renderer(template, field=field, cstruct=cstruct)
 
     def deserialize(self, field, pstruct):
-        if pstruct is None:
-            pstruct = ''
+        if pstruct is default:
+            return default
         if self.strip:
             pstruct = pstruct.strip()
         return pstruct
@@ -206,17 +205,15 @@ class DateInputWidget(Widget):
     readonly_template = 'readonly/textinput'
     size = None
 
-    def serialize(self, field, cstruct=None, readonly=False):
-        if cstruct is None:
-            cstruct = field.default
-        if cstruct is None:
+    def serialize(self, field, cstruct, readonly=False):
+        if cstruct is default:
             cstruct = ''
         template = readonly and self.readonly_template or self.template
         return field.renderer(template, field=field, cstruct=cstruct)
 
     def deserialize(self, field, pstruct):
-        if pstruct is None:
-            pstruct = ''
+        if pstruct is default:
+            return default
         return pstruct
 
 class TextAreaWidget(TextInputWidget):
@@ -292,16 +289,14 @@ class HiddenWidget(Widget):
     template = 'hidden'
     hidden = True
 
-    def serialize(self, field, cstruct=None, readonly=False):
-        if cstruct is None:
-            cstruct = field.default
-        if cstruct is None:
+    def serialize(self, field, cstruct, readonly=False):
+        if cstruct is default:
             cstruct = ''
         return field.renderer(self.template, field=field, cstruct=cstruct)
 
     def deserialize(self, field, pstruct):
-        if pstruct is None:
-            pstruct = ''
+        if pstruct is default:
+            return default
         return pstruct
 
 class CheckboxWidget(Widget):
@@ -333,15 +328,15 @@ class CheckboxWidget(Widget):
     template = 'checkbox'
     readonly_template = 'readonly/checkbox'
 
-    def serialize(self, field, cstruct=None, readonly=False):
-        if cstruct is None:
-            cstruct = field.default
+    def serialize(self, field, cstruct, readonly=False):
+        if cstruct is default:
+            cstruct = self.false_val
         template = readonly and self.readonly_template or self.template
         return field.renderer(template, field=field, cstruct=cstruct)
 
     def deserialize(self, field, pstruct):
-        if pstruct is None:
-            pstruct = self.false_val
+        if pstruct is default:
+            return self.false_val
         return (pstruct == self.true_val) and self.true_val or self.false_val
 
 class SelectWidget(Widget):
@@ -364,20 +359,22 @@ class SelectWidget(Widget):
     readonly_template
         The template name used to render the widget in read-only mode.
         Default: ``readonly/select``.
+
     """
     template = 'select'
     readonly_template = 'readonly/select'
+    null_value = ''
     values = ()
 
-    def serialize(self, field, cstruct=None, readonly=False):
-        if cstruct is None:
-            cstruct = field.default
+    def serialize(self, field, cstruct, readonly=False):
+        if cstruct is default:
+            cstruct = self.null_value
         template = readonly and self.readonly_template or self.template
         return field.renderer(template, field=field, cstruct=cstruct)
 
     def deserialize(self, field, pstruct):
-        if pstruct is None:
-            pstruct = ''
+        if pstruct is default:
+            return default
         return pstruct
 
 class RadioChoiceWidget(SelectWidget):
@@ -401,6 +398,11 @@ class RadioChoiceWidget(SelectWidget):
     readonly_template
         The template name used to render the widget in read-only mode.
         Default: ``readonly/radio_choice``.
+
+    null_value
+        The value used to replace the ``colander.null`` value when it
+        is passed to the ``serialize`` or ``deserialize`` method.
+        Default: the empty string.
     """
     template = 'radio_choice'
     readonly_template = 'readonly/radio_choice'
@@ -426,23 +428,26 @@ class CheckboxChoiceWidget(Widget):
     readonly_template
         The template name used to render the widget in read-only mode.
         Default: ``readonly/checkbox_choice``.
+
+    null_value
+        The value used to replace the ``colander.null`` value when it
+        is passed to the ``serialize`` or ``deserialize`` method.
+        Default: the empty string.
     """
     template = 'checkbox_choice'
     readonly_template = 'readonly/checkbox_choice'
     values = ()
 
 
-    def serialize(self, field, cstruct=None, readonly=False):
-        if cstruct is None:
-            cstruct = field.default
-        if cstruct is None:
+    def serialize(self, field, cstruct, readonly=False):
+        if cstruct is default:
             cstruct = ()
         template = readonly and self.readonly_template or self.template
         return field.renderer(template, field=field, cstruct=cstruct)
 
     def deserialize(self, field, pstruct):
-        if pstruct is None:
-            pstruct = ()
+        if pstruct is default:
+            return default
         if isinstance(pstruct, basestring):
             return (pstruct,)
         return tuple(pstruct)
@@ -506,10 +511,8 @@ class CheckedInputWidget(Widget):
     mask = None
     mask_placeholder = "_"
 
-    def serialize(self, field, cstruct=None, readonly=False):
-        if cstruct is None:
-            cstruct = field.default
-        if cstruct is None:
+    def serialize(self, field, cstruct, readonly=False):
+        if cstruct is default:
             cstruct = ''
         confirm = getattr(field, 'confirm', '')
         template = readonly and self.readonly_template or self.template
@@ -519,8 +522,8 @@ class CheckedInputWidget(Widget):
                               )
 
     def deserialize(self, field, pstruct):
-        if pstruct is None:
-            pstruct = {}
+        if pstruct is default:
+            return default
         value = pstruct.get('value') or ''
         confirm = pstruct.get('confirm') or ''
         field.confirm = confirm
@@ -582,24 +585,25 @@ class MappingWidget(Widget):
     error_class = None
     category = 'structural'
 
-    def serialize(self, field, cstruct=None, readonly=False):
-        if cstruct is None:
+    def serialize(self, field, cstruct, readonly=False):
+        if cstruct is default:
             cstruct = {}
         template = readonly and self.readonly_template or self.template
-        return field.renderer(template, field=field, cstruct=cstruct)
+        return field.renderer(template, field=field, cstruct=cstruct,
+                              default=default)
 
     def deserialize(self, field, pstruct):
         error = None
         result = {}
 
-        if pstruct is None:
+        if pstruct is default:
             pstruct = {}
 
         for num, subfield in enumerate(field.children):
             name = subfield.name
-            subval = pstruct.get(name)
+            subval = pstruct.get(name, default)
             try:
-                result[name] = subfield.widget.deserialize(subfield, subval)
+                result[name] = subfield.deserialize(subval)
             except Invalid, e:
                 result[name] = e.value
                 if error is None:
@@ -696,16 +700,16 @@ class SequenceWidget(Widget):
         # automated testing; finding last node)
         item_field = field.children[0].clone()
         proto = field.renderer(self.item_template, field=item_field,
-                               cstruct=None, parent=field)
+                               cstruct=default, parent=field)
         if isinstance(proto, unicode):
             proto = proto.encode('utf-8')
         proto = urllib.quote(proto)
         return proto
 
-    def serialize(self, field, cstruct=None, readonly=False):
-        if cstruct is None:
+    def serialize(self, field, cstruct, readonly=False):
+        if cstruct is default:
             if self.render_initial_item:
-                cstruct = [None]
+                cstruct = [default]
             else:
                 cstruct = []
 
@@ -737,7 +741,7 @@ class SequenceWidget(Widget):
         result = []
         error = None
 
-        if pstruct is None:
+        if pstruct is default:
             pstruct = []
 
         field.sequence_fields = []
@@ -746,7 +750,7 @@ class SequenceWidget(Widget):
         for num, substruct in enumerate(pstruct):
             subfield = item_field.clone()
             try:
-                subval = subfield.widget.deserialize(subfield, substruct)
+                subval = subfield.deserialize(substruct)
             except Invalid, e:
                 subval = e.value
                 if error is None:
@@ -810,10 +814,8 @@ class FileUploadWidget(Widget):
         return ''.join(
             [random.choice(string.uppercase+string.digits) for i in range(10)])
 
-    def serialize(self, field, cstruct=None, readonly=False):
-        if cstruct is None:
-            cstruct = field.default
-        if cstruct is None:
+    def serialize(self, field, cstruct, readonly=False):
+        if cstruct is default:
             cstruct = {}
         if cstruct:
             uid = cstruct['uid']
@@ -824,6 +826,9 @@ class FileUploadWidget(Widget):
         return field.renderer(template, field=field, cstruct=cstruct)
 
     def deserialize(self, field, pstruct):
+        if pstruct is default:
+            return default
+
         upload = pstruct.get('upload')
         uid = pstruct.get('uid')
 
@@ -852,13 +857,13 @@ class FileUploadWidget(Widget):
             # the upload control had no file selected
             if uid is None:
                 # no previous file exists
-                return None
+                return default
             else:
                 # a previous file should exist
                 data = self.tmpstore.get(uid)
                 # but if it doesn't, don't blow up
                 if data is None:
-                    return None
+                    return default
 
         return data
 
@@ -898,10 +903,8 @@ class DatePartsWidget(Widget):
     size = None
     assume_y2k = True
 
-    def serialize(self, field, cstruct=None, readonly=False):
-        if cstruct is None:
-            cstruct = field.default
-        if cstruct is None:
+    def serialize(self, field, cstruct, readonly=False):
+        if cstruct is default:
             year = ''
             month = ''
             day = ''
@@ -912,8 +915,8 @@ class DatePartsWidget(Widget):
                               year=year, month=month, day=day)
 
     def deserialize(self, field, pstruct):
-        if pstruct is None:
-            return ''
+        if pstruct is default:
+            return default
         else:
             if self.assume_y2k:
                 year = pstruct['year']
@@ -956,10 +959,8 @@ class TextAreaCSVWidget(Widget):
     cols = None
     rows = None
 
-    def serialize(self, field, cstruct=None, readonly=False):
-        if cstruct is None:
-            cstruct = field.default
-        if cstruct is None:
+    def serialize(self, field, cstruct, readonly=False):
+        if cstruct is default:
             cstruct = []
         textrows = getattr(field, 'unparseable', None)
         if textrows is None:
@@ -974,11 +975,10 @@ class TextAreaCSVWidget(Widget):
         return field.renderer(template, field=field, cstruct=textrows)
         
     def deserialize(self, field, pstruct):
-        if pstruct is None:
-            pstruct = ''
-        if not pstruct.strip() and field.schema.required:
-            # prevent
-            raise Invalid(field.schema, 'Required', [])
+        if pstruct is default:
+            return default
+        if not pstruct.strip():
+            return default
         try:
             infile = StringIO.StringIO(pstruct)
             reader = csv.reader(infile)

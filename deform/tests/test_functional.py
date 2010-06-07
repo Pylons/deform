@@ -19,7 +19,7 @@ class TestFunctional(unittest.TestCase):
         class MySchema(MappingSchema):
             name = SchemaNode(String())
             title = SchemaNode(String())
-            cool = SchemaNode(Boolean(), default=True)
+            cool = SchemaNode(Boolean(), default=True, missing=True)
             series = SeriesSchema()
 
         schema = MySchema()
@@ -120,6 +120,7 @@ class TestFunctional(unittest.TestCase):
 
     def test_validate(self):
         from deform.exception import ValidationFailure
+        from colander import default
         schema = self._makeSchema()
         form = self._makeForm(schema)
         try:
@@ -134,8 +135,13 @@ class TestFunctional(unittest.TestCase):
                          e.children[2].children[0])
         self.assertEqual(
             ve.cstruct,
-            {'series': {'dates': [], 'name': ''}, 'cool': 'false', 'name': '',
-             'title': ''})
+            {
+                'series': {'dates': [], 'name': default},
+                'cool': 'false',
+                'name': default,
+                'title': default
+             }
+            )
         
         
         

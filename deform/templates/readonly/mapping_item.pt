@@ -7,6 +7,6 @@
          title="${field.description}"
          >${field.title}</p>
   <span tal:replace="structure
-            field.widget.serialize(field, cstruct, readonly=True)"/>
+            field.serialize(cstruct, readonly=True)"/>
   <!-- /mapping_item -->
 </li>
