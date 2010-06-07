@@ -683,10 +683,12 @@ class DeformDemo(object):
     def require_one_or_another(self):
         class Schema(colander.Schema):
             one = colander.SchemaNode(
-                colander.String(allow_empty=True),
+                colander.String(),
+                missing='',
                 title='One (required if Two is not supplied)')
             two = colander.SchemaNode(
-                colander.String(allow_empty=True),
+                colander.String(),
+                missing='',
                 title='Two (required if One is not supplied)')
         def validator(form, value):
             if not value['one'] and not value['two']:
@@ -823,10 +825,8 @@ class SequenceToTextWidgetAdapter(object):
     def __getattr__(self, name):
         return getattr(self.widget, name)
 
-    def serialize(self, field, cstruct=None, readonly=False):
-        if cstruct is None:
-            cstruct = field.default
-        if cstruct is None:
+    def serialize(self, field, cstruct, readonly=False):
+        if cstruct is colander.default:
             cstruct = []
         textrows = getattr(field, 'unparseable', None)
         if textrows is None:
@@ -839,9 +839,10 @@ class SequenceToTextWidgetAdapter(object):
 
     def deserialize(self, field, pstruct):
         text = self.widget.deserialize(field, pstruct)
-        if not text.strip() and field.schema.required:
-            # prevent
-            raise colander.Invalid(field.schema, 'Required', [])
+        if text is colander.default:
+            return colander.default
+        if not text.strip():
+            return colander.default
         try:
             infile = StringIO.StringIO(text)
             reader = csv.reader(infile)

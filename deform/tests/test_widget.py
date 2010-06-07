@@ -107,6 +107,14 @@ class TestTextInputWidget(unittest.TestCase):
         result = widget.deserialize(field, default)
         self.assertEqual(result, default)
 
+    def test_deserialize_emptystring(self):
+        from colander import default
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = ''
+        result = widget.deserialize(field, pstruct)
+        self.assertEqual(result, default)
+
 class TestDateInputWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import DateInputWidget

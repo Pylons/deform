@@ -177,6 +177,8 @@ class TextInputWidget(Widget):
             return default
         if self.strip:
             pstruct = pstruct.strip()
+        if not pstruct:
+            return default
         return pstruct
 
 class DateInputWidget(Widget):
