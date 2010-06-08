@@ -393,6 +393,13 @@ class TestSelectWidget(unittest.TestCase):
         result = widget.deserialize(field, default)
         self.assertEqual(result, default)
 
+    def test_deserialize_null_value(self):
+        from colander import default
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, '')
+        self.assertEqual(result, default)
+
     def test_deserialize_other(self):
         widget = self._makeOne()
         field = DummyField()

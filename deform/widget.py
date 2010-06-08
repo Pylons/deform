@@ -354,6 +354,12 @@ class SelectWidget(Widget):
         returned when the form is posted.  The second is the display
         value.
 
+    null_value
+        The value which represents the null value.  When the null
+        value is encountered during serialization, the
+        :attr:`colander.default` sentinel is returned to the caller.
+        Default: ``''`` (the empty string).
+
     template
         The template name used to render the widget.  Default:
         ``select``.
@@ -375,7 +381,7 @@ class SelectWidget(Widget):
         return field.renderer(template, field=field, cstruct=cstruct)
 
     def deserialize(self, field, pstruct):
-        if pstruct is default:
+        if pstruct in (default, self.null_value):
             return default
         return pstruct
 
