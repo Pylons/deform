@@ -81,14 +81,13 @@ get defined as so:
    :linenos:
 
     from deform.widget import Widget
+    from colander import null
     import cgi
 
     class MyInputWidget(Widget):
         def serialize(self, field, cstruct=None, readonly=False):
-            if cstruct is None:
-                cstruct = field.default
-            if cstruct is None:
-                cstruct = ''
+            if cstruct is null:
+                cstruct = u''
             quoted = cgi.escape(cstruct, quote='"')
             return u'<input type="text" value="%s">' % quoted
 
@@ -96,24 +95,18 @@ Note that every ``serialize`` method is responsible for returning a
 serialization, no matter whether it is provided data by its caller or
 not.  Usually, the value of ``cstruct`` will contain appropriate data
 that can be used directly by the widget's rendering logic.  But
-sometimes it will be ``None``.  It will be ``None`` when a form which
-uses this widget is serialized without any data; for example an "add
-form".
+sometimes it will be ``colander.null``.  It will be ``colander.null``
+when a form which uses this widget is serialized without any data; for
+example an "add form".
 
 All widgets *must* check if the value passed as ``cstruct`` is
-``None`` during ``serialize``.  Widgets are responsible for handling
-this eventuality, often by attempting to use the value of
-``field.default``, which will be the default value of the
-:term:`schema node` related to this widget, if any.  If ``cstruct`` is
-``None`` and ``field.default`` is *also* ``None``, it means the field
-has no default value (it is a "required" field).  In this case, the
-widget is responsible for providing a suitable default value for
-``cstruct`` itself.  
+``colander.null`` during ``serialize``.  Widgets are responsible for
+handling this eventuality, often by serializing a logically "empty"
+value.
 
 Regardless of how the widget attempts to compute the default value, it
-must still be able to return a rendering when ``cstruct`` is ``None``
-and ``field.default`` is ``None``.  In the example case above, if both
-``cstruct`` and ``field.default`` are ``None``, the widget uses the
+must still be able to return a rendering when ``cstruct`` is
+``colander.null``.  In the example case above, the widget uses the
 empty string as the ``cstruct`` value, which is appropriate for this
 type of "scalar" input widget; for a more "structural" kind of widget
 the default might be something else like an empty dictionary or list.
@@ -161,15 +154,17 @@ attached.
    :linenos:
 
     from deform.widget import Widget
+    from colander import null
+    from colander import default
     import cgi
 
     class MyInputWidget(Widget):
         def serialize(self, field, cstruct=None, readonly=False):
-            if cstruct is None:
-                cstruct = field.default
-            if cstruct is None:
-                cstruct = ''
+            if cstruct is null:
+                cstruct = u''
             return '<input type="text" value="%s">' % cgi.escape(cstruct)
 
         def deserialize(self, field, pstruct=None):
-            ...
+            if cstruct is null:
+                return default
+

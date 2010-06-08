@@ -4,8 +4,10 @@ import string
 import StringIO
 import urllib
 
-from colander import Invalid
 from colander import default
+from colander import Invalid
+from colander import null
+
 from deform.i18n import _
 
 class Widget(object):
@@ -167,13 +169,13 @@ class TextInputWidget(Widget):
     mask_placeholder = "_"
 
     def serialize(self, field, cstruct, readonly=False):
-        if cstruct is default:
+        if cstruct is null:
             cstruct = ''
         template = readonly and self.readonly_template or self.template
         return field.renderer(template, field=field, cstruct=cstruct)
 
     def deserialize(self, field, pstruct):
-        if pstruct is default:
+        if pstruct is null:
             return default
         if self.strip:
             pstruct = pstruct.strip()
@@ -208,13 +210,13 @@ class DateInputWidget(Widget):
     size = None
 
     def serialize(self, field, cstruct, readonly=False):
-        if cstruct is default:
+        if cstruct is null:
             cstruct = ''
         template = readonly and self.readonly_template or self.template
         return field.renderer(template, field=field, cstruct=cstruct)
 
     def deserialize(self, field, pstruct):
-        if pstruct in ('', default):
+        if pstruct in ('', null):
             return default
         return pstruct
 
@@ -292,12 +294,12 @@ class HiddenWidget(Widget):
     hidden = True
 
     def serialize(self, field, cstruct, readonly=False):
-        if cstruct is default:
+        if cstruct is null:
             cstruct = ''
         return field.renderer(self.template, field=field, cstruct=cstruct)
 
     def deserialize(self, field, pstruct):
-        if pstruct is default:
+        if pstruct is null:
             return default
         return pstruct
 
@@ -331,13 +333,13 @@ class CheckboxWidget(Widget):
     readonly_template = 'readonly/checkbox'
 
     def serialize(self, field, cstruct, readonly=False):
-        if cstruct is default:
+        if cstruct is null:
             cstruct = self.false_val
         template = readonly and self.readonly_template or self.template
         return field.renderer(template, field=field, cstruct=cstruct)
 
     def deserialize(self, field, pstruct):
-        if pstruct is default:
+        if pstruct is null:
             return self.false_val
         return (pstruct == self.true_val) and self.true_val or self.false_val
 
@@ -375,13 +377,13 @@ class SelectWidget(Widget):
     values = ()
 
     def serialize(self, field, cstruct, readonly=False):
-        if cstruct is default:
+        if cstruct is null:
             cstruct = self.null_value
         template = readonly and self.readonly_template or self.template
         return field.renderer(template, field=field, cstruct=cstruct)
 
     def deserialize(self, field, pstruct):
-        if pstruct in (default, self.null_value):
+        if pstruct in (null, self.null_value):
             return default
         return pstruct
 
@@ -448,13 +450,13 @@ class CheckboxChoiceWidget(Widget):
 
 
     def serialize(self, field, cstruct, readonly=False):
-        if cstruct is default:
+        if cstruct is null:
             cstruct = ()
         template = readonly and self.readonly_template or self.template
         return field.renderer(template, field=field, cstruct=cstruct)
 
     def deserialize(self, field, pstruct):
-        if pstruct is default:
+        if pstruct is null:
             return default
         if isinstance(pstruct, basestring):
             return (pstruct,)
@@ -520,7 +522,7 @@ class CheckedInputWidget(Widget):
     mask_placeholder = "_"
 
     def serialize(self, field, cstruct, readonly=False):
-        if cstruct is default:
+        if cstruct is null:
             cstruct = ''
         confirm = getattr(field, 'confirm', '')
         template = readonly and self.readonly_template or self.template
@@ -530,7 +532,7 @@ class CheckedInputWidget(Widget):
                               )
 
     def deserialize(self, field, pstruct):
-        if pstruct is default:
+        if pstruct is null:
             return default
         value = pstruct.get('value') or ''
         confirm = pstruct.get('confirm') or ''
@@ -594,22 +596,22 @@ class MappingWidget(Widget):
     category = 'structural'
 
     def serialize(self, field, cstruct, readonly=False):
-        if cstruct is default:
+        if cstruct is null:
             cstruct = {}
         template = readonly and self.readonly_template or self.template
         return field.renderer(template, field=field, cstruct=cstruct,
-                              default=default)
+                              null=null)
 
     def deserialize(self, field, pstruct):
         error = None
         result = {}
 
-        if pstruct is default:
+        if pstruct is null:
             pstruct = {}
 
         for num, subfield in enumerate(field.children):
             name = subfield.name
-            subval = pstruct.get(name, default)
+            subval = pstruct.get(name, null)
             try:
                 result[name] = subfield.deserialize(subval)
             except Invalid, e:
@@ -708,16 +710,16 @@ class SequenceWidget(Widget):
         # automated testing; finding last node)
         item_field = field.children[0].clone()
         proto = field.renderer(self.item_template, field=item_field,
-                               cstruct=default, parent=field)
+                               cstruct=null, parent=field)
         if isinstance(proto, unicode):
             proto = proto.encode('utf-8')
         proto = urllib.quote(proto)
         return proto
 
     def serialize(self, field, cstruct, readonly=False):
-        if cstruct is default:
+        if cstruct is null:
             if self.render_initial_item:
-                cstruct = [default]
+                cstruct = [null]
             else:
                 cstruct = []
 
@@ -749,7 +751,7 @@ class SequenceWidget(Widget):
         result = []
         error = None
 
-        if pstruct is default:
+        if pstruct is null:
             pstruct = []
 
         field.sequence_fields = []
@@ -823,7 +825,7 @@ class FileUploadWidget(Widget):
             [random.choice(string.uppercase+string.digits) for i in range(10)])
 
     def serialize(self, field, cstruct, readonly=False):
-        if cstruct is default:
+        if cstruct is null:
             cstruct = {}
         if cstruct:
             uid = cstruct['uid']
@@ -834,7 +836,7 @@ class FileUploadWidget(Widget):
         return field.renderer(template, field=field, cstruct=cstruct)
 
     def deserialize(self, field, pstruct):
-        if pstruct is default:
+        if pstruct is null:
             return default
 
         upload = pstruct.get('upload')
@@ -912,7 +914,7 @@ class DatePartsWidget(Widget):
     assume_y2k = True
 
     def serialize(self, field, cstruct, readonly=False):
-        if cstruct is default:
+        if cstruct is null:
             year = ''
             month = ''
             day = ''
@@ -923,7 +925,7 @@ class DatePartsWidget(Widget):
                               year=year, month=month, day=day)
 
     def deserialize(self, field, pstruct):
-        if pstruct is default:
+        if pstruct is null:
             return default
         else:
             if self.assume_y2k:
@@ -968,7 +970,7 @@ class TextAreaCSVWidget(Widget):
     rows = None
 
     def serialize(self, field, cstruct, readonly=False):
-        if cstruct is default:
+        if cstruct is null:
             cstruct = []
         textrows = getattr(field, 'unparseable', None)
         if textrows is None:
@@ -983,7 +985,7 @@ class TextAreaCSVWidget(Widget):
         return field.renderer(template, field=field, cstruct=textrows)
         
     def deserialize(self, field, pstruct):
-        if pstruct is default:
+        if pstruct is null:
             return default
         if not pstruct.strip():
             return default

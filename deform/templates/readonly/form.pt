@@ -15,6 +15,6 @@
                   tmpl field.widget.readonly_item_template"
       tal:repeat="f field.children"
       tal:replace="structure 
-                  rndr(tmpl,field=f,cstruct=cstruct.get(f.name, default))"/>
+                  rndr(tmpl,field=f,cstruct=cstruct.get(f.name, null))"/>
   
 </div>

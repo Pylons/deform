@@ -187,8 +187,8 @@ class Field(object):
     def serialize(self, cstruct, readonly=False):
         """ Serialize the cstruct into HTML.  If ``readonly`` is
         ``True``, render a read-only rendering (no input fields)."""
-        if cstruct is colander.null:
-            cstruct = colander.default
+        if cstruct is colander.default:
+            cstruct = colander.null
         return self.widget.serialize(self, cstruct=cstruct, readonly=readonly)
 
     def deserialize(self, pstruct):

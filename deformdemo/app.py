@@ -826,7 +826,7 @@ class SequenceToTextWidgetAdapter(object):
         return getattr(self.widget, name)
 
     def serialize(self, field, cstruct, readonly=False):
-        if cstruct is colander.default:
+        if cstruct is colander.null:
             cstruct = []
         textrows = getattr(field, 'unparseable', None)
         if textrows is None:
@@ -839,8 +839,8 @@ class SequenceToTextWidgetAdapter(object):
 
     def deserialize(self, field, pstruct):
         text = self.widget.deserialize(field, pstruct)
-        if text is colander.default:
-            return colander.default
+        if text in (colander.null, colander.default):
+            return text
         if not text.strip():
             return colander.default
         try:

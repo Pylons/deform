@@ -14,7 +14,7 @@
        tal:define="rndr field.renderer;
                    tmpl field.widget.item_template"
        tal:repeat="f field.children"
-       tal:replace="structure rndr(tmpl,field=f,cstruct=cstruct.get(f.name, default))"/>
+       tal:replace="structure rndr(tmpl,field=f,cstruct=cstruct.get(f.name,null))"/>
     <input type="hidden" name="__end__" value="${field.name}:mapping"/>
   </ul>
   <!-- /mapping -->

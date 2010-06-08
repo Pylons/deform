@@ -16,6 +16,11 @@ Next release
 - Change default form action to the empty string (rather than ``.``).
   Thanks to Kiran.
 
+- Custom widgets must now check for ``colander.null`` rather than
+  ``None`` as the null sentinel value.
+
+- Dependency on a new (default_overhaul) version of Colander.
+
 0.2 (2010-05-13)
 ----------------
 
