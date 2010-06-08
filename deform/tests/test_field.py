@@ -212,6 +212,30 @@ class TestField(unittest.TestCase):
         self.assertEqual(field.render('abc', readonly=True), 'abc')
         self.assertEqual(widget.rendered, 'readonly')
 
+    def test_serialize(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        widget = field.widget = DummyWidget()
+        self.assertEqual(field.serialize('abc'), 'abc')
+        self.assertEqual(widget.rendered, 'writable')
+
+    def test_serialize_default(self):
+        from colander import default
+        from colander import null
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        widget = field.widget = DummyWidget()
+        self.assertEqual(field.serialize(default), null)
+        self.assertEqual(widget.rendered, 'writable')
+
+    def test_deserialize(self):
+        cstruct = {'name':'Name', 'title':'Title'}
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        field.widget = DummyWidget()
+        result = field.deserialize(cstruct)
+        self.assertEqual(result, {'name':'Name', 'title':'Title'})
+
     def test___repr__(self):
         schema = DummySchema()
         field = self._makeOne(schema)

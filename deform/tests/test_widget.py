@@ -524,6 +524,15 @@ class TestCheckedInputWidget(unittest.TestCase):
         result = widget.deserialize(field, null)
         self.assertEqual(result, default)
 
+    def test_deserialize_empty(self):
+        from colander import default
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, {'value':'',
+                                            'confirm':''})
+        self.assertEqual(result, default)
+        self.assertEqual(field.error, None)
+
     def test_deserialize_nonmatching(self):
         widget = self._makeOne()
         field = DummyField()

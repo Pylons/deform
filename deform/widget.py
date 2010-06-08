@@ -537,8 +537,10 @@ class CheckedInputWidget(Widget):
         value = pstruct.get('value') or ''
         confirm = pstruct.get('confirm') or ''
         field.confirm = confirm
-        if value != confirm:
+        if (value or confirm) and (value != confirm):
             raise Invalid(field.schema, self.mismatch_message, value)
+        if not value:
+            return default
         return value
 
 class CheckedPasswordWidget(CheckedInputWidget):
