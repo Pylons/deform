@@ -159,12 +159,25 @@ attached.
     import cgi
 
     class MyInputWidget(Widget):
-        def serialize(self, field, cstruct=None, readonly=False):
+        def serialize(self, field, cstruct, readonly=False):
             if cstruct is null:
                 cstruct = u''
             return '<input type="text" value="%s">' % cgi.escape(cstruct)
 
-        def deserialize(self, field, pstruct=None):
+        def deserialize(self, field, pstruct):
             if cstruct is null:
                 return default
+            return pstruct
+
+Note that both the deserialize method of a widget must also deal with
+the ``colander.null`` value (usually by returning `colander.default``,
+which signifies to the schema that the default value should be used if
+it exists).  ``colander.null`` will be passed to the widget when a
+value is missing from the pstruct.
+
+The only other real constraint of the deserialize method is that the
+``serialize`` method must be able to reserialize the return value of
+``deserialize``.  One caveat exists: if ``deserialize`` returns
+``colander.default``, the ``serialize`` method needn't deal with it
+explicitly; it's handled at a higher level.
 

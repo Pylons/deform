@@ -206,20 +206,10 @@ attribute to the exception constructor.  For example:
 .. code-block:: python
    :linenos:
 
-    def deserialize(self, field, pstruct):
-        if pstruct is None:
-            pstruct = {}
-        value = pstruct.get('value') or ''
-        confirm = pstruct.get('confirm') or ''
-        field.confirm = confirm
-        if value != confirm:
-            raise Invalid(field.schema, self.mismatch_message, value)
-        return value
+    import colander
 
-    def serialize(self, field, cstruct=None, readonly=False):
-        if cstruct is None:
-            cstruct = field.default
-        if cstruct is None:
+    def serialize(self, field, cstruct, readonly=False):
+        if cstruct is colander.null:
             cstruct = ''
         confirm = getattr(field, 'confirm', '')
         template = readonly and self.readonly_template or self.template
@@ -228,6 +218,15 @@ attribute to the exception constructor.  For example:
                               confirm_subject=self.confirm_subject,
                               )
 
+    def deserialize(self, field, pstruct):
+        if pstruct is colander.null:
+            return colander.default
+        value = pstruct.get('value') or ''
+        confirm = pstruct.get('confirm') or ''
+        field.confirm = confirm
+        if value != confirm:
+            raise Invalid(field.schema, self.mismatch_message, value)
+        return value
 
 The schema type associated with this widget is expecting a single
 string as its cstruct.  The ``value`` passed to the exception

@@ -127,10 +127,11 @@ Schema Node Objects
    <http://docs.repoze.org/colander>`_
 
 A schema is composed of one or more *schema node* objects, each
-typically of the class :class:`colander.SchemaNode`, usually in a nested
-arrangement.  Each schema node object has a required *type*, an
-optional *validator*, an optional *default*, an optional *title*, an
-optional *description*, and a slightly less optional *name*.
+typically of the class :class:`colander.SchemaNode`, usually in a
+nested arrangement.  Each schema node object has a required *type*, an
+optional *validator*, an optional *default*, an optional *missing*, an
+optional *title*, an optional *description*, and a slightly less
+optional *name*.
 
 The *type* of a schema node indicates its data type (such as
 :class:`colander.Int` or :class:`colander.String`).
@@ -141,11 +142,17 @@ such a validator is provided in the schema above:
 ``validator=colander.Range(0, 200)``.  A validator is not called after
 schema node serialization, only after node deserialization.
 
-The *default* of a schema node indicates its default value if a value
-for the schema node is not found in the input data during
-serialization.  It should be the *deserialized* representation.  If a
-schema node does not have a default, it is considered a required
-schema node.
+The *default* of a schema node indicates the value to be serialized if
+a value for the schema node is not found in the input data during
+serialization.  It should be the deserialized representation.  If a
+schema node does not have a default, it is considered "serialization
+required".
+
+The *missing* of a schema node indicates the value to be deserialized
+if a value for the schema node is not found in the input data during
+deserialization.  It should be the deserialized representation.  If a
+schema node does not have a default, it is considered "deserialization
+required".
 
 The *name* of a schema node is used to relate schema nodes to each
 other.  It is also used as the title if a title is not provided.
