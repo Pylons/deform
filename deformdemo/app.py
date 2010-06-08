@@ -684,11 +684,11 @@ class DeformDemo(object):
         class Schema(colander.Schema):
             one = colander.SchemaNode(
                 colander.String(),
-                missing='',
+                missing=u'',
                 title='One (required if Two is not supplied)')
             two = colander.SchemaNode(
                 colander.String(),
-                missing='',
+                missing=u'',
                 title='Two (required if One is not supplied)')
         def validator(form, value):
             if not value['one'] and not value['two']:
