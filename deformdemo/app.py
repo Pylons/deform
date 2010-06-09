@@ -53,7 +53,7 @@ class DeformDemo(object):
         self.request = request
         self.macros = get_template('templates/main.pt').macros
 
-    def render_form(self, form, appstruct=colander.default, submitted='submit',
+    def render_form(self, form, appstruct=colander.null, submitted='submit',
                     success=None, readonly=False):
 
         captured = None
@@ -555,6 +555,22 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
+    @bfg_view(renderer='templates/form.pt', name='nonrequiredfields')
+    @demonstrate('Non-Required Fields')
+    def nonrequiredfields(self):
+        class Schema(colander.Schema):
+            required = colander.SchemaNode(
+                colander.String(),
+                description='Required Field'
+                )
+            notrequired = colander.SchemaNode(
+                colander.String(),
+                missing=u'',
+                description='Unrequired Field')
+        schema = Schema()
+        form = deform.Form(schema, buttons=('submit',))
+        return self.render_form(form)
+
     @bfg_view(renderer='templates/form.pt', name='unicodeeverywhere')
     @demonstrate('Unicode Everywhere')
     def unicodeeverywhere(self):
@@ -839,10 +855,10 @@ class SequenceToTextWidgetAdapter(object):
 
     def deserialize(self, field, pstruct):
         text = self.widget.deserialize(field, pstruct)
-        if text in (colander.null, colander.default):
+        if text is colander.null:
             return text
         if not text.strip():
-            return colander.default
+            return colander.null
         try:
             infile = StringIO.StringIO(text)
             reader = csv.reader(infile)

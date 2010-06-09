@@ -220,7 +220,7 @@ attribute to the exception constructor.  For example:
 
     def deserialize(self, field, pstruct):
         if pstruct is colander.null:
-            return colander.default
+            return colander.null
         value = pstruct.get('value') or ''
         confirm = pstruct.get('confirm') or ''
         field.confirm = confirm

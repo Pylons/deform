@@ -187,15 +187,13 @@ class Field(object):
     def serialize(self, cstruct, readonly=False):
         """ Serialize the cstruct into HTML.  If ``readonly`` is
         ``True``, render a read-only rendering (no input fields)."""
-        if cstruct is colander.default:
-            cstruct = colander.null
         return self.widget.serialize(self, cstruct=cstruct, readonly=readonly)
 
     def deserialize(self, pstruct):
         """ Deserialize the pstruct into a cstruct."""
         return self.widget.deserialize(self, pstruct)
 
-    def render(self, appstruct=colander.default, readonly=False):
+    def render(self, appstruct=colander.null, readonly=False):
         """ Render the field (or form) to HTML using ``appstruct`` as
         a set of default values.  ``appstruct`` is typically a
         dictionary of application values matching the schema used by

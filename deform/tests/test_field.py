@@ -219,13 +219,12 @@ class TestField(unittest.TestCase):
         self.assertEqual(field.serialize('abc'), 'abc')
         self.assertEqual(widget.rendered, 'writable')
 
-    def test_serialize_default(self):
-        from colander import default
+    def test_serialize_null(self):
         from colander import null
         schema = DummySchema()
         field = self._makeOne(schema)
         widget = field.widget = DummyWidget()
-        self.assertEqual(field.serialize(default), null)
+        self.assertEqual(field.serialize(null), null)
         self.assertEqual(widget.rendered, 'writable')
 
     def test_deserialize(self):

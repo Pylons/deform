@@ -119,8 +119,8 @@ class TestFunctional(unittest.TestCase):
         self.assertEqual(result, expected)
 
     def test_validate(self):
+        from colander import null
         from deform.exception import ValidationFailure
-        from colander import default
         schema = self._makeSchema()
         form = self._makeForm(schema)
         try:
@@ -136,10 +136,10 @@ class TestFunctional(unittest.TestCase):
         self.assertEqual(
             ve.cstruct,
             {
-                'series': {'dates': [], 'name': default},
+                'series': {'dates': [], 'name': null},
                 'cool': 'false',
-                'name': default,
-                'title': default
+                'name': null,
+                'title': null,
              }
             )
         

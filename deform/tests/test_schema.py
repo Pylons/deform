@@ -64,13 +64,6 @@ class TestFileData(unittest.TestCase):
         from deform.schema import FileData
         return FileData()
 
-    def test_deserialize_default(self):
-        from colander import default
-        typ = self._makeOne()
-        node = DummySchemaNode()
-        result = typ.deserialize(node, default)
-        self.assertEqual(result, default)
-
     def test_deserialize_null(self):
         from colander import null
         typ = self._makeOne()
@@ -78,7 +71,7 @@ class TestFileData(unittest.TestCase):
         result = typ.deserialize(node, null)
         self.assertEqual(result, null)
 
-    def test_deserialize_not_default(self):
+    def test_deserialize_not_null(self):
         typ = self._makeOne()
         node = DummySchemaNode()
         result = typ.deserialize(node, '123')

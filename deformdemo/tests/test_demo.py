@@ -656,6 +656,58 @@ class FieldDefaultTests(unittest.TestCase):
             browser.get_text('css=#captured'),
             u"{'album': u'def', 'song': u'ghi', 'artist': u'abc'}")
 
+class NonRequiredFieldTests(unittest.TestCase):
+    url = "/nonrequiredfields/"
+    def test_render_default(self):
+        browser.open(self.url)
+        self.failIf(browser.is_element_present('css=.errorMsgLbl'))
+        self.failUnless(browser.is_element_present('css=#req-deformField1'))
+        self.assertEqual(browser.get_value('deformField1'), '')
+        self.assertEqual(browser.get_attribute('deformField1@name'), 'required')
+        self.assertEqual(browser.get_value('deformField2'), '')
+        self.assertEqual(browser.get_attribute('deformField2@name'),
+                         'notrequired')
+        self.assertEqual(browser.get_text('css=#captured'), 'None')
+
+    def test_submit_empty(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.click('submit')
+        browser.wait_for_page_to_load("30000")
+        self.failUnless(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertEqual(browser.get_value('deformField1'), '')
+        self.assertEqual(browser.get_value('deformField2'), '')
+        self.assertEqual(browser.get_text('css=#error-deformField1'),
+                         'Required')
+        self.assertEqual(browser.get_text('css=#captured'), 'None')
+
+    def test_submit_success_required_filled_notrequired_empty(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.type('deformField1', 'abc')
+        browser.click('submit')
+        browser.wait_for_page_to_load("30000")
+        self.failIf(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertEqual(browser.get_value('deformField1'), 'abc')
+        self.assertEqual(browser.get_value('deformField2'), '')
+        self.assertEqual(
+            browser.get_text('css=#captured'),
+            u"{'required': u'abc', 'notrequired': u''}")
+
+    def test_submit_success_required_and_notrequired_filled(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.type('deformField1', 'abc')
+        browser.type('deformField2', 'def')
+        browser.click('submit')
+        browser.wait_for_page_to_load("30000")
+        self.failIf(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertEqual(browser.get_value('deformField1'), 'abc')
+        self.assertEqual(browser.get_value('deformField2'), 'def')
+        self.assertEqual(
+            browser.get_text('css=#captured'),
+            u"{'required': u'abc', 'notrequired': u'def'}")
+
 class HiddenFieldWidgetTests(unittest.TestCase):
     url = "/hidden_field/"
     def test_render_default(self):
