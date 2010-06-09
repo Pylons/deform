@@ -85,6 +85,9 @@ class FileData(object):
         ``mimetype`` is not provided, the widget will not be able to
         display mimetype information.
         """
+        if value is colander.null:
+            return colander.null
+        
         if not hasattr(value, 'get'):
             mapping = {'value':repr(value)}
             raise colander.Invalid(
@@ -108,26 +111,43 @@ class FileData(object):
         return result
 
     def deserialize(self, node, value):
-        if not value and node.required:
-            raise colander.Invalid(node, _('Required'))
+        if value is colander.null:
+            return colander.null
         return value
 
 class Set(object):
     """ A type representing a non-overlapping set of items.
-    Deserializes an iterable to a ``set`` object. """
+    Deserializes an iterable to a ``set`` object.
+
+    This type constructor accepts one argument:
+
+    ``allow_empty``
+       Boolean representing whether an empty set input to
+       deserialize will be considered valid.  Default: ``False``.
+    """
+
     widget_maker = widget.CheckboxChoiceWidget
+
+    def __init__(self, allow_empty=False):
+        self.allow_empty = allow_empty
+        
+    def serialize(self, node, value):
+        if value is colander.null:
+            return colander.null
+        return value
+
     def deserialize(self, node, value):
+        if value is colander.null:
+            return colander.null
         if not hasattr(value, '__iter__'):
             raise colander.Invalid(
                 node,
                 _('${value} is not iterable', mapping={'value':value})
                 )
-        if not value:
-            if node.required:
-                raise colander.Invalid(node, _('Required'))
-            value = node.default
-        return set(value)
-
-    def serialize(self, node, value):
+        value =  set(value)
+        if not value and not self.allow_empty:
+            raise colander.Invalid(node, _('Required'))
         return value
+    
+        
 

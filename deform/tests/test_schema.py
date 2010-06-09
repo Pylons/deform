@@ -21,25 +21,25 @@ class TestSet(unittest.TestCase):
         result = typ.serialize(node, provided)
         self.failUnless(result is provided)
 
+    def test_serialize_null(self):
+        from colander import null
+        node = DummySchemaNode()
+        typ = self._makeOne()
+        result = typ.serialize(node, null)
+        self.assertEqual(result, null)
+
     def test_deserialize_no_iter(self):
         node = DummySchemaNode()
         typ = self._makeOne()
         e = invalid_exc(typ.deserialize, node, 'str')
         self.assertEqual(e.msg, '${value} is not iterable')
 
-    def test_deserialize_empty_required_no_default(self):
+    def test_deserialize_null(self):
+        from colander import null
         node = DummySchemaNode()
         typ = self._makeOne()
-        e = invalid_exc(typ.deserialize, node, ())
-        self.assertEqual(e.msg, 'Required')
-
-    def test_deserialize_empty_required_with_default(self):
-        node = DummySchemaNode()
-        typ = self._makeOne()
-        node.default = ('abc',)
-        node.required = False
-        result = typ.deserialize(node, ())
-        self.assertEqual(result, set(('abc',)))
+        result = typ.deserialize(node, null)
+        self.assertEqual(result, null)
 
     def test_deserialize_valid(self):
         node = DummySchemaNode()
@@ -47,29 +47,42 @@ class TestSet(unittest.TestCase):
         result = typ.deserialize(node, ('a',))
         self.assertEqual(result, set(('a',)))
 
+    def test_deserialize_empty_allow_empty_false(self):
+        node = DummySchemaNode()
+        typ = self._makeOne()
+        e = invalid_exc(typ.deserialize, node, ())
+        self.assertEqual(e.msg, 'Required')
+
+    def test_deserialize_empty_allow_empty_true(self):
+        node = DummySchemaNode()
+        typ = self._makeOne(allow_empty=True)
+        result = typ.deserialize(node, ())
+        self.assertEqual(result, set())
+
 class TestFileData(unittest.TestCase):
     def _makeOne(self):
         from deform.schema import FileData
         return FileData()
 
-    def test_deserialize_required_None(self):
+    def test_deserialize_null(self):
+        from colander import null
         typ = self._makeOne()
         node = DummySchemaNode()
-        e = invalid_exc(typ.deserialize, node, None)
-        self.assertEqual(e.msg, 'Required')
-        
-    def test_deserialize_notrequired_None(self):
-        typ = self._makeOne()
-        node = DummySchemaNode()
-        node.required = False
-        result = typ.deserialize(node, None)
-        self.assertEqual(result, None)
+        result = typ.deserialize(node, null)
+        self.assertEqual(result, null)
 
-    def test_deserialize_not_None(self):
+    def test_deserialize_not_null(self):
         typ = self._makeOne()
         node = DummySchemaNode()
         result = typ.deserialize(node, '123')
         self.assertEqual(result, '123')
+
+    def test_serialize_null(self):
+        from colander import null
+        typ = self._makeOne()
+        node = DummySchemaNode()
+        result = typ.serialize(node, null)
+        self.assertEqual(result, null)
 
     def test_serialize_not_a_dict(self):
         typ = self._makeOne()

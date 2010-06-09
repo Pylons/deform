@@ -26,7 +26,6 @@ class TestField(unittest.TestCase):
         self.assertEqual(field.renderer, default_renderer)
         self.assertEqual(field.name, 'name')
         self.assertEqual(field.title, 'title')
-        self.assertEqual(field.default, 'sdefault')
         self.assertEqual(field.required, True)
         self.assertEqual(field.order, 0)
         self.assertEqual(field.oid, 'deformField0')
@@ -44,12 +43,6 @@ class TestField(unittest.TestCase):
         self.assertEqual(child_field.__class__, Field)
         self.assertEqual(child_field.schema, node)
         self.assertEqual(child_field.renderer, 'abc')
-
-    def test_ctor_schema_required(self):
-        schema = DummySchema()
-        schema.required = False
-        field = self._makeOne(schema)
-        self.assertEqual(field.default, 'sdefault')
 
     def test_set_default_renderer(self):
         cls = self._getTargetClass()
@@ -219,7 +212,35 @@ class TestField(unittest.TestCase):
         self.assertEqual(field.render('abc', readonly=True), 'abc')
         self.assertEqual(widget.rendered, 'readonly')
 
+    def test_serialize(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        widget = field.widget = DummyWidget()
+        self.assertEqual(field.serialize('abc'), 'abc')
+        self.assertEqual(widget.rendered, 'writable')
 
+    def test_serialize_null(self):
+        from colander import null
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        widget = field.widget = DummyWidget()
+        self.assertEqual(field.serialize(null), null)
+        self.assertEqual(widget.rendered, 'writable')
+
+    def test_deserialize(self):
+        cstruct = {'name':'Name', 'title':'Title'}
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        field.widget = DummyWidget()
+        result = field.deserialize(cstruct)
+        self.assertEqual(result, {'name':'Name', 'title':'Title'})
+
+    def test___repr__(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        r = repr(field)
+        self.failUnless(r.startswith('<deform.field.Field object at '))
+        self.failUnless(r.endswith("(schemanode 'name')>"))
 
 class DummyField(object):
     name = 'name'

@@ -4,6 +4,7 @@
 # You can set these variables from the command line.
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
+SPHINXBUILD   = /home/chrism/projects/repoze/svn/deform/trunk/env/bin/sphinx-build
 PAPER         =
 
 # Internal variables.

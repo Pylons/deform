@@ -9,7 +9,7 @@
        src="${parent.widget.closebutton_url}" 
        alt="Remove" onclick="javascript:$(this).parent().remove();"/>
 
-  <span tal:replace="structure field.widget.serialize(field, cstruct)"/>
+  <span tal:replace="structure field.serialize(cstruct)"/>
   <p tal:condition="field.error and not field.widget.hidden"
      id="error-${field.oid}"
      class="${field.widget.error_class}">${field.error.msg}</p>

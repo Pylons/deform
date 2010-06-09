@@ -53,7 +53,7 @@ class DeformDemo(object):
         self.request = request
         self.macros = get_template('templates/main.pt').macros
 
-    def render_form(self, form, appstruct=None, submitted='submit',
+    def render_form(self, form, appstruct=colander.null, submitted='submit',
                     success=None, readonly=False):
 
         captured = None
@@ -555,6 +555,22 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
+    @bfg_view(renderer='templates/form.pt', name='nonrequiredfields')
+    @demonstrate('Non-Required Fields')
+    def nonrequiredfields(self):
+        class Schema(colander.Schema):
+            required = colander.SchemaNode(
+                colander.String(),
+                description='Required Field'
+                )
+            notrequired = colander.SchemaNode(
+                colander.String(),
+                missing=u'',
+                description='Unrequired Field')
+        schema = Schema()
+        form = deform.Form(schema, buttons=('submit',))
+        return self.render_form(form)
+
     @bfg_view(renderer='templates/form.pt', name='unicodeeverywhere')
     @demonstrate('Unicode Everywhere')
     def unicodeeverywhere(self):
@@ -684,11 +700,11 @@ class DeformDemo(object):
         class Schema(colander.Schema):
             one = colander.SchemaNode(
                 colander.String(),
-                default='',
+                missing=u'',
                 title='One (required if Two is not supplied)')
             two = colander.SchemaNode(
                 colander.String(),
-                default='',
+                missing=u'',
                 title='Two (required if One is not supplied)')
         def validator(form, value):
             if not value['one'] and not value['two']:
@@ -825,10 +841,8 @@ class SequenceToTextWidgetAdapter(object):
     def __getattr__(self, name):
         return getattr(self.widget, name)
 
-    def serialize(self, field, cstruct=None, readonly=False):
-        if cstruct is None:
-            cstruct = field.default
-        if cstruct is None:
+    def serialize(self, field, cstruct, readonly=False):
+        if cstruct is colander.null:
             cstruct = []
         textrows = getattr(field, 'unparseable', None)
         if textrows is None:
@@ -841,9 +855,10 @@ class SequenceToTextWidgetAdapter(object):
 
     def deserialize(self, field, pstruct):
         text = self.widget.deserialize(field, pstruct)
-        if not text.strip() and field.schema.required:
-            # prevent
-            raise colander.Invalid(field.schema, 'Required', [])
+        if text is colander.null:
+            return text
+        if not text.strip():
+            return colander.null
         try:
             infile = StringIO.StringIO(text)
             reader = csv.reader(infile)
