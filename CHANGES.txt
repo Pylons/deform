@@ -1,8 +1,17 @@
 Changes
 =======
 
-Next release
-------------
+0.3
+---
+
+Bug Fixes
+~~~~~~~~~
+
+- Change default form action to the empty string (rather than ``.``).
+  Thanks to Kiran.
+
+Features
+~~~~~~~~
 
 - Add ``deform.widget.DateInputWidget`` widget, which is a date picker
   widget.  This has now become the default widget for the
@@ -13,13 +22,25 @@ Next release
 - Add text input mask capability to
   ``deform.widget.CheckedInputWidget``.
 
-- Change default form action to the empty string (rather than ``.``).
-  Thanks to Kiran.
+Backwards Incompatibilities
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - Custom widgets must now check for ``colander.null`` rather than
   ``None`` as the null sentinel value.
 
-- Dependency on a new (default_overhaul) version of Colander.
+- Dependency on a new (0.7) version of Colander, which has been
+  changed to make using proper defaults possible; if you've used the
+  ``default`` argument to a ``colander.SchemaNode``, or if you've
+  defined a custom Colander type, you'll want to read `the updated
+  Colander documentation <http://docs.repoze.org/colander>`_
+  (particularly the changelist).  Short story: use the ``missing``
+  argument instead.
+
+- If you've created a custom widget, you will need to tweak it
+  slightly to handle the value ``colander.null`` as input to both
+  ``serialize`` and ``deserialize``.  See the Deform docs at
+  `http://docs.repoze.org/deform <http://docs.repoze.org/deform>`_ for
+  more information.
 
 0.2 (2010-05-13)
 ----------------

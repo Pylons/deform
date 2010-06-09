@@ -22,7 +22,7 @@ README = open(os.path.join(here, 'README.txt')).read()
 CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
 requires = [
-    'colander>=0.6.2', # unicode-lenient string
+    'colander>=0.7.0', # colander.null-providing
     'chameleon>=1.2.3', # debug arg
     'translationstring',
     'peppercorn',
@@ -30,7 +30,7 @@ requires = [
 
 setupkw = dict(
     name='deform',
-    version='0.2',
+    version='0.3',
     description='Another form generation library',
     long_description=README + '\n\n' + CHANGES,
     classifiers=[

@@ -39,6 +39,7 @@ Topics
    api.rst
    interfaces.rst
    glossary.rst
+   changes.rst
 
 Demonstration Site
 ==================
