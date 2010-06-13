@@ -549,8 +549,10 @@ constructor is called with the schema.  For example:
    :linenos:
 
    from deform import Form
+   from deform.widget import TextInputWidget
+
    myform = Form(schema, buttons=('submit',))
-   myform['people']['person']['name'] = deform.widget.TextInputWidget(size=10)
+   myform['people']['person']['name'].widget = TextInputWidget(size=10)
 
 The above associates the String field named ``name`` in the rendered
 form with the widget named :class:`deform.widget.TextInputWidget`.
