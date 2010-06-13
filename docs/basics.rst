@@ -144,15 +144,14 @@ schema node serialization, only after node deserialization.
 
 The *default* of a schema node indicates the value to be serialized if
 a value for the schema node is not found in the input data during
-serialization.  It should be the deserialized representation.  If a
-schema node does not have a default, it is considered "serialization
-required".
+serialization.  It should be the deserialized representation.
 
 The *missing* of a schema node indicates the value to be deserialized
 if a value for the schema node is not found in the input data during
 deserialization.  It should be the deserialized representation.  If a
-schema node does not have a default, it is considered "deserialization
-required".
+schema node does not have a ``missing`` value, a
+:exc:`colander.Invalid` exception will be raised if the data structure
+being deserialized does not contain a matching value.
 
 The *name* of a schema node is used to relate schema nodes to each
 other.  It is also used as the title if a title is not provided.
@@ -274,12 +273,12 @@ argument to the :class:`deform.Form` constructor
 Although different kinds of schema nodes can be present in a schema
 used by a Deform :class:`deform.Form` instance, a form instance cannot
 deal with a schema node representing a sequence, a tuple schema, a
-string, an integer, etc. as its first parameter; only a schema node
-representing a mapping is permissible.  This typically means that the
-object passed as the ``schema`` argument to a :class:`deform.Form`
-constructor must be obtained as the result of using the
-:class:`colander.MappingSchema` constructor (or the equivalent
-imperative spelling).
+string, an integer, etc. as the value of its ``schema`` parameter;
+only a schema node representing a mapping is permissible.  This
+typically means that the object passed as the ``schema`` argument to a
+:class:`deform.Form` constructor must be obtained as the result of
+using the :class:`colander.MappingSchema` constructor (or the
+equivalent imperative spelling).
 
 Rendering the Form
 ~~~~~~~~~~~~~~~~~~
