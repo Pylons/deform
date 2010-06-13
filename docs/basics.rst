@@ -257,11 +257,11 @@ We used the ``schema`` object (an instance of
 :class:`colander.MappingSchema`) we created in the previous section as
 the first positional parameter to the :class:`deform.Form` class; we
 passed the value ``('submit',)`` as the value of the ``buttons``
-keyword argument.  This will cause a single button labeled ``Submit``
-to be injected at the bottom of the form rendering.  We chose to pass
-in the button names as a sequence of strings, but we could have also
-passed a sequence of instances of the :class:`deform.Button` class.
-Either is permissible.
+keyword argument.  This will cause a single ``submit`` input element
+labeled ``Submit`` to be injected at the bottom of the form rendering.
+We chose to pass in the button names as a sequence of strings, but we
+could have also passed a sequence of instances of the
+:class:`deform.Button` class.  Either is permissible.
 
 Note that the first positional argument to :class:`deform.Form` must
 be a schema node representing a *mapping* object (a structure which
@@ -554,16 +554,45 @@ constructor is called with the schema.  For example:
    myform = Form(schema, buttons=('submit',))
    myform['people']['person']['name'].widget = TextInputWidget(size=10)
 
-The above associates the String field named ``name`` in the rendered
-form with the widget named :class:`deform.widget.TextInputWidget`.
-This was already the default for ``name``, but we've passed a ``size``
-argument to the explicit widget creation, meaning that the size of the
-input field will be 10em.  Not just any widget can be used with any
-schema type; the documentation for each widget usually indicates what
-type it can be used against successfully.
+The above line ``myform['people']['person']['name'].widget =
+TextInputWidget(size=10)`` associates the String field named ``name``
+in the rendered form with an explicitly created
+:class:`deform.widget.TextInputWidget` by finding the ``name`` field
+via a series of ``__getitem__`` calls (brackets) through the field
+structure, then by assigning an explicit ``widget`` attribute to the
+``name`` field.
 
-A custom widget might have been used above instead.  If the existing
-widgets provided by Deform are not sufficient, see
+The :class:`deform.widget.TextInputWidget` is used to display a
+:class:`colander.String` schema type by default.  Above, however, we
+create a :class:`deform.widget.TextInputWidget` explicitly and
+associate it with the ``name`` field in order to pass a ``size``
+argument to the explicit widget creation, indicating that the size of
+the ``name`` input field should be 10em rather than the default size
+decided by the browser for ``input type=text`` input fields.  Although
+in the example above, we associated the ``name`` field with the same
+type of widget its schema type would have been rendered with by
+default, we could have just as easily associated the ``name`` field
+with a completely different widget using the same pattern.  For example:
+
+.. code-block:: python
+   :linenos:
+
+   from deform import Form
+   from deform.widget import TextInputWidget
+
+   myform = Form(schema, buttons=('submit',))
+   myform['people']['person']['name'].widget = TextAreaWidget()
+
+The above renders an HTML ``textarea`` input element for the ``name``
+field instead of an ``input type=text`` field.  This probably doesn't
+make much sense for a field called ``name`` (names aren't usually
+multiline paragraphs); but it does let us demonstrate how different
+widgets can be used for the same field.
+
+Not just any widget can be used with any schema type; the
+documentation for each widget usually indicates what type it can be
+used against successfully.  If all existing widgets provided by Deform
+are insufficient, you can use a custom widget.  See
 :ref:`writing_a_widget` for more information about writing a custom
 widget.
 
@@ -632,8 +661,8 @@ Creating a New Schema Type
 --------------------------
 
 Sometimes the default schema types offered by Colander may not be
-sufficient to model structures in your application.  See the `Colander
-documentation about defining a new schema type
+sufficient to model all the structures in your application.  See the
+`Colander documentation about defining a new schema type
 <http://docs.repoze.org/colander/#defining-a-new-type>`_ when this
 becomes true.
 
