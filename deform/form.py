@@ -116,16 +116,21 @@ class Button(object):
         whatever is passed as ``name``.  E.g. if ``name`` is passed as
         ``submit``, ``title`` will be ``Submit``.
 
+    type_
+        The value used as the type of button. The HTML spec supports 
+        ``submit``, ``reset`` and ``button``. Default: ``submit``. 
+
     value
         The value used as the value of the button when rendered (the
         ``value`` attribute of the button or input tag resulting from
         a form rendering).  Default: same as ``name`` passed.
     """
-    def __init__(self, name='submit', title=None, value=None):
+    def __init__(self, name='submit', title=None, type_='submit', value=None):
         if title is None:
             title = name.capitalize()
         if value is None:
             value = name
         self.name = name
         self.title = title
+        self.type_ = type_
         self.value = value
