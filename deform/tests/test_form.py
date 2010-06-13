@@ -49,7 +49,7 @@ class TestButton(unittest.TestCase):
 
     def test_ctor_type_None(self):
         button = self._makeOne()
-        self.assertEqual(button.type_, 'submit')
+        self.assertEqual(button.type, 'submit')
 
     def test_ctor_value_None(self):
         button = self._makeOne()
@@ -57,11 +57,11 @@ class TestButton(unittest.TestCase):
 
     def test_ctor(self):
         button = self._makeOne(name='name', title='title', 
-                               type_='type', value='value')
+                               type='type', value='value')
         self.assertEqual(button.value, 'value')
         self.assertEqual(button.name, 'name')
         self.assertEqual(button.title, 'title')
-        self.assertEqual(button.type_, 'type')
+        self.assertEqual(button.type, 'type')
 
 class TestRaw(unittest.TestCase):
     def _makeOne(self, val):
