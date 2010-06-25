@@ -661,6 +661,21 @@ class DeformDemo(object):
         form['sneaky'].widget = deform.widget.HiddenWidget()
         return self.render_form(form)
 
+    @bfg_view(renderer='templates/form.pt', name='hiddenmissing')
+    @demonstrate('Hidden, Missing Widget Representing an Integer')
+    def hiddenmissing(self):
+        class Schema(colander.Schema):
+            title = colander.SchemaNode(
+                colander.String())
+            number = colander.SchemaNode(
+                colander.Integer(),
+                missing=colander.null,
+                )
+        schema = Schema()
+        form = deform.Form(schema, buttons=('submit',))
+        form['number'].widget = deform.widget.HiddenWidget()
+        return self.render_form(form)
+
     @bfg_view(renderer='templates/form.pt', name='text_input_masks')
     @demonstrate('Text Input Masks')
     def text_input_masks(self):

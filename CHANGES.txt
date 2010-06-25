@@ -1,6 +1,18 @@
 Changes
 =======
 
+Next Release
+------------
+
+Bug Fixes
+~~~~~~~~~
+
+- When the hidden widget is used to deserialize a field, return
+  ``colander.null`` rather than the empty string so that it may be
+  used to represent non-text fields such as ``colander.Integer``.
+  This is isomorphic to the change done previously to
+  ``deform.TextInputWidget`` to support nontextual empty fields.
+
 0.3
 ---
 

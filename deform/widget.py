@@ -346,7 +346,7 @@ class HiddenWidget(Widget):
         return field.renderer(self.template, field=field, cstruct=cstruct)
 
     def deserialize(self, field, pstruct):
-        if pstruct is null:
+        if not pstruct:
             return null
         return pstruct
 

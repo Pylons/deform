@@ -728,6 +728,30 @@ class HiddenFieldWidgetTests(unittest.TestCase):
         self.assertEqual(browser.get_value('deformField1'), 'true')
         self.assertEqual(browser.get_text('css=#captured'), "{'sneaky': True}")
 
+class HiddenmissingTests(unittest.TestCase):
+    url = "/hiddenmissing/"
+    def test_render_default(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        self.failIf(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertEqual(browser.get_attribute('deformField1@name'), 'title')
+        self.assertEqual(browser.get_attribute('deformField2@name'), 'number')
+        self.assertEqual(browser.get_value('deformField1'), '')
+        self.assertEqual(browser.get_value('deformField2'), '')
+        self.assertEqual(browser.get_text('css=#captured'), 'None')
+    
+    def test_render_submitted(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.type('deformField1', 'yup')
+        browser.click('submit')
+        browser.wait_for_page_to_load("30000")
+        self.failIf(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertEqual(browser.get_attribute('deformField1@name'), 'title')
+        self.assertEqual(browser.get_value('deformField1'), 'yup')
+        self.assertEqual(browser.get_text('css=#captured'),
+                         "{'number': <colander.null>, 'title': u'yup'}")
+
 class FileUploadTests(unittest.TestCase):
     url = "/file/"
 

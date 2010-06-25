@@ -233,6 +233,13 @@ class TestHiddenWidget(unittest.TestCase):
         result = widget.deserialize(field, null)
         self.assertEqual(result, null)
 
+    def test_deserialize_emptystring(self):
+        from colander import null
+        widget = self._makeOne(strip=False)
+        field = DummyField()
+        result = widget.deserialize(field, '')
+        self.assertEqual(result, null)
+
 class TestPasswordWidget(TestTextInputWidget):
     def _makeOne(self, **kw):
         from deform.widget import PasswordWidget
