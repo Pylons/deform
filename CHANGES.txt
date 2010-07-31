@@ -13,6 +13,9 @@ Bug Fixes
   This is isomorphic to the change done previously to
   ``deform.TextInputWidget`` to support nontextual empty fields.
 
+- Fix typo about overriding templates using set_zpt_renderer in
+  templating chapter.
+
 0.3
 ---
 

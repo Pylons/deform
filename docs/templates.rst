@@ -24,7 +24,7 @@ settings associated with the default ZPT renderer:
    deform_templates = resource_filename('deform', 'templates')
    search_path = ('/path/to/my/templates', deform_templates)
 
-   Form.set_zpt_renderer(deform_templates, search_path)
+   Form.set_zpt_renderer(search_path)
 
 This resets the rendering settings for the entire process.  If you
 don't want to change the process-wide settings, and you'd rather only
