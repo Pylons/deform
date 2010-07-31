@@ -16,6 +16,8 @@ Bug Fixes
 - Fix typo about overriding templates using set_zpt_renderer in
   templating chapter.
 
+- Fix link to imperative schema within in Colander docs within "Basics".
+
 0.3
 ---
 

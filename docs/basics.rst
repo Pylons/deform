@@ -206,8 +206,8 @@ which has a *type* value of :class:`colander.Sequence`.
 Creating Schemas Without Using a Class Statement (Imperatively)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-See `http://docs.repoze.org/colander/#defining-a-schema-imperatively
-<http://docs.repoze.org/colander/#defining-a-schema-imperatively>`_
+See `http://docs.repoze.org/colander/basics.html#defining-a-schema-imperatively
+<http://docs.repoze.org/colander/basics.html#defining-a-schema-imperatively>`_
 for information about how to create schemas without using a ``class``
 statement.
 
