@@ -53,6 +53,19 @@ TODOs
       that allows you to retrieve all the logical resources required
       by all widgets that are part of a form.
 
+- [ ] Provide a lame default widget for tuples in order to avoid ``
+      File "/Users/...deform/widget.py", line 92, in serialize raise
+      NotImplementedError`` during serialization or provide a better
+      error message (maybe a subclass of Widget that spits out a more
+      informative error message).
+
+- [ ] Somehow prevent schemas that have sequence types (tuples and
+      sequences) that have no schema children from reaching the point
+      where we try to serialize them, as a hapless user will wind up
+      with a `` File "/Users/...../deform/widget.py", line 773, in
+      serialize item_field = field.children[0]`` exception instead of
+      a more sensible error message.
+
 Topics Needing Documentation
 ----------------------------
 
