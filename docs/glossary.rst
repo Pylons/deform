@@ -100,3 +100,13 @@ Glossary
      exception or returns ``None``.  Used in deform as the
      ``validator=`` argument to a schema node, ensuring that the input
      meets the requirements of the schema.
+
+   TinyMCE Editor
+     `TinyMCE <http://tinymce.moxiecode.com/index.php>`_ is a platform
+     independent web based Javascript HTML WYSIWYG editor control
+     released as Open Source under `LGPL
+     <http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html>`_ by
+     `Moxiecode Systems AB <http://www.moxiecode.com/>`_. It
+     has the ability to convert HTML TEXTAREA fields or other HTML
+     elements to editor instances. TinyMCE is very easy to integrate
+     into other Content Management Systems.

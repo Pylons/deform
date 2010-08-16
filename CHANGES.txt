@@ -18,6 +18,15 @@ Bug Fixes
 
 - Fix link to imperative schema within in Colander docs within "Basics".
 
+- Remove duplicate ``deform.widget.DateInputWidget`` class definition.
+
+Features
+~~~~~~~~
+
+- Add a ``deform.widget.RichTextWidget`` widget, which adds the 
+  TinyMCE WYSIWIG javascript editor to a text area.
+
+
 0.3
 ---
 

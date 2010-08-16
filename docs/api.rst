@@ -67,6 +67,9 @@ Widget-Related
 .. autoclass:: TextAreaWidget
    :members:
 
+.. autoclass:: RichTextWidget
+   :members:
+
 .. autoclass:: CheckboxWidget
    :members:
 

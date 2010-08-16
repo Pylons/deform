@@ -267,7 +267,12 @@ class TextAreaWidget(TextInputWidget):
 class RichTextWidget(TextInputWidget):
     """
     Renders a ``<textarea>`` widget with the
-    `TinyMCE WYSIGIG Editor <http://tinymce.moxiecode.com/index.php>`_.
+    :term:`TinyMCE Editor`.
+
+    To use this widget the :term:`TinyMCE Editor` library must be
+    provided in the page where the widget is rendered. A version of
+    :term:`TinyMCE Editor` is included in deform's static directory.
+    
 
     **Attributes/Arguments**
 
