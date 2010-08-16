@@ -250,6 +250,11 @@ class TestTextAreaWidget(TestTextInputWidget):
         from deform.widget import TextAreaWidget
         return TextAreaWidget(**kw)
 
+class TestRichTextWidget(TestTextInputWidget):
+    def _makeOne(self, **kw):
+        from deform.widget import TextAreaWidget
+        return TextAreaWidget(**kw)
+
 class TestCheckboxWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import CheckboxWidget
