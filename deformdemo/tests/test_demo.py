@@ -1582,6 +1582,40 @@ class TextAreaWidgetTests(unittest.TestCase):
         captured = browser.get_text('css=#captured')
         self.assertEqual(captured, "{'text': u'hello'}")
 
+class RichTextWidgetTests(unittest.TestCase):
+    url = "/richtext/"
+    def test_render_default(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        self.failUnless(browser.is_text_present("Text"))
+        self.assertEqual(browser.get_attribute("deformField1@name"), 'text')
+        self.assertEqual(browser.get_value("deformField1"), '')
+        self.assertEqual(browser.get_text('css=.req'), '*')
+        self.assertEqual(browser.get_text('css=#captured'), 'None')
+
+    def test_submit_empty(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.click('submit')
+        browser.wait_for_page_to_load("30000")
+        self.failUnless(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertEqual(browser.get_text('css=#error-deformField1'),
+                         'Required')
+        captured = browser.get_text('css=#captured')
+        self.assertEqual(captured, 'None')
+
+    def test_submit_filled(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.type('tinymce', 'hello')
+        browser.click('submit')
+        browser.wait_for_page_to_load("30000")
+        self.failIf(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertEqual(browser.get_value('deformField1'), '<p>hello</p>')
+        captured = browser.get_text('css=#captured')
+        self.assertEqual(captured, "{'text': u'<p>hello</p>'}")
+
+
 class UnicodeEverywhereTests(unittest.TestCase):
     url = "/unicodeeverywhere/"
     def test_render_default(self):
