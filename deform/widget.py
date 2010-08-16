@@ -302,6 +302,44 @@ class TextAreaWidget(TextInputWidget):
     rows = None
     strip = True
 
+class RichTextWidget(TextInputWidget):
+    """
+    Renders a ``<textarea>`` widget with the
+    `TinyMCE WYSIGIG Editor <http://tinymce.moxiecode.com/index.php>`_.
+
+    **Attributes/Arguments**
+
+    height
+        The size, in rows, of the text input field.  Defaults to
+        240.
+
+    readonly_template
+        The template name used to render the widget in read-only mode.
+        Default: ``readonly/richtext``.
+
+    strip
+        If true, during deserialization, strip the value of leading
+        and trailing whitespace (default ``True``).
+
+    template
+        The template name used to render the widget.  Default:
+        ``richtext``.
+
+    theme
+        The theme for the WYSIWYG editor, ``simple`` or ``advanced``.
+        Defaults to ``simple``.
+    width
+        The size, in pixels, of the editor.  Defaults to
+        640.
+    """
+    height = 240
+    readonly_template = 'readonly/richtextarea'
+    strip = True
+    template = 'richtext'
+    theme = 'simple'
+    width = 640
+
+
 class PasswordWidget(TextInputWidget):
     """
     Renders a single <input type="password"/> input field.

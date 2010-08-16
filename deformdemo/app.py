@@ -172,6 +172,17 @@ class DeformDemo(object):
         form['text'].widget = deform.widget.TextAreaWidget(rows=10, cols=60)
         return self.render_form(form)
 
+    @bfg_view(renderer='templates/form.pt', name='richtext')
+    @demonstrate('Rich Text Widget')
+    def richtext(self):
+        class Schema(colander.Schema):
+            text = colander.SchemaNode(colander.String(),
+                                       description='Enter some text')
+        schema = Schema()
+        form = deform.Form(schema, buttons=('submit',))
+        form['text'].widget = deform.widget.RichTextWidget()
+        return self.render_form(form)
+
     @bfg_view(renderer='templates/form.pt', name='password')
     @demonstrate('Password Widget')
     def password(self):
