@@ -26,6 +26,10 @@ Features
 - Add a ``deform.widget.RichTextWidget`` widget, which adds the 
   TinyMCE WYSIWIG javascript editor to a text area.
 
+- Add a ``deform.widget.AutocompleteInputWidget`` widget, which adds
+  a text input that can be supplied a URL or iterable of choices to
+  ease the search and selection of a finite set of choices.
+
 
 0.3
 ---
