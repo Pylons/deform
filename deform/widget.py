@@ -243,6 +243,7 @@ class AutocompleteInputWidget(Widget):
         If a string is provided to a URL, an :term:`xhr` request will
         be sent to the URL. The response should be a list of values
         one per line. i.e.::
+
           foo
           bar
           baz

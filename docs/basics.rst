@@ -710,10 +710,11 @@ available options. Passing options looks like:
 				values=['spam, 'eggs', 'bar', 'baz'],
                                 options={'autofill' : True})
 
+
 When :class:`deform.widget.AutocompleteInputWidget` is used, the
 :term:`jquery.autocomplete` library must be loaded into the page
 serving the form for the mask argument to have any effect.  A copy
- of this library is available in the ``static/scripts`` directory of
+of this library is available in the ``static/scripts`` directory of
 the :mod:`deform` package itself.
 
 See `http://localhost:8521/autocomplete_input/
@@ -723,14 +724,19 @@ See `http://localhost:8521/autocomplete_input/
 for working examples. A working example of a remote URL providing
 completion data can br found at
 `http://localhost:8521/autocomplete_input_values
-<http://localhost:8521/autocomplete_input_values>`_.	
+<http://localhost:8521/autocomplete_input_values>`_.
 
 Use of :class:`deform.widget.AutocompleteInputWidget` is not a
 replacement for server-side validation of the field; it is purely a UI
 affordance.  If the data must be checked at input time a separate
 :term:`validator` should be attached to the related schema node.
 
+.. _using_deform_static_library:
 
+Using Static Files in Your Own Application
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+## XXX: document me
 
 
 Creating a New Schema Type
