@@ -66,6 +66,9 @@ TODOs
       serialize item_field = field.children[0]`` exception instead of
       a more sensible error message.
 
+- [ ] Make deform.widget.RichText render only on oid specific element
+      in templates.
+
 Topics Needing Documentation
 ----------------------------
 
