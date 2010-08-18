@@ -22,6 +22,10 @@ div.related a {
 
 /* override the justify text align of the default */
 
+div.body p, div.body dd, div.body li {
+    text-align: left;
+    }
+
 div.body p {
     text-align: left !important;
 }
@@ -31,3 +35,7 @@ div.body p {
 pre {
    line-height: normal !important;
 }
+
+div.body p, div.body dd, div.body li {
+    text-align: left;
+    }
