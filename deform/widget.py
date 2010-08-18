@@ -10,6 +10,12 @@ from colander import null
 
 from deform.i18n import _
 
+try:
+    import json 
+except ImportError: # PRAGMA: no cover
+    import simplejson as json 
+
+
 class Widget(object):
     """
     A widget is the building block for rendering logic.  The
@@ -192,6 +198,130 @@ class TextInputWidget(Widget):
         if not pstruct:
             return null
         return pstruct
+
+class AutocompleteInputWidget(Widget):
+    """
+    Renders an ``<input type="text"/>`` widget which provides
+    autocompletion via a list of values.
+
+    When this option is used, the :term:`jquery.autocomplete`
+    library must be loaded into the page serving the form for
+    autocompletion to have any effect.  See :ref:`autocomplete_input`.
+    A version of :term:`jquery.autocomplete` is included in the deform
+    static directory. The default styles for the autocomplete are also
+    available in the deform static/css directory.
+
+    **Attributes/Arguments**
+
+    size
+        The size, in columns, of the text input field.  Defaults to
+        ``None``, meaning that the ``size`` is not included in the
+        widget output (uses browser default size).
+
+    template
+        The template name used to render the widget.  Default:
+        ``autocomplete_textinput``.
+
+    readonly_template
+        The template name used to render the widget in read-only mode.
+        Default: ``readonly/autocomplete_textinput``.
+
+    strip
+        If true, during deserialization, strip the value of leading
+        and trailing whitespace (default ``True``).
+
+    values
+        ``values`` from which :term:`jquery.autocomplete` provides
+        autocompletion. It MUST be an iterable that can be converted
+        to a json array by [simple]json.dumps. It is also possible
+        to pass a [base]string representing a remote URL.
+
+        If ``values`` is a string it will be treated as a
+        URL. If values is an iterable which can be serialized to a
+        :term:`json` array, it will be treated as local data.
+
+        If a string is provided to a URL, an :term:`xhr` request will
+        be sent to the URL. The response should be a list of values
+        one per line. i.e.::
+          foo
+          bar
+          baz
+
+        Defaults to ``None``.
+
+    autofill
+        ``autofill`` is an optional argument to
+        :term:`jquery.autocomplete`. It fills the text input while
+        still typing. The value will be replaced if more is typed or
+        a different selection from the selection area is selected.
+        Defaults to ``False``
+
+    minchars
+        ``minchars``  is an optional argument to
+        :term:`jquery.autocomplete`. The number of characters to wait
+        for before activating the autocomplete call.
+        Defaults to ``1``.
+
+    must_match
+        ``must_match`` is an optional argument to
+        :term:`jquery.autocomplete`. If ``True`` only values in the
+        results will be allowed in the input. Non existant values will
+        result in an empty input. Defaults to ``False``.
+
+    max
+        ``max`` is an optional argument to
+        :term:`jquery.autocomplete`. It sets the maximum number of
+        results to show in the selection area. It also adds the value
+        as a ``limit`` parameter in a remote request.
+        Defaults to ``10``.
+
+    delay
+        ``delay`` is an optional argument to
+        :term:`jquery.autocomplete`. It sets the time to wait after a
+        keypress to activate the autocomplete call.
+        Defaults to ``10`` ms or ``400`` ms if a url is passed.
+    """
+    autofill = False
+    delay = None
+    max = 10
+    minchars = 1
+    must_match = False
+    readonly_template = 'readonly/autocomplete_input'
+    size = None
+    strip = True
+    template = 'autocomplete_input'
+    values = None
+
+    def serialize(self, field, cstruct, readonly=False):
+        if cstruct in (null, None):
+            cstruct = ''
+        options = {}
+        if not self.delay:
+            # set default delay if None
+            options['delay'] = (isinstance(self.values,
+                                          basestring) and 400) or 10
+        options['autoFill'] = self.autofill
+        options['minChars'] = self.minchars
+        options['mustMatch'] = self.must_match
+        options['max'] = self.max
+        options = json.dumps(options)
+        values = json.dumps(self.values)
+        template = readonly and self.readonly_template or self.template
+        return field.renderer(template,
+                              cstruct=cstruct,
+                              field=field,
+                              options=options,
+                              values=values)
+
+    def deserialize(self, field, pstruct):
+        if pstruct is null:
+            return null
+        if self.strip:
+            pstruct = pstruct.strip()
+        if not pstruct:
+            return null
+        return pstruct
+
 
 class DateInputWidget(Widget):
     """

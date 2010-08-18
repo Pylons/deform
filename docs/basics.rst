@@ -657,6 +657,82 @@ validation of the field; it is purely a UI affordance.  If the data
 must be checked at input time a separate :term:`validator` should be
 attached to the related schema node.
 
+
+.. _autocomplete_input:
+
+Using :class:`deform.widget.AutocompleteInputWidget`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The :class:`deform.widget.AutocompleteInputWidget` widget allows for
+client side autocompletion from provided choices in a text input
+field. To use this you **MUST** ensure that :term:`jQuery` and the
+:term:`jquery.autocomplete` plugin are available to the page where the
+:class:`deform.widget.AutocompleteInputWidget` widget is rendered.
+
+For confenience a version of the :term:`jquery.autocomplete` is
+included in the :mod:`deform` static directory. Additionally, the
+:term:`jquery.autocomplete` styles for the selection box are also
+included in :mod:`deform` static. See
+:ref:`_using_deform_static_library` for more information about using
+included libraries from your application.
+
+A very simple example of using
+:class:`deform.widget.AutocompleteInputWidget` follows:
+
+.. code-block:: python
+
+   form['frozznobs'].widget = AutocompleteInputWidget(
+                                values=['spam', 'eggs', 'bar', 'baz'])
+
+Instead of a list of values a URL can be provided to values:
+
+.. code-block:: python
+
+   form['frobsnozz'].widget = AutocompleteInputWidget(
+                                values='http://example.com/someapi')
+
+In the above case a call to the url should provide results one item
+per line in the response. Something like::
+
+    item-one
+    item-two
+    item-three
+
+
+Some options for the :term:`jquery.autocomplete` plugin are mapped and
+can be passed to the widget. See
+:class:`deform.widget.AutocompleteInputWidget` for details regarding the
+available options. Passing options looks like:
+
+.. code-block:: python
+
+   form['nobsfrozz'].widget = AutocompleteInputWidget(
+				values=['spam, 'eggs', 'bar', 'baz'],
+                                options={'autofill' : True})
+
+When :class:`deform.widget.AutocompleteInputWidget` is used, the
+:term:`jquery.autocomplete` library must be loaded into the page
+serving the form for the mask argument to have any effect.  A copy
+ of this library is available in the ``static/scripts`` directory of
+the :mod:`deform` package itself.
+
+See `http://localhost:8521/autocomplete_input/
+<http://localhost:8521/autocomplete_input/>`_ and
+`http://localhost:8521/autocomplete_remote_input/
+<http://localhost:8521/autocomplete_remote_input/>`_
+for working examples. A working example of a remote URL providing
+completion data can br found at
+`http://localhost:8521/autocomplete_input_values
+<http://localhost:8521/autocomplete_input_values>`_.	
+
+Use of :class:`deform.widget.AutocompleteInputWidget` is not a
+replacement for server-side validation of the field; it is purely a UI
+affordance.  If the data must be checked at input time a separate
+:term:`validator` should be attached to the related schema node.
+
+
+
+
 Creating a New Schema Type
 --------------------------
 

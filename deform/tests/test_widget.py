@@ -124,6 +124,113 @@ class TestTextInputWidget(unittest.TestCase):
         result = widget.deserialize(field, pstruct)
         self.assertEqual(result, null)
 
+class TestAutocompleteInputWidget(unittest.TestCase):
+    def _makeOne(self, **kw):
+        from deform.widget import AutocompleteInputWidget
+        return AutocompleteInputWidget(**kw)
+
+    def test_serialize_null(self):
+        from colander import null
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        field = DummyField(None, renderer=renderer)
+        widget.serialize(field, null)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], '')
+
+    def test_serialize_None(self):
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        field = DummyField(None, renderer=renderer)
+        widget.serialize(field, None)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], '')
+
+    def test_serialize_url(self):
+        try:
+            import json
+        except ImportError: #PRAGMA: nocover
+            import simplejson as json
+        widget = self._makeOne()
+        url='http://example.com'
+        widget.values = url
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer=renderer)
+        cstruct = 'abc'
+        widget.serialize(field, cstruct)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], cstruct)
+        self.assertEqual(renderer.kw['options'],
+                         '{"delay": 400, "max": 10, "autoFill": false, "minChars": 1, "mustMatch": false}')
+        self.assertEqual(renderer.kw['values'],
+                         json.dumps(url))
+
+    def test_serialize_iterable(self):
+        try:
+            import json
+        except ImportError: #PRAGMA: nocover
+            import simplejson as json
+        widget = self._makeOne()
+        vals = [1,2,3,4]
+        widget.values = vals
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer=renderer)
+        cstruct = 'abc'
+        widget.serialize(field, cstruct)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], cstruct)
+        self.assertEqual(renderer.kw['options'],
+                         '{"delay": 10, "max": 10, "autoFill": false, "minChars": 1, "mustMatch": false}')
+        self.assertEqual(renderer.kw['values'],
+                         json.dumps(vals))
+
+    def test_serialize_not_null_readonly(self):
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer=renderer)
+        cstruct = 'abc'
+        widget.serialize(field, cstruct, readonly=True)
+        self.assertEqual(renderer.template, widget.readonly_template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], cstruct)
+
+    def test_deserialize_strip(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = ' abc '
+        result = widget.deserialize(field, pstruct)
+        self.assertEqual(result, 'abc')
+
+    def test_deserialize_no_strip(self):
+        widget = self._makeOne(strip=False)
+        field = DummyField()
+        pstruct = ' abc '
+        result = widget.deserialize(field, pstruct)
+        self.assertEqual(result, ' abc ')
+
+    def test_deserialize_null(self):
+        from colander import null
+        widget = self._makeOne(strip=False)
+        field = DummyField()
+        result = widget.deserialize(field, null)
+        self.assertEqual(result, null)
+
+    def test_deserialize_emptystring(self):
+        from colander import null
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = ''
+        result = widget.deserialize(field, pstruct)
+        self.assertEqual(result, null)
+
+
 class TestDateInputWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import DateInputWidget

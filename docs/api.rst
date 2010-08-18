@@ -61,6 +61,9 @@ Widget-Related
 .. autoclass:: TextInputWidget
    :members:
 
+.. autoclass:: AutocompleteInputWidget
+   :members:
+
 .. autoclass:: HiddenWidget
    :members:
 

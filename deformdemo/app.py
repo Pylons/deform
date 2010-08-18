@@ -160,6 +160,45 @@ class DeformDemo(object):
         form['text'].widget = deform.widget.TextInputWidget(size=60)
         return self.render_form(form)
 
+    @bfg_view(renderer='templates/form.pt', name='autocomplete_input')
+    @demonstrate('Autocomplete Input Widget')
+    def autocomplete_input(self):
+        class Schema(colander.Schema):
+            text = colander.SchemaNode(
+                colander.String(),
+                validator=colander.Length(max=100),
+                description='Enter some text (Hint: try "b" or "t")')
+        schema = Schema()
+        choices = ['bar', 'baz', 'two', 'three']
+        form = deform.Form(schema, buttons=('submit',))
+        form['text'].widget = deform.widget.AutocompleteInputWidget(
+            size=60,
+            values = choices)
+        return self.render_form(form)
+
+    @bfg_view(renderer='templates/form.pt', name='autocomplete_remote_input')
+    @demonstrate('Autocomplete Input Widget with Remote Data Source')
+    def autocomplete_remote_input(self):
+        class Schema(colander.Schema):
+            text = colander.SchemaNode(
+                colander.String(),
+                validator=colander.Length(max=100),
+                description='Enter some text (Hint: try "b" or "t")')
+        schema = Schema()
+        url = '/autocomplete_input_values'
+        form = deform.Form(schema, buttons=('submit',))
+        form['text'].widget = deform.widget.AutocompleteInputWidget(
+            size=60,
+            values = url)
+        return self.render_form(form)
+
+    @bfg_view(renderer='string', name='autocomplete_input_values')
+    def autocomplete_input_values(self):
+        text = self.request.params.get('q', '')
+        choices = "\n".join([x for x in ['bar', 'baz', 'two', 'three'] 
+                             if x.startswith(text)])
+        return choices
+
     @bfg_view(renderer='templates/form.pt', name='textarea')
     @demonstrate('Text Area Widget')
     def textarea(self):

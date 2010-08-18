@@ -110,3 +110,24 @@ Glossary
      has the ability to convert HTML TEXTAREA fields or other HTML
      elements to editor instances. TinyMCE is very easy to integrate
      into other Content Management Systems.
+
+   jquery.autocomplete
+     A  :term:`jQuery` plugin library that allows for autocompleting a
+     value in a text input, making it easier to find and select a
+     value from a possibly large list. The data may be local or
+     remote. See also `http://docs.jquery.com/Plugins/Autocomplete
+     <http://docs.jquery.com/Plugins/Autocomplete>`_ for more details.
+
+   xhr
+     ``xhr`` an XMLHTTPRequest. See also
+     `http://www.w3.org/TR/XMLHttpRequest/ 
+     <http://www.w3.org/TR/XMLHttpRequest/>`_.
+
+   JSON
+     ``JSON`` (JavaScript Object Notation) is a lightweight
+     data-interchange format. It is easy for humans to read and write.
+     See also `http://www.json.org/ <http://www.json.org/>`_.
+
+   jQuery
+     `jQuery <http://jquery.com/>`_ is a JavaScript library for making
+     client side changes to HTML.

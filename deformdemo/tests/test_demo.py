@@ -1547,6 +1547,86 @@ class TextInputWidgetTests(unittest.TestCase):
         captured = browser.get_text('css=#captured')
         self.assertEqual(captured, "{'text': u'hello'}")
 
+class AutocompleteInputWidgetTests(unittest.TestCase):
+    url = "/autocomplete_input/"
+    def test_render_default(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        self.failUnless(browser.is_text_present("Autocomplete Input Widget"))
+        self.assertEqual(browser.get_attribute("deformField1@name"), 'text')
+        self.assertEqual(browser.get_attribute("deformField1@type"), 'text')
+        self.assertEqual(browser.get_value("deformField1"), '')
+        self.assertEqual(browser.get_text('css=.req'), '*')
+        self.assertEqual(browser.get_text('css=#captured'), 'None')
+
+    def test_submit_empty(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.click('submit')
+        browser.wait_for_page_to_load("30000")
+        self.failUnless(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertEqual(browser.get_text('css=#error-deformField1'),
+                         'Required')
+        captured = browser.get_text('css=#captured')
+        self.assertEqual(captured, 'None')
+
+    def test_submit_filled(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.type_keys('deformField1', 'b')
+        import time
+        time.sleep(.2)
+        self.failUnless(browser.is_text_present('bar'))
+        self.failUnless(browser.is_text_present('baz'))
+        browser.click("//body[@id='public']/div[2]/ul/li[2]")
+        browser.click('submit')
+        browser.wait_for_page_to_load("30000")
+        self.failIf(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertEqual(browser.get_value('deformField1'), u'bar')
+        captured = browser.get_text('css=#captured')
+        self.assertEqual(captured, "{'text': u'bar'}")
+
+class AutocompleteRemoteInputWidgetTests(unittest.TestCase):
+    url = "/autocomplete_remote_input/"
+    def test_render_default(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        self.failUnless(browser.is_text_present(
+                "Autocomplete Input Widget with Remote Data Source"))
+        self.assertEqual(browser.get_attribute("deformField1@name"), 'text')
+        self.assertEqual(browser.get_attribute("deformField1@type"), 'text')
+        self.assertEqual(browser.get_value("deformField1"), '')
+        self.assertEqual(browser.get_text('css=.req'), '*')
+        self.assertEqual(browser.get_text('css=#captured'), 'None')
+
+    def test_submit_empty(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.click('submit')
+        browser.wait_for_page_to_load("30000")
+        self.failUnless(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertEqual(browser.get_text('css=#error-deformField1'),
+                         'Required')
+        captured = browser.get_text('css=#captured')
+        self.assertEqual(captured, 'None')
+
+    def test_submit_filled(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.type_keys('deformField1', 't')
+        import time
+        time.sleep(1)
+        self.failUnless(browser.is_text_present('two'))
+        self.failUnless(browser.is_text_present('three'))
+        browser.click("//body[@id='public']/div[2]/ul/li[1]")
+        browser.click('submit')
+        browser.wait_for_page_to_load("30000")
+        self.failIf(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertEqual(browser.get_value('deformField1'), u'two')
+        captured = browser.get_text('css=#captured')
+        self.assertEqual(captured, "{'text': u'two'}")
+
+
 class TextAreaWidgetTests(unittest.TestCase):
     url = "/textarea/"
     def test_render_default(self):
