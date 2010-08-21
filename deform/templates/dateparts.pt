@@ -2,13 +2,13 @@
   <input type="hidden" name="__start__" value="${field.name}:mapping"/>
   <label for="${field.oid}">Year</label>
   <input type="text" name="year" value="${year}" 
-         tal:attributes="size field.widget.size" id="${field.oid}"/>
+         tal:attributes="size field.widget.size; class field.widget.css_class;" id="${field.oid}"/>
   <label for="${field.oid}-month">Month</label>
   <input type="text" name="month" value="${month}" 
-         tal:attributes="size field.widget.size" id="${field.oid}-month"/>
+         tal:attributes="size field.widget.size; class field.widget.css_class;" id="${field.oid}-month"/>
   <label for="${field.oid}-day">Day</label>
   <input type="text" name="day" value="${day}" 
-         tal:attributes="size field.widget.size" id="${field.oid}-day"/>
+         tal:attributes="size field.widget.size; class field.widget.css_class;" id="${field.oid}-day"/>
   <input type="hidden" name="__end__" value="${field.name}:mapping"/>
 </div>
 

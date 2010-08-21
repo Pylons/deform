@@ -28,14 +28,15 @@ class Form(field.Field):
 
     formid
         The identifier for this form.  This value will be used as the
-        value of a hidden form input control (``__formid__``) which
-        will be placed in this form's rendering.  You should pass a
-        string value for ``formid`` when more than one Deform form is
-        placed into a single page and both share the same action.
-        When one of the forms on the page is posted, your code will to
-        be able to decide which of those forms was posted based on the
-        differing values of ``__formid__``.  By default, ``formid`` is
-        ``deform``.
+        HTML ``id`` attribute of the rendered HTML form.  It will also
+        be used as the value of a hidden form input control
+        (``__formid__``) which will be placed in this form's
+        rendering.  You should pass a string value for ``formid`` when
+        more than one Deform form is placed into a single page and
+        both share the same action.  When one of the forms on the page
+        is posted, your code will to be able to decide which of those
+        forms was posted based on the differing values of
+        ``__formid__``.  By default, ``formid`` is ``deform``.
 
     use_ajax
        If this option is ``True``, the form will use AJAX (actually

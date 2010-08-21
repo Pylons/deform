@@ -3,7 +3,7 @@
     <tal:loop tal:repeat="choice field.widget.values">
      <tal:def tal:define="(value, description) choice">
       <label for="${field.oid}-${repeat.choice.index}">${description}</label>
-        <input tal:attributes="checked value in cstruct"
+        <input tal:attributes="checked value in cstruct; class field.widget.css_class;"
                type="checkbox"
                name="checkbox"
                value="${value}"

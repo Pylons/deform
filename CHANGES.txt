@@ -30,6 +30,13 @@ Features
   a text input that can be supplied a URL or iterable of choices to
   ease the search and selection of a finite set of choices.
 
+- The ``deform.widget.Widget`` class now accepts an extra keyword
+  argument in its constructor: ``css_class``.
+
+  All widgets now inherit a ``css_class`` attribute from the base
+  ``deform.widget.Widget`` class.  If `css_class`` contains a value,
+  the primary element in the rendered widget will get a CSS ``class``
+  attribute equal to the value.
 
 0.3
 ---

@@ -159,6 +159,18 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         form['text'].widget = deform.widget.TextInputWidget(size=60)
         return self.render_form(form)
+    
+    @bfg_view(renderer='templates/form.pt', name='textinput_with_css_class')
+    @demonstrate('Text Input Widget with CSS Class')
+    def textinput_with_css_class(self):
+        class Schema(colander.Schema):
+            text = colander.SchemaNode(colander.String(),
+                                     validator=colander.Length(max=100),
+                                     description='Enter some text')
+        schema = Schema()
+        form = deform.Form(schema, buttons=('submit',))
+        form['text'].widget = deform.widget.TextInputWidget(size=60, css_class='deformWidgetWithStyle')
+        return self.render_form(form)
 
     @bfg_view(renderer='templates/form.pt', name='autocomplete_input')
     @demonstrate('Autocomplete Input Widget')

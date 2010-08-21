@@ -6,4 +6,6 @@ env
 dist
 .coverage
 .build
+*.pyc
+.svn
 

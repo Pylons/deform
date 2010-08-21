@@ -1,4 +1,3 @@
-import colander
 import csv
 import random
 import string
@@ -63,6 +62,11 @@ class Widget(object):
         The name of the CSS class attached to various tags in the form
         renderering indicating an error condition for the field
         associated with this widget.  Default: ``error``.
+    
+    css_class
+        The name of the CSS class attached to various tags in
+        the form renderering specifying a new class for the field
+        associated with this widget.  Default: ``None`` (no class).
 
     These attributes are also accepted as keyword arguments to all
     widget constructors; if they are passed, they will override the
@@ -77,6 +81,7 @@ class Widget(object):
     hidden = False
     category = 'default'
     error_class = 'error'
+    css_class = None
 
     def __init__(self, **kw):
         self.__dict__.update(kw)

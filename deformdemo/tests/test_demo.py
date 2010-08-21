@@ -1547,6 +1547,13 @@ class TextInputWidgetTests(unittest.TestCase):
         captured = browser.get_text('css=#captured')
         self.assertEqual(captured, "{'text': u'hello'}")
 
+class TextInputWithCssClassWidgetTests(unittest.TestCase):
+    url = "/textinput_with_css_class/"
+    def test_render_default(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        self.assertTrue(browser.is_element_present('css=.deformWidgetWithStyle'))
+
 class AutocompleteInputWidgetTests(unittest.TestCase):
     url = "/autocomplete_input/"
     def test_render_default(self):
