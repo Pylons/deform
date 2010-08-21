@@ -66,6 +66,10 @@ TODOs
       serialize item_field = field.children[0]`` exception instead of
       a more sensible error message.
 
+- [ ] Allow for single-field readonly renderings (e.g. on an add form,
+      the name must be provided, on an edit form the name cannot be
+      provided).
+
 - [ ] Make deform.widget.RichText render only on oid specific element
       in templates.
 
