@@ -38,6 +38,10 @@ Features
   the primary element in the rendered widget will get a CSS ``class``
   attribute equal to the value.
 
+- The ``deform.Field`` class now as an ``__iter__`` method which
+  iterates over the children fields of the field upon which it is
+  called (``for item in field`` == ``for item in field.children``).
+
 0.3
 ---
 

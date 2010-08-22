@@ -113,6 +113,15 @@ class TestField(unittest.TestCase):
         self.assertEqual(result.children, [child])
         self.assertEqual(result.children[0].cloned, True)
 
+    def test___iter__(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        child = DummyField()
+        child2 = DummyField()
+        field.children = [child, child2]
+        result = list(field.__iter__())
+        self.assertEqual(result, [child, child2])
+
     def test___getitem__success(self):
         schema = DummySchema()
         field = self._makeOne(schema)

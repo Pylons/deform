@@ -106,6 +106,10 @@ class Field(object):
                                        renderer=renderer,
                                        counter=self.counter))
 
+    def __iter__(self):
+        """ Iterate over the children fields of this field. """
+        return iter(self.children)
+
     @classmethod
     def set_zpt_renderer(cls, search_path, auto_reload=True,
                          debug=True, encoding='utf-8',

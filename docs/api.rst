@@ -11,6 +11,8 @@ Form-Related
 
    .. automethod:: __getitem__
 
+   .. automethod:: __iter__
+
 .. autoclass:: Form
    :members:
 
