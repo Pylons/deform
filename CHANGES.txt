@@ -1,8 +1,8 @@
 Changes
 =======
 
-Next Release
-------------
+0.4 (2010-08-22)
+----------------
 
 Bug Fixes
 ~~~~~~~~~
@@ -33,10 +33,11 @@ Features
 - The ``deform.widget.Widget`` class now accepts an extra keyword
   argument in its constructor: ``css_class``.
 
-  All widgets now inherit a ``css_class`` attribute from the base
+- All widgets now inherit a ``css_class`` attribute from the base
   ``deform.widget.Widget`` class.  If `css_class`` contains a value,
-  the primary element in the rendered widget will get a CSS ``class``
-  attribute equal to the value.
+  the "primary" element in the rendered widget will get a CSS
+  ``class`` attribute equal to the value ("primary" is defined by the
+  widget template's implementor).
 
 - The ``deform.Field`` class now as an ``__iter__`` method which
   iterates over the children fields of the field upon which it is

@@ -34,7 +34,7 @@ if sys.version_info <(2,6,0):
 
 setupkw = dict(
     name='deform',
-    version='0.3',
+    version='0.4',
     description='Another form generation library',
     long_description=README + '\n\n' + CHANGES,
     classifiers=[
