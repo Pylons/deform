@@ -181,64 +181,96 @@ class Field(object):
             widget_maker = widget.TextInputWidget
         return widget_maker()
 
-    def set_widgets(self, widgets):
-        """ Recursively set widgets of the child fields of this field
+    def set_widgets(self, values, separator='.'):
+        """ set widgets of the child fields of this field
         or form element.  ``widgets`` should be a dictionary in the
         form::
 
-          {'childname':{'widget':SomeWidget(),
-                        'children':{'childname': <again>}}
+           {'dotted.field.name':Widget(),
+            'dotted.field.name2':Widget()}
 
-        The above dictionary composition is the 'complex form' of
-        dictionary used to set child field widgets.  It can be used to
-        set the widgets for deeply nested field implementations.
-        ``<again>`` above represents a dictionary in the same form as
-        the ``widgets`` dict passed to ``set_widgets``; the child
-        field's ``set_widgets`` method is called with the ``<again>``
-        value (ad infinitum, recursively).
+        The keys of the dictionary are dotted names.  Each dotted name
+        refers to a single field in the tree of fields that are
+        children of the field or form object upon which this method is
+        called.
 
-        If the value of a key in the ``widgets`` dictionary is not a
-        dictionary, it will be presumed to be a widget implementation.
-        This allows for a simplified usage of ``set_widgets``, useful
-        for when the current field has only top-level children (such
-        as when it is a 'simple' form that has no nested field
-        elements).  For example, you might pass the below as
-        ``widgets`` to take advantage of the simplified form::
+        The dotted name is split on its dots and the resulting list of
+        names is used as a search path into the child fields of this
+        field in order to find a field to which to assign the
+        associated widget.
 
-          {'child1':SomeWidget(), 'child2':AnotherWidget()}
+        Two special cases exist:
 
-        If the key in the dictionary is the empty string, its value
-        will be used to set the widget of the *field upon which it is
-        called* instead the widget value of of a child field.  For
-        example::
+        - If the key is the empty string (``''``), the widget is
+          assigned to the field upon which this method is called.
 
-          {'':{'widget':SomeWidget(),
-               'children':{'childname': <again>}}
+        - If the key contains an asterisk as an element name, the
+          first child of the found element is traversed.  This is most
+          useful for sequence fields, because the first (and only)
+          child of sequence fields is always the prototype field which
+          is used to render all fields in the sequence within a form
+          rendering.
 
-        The above will set the widget implementation of the field or
-        form upon which it is called to ``SomeWidget()``, and then
-        will descend using ``children``.  When the empty string is
-        used as a key name, the remainder of the rules outlined above
-        are still in effect (such as usage of the complex and
-        simplified forms).
+        If the ``separator`` argument is passed, it is should be a
+        string to be used as the dot character when splitting the
+        dotted names (useful for supplying if one of your field object
+        has a dot in its name, and you need to use a different
+        separator).
+
+        Examples follow.  If the following form is used::
+
+          class Person(Schema):
+              first_name = SchemaNode(String())
+              last_name = SchemaNode(String())
+
+          class People(SequenceSchema):
+              person = Person()
+
+          class Conference(Schema):
+              people = People()
+              name = SchemaNode(String())
+
+          schema = Conference()
+          form = Form(schema)
+
+        The following invocations will have the following results
+        against the schema defined above:
+
+        ``form.set_widgets({'people.person.first_name':TextAreaWidget()})``
+
+          Set the ``first_name`` field's widget to a ``TextAreaWidget``.
+
+        ``form.set_widgets({'people.*.first_name':TextAreaWidget()})``
+
+          Set the ``first_name`` field's widget to a
+          ``TextAreaWidget``.
         
+        ``form.set_widgets({'people':MySequenceWidget()})``
+
+          Set the ``people`` sequence field's widget to a
+          ``MySequenceWidget``.
+
+        ``form.set_widgets({'people.*':MySequenceWidget()})``
+
+          Set the *person* field's widget to a ``MySequenceWidget``.
+
+        ``form.set_widgets({'':MyMappingWidget()})``
+
+          Set *form* node's widget to a ``MyMappingWidget``.
+
         """
-        for k, v in widgets.items():
-            if isinstance(v, dict):
-                widget = v['widget']
-                if k:
-                    field = self[k]
-                else:
-                    field = self
-                field.widget = widget
-                child_widgets = v.get('children')
-                if child_widgets:
-                    field.set_widgets(child_widgets)
+        for k, v in values.items():
+            if not k:
+                self.widget = v
             else:
-                if k:
-                    field = self[k]
-                else:
-                    field = self
+                path = k.split(separator)
+                field = self
+                while path:
+                    element = path.pop(0)
+                    if element == '*':
+                        field = field.children[0]
+                    else:
+                        field = field[element]
                 field.widget = v
                 
     @property

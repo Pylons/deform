@@ -15,6 +15,9 @@ default_widget_makers = {
     colander.Tuple: widget.Widget, # null
 }
 
+class filedict(dict):
+    pass
+
 class FileData(object):
     """
     A type representing file data; used to shuttle data back and forth
@@ -101,7 +104,7 @@ class FileData(object):
                     node,
                     _('${value} has no ${key} key', mapping=mapping)
                     )
-        result = {}
+        result = filedict()
         result['filename'] = value['filename']
         result['uid'] = value['uid']
         result['mimetype'] = value.get('mimetype')

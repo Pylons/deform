@@ -97,14 +97,14 @@ class TestField(unittest.TestCase):
         widget = field.widget
         self.assertEqual(widget.__class__, TextInputWidget)
 
-    def test_set_widgets_simple_emptykey_no_children(self):
+    def test_set_widgets_emptystring(self):
         schema = DummySchema()
         field = self._makeOne(schema, renderer='abc')
         widget = DummyWidget()
         field.set_widgets({'':widget})
         self.assertEqual(field.widget, widget)
 
-    def test_set_widgets_complex_emptykey_with_children(self):
+    def test_set_widgets_emptystring_and_children(self):
         schema = DummySchema()
         field = self._makeOne(schema, renderer='abc')
         child1 = DummyField(name='child1')
@@ -113,14 +113,14 @@ class TestField(unittest.TestCase):
         widget = DummyWidget()
         widget1 = DummyWidget()
         widget2 = DummyWidget()
-        field.set_widgets({'':{'widget':widget,
-                               'children':{'child1':widget1,
-                                           'child2':widget2}}})
+        field.set_widgets({'':widget,
+                           'child1':widget1,
+                           'child2':widget2})
         self.assertEqual(field.widget, widget)
         self.assertEqual(child1.widget, widget1)
         self.assertEqual(child2.widget, widget2)
 
-    def test_set_widgets_simple_nonempty_key_with_children(self):
+    def test_set_widgets_childrenonly(self):
         schema = DummySchema()
         field = self._makeOne(schema, renderer='abc')
         child1 = DummyField(name='child1')
@@ -133,7 +133,16 @@ class TestField(unittest.TestCase):
         self.assertEqual(child1.widget, widget1)
         self.assertEqual(child2.widget, widget2)
 
-    def test_set_widgets_complex(self):
+    def test_set_widgets_splat(self):
+        schema = DummySchema()
+        field = self._makeOne(schema, renderer='abc')
+        child1 = DummyField(name='child1')
+        field.children = [child1]
+        widget1 = DummyWidget()
+        field.set_widgets({'*':widget1})
+        self.assertEqual(child1.widget, widget1)
+
+    def test_set_widgets_nested(self):
         schema = DummySchema()
         field = self._makeOne(schema)
         schema1 = DummySchema()
@@ -155,10 +164,10 @@ class TestField(unittest.TestCase):
         widget2 = DummyWidget()
         widget3 = DummyWidget()
         widget4 = DummyWidget()
-        field.set_widgets({'child1':{'widget':widget1,
-                                     'children':{'child3':widget3}},
-                           'child2':{'widget':widget2,
-                                     'children':{'child4':widget4}}})
+        field.set_widgets({'child1':widget1,
+                           'child1.child3':widget3,
+                           'child2':widget2,
+                           'child2.child4':widget4})
         self.assertEqual(child1.widget, widget1)
         self.assertEqual(child2.widget, widget2)
         self.assertEqual(child3.widget, widget3)
