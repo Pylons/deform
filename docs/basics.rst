@@ -671,8 +671,9 @@ be loaded into the page serving the form for the mask argument to have
 any effect.  A copy of this library is available in the
 ``static/scripts`` directory of the :mod:`deform` package itself.
 
-See `http://localhost:8521/text_input_masks/
-<http://localhost:8521/text_input_masks/>`_ for a working example.
+See `http://deformdemo.repoze.org/text_input_masks/
+<http://deformdemo.repoze.org/text_input_masks/>`_ for a working
+example.
 
 Use of a text input mask is not a replacement for server-side
 validation of the field; it is purely a UI affordance.  If the data
@@ -739,14 +740,14 @@ serving the form for the mask argument to have any effect.  A copy
 of this library is available in the ``static/scripts`` directory of
 the :mod:`deform` package itself.
 
-See `http://localhost:8521/autocomplete_input/
-<http://localhost:8521/autocomplete_input/>`_ and
-`http://localhost:8521/autocomplete_remote_input/
-<http://localhost:8521/autocomplete_remote_input/>`_
-for working examples. A working example of a remote URL providing
+See `http://deformdemo.repoze.org/autocomplete_input/
+<http://deformdemo.repoze.org/autocomplete_input/>`_ and
+`http://deformdemo.repoze.org/autocomplete_remote_input/
+<http://deformdemo.repoze.org/autocomplete_remote_input/>`_ for
+working examples. A working example of a remote URL providing
 completion data can br found at
-`http://localhost:8521/autocomplete_input_values
-<http://localhost:8521/autocomplete_input_values>`_.
+`http://deformdemo.repoze.org/autocomplete_input_values
+<http://deformdemo.repoze.org/autocomplete_input_values>`_.
 
 Use of :class:`deform.widget.AutocompleteInputWidget` is not a
 replacement for server-side validation of the field; it is purely a UI
