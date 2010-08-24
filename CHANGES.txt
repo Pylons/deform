@@ -1,6 +1,16 @@
 Changes
 =======
 
+Next release
+------------
+
+Features
+~~~~~~~~
+
+- Add the ``deform.Field.set_widgets`` method, which allows a
+  (potentially nested) set of widgets to be applied to children fields
+  of the field upon whcih it is called.
+
 0.4 (2010-08-22)
 ----------------
 

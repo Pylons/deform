@@ -97,6 +97,86 @@ class TestField(unittest.TestCase):
         widget = field.widget
         self.assertEqual(widget.__class__, TextInputWidget)
 
+    def test_set_widgets_simple_emptykey_no_children(self):
+        schema = DummySchema()
+        field = self._makeOne(schema, renderer='abc')
+        widget = DummyWidget()
+        field.set_widgets({'':widget})
+        self.assertEqual(field.widget, widget)
+
+    def test_set_widgets_complex_emptykey_with_children(self):
+        schema = DummySchema()
+        field = self._makeOne(schema, renderer='abc')
+        child1 = DummyField(name='child1')
+        child2 = DummyField(name='child2')
+        field.children = [child1, child2]
+        widget = DummyWidget()
+        widget1 = DummyWidget()
+        widget2 = DummyWidget()
+        field.set_widgets({'':{'widget':widget,
+                               'children':{'child1':widget1,
+                                           'child2':widget2}}})
+        self.assertEqual(field.widget, widget)
+        self.assertEqual(child1.widget, widget1)
+        self.assertEqual(child2.widget, widget2)
+
+    def test_set_widgets_simple_nonempty_key_with_children(self):
+        schema = DummySchema()
+        field = self._makeOne(schema, renderer='abc')
+        child1 = DummyField(name='child1')
+        child2 = DummyField(name='child2')
+        field.children = [child1, child2]
+        widget1 = DummyWidget()
+        widget2 = DummyWidget()
+        field.set_widgets({'child1':widget1,
+                           'child2':widget2})
+        self.assertEqual(child1.widget, widget1)
+        self.assertEqual(child2.widget, widget2)
+
+    def test_set_widgets_complex(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        schema1 = DummySchema()
+        schema1.name = 'child1'
+        child1 = self._makeOne(schema1)
+        schema2 = DummySchema()
+        schema2.name = 'child2'
+        child2 = self._makeOne(schema2)
+        schema3 = DummySchema()
+        schema3.name = 'child3'
+        child3 = self._makeOne(schema3)
+        schema4 = DummySchema()
+        schema4.name = 'child4'
+        child4 = self._makeOne(schema4)
+        field.children = [child1, child2]
+        child1.children = [child3]
+        child2.children = [child4]
+        widget1 = DummyWidget()
+        widget2 = DummyWidget()
+        widget3 = DummyWidget()
+        widget4 = DummyWidget()
+        field.set_widgets({'child1':{'widget':widget1,
+                                     'children':{'child3':widget3}},
+                           'child2':{'widget':widget2,
+                                     'children':{'child4':widget4}}})
+        self.assertEqual(child1.widget, widget1)
+        self.assertEqual(child2.widget, widget2)
+        self.assertEqual(child3.widget, widget3)
+        self.assertEqual(child4.widget, widget4)
+
+    def test_set_widgets_complex_nonempty_key_no_children(self):
+        schema = DummySchema()
+        field = self._makeOne(schema, renderer='abc')
+        child1 = DummyField(name='child1')
+        child2 = DummyField(name='child2')
+        field.children = [child1, child2]
+        widget1 = DummyWidget()
+        widget2 = DummyWidget()
+        field.set_widgets({'child1':widget1,
+                           'child2':widget2})
+        self.assertEqual(child1.widget, widget1)
+        self.assertEqual(child2.widget, widget2)
+
     def test_clone(self):
         schema = DummySchema()
         field = self._makeOne(schema, renderer='abc')
@@ -252,11 +332,11 @@ class TestField(unittest.TestCase):
         self.failUnless(r.endswith("(schemanode 'name')>"))
 
 class DummyField(object):
-    name = 'name'
     oid = 'oid'
-    def __init__(self, schema=None, renderer=None):
+    def __init__(self, schema=None, renderer=None, name='name'):
         self.schema = schema
         self.renderer = renderer
+        self.name = name
 
     def clone(self):
         self.cloned = True

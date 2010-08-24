@@ -181,6 +181,66 @@ class Field(object):
             widget_maker = widget.TextInputWidget
         return widget_maker()
 
+    def set_widgets(self, widgets):
+        """ Recursively set widgets of the child fields of this field
+        or form element.  ``widgets`` should be a dictionary in the
+        form::
+
+          {'childname':{'widget':SomeWidget(),
+                        'children':{'childname': <again>}}
+
+        The above dictionary composition is the 'complex form' of
+        dictionary used to set child field widgets.  It can be used to
+        set the widgets for deeply nested field implementations.
+        ``<again>`` above represents a dictionary in the same form as
+        the ``widgets`` dict passed to ``set_widgets``; the child
+        field's ``set_widgets`` method is called with the ``<again>``
+        value (ad infinitum, recursively).
+
+        If the value of a key in the ``widgets`` dictionary is not a
+        dictionary, it will be presumed to be a widget implementation.
+        This allows for a simplified usage of ``set_widgets``, useful
+        for when the current field has only top-level children (such
+        as when it is a 'simple' form that has no nested field
+        elements).  For example, you might pass the below as
+        ``widgets`` to take advantage of the simplified form::
+
+          {'child1':SomeWidget(), 'child2':AnotherWidget()}
+
+        If the key in the dictionary is the empty string, its value
+        will be used to set the widget of the *field upon which it is
+        called* instead the widget value of of a child field.  For
+        example::
+
+          {'':{'widget':SomeWidget(),
+               'children':{'childname': <again>}}
+
+        The above will set the widget implementation of the field or
+        form upon which it is called to ``SomeWidget()``, and then
+        will descend using ``children``.  When the empty string is
+        used as a key name, the remainder of the rules outlined above
+        are still in effect (such as usage of the complex and
+        simplified forms).
+        
+        """
+        for k, v in widgets.items():
+            if isinstance(v, dict):
+                widget = v['widget']
+                if k:
+                    field = self[k]
+                else:
+                    field = self
+                field.widget = widget
+                child_widgets = v.get('children')
+                if child_widgets:
+                    field.set_widgets(child_widgets)
+            else:
+                if k:
+                    field = self[k]
+                else:
+                    field = self
+                field.widget = v
+                
     @property
     def errormsg(self):
         """ Return the ``msg`` attribute of the ``error`` attached to
