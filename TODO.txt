@@ -21,9 +21,10 @@ TODOs
 
 - [X] Add a multi-select checkbox widget.
 
-- [_] Add a "combo-box" widget.
+- [X] Add a "combo-box" widget (serviced by AutoComplete text box)
 
       o Mixes free-form input with a drop-down.
+
 
 - [_] Add a multi-select widget using dual lists.
 
