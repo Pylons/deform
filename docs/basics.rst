@@ -589,6 +589,28 @@ make much sense for a field called ``name`` (names aren't usually
 multiline paragraphs); but it does let us demonstrate how different
 widgets can be used for the same field.
 
+Equivalently, you can also use the :meth:`deform.Field.set_widgets`
+method to associate multiple widgets with multiple fields in a form.
+For example:
+
+.. code-block:: python
+   :linenos:
+
+   from deform import Form
+   from deform.widget import TextInputWidget
+
+   myform = Form(schema, buttons=('submit',))
+   myform.set_widgets({'people.person.name':TextAreaWidget(),
+                       'people.person.age':TextAreaWidget()})
+
+Each key in the dictionary passed to :meth:`deform.Field.set_widgets`
+is a "dotted name" which resolves to a single field element.  Each
+value in the dictionary is a widget instance.  See
+:meth:`deform.Field.set_widgets` for more information about this
+method and dotted name resolution, including special cases which
+involve the "splat" (``*``) character and the empty string as a key
+name.
+
 Not just any widget can be used with any schema type; the
 documentation for each widget usually indicates what type it can be
 used against successfully.  If all existing widgets provided by Deform
