@@ -745,9 +745,9 @@ See `http://deformdemo.repoze.org/autocomplete_input/
 `http://deformdemo.repoze.org/autocomplete_remote_input/
 <http://deformdemo.repoze.org/autocomplete_remote_input/>`_ for
 working examples. A working example of a remote URL providing
-completion data can br found at
-`http://deformdemo.repoze.org/autocomplete_input_values
-<http://deformdemo.repoze.org/autocomplete_input_values>`_.
+completion data can be found at
+`http://deformdemo.repoze.org/autocomplete_input_values/
+<http://deformdemo.repoze.org/autocomplete_input_values/>`_.
 
 Use of :class:`deform.widget.AutocompleteInputWidget` is not a
 replacement for server-side validation of the field; it is purely a UI
