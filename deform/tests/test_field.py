@@ -44,6 +44,18 @@ class TestField(unittest.TestCase):
         self.assertEqual(child_field.schema, node)
         self.assertEqual(child_field.renderer, 'abc')
 
+    def test_ctor_with_resource_registry(self):
+        from deform.field import Field
+        schema = DummySchema()
+        node = DummySchema()
+        schema.children = [node]
+        field = self._makeOne(schema, resource_registry='abc')
+        self.assertEqual(len(field.children), 1)
+        child_field = field.children[0]
+        self.assertEqual(child_field.__class__, Field)
+        self.assertEqual(child_field.schema, node)
+        self.assertEqual(child_field.resource_registry, 'abc')
+
     def test_set_default_renderer(self):
         cls = self._getTargetClass()
         old = cls.default_renderer
@@ -54,6 +66,15 @@ class TestField(unittest.TestCase):
             self.assertEqual(cls.default_renderer(), 'OK')
         finally:
             cls.set_default_renderer(old)
+
+    def test_set_default_resource_registry(self):
+        cls = self._getTargetClass()
+        old = cls.default_resource_registry
+        try:
+            cls.set_default_resource_registry('OK')
+            self.assertEqual(cls.default_resource_registry, 'OK')
+        finally:
+            cls.set_default_resource_registry(old)
 
     def test_set_zpt_renderer(self):
         cls = self._getTargetClass()
@@ -185,6 +206,27 @@ class TestField(unittest.TestCase):
                            'child2':widget2})
         self.assertEqual(child1.widget, widget1)
         self.assertEqual(child2.widget, widget2)
+
+    def test_get_widget_requirements(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        field.widget.requirements = (('abc', '123'), ('ghi', '789'))
+        child1 = DummyField(name='child1')
+        field.children = [child1]
+        result = field.get_widget_requirements()
+        self.assertEqual(result,
+                         [('abc', '123'), ('ghi', '789'), ('def', '456')])
+
+    def test_get_widget_resources(self):
+        def resource_registry(requirements):
+            self.assertEqual(requirements, [ ('abc', '123') ])
+            return 'OK'
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        field.widget.requirements = ( ('abc', '123') ,)
+        field.resource_registry = resource_registry
+        result = field.get_widget_resources()
+        self.assertEqual(result, 'OK')
 
     def test_clone(self):
         schema = DummySchema()
@@ -342,6 +384,7 @@ class TestField(unittest.TestCase):
 
 class DummyField(object):
     oid = 'oid'
+    requirements = ( ('abc', '123'), ('def', '456'))
     def __init__(self, schema=None, renderer=None, name='name'):
         self.schema = schema
         self.renderer = renderer
@@ -350,6 +393,9 @@ class DummyField(object):
     def clone(self):
         self.cloned = True
         return self
+
+    def get_widget_requirements(self, L=None):
+        return self.requirements
 
 class DummySchema(object):
     typ = None

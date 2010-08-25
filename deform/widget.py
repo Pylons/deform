@@ -68,6 +68,27 @@ class Widget(object):
         the form renderering specifying a new class for the field
         associated with this widget.  Default: ``None`` (no class).
 
+    requirements
+        A sequence of two-tuples in the form ``( (requirement_name,
+        version_id), ...)`` indicating the logical external
+        requirements needed to make this widget render properly within
+        a form.  The ``requirement_name`` is a string that *logically*
+        (not concretely, it is not a filename) identifies *one or
+        more* Javascript or CSS resources that must be included in the
+        page by the application performing the form rendering.  The
+        requirement name string value should be interpreted as a
+        logical requirement name (e.g. ``jquery`` for JQuery,
+        ``jquery.tools`` for JQuery Tools, 'tinymce' for Tiny MCE).
+        The ``version_id`` is a string indicating the version number
+        (or ``None`` if no particular version is required).  For
+        example, a rich text widget might declare ``requirements =
+        (('tinymce', '3.3.8'),)``.  See also:
+        :ref:`specifying_widget_requirements` and
+        :ref:`widget_requirements`.
+
+        Default: ``()`` (the empty tuple, meaning no special
+        requirements).
+
     These attributes are also accepted as keyword arguments to all
     widget constructors; if they are passed, they will override the
     defaults.
@@ -82,6 +103,7 @@ class Widget(object):
     category = 'default'
     error_class = 'error'
     css_class = None
+    requirements = ()
 
     def __init__(self, **kw):
         self.__dict__.update(kw)
@@ -145,7 +167,7 @@ class TextInputWidget(Widget):
         widget output (uses browser default size).
 
     template
-        The template name used to render the widget.  Default:
+       The template name used to render the widget.  Default:
         ``textinput``.
 
     readonly_template
@@ -188,6 +210,7 @@ class TextInputWidget(Widget):
     strip = True
     mask = None
     mask_placeholder = "_"
+    requirements = ( ('jquery.maskedinput', None), )
 
     def serialize(self, field, cstruct, readonly=False):
         if cstruct in (null, None):
@@ -297,6 +320,7 @@ class AutocompleteInputWidget(Widget):
     strip = True
     template = 'autocomplete_input'
     values = None
+    requirements = ( ('jquery.autocomplete', None), )
 
     def serialize(self, field, cstruct, readonly=False):
         if cstruct in (null, None):
@@ -353,6 +377,7 @@ class DateInputWidget(Widget):
     template = 'dateinput'
     readonly_template = 'readonly/textinput'
     size = None
+    requirements = ( ('dateinput', None), )
 
     def serialize(self, field, cstruct, readonly=False):
         if cstruct in (null, None):
@@ -441,7 +466,7 @@ class RichTextWidget(TextInputWidget):
     template = 'richtext'
     theme = 'simple'
     width = 640
-
+    requirements = ( ('tinymce', None), )
 
 class PasswordWidget(TextInputWidget):
     """
@@ -705,6 +730,7 @@ class CheckedInputWidget(Widget):
     confirm_subject = _('Confirm Value')
     mask = None
     mask_placeholder = "_"
+    requirements = ( ('jquery.maskedinput', None), )
 
     def serialize(self, field, cstruct, readonly=False):
         if cstruct in (null, None):
@@ -781,6 +807,7 @@ class MappingWidget(Widget):
     readonly_item_template = 'readonly/mapping_item'
     error_class = None
     category = 'structural'
+    requirements = ( ('deform', None), )
 
     def serialize(self, field, cstruct, readonly=False):
         if cstruct in (null, None):
@@ -892,6 +919,7 @@ class SequenceWidget(Widget):
     render_initial_item = False
     category = 'structural'
     closebutton_url = '/static/images/close.png'
+    requirements = ( ('deform', None), )
 
     def prototype(self, field):
         # we clone the item field to bump the oid (for easier
@@ -1194,3 +1222,120 @@ class TextAreaCSVWidget(Widget):
             for e in error.children:
                 msgs.append('line %s: %s' % (e.pos+1, e))
             field.error = Invalid(field.schema, '\n'.join(msgs))
+
+class ResourceRegistry(object):
+    """ A resource registry maps :term:`requirement` name/version
+    pairs to one or more relative resources.  A resource registry can
+    be passed to a :class:`deform.Form` constructor; if a resource
+    registry is *not* passed to the form constructor, a default
+    resource registry is used by that form.  The default resource
+    registry contains only mappings from requirement names to
+    resources required by the built-in Deform widgets (not by any
+    add-on widgets).
+
+    If the ``use_defaults`` flag is True, the default set of Deform
+    requirement-to-resource mappings is loaded into the registry.
+    Otherwise, the registry is initialized without any mappings.
+    """
+    def __init__(self, use_defaults=True):
+        if use_defaults is True:
+            self.registry = default_resources.copy()
+        else:
+            self.registry = {}
+
+    def set_js_resources(self, requirement, version, *resources):
+        """ Set the Javascript resources for the requirement/version
+        pair, using ``resources`` as the set of relative resource paths."""
+        reqt = self.registry.setdefault(requirement, {})
+        ver = reqt.setdefault(version, {})
+        ver['js'] = resources
+
+    def set_css_resources(self, requirement, version, *resources):
+        """ Set the CSS resources for the requirement/version
+        pair, using ``resources`` as the set of relative resource paths."""
+        reqt = self.registry.setdefault(requirement, {})
+        ver = reqt.setdefault(version, {})
+        ver['css'] = resources
+
+    def __call__(self, requirements):
+        """ Return a dictionary representing the resources required
+        for a particular set of requirements (as returned by
+        :meth:`deform.Field.get_widget_requirements`).  The dictionary
+        will be a mapping from resource type (``js`` and ``css`` are
+        both keys in the dictionary) to a list of relative resource
+        paths.  Each path is relative to wherever you've mounted
+        Deform's ``static`` directory in your web server.  You can use
+        the paths for each resource type to inject CSS and Javascript
+        on-demand into the head of dynamic pages that render Deform
+        forms.  """
+        result = {'js':[], 'css':[]}
+        for requirement, version in requirements:
+            tmp = self.registry.get(requirement)
+            if tmp is None:
+                raise ValueError(
+                    'Cannot resolve widget requirement %r' % requirement)
+            versioned = tmp.get(version)
+            if versioned is None:
+                raise ValueError(
+                    'Cannot resolve widget requirement %r (version %r)' % (
+                        (requirement, version)))
+            for thing in ('js', 'css'):
+                sources = versioned.get(thing)
+                if sources is None:
+                    continue
+                if not hasattr(sources, '__iter__'):
+                    sources = (sources,)
+                for source in sources:
+                    if not source in result[thing]:
+                        result[thing].append(source)
+        return result
+
+            
+default_resources = {
+    'jquery': {
+        None:{
+            'js':'scripts/jquery-1.4.2.min.js',
+            },
+        },
+    'dateinput': {
+        None:{
+            'js':('scripts/jquery-1.4.2.min.js',
+                  'scripts/jquery.tools.min.js'),
+            'css':'css/dateinput.css',
+            },
+        },
+    'jquery.tools': {
+        None:{
+            'js':('scripts/jquery-1.4.2.min.js',
+                  'scripts/jquery.tools.min.js'),
+            },
+        },
+    'jquery.maskedinput': {
+        None:{
+            'js':('scripts/jquery-1.4.2.min.js',
+                  'scripts/jquery-maskedinput-1.2.2.min.js'),
+            },
+        },
+    'jquery.autocomplete': {
+        None:{
+            'js':('scripts/jquery-1.4.2.min.js',
+                  'scripts/jquery-autocomplete.min.js'),
+            },
+        },
+    'deform': {
+        None:{
+            'js':('scripts/jquery-1.4.2.min.js',
+                  'scripts/deform.js'),
+            'css':('css/form.css',
+                   'css/theme.css'),
+            },
+        },
+    'tinymce': {
+        None:{
+            'js':'tinymce/jscripts/tiny_mce/tiny_mce.js',
+            },
+        },
+    }
+
+resource_registry = ResourceRegistry()
+

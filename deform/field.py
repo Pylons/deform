@@ -86,8 +86,10 @@ class Field(object):
 
     error = None
     default_renderer = template.default_renderer
+    default_resource_registry = widget.resource_registry
 
-    def __init__(self, schema, renderer=None, counter=None):
+    def __init__(self, schema, renderer=None, counter=None,
+                 resource_registry=None):
         self.counter = counter or itertools.count()
         self.order = self.counter.next()
         self.oid = 'deformField%s' % self.order
@@ -95,7 +97,10 @@ class Field(object):
         self.typ = self.schema.typ # required by Invalid exception
         if renderer is None:
             renderer = self.default_renderer
+        if resource_registry is None:
+            resource_registry = self.default_resource_registry
         self.renderer = renderer
+        self.resource_registry = resource_registry
         self.name = schema.name
         self.title = schema.title
         self.description = schema.description
@@ -104,7 +109,8 @@ class Field(object):
         for child in schema.children:
             self.children.append(Field(child,
                                        renderer=renderer,
-                                       counter=self.counter))
+                                       counter=self.counter,
+                                       resource_registry=resource_registry))
 
     def __iter__(self):
         """ Iterate over the children fields of this field. """
@@ -144,6 +150,20 @@ class Field(object):
         """
         cls.default_renderer = staticmethod(renderer)
 
+    @classmethod
+    def set_default_resource_registry(cls, registry):
+
+        """ Set the callable that will act as a default
+        :term:`resource registry` for instances of the associated
+        class when no ``resource_registry`` argument is provided to
+        the class' constructor.  Useful when you'd like to use
+        non-default requirement to resource path mappings for the
+        entirety of a process.
+
+        Calling this method resets the default :term:`resource registry`.
+        """
+        cls.default_resource_registry = registry
+
     def __getitem__(self, name):
         """ Return the subfield of this field named ``name`` or raise
         a :exc:`KeyError` if a subfield does not exist named ``name``."""
@@ -180,6 +200,65 @@ class Field(object):
         if widget_maker is None:
             widget_maker = widget.TextInputWidget
         return widget_maker()
+
+    def get_widget_requirements(self):
+        """ Return a sequence of two tuples in the form
+        [(``requirement_name``, ``version``), ..].
+
+        The first element in each two-tuple represents a requirement
+        name.  When a requirement name is returned as part of
+        ``get_widget_requirements``, it means that one or more CSS or
+        Javascript resources need to be loaded by the page performing
+        the form rendering in order for some widget on the page to
+        function properly.
+        
+        The second element in each two-tuple is the reqested version
+        of the library resource.  It may be ``None``, in which case
+        the version is unspecified.
+
+        See also the ``requirements`` attribute of
+        :class:`deform.Widget` and the explanation of widget
+        requirements in :ref:`get_widget_requirements`.
+        """
+        L = []
+        requirements = self.widget.requirements
+        if requirements:
+            for requirement in requirements:
+                reqt = tuple(requirement)
+                if not reqt in L:
+                    L.append(reqt)
+        for child in self.children:
+            for requirement in child.get_widget_requirements():
+                reqt = tuple(requirement)
+                if not reqt in L:
+                    L.append(reqt)
+        return L
+
+    def get_widget_resources(self, requirements=None, L=None):
+        """ Return a resources dictionary in the form {'js':[seq],
+        'css':[seq]}.  ``js`` represents Javascript resources, ``css``
+        represents CSS resources.  ``seq`` represents a sequence of
+        resource paths.  Each path in ``seq`` represents a relative
+        resource name, as defined by the mapping of a requirement to a
+        set of resource specification by the :term:`resource registry`
+        attached to this field or form.
+
+        This method may raise a :exc:`ValueError` if the resource
+        registry associated with this field or form cannot resolve a
+        requirement to a set of resource paths.
+
+        The ``requirements`` argument represents a set of requirements
+        as returned by a manual call to
+        :meth:`deform.Field.get_widget_requirements`.  If
+        ``requirements`` is not supplied, the requirement are implied
+        by calling the :meth:`deform.Field.get_widget_requirements`
+        method against this form field.
+
+        See also :ref:`get_widget_resources`.
+        """
+        if requirements is None:
+            requirements = self.get_widget_requirements()
+        return self.resource_registry(requirements)
 
     def set_widgets(self, values, separator='.'):
         """ set widgets of the child fields of this field

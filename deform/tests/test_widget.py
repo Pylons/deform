@@ -1328,6 +1328,52 @@ class TestTextAreaCSVWidget(unittest.TestCase):
         widget.handle_error(field, error)
         self.assertEqual(field.error.msg, 'line 1: Invalid\nline 2: Invalid')
 
+class TestResourceRegistry(unittest.TestCase):
+    def _makeOne(self, **kw):
+        from deform.widget import ResourceRegistry
+        return ResourceRegistry(**kw)
+
+    def test_use_defaults(self):
+        from deform.widget import default_resources
+        reg = self._makeOne()
+        self.assertEqual(reg.registry, default_resources)
+
+    def test_dont_use_defaults(self):
+        from deform.widget import default_resources
+        reg = self._makeOne(use_defaults=False)
+        self.failIfEqual(reg.registry, default_resources)
+
+    def test_set_js_resources(self):
+        reg = self._makeOne()
+        reg.set_js_resources('abc', '123', 1, 2)
+        self.assertEqual(reg.registry['abc']['123']['js'], (1,2))
+
+    def test_set_css_resources(self):
+        reg = self._makeOne()
+        reg.set_css_resources('abc', '123', 1, 2)
+        self.assertEqual(reg.registry['abc']['123']['css'], (1,2))
+
+    def test___call___no_requirement(self):
+        reg = self._makeOne()
+        self.assertRaises(ValueError, reg.__call__, ( ('abc', 'def'), ))
+        
+    def test___call___no_version(self):
+        reg = self._makeOne()
+        reg.registry = {'abc':{'123':{'js':(1,2)}}}
+        self.assertRaises(ValueError, reg.__call__, ( ('abc', 'def'), ))
+
+    def test___call___(self):
+        reg = self._makeOne()
+        reg.registry = {'abc':{'123':{'js':(1,2)}}}
+        result = reg([('abc', '123')])
+        self.assertEqual(result, {'js':[1,2], 'css':[]})
+
+    def test___call___leaf_isnt_iterable(self):
+        reg = self._makeOne()
+        reg.registry = {'abc':{'123':{'js':'1', 'css':'2'}}}
+        result = reg([('abc', '123')])
+        self.assertEqual(result, {'js':['1'], 'css':['2']})
+
 class DummyRenderer(object):
     def __init__(self, result=''):
         self.result = result

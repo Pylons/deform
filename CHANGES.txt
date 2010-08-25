@@ -7,6 +7,22 @@ Next release
 Features
 ~~~~~~~~
 
+- Added features which make it possible to inquire about which
+  resources (JavaScript and CSS resources) are required by all the
+  widgets that make up a form rendering.  Also make it possible for a
+  newly created widget to specify its requirements.  See "Widget
+  Requirements and Resources" in the widgets chapter of the
+  documentation.
+
+- Add the ``get_widget_requirements`` method to ``deform.Field``
+  objects.
+
+- Add the ``get_widget_resources`` method to ``deform.Field``
+  objects.
+
+- Allow ``deform.Field`` (and ``deform.Form``) objects to accept a
+  "resource registry" as a constructor argument.
+
 - Add the ``deform.Field.set_widgets`` method, which allows a
   (potentially nested) set of widgets to be applied to children fields
   of the field upon which it is called.
