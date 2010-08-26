@@ -1224,7 +1224,7 @@ class TextAreaCSVWidget(Widget):
             field.error = Invalid(field.schema, '\n'.join(msgs))
 
 class ResourceRegistry(object):
-    """ A resource registry maps :term:`requirement` name/version
+    """ A resource registry maps :term:`widget requirement` name/version
     pairs to one or more relative resources.  A resource registry can
     be passed to a :class:`deform.Form` constructor; if a resource
     registry is *not* passed to the form constructor, a default
@@ -1344,5 +1344,4 @@ default_resources = {
         },
     }
 
-resource_registry = ResourceRegistry()
-
+default_resource_registry = ResourceRegistry()

@@ -373,8 +373,8 @@ e.g.:
    :linenos:
 
    registry = deform.widget.ResourceRegistry()
-   registry.add_js_resources('requirement', 'ver', 'bar.js', 'baz.js')
-   registry.add_js_resources('requirement', 'ver', 'foo.css', 'baz.css')
+   registry.set_js_resources('requirement', 'ver', 'bar.js', 'baz.js')
+   registry.set_css_resources('requirement', 'ver', 'foo.css', 'baz.css')
 
    form = Form(schema, resource_registry=registry)
    resources = form.get_widget_resources()
@@ -397,8 +397,8 @@ forms by calling the
    :linenos:
 
    registry = deform.widget.ResourceRegistry()
-   registry.add_js_resources('requirement', 'ver', 'bar.js', 'baz.js')
-   registry.add_js_resources('requirement', 'ver', 'foo.css', 'baz.css')
+   registry.set_js_resources('requirement', 'ver', 'bar.js', 'baz.js')
+   registry.set_css_resources('requirement', 'ver', 'foo.css', 'baz.css')
    Form.set_default_resource_registry(registry)
 
 This will result in the ``registry`` registry being used as the

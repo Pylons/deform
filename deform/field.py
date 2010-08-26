@@ -86,7 +86,7 @@ class Field(object):
 
     error = None
     default_renderer = template.default_renderer
-    default_resource_registry = widget.resource_registry
+    default_resource_registry = widget.default_resource_registry
 
     def __init__(self, schema, renderer=None, counter=None,
                  resource_registry=None):

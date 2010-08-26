@@ -114,3 +114,14 @@ Widget-Related
 .. autoclass:: TextAreaCSVWidget
    :members:
 
+.. autoclass:: ResourceRegistry
+   :members:
+
+.. attribute:: default_resource_registry
+
+   The default :term:`resource registry` (maps Deform-internal
+   :term:`widget requirement` strings to resource paths).  This
+   resource registry is used by forms which do not specify their own
+   as a constructor argument, unless
+   :meth:`deform.Field.set_default_resource_registry` is used to
+   change the default resource registry.
