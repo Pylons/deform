@@ -22,7 +22,11 @@ class FileData(object):
     :class:`deform.widget.FileUploadWidget` widget.
 
     This type passes the value obtained during deserialization back to
-    the caller unchanged.  It serializes from a dictionary containing
+    the caller unchanged (it will be an instance of
+    ``deform.widget.filedict``, which is a plain dictionary subclass;
+    it is only a dict subclass so ``isinstance`` may be used against
+    it in highly generalized persistence circumstances to detect that
+    it is file data).  It serializes from a dictionary containing
     partial file data info into a dictionary containing full file data
     info, serializing the full file data (the widget receives the full
     file data).
