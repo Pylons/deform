@@ -266,11 +266,11 @@ the page which includes the rendered form.
 
 .. _get_widget_requirements:
 
-The (Low-Level) :meth:`deform.Form.get_widget_requirements` Method
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The (Low-Level) :meth:`deform.Field.get_widget_requirements` Method
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 After a form has been fully populated with widgets, the
-:meth:`deform.Form.get_widget_requirements` method called on the form
+:meth:`deform.Field.get_widget_requirements` method called on the form
 object will return a sequence of two-tuples.  When a non-empty
 sequence is returned by :meth:`deform.Field.get_widget_requirements`,
 it means that one or more CSS or JavaScript resources will need to be
@@ -296,10 +296,10 @@ src="http://deformdemo.repoze.org/static/scripts/jquery-1.4.2.min.js"></script>`
 within the HEAD tag of the rendered HTML page.
 
 Users will almost certainly prefer to use the
-:meth:`deform.Form.get_widget_resources` API (explained in the
+:meth:`deform.Field.get_widget_resources` API (explained in the
 succeeding section) to obtain a fully expanded list of relative
 resource paths required by a form rendering.
-:meth:`deform.Form.get_widget_requirements`, however, may be used if
+:meth:`deform.Field.get_widget_requirements`, however, may be used if
 custom requirement name to resource mappings need to be done without
 the help of a :term:`resource registry`.
 
@@ -308,8 +308,8 @@ See also the description of ``requirements`` in
 
 .. _get_widget_resources:
 
-The (High-Level) :meth:`deform.Form.get_widget_resources` Method
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The (High-Level) :meth:`deform.Field.get_widget_resources` Method
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A mechanism to resolve the requirements of a form into relative
 resource filenames exists as a method:
