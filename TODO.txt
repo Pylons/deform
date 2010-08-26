@@ -49,7 +49,7 @@ TODOs
 - [X] Use case: require (email or phonenumber; see
       require_one_or_another in deformdemo).
 
-- [ ] Add a convention that allows a widget to specify the (logical)
+- [X] Add a convention that allows a widget to specify the (logical)
       resources it requires (e.g. ["foo.css", "jquery"]).  Add an API
       that allows you to retrieve all the logical resources required
       by all widgets that are part of a form.
