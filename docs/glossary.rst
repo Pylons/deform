@@ -131,3 +131,22 @@ Glossary
    jQuery
      `jQuery <http://jquery.com/>`_ is a JavaScript library for making
      client side changes to HTML.
+
+   Resource registry
+      An attribute of a Deform form which maps :term:`widget
+      requirement` declarations made by widgets to relative file
+      paths.  Useful to obtain all the CSS and/or Javascript resources
+      required by all the widgets in a concrete form rendering.  See
+      also :ref:`get_widget_resources`.
+
+   Resource registry
+      An attribute of a Deform form which maps :term:`widget
+      requirement` declarations made by widgets to relative file
+      paths.  Useful to obtain all the CSS and/or Javascript resources
+      required by all the widgets in a concrete form rendering.  See
+      also :ref:`get_widget_resources`.
+
+   Widget requirement
+      A sequence of tuples attached to a widget object representing
+      the *logical* Javascript and/or CSS requirements of the widget.
+      See also :ref:`specifying_widget_requirements`.
