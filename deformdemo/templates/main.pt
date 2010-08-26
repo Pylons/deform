@@ -12,26 +12,14 @@
     <!-- Meta Tags -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!-- CSS -->
-    <link rel="stylesheet" href="${static}/css/form.css" type="text/css" />
-    <link rel="stylesheet" href="${static}/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="${static}/css/dateinput.css" type="text/css" />
-    <link rel="stylesheet" href="${static}/css/jquery.autocomplete.css" type="text/css" />
     <link rel="stylesheet" href="${app_url}/pygments.css" type="text/css" />
+    <tal:block repeat="reqt css_links|[]">
+      <link rel="stylesheet" href="${static}/${reqt}" type="text/css" />
+    </tal:block>
     <!-- JavaScript -->
-    <script type="text/javascript"
-            src="${static}/scripts/deform.js"></script>
-    <script type="text/javascript"
-            src="${static}/scripts/jquery-1.4.2.min.js"></script> 
-    <script type="text/javascript"
-            src="${static}/scripts/jquery.form.js"></script> 
-    <script type="text/javascript"
-            src="${static}/scripts/jquery.maskedinput-1.2.2.min.js"></script> 
-    <script type="text/javascript"
-            src="${static}/scripts/jquery.tools.min.js"></script> 
-    <script type="text/javascript"
-            src="${static}/tinymce/jscripts/tiny_mce/tiny_mce.js"></script> 
-    <script type="text/javascript"
-            src="${static}/scripts/jquery.autocomplete.min.js"></script> 
+    <tal:block repeat="reqt js_links|[]">
+      <script type="text/javascript" src="${static}/${reqt}"></script>
+    </tal:block>
 
   </head>
   

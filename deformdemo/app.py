@@ -82,6 +82,8 @@ class DeformDemo(object):
 
         code, start, end = self.get_code(2)
 
+        reqts = form.get_widget_resources()
+
         # values passed to template for rendering
         return {
             'form':html,
@@ -90,6 +92,8 @@ class DeformDemo(object):
             'start':start,
             'end':end,
             'title':self.get_title(),
+            'css_links':reqts['css'],
+            'js_links':reqts['js'],
             }
 
     def get_code(self, level):

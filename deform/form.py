@@ -74,7 +74,7 @@ class Form(field.Field):
     The :class:`deform.Form` constructor also accepts all the keyword
     arguments accepted by the :class:`deform.Field` class.  These
     keywords mean the same thing in the context of a Form as they do
-    in the context of a Field.
+    in the context of a Field (a Form is just another kind of Field).
     """
     def __init__(self, schema, action='', method='POST', buttons=(),
                  formid='deform', use_ajax=False, ajax_options='{}', **kw):

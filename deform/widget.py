@@ -1310,21 +1310,28 @@ default_resources = {
                   'scripts/jquery.tools.min.js'),
             },
         },
+    'jquery.form': {
+        None:{
+            'js':('scripts/jquery-1.4.2.min.js',
+                  'scripts/jquery.form.js'),
+            },
+        },
     'jquery.maskedinput': {
         None:{
             'js':('scripts/jquery-1.4.2.min.js',
-                  'scripts/jquery-maskedinput-1.2.2.min.js'),
+                  'scripts/jquery.maskedinput-1.2.2.min.js'),
             },
         },
     'jquery.autocomplete': {
         None:{
             'js':('scripts/jquery-1.4.2.min.js',
-                  'scripts/jquery-autocomplete.min.js'),
+                  'scripts/jquery.autocomplete.min.js'),
             },
         },
     'deform': {
         None:{
             'js':('scripts/jquery-1.4.2.min.js',
+                  'scripts/jquery.form.js',
                   'scripts/deform.js'),
             'css':('css/form.css',
                    'css/theme.css'),
