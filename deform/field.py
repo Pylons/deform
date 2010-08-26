@@ -234,14 +234,14 @@ class Field(object):
                     L.append(reqt)
         return L
 
-    def get_widget_resources(self, requirements=None, L=None):
-        """ Return a resources dictionary in the form {'js':[seq],
-        'css':[seq]}.  ``js`` represents Javascript resources, ``css``
-        represents CSS resources.  ``seq`` represents a sequence of
-        resource paths.  Each path in ``seq`` represents a relative
-        resource name, as defined by the mapping of a requirement to a
-        set of resource specification by the :term:`resource registry`
-        attached to this field or form.
+    def get_widget_resources(self, requirements=None):
+        """ Return a resources dictionary in the form ``{'js':[seq],
+        'css':[seq]}``.  ``js`` represents Javascript resources,
+        ``css`` represents CSS resources.  ``seq`` represents a
+        sequence of resource paths.  Each path in ``seq`` represents a
+        relative resource name, as defined by the mapping of a
+        requirement to a set of resource specification by the
+        :term:`resource registry` attached to this field or form.
 
         This method may raise a :exc:`ValueError` if the resource
         registry associated with this field or form cannot resolve a

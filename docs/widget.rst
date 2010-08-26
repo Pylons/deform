@@ -377,7 +377,7 @@ e.g.:
    registry.add_js_resources('requirement', 'ver', 'foo.css', 'baz.css')
 
    form = Form(schema, resource_registry=registry)
-   resources = form.get_js_resources()
+   resources = form.get_widget_resources()
    js_resources = resources['js']
    css_resources = resources['css']
    js_links = [ 'http://my.static.place/%s' % r for r in js_resources ]
