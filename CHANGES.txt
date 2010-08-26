@@ -34,6 +34,12 @@ Features
 - The default widget for ``colander.Tuple`` schema types is now
   ``deform.widget.TextInputCSV``.
 
+- The ``deform.widget.FileUploadWidget`` now returns an instance of
+  ``deform.widget.filedict`` instead of a plain dictionary to make it
+  possible (using isinstance) to tell the difference between file
+  upload data and a plain data dictionary for highly generalized
+  persistence code.
+
 0.4 (2010-08-22)
 ----------------
 

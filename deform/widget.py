@@ -1001,6 +1001,11 @@ class SequenceWidget(Widget):
                 if e.pos == num:
                     subfield.widget.handle_error(subfield, e)
 
+class filedict(dict):
+    """ Use a dict subclass to make it easy to detect file upload
+    dictionaries in application code before trying to write them to
+    persistent objects."""
+
 class FileUploadWidget(Widget):
     """
     Represent a file upload.  Meant to work with a
@@ -1060,7 +1065,7 @@ class FileUploadWidget(Widget):
 
         if hasattr(upload, 'file'):
             # the upload control had a file selected
-            data = {}
+            data = filedict()
             data['fp'] = upload.file
             data['filename'] = upload.filename
             data['mimetype'] = upload.type
