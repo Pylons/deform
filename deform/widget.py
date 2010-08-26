@@ -1396,6 +1396,7 @@ default_resources = {
         None:{
             'js':('scripts/jquery-1.4.2.min.js',
                   'scripts/jquery.autocomplete.min.js'),
+            'css':('css/jquery.autocomplete.css',),
             },
         },
     'deform': {
