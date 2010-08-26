@@ -348,7 +348,7 @@ to resolve the requirements passed to it.  You might use it like so:
    css_links = [ 'http://my.static.place/%s' % r for r in css_resources ]
    js_tags = ['<script type="text/javascript" src="%s"></script>' % link
               for link in js_links]
-   css_tags = ['<link type="text/css" href="%s"/>' % link
+   css_tags = ['<link rel="stylesheet" href="%s"/>' % link
               for link in css_links]
    tags = js_tags + css_tags
    return {'form':form.render(), 'tags':tags}
