@@ -1823,6 +1823,59 @@ class TextAreaCSVWidgetTests(unittest.TestCase):
         captured = browser.get_text('css=#captured')
         self.assertEqual(captured, "None")
 
+class TextInputCSVWidgetTests(unittest.TestCase):
+    url = "/textinputcsv/"
+    def test_render_default(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        self.failUnless(browser.is_text_present("Csv"))
+        self.assertEqual(browser.get_attribute("deformField1@name"), 'csv')
+        self.assertEqual(browser.get_value("deformField1"),
+                         '1,hello,4.5')
+        self.assertEqual(browser.get_text('css=.req'), '*')
+        self.assertEqual(browser.get_text('css=#captured'), 'None')
+
+    def test_submit_default(self):
+        from decimal import Decimal
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.click('submit')
+        browser.wait_for_page_to_load("30000")
+        self.failIf(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertEqual(browser.get_value('deformField1'),
+                         '1,hello,4.5')
+        captured = browser.get_text('css=#captured')
+        self.assertEqual(
+            eval(captured),
+            ({'csv': (1, u'hello', Decimal("4.5"))}))
+
+    def test_submit_line_error(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.type('deformField1', '1,2,wrong')
+        browser.click('submit')
+        browser.wait_for_page_to_load("30000")
+        self.failUnless(browser.is_element_present('css=.errorMsgLbl'))
+        error_node = 'css=#error-deformField1'
+        self.assertEqual(browser.get_text(error_node),
+                         u'{\'2\': u\'"wrong" is not a number\'}')
+        self.assertEqual(browser.get_value('deformField1'), '1,2,wrong')
+        captured = browser.get_text('css=#captured')
+        self.assertEqual(captured, "None")
+
+    def test_submit_empty(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.type('deformField1', '')
+        browser.click('submit')
+        browser.wait_for_page_to_load("30000")
+        self.failUnless(browser.is_element_present('css=.errorMsgLbl'))
+        error_node = 'css=#error-deformField1'
+        self.assertEqual(browser.get_text(error_node), 'Required')
+        self.assertEqual(browser.get_value('deformField1'), '')
+        captured = browser.get_text('css=#captured')
+        self.assertEqual(captured, "None")
+
 class WidgetAdapterTests(TextAreaCSVWidgetTests):
     url = "/widget_adapter/"
 

@@ -27,6 +27,13 @@ Features
   (potentially nested) set of widgets to be applied to children fields
   of the field upon which it is called.
 
+- Add the ``deform.widget.TextInputCSV`` widget.  This widget is
+  exactly like the ``deform.widget.TextAreaCSV`` widget except it
+  accepts a single line of input only.
+
+- The default widget for ``colander.Tuple`` schema types is now
+  ``deform.widget.TextInputCSV``.
+
 0.4 (2010-08-22)
 ----------------
 

@@ -114,8 +114,13 @@ Widget-Related
 .. autoclass:: TextAreaCSVWidget
    :members:
 
+.. autoclass:: TextInputCSVWidget
+   :members:
+
 .. autoclass:: ResourceRegistry
    :members:
+
+   .. automethod:: __call__
 
 .. attribute:: default_resource_registry
 

@@ -1156,9 +1156,9 @@ class DatePartsWidget(Widget):
 
 class TextAreaCSVWidget(Widget):
     """
-    Widget used for a sequence of scalars; allows for editing CSV
-    within a text area.  Used with a schema node which is a sequence
-    of tuples.
+    Widget used for a sequence of tuples of scalars; allows for
+    editing CSV within a text area.  Used with a schema node which is
+    a sequence of tuples.
     
     **Attributes/Arguments**
 
@@ -1221,6 +1221,71 @@ class TextAreaCSVWidget(Widget):
         else:
             for e in error.children:
                 msgs.append('line %s: %s' % (e.pos+1, e))
+            field.error = Invalid(field.schema, '\n'.join(msgs))
+
+
+class TextInputCSVWidget(Widget):
+    """
+    Widget used for a tuple of scalars; allows for editing a single
+    CSV line within a text input.  Used with a schema node which is a
+    tuple composed entirely of scalar values (integers, strings, etc).
+    
+    **Attributes/Arguments**
+
+    template
+        The template name used to render the widget.  Default:
+        ``textinput``.
+
+    readonly_template
+        The template name used to render the widget in read-only mode.
+        Default: ``readonly/textinput``.
+
+    size
+        The size, in columns, of the text input field.  Defaults to
+        ``None``, meaning that the ``size`` is not included in the
+        widget output (uses browser default size).
+    """
+    template = 'textinput'
+    readonly_template = 'readonly/textinput'
+    size = None
+    mask = None
+
+    def serialize(self, field, cstruct, readonly=False):
+        if cstruct is null:
+            cstruct = ''
+        textrow = getattr(field, 'unparseable', None)
+        if textrow is None:
+            outfile = StringIO.StringIO()
+            writer = csv.writer(outfile)
+            writer.writerow(cstruct)
+            textrow = outfile.getvalue().strip()
+        if readonly:
+            template = self.readonly_template
+        else:
+            template = self.template
+        return field.renderer(template, field=field, cstruct=textrow)
+        
+    def deserialize(self, field, pstruct):
+        if pstruct is null:
+            return null
+        if not pstruct.strip():
+            return null
+        try:
+            infile = StringIO.StringIO(pstruct)
+            reader = csv.reader(infile)
+            row = reader.next()
+        except Exception, e:
+            field.unparseable = pstruct
+            raise Invalid(field.schema, str(e))
+        return row
+
+    def handle_error(self, field, error):
+        msgs = []
+        if error.msg:
+            field.error = error
+        else:
+            for e in error.children:
+                msgs.append('%s' % e)
             field.error = Invalid(field.schema, '\n'.join(msgs))
 
 class ResourceRegistry(object):

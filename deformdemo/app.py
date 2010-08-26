@@ -775,6 +775,22 @@ class DeformDemo(object):
         appstruct = {'csv':[ (1, 'hello', 4.5), (2, 'goodbye', 5.5) ]}
         return self.render_form(form, appstruct=appstruct)
 
+    @bfg_view(renderer='templates/form.pt', name='textinputcsv')
+    @demonstrate('Text Input CSV Widget')
+    def textinputcsv(self):
+        class Row(colander.TupleSchema):
+            first = colander.SchemaNode(colander.Integer())
+            second = colander.SchemaNode(colander.String())
+            third = colander.SchemaNode(colander.Decimal())
+        class Schema(colander.Schema):
+            csv = Row()
+        schema = Schema()
+        form = deform.Form(schema, buttons=('submit',))
+        # we don't need to assign a widget; the text input csv widget is the
+        # default widget for tuples
+        appstruct = {'csv':(1, 'hello', 4.5)}
+        return self.render_form(form, appstruct=appstruct)
+
     @bfg_view(renderer='templates/form.pt', name='require_one_or_another')
     @demonstrate('Require One Field or Another')
     def require_one_or_another(self):
