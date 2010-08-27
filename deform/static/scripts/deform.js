@@ -1,67 +1,64 @@
-function deformAddNewItem(protonode, before) {
-    // - Clone the prototype node and add it before the "before" node.
+var deform  = {
 
-    // In order to avoid breaking accessibility:
-    //
-    // - Find all the label tags within the prototype node.
-    // - For each label referencing an id, find the node with that id.
-    // - Change the label reference and the node id to a random string. 
+    addSequenceItem: function (protonode, before) {
+        // - Clone the prototype node and add it before the "before" node.
 
-    var code = protonode.attributes['prototype'].value;
-    var html = decodeURIComponent(code);
-    var $node = $(html);
-    var $labels = $node.find('label');
-    var labeled = {};
+        // In order to avoid breaking accessibility:
+        //
+        // - Find each tag within the prototype node with an id
+        //   that has the string ``deformField(\d+)`` within it, and modify 
+        //   its id to have a random component.
+        // - For each label referencing an change id, change the label's
+        //   htmlFor attribute to the new id.
 
-    // find all labels for each id
-    for (var i = 0; i < $labels.length; i++) {
-        var label = $labels.get(i);
-        var labelid = label.htmlFor;
-        if (labelid) {
-            var tmp = labeled[labelid] || [];
-            tmp.push(label);
-            labeled[labelid] = tmp;
+        var fieldmatch = /deformField(\d+)/;
+        var code = protonode.attributes['prototype'].value;
+        var html = decodeURIComponent(code);
+        var $htmlnode = $(html);
+        var $idnodes = $htmlnode.find('[id]');
+        var genid = deform.randomString(6);
+
+        $idnodes.each(function(idx, node) {
+            var $node = $(node);
+            var oldid = $node.attr('id');
+            var newid = oldid.replace(fieldmatch, "deformField$1-" + genid);
+            $node.attr('id', newid);
+
+            var labelselector = 'label[htmlFor=' + oldid + ']';
+            var $fornodes = $htmlnode.find(labelselector);
+            $fornodes.attr('htmlFor', newid);
+            });
+
+        $htmlnode.insertBefore(before);
+    },
+
+    focusFirstInput: function () {
+        var input = $(':input').filter('[id ^= deformField]').first();
+        if (input) {
+            var raw = input.get(0);
+            if (raw) {
+                if (raw.type === 'text' || raw.type === 'file' || 
+                    raw.type == 'password' || raw.type == 'text' || 
+                    raw.type == 'textarea') { 
+                    input.focus();
+                };
+            };
         };
-    };
+    },
 
-    // for each labelid, find the node it points to and replace its id
-    // with a generated id; also set the for= attribute of the labels
-    // which reference to the same generated id
-    for (labelid in labeled) {
-        var labels = labeled[labelid];
-        var genid = randomString(10);
-        $node.find('#' + labelid).attr('id', genid);
-        for (var i = 0; i < labels.length; i++) {
-            var label = labels[i];
-            label.htmlFor = genid;
-        };
-    };
-    $node.insertBefore(before);
-}
-
-function randomString(length) {
-    var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';
-    var chars = chars.split('');
+    randomString: function (length) {
+        var chr='0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';
+        var chr = chr.split('');
     
-    if (! length) {
-        length = Math.floor(Math.random() * chars.length);
-    }
-    
-    var str = '';
-    for (var i = 0; i < length; i++) {
-        str += chars[Math.floor(Math.random() * chars.length)];
-    }
-    return str;
-}
-
-function deformFocusFirstInput() {
-    var input = $(':input').filter('[id ^= deformField]').first();
-    if (input) {
-        var raw = input.get(0);
-        if (raw.type === 'text' || raw.type === 'file' || 
-            raw.type == 'password' || raw.type == 'text' || 
-            raw.type == 'textarea') { 
-            input.focus();
+        if (! length) {
+            length = Math.floor(Math.random() * chr.length);
         };
-    };
+    
+        var str = '';
+        for (var i = 0; i < length; i++) {
+            str += chr[Math.floor(Math.random() * chr.length)];
+        };
+        return str;
+    }
+
 };

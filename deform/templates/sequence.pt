@@ -11,7 +11,7 @@
      class="deformSeqAdd"
      id="${field.oid}-seqAdd"
      onclick="javascript:
-              deformAddNewItem($(this).parent().children('.deformProto')[0],
+              deform.addSequenceItem($(this).parent().children('.deformProto')[0],
               $(this).parent().children('.deformInsertBefore')[0]);
               return false;">
     <small id="${field.oid}-addtext">${add_subitem_text}</small>

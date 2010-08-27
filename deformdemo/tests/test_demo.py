@@ -1166,7 +1166,7 @@ class SequenceOfFileUploads(unittest.TestCase):
         browser.wait_for_page_to_load("30000")
         browser.click('deformField1-seqAdd')
         path, filename = _getFile('test_demo.py')
-        browser.type("deformField3", path)
+        browser.type("dom=document.forms[0].upload", path)
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
 
@@ -1185,7 +1185,7 @@ class SequenceOfFileUploads(unittest.TestCase):
         browser.wait_for_page_to_load("30000")
         browser.click('deformField1-seqAdd')
         path, filename = _getFile('test_demo.py')
-        browser.type("deformField3", path)
+        browser.type("dom=document.forms[0].upload", path)
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
 
@@ -1220,7 +1220,7 @@ class SequenceOfFileUploads(unittest.TestCase):
         # add a new file
         browser.click('deformField1-seqAdd')
         path, filename = _getFile('test_demo.py')
-        browser.type("deformField4", path)
+        browser.type("dom=document.forms[0].upload[1]", path)
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
         self.assertEqual(browser.get_text('css=#deformField3-filename'),

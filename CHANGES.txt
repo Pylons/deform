@@ -4,12 +4,28 @@ Changes
 Next release
 ------------
 
+Features
+~~~~~~~~
+
 - Fix CSS of autocomplete widget when obtaining resources using
   ``get_widget_resources`` (``jquery.autocomplete.css`` was missing as
   a resource to the ``jquery.autocomplete`` requirement).
 
 - Sequence widgets are no longer 'structural' by default; they now
   print the label of the sequence above the sequence adder.
+
+Internal
+~~~~~~~~
+
+- The various deform* JavaScript functions in ``deform.js`` have now
+  been moved into a top-level namespace.  For example, where it was
+  necessary to call ``deformFocusFirstInput()`` before, it is now
+  necessary to call ``deform.focusFirstInput()``.
+
+- Make the TinyMCE rich text widget use ``mode: 'exact'`` instead of
+  ``mode: 'textareas'``.
+
+- Change sequence adding logic to be slightly simpler.
 
 0.5 (2010-08-25)
 ----------------
