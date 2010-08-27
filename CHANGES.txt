@@ -8,6 +8,9 @@ Next release
   ``get_widget_resources`` (``jquery.autocomplete.css`` was missing as
   a resource to the ``jquery.autocomplete`` requirement).
 
+- Sequence widgets are no longer 'structural' by default; they now
+  print the label of the sequence above the sequence adder.
+
 0.5 (2010-08-25)
 ----------------
 

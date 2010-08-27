@@ -917,7 +917,6 @@ class SequenceWidget(Widget):
     error_class = None
     add_subitem_text_template = _('Add ${subitem_title}')
     render_initial_item = False
-    category = 'structural'
     closebutton_url = '/static/images/close.png'
     requirements = ( ('deform', None), )
 
