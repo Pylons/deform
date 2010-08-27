@@ -93,7 +93,6 @@ same directory:
    <!-- Meta Tags -->
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
    <!-- JavaScript -->
-   <script type="text/javascript" src="static/scripts/wufoo.js"></script>
    <script type="text/javascript" src="static/scripts/deform.js"></script>
    <!-- CSS -->
    <link rel="stylesheet" href="static/css/form.css" type="text/css" />
