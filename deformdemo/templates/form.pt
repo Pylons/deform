@@ -10,7 +10,9 @@
     </h1>
     <span tal:replace="structure code"/>
     <script type="text/javascript">
-      deform.focusFirstInput();
+      jQuery(function() {
+         deform.load();
+         });
     </script>
   </div>
 </div>

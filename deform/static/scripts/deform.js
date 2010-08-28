@@ -1,7 +1,35 @@
 var deform  = {
+    callbacks: [],
+
+    addCallback: function (oid, callback) {
+        deform.callbacks.push([oid, callback])
+    },
+
+    clearCallbacks: function () {
+        deform.callbacks = [];
+    },
+
+    load: function() {
+        $(function() {
+            deform.processCallbacks();
+            deform.focusFirstInput();
+            });
+    },
+            
+
+    processCallbacks: function () {
+        $(deform.callbacks).each(function(num, item) {
+            var oid = item[0];
+            var callback = item[1];
+            callback(oid);
+            }
+            );
+        deform.clearCallbacks();
+    },
 
     addSequenceItem: function (protonode, before) {
         // - Clone the prototype node and add it before the "before" node.
+        //   Also ensure any callbacks are run for the widget.
 
         // In order to avoid breaking accessibility:
         //
@@ -17,19 +45,30 @@ var deform  = {
         var $htmlnode = $(html);
         var $idnodes = $htmlnode.find('[id]');
         var genid = deform.randomString(6);
+        var idmap = {};
 
         $idnodes.each(function(idx, node) {
             var $node = $(node);
             var oldid = $node.attr('id');
             var newid = oldid.replace(fieldmatch, "deformField$1-" + genid);
             $node.attr('id', newid);
-
+            idmap[oldid] = newid;
             var labelselector = 'label[htmlFor=' + oldid + ']';
             var $fornodes = $htmlnode.find(labelselector);
             $fornodes.attr('htmlFor', newid);
             });
 
         $htmlnode.insertBefore(before);
+
+        $(deform.callbacks).each(function(num, item) {
+            var oid = item[0];
+            var callback = item[1];
+            var newid = idmap[oid];
+            if (newid) { callback(newid) };
+            });
+
+        deform.clearCallbacks();
+
     },
 
     focusFirstInput: function () {

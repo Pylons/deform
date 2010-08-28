@@ -402,6 +402,74 @@ class DeformDemo(object):
         form['mapping']['date'].widget = deform.widget.DatePartsWidget()
         return self.render_form(form, success=succeed)
 
+
+    @bfg_view(renderer='templates/form.pt', name='sequence_of_autocompletes')
+    @demonstrate('Sequence of Autocomplete Widgets')
+    def sequence_of_autocompletes(self):
+        class Sequence(colander.SequenceSchema):
+            text = colander.SchemaNode(
+                colander.String(),
+                validator=colander.Length(max=100),
+                description='Enter some text (Hint: try "b" or "t")')
+        class Schema(colander.Schema):
+            texts = Sequence()
+        schema = Schema()
+        choices = ['bar', 'baz', 'two', 'three']
+        form = deform.Form(schema, buttons=('submit',))
+        textwidget = deform.widget.AutocompleteInputWidget(
+            size=60,
+            values = choices
+            )
+        form.set_widgets({'texts.*':textwidget})
+        return self.render_form(form)
+
+    @bfg_view(renderer='templates/form.pt', name='sequence_of_dateinputs')
+    @demonstrate('Sequence of Date Inputs')
+    def sequence_of_dateinputs(self):
+        import datetime
+        from colander import Range
+        class Sequence(colander.SequenceSchema):
+            date = colander.SchemaNode(
+                colander.Date(),
+                validator=Range(
+                    min=datetime.date(2010, 5, 5),
+                    min_err=_('${val} is earlier than earliest date ${min}')
+                    )
+                )
+        class Schema(colander.Schema):
+            dates = Sequence()
+        schema = Schema()
+        form = deform.Form(schema, buttons=('submit',))
+        return self.render_form(form)
+
+    @bfg_view(renderer='templates/form.pt', name='sequence_of_richtext')
+    @demonstrate('Sequence of Rich Text Widgets')
+    def sequence_of_richtext(self):
+        class Sequence(colander.SequenceSchema):
+            text = colander.SchemaNode(colander.String(),
+                                       description='Enter some text')
+        class Schema(colander.Schema):
+            texts = Sequence()
+        schema = Schema()
+        form = deform.Form(schema, buttons=('submit',))
+        form.set_widgets({'texts.*':deform.widget.RichTextWidget()})
+        return self.render_form(form)
+
+    @bfg_view(renderer='templates/form.pt',
+              name='sequence_of_masked_textinputs')
+    @demonstrate('Sequence of Date Inputs')
+    def sequence_of_masked_textinputs(self):
+        class Sequence(colander.SequenceSchema):
+            text = colander.SchemaNode(
+                colander.String())
+        class Schema(colander.Schema):
+            texts = Sequence()
+        schema = Schema()
+        form = deform.Form(schema, buttons=('submit',))
+        form.set_widgets({'texts.*':
+                          deform.widget.TextInputWidget(mask='999-99-9999')})
+        return self.render_form(form)
+
     @bfg_view(renderer='templates/form.pt', name='sequence_of_fileuploads')
     @demonstrate('Sequence of File Upload Widgets')
     def sequence_of_fileuploads(self):
@@ -414,6 +482,7 @@ class DeformDemo(object):
         form['uploads']['upload'].widget = deform.widget.FileUploadWidget(
             tmpstore)
         return self.render_form(form, success=tmpstore.clear)
+
 
     @bfg_view(renderer='templates/form.pt',
               name='sequence_of_fileuploads_with_initial_item')

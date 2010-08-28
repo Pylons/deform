@@ -32,9 +32,13 @@ demonstration website:
 - `No redirection on validation success
   <http://deformdemo.repoze.org/ajaxform/>`_
 
-Note that for AJAX forms to work, the ``jquery.form.js`` library must
-be included in the rendering of the page that includes the form
-itself.  This is the responsibility of the wrapping page; Deform does
-not help here.  This library is present in the ``static`` directory of
-the :mod:`deform` package itself.
+Note that for AJAX forms to work, the ``deform.js`` and
+``jquery.form.js`` libraries must be included in the rendering of the
+page that includes the form itself, and the ``deform.load()``
+JavaScript function must be called by the rendering in order to
+associate the form with AJAX.  This is the responsibility of the
+wrapping page.  Both libraries are present in the ``static`` directory
+of the :mod:`deform` package itself.  See :ref:`widget_requirements`
+for a way to detect which JavaScript libraries are required for a
+particular form rendering.
 

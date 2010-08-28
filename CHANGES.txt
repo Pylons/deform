@@ -11,8 +11,31 @@ Features
   ``get_widget_resources`` (``jquery.autocomplete.css`` was missing as
   a resource to the ``jquery.autocomplete`` requirement).
 
-- Sequence widgets are no longer 'structural' by default; they now
+- Sequence widgets are no longer ``structural`` by default; they now
   print the label of the sequence above the sequence adder.
+
+Bug Fixes
+~~~~~~~~~
+
+- ``RichTextWidget``, ``AutocompleteInputWidget``, ``TextInputWidget``
+  with input masks, and ``CheckedInputWidget`` with input masks could
+  not be used properly within sequences.  Now they can be.  See also
+  ``Internal`` and ``Backwards Incompatibilities`` within this
+  release's notes.  This necessitated new required ``deform.load()``
+  and ``deform.addCallback()`` JavaScript APIs.
+
+Backwards Incompatibilities
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- The JavaScript function ``deform.load()`` now *must* be called by
+  the HTML page (usually in a script tag near the end of the page, ala
+  ``<script..>deform.load()</script>``) which renders a Deform form in
+  order for widgets which use JavaScript to do proper event and
+  behavior binding.  If this function is not called, built-in widgets
+  which use JavaScript will no longer function properly.
+
+- The JavaScript function ``deformFocusFirstInput`` was removed.  This
+  is now implied by ``deform.load()``.
 
 Internal
 ~~~~~~~~
@@ -25,7 +48,33 @@ Internal
 - Make the TinyMCE rich text widget use ``mode: 'exact'`` instead of
   ``mode: 'textareas'``.
 
+- ``richtext``, ``autocomplete_input``, ``textinput``,
+  ``checked_input``, and ``dateinput``, and ``form`` templates now use
+  the new ``deform.addCallback`` indirection instead of each
+  registering their own JQuery callback or performing their own
+  initialization logic, so that each may be used properly within
+  sequences.
+
 - Change sequence adding logic to be slightly simpler.
+
+- The sample app form page now calls ``deform.load()`` rather than
+  ``deformFocusFirstInput()``.
+
+- Added new demo app views for showing a sequence of autocompletes, a
+  sequence of dateinputs, a sequence of richtext fields, and a
+  sequence of text inputs with masks and tests for same.
+
+Documentation
+~~~~~~~~~~~~~
+
+- Added a note about ``get_widget_resources`` to the "Basics"
+  chapter.
+
+- Added a note about ``deform.load()`` JavaScript requiredness to the
+  "Basics" chapter.
+
+- Add new top-level sections named ``Widget Templates`` and ``Widget
+  JavaScript`` to the "Widgets" chapter.
 
 0.5 (2010-08-25)
 ----------------

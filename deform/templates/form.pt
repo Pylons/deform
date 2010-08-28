@@ -52,28 +52,22 @@
   </fieldset>
 
 <script type="text/javascript" tal:condition="field.use_ajax">
-
-$(document).ready(function() { 
-
-  var options = {
-    target: '#${field.formid}',
-    replaceTarget: true,
-  };
-
-  var extra_options = ${field.ajax_options};
-
-  var name;
-
-  if (extra_options) {
-    for (name in extra_options) {
-      options[name] = extra_options[name];
-    };
-  };
-
-  $('#${field.formid}').ajaxForm(options);
-
-});
-
+  deform.addCallback(
+     '${field.formid}',
+     function(oid) { 
+         var options = {
+           target: '#' + oid,
+           replaceTarget: true,
+         };
+         var extra_options = ${field.ajax_options};
+         var name;
+         if (extra_options) {
+           for (name in extra_options) {
+             options[name] = extra_options[name];
+           };
+         };
+         $('#' + oid).ajaxForm(options);
+   });
 </script>
   
 </form>

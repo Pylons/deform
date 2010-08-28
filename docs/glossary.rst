@@ -143,3 +143,7 @@ Glossary
       A sequence of tuples attached to a widget object representing
       the *logical* Javascript and/or CSS requirements of the widget.
       See also :ref:`specifying_widget_requirements`.
+
+   Sequence
+      A widget which allows you to add multiple subwidgets, each of
+      the same type.  

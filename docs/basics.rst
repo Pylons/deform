@@ -369,6 +369,9 @@ configuration via:
   config.add_static_view('static', 'deform:static')
   ...
 
+Your web framework will use a different mechanism to offer up static
+files.
+
 Some of the more important files in the set of JavaScript, CSS files,
 and images present in the ``static`` directory of the :mod:`deform`
 package are the following:
@@ -408,6 +411,26 @@ page which renders a Deform form, e.g.:
      <script type="text/javascript"
              src="/static/scripts/deform.js"></script>
    </head>
+
+The :meth:`deform.field.get_widget_resources` method can be used to
+tell you which ``static`` directory-relative files are required by a
+particular form rendering, so that you can inject only the ones
+necessary into the page rendering.
+
+The JavaScript function ``deform.load()`` *must* be called by the HTML
+page (usually in a script tag near the end of the page, ala
+``<script..>deform.load()</script>``) which renders a Deform form in
+order for widgets which use JavaScript to do proper event and behavior
+binding.  If this function is not called, built-in widgets which use
+JavaScript will not function properly.  For example, you might include
+this within the body of the rendered page near its end:
+
+.. code-block:: xml
+   :linenos:
+
+   <script type="text/javascript">
+      deform.load()
+   </script>
 
 As above, the head should also contain a ``<meta>`` tag which names a
 ``utf-8`` charset in a ``Content-Type`` http-equiv.  This is a sane
@@ -753,14 +776,6 @@ Use of :class:`deform.widget.AutocompleteInputWidget` is not a
 replacement for server-side validation of the field; it is purely a UI
 affordance.  If the data must be checked at input time a separate
 :term:`validator` should be attached to the related schema node.
-
-.. _using_deform_static_library:
-
-Using Static Files in Your Own Application
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-## XXX: document me
-
 
 Creating a New Schema Type
 --------------------------
