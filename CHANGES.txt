@@ -14,8 +14,12 @@ Features
 - Sequence widgets are no longer ``structural`` by default; they now
   print the label of the sequence above the sequence adder.
 
-- Sequence widgets now scroll a newly added sequence item into view
-  when it is added.
+- The sequence widget now scrolls a newly added sequence item into
+  view when it is added.
+
+- The sequence widget now puts the sequence adding link *after* any
+  existing items in the sequence (previously the link was always
+  beneath the sequence title).
 
 - It is now possible to associate a widget with a schema node within
   the schema directly.  For example::
