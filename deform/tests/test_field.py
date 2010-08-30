@@ -92,6 +92,15 @@ class TestField(unittest.TestCase):
         finally:
             cls.set_default_renderer(old)
 
+    def test_widget_uses_schema_widget(self):
+        widget = DummyWidget()
+        schema = DummySchema()
+        schema.widget = widget
+        schema.typ = DummyType()
+        field = self._makeOne(schema)
+        widget = field.widget
+        self.assertEqual(widget, widget)
+
     def test_widget_has_maker(self):
         schema = DummySchema()
         def maker():

@@ -500,6 +500,8 @@ application which demonstrates most of the features of Deform,
 including most of the widget and data types available for use within
 an application that uses Deform.  
 
+.. _changing_a_default_widget:
+
 Changing the Default Widget Associated With a Field
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -561,12 +563,29 @@ which is the header uses the widget underneath it by default.
 :class:`colander.Tuple`
     :class:`deform.widget.Widget`
 
+.. note::
+
+   Not just any widget can be used with any schema type; the
+   documentation for each widget usually indicates what type it can be
+   used against successfully.  If all existing widgets provided by
+   Deform are insufficient, you can use a custom widget.  See
+   :ref:`writing_a_widget` for more information about writing a custom
+   widget.
+
 If you are creating a schema that contains a type which is not in this
 list, or if you'd like to use a different widget for a particular
 field, or you want to change the settings of the default widget
 associated with the type, you need to associate the field with the
-widget by hand.  This is done after the :class:`deform.Form`
-constructor is called with the schema.  For example:
+widget "by hand".  There are a number of ways to do so, as outlined in
+the sections below.
+
+Using The ``__setitem__`` Method of A Form or Field Object
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+You may use the :meth:`deform.Field.__setitem__` method after the
+:class:`deform.Form` constructor is called with the schema.  A
+:class:`deform.Form` is just another kind of :class:`deform.Field`, so
+the method works for either kind of object.  For example:
 
 .. code-block:: python
    :linenos:
@@ -612,6 +631,9 @@ make much sense for a field called ``name`` (names aren't usually
 multiline paragraphs); but it does let us demonstrate how different
 widgets can be used for the same field.
 
+Using the :meth:`deform.Field.set_widgets` Method
++++++++++++++++++++++++++++++++++++++++++++++++++
+
 Equivalently, you can also use the :meth:`deform.Field.set_widgets`
 method to associate multiple widgets with multiple fields in a form.
 For example:
@@ -634,12 +656,50 @@ method and dotted name resolution, including special cases which
 involve the "splat" (``*``) character and the empty string as a key
 name.
 
-Not just any widget can be used with any schema type; the
-documentation for each widget usually indicates what type it can be
-used against successfully.  If all existing widgets provided by Deform
-are insufficient, you can use a custom widget.  See
-:ref:`writing_a_widget` for more information about writing a custom
+As An Argument to A ``colander.SchemaNode`` Constructor
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+As of Deform 0.8, you may also specify the widget as part of the
+schema:
+
+.. code-block:: python
+   :linenos:
+
+   import colander
+
+   from deform import Form
+   from deform.widget import TextInputWidget
+
+   class Person(colander.MappingSchema):
+       name = colander.SchemaNode(colander.String(),
+                                  widget=TextAreaWidget())
+       age = colander.SchemaNode(colander.Integer(),
+                                 validator=colander.Range(0, 200))
+
+   class People(colander.SequenceSchema):
+       person = Person()
+
+   class Schema(colander.MappingSchema):
+       people = People()
+
+   schema = Schema()
+
+   myform = Form(schema, buttons=('submit',))
+
+Note above that we passed a ``widget`` argument to the ``name`` schema
+node in the ``Person`` class above.  When a schema containing a node
+with a ``widget`` argument to a schema node is rendered by Deform, the
+widget specified in the node constructor is used as the widget which
+should be associated with that node's form rendering.  In this case,
+we'll be using a :class:`deform.widget.TextAreaWidget` as the ``name``
 widget.
+
+.. note::
+
+  Widget associations done in a schema are always overridden by
+  explicit widget assigments performed via
+  :meth:`deform.Field.__setitem__` and
+  :meth:`deform.Field.set_widgets`.
 
 .. _masked_input:
 

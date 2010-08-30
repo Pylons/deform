@@ -17,6 +17,26 @@ Features
 - Sequence widgets now scroll a newly added sequence item into view
   when it is added.
 
+- It is now possible to associate a widget with a schema node within
+  the schema directly.  For example::
+
+    import colander
+    import deform.widget
+
+    class MySchema(Schema):
+        description = colander.SchemaNode(
+                          colander.String(),
+                          widget=deform.widget.RichTextWidget()
+                          )
+
+  For more information, see "Changing the Default Widget Associated
+  With a Field" in the documentation.
+
+Requirements
+~~~~~~~~~~~~
+
+- This Deform version requires ``colander`` version 0.7.2 or better.
+
 Bug Fixes
 ~~~~~~~~~
 

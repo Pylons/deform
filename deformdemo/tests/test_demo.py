@@ -2267,7 +2267,6 @@ class TextInputMaskTests(unittest.TestCase):
         self.assertEqual(browser.get_text('css=#captured'),
                          u"{'date': u'10/10/2010', 'ssn': u'140-11-8866'}")
 
-
 if __name__ == '__main__':
     setUpModule()
     try:

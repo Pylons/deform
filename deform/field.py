@@ -193,6 +193,9 @@ class Field(object):
         the ``widget`` attribute of the field for the rest of the
         lifetime of this field. If a widget is assigned to a field
         before form processing, this function will not be called."""
+        wdg = getattr(self.schema, 'widget', None)
+        if wdg is not None:
+            return wdg
         widget_maker = getattr(self.schema.typ, 'widget_maker', None)
         if widget_maker is None:
             widget_maker = schema.default_widget_makers.get(

@@ -23,7 +23,7 @@ README = open(os.path.join(here, 'README.txt')).read()
 CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
 requires = [
-    'colander>=0.7.0', # colander.null-providing
+    'colander>=0.7.2', # widget-arg providing
     'chameleon>=1.2.3', # debug arg
     'translationstring',
     'peppercorn',
