@@ -31,6 +31,9 @@ Here's the Python code:
    from deform import Form
    from deform import widget
 
+
+   colors = (('red', 'Red'), ('green', 'Green'), ('blue', 'Blue'))
+
    class DateSchema(MappingSchema):
        month = SchemaNode(Integer())
        year = SchemaNode(Integer())
@@ -40,22 +43,25 @@ Here's the Python code:
        date = DateSchema()
 
    class MySchema(MappingSchema):
-       name = SchemaNode(String(), description=LONG_DESC)
-       title = SchemaNode(String(), validator=Length(max=20),
-                          description=LONG_DESC)
-       password = SchemaNode(String(), validator=Length(min=5))
-       is_cool = SchemaNode(Boolean(), default=True)
+       name = SchemaNode(String(),
+                         description = LONG_DESC)
+       title = SchemaNode(String(),
+                          widget = widget.TextInputWidget(size=40),
+                          validator = Length(max=20),
+                          description = LONG_DESC)
+       password = SchemaNode(String(),
+                             widget = widget.CheckedPasswordWidget(),
+                             validator = Length(min=5))
+       is_cool = SchemaNode(Boolean(),
+                            default = True)
        dates = DatesSchema()
-       color = SchemaNode(String(), validator=OneOf(('red', 'blue')))
+       color = SchemaNode(String(),
+                          widget = widget.RadioChoiceWidget(values=colors),
+                          validator = OneOf(('red', 'blue')))
 
    def form_view(request):
        schema = MySchema()
        myform = Form(schema, buttons=('submit',))
-
-       myform['password'].widget = widget.CheckedPasswordWidget()
-       myform['title'].widget = widget.TextInputWidget(size=40)
-       myform['color'].widget = widget.RadioChoiceWidget(
-           values=(('red', 'Red'),('green', 'Green'),('blue', 'Blue')))
 
        if 'submit' in request.POST:
            controls = request.POST.items()
