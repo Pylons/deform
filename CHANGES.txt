@@ -14,6 +14,9 @@ Features
 - Sequence widgets are no longer ``structural`` by default; they now
   print the label of the sequence above the sequence adder.
 
+- Sequence widgets now scroll a newly added sequence item into view
+  when it is added.
+
 Bug Fixes
 ~~~~~~~~~
 
@@ -23,6 +26,11 @@ Bug Fixes
   ``Internal`` and ``Backwards Incompatibilities`` within this
   release's notes.  This necessitated new required ``deform.load()``
   and ``deform.addCallback()`` JavaScript APIs.
+
+- Radio choice widgets included within a submapping no longer put
+  their selections on separate lines.
+
+- Rich text widgets are now 500 pixels wide by default instead of 640.
 
 Backwards Incompatibilities
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~

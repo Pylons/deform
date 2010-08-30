@@ -58,7 +58,12 @@ var deform  = {
             $fornodes.attr('htmlFor', newid);
             });
 
+        var anchorid = genid + '-anchor';
+        var anchortext = '<a name="' + anchorid +'" id="' + anchorid + '"/>' 
+        $(anchortext).insertBefore(before);
         $htmlnode.insertBefore(before);
+
+        document.getElementById(anchorid).scrollIntoView();
 
         $(deform.callbacks).each(function(num, item) {
             var oid = item[0];

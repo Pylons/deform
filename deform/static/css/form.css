@@ -13,7 +13,7 @@ Last Updated : July 2, 2009
 }
 .wufoo li{
 /* 	width:62%; */
-	width:85%;
+	width:90%;
 }
 form ul{
 	margin:0;
@@ -253,7 +253,7 @@ form li div label, form li span label{
 	font-size:85%;
 	line-height:100%;
 	color:#444;
-	display:block;
+	/* display:block; */
 }
 form li div span label{
 	padding-bottom:12px;

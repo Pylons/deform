@@ -456,16 +456,17 @@ class RichTextWidget(TextInputWidget):
     theme
         The theme for the WYSIWYG editor, ``simple`` or ``advanced``.
         Defaults to ``simple``.
+
     width
         The size, in pixels, of the editor.  Defaults to
         640.
     """
     height = 240
+    width = 500
     readonly_template = 'readonly/richtextarea'
     strip = True
     template = 'richtext'
     theme = 'simple'
-    width = 640
     requirements = ( ('tinymce', None), )
 
 class PasswordWidget(TextInputWidget):
