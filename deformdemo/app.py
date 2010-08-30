@@ -466,7 +466,7 @@ class DeformDemo(object):
 
     @bfg_view(renderer='templates/form.pt',
               name='sequence_of_masked_textinputs')
-    @demonstrate('Sequence of Date Inputs')
+    @demonstrate('Sequence of Masked Text Inputs')
     def sequence_of_masked_textinputs(self):
         class Sequence(colander.SequenceSchema):
             text = colander.SchemaNode(
