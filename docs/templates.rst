@@ -53,6 +53,8 @@ the search path.
 See also the :class:`deform.ZPTRendererFactory` class and the
 :class:`deform.Field` class ``renderer`` argument.
 
+.. _creating_a_renderer:
+
 Creating A Renderer (Using an Alternative Templating System)
 ------------------------------------------------------------
 
