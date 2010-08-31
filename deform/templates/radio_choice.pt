@@ -1,8 +1,15 @@
-<span tal:repeat="choice field.widget.values" tal:omit-tag="">
-  <label for="${field.oid}-${repeat.choice.index}">${choice[1]}</label>
-  <input tal:attributes="checked choice[0] == cstruct; class field.widget.css_class;"
-         type="radio"
-         name="${field.name}"
-         value="${choice[0]}"
-         id="${field.oid}-${repeat.choice.index}"/>
-</span>
+<div>
+    <ul class="deformSet"> 
+        <span tal:repeat="choice field.widget.values" tal:omit-tag="">
+          <li class="deformSet-item">
+          <label for="${field.oid}-${repeat.choice.index}">${choice[1]}</label>
+          <input tal:attributes="checked choice[0] == cstruct; class field.widget.css_class;"
+                 type="radio"
+                 name="${field.name}"
+                 value="${choice[0]}"
+                 id="${field.oid}-${repeat.choice.index}"/>
+          </li>
+        </span>
+    </ul>
+</div>
+

@@ -45,6 +45,10 @@ Features
 - The form object's template now respects the ``css_class`` argument /
   attribute of the form node.
 
+- CheckboxChoice and RadioChoice widgets now use <ul> and <li> to
+  display individual choice elements (thanks to Ergo^).
+
+
 Requirements
 ~~~~~~~~~~~~
 
