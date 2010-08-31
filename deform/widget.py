@@ -78,11 +78,10 @@ class Widget(object):
         page by the application performing the form rendering.  The
         requirement name string value should be interpreted as a
         logical requirement name (e.g. ``jquery`` for JQuery,
-        ``jquery.tools`` for JQuery Tools, 'tinymce' for Tiny MCE).
-        The ``version_id`` is a string indicating the version number
-        (or ``None`` if no particular version is required).  For
-        example, a rich text widget might declare ``requirements =
-        (('tinymce', '3.3.8'),)``.  See also:
+        'tinymce' for Tiny MCE).  The ``version_id`` is a string
+        indicating the version number (or ``None`` if no particular
+        version is required).  For example, a rich text widget might
+        declare ``requirements = (('tinymce', '3.3.8'),)``.  See also:
         :ref:`specifying_widget_requirements` and
         :ref:`widget_requirements`.
 
@@ -355,9 +354,10 @@ class AutocompleteInputWidget(Widget):
 
 class DateInputWidget(Widget):
     """
-    Renders an ``<input type="date"/>`` date picker widget (uses JQuery Tools
-    to paint the control if the browser is not HTML5-aware).  Most useful when
-    the schema  node is a ``colander.Date`` object.
+    
+    Renders a JQuery UI date picker widget
+    (http://jqueryui.com/demos/datepicker/).  Most useful when the
+    schema node is a ``colander.Date`` object.
 
     **Attributes/Arguments**
 
@@ -1370,14 +1370,8 @@ default_resources = {
     'dateinput': {
         None:{
             'js':('scripts/jquery-1.4.2.min.js',
-                  'scripts/jquery.tools.min.js'),
-            'css':'css/dateinput.css',
-            },
-        },
-    'jquery.tools': {
-        None:{
-            'js':('scripts/jquery-1.4.2.min.js',
-                  'scripts/jquery.tools.min.js'),
+                  'scripts/jquery-ui-1.8.4.custom.min.js'),
+            'css':'css/ui-lightness/jquery-ui-1.8.4.custom.css',
             },
         },
     'jquery.form': {

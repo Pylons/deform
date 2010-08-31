@@ -85,6 +85,10 @@ Backwards Incompatibilities
 Internal
 ~~~~~~~~
 
+- The date input widget now uses JQueryUI's ``datepicker``
+  functionality rather than relying on JQuery Tools' ``date`` input.
+  The latter was broken for sequences, and the former works fine.
+
 - The various deform* JavaScript functions in ``deform.js`` have now
   been moved into a top-level namespace.  For example, where it was
   necessary to call ``deformFocusFirstInput()`` before, it is now
