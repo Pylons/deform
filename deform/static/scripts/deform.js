@@ -69,7 +69,9 @@ var deform  = {
             var oid = item[0];
             var callback = item[1];
             var newid = idmap[oid];
-            if (newid) { callback(newid) };
+            if (newid) { 
+                callback(newid)
+                };
             });
 
         deform.clearCallbacks();
@@ -84,7 +86,9 @@ var deform  = {
                 if (raw.type === 'text' || raw.type === 'file' || 
                     raw.type == 'password' || raw.type == 'text' || 
                     raw.type == 'textarea') { 
-                    input.focus();
+                    if (raw.className != "hasDatepicker") {
+                        input.focus();
+                    };
                 };
             };
         };
