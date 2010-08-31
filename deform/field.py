@@ -20,68 +20,92 @@ class Field(object):
     those widget still only need to be constructed once instead of on
     each request.
     
-    All field objects have the following attributes:
+    *Attributes*
 
-    schema
-        The schema node associated with this field.
+        schema
+            The schema node associated with this field.
 
-    widget
-        The widget associated with this field.
+        widget
+            The widget associated with this field.
 
-    order
-        An integer indicating the relative order of this field's
-        construction to its children and parents.
+        order
+            An integer indicating the relative order of this field's
+            construction to its children and parents.
 
-    oid
-        A string incorporating the ``order`` attribute that can be
-        used as a unique identifier in HTML code (often for ``id``
-        attributes of field-related elements).  An example oid is
-        ``deformField0``.
+        oid
+            A string incorporating the ``order`` attribute that can be
+            used as a unique identifier in HTML code (often for ``id``
+            attributes of field-related elements).  An example oid is
+            ``deformField0``.
 
-    name
-        An alias for self.schema.name
-    
-    title
-        An alias for self.schema.title
+        name
+            An alias for self.schema.name
+        
+        title
+            An alias for self.schema.title
 
-    description
-        An alias for self.schema.description
+        description
+            An alias for self.schema.description
 
-    required
-        An alias for self.schema.required
+        required
+            An alias for self.schema.required
 
-    typ
-        An alias for self.schema.typ
+        typ
+            An alias for self.schema.typ
 
-    children
-        Child fields of this field.
+        children
+            Child fields of this field.
 
-    error
-        The exception raised by the last attempted validation of the
-        schema element associated with this field.  By default, this
-        attribute is ``None``.  If non-None, this attribute is usually
-        an instance of the exception class
-        :exc:`colander.Invalid`, which has a ``msg`` attribute
-        providing a human-readable validation error message.
+        error
+            The exception raised by the last attempted validation of the
+            schema element associated with this field.  By default, this
+            attribute is ``None``.  If non-None, this attribute is usually
+            an instance of the exception class
+            :exc:`colander.Invalid`, which has a ``msg`` attribute
+            providing a human-readable validation error message.
 
-    errormsg
-        The ``msg`` attribute of the ``error`` attached to this field
-        or ``None`` if the ``error`` attached to this field is ``None``.
+        errormsg
+            The ``msg`` attribute of the ``error`` attached to this field
+            or ``None`` if the ``error`` attached to this field is ``None``.
 
-    renderer
-        The template :term:`renderer` associated with the form.  If a
-        renderer is not passed to the constructor, the default deform
-        renderer will be used (the :term:`default renderer`).
+        renderer
+            The template :term:`renderer` associated with the form.  If a
+            renderer is not passed to the constructor, the default deform
+            renderer will be used (the :term:`default renderer`).
 
-    counter
-        ``None`` or an instance of ``itertools.counter`` which is used
-        to generate sequential order-related attributes such as
-        ``oid`` and ``order``.
+        counter
+            ``None`` or an instance of ``itertools.counter`` which is used
+            to generate sequential order-related attributes such as
+            ``oid`` and ``order``.
 
-    ``renderer`` and ``counter`` are accepted as keyword arguments to
-    the :class:`deform.Field` constructor as well as being present as
-    attribute values.  If they are ``None`` (their default), suitable
-    values are used in their place.
+        resource_registry
+            The :term:`resource registry` associated with this field.
+
+    *Constructor Arguments*
+
+      ``renderer``, ``counter`` and ``resource_registry`` are accepted
+      as explicit keyword arguments to the :class:`deform.Field`.
+      These are also available as attribute values.  ``renderer``, if
+      passed, is a template renderer as described in
+      :ref:`creating_a_renderer`.  ``counter``, if passed, should be
+      an :attr:`itertools.counter` object (useful when rendering
+      multiple forms on the same page, see
+      `http://deformdemo.repoze.org/multiple_forms/
+      <http://deformdemo.repoze.org/multiple_forms/>`_.
+      ``resource_registry``, if passed should be a widget resource
+      registry (see also :ref:`get_widget_resources`).
+
+      If any of these values is ``None`` (their default), suitable
+      default values are used in their place.
+
+      The :class:`deform.Field` constructor also accepts *arbitrary*
+      keyword arguments.  When an 'unknown' keyword argument is
+      passed, it is attached unmolested to the form field as an
+      attribute.
+
+      All keyword arguments (explicit and unknown) are also attached to
+      all *children* nodes of the field being constructed.
+
     """
 
     error = None
@@ -89,7 +113,7 @@ class Field(object):
     default_resource_registry = widget.default_resource_registry
 
     def __init__(self, schema, renderer=None, counter=None,
-                 resource_registry=None):
+                 resource_registry=None, **kw):
         self.counter = counter or itertools.count()
         self.order = self.counter.next()
         self.oid = 'deformField%s' % self.order
@@ -106,11 +130,13 @@ class Field(object):
         self.description = schema.description
         self.required = schema.required
         self.children = []
+        self.__dict__.update(kw)
         for child in schema.children:
             self.children.append(Field(child,
                                        renderer=renderer,
                                        counter=self.counter,
-                                       resource_registry=resource_registry))
+                                       resource_registry=resource_registry,
+                                       **kw))
 
     def __iter__(self):
         """ Iterate over the children fields of this field. """

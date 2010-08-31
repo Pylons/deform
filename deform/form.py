@@ -76,6 +76,7 @@ class Form(field.Field):
     keywords mean the same thing in the context of a Form as they do
     in the context of a Field (a Form is just another kind of Field).
     """
+    css_class = 'wufoo'
     def __init__(self, schema, action='', method='POST', buttons=(),
                  formid='deform', use_ajax=False, ajax_options='{}', **kw):
         field.Field.__init__(self, schema, **kw)

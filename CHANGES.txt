@@ -36,6 +36,15 @@ Features
   For more information, see "Changing the Default Widget Associated
   With a Field" in the documentation.
 
+- The constructor of ``deform.Field`` objects (and thus
+  ``deform.Form`` objects) now accept arbitrary keyword arguments,
+  each of which is attached to the field or form object being
+  constructed, as well as being attached to its descendant fields
+  recursively.
+
+- The form object's template now respects the ``css_class`` argument /
+  attribute of the form node.
+
 Requirements
 ~~~~~~~~~~~~
 

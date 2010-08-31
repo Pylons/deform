@@ -56,6 +56,21 @@ class TestField(unittest.TestCase):
         self.assertEqual(child_field.schema, node)
         self.assertEqual(child_field.resource_registry, 'abc')
 
+    def test_ctor_with_unknown_kwargs(self):
+        from deform.field import Field
+        schema = DummySchema()
+        node = DummySchema()
+        schema.children = [node]
+        field = self._makeOne(schema, foo='foo', bar='bar')
+        self.assertEqual(len(field.children), 1)
+        child_field = field.children[0]
+        self.assertEqual(field.foo, 'foo')
+        self.assertEqual(field.bar, 'bar')
+        self.assertEqual(child_field.__class__, Field)
+        self.assertEqual(child_field.schema, node)
+        self.assertEqual(child_field.foo, 'foo')
+        self.assertEqual(child_field.bar, 'bar')
+
     def test_set_default_renderer(self):
         cls = self._getTargetClass()
         old = cls.default_renderer

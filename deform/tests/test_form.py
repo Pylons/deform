@@ -38,6 +38,17 @@ class TestForm(unittest.TestCase):
         button = form.buttons[0]
         self.assertEqual(button, None)
 
+    def test_ctor_passes_unknown_kwargs(self):
+        schema = DummySchema()
+        schema.children = [DummySchema()]
+        form = self._makeOne(schema, a='a', b='b')
+        self.assertEqual(form.schema, schema)
+        self.assertEqual(form.a, 'a')
+        self.assertEqual(form.b, 'b')
+        child = form.children[0]
+        self.assertEqual(child.a, 'a')
+        self.assertEqual(child.b, 'b')
+
 class TestButton(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.form import Button
