@@ -42,7 +42,9 @@ Features
   attribute of the form node.
 
 - CheckboxChoice and RadioChoice widgets now use <ul> and <li> to
-  display individual choice elements (thanks to Ergo^).
+  display individual choice elements (thanks to Ergo^), and both
+  widgets put the label after the element instead of before as
+  previously.
 
 - The ``deform.widget.AutocompleteInputWidget`` widget now uses
   `JQuery UI's autocomplete sublibrary

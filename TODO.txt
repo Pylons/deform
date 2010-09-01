@@ -1,7 +1,15 @@
 TODOs
 =====
 
-- [X] Error message translations.
+- [_] Easier JQuery UI theme changing.
+
+- [X] Put input element on left hand side of label in
+      RadioChoiceWidget and CheckboxChoiceWidget.
+
+- [_] RadioChoiceWidget doesn't work when used multiple times in a
+      page.
+
+- [X] Make error message translations possible.
 
 - [_] Progressive form validation (show validation errors as you
       type).  This includes (supersedes) these previously top-level
