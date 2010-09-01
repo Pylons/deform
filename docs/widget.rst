@@ -60,22 +60,23 @@ this:
 .. code-block:: html
    :linenos:
 
-   <span tal:omit-tag="">
-       <input type="text"
-              name="${field.name}"
-              value="${cstruct}" 
-              tal:attributes="size field.widget.size;
-                              class field.widget.css_class"
-              id="${field.oid}"/>
-       <script tal:condition="field.widget.values" type="text/javascript">
-         deform.addCallback(
-           '${field.oid}',
+    <span tal:omit-tag="">
+        <input type="text"
+               name="${field.name}"
+               value="${cstruct}" 
+               tal:attributes="size field.widget.size;
+                               class field.widget.css_class"
+               id="${field.oid}"/>
+        <script tal:condition="field.widget.values" type="text/javascript">
+          deform.addCallback(
+            '${field.oid}',
             function (oid) {
-              $('#' + oid).autocomplete(${values}, ${options});
-           }
-         );
-       </script>
-   </span>
+                $('#' + oid).autocomplete({source: ${values}});
+                $('#' + oid).autocomplete("option", ${options});
+            }
+          );
+        </script>
+    </span>
 
 ``field.oid`` refers to the ordered identifier that Deform gives to
 each field widget rendering.  You can see that the script which runs

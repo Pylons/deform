@@ -7,10 +7,6 @@ Next release
 Features
 ~~~~~~~~
 
-- Fix CSS of autocomplete widget when obtaining resources using
-  ``get_widget_resources`` (``jquery.autocomplete.css`` was missing as
-  a resource to the ``jquery.autocomplete`` requirement).
-
 - Sequence widgets are no longer ``structural`` by default; they now
   print the label of the sequence above the sequence adder.
 
@@ -48,6 +44,17 @@ Features
 - CheckboxChoice and RadioChoice widgets now use <ul> and <li> to
   display individual choice elements (thanks to Ergo^).
 
+- The ``deform.widget.AutocompleteInputWidget`` widget now uses
+  `JQuery UI's autocomplete sublibrary
+  <http://docs.jquery.com/UI/Autocomplete>` instead of the
+  ``jquery.autocomplete`` library to perform its job in order to
+  reduce the number of libraries needed by Deform.  Some options have
+  been changed as a result, and the set of resources returned by
+  ``form.get_widget_resources`` has changed.
+
+  This change also implies that when a widget which uses a remote URL
+  as a ``values`` input, the remote URL must return a JSON structure
+  instead of a ``\n``-delimited list of values.
 
 Requirements
 ~~~~~~~~~~~~

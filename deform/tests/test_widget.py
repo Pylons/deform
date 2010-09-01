@@ -165,7 +165,7 @@ class TestAutocompleteInputWidget(unittest.TestCase):
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], cstruct)
         self.assertEqual(renderer.kw['options'],
-                         '{"delay": 400, "max": 10, "autoFill": false, "minChars": 1, "mustMatch": false}')
+                         '{"delay": 400, "minLength": 2}')
         self.assertEqual(renderer.kw['values'],
                          json.dumps(url))
 
@@ -186,7 +186,7 @@ class TestAutocompleteInputWidget(unittest.TestCase):
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], cstruct)
         self.assertEqual(renderer.kw['options'],
-                         '{"delay": 10, "max": 10, "autoFill": false, "minChars": 1, "mustMatch": false}')
+                         '{"delay": 10, "minLength": 2}')
         self.assertEqual(renderer.kw['values'],
                          json.dumps(vals))
 

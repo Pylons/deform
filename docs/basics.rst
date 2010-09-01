@@ -772,15 +772,16 @@ Using :class:`deform.widget.AutocompleteInputWidget`
 The :class:`deform.widget.AutocompleteInputWidget` widget allows for
 client side autocompletion from provided choices in a text input
 field. To use this you **MUST** ensure that :term:`jQuery` and the
-:term:`jquery.autocomplete` plugin are available to the page where the
+:term:`jquery.ui` plugin are available to the page where the
 :class:`deform.widget.AutocompleteInputWidget` widget is rendered.
 
-For confenience a version of the :term:`jquery.autocomplete` is
-included in the :mod:`deform` static directory. Additionally, the
-:term:`jquery.autocomplete` styles for the selection box are also
-included in :mod:`deform` static. See
-:ref:`_using_deform_static_library` for more information about using
-included libraries from your application.
+For confenience a version of the :term:`jquery.ui` (which includes the
+``autocomplete`` sublibrary) is included in the :mod:`deform` static
+directory. Additionally, the :term:`jquery.ui` styles for the
+selection box are also included in the :mod:`deform` ``static``
+directory. See :ref:`using_deform_static_library` and
+:ref:`get_widget_resources` for more information about using included
+libraries from your application.
 
 A very simple example of using
 :class:`deform.widget.AutocompleteInputWidget` follows:
@@ -814,14 +815,7 @@ available options. Passing options looks like:
 
    form['nobsfrozz'].widget = AutocompleteInputWidget(
 				values=['spam, 'eggs', 'bar', 'baz'],
-                                options={'autofill' : True})
-
-
-When :class:`deform.widget.AutocompleteInputWidget` is used, the
-:term:`jquery.autocomplete` library must be loaded into the page
-serving the form for the mask argument to have any effect.  A copy
-of this library is available in the ``static/scripts`` directory of
-the :mod:`deform` package itself.
+                                min_length=1)
 
 See `http://deformdemo.repoze.org/autocomplete_input/
 <http://deformdemo.repoze.org/autocomplete_input/>`_ and

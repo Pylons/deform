@@ -185,7 +185,8 @@ class DeformDemo(object):
         choices = ['bar', 'baz', 'two', 'three']
         widget = deform.widget.AutocompleteInputWidget(
             size=60,
-            values = choices)
+            values = choices,
+            min_length=1)
         class Schema(colander.Schema):
             text = colander.SchemaNode(
                 colander.String(),
@@ -201,6 +202,7 @@ class DeformDemo(object):
     def autocomplete_remote_input(self):
         widget = deform.widget.AutocompleteInputWidget(
             size=60,
+            min_length=1,
             values = '/autocomplete_input_values')
         class Schema(colander.Schema):
             text = colander.SchemaNode(
@@ -212,12 +214,11 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='string', name='autocomplete_input_values')
+    @bfg_view(renderer='json', name='autocomplete_input_values')
     def autocomplete_input_values(self):
-        text = self.request.params.get('q', '')
-        choices = "\n".join([x for x in ['bar', 'baz', 'two', 'three'] 
-                             if x.startswith(text)])
-        return choices
+        text = self.request.params.get('term', '')
+        return [x for x in ['bar', 'baz', 'two', 'three'] 
+                if x.startswith(text)]
 
     @bfg_view(renderer='templates/form.pt', name='textarea')
     @demonstrate('Text Area Widget')

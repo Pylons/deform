@@ -231,12 +231,14 @@ class AutocompleteInputWidget(Widget):
     Renders an ``<input type="text"/>`` widget which provides
     autocompletion via a list of values.
 
-    When this option is used, the :term:`jquery.autocomplete`
-    library must be loaded into the page serving the form for
-    autocompletion to have any effect.  See :ref:`autocomplete_input`.
-    A version of :term:`jquery.autocomplete` is included in the deform
-    static directory. The default styles for the autocomplete are also
-    available in the deform static/css directory.
+    When this option is used, the :term:`jquery.ui.autocomplete`
+    library (see `http://docs.jquery.com/UI/Autocomplete
+    <http://docs.jquery.com/UI/Autocomplete>`_) must be loaded into
+    the page serving the form for autocompletion to have any effect.
+    See also :ref:`autocomplete_input`.  A version of
+    :term:`jquery.ui` which includes the autoinclude sublibrary is
+    included in the deform static directory. The default styles for
+    JQuery UI are also available in the deform static/css directory.
 
     **Attributes/Arguments**
 
@@ -268,40 +270,18 @@ class AutocompleteInputWidget(Widget):
         :term:`json` array, it will be treated as local data.
 
         If a string is provided to a URL, an :term:`xhr` request will
-        be sent to the URL. The response should be a list of values
-        one per line. i.e.::
+        be sent to the URL. The response should be a JSON
+        serialization of a list of values.  For example:
 
-          foo
-          bar
-          baz
+          ['foo', 'bar', 'baz']
 
         Defaults to ``None``.
 
-    autofill
-        ``autofill`` is an optional argument to
-        :term:`jquery.autocomplete`. It fills the text input while
-        still typing. The value will be replaced if more is typed or
-        a different selection from the selection area is selected.
-        Defaults to ``False``
-
-    minchars
-        ``minchars``  is an optional argument to
-        :term:`jquery.autocomplete`. The number of characters to wait
-        for before activating the autocomplete call.
-        Defaults to ``1``.
-
-    must_match
-        ``must_match`` is an optional argument to
-        :term:`jquery.autocomplete`. If ``True`` only values in the
-        results will be allowed in the input. Non existant values will
-        result in an empty input. Defaults to ``False``.
-
-    max
-        ``max`` is an optional argument to
-        :term:`jquery.autocomplete`. It sets the maximum number of
-        results to show in the selection area. It also adds the value
-        as a ``limit`` parameter in a remote request.
-        Defaults to ``10``.
+    min_length
+        ``min_length`` is an optional argument to
+        :term:`jquery.ui.autocomplete`. The number of characters to
+        wait for before activating the autocomplete call.  Defaults to
+        ``2``.
 
     delay
         ``delay`` is an optional argument to
@@ -309,17 +289,14 @@ class AutocompleteInputWidget(Widget):
         keypress to activate the autocomplete call.
         Defaults to ``10`` ms or ``400`` ms if a url is passed.
     """
-    autofill = False
     delay = None
-    max = 10
-    minchars = 1
-    must_match = False
+    min_length = 2
     readonly_template = 'readonly/autocomplete_input'
     size = None
     strip = True
     template = 'autocomplete_input'
     values = None
-    requirements = ( ('jquery.autocomplete', None), )
+    requirements = ( ('jqueryui', None), )
 
     def serialize(self, field, cstruct, readonly=False):
         if cstruct in (null, None):
@@ -329,10 +306,7 @@ class AutocompleteInputWidget(Widget):
             # set default delay if None
             options['delay'] = (isinstance(self.values,
                                           basestring) and 400) or 10
-        options['autoFill'] = self.autofill
-        options['minChars'] = self.minchars
-        options['mustMatch'] = self.must_match
-        options['max'] = self.max
+        options['minLength'] = self.min_length
         options = json.dumps(options)
         values = json.dumps(self.values)
         template = readonly and self.readonly_template or self.template
@@ -377,7 +351,7 @@ class DateInputWidget(Widget):
     template = 'dateinput'
     readonly_template = 'readonly/textinput'
     size = None
-    requirements = ( ('dateinput', None), )
+    requirements = ( ('jqueryui', None), )
 
     def serialize(self, field, cstruct, readonly=False):
         if cstruct in (null, None):
@@ -1367,7 +1341,7 @@ default_resources = {
             'js':'scripts/jquery-1.4.2.min.js',
             },
         },
-    'dateinput': {
+    'jqueryui': {
         None:{
             'js':('scripts/jquery-1.4.2.min.js',
                   'scripts/jquery-ui-1.8.4.custom.min.js'),
@@ -1384,13 +1358,6 @@ default_resources = {
         None:{
             'js':('scripts/jquery-1.4.2.min.js',
                   'scripts/jquery.maskedinput-1.2.2.min.js'),
-            },
-        },
-    'jquery.autocomplete': {
-        None:{
-            'js':('scripts/jquery-1.4.2.min.js',
-                  'scripts/jquery.autocomplete.min.js'),
-            'css':('css/jquery.autocomplete.css',),
             },
         },
     'deform': {
