@@ -291,7 +291,7 @@ class AutocompleteInputWidget(Widget):
     """
     delay = None
     min_length = 2
-    readonly_template = 'readonly/autocomplete_input'
+    readonly_template = 'readonly/textinput'
     size = None
     strip = True
     template = 'autocomplete_input'
