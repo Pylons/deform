@@ -231,14 +231,13 @@ class AutocompleteInputWidget(Widget):
     Renders an ``<input type="text"/>`` widget which provides
     autocompletion via a list of values.
 
-    When this option is used, the :term:`jquery.ui.autocomplete`
-    library (see `http://docs.jquery.com/UI/Autocomplete
-    <http://docs.jquery.com/UI/Autocomplete>`_) must be loaded into
-    the page serving the form for autocompletion to have any effect.
-    See also :ref:`autocomplete_input`.  A version of
-    :term:`jquery.ui` which includes the autoinclude sublibrary is
-    included in the deform static directory. The default styles for
-    JQuery UI are also available in the deform static/css directory.
+    When this option is used, the :ref:`jquery.ui.autocomplete`
+    library must be loaded into the page serving the form for
+    autocompletion to have any effect.  See also
+    :ref:`autocomplete_input`.  A version of :term:`JQuery UI` which
+    includes the autoinclude sublibrary is included in the deform
+    static directory. The default styles for JQuery UI are also
+    available in the deform static/css directory.
 
     **Attributes/Arguments**
 
@@ -801,7 +800,47 @@ class MappingWidget(Widget):
 
         for num, subfield in enumerate(field.children):
             name = subfield.name
+            oid = subfield.oid
             subval = pstruct.get(name, null)
+            if subval is null:
+                # Golly, HTML forms are so much fun!  Sit down and let
+                # me tell you a little story.  Get a blanket and some
+                # hot cocoa.
+                #
+                # Some widgets (radio choice widgets) use HTML
+                # elements where the input ``name`` attribute is used
+                # as a grouping key.  When controls from two unrelated
+                # widgets have the same ``name``, HTML selection of an
+                # element from this grouping will break (the
+                # selections made from one logical grouping will cause
+                # "another's" to change).  And indeed, when a form is
+                # generated from a complex schema, there may be more
+                # than one unrelated control on the form with the same
+                # ``name`` value, and it may happen that both are
+                # controls that are part of a grouping.  To work
+                # around this, we allow widgets to use ``field.oid``
+                # (e.g. ``deformField2``) rather than the field name
+                # as a ``name`` value (e.g. ``pepper``) in its
+                # constituent controls.
+                subval = pstruct.get(oid, null)
+                if subval is null:
+                    # But wait!  The fun doesn't end there!  When a widget
+                    # uses a control that includes an oid in its name, and
+                    # that widget is added to a *sequence*, that control's
+                    # ``name`` value is changed during the
+                    # ``deform.addSequenceItem`` JavaScript function in
+                    # order to prevent the unrelated-control-group-by-name
+                    # problem problem described above.  Each ``name``
+                    # value is mutated so that e.g. ``deformField2``
+                    # becomes ``deformField2-H7gshj``.  We cope with that
+                    # here by comparing a prefix rather than looking for
+                    # only ``oid`` as a pstruct key.
+                    prefix = oid + '-'
+                    for k, v in pstruct.items():
+                        if (k.startswith(prefix)):
+                            subval = v
+                            break
+                            
             try:
                 result[name] = subfield.deserialize(subval)
             except Invalid, e:

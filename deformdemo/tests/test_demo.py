@@ -1130,6 +1130,41 @@ class ReadOnlySequenceOfMappingTests(unittest.TestCase):
         self.assertEqual(browser.get_text('deformField9'), 'name2')
         self.assertEqual(browser.get_text('deformField10'), '25')
 
+class SequenceOfRadioChoices(unittest.TestCase):
+    url = "/sequence_of_radiochoices/"
+    def test_render_default(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        self.assertEqual(browser.get_text('deformField1-addtext'),
+                         'Add Pepper Chooser')
+        self.assertEqual(browser.get_text('css=#captured'), 'None')
+
+    def test_submit_none_added(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.click("submit")
+        browser.wait_for_page_to_load("30000")
+        self.assertEqual(browser.get_text('deformField1-addtext'),
+                         'Add Pepper Chooser')
+        self.assertEqual(browser.get_text('css=#captured'), "{'peppers': []}")
+        self.failIf(browser.is_element_present('css=.errorMsgLbl'))
+
+    def test_submit_two_filled(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.click('deformField1-seqAdd')
+        browser.click('deformField1-seqAdd')
+        browser.click(
+          '//html/body/div/div/div/form/fieldset/ul/li/div/li/div/ul/li/input')
+        browser.click(
+          '//html/body/div/div/div/form/fieldset/ul/li/div/li[2]/div/ul/li[2]/input[1]')
+        browser.click("submit")
+        browser.wait_for_page_to_load("30000")
+        self.failIf(browser.is_element_present('css=.errorMsgLbl'))
+        captured = browser.get_text('css=#captured')
+        self.assertEqual(eval(captured),
+                         {'peppers': [u'habanero', u'jalapeno']})
+
 class SequenceOfFileUploads(unittest.TestCase):
     url = "/sequence_of_fileuploads/"
     def test_render_default(self):

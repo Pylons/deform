@@ -147,3 +147,13 @@ Glossary
    Sequence
       A widget which allows you to add multiple subwidgets, each of
       the same type.  
+
+   JQuery UI
+      A library used by Deform for various widget theming, effects and
+      functionality: See `http://jqueryui.com/
+      <http://jqueryui.com/>`_.
+
+   jquery.ui.autocomplete
+      A :term:`JQuery UI` sublibrary for autocompletion of text
+      fields.  See `http://docs.jquery.com/UI/Autocomplete
+      <http://docs.jquery.com/UI/Autocomplete>`_.

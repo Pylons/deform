@@ -411,6 +411,23 @@ class DeformDemo(object):
                            ajax_options=options)
         return self.render_form(form, success=succeed)
 
+    @bfg_view(renderer='templates/form.pt', name='sequence_of_radiochoices')
+    @demonstrate('Sequence of Radio Choice Widgets')
+    def sequence_of_radiochoices(self):
+        choices = (('habanero', 'Habanero'), ('jalapeno', 'Jalapeno'),
+                   ('chipotle', 'Chipotle'))
+        class Peppers(colander.SequenceSchema):
+            pepper = colander.SchemaNode(
+                colander.String(),
+                validator=colander.OneOf([x[0] for x in choices]),
+                widget=deform.widget.RadioChoiceWidget(values=choices),
+                title='Pepper Chooser',
+                description='Select a Pepper')
+        class Schema(colander.Schema):
+            peppers = Peppers()
+        schema = Schema()
+        form = deform.Form(schema, buttons=('submit',))
+        return self.render_form(form)
 
     @bfg_view(renderer='templates/form.pt', name='sequence_of_autocompletes')
     @demonstrate('Sequence of Autocomplete Widgets')

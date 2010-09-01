@@ -58,6 +58,10 @@ Features
   as a ``values`` input, the remote URL must return a JSON structure
   instead of a ``\n``-delimited list of values.
 
+- It is now acceptable to use the field *oid* as the ``name`` of an
+  input element that is part of a mapping instead of its name (its
+  name also continues to work).
+
 Requirements
 ~~~~~~~~~~~~
 
@@ -77,6 +81,16 @@ Bug Fixes
   their selections on separate lines.
 
 - Rich text widgets are now 500 pixels wide by default instead of 640.
+
+- RadioChoiceWidgets did not work when they were used within
+  sequences.  Making them work required some changes to the
+  MappingWidget.  Their templates were also changed slightly.
+
+- To make radio choice widgets work within sequences, the
+  deform.addSequenceItem JavaScript method needed to be changed.  It
+  will now change the value of ``name`` attributes which include a
+  field marker (e.g. ``deformField1``) in the same way it already
+  changed the value of ``id`` attributes which include a field marker.
 
 Backwards Incompatibilities
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -119,8 +133,9 @@ Internal
   ``deformFocusFirstInput()``.
 
 - Added new demo app views for showing a sequence of autocompletes, a
-  sequence of dateinputs, a sequence of richtext fields, and a
-  sequence of text inputs with masks and tests for same.
+  sequence of dateinputs, a sequence of richtext fields, a sequence of
+  radio choice widgets and a sequence of text inputs with masks and
+  tests for same.
 
 Documentation
 ~~~~~~~~~~~~~

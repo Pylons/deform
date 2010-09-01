@@ -772,12 +772,12 @@ Using :class:`deform.widget.AutocompleteInputWidget`
 The :class:`deform.widget.AutocompleteInputWidget` widget allows for
 client side autocompletion from provided choices in a text input
 field. To use this you **MUST** ensure that :term:`jQuery` and the
-:term:`jquery.ui` plugin are available to the page where the
+:term:`JQuery UI` plugin are available to the page where the
 :class:`deform.widget.AutocompleteInputWidget` widget is rendered.
 
-For confenience a version of the :term:`jquery.ui` (which includes the
+For confenience a version of the :term:`JQuery UI` (which includes the
 ``autocomplete`` sublibrary) is included in the :mod:`deform` static
-directory. Additionally, the :term:`jquery.ui` styles for the
+directory. Additionally, the :term:`JQuery UI` styles for the
 selection box are also included in the :mod:`deform` ``static``
 directory. See :ref:`using_deform_static_library` and
 :ref:`get_widget_resources` for more information about using included

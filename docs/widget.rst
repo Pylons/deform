@@ -530,3 +530,51 @@ This implementation does not attach any errors to field children;
 instead it attaches all of the child errors to the field itself for
 review.
 
+The Template
+~~~~~~~~~~~~
+
+The template you use to render a widget will receive input from the
+widget object, including ``field``, which will be the field object
+represented by the widget.  It will usually use the ``field.name``
+value as the ``name`` input element of the primary control in the
+widget, and the ``field.oid`` value as the ``id`` element of the
+primary control in the widget.
+
+Grouping Elements
++++++++++++++++++
+
+When some HTML controls (radio controls, in particular) are used, the
+value of the control ``name`` attribute across multiple controls is
+used as a grouping key.
+
+When controls from two unrelated widgets have the same ``name``, HTML
+selection of an element from this grouping will break (the selections
+made from one logical grouping will cause "another's" to change).
+When a form is generated from a complex schema, there may be more than
+one unrelated control on the form with the same ``name`` value, and it
+may happen that both are controls that are part of a grouping.
+
+Because this would cause user input to not work properly, to work
+around this, a widget template may use the value of ``field.oid``
+rather than the value of ``field.name`` as a ``name`` attribute value.
+For example, rather than this:
+
+.. code-block:: xml
+   :linenos:
+
+   <input type="radio"
+          name="${field.name}"
+          value="someval"
+          id="${field.oid}"/>
+
+A widget template might do this:
+
+.. code-block:: xml
+   :linenos:
+
+   <input type="radio"
+          name="${field.oid}"
+          value="someval"
+          id="${field.oid}"/>
+
+

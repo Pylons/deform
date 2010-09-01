@@ -44,8 +44,12 @@ var deform  = {
         var html = decodeURIComponent(code);
         var $htmlnode = $(html);
         var $idnodes = $htmlnode.find('[id]');
+        var $namednodes = $htmlnode.find('[name]');
         var genid = deform.randomString(6);
         var idmap = {};
+
+        // replace ids containing ``deformField`` and associated label for= 
+        // items which point at them
 
         $idnodes.each(function(idx, node) {
             var $node = $(node);
@@ -56,6 +60,15 @@ var deform  = {
             var labelselector = 'label[htmlFor=' + oldid + ']';
             var $fornodes = $htmlnode.find(labelselector);
             $fornodes.attr('htmlFor', newid);
+            });
+
+        // replace names containing ``deformField`` (radio and checkbox choices)
+
+        $namednodes.each(function(idx, node) {
+            var $node = $(node);
+            var oldname = $node.attr('name');
+            var newname = oldname.replace(fieldmatch, "deformField$1-" + genid);
+            $node.attr('name', newname);
             });
 
         var anchorid = genid + '-anchor';
