@@ -82,8 +82,8 @@ TODOs
 - [ ] Make deform.widget.RichText render only on oid specific element
       in templates.
 
-- [ ] Work out default height and width defaults and overrides for
-      them, then document how to do so.
+- [ ] Work out RichTextWidget default height and width and overrides
+      for them, then document how to do so.
 
 - [ ] Add placeholder text to
       :class:`deform.widget.AutocompleteinputWidget`
