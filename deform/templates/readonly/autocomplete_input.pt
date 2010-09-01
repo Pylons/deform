@@ -4,7 +4,7 @@
            id="${field.oid}"/>
     <script tal:condition="field.widget.values" type="text/javascript">
       jQuery(function($) {
-          $("#${field.oid}").autocomplete("${field.widget.mask}");
+          $("#${field.oid}").autocompeslete(${values}, ${options});
       });
     </script>
 </span>
