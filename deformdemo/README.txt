@@ -14,7 +14,7 @@ of other dependencies to be installed along with deform.
 
 Get a checkout of deform:
 
-  svn co http://svn.repoze.org/svn/deform/trunk deform
+  svn co http://svn.repoze.org/deform/trunk deform
 
 cd to the deform package:
 
