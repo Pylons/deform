@@ -40,6 +40,7 @@ var deform  = {
         //   htmlFor attribute to the new id.
 
         var fieldmatch = /deformField(\d+)/;
+        var namematch = /(.+)?-[#]{3}/;
         var code = protonode.attributes['prototype'].value;
         var html = decodeURIComponent(code);
         var $htmlnode = $(html);
@@ -62,12 +63,13 @@ var deform  = {
             $fornodes.attr('htmlFor', newid);
             });
 
-        // replace names containing ``deformField`` (radio and checkbox choices)
+        // replace names a containing ``###`` marker (radio button
+        // names usually)
 
         $namednodes.each(function(idx, node) {
             var $node = $(node);
             var oldname = $node.attr('name');
-            var newname = oldname.replace(fieldmatch, "deformField$1-" + genid);
+            var newname = oldname.replace(namematch, "$1-###-" + genid);
             $node.attr('name', newname);
             });
 

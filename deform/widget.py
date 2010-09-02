@@ -800,46 +800,55 @@ class MappingWidget(Widget):
 
         for num, subfield in enumerate(field.children):
             name = subfield.name
-            oid = subfield.oid
             subval = pstruct.get(name, null)
             if subval is null:
                 # Golly, HTML forms are so much fun!  Sit down and let
                 # me tell you a little story.  Get a blanket and some
                 # hot cocoa.
                 #
-                # Some widgets (radio choice widgets) use HTML
-                # elements where the input ``name`` attribute is used
-                # as a grouping key.  When controls from two unrelated
-                # widgets have the same ``name``, HTML selection of an
-                # element from this grouping will break (the
-                # selections made from one logical grouping will cause
-                # "another's" to change).  And indeed, when a form is
-                # generated from a complex schema, there may be more
-                # than one unrelated control on the form with the same
-                # ``name`` value, and it may happen that both are
-                # controls that are part of a grouping.  To work
-                # around this, we allow widgets to use ``field.oid``
-                # (e.g. ``deformField2``) rather than the field name
-                # as a ``name`` value (e.g. ``pepper``) in its
-                # constituent controls.
-                subval = pstruct.get(oid, null)
-                if subval is null:
-                    # But wait!  The fun doesn't end there!  When a widget
-                    # uses a control that includes an oid in its name, and
-                    # that widget is added to a *sequence*, that control's
-                    # ``name`` value is changed during the
-                    # ``deform.addSequenceItem`` JavaScript function in
-                    # order to prevent the unrelated-control-group-by-name
-                    # problem problem described above.  Each ``name``
-                    # value is mutated so that e.g. ``deformField2``
-                    # becomes ``deformField2-H7gshj``.  We cope with that
-                    # here by comparing a prefix rather than looking for
-                    # only ``oid`` as a pstruct key.
-                    prefix = oid + '-'
-                    for k, v in pstruct.items():
-                        if (k.startswith(prefix)):
-                            subval = v
-                            break
+                # Radio button controls in HTML must have a ``name``
+                # attribute; its value is used as a grouping key.
+                # When two radio controls from two unrelated widgets
+                # have the same ``name``, HTML selection of an element
+                # from this grouping will break (the selections made
+                # from one logical grouping will cause "another
+                # widget's buttons" to change).  And indeed, when a
+                # form is generated from an arbitrary schema, there
+                # may very well be two unrelated controls on the form
+                # with the same ``name`` value, and it may happen that
+                # both are radio button controls.  Therefore, it's
+                # Deform's job to provide facilities so that radio
+                # button controls may be given a form-unambiguous
+                # ``name`` value, so that their browser selection
+                # behavior is not broken.
+                #
+                # However, meanwhile, the ``name`` attribute of every
+                # form control is *also* submitted as the key portion
+                # of the value sent to the server within the form
+                # submission.  Usually, it suffices within any
+                # particular pstruct for this ``name`` to be simply
+                # the field's ``name`` attribute; the mapping widget
+                # will find that field's substructure by looking up
+                # its ``name`` in the mapping's pstruct dict.  But due
+                # to the radio button behavior detailed above, it is
+                # not possible to rely on the ``name`` value of a
+                # particular radio button group to be the same as the
+                # ``name`` of its Deform field.
+                #
+                # To work around this, we allow widgets to use a
+                # special ``name`` value for an input control.  These
+                # specially named controls must contain the string
+                # ``-###``.  Characters to the left of ``-###`` in the
+                # ``name`` must represent the "real" field name, and
+                # characters to the right of ``-###`` are ignored.
+                # ``pepper-###`` or ``pepper-###-Uw7jdh`` are both
+                # examples of valid specially-named fields.
+                name_marker = '-###'
+                for k, v in pstruct.items():
+                    idx = k.find(name_marker)
+                    if idx != -1 and k[:idx] == name:
+                        subval = v
+                        break
                             
             try:
                 result[name] = subfield.deserialize(subval)

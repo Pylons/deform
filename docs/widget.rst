@@ -540,24 +540,46 @@ value as the ``name`` input element of the primary control in the
 widget, and the ``field.oid`` value as the ``id`` element of the
 primary control in the widget.
 
-Grouping Elements
-+++++++++++++++++
+Radio Control Workarounds
++++++++++++++++++++++++++
 
-When some HTML controls (radio controls, in particular) are used, the
-value of the control ``name`` attribute across multiple controls is
-used as a grouping key.
+Radio button controls in HTML must have a ``name`` attribute; the
+value of a radio button's ``name`` attribute is used as a grouping
+key.  Radio button groups are identified as radio buttons which share
+the same ``name`` value.
 
-When controls from two unrelated widgets have the same ``name``, HTML
-selection of an element from this grouping will break (the selections
-made from one logical grouping will cause "another's" to change).
-When a form is generated from a complex schema, there may be more than
-one unrelated control on the form with the same ``name`` value, and it
-may happen that both are controls that are part of a grouping.
+When two radio controls from two unrelated Deform widgets have the
+same ``name``, HTML selection of an element from this grouping will
+break (the selections made from one logical grouping will cause
+"another widget's buttons" to change).  And indeed, when a form is
+generated from an arbitrary schema, there may very well be two
+unrelated controls on the form with the same ``name`` value, and it
+may happen that both are radio button controls.  Therefore, it's
+Deform's job to provide facilities so that radio button controls may
+be designated a form-unambiguous ``name`` value, so that their browser
+selection behavior is not broken.
 
-Because this would cause user input to not work properly, to work
-around this, a widget template may use the value of ``field.oid``
-rather than the value of ``field.name`` as a ``name`` attribute value.
-For example, rather than this:
+However, meanwhile, the ``name`` attribute of every form control is
+*also* submitted as the key portion of the value sent to the server
+within the form submission.  Usually, it suffices within any
+particular :term:`pstruct` for this ``name`` to be simply the field's
+``name`` attribute; a containing mapping widget will find the
+field's substructure by looking up its ``name`` in the mapping's
+pstruct dict.  But due to the radio button behavior detailed above, it
+is not possible to rely on the ``name`` value of a particular radio
+button group to be the same as the ``name`` of its Deform field.
+
+To work around this, Deform allows widgets which are used as
+subwidgets of a mapping (or form) widget to use a special ``name``
+value for an input control.  These specially named controls must
+contain the string ``-###``.  Characters to the left of ``-###`` in
+the ``name`` must represent the "real" field name, and characters to
+the right of ``-###`` are ignored.  ``pepper-###`` or
+``pepper-###-Uw7jdh`` are both examples of valid specially-named
+fields.
+
+This means, for example, rather than using ``name`` in a template as
+the value of a radio button control's ``name``, like this:
 
 .. code-block:: xml
    :linenos:
@@ -567,14 +589,42 @@ For example, rather than this:
           value="someval"
           id="${field.oid}"/>
 
-A widget template might do this:
+A widget template that renders radio button controls should do this:
 
 .. code-block:: xml
    :linenos:
 
    <input type="radio"
-          name="${field.oid}"
+          name="${field.name}-###-${field.oid}"
           value="someval"
           id="${field.oid}"/>
+
+The widget template used ``${field.name}-###-${field.oid}`` as the
+value of the ``name`` attribute of the control because:
+
+#. The control ``name`` attribute must begin with the "real" field
+   name, thus it starts with ``${field.name}``.
+
+#. The control ``name`` attribute must contain the marker ``-###`` in
+   it (preceded by the "real" field name) in order to be recognized as
+   a specially named field by the mapping widget.  Thus it has that
+   string within it, directly after ``${field.name}``.
+
+#. The control ``name`` attribute must not be ambiguous when rendered
+   into a form, to allow radio groupings to work independently.  Thus
+   ``-${field.oid}`` is included at the end of the ``name`` attribute
+   because the oid is a value unique to the field within all the
+   controls rendered by any widget on the form.  Anything to the right
+   of ``-###`` is ignored at submit time, so it's not meaningful
+   during deserialization; it exists purely to allow browser selection
+   of radio buttons to group properly.
+
+When an input element that has a name with ``-###`` in it is used as a
+member of a sequence, when the element is added to the DOM, its
+``name`` value will be further mutated: the ``-###`` string will be
+replaced with ``-###-<randomid>``.  This suffices to disambiguate the
+control sufficiently when it is used within the prototype of a
+sequence widget.
+
 
 

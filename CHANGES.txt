@@ -58,9 +58,11 @@ Features
   as a ``values`` input, the remote URL must return a JSON structure
   instead of a ``\n``-delimited list of values.
 
-- It is now acceptable to use the field *oid* as the ``name`` of an
-  input element that is part of a mapping instead of its name (its
-  name also continues to work).
+- The ``name`` of an input element that is part of a widget used as a
+  subwidget of mapping widget may now include the special suffix
+  ``-###<anything>``.  ``<anything>`` means any character.  This
+  allows radio button choice widgets to work.  For more information,
+  see "Radio Control Workarounds" in the "Widgets" chapter.
 
 Requirements
 ~~~~~~~~~~~~
@@ -88,9 +90,11 @@ Bug Fixes
 
 - To make radio choice widgets work within sequences, the
   deform.addSequenceItem JavaScript method needed to be changed.  It
-  will now change the value of ``name`` attributes which include a
-  field marker (e.g. ``deformField1``) in the same way it already
-  changed the value of ``id`` attributes which include a field marker.
+  will now change the value of ``name`` attributes which contain a
+  ``-###`` field marker (e.g. ``email-###-deformField1``) to include a
+  random component (e.g. ``email-###-s7Ys8W-deformField``).  See the
+  section entited "Radio Control Workarounds" in the "Widgets" chapter
+  for more information as to why this needs be done.
 
 - The mapping and sequence item templates now correctly display errors
   with ``msg`` values that are lists.  Previously, a repr of a Python
@@ -166,6 +170,9 @@ Documentation
 
 - Add new top-level sections named ``Widget Templates`` and ``Widget
   JavaScript`` to the "Widgets" chapter.
+
+- Added a section named "Radio Control Workarounds" to the
+  "Widgets" chapter.
 
 0.5 (2010-08-25)
 ----------------

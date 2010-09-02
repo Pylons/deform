@@ -999,31 +999,16 @@ class TestMappingWidget(unittest.TestCase):
         result = widget.deserialize(field, pstruct)
         self.assertEqual(result, {'a':1})
 
-    def test_deserialize_name_is_oid(self):
+    def test_deserialize_name_contains_dash_triplehash(self):
         widget = self._makeOne()
         field = DummyField()
         inner_field = DummyField()
         inner_field.name = 'a'
-        inner_field.oid = 'deformField12'
         inner_widget = DummyWidget()
         inner_widget.name = 'a'
         inner_field.widget = inner_widget
         field.children = [inner_field]
-        pstruct = {'deformField12':1}
-        result = widget.deserialize(field, pstruct)
-        self.assertEqual(result, {'a':1})
-
-    def test_deserialize_name_is_fuzzy_oid(self):
-        widget = self._makeOne()
-        field = DummyField()
-        inner_field = DummyField()
-        inner_field.name = 'a'
-        inner_field.oid = 'deformField12'
-        inner_widget = DummyWidget()
-        inner_widget.name = 'a'
-        inner_field.widget = inner_widget
-        field.children = [inner_field]
-        pstruct = {'deformField12-H7Sh27':1}
+        pstruct = {'a-###':1}
         result = widget.deserialize(field, pstruct)
         self.assertEqual(result, {'a':1})
 
