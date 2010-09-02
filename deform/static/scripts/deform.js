@@ -63,13 +63,12 @@ var deform  = {
             $fornodes.attr('htmlFor', newid);
             });
 
-        // replace names a containing ``###`` marker (radio button
-        // names usually)
+        // replace names a containing ```deformField`` like we do for ids
 
         $namednodes.each(function(idx, node) {
             var $node = $(node);
             var oldname = $node.attr('name');
-            var newname = oldname.replace(namematch, "$1-###-" + genid);
+            var newname = oldname.replace(fieldmatch, "deformField$1-" + genid);
             $node.attr('name', newname);
             });
 

@@ -1,18 +1,20 @@
 <div>
   <ul class="deformSet"> 
+    <input type="hidden" name="__start__" value="${field.name}:rename"/>
     <tal:loop tal:repeat="choice field.widget.values">
       <tal:def tal:define="(value, title) choice">
         <li class="deformSet-item">
           <input tal:attributes="checked value == cstruct;
                                  class field.widget.css_class"
                  type="radio"
-                 name="${field.name}-###-${field.oid}"
+                 name="${field.oid}"
                  value="${value}"
                  id="${field.oid}-${repeat.choice.index}"/>
           <label for="${field.oid}-${repeat.choice.index}">${title}</label>
         </li>
       </tal:def>
     </tal:loop>
+    <input type="hidden" name="__end__"/>
   </ul>
 </div>
 

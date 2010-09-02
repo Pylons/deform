@@ -999,19 +999,6 @@ class TestMappingWidget(unittest.TestCase):
         result = widget.deserialize(field, pstruct)
         self.assertEqual(result, {'a':1})
 
-    def test_deserialize_name_contains_dash_triplehash(self):
-        widget = self._makeOne()
-        field = DummyField()
-        inner_field = DummyField()
-        inner_field.name = 'a'
-        inner_widget = DummyWidget()
-        inner_widget.name = 'a'
-        inner_field.widget = inner_widget
-        field.children = [inner_field]
-        pstruct = {'a-###':1}
-        result = widget.deserialize(field, pstruct)
-        self.assertEqual(result, {'a':1})
-
     def test_deserialize_error(self):
         from colander import Invalid
         widget = self._makeOne()

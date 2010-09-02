@@ -25,8 +25,8 @@ CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 requires = [
     'colander>=0.7.3', # Invalid.messages()-providing
     'chameleon>=1.2.3', # debug arg
+    'peppercorn>=0.3', # rename operation type
     'translationstring',
-    'peppercorn',
     ]
 
 if sys.version_info <(2,6,0):
