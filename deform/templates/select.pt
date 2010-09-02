@@ -1,6 +1,7 @@
 <select name="${field.name}"
         id="${field.oid}">
  <option tal:repeat="(value, description) field.widget.values"
-         tal:attributes="selected value == cstruct; class field.widget.css_class;"
+         tal:attributes="selected value == cstruct;
+                         class field.widget.css_class"
          value="${value}">${description}</option>
 </select>
