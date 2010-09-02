@@ -49,7 +49,8 @@ wise to run these tests before submitting a patch.  Here's how:
 - Make sure you have a Java interpreter installed.
 
 - Start the ``deformdemo`` application as described above in "Running
-  the Demo".
+  the Demo".  Leave the terminal window running this application open,
+  and open another terminal window to perform the below steps.
 
 - Download `Selenium RC <http://seleniumhq.org/download/>`.
 
@@ -66,9 +67,9 @@ wise to run these tests before submitting a patch.  Here's how:
    01:49:06.105 INFO - Started org.openqa.jetty.jetty.Server@7d2a1e44
 
 - Leave the terminal window in which the selenium server is now
-  running open, and open another terminal window.
+  running open, and open (yet) another terminal window.
 
-- In the new terminal window, cd to the "deform" checkout directory
+- In the newest terminal window, cd to the "deform" checkout directory
   you created above in "Running the Demo"::
 
    $ cd /path/to/my/deform/checkout
