@@ -12,12 +12,7 @@ TODOs
 - [X] Make error message translations possible.
 
 - [_] Progressive form validation (show validation errors as you
-      type).  This includes (supersedes) these previously top-level
-      TODO items:
-
-      - [_] Add regex pattern-matching widgets.
-
-      - [_] Add an e-mail widget.
+      type). 
 
 - [X] Date widget with picker (see ``deform.widget.DateInputWidget``).
 
@@ -87,6 +82,22 @@ TODOs
 
 - [ ] Add placeholder text to
       :class:`deform.widget.AutocompleteinputWidget`
+
+- [ ] CSRF:
+
+      <DanielHolth> I came up with a repoze.bfg.formish CSRF solution
+      that I don't entirely hate. The token stored on the
+      FormController is hmac(''.join(user_id, str(self.__class__),
+      request.url, csrf_secret), session_identifier). The main form
+      template inserts the token into the form if
+      hasattr(form.controller.csrf_token) and it's checked with a
+      decorator on the action method.
+      <DanielHolth> I tried setting
+      the token as a default value for a String() but then the form
+      will compute the correct csrf token when submitted without that
+      key.
+      <wiggy> I use a CSRForm class which is derived from formish.Form
+      and every user gets a secret which is reset on login
 
 Topics Needing Documentation
 ----------------------------
