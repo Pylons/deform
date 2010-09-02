@@ -65,7 +65,7 @@ Features
 Requirements
 ~~~~~~~~~~~~
 
-- This Deform version requires ``colander`` version 0.7.2 or better.
+- This Deform version requires ``colander`` version 0.7.3 or better.
 
 Bug Fixes
 ~~~~~~~~~
@@ -92,6 +92,13 @@ Bug Fixes
   field marker (e.g. ``deformField1``) in the same way it already
   changed the value of ``id`` attributes which include a field marker.
 
+- The mapping and sequence item templates now correctly display errors
+  with ``msg`` values that are lists.  Previously, a repr of a Python
+  list was displayed when a widget had an error with a ``msg`` value
+  that was a list; now multiple <p> nodes are inserted into the
+  rendering, each <p> node containing an individual error message.
+  (Note that this change requires colander 0.7.3).
+
 Backwards Incompatibilities
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -107,6 +114,17 @@ Backwards Incompatibilities
 
 Internal
 ~~~~~~~~
+
+- Provided better instructions for running the demo app and running
+  the tests for the demo app in ``deformdemo/README.txt``.
+
+- Try to prevent false test failures by injecting sleep statements in
+  things that use ``browser.key_press``.
+
+- Moved ``deformdemo/tests/test_demo.py`` to ``deformdemo/test.py`` as
+  well as moving ``deformdemo/tests/selenium.py`` to
+  ``deformdemo/selenium.py``.  Removed the ``deformdemo/tests``
+  subdirectory.
 
 - The date input widget now uses JQueryUI's ``datepicker``
   functionality rather than relying on JQuery Tools' ``date`` input.

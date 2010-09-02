@@ -911,6 +911,50 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
+    @bfg_view(renderer='templates/form.pt', name='multiple_error_messages_map')
+    @demonstrate('Multiple Error Messages For a Single Widget (Mapping)')
+    def multiple_error_messages_mapping(self):
+        def v1(node, value):
+            msg = _('Error ${num}', mapping=dict(num=1))
+            raise colander.Invalid(node, msg)
+        def v2(node, value):
+            msg = _('Error ${num}', mapping=dict(num=2))
+            raise colander.Invalid(node, msg)
+        def v3(node, value):
+            msg = _('Error ${num}', mapping=dict(num=3))
+            raise colander.Invalid(node, msg)
+        class Schema(colander.Schema):
+            field = colander.SchemaNode(
+                colander.String(),
+                title="Fill in a value and submit to see multiple errors",
+                validator = colander.All(v1, v2, v3))
+        schema = Schema()
+        form = deform.Form(schema, buttons=('submit',))
+        return self.render_form(form)
+
+    @bfg_view(renderer='templates/form.pt', name='multiple_error_messages_seq')
+    @demonstrate('Multiple Error Messages For a Single Widget (Sequence)')
+    def multiple_error_messages_seq(self):
+        def v1(node, value):
+            msg = _('Error ${num}', mapping=dict(num=1))
+            raise colander.Invalid(node, msg)
+        def v2(node, value):
+            msg = _('Error ${num}', mapping=dict(num=2))
+            raise colander.Invalid(node, msg)
+        def v3(node, value):
+            msg = _('Error ${num}', mapping=dict(num=3))
+            raise colander.Invalid(node, msg)
+        class Sequence(colander.SequenceSchema):
+            field = colander.SchemaNode(
+                colander.String(),
+                title="Fill in a value and submit to see multiple errors",
+                validator = colander.All(v1, v2, v3))
+        class Schema(colander.Schema):
+            fields = Sequence()
+        schema = Schema()
+        form = deform.Form(schema, buttons=('submit',))
+        return self.render_form(form)
+
     @bfg_view(renderer='templates/form.pt', name="multiple_forms")
     @demonstrate('Multiple Forms on the Same Page')
     def multiple_forms(self):

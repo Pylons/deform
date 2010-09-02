@@ -12,8 +12,13 @@
                               id="req-${field.oid}">*</span>
   </label>
   <span tal:replace="structure field.serialize(cstruct)"/>
+
   <p tal:condition="field.error and not field.widget.hidden"
-     id="error-${field.oid}"
-     class="${field.widget.error_class}">${field.error.msg}</p>
+     tal:define="errstr 'error-%s' % field.oid"
+     tal:repeat="msg field.error.messages()"
+     tal:attributes="id repeat.msg.index==0 and errstr or 
+                       ('%s-%s' % (errstr, repeat.msg.index))"
+     class="${field.widget.error_class}">${msg}</p>
+
   <!-- /mapping_item -->
 </li>

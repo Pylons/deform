@@ -5,7 +5,7 @@ import unittest
 # to run:
 # console 1: java -jar selenium-server.jar
 # console 2: start the deform demo server (paster serve deformdemo.ini)
-# console 3: python test_demo.py
+# console 3: python test.py
 
 # Instead of using -browserSessionReuse as an arg to
 # selenium-server.jar to speed up tests, we rely on
@@ -188,26 +188,32 @@ class CheckedInputWidgetWithMaskTests(unittest.TestCase):
         self.failIf(browser.is_element_present('css=.errorMsgLbl'))
 
     def test_type_bad_input(self):
+        import time
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")
         browser.focus('deformField1')
         browser.key_press('deformField1', 'a')
+        time.sleep(.005)
         browser.focus('deformField1-confirm')
         browser.key_press('deformField1-confirm', 'a')
+        time.sleep(.005)
         self.failUnless(
             browser.get_value('deformField1') in ('', '###-##-####'))
         self.failUnless(
             browser.get_value('deformField1-confirm') in ('', '###-##-####'))
 
     def test_submit_success(self):
+        import time
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")
         browser.focus('deformField1')
         for key in '140118866':
             browser.key_press('deformField1', key)
+            time.sleep(.005)
         browser.focus('deformField1-confirm')
         for key in '140118866':
             browser.key_press('deformField1-confirm', key)
+            time.sleep(.005)
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
         self.assertEqual(browser.get_text('css=#captured'),
@@ -1691,6 +1697,7 @@ class SequenceOfMaskedTextInputs(unittest.TestCase):
         self.assertEqual(captured, 'None')
 
     def test_submit_one_filled(self):
+        import time
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")
         browser.click('deformField1-seqAdd')
@@ -1698,6 +1705,7 @@ class SequenceOfMaskedTextInputs(unittest.TestCase):
         browser.focus(added)
         for key in '140118866':
             browser.key_press(added, key)
+            time.sleep(.005)
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
         self.failIf(browser.is_element_present('css=.errorMsgLbl'))
@@ -2280,30 +2288,61 @@ class TextInputMaskTests(unittest.TestCase):
         self.failIf(browser.is_element_present('css=.errorMsgLbl'))
 
     def test_type_bad_input(self):
+        import time
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")
         browser.focus('deformField1')
         browser.key_press('deformField1', 'a')
+        time.sleep(.005)
         browser.focus('deformField2')
         browser.key_press('deformField2', 'a')
+        time.sleep(.005)
         self.failUnless(
             browser.get_value('deformField1') in ('', '___-__-____'))
         self.failUnless(
             browser.get_value('deformField2') in ('', '__/__/____'))
 
     def test_submit_success(self):
+        import time
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")
         browser.focus('deformField1')
         for key in '140118866':
             browser.key_press('deformField1', key)
+            time.sleep(.005)
         browser.focus('deformField2')
         for key in '10102010':
             browser.key_press('deformField2', key)
+            time.sleep(.005)
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
         self.assertEqual(browser.get_text('css=#captured'),
                          u"{'date': u'10/10/2010', 'ssn': u'140-11-8866'}")
+
+class MultipleErrorMessagesInMappingTest(unittest.TestCase):
+    url = "/multiple_error_messages_map/"
+    def test_it(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.type('deformField1', 'whatever')
+        browser.click('submit')
+        browser.wait_for_page_to_load("30000")
+        self.assertEqual(browser.get_text('error-deformField1'), 'Error 1')
+        self.assertEqual(browser.get_text('error-deformField1-1'), 'Error 2')
+        self.assertEqual(browser.get_text('error-deformField1-2'), 'Error 3')
+
+class MultipleErrorMessagesInSequenceTest(unittest.TestCase):
+    url = "/multiple_error_messages_seq/"
+    def test_it(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.click('deformField1-seqAdd')
+        browser.type('dom=document.forms[0].field', 'whatever')
+        browser.click('submit')
+        browser.wait_for_page_to_load("30000")
+        self.assertEqual(browser.get_text('error-deformField3'), 'Error 1')
+        self.assertEqual(browser.get_text('error-deformField3-1'), 'Error 2')
+        self.assertEqual(browser.get_text('error-deformField3-2'), 'Error 3')
 
 if __name__ == '__main__':
     setUpModule()
