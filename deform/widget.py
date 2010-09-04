@@ -881,9 +881,6 @@ class SequenceWidget(Widget):
         of a form including a sequence widget, a child widget
         rendering should be performed.  Default: ``False``.
 
-    closebutton_url
-        The URL to the image representing the sequence item close
-        button.  Default: ``/static/images/close.png``
     """
     template = 'sequence'
     readonly_template = 'readonly/sequence'
@@ -892,7 +889,6 @@ class SequenceWidget(Widget):
     error_class = None
     add_subitem_text_template = _('Add ${subitem_title}')
     render_initial_item = False
-    closebutton_url = '/static/images/close.png'
     requirements = ( ('deform', None), )
 
     def prototype(self, field):
@@ -1367,6 +1363,7 @@ default_resources = {
                   'scripts/deform.js'),
             'css':('css/form.css',
                    'css/theme.css'),
+
             },
         },
     'tinymce': {

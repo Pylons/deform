@@ -915,13 +915,19 @@ form li.paging-context{
 
 /* deform additions*/
 
-img.deformClosebutton {
+.deformClosebutton {
    border: 0;
    cursor: pointer;
-   width: 1em;
-   height: 1em;
    float: left;
-   margin: .5em;
+   /* width: 1em; */
+   /* height: 1em; */
+   /* margin: .5em; */
+}
+
+.deformClosebutton:before {
+    content:"✖";
+    color:red;
+    margin-right: 2px;
 }
 
 a.deformSeqAdd:visited {
@@ -934,11 +940,14 @@ div.deformReplaces {
 
 /* css_class test */
 form .deformWidgetWithStyle{
-	width:100px;
-	margin:0;
-	padding: 10px;
-	border: 2px solid #71a23c;
-	background-color: #fff7c0;
-	font-weight: bold;
+    width:100px;
+    margin:0;
+    padding: 10px;
+    border: 2px solid #71a23c;
+    background-color: #fff7c0;
+    font-weight: bold;
 }
 
+.deformSet-item {
+    padding: 1px;
+}

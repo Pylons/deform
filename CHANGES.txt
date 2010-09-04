@@ -10,8 +10,10 @@ Features
 - Sequence widgets are no longer ``structural`` by default; they now
   print the label of the sequence above the sequence adder.
 
-- The sequence widget now scrolls a newly added sequence item into
-  view when it is added.
+- Radio buttons in a radio button choice widget are now spaced closer
+  together and the button is on the left hand side.
+
+- The sequence remove button is no longer an image.
 
 - The sequence widget now puts the sequence adding link *after* any
   existing items in the sequence (previously the link was always
@@ -109,6 +111,9 @@ Backwards Incompatibilities
 
 - The JavaScript function ``deformFocusFirstInput`` was removed.  This
   is now implied by ``deform.load()``.
+
+- The ``closebutton_url`` argument to the SequenceWidget no longer
+  does anything.  Style the widget template via CSS to add an image.
 
 Internal
 ~~~~~~~~
