@@ -260,8 +260,8 @@ Features
   iterates over the children fields of the field upon which it is
   called (``for item in field`` == ``for item in field.children``).
 
-0.3
----
+0.3 (2010-06-09)
+----------------
 
 Bug Fixes
 ~~~~~~~~~
