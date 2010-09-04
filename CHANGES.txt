@@ -1,6 +1,15 @@
 Changes
 =======
 
+Next release
+------------
+
+Features
+~~~~~~~~
+
+- ``DatePartsWidget`` now renders error "Required" if all blank or
+  "Incomplete" if partially blank for consistency with the other widgets.
+
 0.6 (2010-09-03)
 ----------------
 

@@ -922,6 +922,14 @@ class TestDatePartsWidget(unittest.TestCase):
         result = widget.deserialize(field, null)
         self.assertEqual(result, null)
 
+    def test_deserialize_required(self):
+        schema = DummySchema()
+        field = DummyField(schema, None)
+        widget = self._makeOne()
+        e = invalid_exc(widget.deserialize,
+                        field, {'year':'', 'month':'', 'day':''})
+        self.assertEqual(e.msg, 'Required')
+
     def test_deserialize_incomplete(self):
         schema = DummySchema()
         field = DummyField(schema, None)

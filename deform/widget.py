@@ -1124,9 +1124,15 @@ class DatePartsWidget(Widget):
                 if len(year) == 2:
                     pstruct['year'] = '20' + year
             result = '%(year)s-%(month)s-%(day)s' % pstruct
+
+            if (not pstruct['year'] and not pstruct['month']
+                and not pstruct['day']):
+                raise Invalid(field.schema, _('Required'), result)
+
             if (not pstruct['year'] or not pstruct['month']
                 or not pstruct['day']):
                 raise Invalid(field.schema, _('Incomplete'), result)
+
             return result
 
 class TextAreaCSVWidget(Widget):
