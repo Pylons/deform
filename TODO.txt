@@ -111,6 +111,9 @@ TODOs
 
 - [ ] http://deformdemo.repoze.org/multiple_forms/ has weird styling.
 
+- [ ] Date parts widget renders error "Incomplete" if all blank.
+      should be "Required" for consistency with others
+
 Topics Needing Documentation
 ----------------------------
 
