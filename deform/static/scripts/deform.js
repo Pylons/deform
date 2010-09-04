@@ -77,8 +77,6 @@ var deform  = {
         $(anchortext).insertBefore(before);
         $htmlnode.insertBefore(before);
 
-        document.getElementById(anchorid).scrollIntoView();
-
         $(deform.callbacks).each(function(num, item) {
             var oid = item[0];
             var callback = item[1];
@@ -89,7 +87,26 @@ var deform  = {
             });
 
         deform.clearCallbacks();
+        //deform.maybeScrollIntoView('#' + anchorid);
+    },
 
+    maybeScrollIntoView: function(element_id) {
+        var viewportWidth = $(window).width(),
+            viewportHeight = $(window).height(),
+            documentScrollTop = $(document).scrollTop(),
+            documentScrollLeft = $(document).scrollLeft(),
+            minTop = documentScrollTop,
+            maxTop = documentScrollTop + viewportHeight,
+            minLeft = documentScrollLeft,
+            maxLeft = documentScrollLeft + viewportWidth,
+            element = document.getElementById(element_id),
+            elementOffset = $(element_id).offset();
+        if (
+            !(elementOffset.top > minTop && elementOffset.top < maxTop) &&
+            !(elementOffset.left > minLeft && elementOffset.left < maxLeft)
+            ) {
+                element.scrollIntoView();
+            };
     },
 
     focusFirstInput: function () {
