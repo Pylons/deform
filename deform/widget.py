@@ -1127,7 +1127,7 @@ class DatePartsWidget(Widget):
 
             if (not pstruct['year'] and not pstruct['month']
                 and not pstruct['day']):
-                raise Invalid(field.schema, _('Required'), result)
+                return null
 
             if (not pstruct['year'] or not pstruct['month']
                 or not pstruct['day']):
