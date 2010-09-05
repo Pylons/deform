@@ -1,21 +1,25 @@
-<div>
-  <input type="hidden" name="__start__" value="${field.name}:mapping"/>
-  <label for="${field.oid}">Year</label>
-  <input type="text" name="year" value="${year}" 
-         tal:attributes="size field.widget.size;
-                         class field.widget.css_class" 
-         id="${field.oid}"/>
-  <label for="${field.oid}-month">Month</label>
-  <input type="text" name="month" value="${month}" 
-         tal:attributes="size field.widget.size;
-                         class field.widget.css_class"
-         id="${field.oid}-month"/>
-  <label for="${field.oid}-day">Day</label>
-  <input type="text" name="day" value="${day}" 
-         tal:attributes="size field.widget.size;
-                         class field.widget.css_class"
-         id="${field.oid}-day"/>
-  <input type="hidden" name="__end__" value="${field.name}:mapping"/>
-</div>
-
-
+<input type="hidden" name="__start__" value="${field.name}:mapping"/>
+<ul class="inline">
+  <li>
+	  <label for="${field.oid}">Year</label>
+	  <input type="text" name="year" value="${year}" 
+	         tal:attributes="size field.widget.size;
+	                         class field.widget.css_class" 
+	         id="${field.oid}"/>
+  </li>
+  <li>
+	  <label for="${field.oid}-month">Month</label>
+	  <input type="text" name="month" value="${month}" 
+	         tal:attributes="size field.widget.size;
+	                         class field.widget.css_class"
+	         id="${field.oid}-month"/>
+  </li>
+  <li>
+	  <label for="${field.oid}-day">Day</label>
+	  <input type="text" name="day" value="${day}" 
+	         tal:attributes="size field.widget.size;
+	                         class field.widget.css_class"
+	         id="${field.oid}-day"/>
+  </li>
+</ul>
+<input type="hidden" name="__end__" value="${field.name}:mapping"/>

@@ -10,6 +10,10 @@ Features
 - ``DatePartsWidget`` now renders error "Required" if all blank or
   "Incomplete" if partially blank for consistency with the other widgets.
 
+- Different styling involving <li> and <ul> for checkbox choice,
+  checked input, radio choice, checked password, and dateparts widgets
+  (via Ergo^). See http://bugs.repoze.org/issue165.
+
 0.6 (2010-09-03)
 ----------------
 

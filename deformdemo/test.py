@@ -387,7 +387,7 @@ class DatePartsWidgetTests(unittest.TestCase):
         browser.wait_for_page_to_load("30000")
         self.failUnless(browser.get_text('css=.errorMsgLbl'))
         error_node = 'css=#error-deformField1'
-        self.assertEqual(browser.get_text(error_node), 'Incomplete')
+        self.assertEqual(browser.get_text(error_node), 'Required')
         self.assertEqual(browser.get_text('css=#captured'), 'None')
         self.assertEqual(browser.get_value('deformField1'), '')
         self.assertEqual(browser.get_value('deformField1-month'), '')
@@ -547,7 +547,7 @@ class MappingWidgetTests(unittest.TestCase):
         self.assertEqual(browser.get_text('css=#error-deformField3'),
                          'Required')
         self.assertEqual(browser.get_text('css=#error-deformField4'),
-                         'Incomplete')
+                         'Required')
         self.assertEqual(browser.get_text('css=#captured'),
                          'None')
 
@@ -563,7 +563,7 @@ class MappingWidgetTests(unittest.TestCase):
         self.assertEqual(browser.get_text('css=#error-deformField3'),
                          'Required')
         self.assertEqual(browser.get_text('css=#error-deformField4'),
-                         'Incomplete')
+                         'Required')
         self.assertEqual(browser.get_text('css=#captured'),
                          'None')
 
@@ -1160,10 +1160,8 @@ class SequenceOfRadioChoices(unittest.TestCase):
         browser.wait_for_page_to_load("30000")
         browser.click('deformField1-seqAdd')
         browser.click('deformField1-seqAdd')
-        browser.click(
-          '//html/body/div/div/div/form/fieldset/ul/li/div/li/div/ul/li/input')
-        browser.click(
-          '//html/body/div/div/div/form/fieldset/ul/li/div/li[2]/div/ul/li[2]/input[1]')
+        browser.click('dom=document.forms[0].elements[5]')
+        browser.click('dom=document.forms[0].elements[11]')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
         self.failIf(browser.is_element_present('css=.errorMsgLbl'))
@@ -2221,7 +2219,7 @@ class AjaxFormTests(unittest.TestCase):
         self.assertEqual(browser.get_text('css=#error-deformField3'),
                          'Required')
         self.assertEqual(browser.get_text('css=#error-deformField4'),
-                         'Incomplete')
+                         'Required')
         self.assertEqual(browser.get_text('css=#captured'),
                          'None')
 
@@ -2239,7 +2237,7 @@ class AjaxFormTests(unittest.TestCase):
         self.assertEqual(browser.get_text('css=#error-deformField3'),
                          'Required')
         self.assertEqual(browser.get_text('css=#error-deformField4'),
-                         'Incomplete')
+                         'Required')
         self.assertEqual(browser.get_text('css=#captured'),
                          'None')
 

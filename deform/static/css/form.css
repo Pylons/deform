@@ -28,6 +28,32 @@ form li{
         clear: left;
 /* 	clear:both; */
 }
+
+form fieldset ul > li > ul > li{
+	display:block;
+	margin:0;
+	padding:0px;
+    clear: left;
+/* 	clear:both; */
+}
+
+.inline{
+	margin: 0px;
+	padding: 0px;
+}
+
+.inline > li{
+	clear: none;
+	display: inline-block;
+	zoom: 1;
+	width: auto;
+	overflow: hidden;
+}
+
+form li label{
+	font-size: 85%;
+}
+
 form li:after, form li div:after{
 	content:".";
 	display:block;
