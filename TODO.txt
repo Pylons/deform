@@ -99,11 +99,11 @@ TODOs
       <wiggy> I use a CSRForm class which is derived from formish.Form
       and every user gets a secret which is reset on login
 
-- [ ] Apply patches:
+- Apply patches:
 
-      http://bugs.repoze.org/issue151
+      [ ] http://bugs.repoze.org/issue151
 
-      http://bugs.repoze.org/issue165
+      [X] http://bugs.repoze.org/issue165
 
 - [ ] Spinner for upload widget.
 
