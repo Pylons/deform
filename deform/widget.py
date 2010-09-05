@@ -1119,18 +1119,18 @@ class DatePartsWidget(Widget):
         if pstruct is null:
             return null
         else:
-            if (not pstruct['year'] and not pstruct['month']
-                and not pstruct['day']):
+            year = pstruct['year'].strip()
+            month = pstruct['month'].strip()
+            day = pstruct['day'].strip()
+            
+            if (not year and not month and not day):
                 return null
 
-            if self.assume_y2k:
-                year = pstruct['year']
-                if len(year) == 2:
-                    pstruct['year'] = '20' + year
-            result = '%(year)s-%(month)s-%(day)s' % pstruct
+            if self.assume_y2k and len(year) == 2:
+                year = '20' + year
+            result = '-'.join([year, month, day])
 
-            if (not pstruct['year'] or not pstruct['month']
-                or not pstruct['day']):
+            if (not year or not month or not day):
                 raise Invalid(field.schema, _('Incomplete'), result)
 
             return result

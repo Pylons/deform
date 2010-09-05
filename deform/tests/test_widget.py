@@ -928,7 +928,7 @@ class TestDatePartsWidget(unittest.TestCase):
         field = DummyField(schema, None)
         widget = self._makeOne()
         result = widget.deserialize(field, 
-                                    {'year':'', 'month':'', 'day':''})
+                                    {'year':'\t', 'month':'', 'day':''})
         self.assertEqual(result, null)
 
     def test_deserialize_incomplete(self):
