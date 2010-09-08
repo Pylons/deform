@@ -1064,6 +1064,107 @@ class DeformDemo(object):
         appstruct = {'csv':[ (1, 'hello', 4.5), (2, 'goodbye', 5.5) ]}
         return self.render_form(form, appstruct=appstruct)
 
+    @bfg_view(renderer='templates/form.pt', name='deferred_schema_bindings')
+    @demonstrate('Deferred Schema Bindings')
+    def deferred_schema_bindings(self):
+        import datetime
+        import colander
+        @colander.deferred
+        def deferred_date_validator(node, kw):
+            max_date = kw.get('max_date')
+            if max_date is None:
+                max_date = datetime.date.today()
+            return colander.Range(min=datetime.date.min, max=max_date)
+
+        @colander.deferred
+        def deferred_date_description(node, kw):
+            max_date = kw.get('max_date')
+            if max_date is None:
+                max_date = datetime.date.today()
+            return 'Blog post date (no earlier than %s)' % max_date.ctime()
+
+        @colander.deferred
+        def deferred_date_missing(node, kw):
+            default_date = kw.get('default_date')
+            if default_date is None:
+                default_date = datetime.date.today()
+            return default_date
+
+        @colander.deferred
+        def deferred_body_validator(node, kw):
+            max_bodylen = kw.get('max_bodylen')
+            if max_bodylen is None:
+                max_bodylen = 1 << 18
+            return colander.Length(max=max_bodylen)
+
+        @colander.deferred
+        def deferred_body_description(node, kw):
+            max_bodylen = kw.get('max_bodylen')
+            if max_bodylen is None:
+                max_bodylen = 1 << 18
+            return 'Blog post body (no longer than %s bytes)' % max_bodylen
+
+        @colander.deferred
+        def deferred_body_widget(node, kw):
+            body_type = kw.get('body_type')
+            if body_type == 'richtext':
+                widget = deform.widget.RichTextWidget()
+            else:
+                widget = deform.widget.TextAreaWidget()
+            return widget
+
+        @colander.deferred
+        def deferred_category_validator(node, kw):
+            categories = kw.get('categories', [])
+            return colander.OneOf([ x[0] for x in categories ])
+
+        @colander.deferred
+        def deferred_category_widget(node, kw):
+            categories = kw.get('categories', [])
+            return deform.widget.RadioChoiceWidget(values=categories)
+
+        class BlogPostSchema(colander.Schema):
+            title = colander.SchemaNode(
+                colander.String(),
+                title = 'Title',
+                description = 'Blog post title',
+                validator = colander.Length(min=5, max=100),
+                widget = deform.widget.TextInputWidget(),
+                )
+            date = colander.SchemaNode(
+                colander.Date(),
+                title = 'Date',
+                missing = deferred_date_missing,
+                description = deferred_date_description,
+                validator = deferred_date_validator,
+                widget = deform.widget.DateInputWidget(),
+                )
+            body = colander.SchemaNode(
+                colander.String(),
+                title = 'Body',
+                description = deferred_body_description,
+                validator = deferred_body_validator,
+                widget = deferred_body_widget,
+                )
+            category = colander.SchemaNode(
+                colander.String(),
+                title = 'Category',
+                description = 'Blog post category',
+                validator = deferred_category_validator,
+                widget = deferred_category_widget,
+                )
+        
+        schema = BlogPostSchema().bind(
+            max_date = datetime.date.max,
+            max_bodylen = 5000,
+            body_type = 'richtext',
+            default_date = datetime.date.today(),
+            categories = [('one', 'One'), ('two', 'Two')]
+            )
+        
+        form = deform.Form(schema, buttons=('submit',))
+        return self.render_form(form)
+
 class MemoryTmpStore(dict):
     """ Instances of this class implement the
     :class:`deform.interfaces.FileUploadTempStore` interface"""

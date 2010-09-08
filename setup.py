@@ -23,7 +23,7 @@ README = open(os.path.join(here, 'README.txt')).read()
 CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
 requires = [
-    'colander>=0.7.3', # Invalid.messages()-providing
+    'colander>=0.8', # Bindings-providing
     'chameleon>=1.2.3', # debug arg
     'peppercorn>=0.3', # rename operation type
     'translationstring',
