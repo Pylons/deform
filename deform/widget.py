@@ -580,11 +580,11 @@ class RadioChoiceWidget(SelectWidget):
     **Attributes/Arguments**
 
     values
-        A sequence of two-tuples indicating allowable, displayed
-        values, e.g. ``( ('true', 'True'), ('false', 'False') )``.
-        The first element in the tuple is the value that should be
-        returned when the form is posted.  The second is the display
-        value.
+        A sequence of two-tuples (both values must be **string** or
+        **unicode** values) indicating allowable, displayed values,
+        e.g. ``( ('true', 'True'), ('false', 'False') )``.  The first
+        element in the tuple is the value that should be returned when
+        the form is posted.  The second is the display value.
 
     template
         The template name used to render the widget.  Default:
@@ -610,11 +610,11 @@ class CheckboxChoiceWidget(Widget):
     **Attributes/Arguments**
 
     values
-        A sequence of two-tuples indicating allowable, displayed
-        values, e.g. ``( ('true', 'True'), ('false', 'False') )``.
-        The first element in the tuple is the value that should be
-        returned when the form is posted.  The second is the display
-        value.
+        A sequence of two-tuples (both values must be **string** or
+        **unicode** values) indicating allowable, displayed values,
+        e.g. ``( ('true', 'True'), ('false', 'False') )``.  The first
+        element in the tuple is the value that should be returned when
+        the form is posted.  The second is the display value.
 
     template
         The template name used to render the widget.  Default:
