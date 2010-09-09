@@ -1,0 +1,24 @@
+# Translations template for deform demo.
+# Copyright (C) 2010 ORGANIZATION
+# This file is distributed under the same license as the deformsite project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: deformsite 0.0\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2010-04-25 19:14-0400\n"
+"PO-Revision-Date: 2010-09-09 13:53-0600\n"
+"Last-Translator: Douglas Cerna <douglascerna@yahoo.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 0.9.5\n"
+
+msgid "A number between ${min} and ${max}"
+msgstr "Un número entre ${min} y ${max}"
+
+msgid "Submit"
+msgstr "Enviar"
+

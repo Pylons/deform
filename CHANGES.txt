@@ -4,6 +4,8 @@ Changes
 Next release
 ------------
 
+- Added Spanish locale:  thanks to David Cerna for the translations!
+
 Features
 ~~~~~~~~
 
