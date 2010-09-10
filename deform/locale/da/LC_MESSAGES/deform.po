@@ -46,7 +46,7 @@ msgstr "Godkend værdi"
 
 #: deform/widget.py:445
 msgid "Password did not match confirm"
-msgstr "Kodeordet passede ikke til godkendelsen"
+msgstr "Begge kodeord skal være ens"
 
 #: deform/widget.py:767
 msgid "Incomplete"
