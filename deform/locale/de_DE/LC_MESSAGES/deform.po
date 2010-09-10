@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: deform 0.6\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2010-04-25 21:28-0400\n"
-"PO-Revision-Date: 2010-09-11 00:33+0100\n"
+"PO-Revision-Date: 2010-09-11 01:22+0100\n"
 "Last-Translator: Charlie Clark <charlie@begeistert.org>\n"
 "Language-Team: repoze developers <repoze-dev@lists.repoze.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr "Es gibt keinen Schlüssel ${key} für ${value}"
 #: deform/schema.py:129
 #: deform/schema.py:142
 msgid "Required"
-msgstr ""
+msgstr "Pflichtangabe"
 
 #: deform/schema.py:138
 msgid "${value} is not iterable"
@@ -42,7 +42,7 @@ msgstr "Wert bestätigen"
 
 #: deform/widget.py:445
 msgid "Password did not match confirm"
-msgstr "Das Kennwort und Bestätigung sind nicht gleich"
+msgstr "Passwort und Passwortbestätigung stimmen nicht überein"
 
 #: deform/widget.py:767
 msgid "Incomplete"
@@ -50,9 +50,9 @@ msgstr "Unvollständig"
 
 #: deform/templates/form.pt:21
 msgid "Errors have been highlighted below"
-msgstr "Die Fehler sind hervorgehoben"
+msgstr "Die Fehler wurden weiter unten hervorgehoben"
 
 #: deform/templates/form.pt:19
 msgid "There was a problem with your submission"
-msgstr "s gab ein Problem mit Ihren Angaben"
+msgstr "Es gab ein Problem mit Ihren Angaben"
 
