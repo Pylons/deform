@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: deformsite 0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2010-04-22 14:17+0400\n"
-"PO-Revision-Date: 2010-04-22 14:17-0400\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2010-09-11 01:20+0100\n"
+"Last-Translator: Charlie Clark <charlie@begeistert.org>\n"
 "Language-Team: de <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "MIME-Version: 1.0\n"
@@ -23,9 +23,9 @@ msgstr "Genehmigen"
 
 #: deformsite/__init__.py:459
 msgid "Show approval"
-msgstr "Zeigen Genehmigung"
+msgstr "Genehmigung zeigen"
 
 #: deformsite/__init__.py:466
 msgid "Submit"
-msgstr "Beugen"
+msgstr "Abschicken"
 
