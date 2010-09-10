@@ -55,5 +55,5 @@ msgstr "Fix what you damned well broke!"
 #: deform/templates/form.pt:19
 #, fuzzy
 msgid "There was a problem with your submission"
-msgstr "Es gab ein Problem mit Ihren Angaben"
+msgstr "Go back and do it right, dammit!"
 
