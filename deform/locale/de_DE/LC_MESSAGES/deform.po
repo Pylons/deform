@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: deform 0.6\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2010-04-25 21:28-0400\n"
-"PO-Revision-Date: 2010-09-11 01:22+0100\n"
+"PO-Revision-Date: 2010-09-11 10:44+0100\n"
 "Last-Translator: Charlie Clark <charlie@begeistert.org>\n"
 "Language-Team: repoze developers <repoze-dev@lists.repoze.org>\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 
 #: deform/schema.py:109
 msgid "${value} is not a dictionary"
-msgstr "$[value} ist keine Dictionary"
+msgstr "$[value} ist kein Dictionary"
 
 #: deform/schema.py:116
 msgid "${value} has no ${key} key"
@@ -26,7 +26,7 @@ msgstr "Pflichtangabe"
 
 #: deform/schema.py:138
 msgid "${value} is not iterable"
-msgstr " ${value} kann Schleife bilden"
+msgstr " ${value} ist nicht iterierbar"
 
 #: deform/widget.py:398
 msgid "Fields did not match"
