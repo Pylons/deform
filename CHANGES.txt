@@ -1,8 +1,8 @@
 Changes
 =======
 
-Next release
-------------
+0.7 (2010-10-10)
+----------------
 
 - Added Danish locale.
 
@@ -23,6 +23,9 @@ Dependencies
 
 - Deform now depends on ``colander`` version 0.8 or better (the demo
   wants to use schema bindings).
+
+- Deform now depends on ``Chameleon`` (uppercase) rather than
+  ``chameleon`` to allow for non-PyPI servers.
 
 Demo
 ~~~~

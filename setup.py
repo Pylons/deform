@@ -23,8 +23,8 @@ README = open(os.path.join(here, 'README.txt')).read()
 CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
 requires = [
+    'Chameleon>=1.2.3', # debug arg
     'colander>=0.8', # Bindings-providing
-    'chameleon>=1.2.3', # debug arg
     'peppercorn>=0.3', # rename operation type
     'translationstring',
     ]
@@ -34,7 +34,7 @@ if sys.version_info <(2,6,0):
 
 setupkw = dict(
     name='deform',
-    version='0.6',
+    version='0.7',
     description='Another form generation library',
     long_description=README + '\n\n' + CHANGES,
     classifiers=[
