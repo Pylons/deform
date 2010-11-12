@@ -1,6 +1,11 @@
 Changes
 =======
 
+Next release
+------------
+
+- Added Polish locale data: thanks to Marcin Lulek.
+
 0.7 (2010-10-10)
 ----------------
 

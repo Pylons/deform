@@ -1,0 +1,64 @@
+# Polish translations for deform.
+# Copyright (C) 2010 ORGANIZATION
+# This file is distributed under the same license as the deform project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: deform 0.7\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2010-04-25 21:28+0400\n"
+"PO-Revision-Date: 2010-11-11 11:15+0100\n"
+"Last-Translator: Marcin Lulek <info@webreactor.eu>\n"
+"Language-Team: pl <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && "
+"(n%100<10 || n%100>=20) ? 1 : 2)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 0.9.5\n"
+
+#: deform/schema.py:109
+msgid "${value} is not a dictionary"
+msgstr "${value} nie jest typem słownikowym"
+
+#: deform/schema.py:116
+msgid "${value} has no ${key} key"
+msgstr "${value} nie posiada klucza ${key}"
+
+#: deform/schema.py:129 deform/schema.py:142
+msgid "Required"
+msgstr "Wymagane"
+
+#: deform/schema.py:138
+msgid "${value} is not iterable"
+msgstr "${value} nie jest iterable"
+
+#: deform/widget.py:398
+msgid "Fields did not match"
+msgstr "Pola nie są takie same"
+
+#: deform/widget.py:399
+msgid "Value"
+msgstr "Wartość"
+
+#: deform/widget.py:400
+msgid "Confirm Value"
+msgstr "Potwierdź wartość"
+
+#: deform/widget.py:445
+msgid "Password did not match confirm"
+msgstr "Hasło nie jest takie samo jak potwierdzenie"
+
+#: deform/widget.py:767
+msgid "Incomplete"
+msgstr "Niekompletne"
+
+#: deform/templates/form.pt:21
+msgid "Errors have been highlighted below"
+msgstr "Błędy zostały wykazane poniżej"
+
+#: deform/templates/form.pt:19
+msgid "There was a problem with your submission"
+msgstr "Wystąpił problem z nadesłanymi danymi"
+
