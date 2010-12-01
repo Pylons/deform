@@ -7,19 +7,19 @@
          class="deformProto" 
          tal:attributes="prototype field.widget.prototype(field)"/>
 
-  <div tal:repeat="tup subfields"
-       tal:content="structure rndr(tmpl, field=tup[1], cstruct=tup[0],
-                                   parent=field)"/>
+  <ul>
 
-  <span class="deformInsertBefore"></span>
+    <div tal:repeat="tup subfields"
+         tal:replace="structure rndr(tmpl, field=tup[1], cstruct=tup[0],
+                      parent=field)"/>
+  </ul>
   
+  <span class="deformInsertBefore"></span>
+
   <a href="#"
      class="deformSeqAdd"
      id="${field.oid}-seqAdd"
-     onclick="javascript:
-              deform.addSequenceItem($(this).parent().children('.deformProto')[0],
-              $(this).parent().children('.deformInsertBefore')[0]);
-              return false;">
+     onclick="javascript: return deform.appendSequenceItem(this);">
     <small id="${field.oid}-addtext">${add_subitem_text}</small>
   </a>
 

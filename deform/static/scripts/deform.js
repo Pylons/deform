@@ -90,6 +90,14 @@ var deform  = {
         //deform.maybeScrollIntoView('#' + anchorid);
     },
 
+    appendSequenceItem: function(start_node) {
+      deform.addSequenceItem(
+          $(start_node).parent().children('.deformProto')[0],
+          $(start_node).parent().children('.deformInsertBefore')[0]
+      );
+      return false;
+    },
+
     maybeScrollIntoView: function(element_id) {
         var viewportWidth = $(window).width(),
             viewportHeight = $(window).height(),

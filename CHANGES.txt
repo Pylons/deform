@@ -6,6 +6,11 @@ Next release
 
 - Added Polish locale data: thanks to Marcin Lulek.
 
+- Fix dynamic sequence item adding on Chrome and Firefox 4.  Previously if
+  there was a validation error rendering a set of sequence items, the "add
+  more" link would be rendered outside the form, which would cause it to not
+  work.  Wrapping the sequence item <li> element in a <ul> fixed this.
+
 0.7 (2010-10-10)
 ----------------
 
