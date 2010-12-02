@@ -1,10 +1,16 @@
 Changes
 =======
 
-Next release
-------------
+0.8 (2010-12-02)
+----------------
+
+Features
+~~~~~~~~
 
 - Added Polish locale data: thanks to Marcin Lulek.
+
+Bug Fixes
+~~~~~~~~~
 
 - Fix dynamic sequence item adding on Chrome and Firefox 4.  Previously if
   there was a validation error rendering a set of sequence items, the "add
@@ -14,12 +20,12 @@ Next release
 0.7 (2010-10-10)
 ----------------
 
+Features
+~~~~~~~~
+
 - Added Danish locale.
 
 - Added Spanish locale:  thanks to David Cerna for the translations!
-
-Features
-~~~~~~~~
 
 - ``DatePartsWidget`` now renders error "Required" if all blank or
   "Incomplete" if partially blank for consistency with the other widgets.
