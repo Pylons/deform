@@ -447,7 +447,7 @@ attached.
             return '<input type="text" value="%s">' % cgi.escape(cstruct)
 
         def deserialize(self, field, pstruct):
-            if cstruct is null:
+            if pstruct is null:
                 return null
             return pstruct
 
