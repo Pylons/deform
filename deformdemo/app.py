@@ -736,6 +736,22 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
+    @bfg_view(renderer='templates/form.pt', name='nonrequired_number_fields')
+    @demonstrate('Non-Required Number Fields')
+    def nonrequired_number_fields(self):
+        class Schema(colander.Schema):
+            required = colander.SchemaNode(
+                colander.Int(),
+                description='Required Field'
+                )
+            notrequired = colander.SchemaNode(
+                colander.Float(),
+                missing=0,
+                description='Unrequired Field')
+        schema = Schema()
+        form = deform.Form(schema, buttons=('submit',))
+        return self.render_form(form)
+
     @bfg_view(renderer='templates/form.pt', name='unicodeeverywhere')
     @demonstrate('Unicode Everywhere')
     def unicodeeverywhere(self):
