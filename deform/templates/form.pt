@@ -36,7 +36,8 @@
       
       <li class="buttons">
         <tal:block repeat="button field.buttons">
-          <button 
+          <button
+              tal:attributes="disabled button.disabled"
               id="${field.formid+button.name}"
               name="${button.name}"
               type="${button.type}"

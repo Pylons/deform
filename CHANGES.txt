@@ -1,6 +1,16 @@
 Changes
 =======
 
+Next release
+------------
+
+Features
+~~~~~~~~
+
+- Allow ``deform.form.Button`` class to be passed a ``disabled`` flag (false
+  by default).  If a Button is disabled, its HTML ``disabled`` setting will
+  be set true.
+
 0.8 (2010-12-02)
 ----------------
 

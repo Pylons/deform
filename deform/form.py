@@ -126,8 +126,12 @@ class Button(object):
         The value used as the value of the button when rendered (the
         ``value`` attribute of the button or input tag resulting from
         a form rendering).  Default: same as ``name`` passed.
+
+    disabled
+        Render the button as disabled if True.
     """
-    def __init__(self, name='submit', title=None, type='submit', value=None):
+    def __init__(self, name='submit', title=None, type='submit', value=None,
+                 disabled=False):
         if title is None:
             title = name.capitalize()
         if value is None:
@@ -136,3 +140,5 @@ class Button(object):
         self.title = title
         self.type = type
         self.value = value
+        self.disabled = disabled
+        

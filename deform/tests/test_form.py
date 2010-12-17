@@ -68,11 +68,12 @@ class TestButton(unittest.TestCase):
 
     def test_ctor(self):
         button = self._makeOne(name='name', title='title', 
-                               type='type', value='value')
+                               type='type', value='value', disabled=True)
         self.assertEqual(button.value, 'value')
         self.assertEqual(button.name, 'name')
         self.assertEqual(button.title, 'title')
         self.assertEqual(button.type, 'type')
+        self.assertEqual(button.disabled, True)
 
 class TestRaw(unittest.TestCase):
     def _makeOne(self, val):
