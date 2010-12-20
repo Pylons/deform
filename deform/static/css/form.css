@@ -595,7 +595,7 @@ form li.focused{
 	-moz-box-shadow:rgba(0,0,0,.15) 1px 1px 2px;
 }
 form li.focused, form li:hover{
-	position:relative; /* Makes Instructs z-index stay on top in IE. */
+	*position:relative; /* Makes Instructs z-index stay on top in IE < 8. */
 }
 form .instruct{
  	position:absolute;

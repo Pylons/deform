@@ -1,6 +1,12 @@
 Changes
 =======
 
+Next release
+------------
+
+- Fix select dropdown behavior on Firefox by fixing CSS (closes
+  http://bugs.repoze.org/issue152).
+
 0.8.1 (2010-12-17)
 ------------------
 
