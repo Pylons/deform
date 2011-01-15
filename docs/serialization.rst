@@ -22,7 +22,7 @@ when you ask Deform to do this:
   each field also knows about an associated :term:`widget` object (it
   has a ``field.widget`` attribute).  This widget object may be a
   default widget based on the schema node type or it might be
-  ovverridden by the application developer for a particular rendering.
+  overridden by the application developer for a particular rendering.
 
 - Deform passes an :term:`appstruct` to the root schema node's
   ``serialize`` method to obtain a :term:`cstruct`.  The root schema
@@ -53,7 +53,7 @@ You'll see the default deform widget "serializations" (form
 renderings) make use of :term:`Peppercorn` *structure markers*.
 
 Peppercorn is a library that is used by Deform; it allows Deform to
-treat a the :term:`form controls` in an HTML form submission as a
+treat the :term:`form controls` in an HTML form submission as a
 *stream* instead of a flat mapping of name to value.  To do so, it
 uses hidden form elements to denote structure.
 
@@ -89,7 +89,7 @@ Basically, Peppercorn makes it more pleasant to deal with form
 submission data by pre-converting the data from a flat mapping into a
 set of mappings, sequences, and strings during deserialization.
 
-However, if a widget doesnt want to do anything fancy and a particular
+However, if a widget doesn't want to do anything fancy and a particular
 widget is completely equivalent to one form control, it doesn't need
 to use any Peppercorn structure markers in its rendering.
 
@@ -113,7 +113,7 @@ data resulting from a form submission to application data) works:
   each field also knows about an associated :term:`widget` object (it
   has a ``field.widget`` attribute).  This widget object may be a
   default widget based on the schema node type or it might be
-  ovverridden by the application developer for a particular rendering.
+  overridden by the application developer for a particular rendering.
 
 - Deform passes a set of :term:`form controls` to the ``parse`` method
   of :term:`Peppercorn` in order to obtain a :term:`pstruct`.
