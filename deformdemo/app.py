@@ -804,15 +804,22 @@ class DeformDemo(object):
     def checkboxchoice2(self):
         choices = (('habanero', 'Habanero'), ('jalapeno', 'Jalapeno'),
                    ('chipotle', 'Chipotle'))
+
+        @colander.deferred
+        def deferred_checkbox_widget(node, kw):
+            return deform.widget.CheckboxChoiceWidget(values=choices)
+
         class Schema(colander.Schema):
             pepper = colander.SchemaNode(
                 deform.Set(),
-                widget=deform.widget.CheckboxChoiceWidget(values=choices),
+                widget=deferred_checkbox_widget,
                 )
             required = colander.SchemaNode(
                 colander.String()
                 )
+
         schema = Schema()
+        schema = schema.bind()
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
