@@ -799,6 +799,23 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
+    @bfg_view(renderer='templates/form.pt', name='checkboxchoice2')
+    @demonstrate('Checkbox Choice Widget 2')
+    def checkboxchoice2(self):
+        choices = (('habanero', 'Habanero'), ('jalapeno', 'Jalapeno'),
+                   ('chipotle', 'Chipotle'))
+        class Schema(colander.Schema):
+            pepper = colander.SchemaNode(
+                deform.Set(),
+                widget=deform.widget.CheckboxChoiceWidget(values=choices),
+                )
+            required = colander.SchemaNode(
+                colander.String()
+                )
+        schema = Schema()
+        form = deform.Form(schema, buttons=('submit',))
+        return self.render_form(form)
+
     @bfg_view(renderer='templates/translated_form.pt', name='i18n')
     @demonstrate('Internationalization')
     def i18n(self):
