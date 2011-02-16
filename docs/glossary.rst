@@ -25,12 +25,12 @@ Glossary
      A raw application data structure (complex Python objects).
 
    Colander
-     A `schema package <http://docs.repoze.org/colander>`_ used by Deform
-     to provide serialization and validation facilities.
+     A `schema package <http://docs.pylonsproject.org/colander/dev/>`_ used
+     by Deform to provide serialization and validation facilities.
 
    Peppercorn
-     A `package <http://docs.repoze.org/peppercorn>`_ used by Deform
-     for strutured form submission value deserialization.
+     A `package <http://docs.pylonsproject.org/peppercorn/dev/>`_ used by
+     Deform for strutured form submission value deserialization.
 
    schema
      A nested collection of :term:`schema node` objects representing

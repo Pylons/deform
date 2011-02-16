@@ -58,13 +58,11 @@ See also the :class:`deform.ZPTRendererFactory` class and the
 Creating A Renderer (Using an Alternative Templating System)
 ------------------------------------------------------------
 
-A :term:`renderer` is used by the each widget implementation in
-:mod:`deform` to render HTML from a templates.  By default, each of
-the default Deform widgets uses a template written in the Chameleon
-ZPT templating language.  This is usually an appropriate templating
-language choice for users of other "Repoze" software.  However, if
-you'd rather use a different templating system for your widgets, you
-can.  To do so, you need to:
+A :term:`renderer` is used by the each widget implementation in :mod:`deform`
+to render HTML from a templates.  By default, each of the default Deform
+widgets uses a template written in the Chameleon ZPT templating language.  If
+you'd rather use a different templating system for your widgets, you can.  To
+do so, you need to:
 
 - Write an alternate renderer that uses the templating system of your
   choice.
@@ -113,9 +111,10 @@ created for it.
 Converting the Default Deform Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The :mod:`deform` package contains a directory named ``templates``.
-You can see the current trunk contents of this directory by `browsing
-SVN <http://svn.repoze.org/deform/trunk/deform/templates>`_. Each file
+The :mod:`deform` package contains a directory named ``templates``.  You can
+see the current trunk contents of this directory by `browsing the source
+repository
+<https://github.com/Pylons/deform/tree/master/deform/templates>`_. Each file
 within this directory and any of its subdirectories is a Chameleon ZPT
 template that is used by a default Deform widget.
 
@@ -170,14 +169,13 @@ to be used by Deform.  In startup code, add something like:
 The deform widget system will now use your renderer as the default
 renderer.
 
-Note that calling :meth:`deform.Field.set_default_renderer` will cause
-this renderer to be used by default by all consumer of Repoze in the
-process it's invoked in.  This is potentially undesirable: you may
-need the same process to use more than one renderer perhaps because
-that same process houses two different Deform-using systems.  In this
-case, instead of using the ``set_default_renderer`` method, you can
-write your application in such a way that it passes a renderer to the
-Form constructor:
+Note that calling :meth:`deform.Field.set_default_renderer` will cause this
+renderer to be used by default by all consumers in the process it's invoked
+in.  This is potentially undesirable: you may need the same process to use
+more than one renderer perhaps because that same process houses two different
+Deform-using systems.  In this case, instead of using the
+``set_default_renderer`` method, you can write your application in such a way
+that it passes a renderer to the Form constructor:
 
 .. code-block:: python
    :linenos:

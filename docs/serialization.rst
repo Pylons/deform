@@ -94,8 +94,8 @@ widget is completely equivalent to one form control, it doesn't need
 to use any Peppercorn structure markers in its rendering.
 
 .. note:: See the `Peppercorn documentation
-   <http://docs.repoze.org/peppercorn>`_ for more information about
-   using peppercorn structure markers in HTML.
+   <http://docs.pylonsproject.org/peppercorn/dev/>`_ for more information
+   about using peppercorn structure markers in HTML.
  
 Deserialization
 ---------------
@@ -162,8 +162,8 @@ There would be a ``date`` key in the root of the pstruct mapping which
 held three keys: ``day``, ``month``, and ``year``.
 
 .. note:: See the `Peppercorn documentation
-   <http://docs.repoze.org/peppercorn>`_ for more information about
-   the result of the ``peppercorn.parse`` method and how it relates to
+   <http://docs.pylonsproject.org/peppercorn/dev/>`_ for more information
+   about the result of the ``peppercorn.parse`` method and how it relates to
    form control data.
 
 The bits of code that are "closest" to the browser are called

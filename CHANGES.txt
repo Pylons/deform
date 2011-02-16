@@ -4,6 +4,10 @@ Changes
 Next release
 ------------
 
+- Moved to GitHub (https://github.com/Pylons/deform).
+
+- Added tox.ini for testing purposes.
+
 - Fix select dropdown behavior on Firefox by fixing CSS (closes
   http://bugs.repoze.org/issue152).
 

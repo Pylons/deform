@@ -1,6 +1,6 @@
 Deform
 ======
 
-A Python HTML form library.  Please see `http://docs.repoze.org/deform
-<http://docs.repoze.org/deform>`_ for the documentation.
+A Python HTML form library.  Please see
+http://docs.pylonsproject.org/deform/dev/ for the documentation.
 

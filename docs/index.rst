@@ -44,32 +44,31 @@ Topics
 Demonstration Site
 ==================
 
-Visit `deformdemo.repoze.org <http://deformdemo.repoze.org>`_ to view
-an application which demonstrates most of Deform's features.  The
-source code for this application is also available in the `deform
-package within the Repoze SVN repository
-<http://svn.repoze.org/deform/trunk/deformdemo>`_.
+Visit `deformdemo.repoze.org <http://deformdemo.repoze.org>`_ to view an
+application which demonstrates most of Deform's features.  The source code
+for this application is also available in the `deform package on GitHub
+<https://github.com/Pylons/deform>`_.
 
 Support and Development
 =======================
 
-To report bugs, use the `bug tracker <http://bfg.repoze.org/trac>`_.
+To report bugs, use the `bug tracker
+<https://github.com/Pylons/deform/issues>`_.
 
-If you've got questions that aren't answered by this documentation,
-contact the `Repoze-dev maillist
-<http://lists.repoze.org/listinfo/repoze-dev>`_ or join the `#repoze
-IRC channel <irc://irc.freenode.net/#repoze>`_.
+If you've got questions that aren't answered by this documentation, contact
+the `Pylons-discuss maillist
+<http://groups.google.com/group/pylons-discuss>`_ or join the `#pylons IRC
+channel <irc://irc.freenode.net/#pylons>`_.
 
-Browse and check out tagged and trunk versions of :mod:`deform`
-via the `Repoze Subversion repository
-<http://svn.repoze.org/deform/>`_.  To check out the trunk
-via Subversion, use this command::
+Browse and check out tagged and trunk versions of :mod:`deform` via the
+`deform package on GitHub <https://github.com/Pylons/deform>`_.  To check out
+the trunk, use this command::
 
-   svn co http://svn.repoze.org/deform/trunk deform
+   git clone git://github.com/Pylons/deform.git
 
-To find out how to become a contributor to :mod:`deform`, please see
-the `Repoze hacking documentation <http://docs.repoze.org/hacking/>`_
-or the `contributor's page <http://repoze.org/contributing.html>`_.
+To find out how to become a contributor to :mod:`deform`, please see the
+`Pylons Project contributor documentation
+<http://docs.pylonsproject.org/#contributing/>`_.
 
 Index and Glossary
 ==================

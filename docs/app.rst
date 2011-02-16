@@ -1,11 +1,11 @@
 Example App
 ===========
 
-An example is worth a thousand words.  Here's an example `repoze.bfg
-<http://bfg.repoze.org>`_ application demonstrating how one might use
+An example is worth a thousand words.  Here's an example `Pyramid
+<http://pylonsproject.org>`_ application demonstrating how one might use
 :mod:`deform` to render a form.
 
-.. warning:: :mod:`deform` is not dependent on :mod:`repoze.bfg` at
+.. warning:: :mod:`deform` is not dependent on :mod:`Pyramid` at
    all; we use BFG in the examples below only to facilitate
    demonstration of an actual end-to-end working application that uses
    Deform.
@@ -16,7 +16,7 @@ Here's the Python code:
    :linenos:
 
    from paste.httpserver import serve
-   from repoze.bfg.configuration import Configurator
+   from pyramid.config import Configurator
 
    from colander import MappingSchema
    from colander import SequenceSchema
@@ -76,10 +76,8 @@ Here's the Python code:
    if __name__ == '__main__':
        settings = dict(reload_templates=True)
        config = Configurator(settings=settings)
-       config.begin()
        config.add_view(form_view, renderer='form.pt')
        config.add_static_view('static', 'deform:static')
-       config.end()
        app = config.make_wsgi_app()
        serve(app)
 
