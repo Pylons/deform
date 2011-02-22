@@ -1065,6 +1065,8 @@ class DeformDemo(object):
             'captured':repr(captured),
             'code': code,
             'start':start,
+            'demos':self.get_demos(),
+            'showmenu':True,
             'end':end,
             'title':'Multiple Forms on the Same Page',
             }
