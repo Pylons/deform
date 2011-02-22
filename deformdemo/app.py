@@ -951,7 +951,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='multiple_error_messages_map')
+    @bfg_view(renderer='templates/form.pt', name='multiple_error_messages_mapping')
     @demonstrate('Multiple Error Messages For a Single Widget (Mapping)')
     def multiple_error_messages_mapping(self):
         def v1(node, value):
@@ -1262,6 +1262,7 @@ def run(global_config, **settings):
     config = Configurator(settings=settings)
     config.begin()
     config.add_static_view('static', 'deform:static')
+    config.add_static_view('static_demo', 'deformdemo:static')
     config.add_translation_dirs(
         'colander:locale',
         'deform:locale',
