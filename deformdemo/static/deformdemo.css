@@ -13,3 +13,9 @@ form .deformWidgetWithStyle{
     float: left;
     width: 230px;
 }
+
+.deform .readonly {
+    border-bottom: 2px solid #EEE;
+    border-left: 2px solid #EEE;
+    padding-left: 1em;
+}

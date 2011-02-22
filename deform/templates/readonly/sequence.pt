@@ -1,4 +1,4 @@
-<div class="deformSeq"
+<div class="deformSeq readonly"
      tal:define="rndr field.renderer;
                  tmpl field.widget.readonly_item_template">
   <!-- sequence -->
