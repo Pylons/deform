@@ -7,3 +7,9 @@ form .deformWidgetWithStyle{
     background-color: #fff7c0;
     font-weight: bold;
 }
+
+.menu {
+    background-color: #EEE;
+    float: left;
+    width: 230px;
+}

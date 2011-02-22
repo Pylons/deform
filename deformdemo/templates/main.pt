@@ -29,6 +29,11 @@
   <body id="public">
     <div class="header-small">
     </div>
+    <div tal:condition="showmenu" class="menu">
+      <ul>
+        <li tal:repeat="(title, name) demos"><a href="${name}/">${title}</a></li>
+      </ul>
+    </div>
     <div class="body">
       <span metal:define-slot="main"/>
     </div>
