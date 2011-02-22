@@ -129,7 +129,7 @@ class DeformDemo(object):
         formatter = HtmlFormatter(linenos='table', lineanchors='line',
                                   hl_lines=hl_lines)
         html = highlight(code, PythonLexer(), formatter)
-        return {'code':html}
+        return {'code':html, 'showmenu':False}
 
     def get_title(self):
         # gross hack; avert your eyes
