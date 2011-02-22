@@ -12,7 +12,10 @@
     <!-- Meta Tags -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!-- CSS -->
+    <link rel="stylesheet" href="${app_url}/static_demo/pylons.css" type="text/css" />
+    <link rel="stylesheet" href="${app_url}/static_demo/deformdemo.css" type="text/css" />
     <link rel="stylesheet" href="${app_url}/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="${app_url}/pylon.css" type="text/css" />
     <tal:block repeat="reqt css_links|[]">
       <link rel="stylesheet" href="${static}/${reqt}" type="text/css" />
     </tal:block>
@@ -24,7 +27,14 @@
   </head>
   
   <body id="public">
-    <div id="container">
+    <div class="header-small">
+    </div>
+    <div tal:condition="showmenu" class="menu">
+      <ul>
+        <li tal:repeat="(title, name) demos"><a href="${name}/">${title}</a></li>
+      </ul>
+    </div>
+    <div class="body">
       <span metal:define-slot="main"/>
     </div>
   </body>

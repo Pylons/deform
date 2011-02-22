@@ -1,4 +1,4 @@
-<div class="wufoo"
+<div class="deform"
      tal:attributes="id field.name or None">
 
   <div class="deformFormFieldset">

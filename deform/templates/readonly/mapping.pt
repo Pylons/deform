@@ -1,7 +1,7 @@
 <div class="deformMappingFieldset">
   <!-- mapping -->
   <p tal:condition="field.title">${field.title}</p>
-  <ul>
+  <ul class="readonly">
     <li class="section" tal:condition="field.description">
       <div>${field.description}</div>
     </li>

@@ -2318,7 +2318,7 @@ class TextInputMaskTests(unittest.TestCase):
                          u"{'date': u'10/10/2010', 'ssn': u'140-11-8866'}")
 
 class MultipleErrorMessagesInMappingTest(unittest.TestCase):
-    url = "/multiple_error_messages_map/"
+    url = "/multiple_error_messages_mapping/"
     def test_it(self):
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")

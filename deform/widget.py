@@ -1367,8 +1367,7 @@ default_resources = {
             'js':('scripts/jquery-1.4.2.min.js',
                   'scripts/jquery.form.js',
                   'scripts/deform.js'),
-            'css':('css/form.css',
-                   'css/theme.css'),
+            'css':('css/form.css')
 
             },
         },

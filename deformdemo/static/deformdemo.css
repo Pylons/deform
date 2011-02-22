@@ -1,0 +1,21 @@
+/* css_class test */
+form .deformWidgetWithStyle{
+    width:100px;
+    margin:0;
+    padding: 10px;
+    border: 2px solid #71a23c;
+    background-color: #fff7c0;
+    font-weight: bold;
+}
+
+.menu {
+    background-color: #EEE;
+    float: left;
+    width: 230px;
+}
+
+.deform .readonly {
+    border-bottom: 2px solid #EEE;
+    border-left: 2px solid #EEE;
+    padding-left: 1em;
+}

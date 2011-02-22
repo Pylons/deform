@@ -16,6 +16,7 @@ from repoze.bfg.chameleon_zpt import get_template
 from repoze.bfg.i18n import get_localizer
 from repoze.bfg.i18n import get_locale_name
 from repoze.bfg.threadlocal import get_current_request
+from repoze.bfg.url import model_url
 from repoze.bfg.view import bfg_view
 
 from pygments import highlight
@@ -91,6 +92,8 @@ class DeformDemo(object):
             'code': code,
             'start':start,
             'end':end,
+            'demos':self.get_demos(),
+            'showmenu':True,
             'title':self.get_title(),
             'css_links':reqts['css'],
             'js_links':reqts['js'],
@@ -126,7 +129,7 @@ class DeformDemo(object):
         formatter = HtmlFormatter(linenos='table', lineanchors='line',
                                   hl_lines=hl_lines)
         html = highlight(code, PythonLexer(), formatter)
-        return {'code':html}
+        return {'code':html, 'showmenu':False}
 
     def get_title(self):
         # gross hack; avert your eyes
@@ -144,13 +147,20 @@ class DeformDemo(object):
 
     @bfg_view(renderer='templates/index.pt')
     def index(self):
+        return {
+            'demos':self.get_demos(),
+            'showmenu':False,
+            }
+
+    def get_demos(self):
+        context = self.request.context
+        base_url = model_url(context, self.request)
         def predicate(value):
             if getattr(value, 'demo', None) is not None:
                 return True
         demos = inspect.getmembers(self, predicate)
-        return {
-            'demos':sorted([(method.demo, name) for name, method in demos])
-            }
+        return sorted([(method.demo, base_url + name) for name, method in \
+                       demos])
 
     @bfg_view(renderer='templates/form.pt', name='textinput')
     @demonstrate('Text Input Widget')
@@ -951,7 +961,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='multiple_error_messages_map')
+    @bfg_view(renderer='templates/form.pt', name='multiple_error_messages_mapping')
     @demonstrate('Multiple Error Messages For a Single Widget (Mapping)')
     def multiple_error_messages_mapping(self):
         def v1(node, value):
@@ -1055,6 +1065,8 @@ class DeformDemo(object):
             'captured':repr(captured),
             'code': code,
             'start':start,
+            'demos':self.get_demos(),
+            'showmenu':True,
             'end':end,
             'title':'Multiple Forms on the Same Page',
             }
@@ -1262,6 +1274,7 @@ def run(global_config, **settings):
     config = Configurator(settings=settings)
     config.begin()
     config.add_static_view('static', 'deform:static')
+    config.add_static_view('static_demo', 'deformdemo:static')
     config.add_translation_dirs(
         'colander:locale',
         'deform:locale',

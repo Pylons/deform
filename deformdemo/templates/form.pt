@@ -1,6 +1,5 @@
 <div metal:use-macro="view.macros['master']">
   <div metal:fill-slot="main">
-    <a href=".."><small>Up to index</small></a>
     <h1>${title}</h1>
     <div id="form" tal:content="structure form"/>
     <h1>Captured</h1>
