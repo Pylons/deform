@@ -1,18 +1,18 @@
-.wufoo .req{
+.deform .req{
    color: red;
 }
 
-.wufoo label.desc{
+.deform label.desc{
     display: block;
     font-weight:bold;
 }
 
-.wufoo ul {
+.deform ul {
     margin: 0;
     padding: 0;
 }
 
-.wufoo li {
+.deform li {
     clear: left;
     display: block;
     margin: 6px 0px;
@@ -48,26 +48,26 @@ div.deformReplaces {
     padding: 1px;
 }
 
-.wufoo ul.inline > li{
+.deform ul.inline > li{
     display:inline-block;
 }
 
 /* error handling */
-.wufoo .errorLi {
+.deform .errorLi {
     border:1px solid red;
     text-align: center;
     -webkit-border-radius:20px;
     -moz-border-radius:20px;
 }
 
-.wufoo li.error{
+.deform li.error{
     background-color: #FFDFDF;
 }
 
-.wufoo li.error label.desc, .wufoo p.error, wufoo h3.errorMsgLbl{
+.deform li.error label.desc, .deform p.error, deform h3.errorMsgLbl{
     color: #DF0000;
 }
 
-.wufoo p.error{
+.deform p.error{
     font-size: 70%;
 }
