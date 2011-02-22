@@ -1,0 +1,9 @@
+/* css_class test */
+form .deformWidgetWithStyle{
+    width:100px;
+    margin:0;
+    padding: 10px;
+    border: 2px solid #71a23c;
+    background-color: #fff7c0;
+    font-weight: bold;
+}

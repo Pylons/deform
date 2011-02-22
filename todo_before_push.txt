@@ -1,0 +1,3 @@
+- selenium tests will be broken
+- add readonly class to sequence and mapping widgets check readonly mapping then
+- remove wufoo
