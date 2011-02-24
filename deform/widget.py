@@ -495,7 +495,7 @@ class RichTextWidget(TextInputWidget):
     """
     height = 240
     width = 500
-    readonly_template = 'readonly/richtextarea'
+    readonly_template = 'readonly/richtext'
     strip = True
     template = 'richtext'
     theme = 'simple'
