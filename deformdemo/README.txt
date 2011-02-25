@@ -7,34 +7,17 @@ generation package.
 Running the Demo
 ----------------
 
-- Create a virtualenv::
+Running the Demo
+----------------
 
-    $ virtualenv2.6 --no-site-packages /path/to/my/venv
+- Run buildout::
 
-  Hereafter ``/path/to/my/venv`` will be referred to as $VENV in steps
-  below.
+    $ python bootstrap.py
+    $ bin/buildout
 
-- Install ``repoze.bfg``, ``pygments`` and ``Babel`` into your
-  virtualenv using ``easy_install``::
+- Fire up the instance::
 
-    $ $VENV/bin/easy_install repoze.bfg pygments Babel
-
-- Get a checkout of deform::
-
-    $ svn co http://svn.repoze.org/deform/trunk deform
-
-- ``cd`` to the newly checked out deform package::
-
-    $ cd deform
-
-- Run ``setup.py develop`` using the virtualenv's ``python`` command::
-
-    $ $VENV/bin/python setup.py develop
-
-- While your working directory is still ``deform``, start the demo
-  application::
-
-    $ $VENV/bin/paster serve deformdemo/demo.ini
+    $ bin/paster serve demo.ini
 
 - Visit http://localhost:8521 in a browser to see the demo.
 
