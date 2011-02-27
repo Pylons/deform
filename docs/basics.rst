@@ -99,9 +99,9 @@ Here's a schema that will help us meet those requirements:
        
 The schemas used by Deform come from a package named :term:`Colander`.  The
 canonical documentation for Colander exists at
-http://docs.pylonsproject.org/colander/dev .  To compose complex schemas,
-you'll need to read it to get comfy with the documentation of the default
-Colander data types.  But for now, we can play it by ear.
+http://docs.pylonsproject.org/projects/colander/dev/ .  To compose complex
+schemas, you'll need to read it to get comfy with the documentation of the
+default Colander data types.  But for now, we can play it by ear.
 
 For ease of reading, we've actually defined *three* schemas above, but
 we coalesce them all into a single schema instance as ``schema`` in
@@ -122,7 +122,7 @@ Schema Node Objects
    documentation about schema nodes in order to prevent you from
    needing to switch away from this page to another while trying to
    learn about forms.  But you can also get much the same information
-   at http://docs.pylonsproject.org/colander/dev/
+   at http://docs.pylonsproject.org/projects/colander/dev/
 
 A schema is composed of one or more *schema node* objects, each
 typically of the class :class:`colander.SchemaNode`, usually in a
@@ -205,8 +205,8 @@ Creating Schemas Without Using a Class Statement (Imperatively)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 See
-`http://docs.pylonsproject.org/colander/dev/basics.html#defining-a-schema-imperatively
-<http://docs.pylonsproject.org/colander/dev/basics.html#defining-a-schema-imperatively>`_
+`http://docs.pylonsproject.org/projects/colander/dev/basics.html#defining-a-schema-imperatively
+<http://docs.pylonsproject.org/projects/colander/dev/basics.html#defining-a-schema-imperatively>`_
 for information about how to create schemas without using a ``class``
 statement.
 
@@ -833,9 +833,9 @@ affordance.  If the data must be checked at input time a separate
 Creating a New Schema Type
 --------------------------
 
-Sometimes the default schema types offered by Colander may not be
-sufficient to model all the structures in your application.  See the
-`Colander documentation about defining a new schema type
-<http://docs.repoze.org/colander/#defining-a-new-type>`_ when this
-becomes true.
+Sometimes the default schema types offered by Colander may not be sufficient
+to model all the structures in your application.  See the `Colander
+documentation about defining a new schema type
+<http://docs.pylonsproject.org/projects/colander/dev/extending.html#defining-a-new-type>`_
+when this becomes true.
 
