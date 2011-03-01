@@ -1,8 +1,8 @@
 Changes
 =======
 
-Next release
-------------
+0.9.0 (2011-03-01)
+------------------
 
 - Moved to GitHub (https://github.com/Pylons/deform).
 
