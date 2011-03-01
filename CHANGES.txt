@@ -13,6 +13,9 @@ Next release
 
 - Removed wufoo css, added a minimal css.
 
+- Sequence widgets now accept a min_len and a max_len argument, which
+  influences its display of close and add buttons.
+
 0.8.1 (2010-12-17)
 ------------------
 

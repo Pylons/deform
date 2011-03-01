@@ -534,8 +534,7 @@ class DeformDemo(object):
             uploads = Sequence()
         schema = Schema()
         form = deform.Form(schema, buttons=('submit',))
-        form['uploads'].widget = deform.widget.SequenceWidget(
-            render_initial_item=True)
+        form['uploads'].widget = deform.widget.SequenceWidget(min_len=1)
         return self.render_form(form, success=tmpstore.clear)
 
     @bfg_view(renderer='templates/form.pt', name='sequence_of_mappings')
@@ -567,8 +566,7 @@ class DeformDemo(object):
             people = People()
         schema = Schema()
         form = deform.Form(schema, buttons=('submit',))
-        form['people'].widget = deform.widget.SequenceWidget(
-            render_initial_item=True)
+        form['people'].widget = deform.widget.SequenceWidget(min_len=1)
         return self.render_form(form)
 
     @bfg_view(renderer='templates/form.pt',
@@ -609,12 +607,28 @@ class DeformDemo(object):
         schema = Schema()
         form = deform.Form(schema, buttons=('submit',))
         outer = form['names_and_titles_sequence']
-        outer.widget = deform.widget.SequenceWidget(
-            render_initial_item=True)
+        outer.widget = deform.widget.SequenceWidget(min_len=1)
         outer['names_and_titles'].widget = deform.widget.SequenceWidget(
-            render_initial_item=True)
+            min_len=1)
         return self.render_form(form)
 
+    @bfg_view(renderer='templates/form.pt', name='sequence_of_constrained_len')
+    @demonstrate('Sequence of Constrained Min and Max Lengths')
+    def sequence_of_constrained_len(self):
+        class Names(colander.SequenceSchema):
+            name = colander.SchemaNode(colander.String())
+        class Schema(colander.Schema):
+            names = Names(
+                validator = colander.Length(2, 4),
+                title = 'At Least 2 At Most 4 Names',
+                widget=deform.widget.SequenceWidget(
+                    min_len=2,
+                    max_len=4)
+            )
+        schema = Schema()
+        form = deform.Form(schema, buttons=('submit',))
+        return self.render_form(form)
+        
     @bfg_view(renderer='templates/form.pt', name='file')
     @demonstrate('File Upload Widget')
     def file(self):

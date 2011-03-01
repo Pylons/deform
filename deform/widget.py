@@ -842,8 +842,7 @@ class FormWidget(MappingWidget):
     readonly_template = 'readonly/form'
 
 class SequenceWidget(Widget):
-    """
-    Renders a sequence (0 .. N widgets, each the same as the other)
+    """Renders a sequence (0 .. N widgets, each the same as the other)
     into a set of fields.
 
     **Attributes/Arguments**
@@ -877,10 +876,24 @@ class SequenceWidget(Widget):
         Default: ``Add ${subitem_title}``.
 
     render_initial_item
-        Boolean attribute indicating whether, on the first rendering
-        of a form including a sequence widget, a child widget
-        rendering should be performed.  Default: ``False``.
+        Deprecated boolean attribute indicating whether, on the first
+        rendering of a form including this sequence widget, a single child
+        widget rendering should be performed.  Default: ``False``.  This
+        attribute is honored for backwards compatibility only: in new
+        applications, please use ``min_len=1`` instead.
 
+    min_len
+        Integer indicating minimum number of acceptable subitems.  Default:
+        ``None`` (meaning no minimum).  On the first rendering of a form
+        including this sequence widget, at least this many subwidgets will be
+        rendered.  The JavaScript sequence management will not allow fewer
+        than this many subwidgets to be present in the sequence.
+
+    max_len
+        Integer indicating maximum number of acceptable subwidgets.  Default:
+        ``None`` (meaning no maximum).  The JavaScript sequence management
+        will not allow more than this many subwidgets to be added to the
+        sequence.
     """
     template = 'sequence'
     readonly_template = 'readonly/sequence'
@@ -889,6 +902,8 @@ class SequenceWidget(Widget):
     error_class = None
     add_subitem_text_template = _('Add ${subitem_title}')
     render_initial_item = False
+    min_len = None
+    max_len = None
     requirements = ( ('deform', None), )
 
     def prototype(self, field):
@@ -903,18 +918,27 @@ class SequenceWidget(Widget):
         return proto
 
     def serialize(self, field, cstruct, readonly=False):
+        if (self.render_initial_item and self.min_len is None):
+            # This is for compat only: ``render_initial_item=True`` should
+            # now be spelled as ``min_len = 1``
+            self.min_len = 1
+
         if cstruct in (null, None):
-            if self.render_initial_item:
-                cstruct = [null]
+            if self.min_len is not None:
+                cstruct = [null] * self.min_len
             else:
                 cstruct = []
+
+        cstructlen = len(cstruct)
+
+        if self.min_len is not None and (cstructlen < self.min_len):
+            cstruct = list(cstruct) + ([null] * (self.min_len-cstructlen))
 
         item_field = field.children[0]
 
         if getattr(field, 'sequence_fields', None):
-            # this serialization is assumed to be performed as a
-            # result of a validation failure (``deserialize`` was
-            # previously run)
+            # this serialization is being performed as a result of a
+            # validation failure (``deserialize`` was previously run)
             assert(len(cstruct) == len(field.sequence_fields))
             subfields = zip(cstruct, field.sequence_fields)
         else:
@@ -929,8 +953,11 @@ class SequenceWidget(Widget):
             subitem_name=item_field.name)
         add_subitem_text = _(self.add_subitem_text_template,
                              mapping=add_template_mapping)
-        return field.renderer(template, field=field, cstruct=cstruct,
-                              subfields=subfields, item_field=item_field,
+        return field.renderer(template,
+                              field=field,
+                              cstruct=cstruct,
+                              subfields=subfields,
+                              item_field=item_field,
                               add_subitem_text=add_subitem_text)
 
     def deserialize(self, field, pstruct):

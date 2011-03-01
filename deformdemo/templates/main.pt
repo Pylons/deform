@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="${app_url}/static_demo/pylons.css" type="text/css" />
     <link rel="stylesheet" href="${app_url}/static_demo/deformdemo.css" type="text/css" />
     <link rel="stylesheet" href="${app_url}/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="${app_url}/pylon.css" type="text/css" />
     <tal:block repeat="reqt css_links|[]">
       <link rel="stylesheet" href="${static}/${reqt}" type="text/css" />
     </tal:block>

@@ -1,27 +1,48 @@
 <div class="deformSeq"
+     id="${field.oid}"
      tal:define="rndr field.renderer;
-                 tmpl field.widget.item_template">
+                 item_tmpl field.widget.item_template;
+                 min_len field.widget.min_len or 0;
+                 max_len field.widget.max_len or 100000;
+                 now_len len(subfields);
+                 prototype field.widget.prototype(field)">
+
   <!-- sequence -->
 
   <input type="hidden" name="__start__" value="${field.name}:sequence"
          class="deformProto" 
-         tal:attributes="prototype field.widget.prototype(field)"/>
+         tal:attributes="prototype prototype"/>
 
   <ul>
 
     <div tal:repeat="tup subfields"
-         tal:replace="structure rndr(tmpl, field=tup[1], cstruct=tup[0],
+         tal:replace="structure rndr(item_tmpl, field=tup[1], cstruct=tup[0],
                       parent=field)"/>
+
+    <span class="deformInsertBefore" 
+          tal:attributes="min_len min_len; 
+                          max_len max_len; 
+                          now_len now_len"></span>
+
   </ul>
   
-  <span class="deformInsertBefore"></span>
-
   <a href="#"
      class="deformSeqAdd"
      id="${field.oid}-seqAdd"
      onclick="javascript: return deform.appendSequenceItem(this);">
     <small id="${field.oid}-addtext">${add_subitem_text}</small>
   </a>
+
+  <script type="text/javascript">
+     deform.addCallback(
+       '${field.oid}',
+       function(oid) {
+         oid_node = $('#'+ oid);
+         deform.processSequenceButtons(oid_node, ${min_len}, 
+                                       ${max_len}, ${now_len});
+       }
+     )
+  </script>
 
   <input type="hidden" name="__end__" value="${field.name}:sequence"/>
 

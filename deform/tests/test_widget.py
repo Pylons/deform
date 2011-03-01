@@ -1099,6 +1099,38 @@ class TestSequenceWidget(unittest.TestCase):
         self.assertEqual(renderer.kw['cstruct'], [null])
         self.assertEqual(renderer.template, widget.template)
 
+    def test_serialize_null_min_len_larger_than_cstruct(self):
+        from colander import null
+        renderer = DummyRenderer('abc')
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+        inner = DummyField()
+        field.children=[inner]
+        widget = self._makeOne()
+        widget.min_len = 2
+        result = widget.serialize(field, ['abc'])
+        self.assertEqual(result, 'abc')
+        self.assertEqual(len(renderer.kw['subfields']), 2)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], ['abc', null])
+        self.assertEqual(renderer.template, widget.template)
+
+    def test_serialize_null_min_one(self):
+        from colander import null
+        renderer = DummyRenderer('abc')
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+        inner = DummyField()
+        field.children=[inner]
+        widget = self._makeOne()
+        widget.min_len = 1
+        result = widget.serialize(field, null)
+        self.assertEqual(result, 'abc')
+        self.assertEqual(len(renderer.kw['subfields']), 1)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], [null])
+        self.assertEqual(renderer.template, widget.template)
+        
     def test_serialize_add_subitem_value(self):
         from colander import null
         renderer = DummyRenderer('abc')

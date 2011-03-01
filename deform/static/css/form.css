@@ -19,9 +19,7 @@
     padding: 3px;
 }
 
-/* deform additions*/
-
-.deformClosebutton {
+.deformClosebuttonActive {
    border: 0;
    cursor: pointer;
    float: left;
@@ -30,7 +28,7 @@
    /* margin: .5em; */
 }
 
-.deformClosebutton:before {
+.deformClosebuttonActive:before {
     content:"✖";
     color:red;
     margin-right: 2px;
