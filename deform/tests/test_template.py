@@ -41,32 +41,12 @@ class TestZPTTemplateLoader(unittest.TestCase):
         result = loader.load('test.pt')
         self.assertEqual(result.auto_reload, True)
 
-    def test_load_notexists(self):
+    def test_load_doesnt_exist(self):
         import os
         from deform.template import TemplateError
         fixtures = os.path.join(os.path.dirname(__file__), 'fixtures')
         loader = self._makeOne(search_path=[fixtures])
         self.assertRaises(TemplateError, loader.load, 'doesnt')
-        self.failUnless(
-            os.path.join(fixtures, 'doesnt') in loader.notexists)
-
-    def test_load_negative_cache(self):
-        import os
-        fixtures = os.path.join(os.path.dirname(__file__), 'fixtures')
-        path = os.path.join(fixtures, 'test.pt')
-        loader = self._makeOne(search_path=[fixtures], auto_reload=True)
-        loader.notexists[path] = True
-        result = loader.load('test.pt')
-        self.failUnless(result)
-
-    def test_load_negative_cache2(self):
-        import os
-        from deform.template import TemplateError
-        fixtures = os.path.join(os.path.dirname(__file__), 'fixtures')
-        path = os.path.join(fixtures, 'test.pt')
-        loader = self._makeOne(search_path=[fixtures], auto_reload=False)
-        loader.notexists[path] = True
-        self.assertRaises(TemplateError, loader.load, 'test.pt')
 
 class TestZPTRendererFactory(unittest.TestCase):
     def _makeOne(self, dirs, **kw):
@@ -78,21 +58,23 @@ class TestZPTRendererFactory(unittest.TestCase):
         default_dir = resource_filename('deform', 'tests/fixtures/')
         renderer = self._makeOne((default_dir,))
         result = renderer('test')
-        self.assertEqual(result, u'<div>Test</div>')
+        self.assertEqual(result, u'<div>Test</div>\n')
 
     def test_it(self):
+        import os
+        path = os.path.join(os.path.dirname(__file__), 'fixtures')
         renderer = self._makeOne(
-            ('dir',),
+            (path,),
             auto_reload=True,
             debug=True,
             encoding='utf-16',
             translator=lambda *arg: 'translation',
             )
-        self.assertEqual(renderer.loader.auto_reload, True)
-        self.assertEqual(renderer.loader.debug, True)
-        self.assertEqual(renderer.loader.search_path, ('dir',))
-        self.assertEqual(renderer.loader.encoding, 'utf-16')
-        self.assertEqual(renderer.loader.translate('a'), 'translation')
+        template = renderer.load("test")
+        self.assertEqual(template.auto_reload, True)
+        self.assertEqual(template.debug, True)
+        self.assertEqual(template.encoding, 'utf-16')
+        self.assertEqual(template.translate('a'), 'translation')
 
 class Test_default_renderer(unittest.TestCase):
     def _callFUT(self, template, **kw):
@@ -100,11 +82,13 @@ class Test_default_renderer(unittest.TestCase):
         return default_renderer(template, **kw)
     
     def test_call_defaultdir(self):
+        import re
         result = self._callFUT('checkbox',
                                **{'cstruct':None, 'field':DummyField()})
-        self.assertEqual(result,
-                         u'<input type="checkbox" name="name" value="true" '
-                         'id="oid" />')
+        self.assertEqual(
+            re.sub('[ \n]+', ' ', result),
+            u'<input type="checkbox" name="name" value="true" id="oid"/> '
+            )
 
 class DummyWidget(object):
     name = 'name'
