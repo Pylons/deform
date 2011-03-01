@@ -1614,6 +1614,47 @@ class SequenceOfDateInputs(unittest.TestCase):
         captured = browser.get_text('css=#captured')
         self.failUnless(captured.startswith(u"{'dates': [datetime.date"))
 
+class SequenceOfConstrainedLength(unittest.TestCase):
+    url = '/sequence_of_constrained_len/'
+    def test_render_default(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        self.failUnless(browser.is_text_present("At Least 2"))
+        self.assertEqual(browser.get_text('deformField1-addtext'),'Add Name')
+        self.assertEqual(browser.get_text('css=#captured'), 'None')
+        # default 2 inputs rendered
+        self.assertEqual(browser.get_value('deformField3'), '')
+        self.assertEqual(browser.get_value('deformField4'), '')
+
+    def test_add_and_remove(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        self.assertEqual(browser.get_text('deformField1-addtext'),'Add Name')
+        self.failUnless(browser.is_visible('deformField1-seqAdd'))
+        browser.type('deformField3', 'hello1')
+        browser.type('deformField4', 'hello2')
+        browser.click('deformField1-seqAdd')
+        browser.click('deformField1-seqAdd')
+        browser.type('dom=document.forms[0].elements[6]', 'hello3')
+        browser.type('dom=document.forms[0].elements[7]', 'hello4')
+        self.failIf(browser.is_visible('deformField1-seqAdd'))
+        browser.click('deformField3-close')
+        self.failUnless(browser.is_visible('deformField1-seqAdd'))
+        browser.click('deformField1-seqAdd')
+        self.failIf(browser.is_visible('deformField1-seqAdd'))
+        browser.type('dom=document.forms[0].elements[7]', 'hello5')
+        browser.click('submit')
+        browser.wait_for_page_to_load("30000")
+        self.failIf(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertEqual(browser.get_value('deformField3'), 'hello2')
+        self.assertEqual(browser.get_value('deformField4'), 'hello3')
+        self.assertEqual(browser.get_value('deformField5'), 'hello4')
+        self.assertEqual(browser.get_value('deformField6'), 'hello5')
+        self.failIf(browser.is_visible('deformField1-seqAdd'))
+        captured = browser.get_text('css=#captured')
+        self.assertEqual(captured,
+            u"{'names': [u'hello2', u'hello3', u'hello4', u'hello5']}")
+        
 class SequenceOfRichTextWidgetTests(unittest.TestCase):
     url = "/sequence_of_richtext/"
     def test_render_default(self):
