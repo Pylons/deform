@@ -28,7 +28,7 @@ except:
     CHANGES = ''
 
 requires = [
-    'Chameleon>=1.2.3', # debug arg
+    'Chameleon>=1.2.3,<1.999', # debug arg, c2 doesnt yet work
     'colander>=0.8', # Bindings-providing
     'peppercorn>=0.3', # rename operation type
     'translationstring',

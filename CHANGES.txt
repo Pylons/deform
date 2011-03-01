@@ -11,10 +11,13 @@ Next release
 - Fix select dropdown behavior on Firefox by fixing CSS (closes
   http://bugs.repoze.org/issue152).
 
-- Removed wufoo css, added a minimal css.
+- Removed ``wufoo.css``, minimized ``form.css``.  Changed templates around to
+  deal with CSS changes.
 
 - Sequence widgets now accept a min_len and a max_len argument, which
   influences its display of close and add buttons.
+
+- Depend on Chameleon<1.999 (deform doesn't yet work with Chameleon 2).
 
 0.8.1 (2010-12-17)
 ------------------
