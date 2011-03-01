@@ -17,6 +17,8 @@ Next release
 - Sequence widgets now accept a min_len and a max_len argument, which
   influences its display of close and add buttons.
 
+- Convert demo application from repoze.bfg to Pyramid.
+
 - Depend on Chameleon<1.999 (deform doesn't yet work with Chameleon 2).
 
 0.8.1 (2010-12-17)

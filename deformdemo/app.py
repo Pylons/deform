@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-""" A repoze.bfg app that demonstrates various Deform widgets and
+""" A Pyramid app that demonstrates various Deform widgets and
 capabilities """
 
 import inspect
@@ -8,16 +8,16 @@ import sys
 import csv
 import StringIO
 
-from webob import Response
 from pkg_resources import resource_filename
 
-from repoze.bfg.configuration import Configurator
-from repoze.bfg.chameleon_zpt import get_template
-from repoze.bfg.i18n import get_localizer
-from repoze.bfg.i18n import get_locale_name
-from repoze.bfg.threadlocal import get_current_request
-from repoze.bfg.url import model_url
-from repoze.bfg.view import bfg_view
+from pyramid.config import Configurator
+from pyramid.renderers import get_renderer
+from pyramid.i18n import get_localizer
+from pyramid.i18n import get_locale_name
+from pyramid.response import Response
+from pyramid.threadlocal import get_current_request
+from pyramid.url import resource_url
+from pyramid.view import view_config
 
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
@@ -52,7 +52,7 @@ class demonstrate(object):
 class DeformDemo(object):
     def __init__(self, request):
         self.request = request
-        self.macros = get_template('templates/main.pt').macros
+        self.macros = get_renderer('templates/main.pt').implementation().macros
 
     def render_form(self, form, appstruct=colander.null, submitted='submit',
                     success=None, readonly=False):
@@ -108,13 +108,13 @@ class DeformDemo(object):
         formatter = HtmlFormatter()
         return highlight(code, PythonLexer(), formatter), start, end
 
-    @bfg_view(name='thanks.html')
+    @view_config(name='thanks.html')
     def thanks(self):
         return Response(
             '<html><body><p>Thanks!</p><small>'
             '<a href="..">Up</a></small></body></html>')
 
-    @bfg_view(name='allcode', renderer='templates/code.pt')
+    @view_config(name='allcode', renderer='templates/code.pt')
     def allcode(self):
         params = self.request.params
         start = params.get('start')
@@ -139,13 +139,13 @@ class DeformDemo(object):
         method = getattr(inst, attr)
         return method.demo
 
-    @bfg_view(name='pygments.css')
+    @view_config(name='pygments.css')
     def cssview(self):
         response =  Response(body=css, content_type='text/css')
         response.cache_expires = 360
         return response
 
-    @bfg_view(renderer='templates/index.pt')
+    @view_config(renderer='templates/index.pt')
     def index(self):
         return {
             'demos':self.get_demos(),
@@ -154,7 +154,7 @@ class DeformDemo(object):
 
     def get_demos(self):
         context = self.request.context
-        base_url = model_url(context, self.request)
+        base_url = resource_url(context, self.request)
         def predicate(value):
             if getattr(value, 'demo', None) is not None:
                 return True
@@ -162,7 +162,7 @@ class DeformDemo(object):
         return sorted([(method.demo, base_url + name) for name, method in \
                        demos])
 
-    @bfg_view(renderer='templates/form.pt', name='textinput')
+    @view_config(renderer='templates/form.pt', name='textinput')
     @demonstrate('Text Input Widget')
     def textinput(self):
         class Schema(colander.Schema):
@@ -175,7 +175,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='textinput_with_css_class')
+    @view_config(renderer='templates/form.pt', name='textinput_with_css_class')
     @demonstrate('Text Input Widget with CSS Class')
     def textinput_with_css_class(self):
         css_widget = deform.widget.TextInputWidget(
@@ -189,7 +189,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='autocomplete_input')
+    @view_config(renderer='templates/form.pt', name='autocomplete_input')
     @demonstrate('Autocomplete Input Widget')
     def autocomplete_input(self):
         choices = ['bar', 'baz', 'two', 'three']
@@ -207,7 +207,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='autocomplete_remote_input')
+    @view_config(renderer='templates/form.pt', name='autocomplete_remote_input')
     @demonstrate('Autocomplete Input Widget with Remote Data Source')
     def autocomplete_remote_input(self):
         widget = deform.widget.AutocompleteInputWidget(
@@ -224,13 +224,13 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='json', name='autocomplete_input_values')
+    @view_config(renderer='json', name='autocomplete_input_values')
     def autocomplete_input_values(self):
         text = self.request.params.get('term', '')
         return [x for x in ['bar', 'baz', 'two', 'three'] 
                 if x.startswith(text)]
 
-    @bfg_view(renderer='templates/form.pt', name='textarea')
+    @view_config(renderer='templates/form.pt', name='textarea')
     @demonstrate('Text Area Widget')
     def textarea(self):
         class Schema(colander.Schema):
@@ -243,7 +243,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='richtext')
+    @view_config(renderer='templates/form.pt', name='richtext')
     @demonstrate('Rich Text Widget')
     def richtext(self):
         class Schema(colander.Schema):
@@ -255,7 +255,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='password')
+    @view_config(renderer='templates/form.pt', name='password')
     @demonstrate('Password Widget')
     def password(self):
         class Schema(colander.Schema):
@@ -268,7 +268,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='checkbox')
+    @view_config(renderer='templates/form.pt', name='checkbox')
     @demonstrate('Checkbox Widget')
     def checkbox(self):
         class Schema(colander.Schema):
@@ -281,7 +281,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='radiochoice')
+    @view_config(renderer='templates/form.pt', name='radiochoice')
     @demonstrate('Radio Choice Widget')
     def radiochoice(self):
         choices = (('habanero', 'Habanero'), ('jalapeno', 'Jalapeno'),
@@ -297,7 +297,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='checkedinput')
+    @view_config(renderer='templates/form.pt', name='checkedinput')
     @demonstrate('Checked Input Widget')
     def checkedinput(self):
         widget = deform.widget.CheckedInputWidget(
@@ -315,7 +315,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='checkedpassword')
+    @view_config(renderer='templates/form.pt', name='checkedpassword')
     @demonstrate('Checked Password Widget')
     def checkedpassword(self):
         class Schema(colander.Schema):
@@ -328,7 +328,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='checkedinput_withmask')
+    @view_config(renderer='templates/form.pt', name='checkedinput_withmask')
     @demonstrate('Checked Input Widget (With Input Mask)')
     def checkedinput_withmask(self):
         widget = deform.widget.CheckedInputWidget(
@@ -348,7 +348,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='mapping')
+    @view_config(renderer='templates/form.pt', name='mapping')
     @demonstrate('Mapping Widget')
     def mapping(self):
         class Mapping(colander.Schema):
@@ -367,7 +367,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='ajaxform')
+    @view_config(renderer='templates/form.pt', name='ajaxform')
     @demonstrate('AJAX form submission (inline success)')
     def ajaxform(self):
         class Mapping(colander.Schema):
@@ -388,7 +388,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',), use_ajax=True)
         return self.render_form(form, success=succeed)
 
-    @bfg_view(renderer='templates/form.pt', name='ajaxform_redirect')
+    @view_config(renderer='templates/form.pt', name='ajaxform_redirect')
     @demonstrate('AJAX form submission (redirect on success)')
     def ajaxform_redirect(self):
         class Mapping(colander.Schema):
@@ -421,7 +421,7 @@ class DeformDemo(object):
                            ajax_options=options)
         return self.render_form(form, success=succeed)
 
-    @bfg_view(renderer='templates/form.pt', name='sequence_of_radiochoices')
+    @view_config(renderer='templates/form.pt', name='sequence_of_radiochoices')
     @demonstrate('Sequence of Radio Choice Widgets')
     def sequence_of_radiochoices(self):
         choices = (('habanero', 'Habanero'), ('jalapeno', 'Jalapeno'),
@@ -439,7 +439,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='sequence_of_autocompletes')
+    @view_config(renderer='templates/form.pt', name='sequence_of_autocompletes')
     @demonstrate('Sequence of Autocomplete Widgets')
     def sequence_of_autocompletes(self):
         choices = ['bar', 'baz', 'two', 'three']
@@ -459,7 +459,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='sequence_of_dateinputs')
+    @view_config(renderer='templates/form.pt', name='sequence_of_dateinputs')
     @demonstrate('Sequence of Date Inputs')
     def sequence_of_dateinputs(self):
         import datetime
@@ -478,7 +478,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='sequence_of_richtext')
+    @view_config(renderer='templates/form.pt', name='sequence_of_richtext')
     @demonstrate('Sequence of Rich Text Widgets')
     def sequence_of_richtext(self):
         class Sequence(colander.SequenceSchema):
@@ -492,7 +492,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt',
+    @view_config(renderer='templates/form.pt',
               name='sequence_of_masked_textinputs')
     @demonstrate('Sequence of Masked Text Inputs')
     def sequence_of_masked_textinputs(self):
@@ -506,7 +506,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='sequence_of_fileuploads')
+    @view_config(renderer='templates/form.pt', name='sequence_of_fileuploads')
     @demonstrate('Sequence of File Upload Widgets')
     def sequence_of_fileuploads(self):
         class Sequence(colander.SequenceSchema):
@@ -521,7 +521,7 @@ class DeformDemo(object):
         return self.render_form(form, success=tmpstore.clear)
 
 
-    @bfg_view(renderer='templates/form.pt',
+    @view_config(renderer='templates/form.pt',
               name='sequence_of_fileuploads_with_initial_item')
     @demonstrate('Sequence of File Upload Widgets (With Initial Item)')
     def sequence_of_fileuploads_with_initial_item(self):
@@ -537,7 +537,7 @@ class DeformDemo(object):
         form['uploads'].widget = deform.widget.SequenceWidget(min_len=1)
         return self.render_form(form, success=tmpstore.clear)
 
-    @bfg_view(renderer='templates/form.pt', name='sequence_of_mappings')
+    @view_config(renderer='templates/form.pt', name='sequence_of_mappings')
     @demonstrate('Sequence of Mapping Widgets')
     def sequence_of_mappings(self):
         class Person(colander.Schema):
@@ -552,7 +552,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt',
+    @view_config(renderer='templates/form.pt',
               name='sequence_of_mappings_with_initial_item')
     @demonstrate('Sequence of Mapping Widgets (With Initial Item)')
     def sequence_of_mappings_with_initial_item(self):
@@ -569,7 +569,7 @@ class DeformDemo(object):
         form['people'].widget = deform.widget.SequenceWidget(min_len=1)
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt',
+    @view_config(renderer='templates/form.pt',
               name='readonly_sequence_of_mappings')
     @demonstrate('Read-Only Sequence of Mappings')
     def readonly_sequence_of_mappings(self):
@@ -591,7 +591,7 @@ class DeformDemo(object):
                        },
             readonly=True)
 
-    @bfg_view(renderer='templates/form.pt', name='sequence_of_sequences')
+    @view_config(renderer='templates/form.pt', name='sequence_of_sequences')
     @demonstrate('Sequence of Sequence Widgets')
     def sequence_of_sequences(self):
         class NameAndTitle(colander.Schema):
@@ -612,7 +612,7 @@ class DeformDemo(object):
             min_len=1)
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='sequence_of_constrained_len')
+    @view_config(renderer='templates/form.pt', name='sequence_of_constrained_len')
     @demonstrate('Sequence of Constrained Min and Max Lengths')
     def sequence_of_constrained_len(self):
         class Names(colander.SequenceSchema):
@@ -629,7 +629,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
         
-    @bfg_view(renderer='templates/form.pt', name='file')
+    @view_config(renderer='templates/form.pt', name='file')
     @demonstrate('File Upload Widget')
     def file(self):
         class Schema(colander.Schema):
@@ -641,7 +641,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form, success=tmpstore.clear)
 
-    @bfg_view(renderer='templates/form.pt', name='dateparts')
+    @view_config(renderer='templates/form.pt', name='dateparts')
     @demonstrate('Date Parts Widget')
     def dateparts(self):
         import datetime
@@ -659,7 +659,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='dateinput')
+    @view_config(renderer='templates/form.pt', name='dateinput')
     @demonstrate('Date Input Widget')
     def dateinput(self):
         import datetime
@@ -677,7 +677,7 @@ class DeformDemo(object):
         when = datetime.date(2010, 5, 5)
         return self.render_form(form, appstruct={'date':when})
 
-    @bfg_view(renderer='templates/form.pt', name='edit')
+    @view_config(renderer='templates/form.pt', name='edit')
     @demonstrate('Edit Form')
     def edit(self):
         class Mapping(colander.Schema):
@@ -707,7 +707,7 @@ class DeformDemo(object):
             }
         return self.render_form(form, appstruct=appstruct)
 
-    @bfg_view(renderer='templates/form.pt', name='interfield')
+    @view_config(renderer='templates/form.pt', name='interfield')
     @demonstrate('Inter-Field Validation')
     def interfield(self):
         class Schema(colander.Schema):
@@ -726,7 +726,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='fielddefaults')
+    @view_config(renderer='templates/form.pt', name='fielddefaults')
     @demonstrate('Field Defaults')
     def fielddefaults(self):
         class Schema(colander.Schema):
@@ -744,7 +744,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='nonrequiredfields')
+    @view_config(renderer='templates/form.pt', name='nonrequiredfields')
     @demonstrate('Non-Required Fields')
     def nonrequiredfields(self):
         class Schema(colander.Schema):
@@ -760,7 +760,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='nonrequired_number_fields')
+    @view_config(renderer='templates/form.pt', name='nonrequired_number_fields')
     @demonstrate('Non-Required Number Fields')
     def nonrequired_number_fields(self):
         class Schema(colander.Schema):
@@ -776,7 +776,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='unicodeeverywhere')
+    @view_config(renderer='templates/form.pt', name='unicodeeverywhere')
     @demonstrate('Unicode Everywhere')
     def unicodeeverywhere(self):
         class Schema(colander.Schema):
@@ -791,7 +791,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='select')
+    @view_config(renderer='templates/form.pt', name='select')
     @demonstrate('Select Widget')
     def select(self):
         choices = (
@@ -809,7 +809,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='checkboxchoice')
+    @view_config(renderer='templates/form.pt', name='checkboxchoice')
     @demonstrate('Checkbox Choice Widget')
     def checkboxchoice(self):
         choices = (('habanero', 'Habanero'), ('jalapeno', 'Jalapeno'),
@@ -823,7 +823,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='checkboxchoice2')
+    @view_config(renderer='templates/form.pt', name='checkboxchoice2')
     @demonstrate('Checkbox Choice Widget 2')
     def checkboxchoice2(self):
         choices = (('habanero', 'Habanero'), ('jalapeno', 'Jalapeno'),
@@ -847,7 +847,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/translated_form.pt', name='i18n')
+    @view_config(renderer='templates/translated_form.pt', name='i18n')
     @demonstrate('Internationalization')
     def i18n(self):
         minmax = {'min':1, 'max':10}
@@ -875,7 +875,7 @@ class DeformDemo(object):
 
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='hidden_field')
+    @view_config(renderer='templates/form.pt', name='hidden_field')
     @demonstrate('Hidden Field Widget')
     def hidden_field(self):
         class Schema(colander.Schema):
@@ -888,7 +888,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='hiddenmissing')
+    @view_config(renderer='templates/form.pt', name='hiddenmissing')
     @demonstrate('Hidden, Missing Widget Representing an Integer')
     def hiddenmissing(self):
         class Schema(colander.Schema):
@@ -903,7 +903,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='text_input_masks')
+    @view_config(renderer='templates/form.pt', name='text_input_masks')
     @demonstrate('Text Input Masks')
     def text_input_masks(self):
         class Schema(colander.Schema):
@@ -919,7 +919,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='textareacsv')
+    @view_config(renderer='templates/form.pt', name='textareacsv')
     @demonstrate('Text Area CSV Widget')
     def textareacsv(self):
         class Row(colander.TupleSchema):
@@ -936,7 +936,7 @@ class DeformDemo(object):
         appstruct = {'csv':[ (1, 'hello', 4.5), (2, 'goodbye', 5.5) ]}
         return self.render_form(form, appstruct=appstruct)
 
-    @bfg_view(renderer='templates/form.pt', name='textinputcsv')
+    @view_config(renderer='templates/form.pt', name='textinputcsv')
     @demonstrate('Text Input CSV Widget')
     def textinputcsv(self):
         class Row(colander.TupleSchema):
@@ -952,7 +952,7 @@ class DeformDemo(object):
         appstruct = {'csv':(1, 'hello', 4.5)}
         return self.render_form(form, appstruct=appstruct)
 
-    @bfg_view(renderer='templates/form.pt', name='require_one_or_another')
+    @view_config(renderer='templates/form.pt', name='require_one_or_another')
     @demonstrate('Require One Field or Another')
     def require_one_or_another(self):
         class Schema(colander.Schema):
@@ -975,7 +975,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='multiple_error_messages_mapping')
+    @view_config(renderer='templates/form.pt', name='multiple_error_messages_mapping')
     @demonstrate('Multiple Error Messages For a Single Widget (Mapping)')
     def multiple_error_messages_mapping(self):
         def v1(node, value):
@@ -996,7 +996,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name='multiple_error_messages_seq')
+    @view_config(renderer='templates/form.pt', name='multiple_error_messages_seq')
     @demonstrate('Multiple Error Messages For a Single Widget (Sequence)')
     def multiple_error_messages_seq(self):
         def v1(node, value):
@@ -1019,7 +1019,7 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         return self.render_form(form)
 
-    @bfg_view(renderer='templates/form.pt', name="multiple_forms")
+    @view_config(renderer='templates/form.pt', name="multiple_forms")
     @demonstrate('Multiple Forms on the Same Page')
     def multiple_forms(self):
         import itertools
@@ -1085,7 +1085,7 @@ class DeformDemo(object):
             'title':'Multiple Forms on the Same Page',
             }
         
-    @bfg_view(renderer='templates/form.pt', name='widget_adapter')
+    @view_config(renderer='templates/form.pt', name='widget_adapter')
     @demonstrate('Widget Adapter')
     def widget_adapter(self):
         # Formish allows you to pair a widget against a type that
@@ -1130,7 +1130,7 @@ class DeformDemo(object):
         appstruct = {'csv':[ (1, 'hello', 4.5), (2, 'goodbye', 5.5) ]}
         return self.render_form(form, appstruct=appstruct)
 
-    @bfg_view(renderer='templates/form.pt', name='deferred_schema_bindings')
+    @view_config(renderer='templates/form.pt', name='deferred_schema_bindings')
     @demonstrate('Deferred Schema Bindings')
     def deferred_schema_bindings(self):
         import datetime
