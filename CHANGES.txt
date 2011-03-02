@@ -1,6 +1,13 @@
 Changes
 =======
 
+Next release
+------------
+
+- Compile all ``.po`` files to ``.mo`` in ``deform/locale`` and remove Texan
+  locale (funny, but breaks ``python setup.py compile_catalog`` with an
+  UnknownLocale error.)
+
 0.9 (2011-03-01)
 ----------------
 
