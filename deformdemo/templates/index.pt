@@ -2,7 +2,7 @@
   <div metal:fill-slot="main">
     <h1>Deform Demo</h1>
     <h3>
-      <a href="http://docs.repoze.org/deform">Deform</a> is an HTML
+      <a href="http://docs.pylonsproject.org/projects/deform/dev/">Deform</a> is an HTML
       form generation system.  Each link below demonstrates a
       capability.
     </h3>
@@ -15,18 +15,18 @@
 
       <p>
         This demo is written using <a
-        href="http://bfg.repoze.org">repoze.bfg</a>. But please note
+        href="http://pylonsproject.org/">Pyramid</a>. But please note
         that Deform does not depend on any particular web framework,
         we just had to write a demo application in
         <i>something</i>. If, for some unfathomable reason, you'd like
         to run this demo application locally, please read the <a
-        href="http://svn.repoze.org/deform/trunk/deformdemo/README.txt"
+        href="https://github.com/Pylons/deform/raw/master/deformdemo/README.txt"
         >README.txt for installation of this application</a>.
       </p>
 
       <p>
         For further information, see
-        the <a href="http://docs.repoze.org/deform">Deform documentation</a>.
+        the <a href="http://docs.pylonsproject.org/projects/deform/dev/">Deform documentation</a>.
       </p>
 
     </div>

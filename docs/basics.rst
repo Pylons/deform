@@ -358,7 +358,7 @@ as the page which serves up the form itself.  For example, the URL
 ``close.png`` image in the ``static/images`` directory in the
 :mod:`deform` package and ``/static/scripts/deform.js`` as
 ``image/png`` content .  How you arrange to do this is dependent on
-your web framework.  It's done in :mod:`Pyramid` imperative
+your web framework.  It's done in :mod:`pyramid` imperative
 configuration via:
 
 .. code-block:: python
@@ -494,7 +494,7 @@ this chapter, visit
 `http://deformdemo.repoze.org/readonly_sequence_of_mappings/
 <http://deformdemo.repoze.org/readonly_sequence_of_mappings/>`_
 
-The application at http://deformdemo.repoze.org is a :mod:`repoze.bfg`
+The application at http://deformdemo.repoze.org is a :mod:`pyramid`
 application which demonstrates most of the features of Deform,
 including most of the widget and data types available for use within
 an application that uses Deform.  

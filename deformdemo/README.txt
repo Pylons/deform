@@ -14,14 +14,14 @@ Running the Demo
   Hereafter ``/path/to/my/venv`` will be referred to as $VENV in steps
   below.
 
-- Install ``repoze.bfg``, ``pygments`` and ``Babel`` into your
+- Install ``Pyramid``, ``pygments`` and ``Babel`` into your
   virtualenv using ``easy_install``::
 
-    $ $VENV/bin/easy_install repoze.bfg pygments Babel
+    $ $VENV/bin/easy_install Pyramid pygments Babel
 
 - Get a checkout of deform::
 
-    $ svn co http://svn.repoze.org/deform/trunk deform
+    $ git clone git://github.com/Pylons/deform.git
 
 - ``cd`` to the newly checked out deform package::
 

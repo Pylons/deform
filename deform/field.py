@@ -458,7 +458,7 @@ class Field(object):
 
         The typical usage of ``validate`` in the wild is often
         something like this (at least in terms of code found within
-        the body of a :mod:`repoze.bfg` view function, the particulars
+        the body of a :mod:`pyramid` view function, the particulars
         will differ in your web framework)::
 
           from webob.exc import HTTPFound
