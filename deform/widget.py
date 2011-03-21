@@ -259,7 +259,7 @@ class AutocompleteInputWidget(Widget):
         and trailing whitespace (default ``True``).
 
     values
-        ``values`` from which :term:`jquery.autocomplete` provides
+        ``values`` from which :term:`jquery.ui.autocomplete` provides
         autocompletion. It MUST be an iterable that can be converted
         to a json array by [simple]json.dumps. It is also possible
         to pass a [base]string representing a remote URL.
@@ -284,7 +284,7 @@ class AutocompleteInputWidget(Widget):
 
     delay
         ``delay`` is an optional argument to
-        :term:`jquery.autocomplete`. It sets the time to wait after a
+        :term:`jquery.ui.autocomplete`. It sets the time to wait after a
         keypress to activate the autocomplete call.
         Defaults to ``10`` ms or ``400`` ms if a url is passed.
     """

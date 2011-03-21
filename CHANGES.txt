@@ -10,6 +10,8 @@ Next release
 
 - Fix references to repoze.bfg and update obsoletes URLs in the demo application
 
+- Remove unused ``jquery.autocomplete.min.js`` file from static directory.
+
 0.9 (2011-03-01)
 ----------------
 
