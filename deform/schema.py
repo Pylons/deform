@@ -115,8 +115,6 @@ class FileData(object):
         return result
 
     def deserialize(self, node, value):
-        if value is colander.null:
-            return colander.null
         return value
 
 class Set(object):
