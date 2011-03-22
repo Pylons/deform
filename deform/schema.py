@@ -134,8 +134,6 @@ class Set(object):
         self.allow_empty = allow_empty
         
     def serialize(self, node, value):
-        if value is colander.null:
-            return colander.null
         return value
 
     def deserialize(self, node, value):
