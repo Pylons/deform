@@ -8,11 +8,6 @@
                ><small>(show in context)</small></a>
     </h1>
     <span tal:replace="structure code"/>
-    <script type="text/javascript">
-      jQuery(function() {
-         deform.load();
-         });
-    </script>
   </div>
 </div>
 
