@@ -559,6 +559,9 @@ which is the header uses the widget underneath it by default.
 :class:`colander.Date`
     :class:`deform.widget.DateInputWidget`
 
+:class:`colander.DateTime`
+    :class:`deform.widget.DateTimeInputWidget`
+
 :class:`colander.Tuple`
     :class:`deform.widget.Widget`
 

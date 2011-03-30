@@ -12,6 +12,7 @@ default_widget_makers = {
     colander.Decimal: widget.TextInputWidget,
     colander.Boolean: widget.CheckboxWidget,
     colander.Date: widget.DateInputWidget,
+    colander.DateTime: widget.DateTimeInputWidget,
     colander.Tuple: widget.TextInputCSVWidget,
 }
 

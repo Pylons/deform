@@ -363,6 +363,65 @@ class DateInputWidget(Widget):
             return null
         return pstruct
 
+class DateTimeInputWidget(DateInputWidget):
+    """
+    Renders a a jQuery UI date picker with a JQuery Timepicker add-on
+    (http://trentrichardson.com/examples/timepicker/).  Used for
+    ``colander.DateTime`` schema nodes.
+
+    **Attributes/Arguments**
+
+    options
+        A dictionary of options that's passed to the datetimepicker.
+
+    size
+        The size, in columns, of the text input field.  Defaults to
+        ``None``, meaning that the ``size`` is not included in the
+        widget output (uses browser default size).
+
+    template
+        The template name used to render the widget.  Default:
+        ``dateinput``.
+
+    readonly_template
+        The template name used to render the widget in read-only mode.
+        Default: ``readonly/textinput``.
+    """
+    template = 'datetimeinput'
+    readonly_template = 'readonly/textinput'
+    size = None
+    requirements = ( ('jqueryui', None), ('datetimepicker', None), )
+    option_defaults = {'dateFormat': 'yy-mm-dd',
+                       'timeFormat': 'hh:mm:ss',
+                       'separator': ' '}
+    options = {}
+
+    def _options(self):
+        options = self.option_defaults.copy()
+        options.update(self.options)
+        return options
+
+    def serialize(self, field, cstruct, readonly=False):
+        if cstruct in (null, None):
+            cstruct = ''
+        template = readonly and self.readonly_template or self.template
+        options = self._options()
+        if len(cstruct) == 25: # strip timezone if it's there
+            cstruct = cstruct[:-6]
+        cstruct = options['separator'].join(cstruct.split('T'))
+        return field.renderer(
+            template,
+            field=field,
+            cstruct=cstruct,
+            options=json.dumps(self._options()),
+            )
+
+    def deserialize(self, field, pstruct):
+        if pstruct in ('', null):
+            return null
+        options = self._options()
+        return pstruct.replace(options['separator'], 'T')
+
 class TextAreaWidget(TextInputWidget):
     """
     Renders a ``<textarea>`` widget.
@@ -1373,8 +1432,8 @@ default_resources = {
     'jqueryui': {
         None:{
             'js':('scripts/jquery-1.4.2.min.js',
-                  'scripts/jquery-ui-1.8.4.custom.min.js'),
-            'css':'css/ui-lightness/jquery-ui-1.8.4.custom.css',
+                  'scripts/jquery-ui-1.8.11.custom.min.js'),
+            'css':'css/ui-lightness/jquery-ui-1.8.11.custom.css',
             },
         },
     'jquery.form': {
@@ -1387,6 +1446,13 @@ default_resources = {
         None:{
             'js':('scripts/jquery-1.4.2.min.js',
                   'scripts/jquery.maskedinput-1.2.2.min.js'),
+            },
+        },
+    'datetimepicker': {
+        None:{
+            'js':('scripts/jquery-1.4.2.min.js',
+                  'scripts/jquery-ui-timepicker-addon.js'),
+            'css':'css/jquery-ui-timepicker-addon.css',
             },
         },
     'deform': {

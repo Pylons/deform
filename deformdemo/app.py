@@ -7,6 +7,7 @@ import inspect
 import sys
 import csv
 import StringIO
+import iso8601
 
 from pkg_resources import resource_filename
 
@@ -676,6 +677,25 @@ class DeformDemo(object):
         form = deform.Form(schema, buttons=('submit',))
         when = datetime.date(2010, 5, 5)
         return self.render_form(form, appstruct={'date':when})
+
+    @view_config(renderer='templates/form.pt', name='datetimeinput')
+    @demonstrate('DateTime Input Widget')
+    def datetimeinput(self):
+        import datetime
+        from colander import Range
+        class Schema(colander.Schema):
+            date_time = colander.SchemaNode(
+                colander.DateTime(),
+                validator=Range(
+                    min=datetime.datetime(
+                        2010, 5, 5, 12, 30, tzinfo=iso8601.iso8601.Utc()),
+                    min_err=_('${val} is earlier than earliest datetime ${min}')
+                    )
+                )
+        schema = Schema()
+        form = deform.Form(schema, buttons=('submit',))
+        when = datetime.datetime(2010, 5, 6, 12)
+        return self.render_form(form, appstruct={'date_time':when})
 
     @view_config(renderer='templates/form.pt', name='edit')
     @demonstrate('Edit Form')

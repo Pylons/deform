@@ -4,7 +4,7 @@ import unittest
 
 # to run:
 # console 1: java -jar selenium-server.jar
-# console 2: start the deform demo server (paster serve deformdemo.ini)
+# console 2: start the deform demo server (paster serve demo.ini)
 # console 3: python test.py
 
 # Instead of using -browserSessionReuse as an arg to
@@ -367,6 +367,56 @@ class DateInputWidgetTests(unittest.TestCase):
         self.assertEqual(browser.get_text('css=#captured'),
                          "{'date': datetime.date(2010, 5, 6)}")
         self.assertEqual(browser.get_value('deformField1'), '2010-05-06')
+
+class DateTimeInputWidgetTests(unittest.TestCase):
+    url = '/datetimeinput/'
+    def test_render_default(self):
+        browser.open(self.url)
+        self.failUnless(browser.is_text_present("Date Time"))
+        self.assertEqual(browser.get_text('css=.req'), '*')
+        self.assertEqual(browser.get_text('css=#captured'), 'None')
+        self.assertEqual(browser.get_value('deformField1'), '2010-05-06 12:00:00')
+        self.failIf(browser.is_element_present('css=.errorMsgLbl'))
+
+    def test_submit_empty(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.type('deformField1', '')
+        browser.click("submit")
+        browser.wait_for_page_to_load("30000")
+        self.failUnless(browser.get_text('css=.errorMsgLbl'))
+        error_node = 'css=#error-deformField1'
+        self.assertEqual(browser.get_text(error_node), 'Required')
+        self.assertEqual(browser.get_text('css=#captured'), 'None')
+        self.failUnless(browser.is_element_present('css=.errorMsgLbl'))
+
+    def test_submit_tooearly(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.focus('css=#deformField1')
+        browser.click('css=#deformField1')
+        browser.click('link=5')
+        browser.click("submit")
+        browser.wait_for_page_to_load("30000")
+        self.failUnless(browser.get_text('css=.errorMsgLbl'))
+        error_node = 'css=#error-deformField1'
+        self.assertEqual(browser.get_text(error_node),
+                         '2010-05-05 12:00:00+00:00 is earlier than earliest datetime 2010-05-05 12:30:00+00:00')
+        self.assertEqual(browser.get_text('css=#captured'), 'None')
+        self.failUnless(browser.is_element_present('css=.errorMsgLbl'))
+
+    def test_submit_success(self):
+        browser.open(self.url)
+        browser.wait_for_page_to_load("30000")
+        browser.focus('css=#deformField1')
+        browser.click('css=#deformField1')
+        browser.click('link=7')
+        browser.click("submit")
+        browser.wait_for_page_to_load("30000")
+        self.failIf(browser.is_element_present('css=.errorMsgLbl'))
+        self.failUnless(browser.get_text('css=#captured').startswith(
+            "{'date_time': datetime.datetime(2010, 5, 7, 12, 0, tzinfo=<iso8601.iso8601.Utc object at"))
+        self.assertEqual(browser.get_value('deformField1'), '2010-05-07 12:00:00')
 
 class DatePartsWidgetTests(unittest.TestCase):
     url = '/dateparts/'
