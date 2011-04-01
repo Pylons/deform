@@ -19,6 +19,10 @@
     padding: 3px;
 }
 
+.deform li.hidden {
+    display:none;
+}
+
 .deformClosebuttonActive {
    border: 0;
    cursor: pointer;
