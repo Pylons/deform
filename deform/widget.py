@@ -1427,26 +1427,26 @@ class ResourceRegistry(object):
 default_resources = {
     'jquery': {
         None:{
-            'js':'scripts/jquery-1.4.2.min.js',
+            'js':'scripts/jquery-1.5.2.min.js',
             },
         },
     'jqueryui': {
         None:{
-            'js':('scripts/jquery-1.4.2.min.js',
+            'js':('scripts/jquery-1.5.2.min.js',
                   'scripts/jquery-ui-1.8.11.custom.min.js'),
             'css':'css/ui-lightness/jquery-ui-1.8.11.custom.css',
             },
         },
     'jquery.form': {
         None:{
-            'js':('scripts/jquery-1.4.2.min.js',
+            'js':('scripts/jquery-1.5.2.min.js',
                   'scripts/jquery.form.js'),
             },
         },
     'jquery.maskedinput': {
         None:{
-            'js':('scripts/jquery-1.4.2.min.js',
-                  'scripts/jquery.maskedinput-1.2.2.min.js'),
+            'js':('scripts/jquery-1.5.2.min.js',
+                  'scripts/jquery.maskedinput-1.3.min.js'),
             },
         },
     'datetimepicker': {
@@ -1458,7 +1458,7 @@ default_resources = {
         },
     'deform': {
         None:{
-            'js':('scripts/jquery-1.4.2.min.js',
+            'js':('scripts/jquery-1.5.2.min.js',
                   'scripts/jquery.form.js',
                   'scripts/deform.js'),
             'css':('css/form.css')
