@@ -23,7 +23,7 @@ def setUpModule():
 def tearDownModule():
     browser.stop()
 
-def _getFile(name):
+def _getFile(name='test.py'):
     import os
     path = os.path.join(os.path.abspath(os.path.dirname(__file__)), name)
     filename = os.path.split(path)[-1]
@@ -835,7 +835,7 @@ class FileUploadTests(unittest.TestCase):
 
     def test_submit_filled(self):
         # submit one first
-        path, filename = _getFile('tests.py')
+        path, filename = _getFile()
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")
         browser.type('deformField1', path)
@@ -1255,7 +1255,7 @@ class SequenceOfFileUploads(unittest.TestCase):
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")
         browser.click('deformField1-seqAdd')
-        path, filename = _getFile('test_demo.py')
+        path, filename = _getFile()
         browser.type("dom=document.forms[0].upload", path)
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
@@ -1274,7 +1274,7 @@ class SequenceOfFileUploads(unittest.TestCase):
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")
         browser.click('deformField1-seqAdd')
-        path, filename = _getFile('test_demo.py')
+        path, filename = _getFile()
         browser.type("dom=document.forms[0].upload", path)
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
@@ -1309,7 +1309,7 @@ class SequenceOfFileUploads(unittest.TestCase):
 
         # add a new file
         browser.click('deformField1-seqAdd')
-        path, filename = _getFile('test_demo.py')
+        path, filename = _getFile()
         browser.type("dom=document.forms[0].upload[1]", path)
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
@@ -1372,7 +1372,7 @@ class SequenceOfFileUploadsWithInitialItem(unittest.TestCase):
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")
         browser.click('deformField1-seqAdd')
-        path, filename = _getFile('test_demo.py')
+        path, filename = _getFile()
         browser.type("dom=document.forms[0].upload[0]", path)
         browser.type("dom=document.forms[0].upload[1]", path)
         browser.click("submit")
