@@ -58,7 +58,7 @@
      function(oid) { 
          var options = {
            target: '#' + oid,
-           replaceTarget: true,
+           replaceTarget: true
          };
          var extra_options = ${field.ajax_options};
          var name;
