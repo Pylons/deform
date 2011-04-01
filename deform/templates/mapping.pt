@@ -1,7 +1,7 @@
 <fieldset class="deformMappingFieldset">
+  <legend tal:condition="field.title">${field.title}</legend>
   <!-- mapping -->
   <input type="hidden" name="__start__" value="${field.name}:mapping"/>
-  <legend tal:condition="field.title">${field.title}</legend>
   <ul>
     <li class="errorLi" tal:condition="field.errormsg">
       <h3 class="errorMsgLbl">There was a problem with this section</h3>
