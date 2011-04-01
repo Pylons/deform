@@ -963,6 +963,7 @@ class SequenceWidget(Widget):
     render_initial_item = False
     min_len = None
     max_len = None
+    category = 'structural'
     requirements = ( ('deform', None), )
 
     def prototype(self, field):

@@ -1,4 +1,4 @@
-<div class="deformSeq"
+<fieldset class="deformSeq"
      id="${field.oid}"
      tal:define="rndr field.renderer;
                  item_tmpl field.widget.item_template;
@@ -8,6 +8,9 @@
                  prototype field.widget.prototype(field)">
 
   <!-- sequence -->
+  <legend tal:condition="field.title">
+    ${field.title}<span tal:condition="field.required"
+        class="req" id="req-${field.oid}">*</span></legend>
 
   <input type="hidden" name="__start__" value="${field.name}:sequence"
          class="deformProto" 
@@ -48,4 +51,4 @@
 
   <!-- /sequence -->
 
-</div>
+</fieldset>
