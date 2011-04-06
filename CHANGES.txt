@@ -4,13 +4,17 @@ Changes
 Next release
 ------------
 
-- Add the ``deform.widget.DateTimeWidget`` widget, which uses the
-  jQueryUI Timepicker add-on.
+- Add the ``deform.widget.DateTimeWidget`` widget, which uses the jQueryUI
+  Timepicker add-on.
 
   ``DateTimeWidget`` uses the ISO8601 combined date and time format
   internally, as expected by ``colander.DateTime``, but converts to
   the more friendly separate date and time format for display in the
   widget.
+
+  This widget is now the default for colander.DateTime schema types.
+
+- Upgrade to jquery-ui 1.8.11, as required by the timepicker.
 
 - Compile all ``.po`` files to ``.mo`` in ``deform/locale`` and remove Texan
   locale (funny, but breaks ``python setup.py compile_catalog`` with an
