@@ -62,11 +62,13 @@ div.deformReplaces {
     -moz-border-radius:20px;
 }
 
-.deform li.error{
+.deform li.error {
     background-color: #FFDFDF;
 }
 
-.deform li.error label.desc, .deform p.error, deform h3.errorMsgLbl{
+.deform li.error label.desc,
+.deform p.error,
+.deform h3.errorMsgLbl {
     color: #DF0000;
 }
 
