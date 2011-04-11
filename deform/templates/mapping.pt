@@ -2,11 +2,11 @@
   <legend tal:condition="field.title">${field.title}</legend>
   <!-- mapping -->
   <input type="hidden" name="__start__" value="${field.name}:mapping"/>
+  <div class="error" tal:condition="field.errormsg">
+    <h3>There was a problem with this section</h3>
+    <p>${field.errormsg}</p>
+  </div>
   <ul>
-    <li class="errorLi" tal:condition="field.errormsg">
-      <h3 class="errorMsgLbl">There was a problem with this section</h3>
-      <p class="errorMsg">${field.errormsg}</p>
-    </li>
     <li class="section" tal:condition="field.description">
       <div>${field.description}</div>
     </li>

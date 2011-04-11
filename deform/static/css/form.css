@@ -55,7 +55,7 @@ div.deformReplaces {
 }
 
 /* error handling */
-.deform .errorLi {
+.deform div.error {
     border:1px solid red;
     text-align: center;
     -webkit-border-radius:20px;
@@ -66,12 +66,12 @@ div.deformReplaces {
     background-color: #FFDFDF;
 }
 
+.deform div.error > h3,
 .deform li.error label.desc,
-.deform p.error,
-.deform h3.errorMsgLbl {
+.deform p.error {
     color: #DF0000;
 }
 
-.deform p.error{
+.deform p.error {
     font-size: 70%;
 }
