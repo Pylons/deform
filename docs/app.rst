@@ -44,11 +44,11 @@ Here's the Python code:
 
    class MySchema(MappingSchema):
        name = SchemaNode(String(),
-                         description = LONG_DESC)
+                         description = 'The name of this thing')
        title = SchemaNode(String(),
                           widget = widget.TextInputWidget(size=40),
                           validator = Length(max=20),
-                          description = LONG_DESC)
+                          description = 'A very short title')
        password = SchemaNode(String(),
                              widget = widget.CheckedPasswordWidget(),
                              validator = Length(min=5))
