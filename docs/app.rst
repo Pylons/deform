@@ -15,6 +15,8 @@ Here's the Python code:
 .. code-block:: python
    :linenos:
 
+   import os
+
    from paste.httpserver import serve
    from pyramid.config import Configurator
 
@@ -32,6 +34,8 @@ Here's the Python code:
    from deform import widget
 
 
+   here = os.path.dirname(os.path.abspath(__file__))
+   
    colors = (('red', 'Red'), ('green', 'Green'), ('blue', 'Blue'))
 
    class DateSchema(MappingSchema):
@@ -44,11 +48,11 @@ Here's the Python code:
 
    class MySchema(MappingSchema):
        name = SchemaNode(String(),
-                         description = LONG_DESC)
+                         description = 'The name of this thing')
        title = SchemaNode(String(),
                           widget = widget.TextInputWidget(size=40),
                           validator = Length(max=20),
-                          description = LONG_DESC)
+                          description = 'A very short title')
        password = SchemaNode(String(),
                              widget = widget.CheckedPasswordWidget(),
                              validator = Length(min=5))
@@ -76,7 +80,7 @@ Here's the Python code:
    if __name__ == '__main__':
        settings = dict(reload_templates=True)
        config = Configurator(settings=settings)
-       config.add_view(form_view, renderer='form.pt')
+       config.add_view(form_view, renderer=os.path.join(here, 'form.pt'))
        config.add_static_view('static', 'deform:static')
        app = config.make_wsgi_app()
        serve(app)
