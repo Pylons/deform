@@ -60,6 +60,11 @@ wise to run these tests before submitting a patch.  Here's how:
 - ``cd`` to the ``selenium-server-1.0.3`` subdirectory of the
   directory to which you unpacked the zipfile.
 
+.. note:: Selenium RC 1.0.X doesn't work with Firefox 4. If you want
+   to use Firefox 4 you need to download Selenium Server >= 2.0b3.
+   Previous versions of Selenium Server 2.0 don't provide the full API
+   used by ``deform`` tests.
+
 - Run ``java -jar selenium-server.jar``.  Success is defined as seeing
   output on the console that ends like this::
 
