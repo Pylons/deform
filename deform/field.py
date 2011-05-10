@@ -454,7 +454,7 @@ class Field(object):
           schema is returned.  It will be a mapping.
 
         - If the fields cannot be successfully validated, a
-          :exc:`colander.Invalid` exception is raised.
+          :exc:`deform.exception.ValidationFailure` exception is raised.
 
         The typical usage of ``validate`` in the wild is often
         something like this (at least in terms of code found within
