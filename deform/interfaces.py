@@ -46,6 +46,12 @@ class FileUploadTempStore(object):
         Same as dict.get.
         """
 
+    def __contains__(self, name):
+        """
+        This should return `True` if we have a value for the
+        name supplied, `False` otherwise.
+        """
+        
     def preview_url(self, name):
         """
         Return the preview URL for the item previously placed into the
