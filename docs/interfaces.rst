@@ -14,5 +14,7 @@ Deform implementations.
 
    .. automethod:: __setitem__
     
+   .. automethod:: __contains__
+    
    .. automethod:: preview_url
 
