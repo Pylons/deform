@@ -386,9 +386,6 @@ package are the following:
 ``static/css/form.css``
   CSS related to form element renderings.
 
-``static/css/theme.css``
-  CSS related to "page furniture" such as error messages.
-
 Each of these libraries should be included in the ``<head>`` tag of a
 page which renders a Deform form, e.g.:
 
@@ -403,7 +400,6 @@ page which renders a Deform form, e.g.:
      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
      <!-- CSS -->
      <link rel="stylesheet" href="/static/css/form.css" type="text/css" />
-     <link rel="stylesheet" href="/static/css/theme.css" type="text/css" />
      <!-- JavaScript -->
      <script type="text/javascript"
              src="/static/scripts/jquery-1.4.2.min.js"></script> 

@@ -104,7 +104,6 @@ same directory:
    <script type="text/javascript" src="static/scripts/deform.js"></script>
    <!-- CSS -->
    <link rel="stylesheet" href="static/css/form.css" type="text/css" />
-   <link rel="stylesheet" href="static/css/theme.css" type="text/css" />
    </head>
    <body id="public">
    <div id="container">
