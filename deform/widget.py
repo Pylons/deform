@@ -14,6 +14,12 @@ try:
 except ImportError: # PRAGMA: no cover
     import simplejson as json 
 
+try:
+    from webhelpers.html import literal
+except ImportError:
+    class literal(unicode):
+        def __html__(self):
+            return self
 
 class Widget(object):
     """
@@ -215,7 +221,8 @@ class TextInputWidget(Widget):
         if cstruct in (null, None):
             cstruct = ''
         template = readonly and self.readonly_template or self.template
-        return field.renderer(template, field=field, cstruct=cstruct)
+        markup =  field.renderer(template, field=field, cstruct=cstruct)
+        return literal(markup)
 
     def deserialize(self, field, pstruct):
         if pstruct is null:
@@ -846,8 +853,9 @@ class MappingWidget(Widget):
         if cstruct in (null, None):
             cstruct = {}
         template = readonly and self.readonly_template or self.template
-        return field.renderer(template, field=field, cstruct=cstruct,
+        markup = field.renderer(template, field=field, cstruct=cstruct,
                               null=null)
+        return literal(markup)
 
     def deserialize(self, field, pstruct):
         error = None
@@ -1012,12 +1020,13 @@ class SequenceWidget(Widget):
             subitem_name=item_field.name)
         add_subitem_text = _(self.add_subitem_text_template,
                              mapping=add_template_mapping)
-        return field.renderer(template,
+        markup = field.renderer(template,
                               field=field,
                               cstruct=cstruct,
                               subfields=subfields,
                               item_field=item_field,
                               add_subitem_text=add_subitem_text)
+        return literal(markup)
 
     def deserialize(self, field, pstruct):
         result = []
@@ -1110,7 +1119,8 @@ class FileUploadWidget(Widget):
                 self.tmpstore[uid] = cstruct
 
         template = readonly and self.readonly_template or self.template
-        return field.renderer(template, field=field, cstruct=cstruct)
+        markup = field.renderer(template, field=field, cstruct=cstruct)
+        return literal(markup)
 
     def deserialize(self, field, pstruct):
         if pstruct is null:
@@ -1198,8 +1208,9 @@ class DatePartsWidget(Widget):
         else:
             year, month, day = cstruct.split('-', 2)
         template = readonly and self.readonly_template or self.template
-        return field.renderer(template, field=field, cstruct=cstruct,
+        markup = field.renderer(template, field=field, cstruct=cstruct,
                               year=year, month=month, day=day)
+        return literal(markup)
 
     def deserialize(self, field, pstruct):
         if pstruct is null:
@@ -1265,8 +1276,9 @@ class TextAreaCSVWidget(Widget):
             template = self.readonly_template
         else:
             template = self.template
-        return field.renderer(template, field=field, cstruct=textrows)
-        
+        markup = field.renderer(template, field=field, cstruct=textrows)
+        return literal(markup)
+
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null
@@ -1330,8 +1342,9 @@ class TextInputCSVWidget(Widget):
             template = self.readonly_template
         else:
             template = self.template
-        return field.renderer(template, field=field, cstruct=textrow)
-        
+        markup = field.renderer(template, field=field, cstruct=textrow)
+        return literal(markup)
+
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null

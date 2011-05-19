@@ -95,6 +95,16 @@ class TestTextInputWidget(unittest.TestCase):
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], cstruct)
 
+    def test_serialize_returns_literal(self):
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer=renderer)
+        cstruct = 'abc'
+        render = widget.serialize(field, cstruct)
+        self.assertTrue(hasattr(render, '__html__'))
+        self.assertEqual(render.__html__(), render)
+
     def test_deserialize_strip(self):
         widget = self._makeOne()
         field = DummyField()

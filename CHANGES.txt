@@ -4,6 +4,11 @@ Changes
 Next release
 ------------
 
+- All widgets now return a `template literal
+  <http://pagetemplates.org/docs/latest/library.html#language-extensions>`_
+  so `Chameleon <http://pagetemplates.org/>`_ will not escape their
+  markup.
+
 - Add the ``deform.widget.DateTimeWidget`` widget, which uses the jQueryUI
   Timepicker add-on.
 
