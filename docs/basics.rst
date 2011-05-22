@@ -20,7 +20,7 @@ browser, and some point, he will submit it.  When the user submits the
 form, the data provided by the user will either validate properly, or
 the form will need to be rerendered with error markers which help to
 inform the user of which parts need to be filled in "properly" (as
-defined by the schema).  We allow the user to coninue filling in the
+defined by the schema).  We allow the user to continue filling in the
 form, submitting, and revalidating indefinitely.
 
 Defining A Schema
