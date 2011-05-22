@@ -340,6 +340,8 @@ that contains this form tag), so the application using it will need to
 wrap it in HTML ``<html>`` and ``<body>`` tags as necessary.  It will
 need to be inserted as "structure" without any HTML escaping.
 
+.. _serving_up_the_rendered_form:
+
 Serving up the Rendered Form
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -571,8 +573,8 @@ which is the header uses the widget underneath it by default.
    documentation for each widget usually indicates what type it can be
    used against successfully.  If all existing widgets provided by
    Deform are insufficient, you can use a custom widget.  See
-   :ref:`writing_a_widget` for more information about writing a custom
-   widget.
+   :ref:`writing_a_widget` for more information about writing 
+   a custom widget.
 
 If you are creating a schema that contains a type which is not in this
 list, or if you'd like to use a different widget for a particular
@@ -781,9 +783,9 @@ For confenience a version of the :term:`JQuery UI` (which includes the
 ``autocomplete`` sublibrary) is included in the :mod:`deform` static
 directory. Additionally, the :term:`JQuery UI` styles for the
 selection box are also included in the :mod:`deform` ``static``
-directory. See :ref:`using_deform_static_library` and
-:ref:`get_widget_resources` for more information about using included
-libraries from your application.
+directory. See :ref:`serving_up_the_rendered_form` and
+:ref:`get_widget_resources` for more information about using the 
+included libraries from your application.
 
 A very simple example of using
 :class:`deform.widget.AutocompleteInputWidget` follows:
