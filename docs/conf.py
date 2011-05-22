@@ -65,7 +65,7 @@ release = version
 today_fmt = '%B %d, %Y'
 
 # List of documents that shouldn't be included in the build.
-#unused_docs = []
+unused_docs = ['_themes/README','todo']
 
 # List of directories, relative to source directories, that shouldn't be
 # searched for source files.
