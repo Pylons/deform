@@ -124,18 +124,28 @@ Schema Node Objects
    learn about forms.  But you can also get much the same information
    at http://docs.pylonsproject.org/projects/colander/dev/
 
-A schema is composed of one or more *schema node* objects, each
-typically of the class :class:`colander.SchemaNode`, usually in a
-nested arrangement.  Each schema node object has a required *type*, an
-optional *validator*, an optional *default*, an optional *missing*, an
-optional *title*, an optional *description*, and a slightly less
-optional *name*.
+A schema is composed of one or more *schema node* objects, each typically of
+the class :class:`colander.SchemaNode`, usually in a nested arrangement.
+Each schema node object has a required *type*, an optional *preparer*
+for adjusting data after deserialization, an optional
+*validator* for deserialized prepared data, an optional *default*, an
+optional *missing*, an optional *title*, an optional *description*,
+and a slightly less optional *name*.  It also accepts *arbitrary*
+keyword arguments, which are attached directly as attributes to the
+node instance.
 
 The *type* of a schema node indicates its data type (such as
 :class:`colander.Int` or :class:`colander.String`).
 
-The *validator* of a schema node is called after deserialization; it
-makes sure the deserialized value matches a constraint.  An example of
+The *preparer* of a schema node is called after
+deserialization but before validation; it prepares a deserialized
+value for validation. Examples would be to prepend schemes that may be
+missing on url values or to filter html provided by a rich text
+editor. A preparer is not called during serialization, only during
+deserialization.
+
+The *validator* of a schema node is called after deserialization and
+preparation ; it makes sure the value matches a constraint.  An example of
 such a validator is provided in the schema above:
 ``validator=colander.Range(0, 200)``.  A validator is not called after
 schema node serialization, only after node deserialization.
