@@ -231,7 +231,7 @@ class AutocompleteInputWidget(Widget):
     Renders an ``<input type="text"/>`` widget which provides
     autocompletion via a list of values.
 
-    When this option is used, the :ref:`jquery.ui.autocomplete`
+    When this option is used, the :term:`jquery.ui.autocomplete`
     library must be loaded into the page serving the form for
     autocompletion to have any effect.  See also
     :ref:`autocomplete_input`.  A version of :term:`JQuery UI` which
