@@ -1,0 +1,61 @@
+# Translations template for deform.
+# Copyright (C) 2010 ORGANIZATION
+# This file is distributed under the same license as the deform project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: deform 0.0\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2010-04-25 21:28-0400\n"
+"PO-Revision-Date: 2011-06-04 00:12+0200\n"
+"Last-Translator: Wichert Akkerman <wichert@wiggy.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 0.9.5\n"
+
+#: deform/schema.py:109
+msgid "${value} is not a dictionary"
+msgstr "${value} is geen mapping"
+
+#: deform/schema.py:116
+msgid "${value} has no ${key} key"
+msgstr "${value} heeft geen ${key} sleutel"
+
+#: deform/schema.py:129 deform/schema.py:142
+msgid "Required"
+msgstr "Verplicht veld"
+
+#: deform/schema.py:138
+msgid "${value} is not iterable"
+msgstr "${value} is niet iteraarbaar"
+
+#: deform/widget.py:398
+msgid "Fields did not match"
+msgstr "Vul twee keer hetzelfde in"
+
+#: deform/widget.py:399
+msgid "Value"
+msgstr "Waarde"
+
+#: deform/widget.py:400
+msgid "Confirm Value"
+msgstr "Nogmaals"
+
+#: deform/widget.py:445
+msgid "Password did not match confirm"
+msgstr "Wachtwoordbevestiging komt niet overeen"
+
+#: deform/widget.py:767
+msgid "Incomplete"
+msgstr "Vul de hele datum in"
+
+#: deform/templates/form.pt:21
+msgid "Errors have been highlighted below"
+msgstr "Fouten zijn hier onder aangegeven"
+
+#: deform/templates/form.pt:19
+msgid "There was a problem with your submission"
+msgstr "Er zaten één of meer fouten in uw formulier"
+

@@ -4,6 +4,8 @@ Changes
 Next release
 ------------
 
+- Add Dutch translation.
+
 - Add the ``deform.widget.DateTimeWidget`` widget, which uses the jQueryUI
   Timepicker add-on.
 
