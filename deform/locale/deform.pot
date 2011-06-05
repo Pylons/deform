@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: deform 0.9\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2011-06-05 07:33+0200\n"
+"POT-Creation-Date: 2011-06-05 08:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,76 +17,44 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: build/lib.linux-x86_64-2.6/deform/schema.py:100 deform/schema.py:100
+#: deform/schema.py:100
 msgid "${value} is not a dictionary"
 msgstr ""
 
-#: build/lib.linux-x86_64-2.6/deform/schema.py:107 deform/schema.py:107
+#: deform/schema.py:107
 msgid "${value} has no ${key} key"
 msgstr ""
 
-#: build/lib.linux-x86_64-2.6/deform/schema.py:146 deform/schema.py:146
+#: deform/schema.py:146
 msgid "${value} is not iterable"
 msgstr ""
 
-#: build/lib.linux-x86_64-2.6/deform/schema.py:150 deform/schema.py:150
+#: deform/schema.py:150
 msgid "Required"
 msgstr ""
 
-#: build/lib.linux-x86_64-2.6/deform/widget.py:761 deform/widget.py:761
+#: deform/widget.py:761
 msgid "Fields did not match"
 msgstr ""
 
-#: build/lib.linux-x86_64-2.6/deform/widget.py:762 deform/widget.py:762
+#: deform/widget.py:762
 msgid "Value"
 msgstr ""
 
-#: build/lib.linux-x86_64-2.6/deform/widget.py:763 deform/widget.py:763
+#: deform/widget.py:763
 msgid "Confirm Value"
 msgstr ""
 
-#: build/lib.linux-x86_64-2.6/deform/widget.py:811 deform/widget.py:811
+#: deform/widget.py:811
 msgid "Password did not match confirm"
 msgstr ""
 
-#: build/lib.linux-x86_64-2.6/deform/widget.py:962 deform/widget.py:962
+#: deform/widget.py:962
 msgid "Add ${subitem_title}"
 msgstr ""
 
-#: build/lib.linux-x86_64-2.6/deform/widget.py:1220 deform/widget.py:1220
+#: deform/widget.py:1220
 msgid "Incomplete"
-msgstr ""
-
-#: build/lib.linux-x86_64-2.6/deformdemo/app.py:473
-#: build/lib.linux-x86_64-2.6/deformdemo/app.py:656
-#: build/lib.linux-x86_64-2.6/deformdemo/app.py:673 deformdemo/app.py:473
-#: deformdemo/app.py:656 deformdemo/app.py:673
-msgid "${val} is earlier than earliest date ${min}"
-msgstr ""
-
-#: build/lib.linux-x86_64-2.6/deformdemo/app.py:692 deformdemo/app.py:692
-msgid "${val} is earlier than earliest datetime ${min}"
-msgstr ""
-
-#: build/lib.linux-x86_64-2.6/deformdemo/app.py:879
-#: build/lib.linux-x86_64-2.6/deformdemo/app.py:881 deformdemo/app.py:879
-#: deformdemo/app.py:881
-msgid "A number between ${min} and ${max}"
-msgstr ""
-
-#: build/lib.linux-x86_64-2.6/deformdemo/app.py:893 deformdemo/app.py:893
-msgid "Submit"
-msgstr ""
-
-#: build/lib.linux-x86_64-2.6/deformdemo/app.py:1002
-#: build/lib.linux-x86_64-2.6/deformdemo/app.py:1005
-#: build/lib.linux-x86_64-2.6/deformdemo/app.py:1008
-#: build/lib.linux-x86_64-2.6/deformdemo/app.py:1023
-#: build/lib.linux-x86_64-2.6/deformdemo/app.py:1026
-#: build/lib.linux-x86_64-2.6/deformdemo/app.py:1029 deformdemo/app.py:1002
-#: deformdemo/app.py:1005 deformdemo/app.py:1008 deformdemo/app.py:1023
-#: deformdemo/app.py:1026 deformdemo/app.py:1029
-msgid "Error ${num}"
 msgstr ""
 
 #: deform/templates/checked_password.pt:10

@@ -73,8 +73,8 @@ try:
     # this to setup() unconditionally, and babel isn't installed,
     # distutils warns pointlessly)
     setupkw['message_extractors'] = { ".": [
-        ("**.py",   "chameleon_python", None ),
-        ("**.pt",   "chameleon_xml", None ),
+        ("deform/**.py",   "chameleon_python", None ),
+        ("deform/**.pt",   "chameleon_xml", None ),
         ]}
 except ImportError:
     pass
