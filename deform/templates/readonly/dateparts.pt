@@ -1,8 +1,8 @@
-<div>
-  <span>Year</span>
+<div i18n:domain="deform">
+  <span i18n:translate="">Year</span>
   <span id="${field.oid}-year">${year}</span>
-  <span>Month</span>
+  <span i18n:translate="">Month</span>
   <span id="${field.oid}-month">${month}</span>
-  <span>Day</span>
+  <span i18n:translate="">Day</span>
   <span id="${field.oid}-day">${day}</span>
 </div>
