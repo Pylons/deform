@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: deform 0.9\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2011-06-05 08:22+0200\n"
+"POT-Creation-Date: 2011-06-05 08:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -110,5 +110,26 @@ msgstr ""
 #: deform/templates/readonly/radio_choice.pt:4
 #: deform/templates/readonly/select.pt:3
 msgid "Selected"
+msgstr ""
+
+#: deformdemo/app.py:473 deformdemo/app.py:656 deformdemo/app.py:673
+msgid "${val} is earlier than earliest date ${min}"
+msgstr ""
+
+#: deformdemo/app.py:692
+msgid "${val} is earlier than earliest datetime ${min}"
+msgstr ""
+
+#: deformdemo/app.py:879 deformdemo/app.py:881
+msgid "A number between ${min} and ${max}"
+msgstr ""
+
+#: deformdemo/app.py:893
+msgid "Submit"
+msgstr ""
+
+#: deformdemo/app.py:1002 deformdemo/app.py:1005 deformdemo/app.py:1008
+#: deformdemo/app.py:1023 deformdemo/app.py:1026 deformdemo/app.py:1029
+msgid "Error ${num}"
 msgstr ""
 
