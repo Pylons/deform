@@ -1,5 +1,6 @@
 <select name="${field.name}"
-        id="${field.oid}">
+        id="${field.oid}"
+        tal:attributes="size field.widget.size">
  <option tal:repeat="(value, description) field.widget.values"
          tal:attributes="selected value == cstruct;
                          class field.widget.css_class"
