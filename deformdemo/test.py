@@ -1841,6 +1841,9 @@ class SelectWidgetTests(unittest.TestCase):
         captured = browser.get_text('css=#captured')
         self.assertEqual(captured, "{'pepper': u'habanero'}")
 
+class SelectWidgetWithSizeTests(SelectWidgetTests):
+    url = "/select_with_size/"
+    
 class TextInputWidgetTests(unittest.TestCase):
     url = "/textinput/"
     def test_render_default(self):

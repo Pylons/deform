@@ -600,6 +600,10 @@ class SelectWidget(Widget):
         element in the tuple is the value that should be returned when
         the form is posted.  The second is the display value.
 
+    size
+        The ``size`` attribute of the select input field (default:
+        ``None``).
+
     null_value
         The value which represents the null value.  When the null
         value is encountered during serialization, the
@@ -619,6 +623,7 @@ class SelectWidget(Widget):
     readonly_template = 'readonly/select'
     null_value = ''
     values = ()
+    size = None
 
     def serialize(self, field, cstruct, readonly=False):
         if cstruct in (null, None):
