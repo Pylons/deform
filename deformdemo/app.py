@@ -678,6 +678,24 @@ class DeformDemo(object):
         when = datetime.date(2010, 5, 5)
         return self.render_form(form, appstruct={'date':when})
 
+    @view_config(renderer='templates/form.pt', name='date')
+    @demonstrate('Time Widget')
+    def dateinput(self):
+        import datetime
+        from colander import Range
+        class Schema(colander.Schema):
+            date = colander.SchemaNode(
+                colander.Time(),
+                validator=Range(
+                    min=datetime.time(12, 16),
+                    min_err=_('${val} is earlier than earliest date ${min}')
+                    )
+                )
+        schema = Schema()
+        form = deform.Form(schema, buttons=('submit',))
+        when = datetime.time(14, 35)
+        return self.render_form(form, appstruct={'date':when})
+
     @view_config(renderer='templates/form.pt', name='datetimeinput')
     @demonstrate('DateTime Input Widget')
     def datetimeinput(self):
