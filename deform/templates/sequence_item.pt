@@ -1,10 +1,10 @@
 <li tal:attributes="class field.error and field.widget.error_class"
     tal:omit-tag="field.widget.hidden"
-    title="${field.description}">
+    title="${field.description}" i18n:domain="deform">
   <!-- sequence_item -->
 
-  <span class="deformClosebutton" 
-        id="${field.oid}-close" 
+  <span class="deformClosebutton"
+        id="${field.oid}-close"
         tal:condition="not field.widget.hidden"
         title="Remove"
         onclick="javascript:deform.removeSequenceItem(this);"></span>
@@ -14,9 +14,9 @@
   <p tal:condition="field.error and not field.widget.hidden"
      tal:define="errstr 'error-%s' % field.oid"
      tal:repeat="msg field.error.messages()"
-     tal:attributes="id repeat.msg.index==0 and errstr or 
+     tal:attributes="id repeat.msg.index==0 and errstr or
                      ('%s-%s' % (errstr, repeat.msg.index))"
-     class="${field.widget.error_class}">${msg}</p>
+     class="${field.widget.error_class}" i18n:translate="">${msg}</p>
 
   <!-- /sequence_item -->
 </li>
