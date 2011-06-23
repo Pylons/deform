@@ -1,9 +1,9 @@
-<fieldset class="deformMappingFieldset">
+<fieldset class="deformMappingFieldset" i18n:domain="deform">
   <!-- mapping -->
   <legend tal:condition="field.title">${field.title}</legend>
   <ul>
     <li class="errorLi" tal:condition="field.errormsg">
-      <h3 class="errorMsgLbl">There was a problem with this section</h3>
+      <h3 class="errorMsgLbl" i18n:translate="">There was a problem with this section</h3>
       <p class="errorMsg">${field.errormsg}</p>
     </li>
     <li class="section" tal:condition="field.description">

@@ -36,6 +36,12 @@ Next release
 
 - Deformdemo application now has a Time field demonstration.
 
+- Deform Chameleon templates now contain i18n:translate tags.
+
+- German translation updated.
+
+- Fixed invalid HTML generated for "select" widget.
+
 0.9 (2011-03-01)
 ----------------
 
