@@ -678,9 +678,9 @@ class DeformDemo(object):
         when = datetime.date(2010, 5, 5)
         return self.render_form(form, appstruct={'date':when})
 
-    @view_config(renderer='templates/form.pt', name='date')
-    @demonstrate('Time Widget')
-    def dateinput(self):
+    @view_config(renderer='templates/form.pt', name='timeinput')
+    @demonstrate('Time Input')
+    def timeinput(self):
         import datetime
         from colander import Range
         class Schema(colander.Schema):
