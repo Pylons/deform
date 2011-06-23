@@ -1,5 +1,5 @@
-<li title="${field.description}"
-    tal:omit-tag="field.widget.hidden or field.widget.category == 'structural'">
+<li tal:attributes="class 'hidden' if field.widget.hidden else None"
+    title="${field.description}">
   <!-- mapping_item -->
   <p tal:condition="not (field.widget.hidden or
                          field.widget.category == 'structural')"

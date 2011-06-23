@@ -1,5 +1,5 @@
-<li title="${field.description}"
-    tal:omit-tag="field.widget.hidden">
+<li tal:attributes="class 'hidden' if field.widget.hidden else None"
+    title="${field.description}">
   <!-- sequence_item -->
   <span tal:replace="structure
         field.serialize(cstruct, readonly=True)"/>

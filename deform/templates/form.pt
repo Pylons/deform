@@ -13,22 +13,19 @@
 
     <input type="hidden" name="_charset_" />
     <input type="hidden" name="__formid__" value="${field.formid}"/>
+    <div class="error" tal:condition="field.error">
+      <h3 i18n:translate=""
+          >There was a problem with your submission</h3>
+      <p i18n:translate=""
+         >Errors have been highlighted below</p>
+    </div>
     <ul>
-      
-      <li class="errorLi" tal:condition="field.error">
-        <h3 class="errorMsgLbl" i18n:translate=""
-            >There was a problem with your submission</h3>
-        <p class="errorMsg" i18n:translate=""
-           >Errors have been highlighted below</p>
-      </li>
-      
       <li class="section first" tal:condition="field.title">
         <h3>${field.title}</h3>
         <div tal:condition="field.description">${field.description}</div>
       </li>
       
-      <div 
-          tal:define="rndr field.renderer;
+      <li tal:define="rndr field.renderer;
                       tmpl field.widget.item_template"
           tal:repeat="f field.children"
           tal:replace="structure 
@@ -53,12 +50,19 @@
   </fieldset>
 
 <script type="text/javascript" tal:condition="field.use_ajax">
+// <![CDATA[
   deform.addCallback(
      '${field.formid}',
-     function(oid) { 
+     function(oid) {
+         var target = $('#' + oid);
          var options = {
-           target: '#' + oid,
-           replaceTarget: true,
+           target: target,
+           // Decide about IFRAME usage only depending on the
+           // presence of file INPUTs. Overrides the default
+           // behavior of the plugin that otherwise looks at the
+           // enctype too.
+           iframe: target.find('input:file').length > 0,
+           replaceTarget: true
          };
          var extra_options = ${field.ajax_options};
          var name;
@@ -67,8 +71,9 @@
              options[name] = extra_options[name];
            };
          };
-         $('#' + oid).ajaxForm(options);
+         target.ajaxForm(options);
    });
+// ]]>
 </script>
-  
+
 </form>

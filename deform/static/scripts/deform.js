@@ -27,8 +27,8 @@ var deform  = {
         deform.clearCallbacks();
     },
 
-    addSequenceItem: function (protonode, before) {
-        // - Clone the prototype node and add it before the "before" node.
+    addSequenceItem: function (sequence, protonode) {
+        // - Clone the prototype node and append it to the sequence' UL.
         //   Also ensure any callbacks are run for the widget.
 
         // In order to avoid breaking accessibility:
@@ -37,11 +37,11 @@ var deform  = {
         //   that has the string ``deformField(\d+)`` within it, and modify 
         //   its id to have a random component.
         // - For each label referencing an change id, change the label's
-        //   htmlFor attribute to the new id.
+        //   for attribute to the new id.
 
         var fieldmatch = /deformField(\d+)/;
         var namematch = /(.+)?-[#]{3}/;
-        var code = protonode.attr('prototype');
+        var code = protonode.data('prototype');
         var html = decodeURIComponent(code);
         var $htmlnode = $(html);
         var $idnodes = $htmlnode.find('[id]');
@@ -58,9 +58,9 @@ var deform  = {
             var newid = oldid.replace(fieldmatch, "deformField$1-" + genid);
             $node.attr('id', newid);
             idmap[oldid] = newid;
-            var labelselector = 'label[htmlFor=' + oldid + ']';
+            var labelselector = 'label[for=' + oldid + ']';
             var $fornodes = $htmlnode.find(labelselector);
-            $fornodes.attr('htmlFor', newid);
+            $fornodes.attr('for', newid);
             });
 
         // replace names a containing ```deformField`` like we do for ids
@@ -73,9 +73,9 @@ var deform  = {
             });
 
         var anchorid = genid + '-anchor';
-        var anchortext = '<a name="' + anchorid +'" id="' + anchorid + '"/>' 
-        $(anchortext).insertBefore(before);
-        $htmlnode.insertBefore(before);
+        var anchortext = '<a name="' + anchorid +'" id="' + anchorid + '"/>'
+        $(anchortext).appendTo(sequence);
+        $htmlnode.appendTo(sequence.find('> ul'));
 
         $(deform.callbacks).each(function(num, item) {
             var oid = item[0];
@@ -87,21 +87,19 @@ var deform  = {
             });
 
         deform.clearCallbacks();
-        var old_len = parseInt(before.attr('now_len')||'0');
-        before.attr('now_len', old_len + 1);
+        var old_len = parseInt(sequence.data('nowlen') || '0', 10);
+        sequence.data('nowlen', old_len + 1);
         //deform.maybeScrollIntoView('#' + anchorid);
     },
 
     appendSequenceItem: function(node) {
         var $oid_node = $(node).parent();
         var $proto_node = $oid_node.children('.deformProto').first();
-        var $before_node = $oid_node.children('ul').first().children(
-                                              '.deformInsertBefore');
-        var min_len = parseInt($before_node.attr('min_len')||'0');
-        var max_len = parseInt($before_node.attr('max_len')||'9999');
-        var now_len = parseInt($before_node.attr('now_len')||'0');
+        var min_len = parseInt($oid_node.data('minlen') || '0', 10);
+        var max_len = parseInt($oid_node.data('maxlen') || '9999', 10);
+        var now_len = parseInt($oid_node.data('nowlen') || '0', 10);
         if (now_len < max_len) {
-            deform.addSequenceItem($proto_node, $before_node);
+            deform.addSequenceItem($oid_node, $proto_node);
             deform.processSequenceButtons($oid_node, min_len, max_len, 
                                           now_len+1);
         };
@@ -111,12 +109,11 @@ var deform  = {
     removeSequenceItem: function(clicked) {
         var $item_node = $(clicked).parent();
         var $oid_node = $item_node.parent().parent();
-        var $before_node = $oid_node.find('.deformInsertBefore').first();
-        var min_len = parseInt($before_node.attr('min_len')||'0');
-        var max_len = parseInt($before_node.attr('max_len')||'9999');
-        var now_len = parseInt($before_node.attr('now_len')||'0');
+        var min_len = parseInt($oid_node.data('minlen') || '0', 10);
+        var max_len = parseInt($oid_node.data('maxlen') || '9999', 10);
+        var now_len = parseInt($oid_node.data('nowlen') || '0', 10);
         if (now_len > min_len) {
-            $before_node.attr('now_len', now_len - 1);
+            $oid_node.data('nowlen', now_len - 1);
             $item_node.remove();
             deform.processSequenceButtons($oid_node, min_len, max_len, 
                                           now_len-1);

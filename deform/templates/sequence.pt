@@ -1,29 +1,27 @@
-<div class="deformSeq"
+<fieldset class="deformSeq"
      id="${field.oid}"
      tal:define="rndr field.renderer;
                  item_tmpl field.widget.item_template;
                  min_len field.widget.min_len or 0;
                  max_len field.widget.max_len or 100000;
                  now_len len(subfields);
-                 prototype field.widget.prototype(field)">
-
+                 prototype field.widget.prototype(field)"
+     tal:attributes="data-minlen min_len;
+                     data-maxlen max_len;
+                     data-nowlen now_len">
   <!-- sequence -->
+  <legend tal:condition="field.title">
+    ${field.title}<span tal:condition="field.required"
+        class="req" id="req-${field.oid}">*</span></legend>
 
   <input type="hidden" name="__start__" value="${field.name}:sequence"
          class="deformProto" 
-         tal:attributes="prototype prototype"/>
+         tal:attributes="data-prototype prototype"/>
 
   <ul>
-
-    <div tal:repeat="tup subfields"
+    <li tal:repeat="tup subfields"
          tal:replace="structure rndr(item_tmpl, field=tup[1], cstruct=tup[0],
                       parent=field)"/>
-
-    <span class="deformInsertBefore" 
-          tal:attributes="min_len min_len; 
-                          max_len max_len; 
-                          now_len now_len"></span>
-
   </ul>
   
   <a href="#"
@@ -48,4 +46,4 @@
 
   <!-- /sequence -->
 
-</div>
+</fieldset>

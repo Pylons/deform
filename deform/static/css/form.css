@@ -19,6 +19,10 @@
     padding: 3px;
 }
 
+.deform li.hidden {
+    display:none;
+}
+
 .deformClosebuttonActive {
    border: 0;
    cursor: pointer;
@@ -51,21 +55,23 @@ div.deformReplaces {
 }
 
 /* error handling */
-.deform .errorLi {
+.deform div.error {
     border:1px solid red;
     text-align: center;
     -webkit-border-radius:20px;
     -moz-border-radius:20px;
 }
 
-.deform li.error{
+.deform li.error {
     background-color: #FFDFDF;
 }
 
-.deform li.error label.desc, .deform p.error, deform h3.errorMsgLbl{
+.deform div.error > h3,
+.deform li.error label.desc,
+.deform p.error {
     color: #DF0000;
 }
 
-.deform p.error{
+.deform p.error {
     font-size: 70%;
 }
