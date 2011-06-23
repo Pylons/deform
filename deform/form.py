@@ -1,3 +1,5 @@
+import re
+
 from deform import widget
 from deform import field
 
@@ -134,6 +136,7 @@ class Button(object):
                  disabled=False):
         if title is None:
             title = name.capitalize()
+        name = re.sub(r'\s', '_', name)
         if value is None:
             value = name
         self.name = name
