@@ -688,7 +688,7 @@ class DeformDemo(object):
                 colander.Time(),
                 validator=Range(
                     min=datetime.time(12, 16),
-                    min_err=_('${val} is earlier than earliest date ${min}')
+                    min_err=_('${val} is earlier than earliest time ${min}')
                     )
                 )
         schema = Schema()
