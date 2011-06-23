@@ -53,22 +53,32 @@
   </fieldset>
 
 <script type="text/javascript" tal:condition="field.use_ajax">
+  function deform_ajaxify(response, status, xhr, form, oid, mthd){
+     var options = {
+       target: '#' + oid,
+       replaceTarget: true,
+       success: function(response, status, xhr, form){
+         deform_ajaxify(response, status, xhr, form, oid);
+       }
+     };
+     var extra_options = ${field.ajax_options};
+     var name;
+     if (extra_options) {
+       for (name in extra_options) {
+         options[name] = extra_options[name];
+       };
+     };
+     $('#' + oid).ajaxForm(options);
+     if(mthd){
+       mthd(response, status, xhr, form);
+     }
+  }
   deform.addCallback(
      '${field.formid}',
-     function(oid) { 
-         var options = {
-           target: '#' + oid,
-           replaceTarget: true,
-         };
-         var extra_options = ${field.ajax_options};
-         var name;
-         if (extra_options) {
-           for (name in extra_options) {
-             options[name] = extra_options[name];
-           };
-         };
-         $('#' + oid).ajaxForm(options);
-   });
+     function(oid) {
+       deform_ajaxify(null, null, null, null, oid);
+     }
+  );
 </script>
-  
+
 </form>
