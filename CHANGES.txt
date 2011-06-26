@@ -4,7 +4,10 @@ Changes
 Next release
 ------------
 
-- Deformdemo application now uses a ``beautify.css`` contributed by Ergo^,
+- Deform now includes a ``beautify.css`` (contributed by Ergo^) in its static
+  directory, which can be used to make form element styling prettier.
+
+- Deformdemo application now uses the ``beautify.css`` contributed by Ergo^,
   which makes form element styling and behavior prettier.
 
 0.9.1 (2011-06-23)
