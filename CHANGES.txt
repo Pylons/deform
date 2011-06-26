@@ -1,6 +1,12 @@
 Changes
 =======
 
+Next release
+------------
+
+- Deformdemo application now uses a ``beautify.css`` contributed by Ergo^,
+  which makes form element styling and behavior prettier.
+
 0.9.1 (2011-06-23)
 ------------------
 
