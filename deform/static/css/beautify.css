@@ -8,6 +8,10 @@
     zoom: 1;
 }
 
+.deform .deformSet-item > label{
+    display: inline-block;
+}
+
 .deform li.error{
     background-color: transparent;
     border: 1px solid rgb(255, 233, 222);
