@@ -18,6 +18,7 @@
     <tal:block repeat="reqt css_links|[]">
       <link rel="stylesheet" href="${static}/${reqt}" type="text/css" />
     </tal:block>
+    <link rel="stylesheet" href="${static}/css/beautify.css" type="text/css" />
     <!-- JavaScript -->
     <tal:block repeat="reqt js_links|[]">
       <script type="text/javascript" src="${static}/${reqt}"></script>
