@@ -57,13 +57,6 @@ setupkw = dict(
     tests_require=requires + ['BeautifulSoup'],
     install_requires=requires,
     test_suite="deform",
-    entry_points = """\
-    [paste.app_factory]
-    demo = deformdemo.app:run
-    """,
-    extras_require = {
-        'demo': ['Pyramid', 'pygments', 'Babel'],
-        }
     )
 
 try:
@@ -75,8 +68,6 @@ try:
     setupkw['message_extractors'] = { ".": [
         ("deform/**.py",     "chameleon_python", None ),
         ("deform/**.pt",     "chameleon_xml", None ),
-        ("deformdemo/**.py", "chameleon_python", None ),
-        ("deformdemo/**.pt", "chameleon_xml", None ),
         ]}
 except ImportError:
     pass

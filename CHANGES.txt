@@ -10,6 +10,9 @@ Next release
 - Deformdemo application now uses the ``beautify.css`` contributed by Ergo^,
   which makes form element styling and behavior prettier.
 
+- Moved ``deformdemo`` into its own package and Github repository
+  (https://github.com/Pylons/deformdemo).
+
 0.9.1 (2011-06-23)
 ------------------
 
