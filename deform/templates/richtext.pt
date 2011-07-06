@@ -1,20 +1,27 @@
-<textarea id="${field.oid}"
-          name="${field.name}">${cstruct}</textarea>
+<textarea id="${field.oid}" name="${field.name}" class='tinymce' tal:content="structure cstruct" />
+<span id="${field.oid}-preload" class="tinymce-preload" tal:content="structure cstruct" />
 <script language="javascript"
 	type="text/javascript">
   deform.addCallback(
       '${field.oid}',
       function(oid) {
+        var jqoid = $('#' + oid);
+        var jqoid_preload = $('#' + oid + '-preload');
+        jqoid.hide();
+        jqoid_preload.click(function(){
+          jqoid.show();
+          jqoid_preload.remove();
           tinyMCE.init({
-          mode : 'exact',
-          elements: oid,
-          height: '${field.widget.height}',
-          width: '${field.widget.width}',
-          theme : '${field.widget.theme}',
-          theme_advanced_resizing : true,
-          theme_advanced_toolbar_align : 'left',
-          theme_advanced_toolbar_location : 'top'
+            mode : 'exact',
+            elements: oid,
+            height: '${field.widget.height}',
+            width: '${field.widget.width}',
+            theme : '${field.widget.theme}',
+            theme_advanced_resizing : true,
+            theme_advanced_toolbar_align : 'left',
+            theme_advanced_toolbar_location : 'top'
           });
-      }
-      );
+          jqoid.unbind('click');
+        });
+      });
 </script>
