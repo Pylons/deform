@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: deform 0.7\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2010-04-25 21:28+0400\n"
+"POT-Creation-Date: 2011-07-13 15:33+0200\n"
 "PO-Revision-Date: 2010-11-11 11:15+0100\n"
 "Last-Translator: Marcin Lulek <info@webreactor.eu>\n"
 "Language-Team: pl <LL@li.org>\n"
@@ -16,43 +16,67 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 0.9.5\n"
+"Generated-By: Babel 0.9.6\n"
 
-#: deform/schema.py:109
+#: deform/schema.py:100
 msgid "${value} is not a dictionary"
 msgstr "${value} nie jest typem słownikowym"
 
-#: deform/schema.py:116
+#: deform/schema.py:107
 msgid "${value} has no ${key} key"
 msgstr "${value} nie posiada klucza ${key}"
 
-#: deform/schema.py:129 deform/schema.py:142
-msgid "Required"
-msgstr "Wymagane"
-
-#: deform/schema.py:138
+#: deform/schema.py:146
 msgid "${value} is not iterable"
 msgstr "${value} nie jest iterable"
 
-#: deform/widget.py:398
+#: deform/schema.py:150
+msgid "Required"
+msgstr "Wymagane"
+
+#: deform/widget.py:766
 msgid "Fields did not match"
 msgstr "Pola nie są takie same"
 
-#: deform/widget.py:399
+#: deform/widget.py:767
 msgid "Value"
 msgstr "Wartość"
 
-#: deform/widget.py:400
+#: deform/widget.py:768
 msgid "Confirm Value"
 msgstr "Potwierdź wartość"
 
-#: deform/widget.py:445
+#: deform/widget.py:816
 msgid "Password did not match confirm"
 msgstr "Hasło nie jest takie samo jak potwierdzenie"
 
-#: deform/widget.py:767
+#: deform/widget.py:967
+msgid "Add ${subitem_title}"
+msgstr ""
+
+#: deform/widget.py:1225
 msgid "Incomplete"
 msgstr "Niekompletne"
+
+#: deform/templates/checked_password.pt:10
+msgid "Confirm Password"
+msgstr ""
+
+#: deform/templates/checked_password.pt:5
+msgid "Password"
+msgstr ""
+
+#: deform/templates/dateparts.pt:19 deform/templates/readonly/dateparts.pt:6
+msgid "Day"
+msgstr ""
+
+#: deform/templates/dateparts.pt:12 deform/templates/readonly/dateparts.pt:4
+msgid "Month"
+msgstr ""
+
+#: deform/templates/dateparts.pt:5 deform/templates/readonly/dateparts.pt:2
+msgid "Year"
+msgstr ""
 
 #: deform/templates/form.pt:21
 msgid "Errors have been highlighted below"
@@ -61,4 +85,35 @@ msgstr "Błędy zostały wykazane poniżej"
 #: deform/templates/form.pt:19
 msgid "There was a problem with your submission"
 msgstr "Wystąpił problem z nadesłanymi danymi"
+
+#: deform/templates/mapping.pt:6
+#, fuzzy
+msgid "There was a problem with this section"
+msgstr "Wystąpił problem z nadesłanymi danymi"
+
+#: deform/templates/mapping_item.pt:16 deform/templates/sequence_item.pt:14
+msgid "${msg}"
+msgstr ""
+
+#: deform/templates/readonly/checked_password.pt:2
+#: deform/templates/readonly/password.pt:2
+msgid "Password not displayed. "
+msgstr ""
+
+#: deform/templates/readonly/file_upload.pt:7
+msgid "Read-only."
+msgstr ""
+
+#: deform/templates/readonly/radio_choice.pt:5
+#: deform/templates/readonly/select.pt:4
+msgid "Not Selected"
+msgstr ""
+
+#: deform/templates/readonly/radio_choice.pt:4
+#: deform/templates/readonly/select.pt:3
+msgid "Selected"
+msgstr ""
+
+#~ msgid "Read-only. "
+#~ msgstr ""
 

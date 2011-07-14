@@ -4,6 +4,6 @@
     <span tal:content="cstruct.get('filename')"/>
   </div>
 
-  <p><em i18n:translate=""> Read-only. </em></p>
+  <p><em i18n:translate=""> Read-only.</em></p>
 
 </div>
