@@ -226,6 +226,11 @@ class Field(object):
         if widget_maker is None:
             widget_maker = schema.default_widget_makers.get(
                 self.schema.typ.__class__)
+            if widget_maker is None:
+                for (cls, wgt) in schema.default_widget_makers.items():
+                    if isinstance(self.schema.typ, cls):
+                        widget_maker = wgt
+                        break
         if widget_maker is None:
             widget_maker = widget.TextInputWidget
         return widget_maker()

@@ -134,6 +134,19 @@ class TestField(unittest.TestCase):
         widget = field.widget
         self.assertEqual(widget.__class__, MappingWidget)
 
+    def test_widget_no_maker_with_derived_from_default_field(self):
+        from deform.widget import SequenceWidget
+        from colander import Sequence
+
+        class CustomSequence(Sequence):
+            pass
+
+        schema = DummySchema() 
+        schema.typ = CustomSequence()
+        field = self._makeOne(schema)
+        widget = field.widget
+        self.assertEqual(widget.__class__, SequenceWidget)
+
     def test_widget_no_maker_no_default_widget_maker(self):
         from deform.widget import TextInputWidget
         schema = DummySchema()
