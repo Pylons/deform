@@ -4,6 +4,8 @@ Changes
 Next release
 ------------
 
+- Chameleon 2 compatibility.
+
 - Use default widgets for a schema's baseclass if known instead of always
   falling back to a text widget.
 
