@@ -1,0 +1,16 @@
+<span tal:omit-tag="">
+    <input type="text"
+           name="${field.name}"
+           value="${cstruct}" 
+           tal:attributes="size field.widget.size;
+                           class field.widget.css_class"
+           id="${field.oid}"/>
+    <script type="text/javascript">
+      deform.addCallback(
+        '${field.oid}',
+        function(oid) {
+            $('#' + oid).datetimepicker(${options});
+        }
+      );
+    </script>
+</span>

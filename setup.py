@@ -39,7 +39,7 @@ if sys.version_info <(2,6,0):
 
 setupkw = dict(
     name='deform',
-    version='0.9',
+    version='0.9.1',
     description='Another form generation library',
     long_description=README + '\n\n' + CHANGES,
     classifiers=[
@@ -57,13 +57,6 @@ setupkw = dict(
     tests_require=requires + ['BeautifulSoup'],
     install_requires=requires,
     test_suite="deform",
-    entry_points = """\
-    [paste.app_factory]
-    demo = deformdemo.app:run
-    """,
-    extras_require = {
-        'demo': ['Pyramid', 'pygments', 'Babel'],
-        }
     )
 
 try:
@@ -73,8 +66,8 @@ try:
     # this to setup() unconditionally, and babel isn't installed,
     # distutils warns pointlessly)
     setupkw['message_extractors'] = { ".": [
-        ("**.py",   "chameleon_python", None ),
-        ("**.pt",   "chameleon_xml", None ),
+        ("deform/**.py",     "chameleon_python", None ),
+        ("deform/**.pt",     "chameleon_xml", None ),
         ]}
 except ImportError:
     pass

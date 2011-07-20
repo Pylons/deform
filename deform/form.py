@@ -1,3 +1,5 @@
+import re
+
 from deform import widget
 from deform import field
 
@@ -63,8 +65,17 @@ class Form(field.Field):
 
        Default options exist even if ``ajax_options`` is not provided.
        By default, ``target`` points at the DOM node representing the
-       form and and ``replaceTarget`` is ``true``.  If you pass these
-       values in ``ajax_options``, the defaults will be overridden.
+       form and and ``replaceTarget`` is ``true``. A successhandler calls
+       the deform_ajaxify method that will ajaxify the newly written form
+       again. the deform_ajaxify method is in the global namespace, it
+       requires a oid, and accepts a method. If it receives a method,
+       it will call the method after it ajaxified the form itself.
+       If you pass these values in ``ajax_options``, the defaults will
+       be overridden.
+       If you want to override the success handler, don't forget to
+       call the original deform_ajaxify successhandler, and pass your
+       own method as an argument. Else, subsequent form submissions
+       won't be submitted via AJAX.
 
        This option has no effect when ``use_ajax`` is False.
 
@@ -134,6 +145,7 @@ class Button(object):
                  disabled=False):
         if title is None:
             title = name.capitalize()
+        name = re.sub(r'\s', '_', name)
         if value is None:
             value = name
         self.name = name

@@ -226,6 +226,11 @@ class Field(object):
         if widget_maker is None:
             widget_maker = schema.default_widget_makers.get(
                 self.schema.typ.__class__)
+            if widget_maker is None:
+                for (cls, wgt) in schema.default_widget_makers.items():
+                    if isinstance(self.schema.typ, cls):
+                        widget_maker = wgt
+                        break
         if widget_maker is None:
             widget_maker = widget.TextInputWidget
         return widget_maker()
@@ -454,11 +459,11 @@ class Field(object):
           schema is returned.  It will be a mapping.
 
         - If the fields cannot be successfully validated, a
-          :exc:`colander.Invalid` exception is raised.
+          :exc:`deform.exception.ValidationFailure` exception is raised.
 
         The typical usage of ``validate`` in the wild is often
         something like this (at least in terms of code found within
-        the body of a :mod:`repoze.bfg` view function, the particulars
+        the body of a :mod:`pyramid` view function, the particulars
         will differ in your web framework)::
 
           from webob.exc import HTTPFound

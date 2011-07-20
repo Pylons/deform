@@ -1,18 +1,17 @@
-# Polish translations for deform.
+# Dutch translations for deform.
 # Copyright (C) 2010 ORGANIZATION
 # This file is distributed under the same license as the deform project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: deform 0.7\n"
+"Project-Id-Version: deform 0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2011-07-13 15:33+0200\n"
-"PO-Revision-Date: 2010-11-11 11:15+0100\n"
-"Last-Translator: Marcin Lulek <info@webreactor.eu>\n"
-"Language-Team: pl <LL@li.org>\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && "
-"(n%100<10 || n%100>=20) ? 1 : 2)\n"
+"PO-Revision-Date: 2011-06-04 00:12+0200\n"
+"Last-Translator: Wichert Akkerman <wichert@wiggy.net>\n"
+"Language-Team: nl <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,76 +19,75 @@ msgstr ""
 
 #: deform/schema.py:100
 msgid "${value} is not a dictionary"
-msgstr "${value} nie jest typem słownikowym"
+msgstr "${value} is geen mapping"
 
 #: deform/schema.py:107
 msgid "${value} has no ${key} key"
-msgstr "${value} nie posiada klucza ${key}"
+msgstr "${value} heeft geen ${key} sleutel"
 
 #: deform/schema.py:146
 msgid "${value} is not iterable"
-msgstr "${value} nie jest iterable"
+msgstr "${value} is niet iteraarbaar"
 
 #: deform/schema.py:150
 msgid "Required"
-msgstr "Wymagane"
+msgstr "Verplicht veld"
 
 #: deform/widget.py:766
 msgid "Fields did not match"
-msgstr "Pola nie są takie same"
+msgstr "Vul twee keer hetzelfde in"
 
 #: deform/widget.py:767
 msgid "Value"
-msgstr "Wartość"
+msgstr "Waarde"
 
 #: deform/widget.py:768
 msgid "Confirm Value"
-msgstr "Potwierdź wartość"
+msgstr "Nogmaals"
 
 #: deform/widget.py:816
 msgid "Password did not match confirm"
-msgstr "Hasło nie jest takie samo jak potwierdzenie"
+msgstr "Wachtwoordbevestiging komt niet overeen"
 
 #: deform/widget.py:967
 msgid "Add ${subitem_title}"
-msgstr ""
+msgstr "Voeg ${subitem_title} toe"
 
 #: deform/widget.py:1225
 msgid "Incomplete"
-msgstr "Niekompletne"
+msgstr "Vul de hele datum in"
 
 #: deform/templates/checked_password.pt:10
 msgid "Confirm Password"
-msgstr ""
+msgstr "Bevestig wachtwoord"
 
 #: deform/templates/checked_password.pt:5
 msgid "Password"
-msgstr ""
+msgstr "Wachtwoord"
 
 #: deform/templates/dateparts.pt:19 deform/templates/readonly/dateparts.pt:6
 msgid "Day"
-msgstr ""
+msgstr "Dag"
 
 #: deform/templates/dateparts.pt:12 deform/templates/readonly/dateparts.pt:4
 msgid "Month"
-msgstr ""
+msgstr "Maand"
 
 #: deform/templates/dateparts.pt:5 deform/templates/readonly/dateparts.pt:2
 msgid "Year"
-msgstr ""
+msgstr "Jaar"
 
 #: deform/templates/form.pt:21
 msgid "Errors have been highlighted below"
-msgstr "Błędy zostały wykazane poniżej"
+msgstr "Fouten zijn hier onder aangegeven"
 
 #: deform/templates/form.pt:19
 msgid "There was a problem with your submission"
-msgstr "Wystąpił problem z nadesłanymi danymi"
+msgstr "Er zaten één of meer fouten in uw formulier"
 
 #: deform/templates/mapping.pt:6
-#, fuzzy
 msgid "There was a problem with this section"
-msgstr "Wystąpił problem z nadesłanymi danymi"
+msgstr "Er zaten één of meer fouten in uw formulier"
 
 #: deform/templates/mapping_item.pt:16 deform/templates/sequence_item.pt:14
 msgid "${msg}"
@@ -98,22 +96,19 @@ msgstr ""
 #: deform/templates/readonly/checked_password.pt:2
 #: deform/templates/readonly/password.pt:2
 msgid "Password not displayed. "
-msgstr ""
+msgstr "Wachtwoord wordt niet getoond"
 
 #: deform/templates/readonly/file_upload.pt:7
 msgid "Read-only."
-msgstr ""
+msgstr "Kan niet gewijzigd worden."
 
 #: deform/templates/readonly/radio_choice.pt:5
 #: deform/templates/readonly/select.pt:4
 msgid "Not Selected"
-msgstr ""
+msgstr "Niet geselecteerd"
 
 #: deform/templates/readonly/radio_choice.pt:4
 #: deform/templates/readonly/select.pt:3
 msgid "Selected"
-msgstr ""
-
-#~ msgid "Read-only. "
-#~ msgstr ""
+msgstr "Geselecteerd"
 

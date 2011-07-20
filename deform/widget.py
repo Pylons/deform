@@ -231,7 +231,7 @@ class AutocompleteInputWidget(Widget):
     Renders an ``<input type="text"/>`` widget which provides
     autocompletion via a list of values.
 
-    When this option is used, the :ref:`jquery.ui.autocomplete`
+    When this option is used, the :term:`jquery.ui.autocomplete`
     library must be loaded into the page serving the form for
     autocompletion to have any effect.  See also
     :ref:`autocomplete_input`.  A version of :term:`JQuery UI` which
@@ -259,7 +259,7 @@ class AutocompleteInputWidget(Widget):
         and trailing whitespace (default ``True``).
 
     values
-        ``values`` from which :term:`jquery.autocomplete` provides
+        ``values`` from which :term:`jquery.ui.autocomplete` provides
         autocompletion. It MUST be an iterable that can be converted
         to a json array by [simple]json.dumps. It is also possible
         to pass a [base]string representing a remote URL.
@@ -284,7 +284,7 @@ class AutocompleteInputWidget(Widget):
 
     delay
         ``delay`` is an optional argument to
-        :term:`jquery.autocomplete`. It sets the time to wait after a
+        :term:`jquery.ui.autocomplete`. It sets the time to wait after a
         keypress to activate the autocomplete call.
         Defaults to ``10`` ms or ``400`` ms if a url is passed.
     """
@@ -362,6 +362,65 @@ class DateInputWidget(Widget):
         if pstruct in ('', null):
             return null
         return pstruct
+
+class DateTimeInputWidget(DateInputWidget):
+    """
+    Renders a a jQuery UI date picker with a JQuery Timepicker add-on
+    (http://trentrichardson.com/examples/timepicker/).  Used for
+    ``colander.DateTime`` schema nodes.
+
+    **Attributes/Arguments**
+
+    options
+        A dictionary of options that's passed to the datetimepicker.
+
+    size
+        The size, in columns, of the text input field.  Defaults to
+        ``None``, meaning that the ``size`` is not included in the
+        widget output (uses browser default size).
+
+    template
+        The template name used to render the widget.  Default:
+        ``dateinput``.
+
+    readonly_template
+        The template name used to render the widget in read-only mode.
+        Default: ``readonly/textinput``.
+    """
+    template = 'datetimeinput'
+    readonly_template = 'readonly/textinput'
+    size = None
+    requirements = ( ('jqueryui', None), ('datetimepicker', None), )
+    option_defaults = {'dateFormat': 'yy-mm-dd',
+                       'timeFormat': 'hh:mm:ss',
+                       'separator': ' '}
+    options = {}
+
+    def _options(self):
+        options = self.option_defaults.copy()
+        options.update(self.options)
+        return options
+
+    def serialize(self, field, cstruct, readonly=False):
+        if cstruct in (null, None):
+            cstruct = ''
+        template = readonly and self.readonly_template or self.template
+        options = self._options()
+        if len(cstruct) == 25: # strip timezone if it's there
+            cstruct = cstruct[:-6]
+        cstruct = options['separator'].join(cstruct.split('T'))
+        return field.renderer(
+            template,
+            field=field,
+            cstruct=cstruct,
+            options=json.dumps(self._options()),
+            )
+
+    def deserialize(self, field, pstruct):
+        if pstruct in ('', null):
+            return null
+        options = self._options()
+        return pstruct.replace(options['separator'], 'T')
 
 class TextAreaWidget(TextInputWidget):
     """
@@ -541,6 +600,10 @@ class SelectWidget(Widget):
         element in the tuple is the value that should be returned when
         the form is posted.  The second is the display value.
 
+    size
+        The ``size`` attribute of the select input field (default:
+        ``None``).
+
     null_value
         The value which represents the null value.  When the null
         value is encountered during serialization, the
@@ -560,6 +623,7 @@ class SelectWidget(Widget):
     readonly_template = 'readonly/select'
     null_value = ''
     values = ()
+    size = None
 
     def serialize(self, field, cstruct, readonly=False):
         if cstruct in (null, None):
@@ -1373,8 +1437,8 @@ default_resources = {
     'jqueryui': {
         None:{
             'js':('scripts/jquery-1.4.2.min.js',
-                  'scripts/jquery-ui-1.8.4.custom.min.js'),
-            'css':'css/ui-lightness/jquery-ui-1.8.4.custom.css',
+                  'scripts/jquery-ui-1.8.11.custom.min.js'),
+            'css':'css/ui-lightness/jquery-ui-1.8.11.custom.css',
             },
         },
     'jquery.form': {
@@ -1387,6 +1451,13 @@ default_resources = {
         None:{
             'js':('scripts/jquery-1.4.2.min.js',
                   'scripts/jquery.maskedinput-1.2.2.min.js'),
+            },
+        },
+    'datetimepicker': {
+        None:{
+            'js':('scripts/jquery-1.4.2.min.js',
+                  'scripts/jquery-ui-timepicker-addon.js'),
+            'css':'css/jquery-ui-timepicker-addon.css',
             },
         },
     'deform': {

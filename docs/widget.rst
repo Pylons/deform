@@ -297,6 +297,8 @@ constructing the form.  The default resource registry
 (:attr:`deform.widget.resource_registry`) does not contain resource
 mappings for your newly-created requirement.
 
+.. _writing_a_widget:
+
 Writing Your Own Widget
 -----------------------
 

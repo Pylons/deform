@@ -105,6 +105,9 @@ Widget-Related
 .. autoclass:: DateInputWidget
    :members:
 
+.. autoclass:: DateTimeInputWidget
+   :members:
+
 .. autoclass:: DatePartsWidget
    :members:
 

@@ -29,6 +29,7 @@ Topics
    :maxdepth: 2
 
    basics.rst
+   common_needs.rst
    components.rst
    serialization.rst
    templates.rst

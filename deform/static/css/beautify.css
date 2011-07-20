@@ -1,0 +1,163 @@
+.deform legend {
+    padding: 0px 10px;
+}
+
+.deform label {
+    display: block;
+    z-index: 1;
+    zoom: 1;
+}
+
+.deform .deformSet-item > label{
+    display: inline-block;
+}
+
+.deform li.error{
+    background-color: transparent;
+    border: 1px solid rgb(255, 233, 222);
+}
+
+.deform fieldset {
+    border: 1px solid rgb(201, 208, 242);
+    padding: 2px 20px 20px;
+}
+
+.deform fieldset:hover {
+    border: 1px solid rgb(221, 228, 252);
+}
+
+.deform legend {
+    padding: 0px 10px;
+}
+
+.deform li>input,.deform li>textarea,.deform li>select,.deform li>button, input.deform, select.deform, textarea.deform, button.deform
+    {
+    border: 1px solid rgb(181, 188, 199);
+    background-color: rgb(247, 252, 255);
+    padding: 2px;
+    margin: 0px 0px 3px 0px;
+}
+
+.deform .error input,.deform .error textarea
+    {
+    border: 1px solid rgb(255, 96, 0);
+    background-color: rgb(255, 233, 222);
+    -webkit-transition-duration: 0.25s;
+    -moz-transition-duration: 0.25s;
+    -o-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+}
+
+.deform li>input,.deform li>textarea,.deform li>select
+    {
+    -webkit-transition-duration: 0.25s;
+    -moz-transition-duration: 0.25s;
+    -o-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+}
+
+.deform input:hover,.deform textarea:hover
+    {
+    border-color: rgb(118, 157, 192);
+    background-color: rgb(233, 244, 255);
+    -webkit-transition-duration: 0.25s;
+    -moz-transition-duration: 0.25s;
+    -o-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+}
+
+.deform input:focus,.deform textarea:focus
+    {
+    border-color: rgb(118, 157, 192);
+    background-color: rgb(255, 255, 255);
+    -webkit-transition-duration: 0.25s;
+    -moz-transition-duration: 0.25s;
+    -o-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+}
+
+.deform .error input,.deform .error textarea
+    {
+    border: 1px solid rgb(255, 96, 0);
+    background-color: rgb(255, 233, 222);
+    -webkit-transition-duration: 0.25s;
+    -moz-transition-duration: 0.25s;
+    -o-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+}
+
+.deform .error input:hover,.deform .error textarea:hover
+    {
+    background-color: rgb(255, 244, 233);
+    -webkit-transition-duration: 0.25s;
+    -moz-transition-duration: 0.25s;
+    -o-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+}
+
+.deform .error input:focus,.deform .error textarea:focus
+    {
+    background-color: rgb(255, 255, 255);
+    -webkit-transition-duration: 0.25s;
+    -moz-transition-duration: 0.25s;
+    -o-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+}
+
+.deform button {
+    padding: 2px 5px;
+}
+
+.deform p.error {
+    color: rgb(255, 33, 0);
+    background-color: rgb(255, 233, 222);
+    border: 1px solid rgb(255, 96, 0);
+    border-left: 5px solid rgb(255, 96, 0);
+    padding: 3px;
+}
+
+.deform .errorLi {
+    background-color: rgb(255, 77, 0);
+    color: rgb(255, 255, 255);
+    padding: 5px 10px 10px 20px;
+    -webkit-border-radius: 25px;
+    -o-border-radius: 25px;
+    border-radius: 25px;
+}
+
+.deform .errorMsgLbl{
+    background-color: rgb(255, 77, 0);
+}
+.deform .errorLi h3{
+    margin: 0px;
+    font-weight: bold;
+}
+
+.deform .errorLi p {
+    margin: 0px;
+}
+
+/* alter font sizes */
+.deform textarea {
+    font-size: 1em;
+}
+
+.deform p.error {
+    font-size: 0.66em !important;
+}
+
+.deform legend {
+    font-size: 0.75em; /* 12px */
+}
+
+.deform label {
+    font-size: 0.75em; /* 12px */
+}
+
+.deform li>input,.deform li>textarea,.deform li>select,.deform li>button, deform.input, deform.select, deform.textarea, deform.button
+    {
+    font-size: 0.75em; /* 12px */
+}
+.deform .small_desc {
+    font-size: 0.75em; /* 12px */
+}

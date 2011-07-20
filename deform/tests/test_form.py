@@ -66,6 +66,11 @@ class TestButton(unittest.TestCase):
         button = self._makeOne()
         self.assertEqual(button.value, 'submit')
 
+    def test_name_with_space(self):
+        button = self._makeOne(name="log\tin as a user")
+        self.assertEquals(button.name, 'log_in_as_a_user')
+        self.assertEquals(button.value, 'log_in_as_a_user')
+    
     def test_ctor(self):
         button = self._makeOne(name='name', title='title', 
                                type='type', value='value', disabled=True)

@@ -12,6 +12,7 @@ default_widget_makers = {
     colander.Decimal: widget.TextInputWidget,
     colander.Boolean: widget.CheckboxWidget,
     colander.Date: widget.DateInputWidget,
+    colander.DateTime: widget.DateTimeInputWidget,
     colander.Tuple: widget.TextInputCSVWidget,
 }
 
@@ -115,8 +116,6 @@ class FileData(object):
         return result
 
     def deserialize(self, node, value):
-        if value is colander.null:
-            return colander.null
         return value
 
 class Set(object):
@@ -136,8 +135,6 @@ class Set(object):
         self.allow_empty = allow_empty
         
     def serialize(self, node, value):
-        if value is colander.null:
-            return colander.null
         return value
 
     def deserialize(self, node, value):

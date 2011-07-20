@@ -5,8 +5,8 @@ An example is worth a thousand words.  Here's an example `Pyramid
 <http://pylonsproject.org>`_ application demonstrating how one might use
 :mod:`deform` to render a form.
 
-.. warning:: :mod:`deform` is not dependent on :mod:`Pyramid` at
-   all; we use BFG in the examples below only to facilitate
+.. warning:: :mod:`deform` is not dependent on :mod:`pyramid` at
+   all; we use Pyramid in the examples below only to facilitate
    demonstration of an actual end-to-end working application that uses
    Deform.
 
@@ -14,6 +14,8 @@ Here's the Python code:
 
 .. code-block:: python
    :linenos:
+
+   import os
 
    from paste.httpserver import serve
    from pyramid.config import Configurator
@@ -32,6 +34,8 @@ Here's the Python code:
    from deform import widget
 
 
+   here = os.path.dirname(os.path.abspath(__file__))
+   
    colors = (('red', 'Red'), ('green', 'Green'), ('blue', 'Blue'))
 
    class DateSchema(MappingSchema):
@@ -44,11 +48,11 @@ Here's the Python code:
 
    class MySchema(MappingSchema):
        name = SchemaNode(String(),
-                         description = LONG_DESC)
+                         description = 'The name of this thing')
        title = SchemaNode(String(),
                           widget = widget.TextInputWidget(size=40),
                           validator = Length(max=20),
-                          description = LONG_DESC)
+                          description = 'A very short title')
        password = SchemaNode(String(),
                              widget = widget.CheckedPasswordWidget(),
                              validator = Length(min=5))
@@ -76,7 +80,7 @@ Here's the Python code:
    if __name__ == '__main__':
        settings = dict(reload_templates=True)
        config = Configurator(settings=settings)
-       config.add_view(form_view, renderer='form.pt')
+       config.add_view(form_view, renderer=os.path.join(here, 'form.pt'))
        config.add_static_view('static', 'deform:static')
        app = config.make_wsgi_app()
        serve(app)
@@ -100,7 +104,6 @@ same directory:
    <script type="text/javascript" src="static/scripts/deform.js"></script>
    <!-- CSS -->
    <link rel="stylesheet" href="static/css/form.css" type="text/css" />
-   <link rel="stylesheet" href="static/css/theme.css" type="text/css" />
    </head>
    <body id="public">
    <div id="container">

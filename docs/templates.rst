@@ -7,15 +7,26 @@ A set of :term:`Chameleon` templates is used by the default widget set
 present in :mod:`deform` to make it easier to customize the look and
 feel of form renderings.
 
-Adjusting the Chameleon Template Path
--------------------------------------
+Overriding the default templates
+--------------------------------
 
-If you are comfortable using the :term:`Chameleon` templating system,
-but you simply need to override some of the templates used by the
-default Deform widget set, you can create some templates via copy and
-paste in your own directory that has a similar structure to the
-``templates`` directory in the :mod:`deform` package, then use the
-:meth:`deform.Field.set_zpt_renderer` classmethod to change the
+The default widget set uses templates that live in the ``templates``
+directory of the :mod:`deform` package. If you are comfortable using
+the :term:`Chameleon` templating system, but you simply need to
+override some of these templates you can create your own template
+directory and copy the template you wish to customize into it. You can
+then either configure your new template directory to be used for all
+forms or for specific forms as described below.
+
+For relevant API documentation see the
+:class:`deform.ZPTRendererFactory` class and the :class:`deform.Field`
+class ``renderer`` argument.
+
+Overriding for all forms
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+To globally override templates use the
+:meth:`deform.Field.set_zpt_renderer` class method to change the
 settings associated with the default ZPT renderer:
 
 .. code-block:: python
@@ -28,9 +39,17 @@ settings associated with the default ZPT renderer:
 
    Form.set_zpt_renderer(search_path)
 
-This resets the rendering settings for the entire process.  If you
-don't want to change the process-wide settings, and you'd rather only
-do this for a particular form rendering, you can pass a ``renderer``
+Now, the templates in ``/path/to/my/templates`` will be used in
+preference to the default templates whenever a form is rendered.
+Any number of template directories can be put into the search path and
+will be searched in the order specified with the first matching
+template found being used.
+
+Overriding for specific forms
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you only want to change the templates used for a specific form, or
+even for the specific rendering of a form, you can pass a ``renderer``
 argument to the :class:`deform.Form` constructor, e.g.:
 
 .. code-block:: python
@@ -45,24 +64,22 @@ argument to the :class:`deform.Form` constructor, e.g.:
 
    form = Form(someschema, renderer=renderer)
 
-In either case, the system will look in ``/path/to/my/templates`` for
-a particular Chameleon template, then finally in the Deform package's
-``templates`` dir.  Any number of template directories can be put into
-the search path.
-
-See also the :class:`deform.ZPTRendererFactory` class and the
-:class:`deform.Field` class ``renderer`` argument.
+When the above form is rendered, the templates in
+``/path/to/my/templates`` will be used in  preference to the default
+templates. Any number of template directories can be put into the
+search path and will be searched in the order specified with the first
+matching template found being used.
 
 .. _creating_a_renderer:
 
-Creating A Renderer (Using an Alternative Templating System)
-------------------------------------------------------------
+Using an alternative templating system
+--------------------------------------
 
-A :term:`renderer` is used by the each widget implementation in :mod:`deform`
-to render HTML from a templates.  By default, each of the default Deform
-widgets uses a template written in the Chameleon ZPT templating language.  If
-you'd rather use a different templating system for your widgets, you can.  To
-do so, you need to:
+A :term:`renderer` is used by the each widget implementation in
+:mod:`deform` to render HTML from a set of templates. By default, each
+of the default Deform widgets uses a template written in the Chameleon
+ZPT templating language. If you'd rather use a different templating
+system for your widgets, you can. To do so, you need to:
 
 - Write an alternate renderer that uses the templating system of your
   choice.
@@ -71,17 +88,17 @@ do so, you need to:
   templating language of choice.  This is only necessary if you choose
   to use the widgets that ship as part of Deform.
 
-- Set the :class:`deform.Form` class' default renderer.
+- Set the default renderer of the :class:`deform.Form` class.
 
 Creating a Renderer
 ~~~~~~~~~~~~~~~~~~~
 
 A renderer is simply a callable that accepts a single positional
-argument, which is a template name and a set of keyword arguments.
+argument, which is the template name, and a set of keyword arguments.
 The keyword arguments it will receive are arbitrary, and differ per
-widget, but the keywords usually include ``field`` (a :term:`field`
-object) and ``cstruct`` (the data structure related to the field that
-must be rendered by the template itself).
+widget, but the keywords usually include ``field``, a :term:`field`
+object, and ``cstruct``, the data structure related to the field that
+must be rendered by the template itself.
 
 Here's an example of a (naive) renderer that uses the Mako templating
 engine:
@@ -102,8 +119,8 @@ engine:
 
 Note the ``mako_renderer`` function we've created actually appends a
 ``.mak`` extension to the ``tmpl_name`` it is passed.  This is because
-Deform pases a template name sans any extension to allow for different
-templating systems to be used as renderers.
+Deform passes a template name without any extension to allow for
+different templating systems to be used as renderers.
 
 Our ``mako_renderer`` renderer is now ready to have some templates
 created for it.
@@ -120,14 +137,11 @@ template that is used by a default Deform widget.
 
 For example, ``textinput.pt`` ZPT template, which is used by the
 :class:`deform.widget.TextInputWidget` widget and which renders a text
-input control looks like this at the time of this writing:
+input control looks like this:
 
-.. code-block:: xml
+.. literalinclude:: ../deform/templates/textinput.pt
+   :language: xml
    :linenos:
-
-   <input type="text" name="${field.name}" value="${cstruct}" 
-          tal:attributes="size field.widget.size"
-          id="${field.oid}"/>
 
 If we created a Mako renderer, we would need to create an analogue of
 this template.  Such an analogue should be named ``textinput.mak`` and
