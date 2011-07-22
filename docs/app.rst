@@ -5,10 +5,11 @@ An example is worth a thousand words.  Here's an example `Pyramid
 <http://pylonsproject.org>`_ application demonstrating how one might use
 :mod:`deform` to render a form.
 
-.. warning:: :mod:`deform` is not dependent on :mod:`pyramid` at
-   all; we use Pyramid in the examples below only to facilitate
-   demonstration of an actual end-to-end working application that uses
-   Deform.
+.. warning::
+
+   :mod:`deform` is not dependent on :mod:`pyramid` at all; we use Pyramid in
+   the examples below only to facilitate demonstration of an actual
+   end-to-end working application that uses Deform.
 
 Here's the Python code:
 

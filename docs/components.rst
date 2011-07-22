@@ -33,7 +33,9 @@ as follows:
   cannot be found, the :class:`deform.widget.TextInputWidget` widget
   is used.
 
-.. note:: The `Colander documentation
+.. note::
+
+   The `Colander documentation
    <http://docs.pylonsproject.org/projects/colander/dev/>`_ is a resource
    useful to Deform developers.  In particular, it details how a
    :term:`schema` is created and used.  Deform schemas are Colander schemas.
