@@ -4,8 +4,7 @@ from pkg_resources import resource_filename
 from deform.exception import TemplateError
 from translationstring import ChameleonTranslate
 
-try:
-    # Chameleon 1
+try: # pragma: no cover (chameleon 1)
     from chameleon.zpt import language # will raise exception for c2
     from chameleon.zpt.template import PageTemplateFile
 

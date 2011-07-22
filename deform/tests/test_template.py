@@ -47,7 +47,7 @@ class TestZPTTemplateLoader(unittest.TestCase):
         fixtures = os.path.join(os.path.dirname(__file__), 'fixtures')
         loader = self._makeOne(search_path=[fixtures])
         self.assertRaises(TemplateError, loader.load, 'doesnt')
-        if hasattr(loader, 'notexists'): # Chameleon 1
+        if hasattr(loader, 'notexists'): # pragma: no cover (chameleon 1)
             self.failUnless(
                 os.path.join(fixtures, 'doesnt') in loader.notexists)
 
@@ -56,7 +56,7 @@ class TestZPTTemplateLoader(unittest.TestCase):
         fixtures = os.path.join(os.path.dirname(__file__), 'fixtures')
         path = os.path.join(fixtures, 'test.pt')
         loader = self._makeOne(search_path=[fixtures], auto_reload=True)
-        if hasattr(loader, 'notexists'):
+        if hasattr(loader, 'notexists'): # pragma: no cover (chameleon 1)
             loader.notexists[path] = True
             result = loader.load('test.pt')
             self.failUnless(result)
@@ -67,7 +67,7 @@ class TestZPTTemplateLoader(unittest.TestCase):
         fixtures = os.path.join(os.path.dirname(__file__), 'fixtures')
         path = os.path.join(fixtures, 'test.pt')
         loader = self._makeOne(search_path=[fixtures], auto_reload=False)
-        if hasattr(loader, 'notexists'):
+        if hasattr(loader, 'notexists'): # pragma: no cover (chameleon 1)
             loader.notexists[path] = True
             self.assertRaises(TemplateError, loader.load, 'test.pt')
 
