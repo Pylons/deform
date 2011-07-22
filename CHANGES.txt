@@ -4,14 +4,13 @@ Changes
 Next release
 ------------
 
+- Chameleon 2 compatibility.
+
 - Use default widgets for a schema's baseclass if known instead of always
   falling back to a text widget.
 
 - Deform now includes a ``beautify.css`` (contributed by Ergo^) in its static
   directory, which can be used to make form element styling prettier.
-
-- Deformdemo application now uses the ``beautify.css`` contributed by Ergo^,
-  which makes form element styling and behavior prettier.
 
 - Moved ``deformdemo`` into its own package and Github repository
   (https://github.com/Pylons/deformdemo).
