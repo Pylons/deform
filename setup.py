@@ -28,7 +28,7 @@ except:
     CHANGES = ''
 
 requires = [
-    'Chameleon>=1.2.3,<1.999', # debug arg, c2 doesnt yet work
+    'Chameleon>=1.2.3', # debug arg
     'colander>=0.8', # Bindings-providing
     'peppercorn>=0.3', # rename operation type
     'translationstring',
@@ -39,7 +39,7 @@ if sys.version_info <(2,6,0):
 
 setupkw = dict(
     name='deform',
-    version='0.9.1',
+    version='0.9.2',
     description='Another form generation library',
     long_description=README + '\n\n' + CHANGES,
     classifiers=[

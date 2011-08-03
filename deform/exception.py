@@ -16,8 +16,8 @@ class ValidationFailure(Exception):
        :meth:`deform.widget.Widget.deserialize`.
 
     ``error``
-       The original :class:`deform.exception.Invalid` exception raised
-       by :meth:`deform.schema.SchemaNode.deserialize` which caused
+       The original :class:`colander.Invalid` exception raised by
+       :meth:`deform.schema.SchemaNode.deserialize` which caused
        this exception to need to be raised.
     """
     def __init__(self, field, cstruct, error):

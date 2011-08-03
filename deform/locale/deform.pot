@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: deform 0.9\n"
+"Project-Id-Version: deform 0.9.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2011-06-05 08:30+0200\n"
+"POT-Creation-Date: 2011-07-13 15:33+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,27 +33,27 @@ msgstr ""
 msgid "Required"
 msgstr ""
 
-#: deform/widget.py:761
+#: deform/widget.py:766
 msgid "Fields did not match"
 msgstr ""
 
-#: deform/widget.py:762
+#: deform/widget.py:767
 msgid "Value"
 msgstr ""
 
-#: deform/widget.py:763
+#: deform/widget.py:768
 msgid "Confirm Value"
 msgstr ""
 
-#: deform/widget.py:811
+#: deform/widget.py:816
 msgid "Password did not match confirm"
 msgstr ""
 
-#: deform/widget.py:962
+#: deform/widget.py:967
 msgid "Add ${subitem_title}"
 msgstr ""
 
-#: deform/widget.py:1220
+#: deform/widget.py:1225
 msgid "Incomplete"
 msgstr ""
 
@@ -99,7 +99,7 @@ msgid "Password not displayed. "
 msgstr ""
 
 #: deform/templates/readonly/file_upload.pt:7
-msgid "Read-only. "
+msgid "Read-only."
 msgstr ""
 
 #: deform/templates/readonly/radio_choice.pt:5
@@ -110,26 +110,5 @@ msgstr ""
 #: deform/templates/readonly/radio_choice.pt:4
 #: deform/templates/readonly/select.pt:3
 msgid "Selected"
-msgstr ""
-
-#: deformdemo/app.py:473 deformdemo/app.py:656 deformdemo/app.py:673
-msgid "${val} is earlier than earliest date ${min}"
-msgstr ""
-
-#: deformdemo/app.py:692
-msgid "${val} is earlier than earliest datetime ${min}"
-msgstr ""
-
-#: deformdemo/app.py:879 deformdemo/app.py:881
-msgid "A number between ${min} and ${max}"
-msgstr ""
-
-#: deformdemo/app.py:893
-msgid "Submit"
-msgstr ""
-
-#: deformdemo/app.py:1002 deformdemo/app.py:1005 deformdemo/app.py:1008
-#: deformdemo/app.py:1023 deformdemo/app.py:1026 deformdemo/app.py:1029
-msgid "Error ${num}"
 msgstr ""
 

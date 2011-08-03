@@ -5,7 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: deform 0.6\n"
-"POT-Creation-Date: 2011-06-05 08:30+0200\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2011-07-13 15:33+0200\n"
 "PO-Revision-Date: 2011-06-05 08:31+0200\n"
 "Last-Translator: Jan Dittberner <jan@dittberner.info>\n"
 "Language-Team: repoze developers <repoze-dev@lists.repoze.org>\n"
@@ -31,27 +32,27 @@ msgstr " ${value} ist nicht iterierbar"
 msgid "Required"
 msgstr "Pflichtangabe"
 
-#: deform/widget.py:761
+#: deform/widget.py:766
 msgid "Fields did not match"
 msgstr "Die Felder sind nicht gleich"
 
-#: deform/widget.py:762
+#: deform/widget.py:767
 msgid "Value"
 msgstr "Wert"
 
-#: deform/widget.py:763
+#: deform/widget.py:768
 msgid "Confirm Value"
 msgstr "Wert bestätigen"
 
-#: deform/widget.py:811
+#: deform/widget.py:816
 msgid "Password did not match confirm"
 msgstr "Passwort und Passwortbestätigung stimmen nicht überein"
 
-#: deform/widget.py:962
+#: deform/widget.py:967
 msgid "Add ${subitem_title}"
 msgstr "${subitem_title} hinzufügen"
 
-#: deform/widget.py:1220
+#: deform/widget.py:1225
 msgid "Incomplete"
 msgstr "Unvollständig"
 
@@ -97,7 +98,9 @@ msgid "Password not displayed. "
 msgstr "Passwort wird nicht angezeigt. "
 
 #: deform/templates/readonly/file_upload.pt:7
-msgid "Read-only. "
+#, fuzzy
+#| msgid "Read-only. "
+msgid "Read-only."
 msgstr "Nur lesen. "
 
 #: deform/templates/readonly/radio_choice.pt:5
@@ -109,25 +112,4 @@ msgstr "Nicht ausgewählt"
 #: deform/templates/readonly/select.pt:3
 msgid "Selected"
 msgstr "Ausgewählt"
-
-#: deformdemo/app.py:473 deformdemo/app.py:656 deformdemo/app.py:673
-msgid "${val} is earlier than earliest date ${min}"
-msgstr "${val} liegt vor dem frühesten möglichen Datum ${min}"
-
-#: deformdemo/app.py:692
-msgid "${val} is earlier than earliest datetime ${min}"
-msgstr "${val} liegt vor dem frühesten möglichen Zeitpunkt ${min}"
-
-#: deformdemo/app.py:879 deformdemo/app.py:881
-msgid "A number between ${min} and ${max}"
-msgstr "Eine Zahl zwischen ${min} und ${max}"
-
-#: deformdemo/app.py:893
-msgid "Submit"
-msgstr "Abschicken"
-
-#: deformdemo/app.py:1002 deformdemo/app.py:1005 deformdemo/app.py:1008
-#: deformdemo/app.py:1023 deformdemo/app.py:1026 deformdemo/app.py:1029
-msgid "Error ${num}"
-msgstr "Fehler ${num}"
 

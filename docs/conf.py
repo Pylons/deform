@@ -62,7 +62,7 @@ copyright = '2011, Agendaless Consulting <pylons-discuss@googlegroups.com>'
 # other places throughout the built documents.
 #
 # The short X.Y version.
-version = '0.9.1'
+version = '0.9.2'
 # The full version, including alpha/beta/rc tags.
 release = version
 
@@ -104,6 +104,7 @@ pygments_style = 'sphinx'
 sys.path.append(os.path.abspath('_themes'))
 html_theme_path = ['_themes']
 html_theme = 'pylons'
+html_theme_options = {'github_url':'http://github.com/Pylons/deform'}
 
 # The style sheet to use for HTML and HTML Help pages. A file of that name
 # must exist either in Sphinx' static/ path, or in one of the custom paths
