@@ -1232,7 +1232,7 @@ class DatePartsWidget(Widget):
             result = '-'.join([year, month, day])
 
             if (not year or not month or not day):
-                raise Invalid(field.schema, _('Incomplete'), result)
+                raise Invalid(field.schema, _('Incomplete date'), result)
 
             return result
 

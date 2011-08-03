@@ -1,6 +1,14 @@
 Changes
 =======
 
+Next release
+------------
+
+- Update Dutch translations.
+
+- Translate title and description of items for sequence fields.
+
+
 0.9.2 (2011-07-22)
 ------------------
 
@@ -9,7 +17,6 @@ Changes
 - Use default widgets for a schema's baseclass if known instead of always
   falling back to a text widget.
 
-- Translate title and description of items for sequence fields.
 
 - Deform now includes a ``beautify.css`` (contributed by Ergo^) in its static
   directory, which can be used to make form element styling prettier.
