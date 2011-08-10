@@ -6,6 +6,8 @@ Next release
 
 - Update Dutch translations.
 
+- Translate title attribute for remove button in sequence fields.
+
 - Translate title and description of items for sequence fields.
 
 
