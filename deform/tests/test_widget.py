@@ -973,7 +973,7 @@ class TestDatePartsWidget(unittest.TestCase):
         widget = self._makeOne()
         e = invalid_exc(widget.deserialize,
                         field, {'year':'1', 'month':'', 'day':''})
-        self.assertEqual(e.msg, 'Incomplete')
+        self.assertEqual(e.msg, 'Incomplete date')
 
 
 class TestMappingWidget(unittest.TestCase):
@@ -1090,6 +1090,24 @@ class TestSequenceWidget(unittest.TestCase):
         self.assertEqual(urllib.unquote(result), 'abc')
         self.assertEqual(protofield.cloned, True)
 
+    def test_get_translate_no_loader_translate(self):
+        renderer = DummyRenderer('abc')
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+        widget = self._makeOne()
+        translate = widget.get_translate(field)
+        marker = []
+        self.assertTrue(translate(marker) is marker)
+
+    def test_get_translate_use_loaders_translate(self):
+        renderer = DummyRenderer('abc')
+        renderer.loader = DummyLoader()
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+        widget = self._makeOne()
+        translate = widget.get_translate(field)
+        self.assertEqual(translate, renderer.loader.translate)
+
     def test_serialize_null(self):
         from colander import null
         renderer = DummyRenderer('abc')
@@ -1179,6 +1197,34 @@ class TestSequenceWidget(unittest.TestCase):
         widget.serialize(field, null)
         self.assertEqual(renderer.kw['add_subitem_text'].interpolate(),
                          'Yo description')
+
+    def test_serialize_add_subitem_translates_title(self):
+        from colander import null
+        renderer = DummyRenderer('abc')
+        renderer.loader = DummyLoader({'title': 'titel'})
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+        inner = DummyField()
+        field.children=[inner]
+        widget = self._makeOne()
+        widget.add_subitem_text_template = 'Yo ${subitem_title}'
+        widget.serialize(field, null)
+        self.assertEqual(renderer.kw['add_subitem_text'].interpolate(),
+                         'Yo titel')
+
+    def test_serialize_add_subitem_translates_description(self):
+        from colander import null
+        renderer = DummyRenderer('abc')
+        renderer.loader = DummyLoader({'description': 'omschrijving'})
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+        inner = DummyField()
+        field.children=[inner]
+        widget = self._makeOne()
+        widget.add_subitem_text_template = 'Yo ${subitem_description}'
+        widget.serialize(field, null)
+        self.assertEqual(renderer.kw['add_subitem_text'].interpolate(),
+                         'Yo omschrijving')
 
     def test_serialize_subitem_value(self):
         from colander import null
@@ -1552,6 +1598,13 @@ class TestResourceRegistry(unittest.TestCase):
         reg.registry = {'abc':{'123':{'js':'1', 'css':'2'}}}
         result = reg([('abc', '123')])
         self.assertEqual(result, {'js':['1'], 'css':['2']})
+
+class DummyLoader(object):
+    def __init__(self, translations={}):
+        self.translations = translations
+    
+    def translate(self, input):
+        return self.translations.get(input, input)
 
 class DummyRenderer(object):
     def __init__(self, result=''):

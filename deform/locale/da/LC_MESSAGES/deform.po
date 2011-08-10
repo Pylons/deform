@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: deform 0.0\n"
 "Report-Msgid-Bugs-To: repoze-dev@repoze.org\n"
-"POT-Creation-Date: 2011-07-13 15:33+0200\n"
+"POT-Creation-Date: 2011-08-03 12:46+0200\n"
 "PO-Revision-Date: 2010-09-09 13:57-0600\n"
 "Last-Translator: Malthe Borch <mborch@gmail.com>\n"
 "Language-Team: da <LL@li.org>\n"
@@ -53,8 +53,8 @@ msgstr "Begge kodeord skal være ens"
 msgid "Add ${subitem_title}"
 msgstr ""
 
-#: deform/widget.py:1225
-msgid "Incomplete"
+#: deform/widget.py:1235
+msgid "Incomplete date"
 msgstr "Ikke komplet"
 
 #: deform/templates/checked_password.pt:10
@@ -112,7 +112,4 @@ msgstr ""
 #: deform/templates/readonly/select.pt:3
 msgid "Selected"
 msgstr ""
-
-#~ msgid "Read-only. "
-#~ msgstr ""
 

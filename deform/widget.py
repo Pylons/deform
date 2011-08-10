@@ -981,6 +981,15 @@ class SequenceWidget(Widget):
         proto = urllib.quote(proto)
         return proto
 
+    def get_translate(self, field):
+        try:
+            translate = field.renderer.loader.translate
+            if translate is not None:
+                return translate
+        except AttributeError:
+            pass
+        return lambda s: s
+
     def serialize(self, field, cstruct, readonly=False):
         if (self.render_initial_item and self.min_len is None):
             # This is for compat only: ``render_initial_item=True`` should
@@ -1011,9 +1020,10 @@ class SequenceWidget(Widget):
             subfields = [ (val, item_field.clone()) for val in cstruct ]
 
         template = readonly and self.readonly_template or self.template
+        translate = self.get_translate(field)
         add_template_mapping = dict(
-            subitem_title=item_field.title,
-            subitem_description=item_field.description,
+            subitem_title=translate(item_field.title),
+            subitem_description=translate(item_field.description),
             subitem_name=item_field.name)
         add_subitem_text = _(self.add_subitem_text_template,
                              mapping=add_template_mapping)
@@ -1222,7 +1232,7 @@ class DatePartsWidget(Widget):
             result = '-'.join([year, month, day])
 
             if (not year or not month or not day):
-                raise Invalid(field.schema, _('Incomplete'), result)
+                raise Invalid(field.schema, _('Incomplete date'), result)
 
             return result
 
