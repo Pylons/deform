@@ -973,7 +973,7 @@ class TestDatePartsWidget(unittest.TestCase):
         widget = self._makeOne()
         e = invalid_exc(widget.deserialize,
                         field, {'year':'1', 'month':'', 'day':''})
-        self.assertEqual(e.msg, 'Incomplete')
+        self.assertEqual(e.msg, 'Incomplete date')
 
 
 class TestMappingWidget(unittest.TestCase):
