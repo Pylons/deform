@@ -981,15 +981,6 @@ class SequenceWidget(Widget):
         proto = urllib.quote(proto)
         return proto
 
-    def get_translate(self, field):
-        try:
-            translate = field.renderer.loader.translate
-            if translate is not None:
-                return translate
-        except AttributeError:
-            pass
-        return lambda s: s
-
     def serialize(self, field, cstruct, readonly=False):
         if (self.render_initial_item and self.min_len is None):
             # This is for compat only: ``render_initial_item=True`` should
@@ -1020,7 +1011,7 @@ class SequenceWidget(Widget):
             subfields = [ (val, item_field.clone()) for val in cstruct ]
 
         template = readonly and self.readonly_template or self.template
-        translate = self.get_translate(field)
+        translate = field.translate
         add_template_mapping = dict(
             subitem_title=translate(item_field.title),
             subitem_description=translate(item_field.description),

@@ -105,12 +105,12 @@ class ZPTRendererFactory(object):
     """
     def __init__(self, search_path, auto_reload=True, debug=True,
                  encoding='utf-8', translator=None):
-        translate = ChameleonTranslate(translator)
+        self.translate = translator
         loader = ZPTTemplateLoader(search_path=search_path,
                                    auto_reload=auto_reload,
                                    debug=debug,
                                    encoding=encoding,
-                                   translate=translate)
+                                   translate=ChameleonTranslate(translator))
         self.loader = loader
 
     def __call__(self, template_name, **kw):

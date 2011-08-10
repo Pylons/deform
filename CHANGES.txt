@@ -8,6 +8,9 @@ Next release
 
 - Translate title and description of items for sequence fields.
 
+- Add a new API method to field objects: ``translate``.  This method will use
+  the translator passed to the underlying renderer to translate message ids
+  into text.
 
 0.9.2 (2011-07-22)
 ------------------

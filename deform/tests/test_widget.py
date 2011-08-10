@@ -1090,24 +1090,6 @@ class TestSequenceWidget(unittest.TestCase):
         self.assertEqual(urllib.unquote(result), 'abc')
         self.assertEqual(protofield.cloned, True)
 
-    def test_get_translate_no_loader_translate(self):
-        renderer = DummyRenderer('abc')
-        schema = DummySchema()
-        field = DummyField(schema, renderer)
-        widget = self._makeOne()
-        translate = widget.get_translate(field)
-        marker = []
-        self.assertTrue(translate(marker) is marker)
-
-    def test_get_translate_use_loaders_translate(self):
-        renderer = DummyRenderer('abc')
-        renderer.loader = DummyLoader()
-        schema = DummySchema()
-        field = DummyField(schema, renderer)
-        widget = self._makeOne()
-        translate = widget.get_translate(field)
-        self.assertEqual(translate, renderer.loader.translate)
-
     def test_serialize_null(self):
         from colander import null
         renderer = DummyRenderer('abc')
@@ -1201,9 +1183,8 @@ class TestSequenceWidget(unittest.TestCase):
     def test_serialize_add_subitem_translates_title(self):
         from colander import null
         renderer = DummyRenderer('abc')
-        renderer.loader = DummyLoader({'title': 'titel'})
         schema = DummySchema()
-        field = DummyField(schema, renderer)
+        field = DummyField(schema, renderer, {'title': 'titel'})
         inner = DummyField()
         field.children=[inner]
         widget = self._makeOne()
@@ -1215,9 +1196,8 @@ class TestSequenceWidget(unittest.TestCase):
     def test_serialize_add_subitem_translates_description(self):
         from colander import null
         renderer = DummyRenderer('abc')
-        renderer.loader = DummyLoader({'description': 'omschrijving'})
         schema = DummySchema()
-        field = DummyField(schema, renderer)
+        field = DummyField(schema, renderer, {'description': 'omschrijving'})
         inner = DummyField()
         field.children=[inner]
         widget = self._makeOne()
@@ -1599,13 +1579,6 @@ class TestResourceRegistry(unittest.TestCase):
         result = reg([('abc', '123')])
         self.assertEqual(result, {'js':['1'], 'css':['2']})
 
-class DummyLoader(object):
-    def __init__(self, translations={}):
-        self.translations = translations
-    
-    def translate(self, input):
-        return self.translations.get(input, input)
-
 class DummyRenderer(object):
     def __init__(self, result=''):
         self.result = result
@@ -1647,9 +1620,10 @@ class DummyField(object):
     name = 'name'
     cloned = False
     oid = 'deformField1'
-    def __init__(self, schema=None, renderer=None):
+    def __init__(self, schema=None, renderer=None, translations=None):
         self.schema = schema
         self.renderer = renderer
+        self.translations = translations
 
     def clone(self):
         self.cloned = True
@@ -1657,6 +1631,11 @@ class DummyField(object):
 
     def deserialize(self, pstruct):
         return self.widget.deserialize(self, pstruct)
+
+    def translate(self, term):
+        if self.translations is None:
+            return term
+        return self.translations.get(term, term)
 
 class DummyTmpStore(dict):
     def preview_url(self, uid):

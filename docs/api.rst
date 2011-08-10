@@ -13,6 +13,8 @@ Form-Related
 
    .. automethod:: __iter__
 
+   .. automethod:: translate
+
 .. autoclass:: Form
    :members:
 

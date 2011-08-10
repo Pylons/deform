@@ -71,6 +71,17 @@ class TestField(unittest.TestCase):
         self.assertEqual(child_field.foo, 'foo')
         self.assertEqual(child_field.bar, 'bar')
 
+    def test_translate_renderer_has_no_translator(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        self.assertEqual(field.translate('term'), 'term')
+
+    def test_translate_renderer_has_translator(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        field.renderer.translate = lambda foo: 'translated'
+        self.assertEqual(field.translate('term'), 'translated')
+
     def test_set_default_renderer(self):
         cls = self._getTargetClass()
         old = cls.default_renderer

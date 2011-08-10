@@ -165,6 +165,15 @@ class Field(object):
             translator=translator,
             )
 
+    def translate(self, msgid):
+        """ Use the translator passed to the renderer of this field to
+        translate the msgid into a term.  If the renderer does not have a
+        translator, this method will return the msgid."""
+        translate = getattr(self.renderer, 'translate', None)
+        if translate is not None:
+            return translate(msgid)
+        return msgid
+
     @classmethod
     def set_default_renderer(cls, renderer):
         """ Set the callable that will act as a default renderer for
