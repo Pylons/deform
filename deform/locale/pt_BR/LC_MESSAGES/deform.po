@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: deform 0.0\n"
 "Report-Msgid-Bugs-To: repoze-dev@repoze.org\n"
-"POT-Creation-Date: 2011-07-13 15:33+0200\n"
+"POT-Creation-Date: 2011-08-03 12:46+0200\n"
 "PO-Revision-Date: 2010-09-10 06:41+0300\n"
 "Last-Translator: Fernando Correa Neto <fcdoth@gmail.com>\n"
 "Language-Team: pt_BR <LL@li.org>\n"
@@ -53,8 +53,8 @@ msgstr "As senhas não são iguais"
 msgid "Add ${subitem_title}"
 msgstr ""
 
-#: deform/widget.py:1225
-msgid "Incomplete"
+#: deform/widget.py:1235
+msgid "Incomplete date"
 msgstr "Incompleto"
 
 #: deform/templates/checked_password.pt:10
@@ -112,7 +112,4 @@ msgstr ""
 #: deform/templates/readonly/select.pt:3
 msgid "Selected"
 msgstr ""
-
-#~ msgid "Read-only. "
-#~ msgstr ""
 
