@@ -1,6 +1,12 @@
 Changes
 =======
 
+Next release
+------------
+
+- Translate title attribute for remove button in sequence fields.
+
+
 0.9.2 (2011-07-22)
 ------------------
 
