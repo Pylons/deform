@@ -731,15 +731,15 @@ class TestCheckedInputWidget(unittest.TestCase):
         widget = self._makeOne()
         field = DummyField()
         e = invalid_exc(widget.deserialize, field,
-                                    {'value':'password', 'confirm':'not'})
+                                    {'name':'password', 'name-confirm':'not'})
         self.assertEqual(e.value, 'password')
         self.assertEqual(e.msg, 'Fields did not match')
 
     def test_deserialize_matching(self):
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field, {'value':'password',
-                                            'confirm':'password'})
+        result = widget.deserialize(field, {'name':'password',
+                                            'name-confirm':'password'})
         self.assertEqual(result, 'password')
         self.assertEqual(field.error, None)
 
@@ -752,7 +752,7 @@ class TestCheckedPasswordWidget(TestCheckedInputWidget):
         widget = self._makeOne()
         field = DummyField()
         e = invalid_exc(widget.deserialize, field,
-                                    {'value':'password', 'confirm':'not'})
+                                    {'name':'password', 'name-confirm':'not'})
         self.assertEqual(e.value, 'password')
         self.assertEqual(e.msg, 'Password did not match confirm')
 
