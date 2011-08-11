@@ -773,7 +773,7 @@ class CheckedInputWidget(Widget):
     def serialize(self, field, cstruct, readonly=False):
         if cstruct in (null, None):
             cstruct = ''
-        confirm = getattr(field, 'confirm', '')
+        confirm = getattr(field, '%s-confirm' % (field.name,), '')
         template = readonly and self.readonly_template or self.template
         return field.renderer(template, field=field, cstruct=cstruct,
                               confirm=confirm, subject=self.subject,
@@ -783,8 +783,8 @@ class CheckedInputWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null
-        value = pstruct.get('value') or ''
-        confirm = pstruct.get('confirm') or ''
+        value = pstruct.get(field.name) or ''
+        confirm = pstruct.get('%s-confirm' % (field.name,)) or ''
         field.confirm = confirm
         if (value or confirm) and (value != confirm):
             raise Invalid(field.schema, self.mismatch_message, value)
