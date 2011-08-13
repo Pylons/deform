@@ -1,3 +1,4 @@
+import re
 import csv
 import random
 import string
@@ -13,6 +14,15 @@ try:
     import json 
 except ImportError: # PRAGMA: no cover
     import simplejson as json 
+
+
+re_c1 = re.compile('(.)([A-Z][a-z]+)')
+re_c2 = re.compile('([a-z0-9])([A-Z])')
+
+
+def camel_to_css_class_name(name):
+    s1 = re_c1.sub(r'\1-\2', name)
+    return re_c2.sub(r'\1-\2', s1).lower()
 
 
 class Widget(object):
@@ -106,6 +116,10 @@ class Widget(object):
 
     def __init__(self, **kw):
         self.__dict__.update(kw)
+
+    @property
+    def css_name(self):
+        return camel_to_css_class_name(type(self).__name__)
 
     def serialize(self, field, cstruct, readonly=False):
         """

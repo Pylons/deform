@@ -19,6 +19,14 @@ class TestWidget(unittest.TestCase):
         self.assertEqual(widget.a, 1)
         self.assertEqual(widget.b, 2)
 
+    def test_css_name(self):
+        from deform.widget import Widget
+
+        class StubWidget(Widget):
+            pass
+
+        self.assertEqual(StubWidget().css_name, 'stub-widget')
+
     def test_serialize(self):
         widget = self._makeOne()
         self.assertRaises(NotImplementedError, widget.serialize, None, None)
