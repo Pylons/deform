@@ -1,7 +1,8 @@
-<li class="field${field.error and ' ' + field.widget.error_class}"
+<li class="field ${field.widget.css_name}${error and ' ' + error}"
     title="${field.description}"
     id="item-${field.oid}"
     tal:omit-tag="field.widget.hidden"
+    tal:define="error field.error and field.widget.error_class"
     i18n:domain="deform">
   <!-- mapping_item -->
   <label tal:condition="not (field.widget.hidden or

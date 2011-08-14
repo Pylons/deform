@@ -1,6 +1,13 @@
 Changes
 =======
 
+In next release ...
+
+- The mapping item widget now adds a css class corresponding to the
+  widget class name, but with camel-case converted into dash-separated
+  lowercase segments, e.g. ``TextInputWidget`` becomes
+  ``"text-input-widget"``.
+
 0.9.3 (2011-08-10)
 ------------------
 
