@@ -1,6 +1,11 @@
 Changes
 =======
 
+In next release ...
+
+- Allow the specification of a custom form widget (as an argument to
+  the form schema constructor).
+
 0.9.3 (2011-08-10)
 ------------------
 

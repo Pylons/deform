@@ -2,6 +2,7 @@ import re
 
 from deform import widget
 from deform import field
+from deform import decorator
 
 class Form(field.Field):
     """
@@ -102,7 +103,14 @@ class Form(field.Field):
         self.formid = formid
         self.use_ajax = use_ajax
         self.ajax_options = Raw(ajax_options.strip())
-        self.widget = widget.FormWidget()
+
+    @decorator.reify
+    def widget(self):
+        wdg = getattr(self.schema, 'widget', None)
+        if wdg is not None:
+            return wdg
+
+        return widget.FormWidget()
 
 class Raw(unicode):
     def __html__(self):
