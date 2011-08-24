@@ -1,12 +1,13 @@
 Changes
 =======
 
-In the next release
--------------------
+Next release
+------------
+
+- Translate title attribute for remove button in sequence fields.
 
 - Do not output empty error messages for sequence items. After translation
   these would insert the PO file metadata.
-
 
 0.9.3 (2011-08-10)
 ------------------
