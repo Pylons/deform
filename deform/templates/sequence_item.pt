@@ -11,12 +11,12 @@
 
   <span tal:replace="structure field.serialize(cstruct)"/>
 
-  <p tal:condition="field.error and not field.widget.hidden"
-     tal:define="errstr 'error-%s' % field.oid"
-     tal:repeat="msg field.error.messages()"
-     tal:attributes="id repeat.msg.index==0 and errstr or
-                     ('%s-%s' % (errstr, repeat.msg.index))"
-     class="${field.widget.error_class}" i18n:translate="">${msg}</p>
+  <tal:errors
+     condition="field.error and not field.widget.hidden"
+     define="errstr 'error-%s' % field.oid"
+     repeat="msg field.error.messages()"><p tal:condition="msg"
+       id="${errstr if repeat.msg.index==0 else '%s-%s' % (errstr, repeat.msg.index)}"
+       class="${field.widget.error_class}" i18n:translate="">${msg}</p></tal:errors>
 
   <!-- /sequence_item -->
 </li>
