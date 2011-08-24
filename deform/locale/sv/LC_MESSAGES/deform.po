@@ -1,0 +1,118 @@
+# Swedish translations for deform.
+# Copyright (C) 2011 ORGANIZATION
+# This file is distributed under the same license as the deform project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: deform 0.9.2\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2011-08-03 12:46+0200\n"
+"PO-Revision-Date: 2011-08-23 09:34+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: sv <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 0.9.6\n"
+
+#: deform/schema.py:100
+msgid "${value} is not a dictionary"
+msgstr "${value} är inte av typen \"dict\""
+
+#: deform/schema.py:107
+msgid "${value} has no ${key} key"
+msgstr "${value} har ingen ${key} nyckel"
+
+#: deform/schema.py:146
+msgid "${value} is not iterable"
+msgstr "${value} är inte itererbar"
+
+#: deform/schema.py:150
+msgid "Required"
+msgstr "Krävd"
+
+#: deform/widget.py:766
+msgid "Fields did not match"
+msgstr "Fälten matchade inte"
+
+#: deform/widget.py:767
+msgid "Value"
+msgstr "Värde"
+
+#: deform/widget.py:768
+msgid "Confirm Value"
+msgstr "Bekräfta värde"
+
+#: deform/widget.py:816
+msgid "Password did not match confirm"
+msgstr "Lösenorden stämmer inte överens"
+
+#: deform/widget.py:967
+msgid "Add ${subitem_title}"
+msgstr "Lägg till ${subitem_title}"
+
+#: deform/widget.py:1235
+msgid "Incomplete date"
+msgstr "Inkomplett datum"
+
+#: deform/templates/checked_password.pt:10
+msgid "Confirm Password"
+msgstr "Bekräfta lösenord"
+
+#: deform/templates/checked_password.pt:5
+msgid "Password"
+msgstr "Lösenord"
+
+#: deform/templates/dateparts.pt:19
+#: deform/templates/readonly/dateparts.pt:6
+msgid "Day"
+msgstr "Dag"
+
+#: deform/templates/dateparts.pt:12
+#: deform/templates/readonly/dateparts.pt:4
+msgid "Month"
+msgstr "Månad"
+
+#: deform/templates/dateparts.pt:5
+#: deform/templates/readonly/dateparts.pt:2
+msgid "Year"
+msgstr "År"
+
+#: deform/templates/form.pt:21
+msgid "Errors have been highlighted below"
+msgstr "Felen har markerats nedan"
+
+#: deform/templates/form.pt:19
+msgid "There was a problem with your submission"
+msgstr "Det uppstod problem med ditt formulär"
+
+#: deform/templates/mapping.pt:6
+msgid "There was a problem with this section"
+msgstr "Det uppstod problem med denna sektion"
+
+#: deform/templates/mapping_item.pt:16
+#: deform/templates/sequence_item.pt:14
+msgid "${msg}"
+msgstr "${msg}"
+
+#: deform/templates/readonly/checked_password.pt:2
+#: deform/templates/readonly/password.pt:2
+msgid "Password not displayed. "
+msgstr "Lösenordet visas inte."
+
+#: deform/templates/readonly/file_upload.pt:7
+msgid "Read-only."
+msgstr "Skrivskyddad."
+
+#: deform/templates/readonly/radio_choice.pt:5
+#: deform/templates/readonly/select.pt:4
+msgid "Not Selected"
+msgstr "Ej vald"
+
+#: deform/templates/readonly/radio_choice.pt:4
+#: deform/templates/readonly/select.pt:3
+msgid "Selected"
+msgstr "Vald"
+
