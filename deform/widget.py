@@ -470,8 +470,7 @@ class RichTextWidget(TextInputWidget):
     **Attributes/Arguments**
 
     height
-        The size, in rows, of the text input field.  Defaults to
-        240.
+        The height, in pixels, of the text editor.  Defaults to 240.
 
     readonly_template
         The template name used to render the widget in read-only mode.
@@ -490,8 +489,9 @@ class RichTextWidget(TextInputWidget):
         Defaults to ``simple``.
 
     width
-        The size, in pixels, of the editor.  Defaults to
-        640.
+        The width, in pixels, of the editor.  Defaults to 500.
+        The width can also be given as a percentage (e.g. '100%')
+        relative to the width of the enclosing element.
     """
     height = 240
     width = 500
