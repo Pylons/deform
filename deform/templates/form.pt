@@ -20,6 +20,7 @@
             >There was a problem with your submission</h3>
         <p class="errorMsg" i18n:translate=""
            >Errors have been highlighted below</p>
+        <p class="errorMsg">${field.errormsg}</p>
       </li>
       
       <li class="section first" tal:condition="field.title">
