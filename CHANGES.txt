@@ -9,6 +9,10 @@ Next release
 - Do not output empty error messages for sequence items. After translation
   these would insert the PO file metadata.
 
+- Update to lingua for translations, add french translation
+
+- Fix mapping_item because in certain cases widget has no error css class attached, thus the field failed to render.
+
 0.9.3 (2011-08-10)
 ------------------
 

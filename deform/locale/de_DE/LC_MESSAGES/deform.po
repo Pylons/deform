@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: deform 0.6\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2011-08-03 12:46+0200\n"
-"PO-Revision-Date: 2011-06-05 08:31+0200\n"
+"POT-Creation-Date: 2011-11-08 17:56+0100\n"
+"PO-Revision-Date: 2011-11-08 15:51+0100\n"
 "Last-Translator: Jan Dittberner <jan@dittberner.info>\n"
 "Language-Team: repoze developers <repoze-dev@lists.repoze.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -52,63 +52,62 @@ msgstr "Passwort und Passwortbestätigung stimmen nicht überein"
 msgid "Add ${subitem_title}"
 msgstr "${subitem_title} hinzufügen"
 
-#: deform/widget.py:1235
+#: deform/widget.py:1226
 msgid "Incomplete date"
 msgstr "Unvollständig"
-
-#: deform/templates/checked_password.pt:10
-msgid "Confirm Password"
-msgstr "Passwortbestätigung"
 
 #: deform/templates/checked_password.pt:5
 msgid "Password"
 msgstr "Passwort"
 
-#: deform/templates/dateparts.pt:19 deform/templates/readonly/dateparts.pt:6
-msgid "Day"
-msgstr "Tag"
-
-#: deform/templates/dateparts.pt:12 deform/templates/readonly/dateparts.pt:4
-msgid "Month"
-msgstr "Monat"
+#: deform/templates/checked_password.pt:10
+msgid "Confirm Password"
+msgstr "Passwortbestätigung"
 
 #: deform/templates/dateparts.pt:5 deform/templates/readonly/dateparts.pt:2
 msgid "Year"
 msgstr "Jahr"
 
-#: deform/templates/form.pt:21
-msgid "Errors have been highlighted below"
-msgstr "Die Fehler wurden weiter unten hervorgehoben"
+#: deform/templates/dateparts.pt:12 deform/templates/readonly/dateparts.pt:4
+msgid "Month"
+msgstr "Monat"
+
+#: deform/templates/dateparts.pt:19 deform/templates/readonly/dateparts.pt:6
+msgid "Day"
+msgstr "Tag"
 
 #: deform/templates/form.pt:19
 msgid "There was a problem with your submission"
 msgstr "Es gab ein Problem mit Ihren Angaben"
 
+#: deform/templates/form.pt:21
+msgid "Errors have been highlighted below"
+msgstr "Die Fehler wurden weiter unten hervorgehoben"
+
 #: deform/templates/mapping.pt:6
 msgid "There was a problem with this section"
 msgstr "Es gab ein Problem in diesem Bereich"
 
-#: deform/templates/mapping_item.pt:16 deform/templates/sequence_item.pt:14
-msgid "${msg}"
-msgstr "${msg}"
+#: deform/templates/sequence_item.pt:6
+msgid "Remove"
+msgstr ""
 
 #: deform/templates/readonly/checked_password.pt:2
 #: deform/templates/readonly/password.pt:2
-msgid "Password not displayed. "
+msgid "Password not displayed."
 msgstr "Passwort wird nicht angezeigt. "
 
 #: deform/templates/readonly/file_upload.pt:7
-#, fuzzy
 msgid "Read-only."
 msgstr "Nur lesen. "
-
-#: deform/templates/readonly/radio_choice.pt:5
-#: deform/templates/readonly/select.pt:4
-msgid "Not Selected"
-msgstr "Nicht ausgewählt"
 
 #: deform/templates/readonly/radio_choice.pt:4
 #: deform/templates/readonly/select.pt:3
 msgid "Selected"
 msgstr "Ausgewählt"
+
+#: deform/templates/readonly/radio_choice.pt:5
+#: deform/templates/readonly/select.pt:4
+msgid "Not Selected"
+msgstr "Nicht ausgewählt"
 

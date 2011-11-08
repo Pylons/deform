@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: deform 0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2011-08-10 09:33+0200\n"
-"PO-Revision-Date: 2011-06-04 00:12+0200\n"
+"POT-Creation-Date: 2011-11-08 17:56+0100\n"
+"PO-Revision-Date: 2011-11-08 15:55+0100\n"
 "Last-Translator: Wichert Akkerman <wichert@wiggy.net>\n"
 "Language-Team: nl <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -53,45 +53,41 @@ msgstr "Wachtwoordbevestiging komt niet overeen"
 msgid "Add ${subitem_title}"
 msgstr "Voeg ${subitem_title} toe"
 
-#: deform/widget.py:1235
+#: deform/widget.py:1226
 msgid "Incomplete date"
 msgstr "Vul de hele datum in"
-
-#: deform/templates/checked_password.pt:10
-msgid "Confirm Password"
-msgstr "Bevestig wachtwoord"
 
 #: deform/templates/checked_password.pt:5
 msgid "Password"
 msgstr "Wachtwoord"
 
-#: deform/templates/dateparts.pt:19 deform/templates/readonly/dateparts.pt:6
-msgid "Day"
-msgstr "Dag"
-
-#: deform/templates/dateparts.pt:12 deform/templates/readonly/dateparts.pt:4
-msgid "Month"
-msgstr "Maand"
+#: deform/templates/checked_password.pt:10
+msgid "Confirm Password"
+msgstr "Bevestig wachtwoord"
 
 #: deform/templates/dateparts.pt:5 deform/templates/readonly/dateparts.pt:2
 msgid "Year"
 msgstr "Jaar"
 
-#: deform/templates/form.pt:21
-msgid "Errors have been highlighted below"
-msgstr "Fouten zijn hier onder aangegeven"
+#: deform/templates/dateparts.pt:12 deform/templates/readonly/dateparts.pt:4
+msgid "Month"
+msgstr "Maand"
+
+#: deform/templates/dateparts.pt:19 deform/templates/readonly/dateparts.pt:6
+msgid "Day"
+msgstr "Dag"
 
 #: deform/templates/form.pt:19
 msgid "There was a problem with your submission"
 msgstr "Er zaten één of meer fouten in uw formulier"
 
+#: deform/templates/form.pt:21
+msgid "Errors have been highlighted below"
+msgstr "Fouten zijn hier onder aangegeven"
+
 #: deform/templates/mapping.pt:6
 msgid "There was a problem with this section"
 msgstr "Er zaten één of meer fouten in deze sectie"
-
-#: deform/templates/mapping_item.pt:16 deform/templates/sequence_item.pt:15
-msgid "${msg}"
-msgstr ""
 
 #: deform/templates/sequence_item.pt:6
 msgid "Remove"
@@ -99,20 +95,20 @@ msgstr "Verwijderen"
 
 #: deform/templates/readonly/checked_password.pt:2
 #: deform/templates/readonly/password.pt:2
-msgid "Password not displayed. "
+msgid "Password not displayed."
 msgstr "Wachtwoord wordt niet getoond"
 
 #: deform/templates/readonly/file_upload.pt:7
 msgid "Read-only."
 msgstr "Kan niet gewijzigd worden."
 
-#: deform/templates/readonly/radio_choice.pt:5
-#: deform/templates/readonly/select.pt:4
-msgid "Not Selected"
-msgstr "Niet geselecteerd"
-
 #: deform/templates/readonly/radio_choice.pt:4
 #: deform/templates/readonly/select.pt:3
 msgid "Selected"
 msgstr "Geselecteerd"
+
+#: deform/templates/readonly/radio_choice.pt:5
+#: deform/templates/readonly/select.pt:4
+msgid "Not Selected"
+msgstr "Niet geselecteerd"
 

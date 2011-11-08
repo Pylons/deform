@@ -1,4 +1,4 @@
-<li class="field${field.error and ' ' + field.widget.error_class}"
+<li class="field${field.error and ' ' + ((field.widget.error_class is not None) and field.widget.error_class or '')}"
     title="${field.description}"
     id="item-${field.oid}"
     tal:omit-tag="field.widget.hidden"
