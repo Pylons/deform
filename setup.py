@@ -59,6 +59,7 @@ setupkw = dict(
     test_suite="deform",
     )
 
+# to update catalogs, use babel and lingua !
 try:
     import babel
     babel = babel # PyFlakes
@@ -66,8 +67,8 @@ try:
     # this to setup() unconditionally, and babel isn't installed,
     # distutils warns pointlessly)
     setupkw['message_extractors'] = { ".": [
-        ("deform/**.py",     "chameleon_python", None ),
-        ("deform/**.pt",     "chameleon_xml", None ),
+        ("deform/**.py",     "lingua_python", None ),
+        ("**.pt", "lingua_xml", None ),
         ]}
 except ImportError:
     pass
