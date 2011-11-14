@@ -1,0 +1,119 @@
+# Translations template for deform.
+# Copyright (C) 2011 ORGANIZATION
+# This file is distributed under the same license as the deform project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: deform 0.9.2\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2011-08-10 09:33+0200\n"
+"PO-Revision-Date: 2011-11-04 21:26+0200\n"
+"Last-Translator: Marco Mariani <birbag@gmail.com>\n"
+"Language-Team: it <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 0.9.6\n"
+
+#: deform/schema.py:100
+msgid "${value} is not a dictionary"
+msgstr "${value} non è un dizionario"
+
+#: deform/schema.py:107
+msgid "${value} has no ${key} key"
+msgstr "${value} non ha la chiave ${key}"
+
+#: deform/schema.py:146
+msgid "${value} is not iterable"
+msgstr "${value} non è iterabile"
+
+#: deform/schema.py:150
+msgid "Required"
+msgstr "Obbligatorio"
+
+#: deform/widget.py:766
+msgid "Fields did not match"
+msgstr "I campi non corrispondono"
+
+#: deform/widget.py:767
+msgid "Value"
+msgstr "Valore"
+
+#: deform/widget.py:768
+msgid "Confirm Value"
+msgstr "Conferma Valore"
+
+#: deform/widget.py:816
+msgid "Password did not match confirm"
+msgstr "La password non corrisponde alla conferma"
+
+#: deform/widget.py:967
+msgid "Add ${subitem_title}"
+msgstr "Aggiungi ${subitem_title}"
+
+#: deform/widget.py:1235
+msgid "Incomplete date"
+msgstr "Data non completa"
+
+#: deform/templates/checked_password.pt:10
+msgid "Confirm Password"
+msgstr "Conferma Password"
+
+#: deform/templates/checked_password.pt:5
+msgid "Password"
+msgstr "Password"
+
+#: deform/templates/dateparts.pt:19 deform/templates/readonly/dateparts.pt:6
+msgid "Day"
+msgstr "Giorno"
+
+#: deform/templates/dateparts.pt:12 deform/templates/readonly/dateparts.pt:4
+msgid "Month"
+msgstr "Mese"
+
+#: deform/templates/dateparts.pt:5 deform/templates/readonly/dateparts.pt:2
+msgid "Year"
+msgstr "Anno"
+
+#: deform/templates/form.pt:21
+msgid "Errors have been highlighted below"
+msgstr "Gli errori sono stati evidenziati di seguito"
+
+#: deform/templates/form.pt:19
+msgid "There was a problem with your submission"
+msgstr "C'è stato un problema con l'invio dei dati"
+
+#: deform/templates/mapping.pt:6
+msgid "There was a problem with this section"
+msgstr "C'è stato un problema con questa sezione"
+
+#: deform/templates/mapping_item.pt:16 deform/templates/sequence_item.pt:15
+msgid "${msg}"
+msgstr ""
+
+#: deform/templates/sequence_item.pt:6
+msgid "Remove"
+msgstr "Rimuovi"
+
+#: deform/templates/readonly/checked_password.pt:2
+#: deform/templates/readonly/password.pt:2
+msgid "Password not displayed. "
+msgstr "Password non visualizzata."
+
+#: deform/templates/readonly/file_upload.pt:7
+msgid "Read-only."
+msgstr "Sola lettura."
+
+#: deform/templates/readonly/radio_choice.pt:5
+#: deform/templates/readonly/select.pt:4
+msgid "Not Selected"
+msgstr "Non selezionato"
+
+#: deform/templates/readonly/radio_choice.pt:4
+#: deform/templates/readonly/select.pt:3
+msgid "Selected"
+msgstr "Selezionato"
+
