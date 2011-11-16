@@ -32,6 +32,7 @@ requires = [
     'colander>=0.8', # Bindings-providing
     'peppercorn>=0.3', # rename operation type
     'translationstring',
+    'lingua', # if chameleon >= 2, for i18n message extraction
     ]
 
 if sys.version_info <(2,6,0):
@@ -66,8 +67,10 @@ try:
     # this to setup() unconditionally, and babel isn't installed,
     # distutils warns pointlessly)
     setupkw['message_extractors'] = { ".": [
-        ("deform/**.py",     "chameleon_python", None ),
-        ("deform/**.pt",     "chameleon_xml", None ),
+        #("deform/**.py",     "chameleon_python", None ), #chameleon < 2
+        #("deform/**.pt",     "chameleon_xml", None ),    #chameleon < 2
+        ("deform/**.py",     "lingua_python", None ),     #chameleon >= 2
+        ("deform/**.pt",     "lingua_xml", None ),        #chameleon >= 2
         ]}
 except ImportError:
     pass

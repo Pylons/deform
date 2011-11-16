@@ -1,4 +1,4 @@
-<span i18n:domain="deform" tal:omit-tag="">
+<span xmlns:i18n="http://xml.zope.org/namespaces/i18n" i18n:domain="deform" tal:omit-tag="">
 <input type="hidden" name="__start__" value="${field.name}:mapping"/>
 <ul class="inline">
   <li>
