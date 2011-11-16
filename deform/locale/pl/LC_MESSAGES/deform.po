@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: deform 0.7\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2011-08-03 12:46+0200\n"
+"POT-Creation-Date: 2011-11-16 01:32+0100\n"
 "PO-Revision-Date: 2010-11-11 11:15+0100\n"
 "Last-Translator: Marcin Lulek <info@webreactor.eu>\n"
 "Language-Team: pl <LL@li.org>\n"
@@ -54,63 +54,60 @@ msgstr "Hasło nie jest takie samo jak potwierdzenie"
 msgid "Add ${subitem_title}"
 msgstr ""
 
-#: deform/widget.py:1235
+#: deform/widget.py:1226
+#, fuzzy
 msgid "Incomplete date"
 msgstr "Niekompletne"
-
-#: deform/templates/checked_password.pt:10
-msgid "Confirm Password"
-msgstr ""
 
 #: deform/templates/checked_password.pt:5
 msgid "Password"
 msgstr ""
 
-#: deform/templates/dateparts.pt:19 deform/templates/readonly/dateparts.pt:6
-msgid "Day"
-msgstr ""
-
-#: deform/templates/dateparts.pt:12 deform/templates/readonly/dateparts.pt:4
-msgid "Month"
+#: deform/templates/checked_password.pt:10
+msgid "Confirm Password"
 msgstr ""
 
 #: deform/templates/dateparts.pt:5 deform/templates/readonly/dateparts.pt:2
 msgid "Year"
 msgstr ""
 
-#: deform/templates/form.pt:21
-msgid "Errors have been highlighted below"
-msgstr "Błędy zostały wykazane poniżej"
+#: deform/templates/dateparts.pt:12 deform/templates/readonly/dateparts.pt:4
+msgid "Month"
+msgstr ""
 
-#: deform/templates/form.pt:19
+#: deform/templates/dateparts.pt:19 deform/templates/readonly/dateparts.pt:6
+msgid "Day"
+msgstr ""
+
+#: deform/templates/form.pt:20
 msgid "There was a problem with your submission"
 msgstr "Wystąpił problem z nadesłanymi danymi"
+
+#: deform/templates/form.pt:22
+msgid "Errors have been highlighted below"
+msgstr "Błędy zostały wykazane poniżej"
 
 #: deform/templates/mapping.pt:6
 #, fuzzy
 msgid "There was a problem with this section"
 msgstr "Wystąpił problem z nadesłanymi danymi"
 
-#: deform/templates/mapping_item.pt:16 deform/templates/sequence_item.pt:14
-msgid "${msg}"
-msgstr ""
-
 #: deform/templates/readonly/checked_password.pt:2
 #: deform/templates/readonly/password.pt:2
-msgid "Password not displayed. "
+msgid "Password not displayed."
 msgstr ""
 
 #: deform/templates/readonly/file_upload.pt:7
 msgid "Read-only."
 msgstr ""
 
-#: deform/templates/readonly/radio_choice.pt:5
+#: deform/templates/readonly/radio_choice.pt:4
 #: deform/templates/readonly/select.pt:4
-msgid "Not Selected"
+msgid "Selected"
 msgstr ""
 
-#: deform/templates/readonly/radio_choice.pt:4
-#: deform/templates/readonly/select.pt:3
-msgid "Selected"
+#: deform/templates/readonly/radio_choice.pt:5
+#: deform/templates/readonly/select.pt:5
+msgid "Not Selected"
 msgstr ""
 
