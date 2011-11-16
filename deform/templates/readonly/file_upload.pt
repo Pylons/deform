@@ -1,4 +1,4 @@
-<div class="fileupload" i18n:domain="deform">
+<div class="fileupload" xmlns:i18n="http://xml.zope.org/namespaces/i18n" i18n:domain="deform">
 
   <div class="replaces" tal:condition="cstruct.get('uid')">
     <span tal:content="cstruct.get('filename')"/>

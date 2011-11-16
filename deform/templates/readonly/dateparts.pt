@@ -1,4 +1,4 @@
-<div i18n:domain="deform">
+<div xmlns:i18n="http://xml.zope.org/namespaces/i18n" i18n:domain="deform">
   <span i18n:translate="">Year</span>
   <span id="${field.oid}-year">${year}</span>
   <span i18n:translate="">Month</span>

@@ -1,4 +1,4 @@
-<ul i18n:domain="deform">
+<ul xmlns:i18n="http://xml.zope.org/namespaces/i18n" i18n:domain="deform">
 <li tal:repeat="(value, description) field.widget.values">
   <span>${description}</span>
   <em tal:condition="value == cstruct" i18n:translate="">Selected</em>

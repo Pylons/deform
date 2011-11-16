@@ -1,3 +1,4 @@
+<span xmlns:i18n="http://xml.zope.org/namespaces/i18n" i18n:domain="deform">
 <form
   id="${field.formid}"
   action="${field.action}"
@@ -82,3 +83,4 @@
 </script>
 
 </form>
+</span>

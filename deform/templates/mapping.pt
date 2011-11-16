@@ -1,4 +1,4 @@
-<fieldset class="deformMappingFieldset" i18n:domain="deform">
+<fieldset class="deformMappingFieldset" xmlns:i18n="http://xml.zope.org/namespaces/i18n" i18n:domain="deform">
   <!-- mapping -->
   <legend tal:condition="field.title">${field.title}</legend>
   <ul>
