@@ -279,7 +279,7 @@ field. To use this you **MUST** ensure that :term:`jQuery` and the
 :term:`JQuery UI` plugin are available to the page where the
 :class:`deform.widget.AutocompleteInputWidget` widget is rendered.
 
-For confenience a version of the :term:`JQuery UI` (which includes the
+For convenience a version of the :term:`JQuery UI` (which includes the
 ``autocomplete`` sublibrary) is included in the :mod:`deform` static
 directory. Additionally, the :term:`JQuery UI` styles for the
 selection box are also included in the :mod:`deform` ``static``
