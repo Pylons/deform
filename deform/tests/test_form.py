@@ -4,7 +4,7 @@ class TestForm(unittest.TestCase):
     def _makeOne(self, schema, **kw):
         from deform.form import Form
         return Form(schema, **kw)
-        
+
     def test_ctor_buttons_strings(self):
         from deform.widget import FormWidget
         schema = DummySchema()
@@ -49,6 +49,33 @@ class TestForm(unittest.TestCase):
         self.assertEqual(child.a, 'a')
         self.assertEqual(child.b, 'b')
 
+
+class TestIssues(unittest.TestCase):
+
+    def test_issue_54(self):
+        import deform
+        import colander
+        class LoginForm(colander.Schema):
+            username = colander.SchemaNode(colander.String())
+            password = colander.SchemaNode(colander.String(),
+                                           widget=deform.widget.PasswordWidget())
+        def validate_password(node, d):
+            raise colander.Invalid(node,
+                                   'Username does not match password')
+        loginform = LoginForm(validator=validate_password)
+        data = [('__formid__', 'deform'),
+                ('username', 'kai'),
+                ('password', '123')]
+        try:
+            deform.Form(loginform).validate(data)
+        except deform.ValidationFailure, e:
+            rendered = e.render()
+            self.assertTrue(
+                '<p class="errorMsg">'
+                'Username does not match password'
+                '</p>' in rendered
+            )
+
 class TestButton(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.form import Button
@@ -70,9 +97,9 @@ class TestButton(unittest.TestCase):
         button = self._makeOne(name="log\tin as a user")
         self.assertEquals(button.name, 'log_in_as_a_user')
         self.assertEquals(button.value, 'log_in_as_a_user')
-    
+
     def test_ctor(self):
-        button = self._makeOne(name='name', title='title', 
+        button = self._makeOne(name='name', title='title',
                                type='type', value='value', disabled=True)
         self.assertEqual(button.value, 'value')
         self.assertEqual(button.name, 'name')

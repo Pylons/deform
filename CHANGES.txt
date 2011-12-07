@@ -11,6 +11,8 @@ Next release
 
 - Update to lingua for translations, add french translation
 
+- fix issue #54.
+
 0.9.3 (2011-08-10)
 ------------------
 
