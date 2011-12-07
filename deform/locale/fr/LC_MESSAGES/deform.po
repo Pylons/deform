@@ -1,17 +1,17 @@
-# Spanish translations for deform.
-# Copyright (C) 2010 ORGANIZATION
+# French translations for deform.
+# Copyright (C) 2011 ORGANIZATION
 # This file is distributed under the same license as the deform project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: deform 0.0\n"
+"Project-Id-Version: deform 0.9.3\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2011-11-08 17:56+0100\n"
-"PO-Revision-Date: 2011-11-08 15:51+0100\n"
-"Last-Translator: Douglas Cerna <douglascerna@yahoo.com>\n"
-"Language-Team: es <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"PO-Revision-Date: 2011-11-08 15:54+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,96 +19,96 @@ msgstr ""
 
 #: deform/schema.py:100
 msgid "${value} is not a dictionary"
-msgstr "${value} no es un diccionario"
+msgstr "${value} n'est pas un dictionnaire"
 
 #: deform/schema.py:107
 msgid "${value} has no ${key} key"
-msgstr "${value} no tiene la clave ${key}"
+msgstr "${value} n'a pas de clé ${key}"
 
 #: deform/schema.py:146
 msgid "${value} is not iterable"
-msgstr "${value} no es iterable"
+msgstr "${value} n'est pas itérabble"
 
 #: deform/schema.py:150
 msgid "Required"
-msgstr "Requerido"
+msgstr "Requis"
 
 #: deform/widget.py:766
 msgid "Fields did not match"
-msgstr "Los campos no coinciden"
+msgstr "Les champs ne correspondent pas"
 
 #: deform/widget.py:767
 msgid "Value"
-msgstr "Valor"
+msgstr "Valeur"
 
 #: deform/widget.py:768
 msgid "Confirm Value"
-msgstr "Confirmar Valor"
+msgstr "Confirmer la valeur"
 
 #: deform/widget.py:816
 msgid "Password did not match confirm"
-msgstr "La contraseña no coincide con la confirmación"
+msgstr "Le mot de passe ne correspond pas à sa confirmation"
 
 #: deform/widget.py:967
 msgid "Add ${subitem_title}"
-msgstr ""
+msgstr "Ajouter ${subitem_title}"
 
 #: deform/widget.py:1226
 msgid "Incomplete date"
-msgstr "Incompleto"
+msgstr "Date incomplète"
 
 #: deform/templates/checked_password.pt:5
 msgid "Password"
-msgstr ""
+msgstr "Mot de passe"
 
 #: deform/templates/checked_password.pt:10
 msgid "Confirm Password"
-msgstr ""
+msgstr "Confirmer le mot de passe"
 
 #: deform/templates/dateparts.pt:5 deform/templates/readonly/dateparts.pt:2
 msgid "Year"
-msgstr ""
+msgstr "Année"
 
 #: deform/templates/dateparts.pt:12 deform/templates/readonly/dateparts.pt:4
 msgid "Month"
-msgstr ""
+msgstr "Mois"
 
 #: deform/templates/dateparts.pt:19 deform/templates/readonly/dateparts.pt:6
 msgid "Day"
-msgstr ""
+msgstr "Jour"
 
 #: deform/templates/form.pt:19
 msgid "There was a problem with your submission"
-msgstr "Hubo un problema con su envío"
+msgstr "Il y a eu un problème avec votre requete"
 
 #: deform/templates/form.pt:21
 msgid "Errors have been highlighted below"
-msgstr "Los errores se han resaltado abajo"
+msgstr "Les erreurs ont été mise en évidence ci dessous"
 
 #: deform/templates/mapping.pt:6
 msgid "There was a problem with this section"
-msgstr "Hubo un problema con su envío"
+msgstr "Il y a eu un problème avec cette section"
 
 #: deform/templates/sequence_item.pt:6
 msgid "Remove"
-msgstr ""
+msgstr "Enlever"
 
 #: deform/templates/readonly/checked_password.pt:2
 #: deform/templates/readonly/password.pt:2
 msgid "Password not displayed."
-msgstr ""
+msgstr "Password non affiché."
 
 #: deform/templates/readonly/file_upload.pt:7
 msgid "Read-only."
-msgstr ""
+msgstr "Lecture seule."
 
 #: deform/templates/readonly/radio_choice.pt:4
 #: deform/templates/readonly/select.pt:3
 msgid "Selected"
-msgstr ""
+msgstr "Selectionné"
 
 #: deform/templates/readonly/radio_choice.pt:5
 #: deform/templates/readonly/select.pt:4
 msgid "Not Selected"
-msgstr ""
+msgstr "Pas selectionné"
 
