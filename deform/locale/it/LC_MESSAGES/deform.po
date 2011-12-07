@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: deform 0.9.2\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2011-12-07 13:05+0100\n"
+"POT-Creation-Date: 2011-12-07 14:59+0100\n"
 "PO-Revision-Date: 2011-12-07 13:06+0100\n"
 "Last-Translator: Marco Mariani <birbag@gmail.com>\n"
 "Language-Team: it <LL@li.org>\n"
@@ -95,9 +95,6 @@ msgstr "Rimuovi"
 
 #: deform/templates/readonly/checked_password.pt:2
 #: deform/templates/readonly/password.pt:2
-msgid "Password not displayed. "
-msgstr "Password non visualizzata. " 
-
 msgid "Password not displayed."
 msgstr "Password non visualizzata."
 
@@ -115,6 +112,6 @@ msgstr "Selezionato"
 msgid "Not Selected"
 msgstr "Non selezionato"
 
-#~ msgid "${msg}"
-#~ msgstr ""
+#~ msgid "Password not displayed. "
+#~ msgstr "Password non visualizzata. "
 
