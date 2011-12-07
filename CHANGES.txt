@@ -13,6 +13,10 @@ Next release
 
 - fix issue #54.
 
+- Previously, all CheckedInputWidget and CheckedPasswordWidget fields had hardcoded input[name] attributes of 'value' and 'confirm'.
+  When deserializing a form, this caused colander.null to be passed to the widget deserialization function since neither submitted value matched the name of the field.
+  This change simply replaces 'value' with the name of the field and 'confirm' with the name of the field with '-confirm' appended.
+
 0.9.3 (2011-08-10)
 ------------------
 
@@ -392,7 +396,7 @@ Bug Fixes
 Features
 ~~~~~~~~
 
-- Add a ``deform.widget.RichTextWidget`` widget, which adds the 
+- Add a ``deform.widget.RichTextWidget`` widget, which adds the
   TinyMCE WYSIWIG javascript editor to a text area.
 
 - Add a ``deform.widget.AutocompleteInputWidget`` widget, which adds
