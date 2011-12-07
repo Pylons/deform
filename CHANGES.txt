@@ -17,6 +17,8 @@ Next release
   When deserializing a form, this caused colander.null to be passed to the widget deserialization function since neither submitted value matched the name of the field.
   This change simply replaces 'value' with the name of the field and 'confirm' with the name of the field with '-confirm' appended.
 
+- In select widget, add css_class to <select> rather than only <option>.
+
 0.9.3 (2011-08-10)
 ------------------
 
