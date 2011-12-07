@@ -10,6 +10,7 @@ $(document).ready(function(){
 
 
 
+var deform_loaded = false;
 var deform  = {
     callbacks: [],
 
@@ -22,10 +23,12 @@ var deform  = {
     },
 
     load: function() {
-        $(function() {
+      $(function() {
+        if (!deform_loaded) {
             deform.processCallbacks();
             deform.focusFirstInput();
-            });
+            deform_loaded = true;
+      }});
     },
             
 
