@@ -14,12 +14,14 @@
   </label>
   <span tal:replace="structure field.serialize(cstruct)"/>
 
-  <p tal:condition="field.error and not field.widget.hidden"
+
+  <p tal:condition="field.error and not field.widget.hidden and not field.typ.__class__.__name__=='Mapping'"
      tal:define="errstr 'error-%s' % field.oid"
      tal:repeat="msg field.error.messages()"
      tal:attributes="id repeat.msg.index==0 and errstr or
-                       ('%s-%s' % (errstr, repeat.msg.index))"
-     class="${field.widget.error_class}" i18n:translate="">${msg}</p>
+     ('%s-%s' % (errstr, repeat.msg.index))"
+     class="${field.widget.error_class}"
+     i18n:translate="">${msg}</p>
 
   <!-- /mapping_item -->
 </li>

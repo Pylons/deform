@@ -11,6 +11,10 @@ Next release
 
 - Update to lingua for translations, add french translation
 
+- fix multiple i18n issues.
+
+- Fix a bug where displaying error could lead on an error when you have imbricated Mapping objects
+
 - fix issue #54.
 
 - Previously, all CheckedInputWidget and CheckedPasswordWidget fields had hardcoded input[name] attributes of 'value' and 'confirm'.
