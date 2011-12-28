@@ -17,4 +17,7 @@
           });
       }
       );
+$().bind('form.pre.serialize', function(event, $form, options) {
+    tinyMCE.triggerSave();
+}); 
 </script>
