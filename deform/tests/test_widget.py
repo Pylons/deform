@@ -735,6 +735,14 @@ class TestCheckedInputWidget(unittest.TestCase):
         self.assertEqual(e.value, 'password')
         self.assertEqual(e.msg, 'Fields did not match')
 
+    def test_deserialize_confirm_hint_on_field(self):
+        widget = self._makeOne()
+        field = DummyField()
+        e = invalid_exc(widget.deserialize, field,
+                                    {'name':'password', 'name-confirm':'not'})
+        self.assertEqual(e.value, 'password')
+        self.assertEqual(getattr(field, 'name-confirm', ''), 'not')
+
     def test_deserialize_matching(self):
         widget = self._makeOne()
         field = DummyField()
