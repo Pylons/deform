@@ -8,6 +8,7 @@
           tinyMCE.init({
           mode : 'exact',
           elements: oid,
+          strict_loading_mode : true,
           height: '${field.widget.height}',
           width: '${field.widget.width}',
           skin : '${field.widget.skin}',
