@@ -10,6 +10,7 @@
           elements: oid,
           height: '${field.widget.height}',
           width: '${field.widget.width}',
+          skin : '${field.widget.skin}',
           theme : '${field.widget.theme}',
           theme_advanced_resizing : true,
           theme_advanced_toolbar_align : 'left',

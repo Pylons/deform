@@ -484,6 +484,11 @@ class RichTextWidget(TextInputWidget):
         The template name used to render the widget.  Default:
         ``richtext``.
 
+    skin 
+        The skin for the WYSIWYG editor. Normally only needed if you
+        plan to reuse a TinyMCE js from another framework that
+        defined a skin.
+
     theme
         The theme for the WYSIWYG editor, ``simple`` or ``advanced``.
         Defaults to ``simple``.
@@ -498,6 +503,7 @@ class RichTextWidget(TextInputWidget):
     readonly_template = 'readonly/richtextarea'
     strip = True
     template = 'richtext'
+    skin = ''
     theme = 'simple'
     requirements = ( ('tinymce', None), )
 
@@ -785,7 +791,7 @@ class CheckedInputWidget(Widget):
             return null
         value = pstruct.get(field.name) or ''
         confirm = pstruct.get('%s-confirm' % (field.name,)) or ''
-        field.confirm = confirm
+        setattr(field, '%s-confirm' % (field.name,), confirm)
         if (value or confirm) and (value != confirm):
             raise Invalid(field.schema, self.mismatch_message, value)
         if not value:
