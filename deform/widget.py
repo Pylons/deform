@@ -476,6 +476,11 @@ class RichTextWidget(TextInputWidget):
         The template name used to render the widget in read-only mode.
         Default: ``readonly/richtext``.
 
+    delayed_load
+        If you have many richtext fields, you can set this option to
+        ``true``, and the richtext editor will only be loaded when
+        clicking on the field (default ``false``)
+
     strip
         If true, during deserialization, strip the value of leading
         and trailing whitespace (default ``True``).
@@ -501,9 +506,10 @@ class RichTextWidget(TextInputWidget):
     height = 240
     width = 500
     readonly_template = 'readonly/richtext'
+    delayed_load = False
     strip = True
     template = 'richtext'
-    skin = ''
+    skin = 'default'
     theme = 'simple'
     requirements = ( ('tinymce', None), )
 

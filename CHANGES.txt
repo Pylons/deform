@@ -23,6 +23,8 @@ Next release
 
 - In select widget, add css_class to <select> rather than only <option>.
 
+- Allow RichText fields to load their editor only after clicking on them
+
 0.9.3 (2011-08-10)
 ------------------
 

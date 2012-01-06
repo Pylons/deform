@@ -24,8 +24,11 @@
                         theme_advanced_toolbar_align : 'left',
                         theme_advanced_toolbar_location : 'top'
                     });
-                    jqoid.unbind('click');
+                    jqoid_preload.unbind('click');
                 });
+                if(!${str(bool(field.widget.delayed_load)).lower()}){
+                    jqoid_preload.click();
+                }
         });
         $().bind('form.pre.serialize', function(event, $form, options) {
             tinyMCE.triggerSave();
