@@ -18,8 +18,8 @@
           theme_advanced_toolbar_location : 'top'
           });
       }
-      );
-$().bind('form.pre.serialize', function(event, $form, options) {
-    tinyMCE.triggerSave();
-}); 
+  );
+  jQuery().bind('form.pre.serialize', function(event, $form, options) {
+      tinyMCE.triggerSave();
+  }); 
 </script>
