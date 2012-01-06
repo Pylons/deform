@@ -503,6 +503,7 @@ class RichTextWidget(TextInputWidget):
     readonly_template = 'readonly/richtextarea'
     strip = True
     template = 'richtext'
+    strict_loading_mode = 'false'
     skin = ''
     theme = 'simple'
     requirements = ( ('tinymce', None), )
