@@ -655,6 +655,74 @@ class TestCheckboxChoiceWidget(unittest.TestCase):
         result = widget.deserialize(field, ['abc'])
         self.assertEqual(result, ('abc',))
 
+class TestSelectChoiceWidget(unittest.TestCase):
+    def _makeOne(self, **kw):
+        from deform.widget import SelectChoiceWidget
+        return SelectChoiceWidget(**kw)
+
+    def test_serialize_null(self):
+        from colander import null
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+        widget = self._makeOne()
+        widget.serialize(field, null)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], ())
+
+    def test_serialize_None(self):
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+        widget = self._makeOne()
+        widget.serialize(field, None)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], ())
+
+    def test_serialize_not_null(self):
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+        widget = self._makeOne()
+        cstruct = ('abc',)
+        widget.serialize(field, cstruct)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], cstruct)
+
+    def test_serialize_not_null_readonly(self):
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+        widget = self._makeOne()
+        cstruct = ('abc',)
+        widget.serialize(field, cstruct, readonly=True)
+        self.assertEqual(renderer.template, widget.readonly_template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], cstruct)
+
+    def test_deserialize_null(self):
+        from colander import null
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, null)
+        self.assertEqual(result, null)
+
+    def test_deserialize_single_string(self):
+        # If only one option was selected:  DAMN HTTP forms!
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, 'abc')
+        self.assertEqual(result, ('abc',))
+
+    def test_deserialize_other(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, ['abc'])
+        self.assertEqual(result, ('abc',))
+
 class TestCheckedInputWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import CheckedInputWidget

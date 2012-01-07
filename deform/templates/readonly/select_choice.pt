@@ -1,0 +1,5 @@
+<p tal:repeat="(value, description) field.widget.values" i18n:domain="deform">
+  <span>${description}</span>
+  <em tal:condition="value in cstruct" i18n:translate="">Selected</em>
+  <em tal:condition="value not in cstruct" i18n:translate="">Not Selected</em>
+</p>

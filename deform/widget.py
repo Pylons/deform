@@ -722,6 +722,59 @@ class CheckboxChoiceWidget(Widget):
             return (pstruct,)
         return tuple(pstruct)
 
+class SelectChoiceWidget(Widget):
+    """
+    Renders ``<select multiple="multiple">`` field based on a
+    predefined set of values.
+
+    **Attributes/Arguments**
+
+    values
+        A sequence of two-tuples (both values must be **string** or
+        **unicode** values) indicating allowable, displayed values,
+        e.g. ``( ('true', 'True'), ('false', 'False') )``.  The first
+        element in the tuple is the value that should be returned when
+        the form is posted.  The second is the display value.
+
+    size
+        The ``size`` attribute of the select input field (default:
+        ``None``).
+
+    null_value
+        The value which represents the null value.  When the null
+        value is encountered during serialization, the
+        :attr:`colander.null` sentinel is returned to the caller.
+        Default: ``''`` (the empty string).
+
+    template
+        The template name used to render the widget.  Default:
+        ``select_choice``.
+
+    readonly_template
+        The template name used to render the widget in read-only mode.
+        Default: ``readonly/select_choice``.
+        
+    """
+    template = 'select_choice'
+    readonly_template = 'readonly/select_choice'
+    values = ()
+    size = None
+
+    def serialize(self, field, cstruct, readonly=False):
+        if cstruct in (null, None):
+            cstruct = ()
+        template = readonly and self.readonly_template or self.template
+        return field.renderer(template, field=field, cstruct=cstruct)
+
+    def deserialize(self, field, pstruct):
+        if pstruct is null:
+            return null
+        if isinstance(pstruct, basestring):
+            return (pstruct,)
+        return tuple(pstruct)
+
+
+
 class CheckedInputWidget(Widget):
     """
     Renders two text input fields: 'value' and 'confirm'.
