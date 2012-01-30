@@ -616,6 +616,9 @@ class SelectWidget(Widget):
         The ``size`` attribute of the select input field (default:
         ``None``).
 
+    multiple
+        Enable multiple on the select widget ( default: ``False`` )
+
     null_value
         The value which represents the null value.  When the null
         value is encountered during serialization, the
@@ -636,6 +639,7 @@ class SelectWidget(Widget):
     null_value = ''
     values = ()
     size = None
+    multiple = False
 
     def serialize(self, field, cstruct, readonly=False):
         if cstruct in (null, None):
