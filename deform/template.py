@@ -103,7 +103,7 @@ class ZPTRendererFactory(object):
        an interpolated translation.  Default: ``None`` (no translation
        performed).
     """
-    def __init__(self, search_path, auto_reload=True, debug=True,
+    def __init__(self, search_path, auto_reload=True, debug=False,
                  encoding='utf-8', translator=None):
         self.translate = translator
         loader = ZPTTemplateLoader(search_path=search_path,
