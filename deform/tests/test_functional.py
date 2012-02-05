@@ -33,7 +33,7 @@ class TestFunctional(unittest.TestCase):
         return Form(schema, formid='myform')
 
     def _soupify(self, html):
-        from BeautifulSoup import BeautifulSoup
+        from bs4 import BeautifulSoup
         return BeautifulSoup(html)
 
     def test_render_empty(self):
@@ -127,8 +127,9 @@ class TestFunctional(unittest.TestCase):
         form = self._makeForm(schema)
         try:
             form.validate([])
-        except ValidationFailure, ve:
-            e = ve.error
+        except ValidationFailure as vf:
+            e = vf.error
+            ve = vf
         self.assertEqual(form.error, e)
         self.assertEqual(form.children[0].error, e.children[0])
         self.assertEqual(form.children[1].error, e.children[1])

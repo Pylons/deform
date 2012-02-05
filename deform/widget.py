@@ -1,13 +1,38 @@
 import csv
 import random
 import string
-import StringIO
+try:
+    string.uppercase
+except AttributeError:
+    string.uppercase = string.ascii_uppercase
+
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 import urllib
+try:
+    urllib.quote
+except AttributeError:
+    import urllib.parse as urllib
 
 from colander import Invalid
 from colander import null
 
 from deform.i18n import _
+
+try:
+    unicode
+except NameError:
+    # Python 3
+    basestring = unicode = str
+
+try:
+    next
+except NameError:
+    # for Python 2.4 & 2.5
+    def next(gen):
+        return gen.next()
 
 try:
     import json 
@@ -880,7 +905,7 @@ class MappingWidget(Widget):
                             
             try:
                 result[name] = subfield.deserialize(subval)
-            except Invalid, e:
+            except Invalid as e:
                 result[name] = e.value
                 if error is None:
                     error = Invalid(field.schema, value=result)
@@ -1051,7 +1076,7 @@ class SequenceWidget(Widget):
             subfield = item_field.clone()
             try:
                 subval = subfield.deserialize(substruct)
-            except Invalid, e:
+            except Invalid as e:
                 subval = e.value
                 if error is None:
                     error = Invalid(field.schema, value=result)
@@ -1275,7 +1300,7 @@ class TextAreaCSVWidget(Widget):
             cstruct = []
         textrows = getattr(field, 'unparseable', None)
         if textrows is None:
-            outfile = StringIO.StringIO()
+            outfile = StringIO()
             writer = csv.writer(outfile)
             writer.writerows(cstruct)
             textrows = outfile.getvalue()
@@ -1291,10 +1316,10 @@ class TextAreaCSVWidget(Widget):
         if not pstruct.strip():
             return null
         try:
-            infile = StringIO.StringIO(pstruct)
+            infile = StringIO(pstruct)
             reader = csv.reader(infile)
             rows = list(reader)
-        except Exception, e:
+        except Exception as e:
             field.unparseable = pstruct
             raise Invalid(field.schema, str(e))
         return rows
@@ -1340,7 +1365,7 @@ class TextInputCSVWidget(Widget):
             cstruct = ''
         textrow = getattr(field, 'unparseable', None)
         if textrow is None:
-            outfile = StringIO.StringIO()
+            outfile = StringIO()
             writer = csv.writer(outfile)
             writer.writerow(cstruct)
             textrow = outfile.getvalue().strip()
@@ -1356,10 +1381,11 @@ class TextInputCSVWidget(Widget):
         if not pstruct.strip():
             return null
         try:
-            infile = StringIO.StringIO(pstruct)
+            infile = StringIO(pstruct)
             reader = csv.reader(infile)
-            row = reader.next()
-        except Exception, e:
+            #row = reader.next()
+            row = next(reader)
+        except Exception as e:
             field.unparseable = pstruct
             raise Invalid(field.schema, str(e))
         return row

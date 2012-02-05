@@ -54,7 +54,7 @@ setupkw = dict(
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
-    tests_require=requires + ['BeautifulSoup'],
+    tests_require=requires + ['beautifulsoup4'],
     install_requires=requires,
     test_suite="deform",
     )

@@ -68,7 +68,7 @@ class TestIssues(unittest.TestCase):
                 ('password', '123')]
         try:
             deform.Form(loginform).validate(data)
-        except deform.ValidationFailure, e:
+        except deform.ValidationFailure as e:
             rendered = e.render()
             self.assertTrue(
                 '<p class="errorMsg">'

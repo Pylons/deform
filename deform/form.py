@@ -3,6 +3,13 @@ import re
 from deform import widget
 from deform import field
 
+try:
+    unicode
+except NameError:
+    # Python 3
+    basestring = unicode = str
+
+
 class Form(field.Field):
     """
     Field representing an entire form.
