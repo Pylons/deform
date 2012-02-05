@@ -19,7 +19,7 @@ class TestSet(unittest.TestCase):
         typ = self._makeOne()
         provided = []
         result = typ.serialize(node, provided)
-        self.failUnless(result is provided)
+        self.assertTrue(result is provided)
 
     def test_serialize_null(self):
         from colander import null

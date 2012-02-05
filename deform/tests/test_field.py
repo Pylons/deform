@@ -113,7 +113,7 @@ class TestField(unittest.TestCase):
         field = Field()
         try:
             cls.set_zpt_renderer(template_dir)
-            self.failUnless(cls.default_renderer('hidden', field=field,
+            self.assertTrue(cls.default_renderer('hidden', field=field,
                                                  cstruct=None))
         finally:
             cls.set_default_renderer(old)
@@ -283,7 +283,7 @@ class TestField(unittest.TestCase):
         field.children = [child]
         field.foo = 1
         result = field.clone()
-        self.failIf(result is field)
+        self.assertFalse(result is field)
         self.assertEqual(result.order, 1)
         self.assertEqual(result.oid, 'deformField1')
         self.assertEqual(result.renderer, 'abc')
@@ -427,8 +427,8 @@ class TestField(unittest.TestCase):
         schema = DummySchema()
         field = self._makeOne(schema)
         r = repr(field)
-        self.failUnless(r.startswith('<deform.field.Field object at '))
-        self.failUnless(r.endswith("(schemanode 'name')>"))
+        self.assertTrue(r.startswith('<deform.field.Field object at '))
+        self.assertTrue(r.endswith("(schemanode 'name')>"))
 
 class DummyField(object):
     oid = 'oid'

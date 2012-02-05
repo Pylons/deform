@@ -1560,7 +1560,7 @@ class TestResourceRegistry(unittest.TestCase):
     def test_dont_use_defaults(self):
         from deform.widget import default_resources
         reg = self._makeOne(use_defaults=False)
-        self.failIfEqual(reg.registry, default_resources)
+        self.assertNotEqual(reg.registry, default_resources)
 
     def test_set_js_resources(self):
         reg = self._makeOne()

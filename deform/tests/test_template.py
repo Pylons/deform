@@ -22,7 +22,7 @@ class TestZPTTemplateLoader(unittest.TestCase):
         fixtures = os.path.join(os.path.dirname(__file__), 'fixtures')
         loader = self._makeOne(search_path=[fixtures])
         result = loader.load('test.pt')
-        self.failUnless(result)
+        self.assertTrue(result)
 
     def test_load_with_translate(self):
         import os
@@ -52,7 +52,7 @@ class TestZPTTemplateLoader(unittest.TestCase):
         loader = self._makeOne(search_path=[fixtures])
         self.assertRaises(TemplateError, loader.load, 'doesnt')
         if hasattr(loader, 'notexists'): # pragma: no cover (chameleon 1)
-            self.failUnless(
+            self.assertTrue(
                 os.path.join(fixtures, 'doesnt') in loader.notexists)
 
     def test_load_negative_cache(self):
@@ -63,7 +63,7 @@ class TestZPTTemplateLoader(unittest.TestCase):
         if hasattr(loader, 'notexists'): # pragma: no cover (chameleon 1)
             loader.notexists[path] = True
             result = loader.load('test.pt')
-            self.failUnless(result)
+            self.assertTrue(result)
 
     def test_load_negative_cache2(self):
         import os
