@@ -1442,7 +1442,7 @@ class ResourceRegistry(object):
                 sources = versioned.get(thing)
                 if sources is None:
                     continue
-                if not hasattr(sources, '__iter__'):
+                if isinstance(sources, string_types):
                     sources = (sources,)
                 for source in sources:
                     if not source in result[thing]:
