@@ -4,6 +4,10 @@ Changes
 Next release
 ------------
 
+- No longer Python 2.5 compatible.  Python 2.6+ is required.
+
+- Python 3.2 compatible.
+
 - Translate title attribute for remove button in sequence fields.
 
 - Do not output empty error messages for sequence items. After translation
@@ -13,13 +17,17 @@ Next release
 
 - fix multiple i18n issues.
 
-- Fix a bug where displaying error could lead on an error when you have imbricated Mapping objects
+- Fix a bug where displaying error could lead on an error when you have
+  imbricated Mapping objects
 
 - fix issue #54.
 
-- Previously, all CheckedInputWidget and CheckedPasswordWidget fields had hardcoded input[name] attributes of 'value' and 'confirm'.
-  When deserializing a form, this caused colander.null to be passed to the widget deserialization function since neither submitted value matched the name of the field.
-  This change simply replaces 'value' with the name of the field and 'confirm' with the name of the field with '-confirm' appended.
+- Previously, all CheckedInputWidget and CheckedPasswordWidget fields had
+  hardcoded input[name] attributes of 'value' and 'confirm'.  When
+  deserializing a form, this caused colander.null to be passed to the widget
+  deserialization function since neither submitted value matched the name of
+  the field.  This change simply replaces 'value' with the name of the field
+  and 'confirm' with the name of the field with '-confirm' appended.
 
 - In select widget, add css_class to <select> rather than only <option>.
 
