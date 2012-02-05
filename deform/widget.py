@@ -1,13 +1,21 @@
 import csv
 import random
-import string
-import StringIO
-import urllib
 
 from colander import Invalid
 from colander import null
 
 from deform.i18n import _
+
+from deform.compat import (
+    string_types,
+    text_type,
+    next,
+    StringIO,
+    string,
+    url_quote,
+)
+
+
 
 try:
     import json 
@@ -304,7 +312,7 @@ class AutocompleteInputWidget(Widget):
         if not self.delay:
             # set default delay if None
             options['delay'] = (isinstance(self.values,
-                                          basestring) and 400) or 10
+                                          string_types) and 400) or 10
         options['minLength'] = self.min_length
         options = json.dumps(options)
         values = json.dumps(self.values)
@@ -718,7 +726,7 @@ class CheckboxChoiceWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null
-        if isinstance(pstruct, basestring):
+        if isinstance(pstruct, string_types):
             return (pstruct,)
         return tuple(pstruct)
 
@@ -880,7 +888,7 @@ class MappingWidget(Widget):
                             
             try:
                 result[name] = subfield.deserialize(subval)
-            except Invalid, e:
+            except Invalid as e:
                 result[name] = e.value
                 if error is None:
                     error = Invalid(field.schema, value=result)
@@ -988,9 +996,9 @@ class SequenceWidget(Widget):
         item_field = field.children[0].clone()
         proto = field.renderer(self.item_template, field=item_field,
                                cstruct=null, parent=field)
-        if isinstance(proto, unicode):
+        if isinstance(proto, string_types):
             proto = proto.encode('utf-8')
-        proto = urllib.quote(proto)
+        proto = url_quote(proto)
         return proto
 
     def serialize(self, field, cstruct, readonly=False):
@@ -1051,7 +1059,7 @@ class SequenceWidget(Widget):
             subfield = item_field.clone()
             try:
                 subval = subfield.deserialize(substruct)
-            except Invalid, e:
+            except Invalid as e:
                 subval = e.value
                 if error is None:
                     error = Invalid(field.schema, value=result)
@@ -1275,7 +1283,7 @@ class TextAreaCSVWidget(Widget):
             cstruct = []
         textrows = getattr(field, 'unparseable', None)
         if textrows is None:
-            outfile = StringIO.StringIO()
+            outfile = StringIO()
             writer = csv.writer(outfile)
             writer.writerows(cstruct)
             textrows = outfile.getvalue()
@@ -1291,10 +1299,10 @@ class TextAreaCSVWidget(Widget):
         if not pstruct.strip():
             return null
         try:
-            infile = StringIO.StringIO(pstruct)
+            infile = StringIO(pstruct)
             reader = csv.reader(infile)
             rows = list(reader)
-        except Exception, e:
+        except Exception as e:
             field.unparseable = pstruct
             raise Invalid(field.schema, str(e))
         return rows
@@ -1340,7 +1348,7 @@ class TextInputCSVWidget(Widget):
             cstruct = ''
         textrow = getattr(field, 'unparseable', None)
         if textrow is None:
-            outfile = StringIO.StringIO()
+            outfile = StringIO()
             writer = csv.writer(outfile)
             writer.writerow(cstruct)
             textrow = outfile.getvalue().strip()
@@ -1356,10 +1364,11 @@ class TextInputCSVWidget(Widget):
         if not pstruct.strip():
             return null
         try:
-            infile = StringIO.StringIO(pstruct)
+            infile = StringIO(pstruct)
             reader = csv.reader(infile)
-            row = reader.next()
-        except Exception, e:
+            #row = reader.next()
+            row = next(reader)
+        except Exception as e:
             field.unparseable = pstruct
             raise Invalid(field.schema, str(e))
         return row
@@ -1433,7 +1442,7 @@ class ResourceRegistry(object):
                 sources = versioned.get(thing)
                 if sources is None:
                     continue
-                if not hasattr(sources, '__iter__'):
+                if isinstance(sources, string_types):
                     sources = (sources,)
                 for source in sources:
                     if not source in result[thing]:

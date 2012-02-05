@@ -8,6 +8,10 @@ from deform import template
 from deform import widget
 from deform import schema
 
+from deform.compat import (
+    next,
+)
+
 class Field(object):
     """ Represents an individual form field (a visible object in a
     form rendering).
@@ -115,7 +119,7 @@ class Field(object):
     def __init__(self, schema, renderer=None, counter=None,
                  resource_registry=None, **kw):
         self.counter = counter or itertools.count()
-        self.order = self.counter.next()
+        self.order = next(self.counter)
         self.oid = 'deformField%s' % self.order
         self.schema = schema
         self.typ = self.schema.typ # required by Invalid exception
@@ -215,7 +219,7 @@ class Field(object):
         than the last renderered field of this set."""
         cloned = self.__class__(self.schema)
         cloned.__dict__.update(self.__dict__)
-        cloned.order = cloned.counter.next()
+        cloned.order = next(cloned.counter)
         cloned.oid = 'deformField%s' % cloned.order
         cloned.children = [ field.clone() for field in self.children ]
         return cloned
@@ -500,23 +504,25 @@ class Field(object):
               return {'form':form.render()} # the form just needs rendering
         """
         pstruct = peppercorn.parse(controls)
-        e = None
+        exc = None
 
         try:
             cstruct = self.deserialize(pstruct)
-        except colander.Invalid, e:
+        except colander.Invalid as e:
             # fill in errors raised by widgets
             self.widget.handle_error(self, e)
             cstruct = e.value
+            exc = e
 
         try:
             appstruct = self.schema.deserialize(cstruct)
-        except colander.Invalid, e:
+        except colander.Invalid as e:
             # fill in errors raised by schema nodes
             self.widget.handle_error(self, e)
+            exc = e
 
-        if e:
-            raise exception.ValidationFailure(self, cstruct, e)
+        if exc:
+            raise exception.ValidationFailure(self, cstruct, exc)
 
         return appstruct
 

@@ -3,6 +3,12 @@ import re
 from deform import widget
 from deform import field
 
+from deform.compat import (
+    string_types,
+    text_type,
+)
+
+
 class Form(field.Field):
     """
     Field representing an entire form.
@@ -93,7 +99,7 @@ class Form(field.Field):
         field.Field.__init__(self, schema, **kw)
         _buttons = []
         for button in buttons:
-            if isinstance(button, basestring):
+            if isinstance(button, string_types):
                 button = Button(button)
             _buttons.append(button)
         self.action = action
@@ -104,7 +110,7 @@ class Form(field.Field):
         self.ajax_options = Raw(ajax_options.strip())
         self.widget = widget.FormWidget()
 
-class Raw(unicode):
+class Raw(text_type):
     def __html__(self):
         return self
 

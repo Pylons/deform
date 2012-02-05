@@ -4,7 +4,7 @@ def invalid_exc(func, *arg, **kw):
     from colander import Invalid
     try:
         func(*arg, **kw)
-    except Invalid, e:
+    except Invalid as e:
         return e
     else:
         raise AssertionError('Invalid not raised') # pragma: no cover
@@ -31,7 +31,8 @@ class TestSet(unittest.TestCase):
     def test_deserialize_no_iter(self):
         node = DummySchemaNode()
         typ = self._makeOne()
-        e = invalid_exc(typ.deserialize, node, 'str')
+        #e = invalid_exc(typ.deserialize, node, 'str')
+        e = invalid_exc(typ.deserialize, node, 1)
         self.assertEqual(e.msg, '${value} is not iterable')
 
     def test_deserialize_null(self):

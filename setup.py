@@ -45,6 +45,12 @@ setupkw = dict(
     classifiers=[
         "Intended Audience :: Developers",
         "Programming Language :: Python",
+        "Programming Language :: Python :: 2.6",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.2",
+        "Programming Language :: Python :: Implementation :: CPython",
+        "Programming Language :: Python :: Implementation :: PyPy",
         ],
     keywords='web forms form generation schema validation',
     author="Chris McDonough, Agendaless Consulting",
@@ -54,7 +60,7 @@ setupkw = dict(
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
-    tests_require=requires + ['BeautifulSoup'],
+    tests_require=requires + ['beautifulsoup4'],
     install_requires=requires,
     test_suite="deform",
     )

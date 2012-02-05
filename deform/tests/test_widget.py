@@ -1,10 +1,15 @@
 import unittest
 
+from deform.compat import (
+    string_types,
+    text_type,
+)
+
 def invalid_exc(func, *arg, **kw):
     from colander import Invalid
     try:
         func(*arg, **kw)
-    except Invalid, e:
+    except Invalid as e:
         return e
     else:
         raise AssertionError('Invalid not raised') # pragma: no cover
@@ -871,7 +876,7 @@ class TestFileUploadWidget(unittest.TestCase):
         tmpstore = DummyTmpStore()
         widget = self._makeOne(tmpstore)
         result = widget.deserialize(field, {'upload':upload})
-        uid = tmpstore.keys()[0]
+        uid = list(tmpstore.keys())[0]
         self.assertEqual(result['uid'], uid)
         self.assertEqual(result['fp'], 'fp')
         self.assertEqual(result['filename'], 'filename')
@@ -1073,8 +1078,8 @@ class TestSequenceWidget(unittest.TestCase):
         return SequenceWidget(**kw)
 
     def test_prototype_unicode(self):
-        import urllib
-        renderer = DummyRenderer(u'abc')
+        from deform.compat import url_unquote
+        renderer = DummyRenderer(text_type('abc'))
         schema = DummySchema()
         field = DummyField(schema, renderer)
         widget = self._makeOne()
@@ -1082,11 +1087,11 @@ class TestSequenceWidget(unittest.TestCase):
         field.children=[protofield]
         result = widget.prototype(field)
         self.assertEqual(type(result), str)
-        self.assertEqual(urllib.unquote(result), 'abc')
+        self.assertEqual(url_unquote(result), 'abc')
         self.assertEqual(protofield.cloned, True)
 
     def test_prototype_str(self):
-        import urllib
+        from deform.compat import url_unquote
         renderer = DummyRenderer('abc')
         schema = DummySchema()
         field = DummyField(schema, renderer)
@@ -1095,7 +1100,7 @@ class TestSequenceWidget(unittest.TestCase):
         field.children=[protofield]
         result = widget.prototype(field)
         self.assertEqual(type(result), str)
-        self.assertEqual(urllib.unquote(result), 'abc')
+        self.assertEqual(url_unquote(result), 'abc')
         self.assertEqual(protofield.cloned, True)
 
     def test_serialize_null(self):
@@ -1266,8 +1271,9 @@ class TestSequenceWidget(unittest.TestCase):
         field.sequence_fields = [sequence_field]
         result = widget.serialize(field, ['123'])
         self.assertEqual(result, 'abc')
-        self.assertEqual(len(renderer.kw['subfields']), 1)
-        self.assertEqual(renderer.kw['subfields'][0], ('123', sequence_field))
+        subfields = list(renderer.kw['subfields'])
+        self.assertEqual(len(subfields), 1)
+        self.assertEqual(subfields[0], ('123', sequence_field))
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], ['123'])
         self.assertEqual(renderer.template, widget.template)
@@ -1583,9 +1589,9 @@ class TestResourceRegistry(unittest.TestCase):
 
     def test___call___leaf_isnt_iterable(self):
         reg = self._makeOne()
-        reg.registry = {'abc':{'123':{'js':'1', 'css':'2'}}}
+        reg.registry = {'abc':{'123':{'js':'123', 'css':'2'}}}
         result = reg([('abc', '123')])
-        self.assertEqual(result, {'js':['1'], 'css':['2']})
+        self.assertEqual(result, {'js':['123'], 'css':['2']})
 
 class DummyRenderer(object):
     def __init__(self, result=''):

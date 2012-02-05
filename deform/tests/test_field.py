@@ -4,7 +4,7 @@ def validation_failure_exc(func, *arg, **kw):
     from deform.exception import ValidationFailure
     try:
         func(*arg, **kw)
-    except ValidationFailure, e:
+    except ValidationFailure as e:
         return e
     else:
         raise AssertionError('Form error not raised') # pragma: no cover
