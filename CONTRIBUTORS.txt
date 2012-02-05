@@ -108,3 +108,4 @@ Contributors
 - Wichert Akkerman , 2011/05/19
 - Mathieu Le Marec - Pasquet , 2011/11/08
 - Richard Mitchell, 2011/08/11
+- Atsushi Odagiri, 2012/02/05
