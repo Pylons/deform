@@ -1,7 +1,6 @@
 import unittest
 
 from deform.compat import (
-    string_types,
     text_type,
 )
 
@@ -154,10 +153,7 @@ class TestAutocompleteInputWidget(unittest.TestCase):
         self.assertEqual(renderer.kw['cstruct'], '')
 
     def test_serialize_url(self):
-        try:
-            import json
-        except ImportError: #PRAGMA: nocover
-            import simplejson as json
+        import json
         widget = self._makeOne()
         url='http://example.com'
         widget.values = url
@@ -175,10 +171,7 @@ class TestAutocompleteInputWidget(unittest.TestCase):
                          json.dumps(url))
 
     def test_serialize_iterable(self):
-        try:
-            import json
-        except ImportError: #PRAGMA: nocover
-            import simplejson as json
+        import json
         widget = self._makeOne()
         vals = [1,2,3,4]
         widget.values = vals
