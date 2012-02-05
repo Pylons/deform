@@ -13,7 +13,6 @@
 ##############################################################################
 
 import os
-import sys
 
 from setuptools import setup
 from setuptools import find_packages
@@ -33,9 +32,6 @@ requires = [
     'peppercorn>=0.3', # rename operation type
     'translationstring',
     ]
-
-if sys.version_info <(2,6,0):
-    requires.append('simplejson')
 
 setupkw = dict(
     name='deform',
