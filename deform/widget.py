@@ -1,5 +1,6 @@
 import csv
 import random
+import json 
 
 from colander import Invalid
 from colander import null
@@ -8,20 +9,12 @@ from deform.i18n import _
 
 from deform.compat import (
     string_types,
-    text_type,
     next,
     StringIO,
     string,
     url_quote,
-)
-
-
-
-try:
-    import json 
-except ImportError: # PRAGMA: no cover
-    import simplejson as json 
-
+    uppercase,
+    )
 
 class Widget(object):
     """
@@ -1125,7 +1118,7 @@ class FileUploadWidget(Widget):
 
     def random_id(self):
         return ''.join(
-            [random.choice(string.uppercase+string.digits) for i in range(10)])
+            [random.choice(uppercase+string.digits) for i in range(10)])
 
     def serialize(self, field, cstruct, readonly=False):
         if cstruct in (null, None):

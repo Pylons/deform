@@ -1,9 +1,9 @@
 import sys
 import string
 try:
-    string.uppercase
+    uppercase = string.uppercase
 except AttributeError:
-    string.uppercase = string.ascii_uppercase
+    uppercase = string.ascii_uppercase
 
 PY3 = sys.version_info[0] == 3
 
