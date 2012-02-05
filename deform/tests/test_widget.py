@@ -1,10 +1,9 @@
 import unittest
 
-try:
-    unicode
-except NameError:
-    # Python 3
-    basestring = unicode = str
+from deform.compat import (
+    string_types,
+    text_type,
+)
 
 def invalid_exc(func, *arg, **kw):
     from colander import Invalid
@@ -1079,12 +1078,8 @@ class TestSequenceWidget(unittest.TestCase):
         return SequenceWidget(**kw)
 
     def test_prototype_unicode(self):
-        import urllib
-        try:
-            urllib.unquote
-        except AttributeError:
-            import urllib.parse as urllib
-        renderer = DummyRenderer(unicode('abc'))
+        from deform.compat import url_unquote
+        renderer = DummyRenderer(text_type('abc'))
         schema = DummySchema()
         field = DummyField(schema, renderer)
         widget = self._makeOne()
@@ -1092,15 +1087,11 @@ class TestSequenceWidget(unittest.TestCase):
         field.children=[protofield]
         result = widget.prototype(field)
         self.assertEqual(type(result), str)
-        self.assertEqual(urllib.unquote(result), 'abc')
+        self.assertEqual(url_unquote(result), 'abc')
         self.assertEqual(protofield.cloned, True)
 
     def test_prototype_str(self):
-        import urllib
-        try:
-            urllib.unquote
-        except AttributeError:
-            import urllib.parse as urllib
+        from deform.compat import url_unquote
         renderer = DummyRenderer('abc')
         schema = DummySchema()
         field = DummyField(schema, renderer)
@@ -1109,7 +1100,7 @@ class TestSequenceWidget(unittest.TestCase):
         field.children=[protofield]
         result = widget.prototype(field)
         self.assertEqual(type(result), str)
-        self.assertEqual(urllib.unquote(result), 'abc')
+        self.assertEqual(url_unquote(result), 'abc')
         self.assertEqual(protofield.cloned, True)
 
     def test_serialize_null(self):

@@ -1,38 +1,21 @@
 import csv
 import random
-import string
-try:
-    string.uppercase
-except AttributeError:
-    string.uppercase = string.ascii_uppercase
-
-try:
-    from StringIO import StringIO
-except ImportError:
-    from io import StringIO
-import urllib
-try:
-    urllib.quote
-except AttributeError:
-    import urllib.parse as urllib
 
 from colander import Invalid
 from colander import null
 
 from deform.i18n import _
 
-try:
-    unicode
-except NameError:
-    # Python 3
-    basestring = unicode = str
+from deform.compat import (
+    string_types,
+    text_type,
+    next,
+    StringIO,
+    string,
+    url_quote,
+)
 
-try:
-    next
-except NameError:
-    # for Python 2.4 & 2.5
-    def next(gen):
-        return gen.next()
+
 
 try:
     import json 
@@ -329,7 +312,7 @@ class AutocompleteInputWidget(Widget):
         if not self.delay:
             # set default delay if None
             options['delay'] = (isinstance(self.values,
-                                          basestring) and 400) or 10
+                                          string_types) and 400) or 10
         options['minLength'] = self.min_length
         options = json.dumps(options)
         values = json.dumps(self.values)
@@ -743,7 +726,7 @@ class CheckboxChoiceWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null
-        if isinstance(pstruct, basestring):
+        if isinstance(pstruct, string_types):
             return (pstruct,)
         return tuple(pstruct)
 
@@ -1013,9 +996,9 @@ class SequenceWidget(Widget):
         item_field = field.children[0].clone()
         proto = field.renderer(self.item_template, field=item_field,
                                cstruct=null, parent=field)
-        if isinstance(proto, unicode):
+        if isinstance(proto, string_types):
             proto = proto.encode('utf-8')
-        proto = urllib.quote(proto)
+        proto = url_quote(proto)
         return proto
 
     def serialize(self, field, cstruct, readonly=False):

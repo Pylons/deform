@@ -1,9 +1,8 @@
 import unittest
-try:
-    unicode
-except NameError:
-    # Python 3
-    basestring = unicode = str
+from deform.compat import (
+    string_types,
+    text_type,
+)
 
 class TestZPTTemplateLoader(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -86,7 +85,7 @@ class TestZPTRendererFactory(unittest.TestCase):
         default_dir = resource_filename('deform', 'tests/fixtures/')
         renderer = self._makeOne((default_dir,))
         result = renderer('test')
-        self.assertEqual(result.strip(), unicode('<div>Test</div>'))
+        self.assertEqual(result.strip(), text_type('<div>Test</div>'))
 
     def test_it(self):
         import os
@@ -117,7 +116,7 @@ class Test_default_renderer(unittest.TestCase):
         result = re.sub(' />', '/>', result)
         result = result.strip()
         self.assertEqual(result,
-                         unicode('<input type="checkbox" name="name" value="true" '
+                         text_type('<input type="checkbox" name="name" value="true" '
                          'id="oid"/>'))
 
 class DummyWidget(object):

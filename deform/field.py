@@ -8,12 +8,9 @@ from deform import template
 from deform import widget
 from deform import schema
 
-try:
-    next
-except NameError:
-    # for Python 2.4 & 2.5
-    def next(gen):
-        return gen.next()
+from deform.compat import (
+    next,
+)
 
 class Field(object):
     """ Represents an individual form field (a visible object in a
