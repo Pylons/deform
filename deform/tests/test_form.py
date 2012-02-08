@@ -76,6 +76,22 @@ class TestIssues(unittest.TestCase):
                 '</p>' in rendered
             )
 
+    def test_issue_71(self):
+        import deform
+        import colander
+        from bs4 import BeautifulSoup
+
+        schema = colander.MappingSchema(title='SCHEMA_TITLE')
+        form = deform.Form(schema)
+        html = form.render(colander.null)
+
+        # check that title occurs exactly once in rendered output
+        soup = BeautifulSoup(html)
+        self.assertEqual(len([ string for string in soup.strings
+                               if schema.title in string
+                               ]),
+                         1)
+
 class TestButton(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.form import Button
