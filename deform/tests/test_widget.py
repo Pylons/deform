@@ -1264,7 +1264,7 @@ class TestSequenceWidget(unittest.TestCase):
         field.sequence_fields = [sequence_field]
         result = widget.serialize(field, ['123'])
         self.assertEqual(result, 'abc')
-        subfields = renderer.kw['subfields'])
+        subfields = renderer.kw['subfields']
         self.assertEqual(len(subfields), 1)
         self.assertEqual(subfields[0], ('123', sequence_field))
         self.assertEqual(renderer.kw['field'], field)
