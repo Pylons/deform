@@ -1017,7 +1017,7 @@ class SequenceWidget(Widget):
             # this serialization is being performed as a result of a
             # validation failure (``deserialize`` was previously run)
             assert(len(cstruct) == len(field.sequence_fields))
-            subfields = zip(cstruct, field.sequence_fields)
+            subfields = list(zip(cstruct, field.sequence_fields))
         else:
             # this serialization is being performed as a result of a
             # first-time rendering
