@@ -33,6 +33,10 @@ Next release
 
 - Allow RichText fields to load their editor only after clicking on them
 
+- There is no longer a ``deform_ajaxify`` global javascript function.
+  Instead forms are AJAXified directly by the javascript callback for the
+  form.
+
 0.9.3 (2011-08-10)
 ------------------
 
