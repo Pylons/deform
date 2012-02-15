@@ -20,7 +20,9 @@ Next release
 - Fix a bug where displaying error could lead on an error when you have
   imbricated Mapping objects
 
-- fix issue #54.
+- Fix ssue #54: form.pt does not show validation errors from the top node of
+  the schema. See https://github.com/Pylons/deform/issues/54 for more
+  information.
 
 - Previously, all CheckedInputWidget and CheckedPasswordWidget fields had
   hardcoded input[name] attributes of 'value' and 'confirm'.  When
