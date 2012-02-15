@@ -1,7 +1,8 @@
 Deform
 ======
 
-:mod:`deform` is a Python HTML form generation library.
+:mod:`deform` is a Python HTML form generation library.  It runs under Python
+2.6, 2.7, and 3.2.
 
 The design of :mod:`deform` is heavily influenced by the `formish
 <http://ish.io/projects/show/formish>`_ form generation library.  Some
