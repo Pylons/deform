@@ -297,6 +297,14 @@ calling the :meth:`deform.Field.render` method: the
 :class:`deform.Form` class is a subclass of the :class:`deform.Field`
 class, so this method is available to a :class:`deform.Form` instance.
 
+If we wanted to render an "add" form (a form without initial
+data), we'd just omit the appstruct while calling
+:meth:`deform.Field.render`.
+
+.. code-block:: python
+
+   form = myform.render()
+
 If we have some existing data already that we'd like to edit using the
 form (the form is an "edit form" as opposed to an "add form").  That
 data might look like this:
@@ -323,7 +331,7 @@ rendering:
 
    form = myform.render(appstruct)
 
-If instead we wanted to render a "read-only" variant of an edit form
+If, finally, instead we wanted to render a "read-only" variant of an edit form
 using the same appstruct, we'd pass the ``readonly`` flag as ``True``
 to the :meth:`deform.Field.render` method.
 
@@ -333,14 +341,6 @@ to the :meth:`deform.Field.render` method.
 
 This would cause a page to be rendered in a crude form without any
 form controls, so the user it's presented to cannot edit it.
-
-If, finally, we wanted to render an "add" form (a form without initial
-data), we'd just omit the appstruct while calling
-:meth:`deform.Field.render`.
-
-.. code-block:: python
-
-   form = myform.render()
 
 Once any of the above statements runs, the ``form`` variable is now a
 Unicode object containing an HTML rendering of the edit form, useful
