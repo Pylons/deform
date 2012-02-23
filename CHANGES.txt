@@ -1,7 +1,7 @@
 Changes
 =======
 
-0.9.4 (2011-02-14)
+0.9.4 (2012-02-14)
 ------------------
 
 - No longer Python 2.5 compatible.  Python 2.6+ is required.
