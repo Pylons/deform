@@ -1,0 +1,114 @@
+# Japanese translations for deform.
+# Copyright (C) 2011 ORGANIZATION
+# This file is distributed under the same license as the deform project.
+# OCHIAI, Gouji <gjo.ext@gmail.com>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: deform 0.9.3\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2011-12-07 14:59+0100\n"
+"PO-Revision-Date: 2012-03-20 17:53+0900\n"
+"Last-Translator: OCHIAI, Gouji <gjo.ext@gmail.com>\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 0.9.6\n"
+
+#: deform/schema.py:100
+msgid "${value} is not a dictionary"
+msgstr "${value} は辞書ではありません"
+
+#: deform/schema.py:107
+msgid "${value} has no ${key} key"
+msgstr "${value} にキー ${key} がありません"
+
+#: deform/schema.py:146
+msgid "${value} is not iterable"
+msgstr "${value} は iterable ではありません"
+
+#: deform/schema.py:150
+msgid "Required"
+msgstr "必須です"
+
+#: deform/widget.py:766
+msgid "Fields did not match"
+msgstr "フィールドが一致しません"
+
+#: deform/widget.py:767
+msgid "Value"
+msgstr "値"
+
+#: deform/widget.py:768
+msgid "Confirm Value"
+msgstr "値の確認入力"
+
+#: deform/widget.py:816
+msgid "Password did not match confirm"
+msgstr "パスワードが確認入力と一致しません"
+
+#: deform/widget.py:967
+msgid "Add ${subitem_title}"
+msgstr "${subitem_title} を追加する"
+
+#: deform/widget.py:1226
+msgid "Incomplete date"
+msgstr "日付入力が不完全です"
+
+#: deform/templates/checked_password.pt:5
+msgid "Password"
+msgstr "パスワード"
+
+#: deform/templates/checked_password.pt:10
+msgid "Confirm Password"
+msgstr "パスワードの確認入力"
+
+#: deform/templates/dateparts.pt:5 deform/templates/readonly/dateparts.pt:2
+msgid "Year"
+msgstr "年"
+
+#: deform/templates/dateparts.pt:12 deform/templates/readonly/dateparts.pt:4
+msgid "Month"
+msgstr "月"
+
+#: deform/templates/dateparts.pt:19 deform/templates/readonly/dateparts.pt:6
+msgid "Day"
+msgstr "日"
+
+#: deform/templates/form.pt:19
+msgid "There was a problem with your submission"
+msgstr "送信されたデータに問題がありました"
+
+#: deform/templates/form.pt:21
+msgid "Errors have been highlighted below"
+msgstr "エラーがあった箇所は強調表示しています"
+
+#: deform/templates/mapping.pt:6
+msgid "There was a problem with this section"
+msgstr "このセクションで問題がありました"
+
+#: deform/templates/sequence_item.pt:6
+msgid "Remove"
+msgstr "削除する"
+
+#: deform/templates/readonly/checked_password.pt:2
+#: deform/templates/readonly/password.pt:2
+msgid "Password not displayed."
+msgstr "パスワードは表示されません。"
+
+#: deform/templates/readonly/file_upload.pt:7
+msgid "Read-only."
+msgstr "読み取り専用です。"
+
+#: deform/templates/readonly/radio_choice.pt:4
+#: deform/templates/readonly/select.pt:3
+msgid "Selected"
+msgstr "選択中"
+
+#: deform/templates/readonly/radio_choice.pt:5
+#: deform/templates/readonly/select.pt:4
+msgid "Not Selected"
+msgstr "未選択"
+
