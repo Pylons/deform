@@ -1,6 +1,11 @@
 Changes
 =======
 
+Next release
+------------
+
+- Japanese translation thanks to OCHIAI, Gouji.
+
 0.9.4 (2012-02-14)
 ------------------
 
