@@ -92,7 +92,7 @@ msgstr "Данные которые вы предоставили содержа
 
 #: deform/templates/sequence_item.pt:6
 msgid "Remove"
-msgstr ""
+msgstr "Удалить"
 
 #: deform/templates/readonly/checked_password.pt:2
 #: deform/templates/readonly/password.pt:2
