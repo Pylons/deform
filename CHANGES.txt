@@ -6,6 +6,8 @@ Next release
 
 - Japanese translation thanks to OCHIAI, Gouji.
 
+- Modified Russian translation thanks to aleksandr.rakov
+
 0.9.4 (2012-02-14)
 ------------------
 
