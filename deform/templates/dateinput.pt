@@ -1,7 +1,7 @@
 <span tal:omit-tag="">
     <input type="date"
            name="${field.name}"
-           value="${cstruct}" 
+           value="${cstruct}"
            tal:attributes="size field.widget.size;
                            class field.widget.css_class"
            id="${field.oid}"/>
@@ -9,7 +9,7 @@
       deform.addCallback(
         '${field.oid}',
         function(oid) {
-            $('#' + oid).datepicker({dateFormat: 'yy-mm-dd'});
+        $('#' + oid).datepicker(${options});
         }
       );
     </script>

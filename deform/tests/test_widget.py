@@ -289,10 +289,20 @@ class TestDateInputWidget(unittest.TestCase):
         result = widget.deserialize(field, '')
         self.assertEqual(result, null)
 
+    def test_options(self):
+        widget = self._makeOne()
+        widget.options['dummy'] = 'dummyvalue'
+        self.assertIn(('dummy', 'dummyvalue'), widget._options().items())
+
 class TestDateTimeInputWidget(TestDateInputWidget):
     def _makeOne(self, **kw):
         from deform.widget import DateTimeInputWidget
         return DateTimeInputWidget(**kw)
+
+    def test_options(self):
+        widget = self._makeOne()
+        widget.options['dummy'] = 'dummyvalue'
+        self.assertIn(('dummy', 'dummyvalue'), widget._options().items())
 
     def test_serialize_with_timezone(self):
         widget = self._makeOne()
@@ -329,7 +339,7 @@ class TestHiddenWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import HiddenWidget
         return HiddenWidget(**kw)
-    
+
     def test_serialize_null(self):
         from colander import null
         widget = self._makeOne()
@@ -359,7 +369,7 @@ class TestHiddenWidget(unittest.TestCase):
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], cstruct)
-        
+
     def test_deserialize(self):
         widget = self._makeOne()
         field = DummyField()
@@ -969,7 +979,7 @@ class TestDatePartsWidget(unittest.TestCase):
         schema = DummySchema()
         field = DummyField(schema, None)
         widget = self._makeOne()
-        result = widget.deserialize(field, 
+        result = widget.deserialize(field,
                                     {'year':'\t', 'month':'', 'day':''})
         self.assertEqual(result, null)
 
@@ -1172,7 +1182,7 @@ class TestSequenceWidget(unittest.TestCase):
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], [null])
         self.assertEqual(renderer.template, widget.template)
-        
+
     def test_serialize_add_subitem_value(self):
         from colander import null
         renderer = DummyRenderer('abc')
@@ -1421,7 +1431,7 @@ class TestTextAreaCSVWidget(unittest.TestCase):
         field = DummyField()
         widget.handle_error(field, error)
         self.assertEqual(field.error, error)
-        
+
     def test_handle_error_children_have_msgs(self):
         widget = self._makeOne()
         error = DummyInvalid()
@@ -1525,7 +1535,7 @@ class TestTextInputCSVWidget(unittest.TestCase):
         field = DummyField()
         widget.handle_error(field, error)
         self.assertEqual(field.error, error)
-        
+
     def test_handle_error_children_have_msgs(self):
         widget = self._makeOne()
         error = DummyInvalid()
@@ -1568,7 +1578,7 @@ class TestResourceRegistry(unittest.TestCase):
     def test___call___no_requirement(self):
         reg = self._makeOne()
         self.assertRaises(ValueError, reg.__call__, ( ('abc', 'def'), ))
-        
+
     def test___call___no_version(self):
         reg = self._makeOne()
         reg.registry = {'abc':{'123':{'js':(1,2)}}}
