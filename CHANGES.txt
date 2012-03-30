@@ -4,6 +4,8 @@ Changes
 Next release
 ------------
 
+- Add translations for TinyMCE.  Thanks OCHIAI, Gouji.
+
 - Japanese translation thanks to OCHIAI, Gouji.
 
 - Modified Russian translation thanks to aleksandr.rakov
