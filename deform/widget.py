@@ -344,6 +344,9 @@ class DateInputWidget(Widget):
         The template name used to render the widget.  Default:
         ``dateinput``.
 
+    options
+        Options for configuring the widget (eg: date format)
+
     readonly_template
         The template name used to render the widget in read-only mode.
         Default: ``readonly/textinput``.
@@ -352,8 +355,11 @@ class DateInputWidget(Widget):
     readonly_template = 'readonly/textinput'
     size = None
     requirements = ( ('jqueryui', None), )
-    options = {'dateFormat': 'yy-mm-dd',}
 
+
+    def __init__(self, *args, **kwargs):
+        Widget.__init__(self, *args, **kwargs)
+        self.options = {'dateFormat': 'yy-mm-dd',}
 
     def serialize(self, field, cstruct, readonly=False):
         if cstruct in (null, None):
