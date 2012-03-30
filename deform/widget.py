@@ -352,23 +352,17 @@ class DateInputWidget(Widget):
     readonly_template = 'readonly/textinput'
     size = None
     requirements = ( ('jqueryui', None), )
-    option_defaults = {'dateFormat': 'yy-mm-dd',}
-    options = {}
+    options = {'dateFormat': 'yy-mm-dd',}
 
-    def _options(self):
-        options = self.option_defaults.copy()
-        options.update(self.options)
-        return options
 
     def serialize(self, field, cstruct, readonly=False):
         if cstruct in (null, None):
             cstruct = ''
         template = readonly and self.readonly_template or self.template
-        options = self._options()
         return field.renderer(template,
                               field=field,
                               cstruct=cstruct,
-                              options=options)
+                              options=self.options)
 
     def deserialize(self, field, pstruct):
         if pstruct in ('', null):
@@ -403,31 +397,30 @@ class DateTimeInputWidget(DateInputWidget):
     readonly_template = 'readonly/textinput'
     size = None
     requirements = ( ('jqueryui', None), ('datetimepicker', None), )
-    option_defaults = {'dateFormat': 'yy-mm-dd',
-                       'timeFormat': 'hh:mm:ss',
-                       'separator': ' '}
-    options = {}
+
+    def __init__(self, *args, **kwargs):
+        DateInputWidget.__init__(self, *args, **kwargs)
+        self.options.update({'timeFormat': 'hh:mm:ss',
+                             'separator': ' '})
 
     def serialize(self, field, cstruct, readonly=False):
         if cstruct in (null, None):
             cstruct = ''
         template = readonly and self.readonly_template or self.template
-        options = self._options()
         if len(cstruct) == 25: # strip timezone if it's there
             cstruct = cstruct[:-6]
-        cstruct = options['separator'].join(cstruct.split('T'))
+        cstruct = self.options['separator'].join(cstruct.split('T'))
         return field.renderer(
             template,
             field=field,
             cstruct=cstruct,
-            options=json.dumps(self._options()),
+            options=json.dumps(self.options),
             )
 
     def deserialize(self, field, pstruct):
         if pstruct in ('', null):
             return null
-        options = self._options()
-        return pstruct.replace(options['separator'], 'T')
+        return pstruct.replace(self.options['separator'], 'T')
 
 class TextAreaWidget(TextInputWidget):
     """
