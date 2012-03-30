@@ -355,11 +355,12 @@ class DateInputWidget(Widget):
     readonly_template = 'readonly/textinput'
     size = None
     requirements = ( ('jqueryui', None), )
+    default_options = (('dateFormat', 'yy-mm-dd'),)
 
 
     def __init__(self, *args, **kwargs):
+        self.options = dict(self.default_options)
         Widget.__init__(self, *args, **kwargs)
-        self.options = {'dateFormat': 'yy-mm-dd',}
 
     def serialize(self, field, cstruct, readonly=False):
         if cstruct in (null, None):
@@ -403,11 +404,9 @@ class DateTimeInputWidget(DateInputWidget):
     readonly_template = 'readonly/textinput'
     size = None
     requirements = ( ('jqueryui', None), ('datetimepicker', None), )
-
-    def __init__(self, *args, **kwargs):
-        DateInputWidget.__init__(self, *args, **kwargs)
-        self.options.update({'timeFormat': 'hh:mm:ss',
-                             'separator': ' '})
+    default_options = (DateInputWidget.default_options +
+                       (('timeFormat', 'hh:mm:ss'),
+                        ('separator', ' ')))
 
     def serialize(self, field, cstruct, readonly=False):
         if cstruct in (null, None):

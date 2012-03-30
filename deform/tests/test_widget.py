@@ -294,6 +294,13 @@ class TestDateInputWidget(unittest.TestCase):
         widget.options['dummy'] = 'dummyvalue'
         self.assertTrue(('dummy', 'dummyvalue') in widget.options.items())
 
+    def test_options_changedef(self):
+        widget2 = self._makeOne()
+        widget = self._makeOne(options={'dateFormat': 'foo'})
+        self.assertEquals(widget.options['dateFormat'], 'foo')
+        self.assertEquals(widget2.options['dateFormat'], 'yy-mm-dd')
+
+
 class TestDateTimeInputWidget(TestDateInputWidget):
     def _makeOne(self, **kw):
         from deform.widget import DateTimeInputWidget
@@ -303,6 +310,12 @@ class TestDateTimeInputWidget(TestDateInputWidget):
         widget = self._makeOne()
         widget.options['dummy'] = 'dummyvalue'
         self.assertTrue(('dummy', 'dummyvalue') in widget.options.items())
+
+    def test_options_changedef(self):
+        widget2 = self._makeOne()
+        widget = self._makeOne(options={'dateFormat': 'foo'})
+        self.assertEquals(widget.options['dateFormat'], 'foo')
+        self.assertEquals(widget2.options['dateFormat'], 'yy-mm-dd')
 
     def test_serialize_with_timezone(self):
         widget = self._makeOne()
