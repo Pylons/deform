@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: deform 0.6\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2011-12-07 14:59+0100\n"
+"POT-Creation-Date: 2012-03-30 16:17+0200\n"
 "PO-Revision-Date: 2011-11-08 15:51+0100\n"
 "Last-Translator: Jan Dittberner <jan@dittberner.info>\n"
 "Language-Team: repoze developers <repoze-dev@lists.repoze.org>\n"
@@ -32,27 +32,27 @@ msgstr " ${value} ist nicht iterierbar"
 msgid "Required"
 msgstr "Pflichtangabe"
 
-#: deform/widget.py:766
+#: deform/widget.py:779
 msgid "Fields did not match"
 msgstr "Die Felder sind nicht gleich"
 
-#: deform/widget.py:767
+#: deform/widget.py:780
 msgid "Value"
 msgstr "Wert"
 
-#: deform/widget.py:768
+#: deform/widget.py:781
 msgid "Confirm Value"
 msgstr "Wert bestätigen"
 
-#: deform/widget.py:816
+#: deform/widget.py:829
 msgid "Password did not match confirm"
 msgstr "Passwort und Passwortbestätigung stimmen nicht überein"
 
-#: deform/widget.py:967
+#: deform/widget.py:980
 msgid "Add ${subitem_title}"
 msgstr "${subitem_title} hinzufügen"
 
-#: deform/widget.py:1226
+#: deform/widget.py:1239
 msgid "Incomplete date"
 msgstr "Unvollständig"
 
@@ -87,6 +87,11 @@ msgstr "Die Fehler wurden weiter unten hervorgehoben"
 #: deform/templates/mapping.pt:6
 msgid "There was a problem with this section"
 msgstr "Es gab ein Problem in diesem Bereich"
+
+#. Default: en
+#: deform/templates/richtext.pt:15
+msgid "language-code"
+msgstr "de"
 
 #: deform/templates/sequence_item.pt:6
 msgid "Remove"

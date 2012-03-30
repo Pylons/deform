@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: deform 0.9.3\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2011-12-07 14:59+0100\n"
+"POT-Creation-Date: 2012-03-30 16:17+0200\n"
 "PO-Revision-Date: 2011-11-08 15:54+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: fr <LL@li.org>\n"
@@ -33,27 +33,27 @@ msgstr "${value} n'est pas itérabble"
 msgid "Required"
 msgstr "Requis"
 
-#: deform/widget.py:766
+#: deform/widget.py:779
 msgid "Fields did not match"
 msgstr "Les champs ne correspondent pas"
 
-#: deform/widget.py:767
+#: deform/widget.py:780
 msgid "Value"
 msgstr "Valeur"
 
-#: deform/widget.py:768
+#: deform/widget.py:781
 msgid "Confirm Value"
 msgstr "Confirmer la valeur"
 
-#: deform/widget.py:816
+#: deform/widget.py:829
 msgid "Password did not match confirm"
 msgstr "Le mot de passe ne correspond pas à sa confirmation"
 
-#: deform/widget.py:967
+#: deform/widget.py:980
 msgid "Add ${subitem_title}"
 msgstr "Ajouter ${subitem_title}"
 
-#: deform/widget.py:1226
+#: deform/widget.py:1239
 msgid "Incomplete date"
 msgstr "Date incomplète"
 
@@ -88,6 +88,11 @@ msgstr "Les erreurs ont été mise en évidence ci dessous"
 #: deform/templates/mapping.pt:6
 msgid "There was a problem with this section"
 msgstr "Il y a eu un problème avec cette section"
+
+#. Default: en
+#: deform/templates/richtext.pt:15
+msgid "language-code"
+msgstr "fr"
 
 #: deform/templates/sequence_item.pt:6
 msgid "Remove"
