@@ -294,7 +294,7 @@ class TestDateInputWidget(unittest.TestCase):
         widget.options['dummy'] = 'dummyvalue'
         self.assertTrue(('dummy', 'dummyvalue') in widget.options.items())
 
-    def test_options_changedef(self):
+    def test_options_changed_and_default(self):
         widget2 = self._makeOne()
         widget = self._makeOne(options={'dateFormat': 'foo'})
         self.assertEquals(widget.options['dateFormat'], 'foo')
@@ -311,7 +311,7 @@ class TestDateTimeInputWidget(TestDateInputWidget):
         widget.options['dummy'] = 'dummyvalue'
         self.assertTrue(('dummy', 'dummyvalue') in widget.options.items())
 
-    def test_options_changedef(self):
+    def test_options_changed_and_default(self):
         widget2 = self._makeOne()
         widget = self._makeOne(options={'dateFormat': 'foo'})
         self.assertEquals(widget.options['dateFormat'], 'foo')
