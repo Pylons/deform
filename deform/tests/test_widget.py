@@ -1222,6 +1222,36 @@ class TestSequenceWidget(unittest.TestCase):
         self.assertEqual(renderer.kw['add_subitem_text'].interpolate(),
                          'Yo titel')
 
+    def test_serialize_add_subitem_translates_title_with_default_domain(self):
+        from colander import null
+        # By default, we get a TranslationString whose domain is 'deform'
+        renderer = DummyRenderer('abc')
+        schema = DummySchema()
+        field = DummyField(schema, renderer, {'title': 'titel'})
+        inner = DummyField()
+        field.children=[inner]
+        widget = self._makeOne()
+        widget.add_subitem_text_template = 'Yo ${subitem_title}'
+        widget.serialize(field, null)
+        self.assertEqual(renderer.kw['add_subitem_text'].domain, 'deform')
+
+    def test_serialize_add_subitem_translates_title_with_another_domain(self):
+        from colander import null
+        from translationstring import TranslationStringFactory
+        renderer = DummyRenderer('abc')
+        schema = DummySchema()
+        field = DummyField(schema, renderer, {'title': 'titel'})
+        inner = DummyField()
+        field.children=[inner]
+        widget = self._makeOne()
+        # Here we provide our own TranslationString with a custom domain
+        custom_domain = 'not_deform'
+        _ = TranslationStringFactory(custom_domain)
+        widget.add_subitem_text_template = _('Yo ${subitem_title}')
+        widget.serialize(field, null)
+        self.assertEqual(renderer.kw['add_subitem_text'].domain,
+                         custom_domain)
+
     def test_serialize_add_subitem_translates_description(self):
         from colander import null
         renderer = DummyRenderer('abc')

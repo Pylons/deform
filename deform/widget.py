@@ -5,6 +5,8 @@ import json
 from colander import Invalid
 from colander import null
 
+from translationstring import TranslationString
+
 from deform.i18n import _
 
 from deform.compat import (
@@ -1033,8 +1035,12 @@ class SequenceWidget(Widget):
             subitem_title=translate(item_field.title),
             subitem_description=translate(item_field.description),
             subitem_name=item_field.name)
-        add_subitem_text = _(self.add_subitem_text_template,
-                             mapping=add_template_mapping)
+        if isinstance(self.add_subitem_text_template, TranslationString):
+            add_subitem_text = self.add_subitem_text_template % \
+                add_template_mapping            
+        else:
+            add_subitem_text = _(self.add_subitem_text_template,
+                                 mapping=add_template_mapping)
         return field.renderer(template,
                               field=field,
                               cstruct=cstruct,
