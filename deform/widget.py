@@ -1,6 +1,6 @@
 import csv
 import random
-import json 
+import json
 
 from colander import Invalid
 from colander import null
@@ -63,7 +63,7 @@ class Widget(object):
         The name of the CSS class attached to various tags in the form
         renderering indicating an error condition for the field
         associated with this widget.  Default: ``error``.
-    
+
     css_class
         The name of the CSS class attached to various tags in
         the form renderering specifying a new class for the field
@@ -328,7 +328,7 @@ class AutocompleteInputWidget(Widget):
 
 class DateInputWidget(Widget):
     """
-    
+
     Renders a JQuery UI date picker widget
     (http://jqueryui.com/demos/datepicker/).  Most useful when the
     schema node is a ``colander.Date`` object.
@@ -344,6 +344,9 @@ class DateInputWidget(Widget):
         The template name used to render the widget.  Default:
         ``dateinput``.
 
+    options
+        Options for configuring the widget (eg: date format)
+
     readonly_template
         The template name used to render the widget in read-only mode.
         Default: ``readonly/textinput``.
@@ -352,12 +355,21 @@ class DateInputWidget(Widget):
     readonly_template = 'readonly/textinput'
     size = None
     requirements = ( ('jqueryui', None), )
+    default_options = (('dateFormat', 'yy-mm-dd'),)
+
+
+    def __init__(self, *args, **kwargs):
+        self.options = dict(self.default_options)
+        Widget.__init__(self, *args, **kwargs)
 
     def serialize(self, field, cstruct, readonly=False):
         if cstruct in (null, None):
             cstruct = ''
         template = readonly and self.readonly_template or self.template
-        return field.renderer(template, field=field, cstruct=cstruct)
+        return field.renderer(template,
+                              field=field,
+                              cstruct=cstruct,
+                              options=self.options)
 
     def deserialize(self, field, pstruct):
         if pstruct in ('', null):
@@ -392,36 +404,28 @@ class DateTimeInputWidget(DateInputWidget):
     readonly_template = 'readonly/textinput'
     size = None
     requirements = ( ('jqueryui', None), ('datetimepicker', None), )
-    option_defaults = {'dateFormat': 'yy-mm-dd',
-                       'timeFormat': 'hh:mm:ss',
-                       'separator': ' '}
-    options = {}
-
-    def _options(self):
-        options = self.option_defaults.copy()
-        options.update(self.options)
-        return options
+    default_options = (DateInputWidget.default_options +
+                       (('timeFormat', 'hh:mm:ss'),
+                        ('separator', ' ')))
 
     def serialize(self, field, cstruct, readonly=False):
         if cstruct in (null, None):
             cstruct = ''
         template = readonly and self.readonly_template or self.template
-        options = self._options()
         if len(cstruct) == 25: # strip timezone if it's there
             cstruct = cstruct[:-6]
-        cstruct = options['separator'].join(cstruct.split('T'))
+        cstruct = self.options['separator'].join(cstruct.split('T'))
         return field.renderer(
             template,
             field=field,
             cstruct=cstruct,
-            options=json.dumps(self._options()),
+            options=json.dumps(self.options),
             )
 
     def deserialize(self, field, pstruct):
         if pstruct in ('', null):
             return null
-        options = self._options()
-        return pstruct.replace(options['separator'], 'T')
+        return pstruct.replace(self.options['separator'], 'T')
 
 class TextAreaWidget(TextInputWidget):
     """
@@ -466,7 +470,7 @@ class RichTextWidget(TextInputWidget):
     To use this widget the :term:`TinyMCE Editor` library must be
     provided in the page where the widget is rendered. A version of
     :term:`TinyMCE Editor` is included in deform's static directory.
-    
+
 
     **Attributes/Arguments**
 
@@ -490,7 +494,7 @@ class RichTextWidget(TextInputWidget):
         The template name used to render the widget.  Default:
         ``richtext``.
 
-    skin 
+    skin
         The skin for the WYSIWYG editor. Normally only needed if you
         plan to reuse a TinyMCE js from another framework that
         defined a skin.
@@ -869,7 +873,7 @@ class MappingWidget(Widget):
 
     def deserialize(self, field, pstruct):
         error = None
-        
+
         result = {}
 
         if pstruct is null:
@@ -878,7 +882,7 @@ class MappingWidget(Widget):
         for num, subfield in enumerate(field.children):
             name = subfield.name
             subval = pstruct.get(name, null)
-                            
+
             try:
                 result[name] = subfield.deserialize(subval)
             except Invalid as e:
@@ -1227,7 +1231,7 @@ class DatePartsWidget(Widget):
             year = pstruct['year'].strip()
             month = pstruct['month'].strip()
             day = pstruct['day'].strip()
-            
+
             if (not year and not month and not day):
                 return null
 
@@ -1245,7 +1249,7 @@ class TextAreaCSVWidget(Widget):
     Widget used for a sequence of tuples of scalars; allows for
     editing CSV within a text area.  Used with a schema node which is
     a sequence of tuples.
-    
+
     **Attributes/Arguments**
 
     cols
@@ -1285,7 +1289,7 @@ class TextAreaCSVWidget(Widget):
         else:
             template = self.template
         return field.renderer(template, field=field, cstruct=textrows)
-        
+
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null
@@ -1315,7 +1319,7 @@ class TextInputCSVWidget(Widget):
     Widget used for a tuple of scalars; allows for editing a single
     CSV line within a text input.  Used with a schema node which is a
     tuple composed entirely of scalar values (integers, strings, etc).
-    
+
     **Attributes/Arguments**
 
     template
@@ -1350,7 +1354,7 @@ class TextInputCSVWidget(Widget):
         else:
             template = self.template
         return field.renderer(template, field=field, cstruct=textrow)
-        
+
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null
@@ -1442,7 +1446,7 @@ class ResourceRegistry(object):
                         result[thing].append(source)
         return result
 
-            
+
 default_resources = {
     'jquery': {
         None:{
