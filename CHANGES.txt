@@ -14,7 +14,11 @@ Next release
   tjebbes, kiorky
 
 - Allow a custom i18n domain to be used for the "Add ${subitem_title}"
-  link of a SequenceWidget.  See #85.
+  link of a SequenceWidget.  See
+  https://github.com/Pylons/deform/issues/85 .
+
+- Allow the use of Integer values with SelectWidget.  See
+  https://github.com/Pylons/deform/issues/81 .
 
 0.9.4 (2012-02-14)
 ------------------
