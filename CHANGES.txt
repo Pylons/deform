@@ -8,6 +8,8 @@ Next release
 
 - Modified Russian translation thanks to aleksandr.rakov
 
+- Date(Time)Widget supports now options to configure it, thx to gaston tjebbes, kiorky
+
 0.9.4 (2012-02-14)
 ------------------
 
