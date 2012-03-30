@@ -1,37 +1,37 @@
-<textarea id="${field.oid}" name="${field.name}" class='tinymce' tal:content="structure cstruct" />
-<span id="${field.oid}-preload" class="tinymce-preload" tal:content="structure cstruct" />
-<script language="javascript"
-	type="text/javascript">
-	(function($){
-        deform.addCallback(
-            '${field.oid}',
-            function(oid) {
-                var jqoid = $('#' + oid);
-                var jqoid_preload = $('#' + oid + '-preload');
-                jqoid.hide();
-                jqoid_preload.click(function(){
-                    jqoid.show();
-                    jqoid_preload.remove();
-                    tinyMCE.init({
-                        mode : 'exact',
-                        elements: oid,
-                        strict_loading_mode : true,
-                        height: '${field.widget.height}',
-                        width: '${field.widget.width}',
-                        skin : '${field.widget.skin}',
-                        theme : '${field.widget.theme}',
-                        theme_advanced_resizing : true,
-                        theme_advanced_toolbar_align : 'left',
-                        theme_advanced_toolbar_location : 'top'
-                    });
-                    jqoid_preload.unbind('click');
-                });
-                if(!${str(bool(field.widget.delayed_load)).lower()}){
-                    jqoid_preload.click();
-                }
+<tal:block tal:omit-tag="" xmlns:i18n="http://xml.zope.org/namespaces/i18n" i18n:domain="deform">
+  <textarea id="${field.oid}" name="${field.name}" class='tinymce' tal:content="structure cstruct" />
+  <span id="${field.oid}-preload" class="tinymce-preload" tal:content="structure cstruct" />
+  <script language="javascript" type="text/javascript">
+    (function($){
+      deform.addCallback('${field.oid}', function(oid) {
+        var jqoid = $('#' + oid);
+        var jqoid_preload = $('#' + oid + '-preload');
+        jqoid.hide();
+        jqoid_preload.click(function(){
+          jqoid.show();
+          jqoid_preload.remove();
+          tinyMCE.init({
+            mode: 'exact',
+            language: '<tal:block tal:omit-tag="" i18n:translate="language-code-for-tiny-mce-initalization">en</tal:block>',
+            elements: oid,
+            strict_loading_mode: true,
+            height: '${field.widget.height}',
+            width: '${field.widget.width}',
+            skin: '${field.widget.skin}',
+            theme: '${field.widget.theme}',
+            theme_advanced_resizing: true,
+            theme_advanced_toolbar_align: 'left',
+            theme_advanced_toolbar_location: 'top'
+          });
+          jqoid_preload.unbind('click');
         });
-        $().bind('form.pre.serialize', function(event, $form, options) {
-            tinyMCE.triggerSave();
-        }); 
+        if (!${str(bool(field.widget.delayed_load)).lower()}) {
+          jqoid_preload.click();
+        }
+      });
+      $().bind('form.pre.serialize', function(event, $form, options) {
+        tinyMCE.triggerSave();
+      });
     })(jQuery);
-</script>
+  </script>
+</tal:block>
