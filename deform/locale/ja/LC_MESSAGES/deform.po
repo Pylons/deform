@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: deform 0.9.3\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2012-03-28 23:21+0900\n"
+"POT-Creation-Date: 2012-03-30 16:17+0200\n"
 "PO-Revision-Date: 2012-03-28 23:47+0900\n"
 "Last-Translator: OCHIAI, Gouji <gjo.ext@gmail.com>\n"
 "Language-Team: ja <LL@li.org>\n"
@@ -91,7 +91,7 @@ msgstr "このセクションで問題がありました"
 
 #. Default: en
 #: deform/templates/richtext.pt:15
-msgid "language-code-for-tiny-mce-initalization"
+msgid "language-code"
 msgstr "ja"
 
 #: deform/templates/sequence_item.pt:6
@@ -116,4 +116,7 @@ msgstr "選択中"
 #: deform/templates/readonly/select.pt:4
 msgid "Not Selected"
 msgstr "未選択"
+
+#~ msgid "language-code-for-tiny-mce-initalization"
+#~ msgstr "ja"
 

@@ -12,7 +12,7 @@
           jqoid_preload.remove();
           tinyMCE.init({
             mode: 'exact',
-            language: '<tal:block tal:omit-tag="" i18n:translate="language-code-for-tiny-mce-initalization">en</tal:block>',
+            language: '<tal:block i18n:translate="language-code">en</tal:block>',
             elements: oid,
             strict_loading_mode: true,
             height: '${field.widget.height}',
