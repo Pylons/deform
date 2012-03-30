@@ -292,7 +292,7 @@ class TestDateInputWidget(unittest.TestCase):
     def test_options(self):
         widget = self._makeOne()
         widget.options['dummy'] = 'dummyvalue'
-        self.assertIn(('dummy', 'dummyvalue'), widget._options().items())
+        self.assertTrue(('dummy', 'dummyvalue') in widget._options().items())
 
 class TestDateTimeInputWidget(TestDateInputWidget):
     def _makeOne(self, **kw):
@@ -302,7 +302,7 @@ class TestDateTimeInputWidget(TestDateInputWidget):
     def test_options(self):
         widget = self._makeOne()
         widget.options['dummy'] = 'dummyvalue'
-        self.assertIn(('dummy', 'dummyvalue'), widget._options().items())
+        self.assertTrue(('dummy', 'dummyvalue') in widget._options().items())
 
     def test_serialize_with_timezone(self):
         widget = self._makeOne()
