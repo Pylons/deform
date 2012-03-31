@@ -588,6 +588,14 @@ class TestSelectWidget(unittest.TestCase):
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], cstruct)
 
+    def test_serialize_integer_values(self):
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+        widget = self._makeOne(values=((1, 'one'),))
+        widget.serialize(field, None)
+        self.assertEqual(renderer.kw['values'], [('1', 'one')])
+
     def test_deserialize_null(self):
         from colander import null
         widget = self._makeOne()
@@ -655,6 +663,14 @@ class TestCheckboxChoiceWidget(unittest.TestCase):
         self.assertEqual(renderer.template, widget.readonly_template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], cstruct)
+
+    def test_serialize_integer_values(self):
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+        widget = self._makeOne(values=((1, 'one'),))
+        widget.serialize(field, None)
+        self.assertEqual(renderer.kw['values'], [('1', 'one')])
 
     def test_deserialize_null(self):
         from colander import null
@@ -1638,6 +1654,26 @@ class TestResourceRegistry(unittest.TestCase):
         reg.registry = {'abc':{'123':{'js':'123', 'css':'2'}}}
         result = reg([('abc', '123')])
         self.assertEqual(result, {'js':['123'], 'css':['2']})
+
+class TestNormalizeChoices(unittest.TestCase):
+    def _call(self, values):
+        from deform.widget import _normalize_choices
+        return _normalize_choices(values)
+
+    def test_empty(self):
+        self.assertEqual(self._call(()), [])
+
+    def test_string(self):
+        self.assertEqual(self._call((('value', 'description'),)),
+                         [('value', 'description')])
+
+    def test_text_type(self):
+        self.assertEqual(self._call(((text_type('value'), 'description'),)),
+                         [('value', 'description')])
+
+    def test_integer(self):
+        self.assertEqual(self._call(((1, 'description'),)),
+                         [('1', 'description')])
 
 class DummyRenderer(object):
     def __init__(self, result=''):

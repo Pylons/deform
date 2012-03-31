@@ -18,6 +18,14 @@ from deform.compat import (
     uppercase,
     )
 
+def _normalize_choices(values):
+    result = []
+    for value, description in values:
+        if not isinstance(value, string_types):
+            value = str(value)
+        result.append((value, description))
+    return result
+
 class Widget(object):
     """
     A widget is the building block for rendering logic.  The
@@ -613,7 +621,6 @@ class SelectWidget(Widget):
     **Attributes/Arguments**
 
     values
-
         A sequence of two-tuples (the first value must be of type
         string, unicode or integer, the second value must be string or
         unicode) indicating allowable, displayed values, e.g. ``(
@@ -650,7 +657,8 @@ class SelectWidget(Widget):
         if cstruct in (null, None):
             cstruct = self.null_value
         template = readonly and self.readonly_template or self.template
-        return field.renderer(template, field=field, cstruct=cstruct)
+        return field.renderer(template, field=field, cstruct=cstruct,
+                              values=_normalize_choices(self.values))
 
     def deserialize(self, field, pstruct):
         if pstruct in (null, self.null_value):
@@ -665,11 +673,12 @@ class RadioChoiceWidget(SelectWidget):
     **Attributes/Arguments**
 
     values
-        A sequence of two-tuples (both values must be **string** or
-        **unicode** values) indicating allowable, displayed values,
-        e.g. ``( ('true', 'True'), ('false', 'False') )``.  The first
-        element in the tuple is the value that should be returned when
-        the form is posted.  The second is the display value.
+        A sequence of two-tuples (the first value must be of type
+        string, unicode or integer, the second value must be string or
+        unicode) indicating allowable, displayed values, e.g. ``(
+        ('true', 'True'), ('false', 'False') )``.  The first element
+        in the tuple is the value that should be returned when the
+        form is posted.  The second is the display value.
 
     template
         The template name used to render the widget.  Default:
@@ -695,11 +704,12 @@ class CheckboxChoiceWidget(Widget):
     **Attributes/Arguments**
 
     values
-        A sequence of two-tuples (both values must be **string** or
-        **unicode** values) indicating allowable, displayed values,
-        e.g. ``( ('true', 'True'), ('false', 'False') )``.  The first
-        element in the tuple is the value that should be returned when
-        the form is posted.  The second is the display value.
+        A sequence of two-tuples (the first value must be of type
+        string, unicode or integer, the second value must be string or
+        unicode) indicating allowable, displayed values, e.g. ``(
+        ('true', 'True'), ('false', 'False') )``.  The first element
+        in the tuple is the value that should be returned when the
+        form is posted.  The second is the display value.
 
     template
         The template name used to render the widget.  Default:
@@ -722,7 +732,8 @@ class CheckboxChoiceWidget(Widget):
         if cstruct in (null, None):
             cstruct = ()
         template = readonly and self.readonly_template or self.template
-        return field.renderer(template, field=field, cstruct=cstruct)
+        return field.renderer(template, field=field, cstruct=cstruct,
+                              values=_normalize_choices(self.values))
 
     def deserialize(self, field, pstruct):
         if pstruct is null:
