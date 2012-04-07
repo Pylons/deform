@@ -20,6 +20,9 @@ Next release
 - Allow the use of Integer values with SelectWidget.  See
   https://github.com/Pylons/deform/issues/81 .
 
+- CheckedInputWidget and CheckedPasswordWidget now populate the "confirm"
+  element with the cstruct value (for edit forms).
+
 0.9.4 (2012-02-14)
 ------------------
 

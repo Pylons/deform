@@ -805,7 +805,7 @@ class CheckedInputWidget(Widget):
     def serialize(self, field, cstruct, readonly=False):
         if cstruct in (null, None):
             cstruct = ''
-        confirm = getattr(field, '%s-confirm' % (field.name,), '')
+        confirm = getattr(field, '%s-confirm' % (field.name,), cstruct)
         template = readonly and self.readonly_template or self.template
         return field.renderer(template, field=field, cstruct=cstruct,
                               confirm=confirm, subject=self.subject,

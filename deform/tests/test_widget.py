@@ -707,6 +707,7 @@ class TestCheckedInputWidget(unittest.TestCase):
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], '')
+        self.assertEqual(renderer.kw['confirm'], '')
 
     def test_serialize_None(self):
         renderer = DummyRenderer()
@@ -717,6 +718,7 @@ class TestCheckedInputWidget(unittest.TestCase):
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], '')
+        self.assertEqual(renderer.kw['confirm'], '')
 
     def test_serialize_true(self):
         renderer = DummyRenderer()
@@ -727,6 +729,7 @@ class TestCheckedInputWidget(unittest.TestCase):
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], True)
+        self.assertEqual(renderer.kw['confirm'], True)
 
     def test_serialize_false(self):
         renderer = DummyRenderer()
@@ -737,6 +740,7 @@ class TestCheckedInputWidget(unittest.TestCase):
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], False)
+        self.assertEqual(renderer.kw['confirm'], False)
 
     def test_serialize_true_readonly(self):
         renderer = DummyRenderer()
@@ -747,6 +751,7 @@ class TestCheckedInputWidget(unittest.TestCase):
         self.assertEqual(renderer.template, widget.readonly_template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], True)
+        self.assertEqual(renderer.kw['confirm'], True)
 
     def test_deserialize_null(self):
         from colander import null
