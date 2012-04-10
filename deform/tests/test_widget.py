@@ -1795,6 +1795,16 @@ class TestNormalizeChoices(unittest.TestCase):
         self.assertEqual(self._call(((1, 'description'),)),
                          [('1', 'description')])
 
+    def test_optgroup_and_tuple(self):
+        from deform.widget import OptGroup
+        optgroup = OptGroup('label', (2, 'two'))
+        normalized = self._call(((1, 'description'), optgroup))
+        self.assertEqual(len(normalized), 2)
+        self.assertEqual(normalized[0], ('1', 'description'))
+        self.assertTrue(isinstance(normalized[1], OptGroup))
+        self.assertEqual(normalized[1].label, 'label')
+        self.assertEqual(normalized[1].options, (('2', 'two'), ))
+
 class DummyRenderer(object):
     def __init__(self, result=''):
         self.result = result

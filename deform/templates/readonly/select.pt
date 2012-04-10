@@ -1,5 +1,16 @@
-<p tal:repeat="(value, description) values" i18n:domain="deform">
-  <span>${description}</span>
-  <em tal:condition="value == cstruct" i18n:translate="">Selected</em>
-  <em tal:condition="value != cstruct" i18n:translate="">Not Selected</em>
-</p>
+<tal:loop tal:repeat="item values" i18n:domain="deform">
+  <tal:if tal:condition="isinstance(item, field.widget.optgroup_class)">
+    <p tal:condition="not field.widget.long_label_generator"
+       class="optgroup">${item.label}</p>
+    <p tal:repeat="(value, description) item.options">
+      <span tal:content="field.widget.long_label_generator and field.widget.long_label_generator(item.label, description) or description"/>
+      <em tal:condition="value == cstruct" i18n:translate="">Selected</em>
+      <em tal:condition="value != cstruct" i18n:translate="">Not Selected</em>
+    </p>
+  </tal:if>
+  <p tal:condition="not isinstance(item, field.widget.optgroup_class)">
+    <span>${item[1]}</span>
+    <em tal:condition="item[0] == cstruct" i18n:translate="">Selected</em>
+    <em tal:condition="item[0] != cstruct" i18n:translate="">Not Selected</em>
+  </p>
+</tal:loop>

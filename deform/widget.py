@@ -21,10 +21,15 @@ from deform.compat import (
 
 def _normalize_choices(values):
     result = []
-    for value, description in values:
-        if not isinstance(value, string_types):
-            value = str(value)
-        result.append((value, description))
+    for item in values:
+        if isinstance(item, OptGroup):
+            normalized_options = _normalize_choices(item.options)
+            result.append(OptGroup(item.label, *normalized_options))
+        else:
+            value, description = item
+            if not isinstance(value, string_types):
+                value = str(value)
+            result.append((value, description))
     return result
 
 class Widget(object):
@@ -709,6 +714,27 @@ class CheckboxWidget(Widget):
             return self.false_val
         return (pstruct == self.true_val) and self.true_val or self.false_val
 
+class OptGroup(object):
+    """
+    Used in the ``values`` argument passed to an instance of
+    ``SelectWidget`` to render an ``<optgroup>`` HTML tag.
+
+    **Attributes/Arguments**
+
+    label
+        The label of the ``<optgroup>`` HTML tag.
+
+    options
+        A sequence that describes the ``<options>`` HTML tag(s). It
+        must have the same structure as the ``values``
+        argument/parameter in the ``SelectWidget`` class, but should
+        not contain ``OptGroup`` instances since ``<optgroup>`` HTML
+        tags cannot be nested.
+    """
+    def __init__(self, label, *options):
+        self.label = label
+        self.options = options
+
 class SelectWidget(Widget):
     """
     Renders ``<select>`` field based on a predefined set of values.
@@ -716,12 +742,17 @@ class SelectWidget(Widget):
     **Attributes/Arguments**
 
     values
-        A sequence of two-tuples (the first value must be of type
-        string, unicode or integer, the second value must be string or
-        unicode) indicating allowable, displayed values, e.g. ``(
-        ('true', 'True'), ('false', 'False') )``.  The first element
-        in the tuple is the value that should be returned when the
-        form is posted.  The second is the display value.
+        A sequence of items where each item must be either:
+
+        - a two-tuple (the first value must be of type string, unicode
+          or integer, the second value must be string or unicode)
+          indicating allowable, displayed values, e.g. ``('jsmith',
+          'John Smith')``. The first element in the tuple is the value
+          that should be returned when the form is posted. The second
+          is the display value;
+
+        - or an instance of ``optgroup_class`` (which is
+          ``deform.widget.OptGroup`` by default).
 
     size
         The ``size`` attribute of the select input field (default:
@@ -743,6 +774,52 @@ class SelectWidget(Widget):
 
     multiple
         Enable multiple on the select widget ( default: ``False`` )
+
+    optgroup_class
+        The class used to represent ``<optgroup>`` HTML tags. Default:
+        ``deform.widget.OptGroup``.
+
+    long_label_generator
+        A function that returns the "long label" used as the
+        description for very old browsers that do not support the
+        ``<optgroup>`` HTML tag. If a function is provided, the
+        ``label`` attribute will receive the (short) description,
+        while the content of the ``<option>`` tag will receive the
+        "long label". The function is called with two parameters: the
+        group label and the option (short) description.
+
+        For example, with the following widget:
+
+        .. code-block:: python
+
+           long_label_gener = lambda group, label: ' - '.join((group, label))
+           SelectWidget(
+             values=(
+               ('', 'Select your favorite musician'),
+               OptGroup('Guitarists',
+                        ('page', 'Jimmy Page'),
+                        ('hendrix', 'Jimi Hendrix')),
+               OptGroup('Drummers',
+                       ('cobham', 'Billy Cobham'),
+                       ('bonham', 'John Bonham'))),
+             long_label_generator=long_label_gener)
+
+        ... the rendered options would look like:
+
+        .. code-block:: html
+
+           <option value="">Select your favorite musician</option>
+           <optgroup label="Guitarists">
+             <option value="page" label="Jimmy Page">Guitarists - Jimmy Page</option>
+             <option value="hendrix" label="Jimi Hendrix">Guitarists - Jimi Hendrix</option>
+           </optgroup>
+           <optgroup label="Drummers">
+             <option value="cobham" label="Billy Cobham">Drummers - Billy Cobham</option>
+             <option value="bonham" label="John Bonham">Drummers - John Bonham</option>
+           </optgroup>
+
+        Default: ``None`` (which means that the ``label`` attribute is
+        not rendered).
     """
     template = 'select'
     readonly_template = 'readonly/select'
@@ -750,6 +827,8 @@ class SelectWidget(Widget):
     values = ()
     size = None
     multiple = False
+    optgroup_class = OptGroup
+    long_label_generator = None
 
     def serialize(self, field, cstruct, readonly=False):
         if cstruct in (null, None):
