@@ -8,7 +8,13 @@ Next release
 
 - Modified Russian translation thanks to aleksandr.rakov
 
-- Date(Time)Widget supports now options to configure it, thx to gaston tjebbes, kiorky
+- Date(Time)Widget supports now options to configure it, thx to gaston
+  tjebbes, kiorky
+
+- FileUploadWidget now sanitizes IE/Windows whole-path filenames before
+  passing them back to the caller during deserialization/validation.
+
+- Add docs and dev setup.py aliases ala Pyramid.
 
 0.9.4 (2012-02-14)
 ------------------

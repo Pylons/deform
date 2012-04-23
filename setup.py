@@ -35,6 +35,9 @@ requires = [
     'translationstring',
     ]
 
+testing_extras = ['nose', 'coverage']
+docs_extras = ['Sphinx']
+
 setupkw = dict(
     name='deform',
     version='0.9.4',
@@ -61,6 +64,10 @@ setupkw = dict(
     tests_require=requires + ['beautifulsoup4'],
     install_requires=requires,
     test_suite="deform",
+      extras_require = {
+          'testing':testing_extras,
+          'docs':docs_extras,
+          },
     )
 
 # to update catalogs, use babel and lingua !

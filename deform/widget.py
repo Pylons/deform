@@ -1141,7 +1141,10 @@ class FileUploadWidget(Widget):
             # the upload control had a file selected
             data = filedict()
             data['fp'] = upload.file
-            data['filename'] = upload.filename
+            filename = upload.filename
+            # sanitize IE whole-path filenames
+            filename = filename[filename.rfind('\\')+1:].strip()
+            data['filename'] = filename
             data['mimetype'] = upload.type
             data['size']  = upload.length
             if uid is None:

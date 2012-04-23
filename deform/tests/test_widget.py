@@ -903,6 +903,22 @@ class TestFileUploadWidget(unittest.TestCase):
         self.assertEqual(result['preview_url'], 'preview_url')
         self.assertEqual(tmpstore['uid'], result)
 
+    def test_deserialize_file_selected_with_previous_file_IE_whole_path(self):
+        schema = DummySchema()
+        field = DummyField(schema)
+        upload = DummyUpload()
+        upload.filename = r'c:\foo\bar\baz.pt'
+        tmpstore = DummyTmpStore()
+        widget = self._makeOne(tmpstore)
+        result = widget.deserialize(field, {'upload':upload, 'uid':'uid'})
+        self.assertEqual(result['uid'], 'uid')
+        self.assertEqual(result['fp'], 'fp')
+        self.assertEqual(result['filename'], 'baz.pt')
+        self.assertEqual(result['mimetype'], 'mimetype')
+        self.assertEqual(result['size'], 'size')
+        self.assertEqual(result['preview_url'], 'preview_url')
+        self.assertEqual(tmpstore['uid'], result)
+
 class TestDatePartsWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import DatePartsWidget
