@@ -17,7 +17,7 @@ Next release
   link of a SequenceWidget.  See
   https://github.com/Pylons/deform/issues/85 .
 
-- Allow the use of Integer values with SelectWidget.  See
+- Allow the use of Integer values with SelectWidget, and RadioChoiceWidget.  See
   https://github.com/Pylons/deform/issues/81 .
 
 - CheckedInputWidget and CheckedPasswordWidget now populate the "confirm"
