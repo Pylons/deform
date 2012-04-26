@@ -300,6 +300,7 @@ class MoneyInputWidget(Widget):
     readonly_template = 'readonly/textinput'
     requirements = ( ('jquery.maskMoney', None), )
     options = None
+    size = None
     
     def serialize(self, field, cstruct, readonly=False):
         if cstruct in (null, None):
