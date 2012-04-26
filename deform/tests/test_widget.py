@@ -378,6 +378,13 @@ class TestDateInputWidget(unittest.TestCase):
         widget.options['dummy'] = 'dummyvalue'
         self.assertTrue(('dummy', 'dummyvalue') in widget.options.items())
 
+    def test_options_changed_and_default(self):
+        widget2 = self._makeOne()
+        widget = self._makeOne(options={'dateFormat': 'foo'})
+        self.assertEqual(widget.options['dateFormat'], 'foo')
+        self.assertEqual(widget2.options['dateFormat'], 'yy-mm-dd')
+
+
 class TestDateTimeInputWidget(TestDateInputWidget):
     def _makeOne(self, **kw):
         from deform.widget import DateTimeInputWidget
@@ -387,6 +394,12 @@ class TestDateTimeInputWidget(TestDateInputWidget):
         widget = self._makeOne()
         widget.options['dummy'] = 'dummyvalue'
         self.assertTrue(('dummy', 'dummyvalue') in widget.options.items())
+
+    def test_options_changed_and_default(self):
+        widget2 = self._makeOne()
+        widget = self._makeOne(options={'dateFormat': 'foo'})
+        self.assertEqual(widget.options['dateFormat'], 'foo')
+        self.assertEqual(widget2.options['dateFormat'], 'yy-mm-dd')
 
     def test_serialize_with_timezone(self):
         widget = self._makeOne()
@@ -659,6 +672,14 @@ class TestSelectWidget(unittest.TestCase):
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], cstruct)
 
+    def test_serialize_integer_values(self):
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+        widget = self._makeOne(values=((1, 'one'),))
+        widget.serialize(field, None)
+        self.assertEqual(renderer.kw['values'], [('1', 'one')])
+
     def test_deserialize_null(self):
         from colander import null
         widget = self._makeOne()
@@ -727,6 +748,14 @@ class TestCheckboxChoiceWidget(unittest.TestCase):
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], cstruct)
 
+    def test_serialize_integer_values(self):
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+        widget = self._makeOne(values=((1, 'one'),))
+        widget.serialize(field, None)
+        self.assertEqual(renderer.kw['values'], [('1', 'one')])
+
     def test_deserialize_null(self):
         from colander import null
         widget = self._makeOne()
@@ -762,6 +791,7 @@ class TestCheckedInputWidget(unittest.TestCase):
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], '')
+        self.assertEqual(renderer.kw['confirm'], '')
 
     def test_serialize_None(self):
         renderer = DummyRenderer()
@@ -772,6 +802,7 @@ class TestCheckedInputWidget(unittest.TestCase):
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], '')
+        self.assertEqual(renderer.kw['confirm'], '')
 
     def test_serialize_true(self):
         renderer = DummyRenderer()
@@ -782,6 +813,7 @@ class TestCheckedInputWidget(unittest.TestCase):
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], True)
+        self.assertEqual(renderer.kw['confirm'], True)
 
     def test_serialize_false(self):
         renderer = DummyRenderer()
@@ -792,6 +824,7 @@ class TestCheckedInputWidget(unittest.TestCase):
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], False)
+        self.assertEqual(renderer.kw['confirm'], False)
 
     def test_serialize_true_readonly(self):
         renderer = DummyRenderer()
@@ -802,6 +835,7 @@ class TestCheckedInputWidget(unittest.TestCase):
         self.assertEqual(renderer.template, widget.readonly_template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], True)
+        self.assertEqual(renderer.kw['confirm'], True)
 
     def test_deserialize_null(self):
         from colander import null
@@ -1309,6 +1343,36 @@ class TestSequenceWidget(unittest.TestCase):
         self.assertEqual(renderer.kw['add_subitem_text'].interpolate(),
                          'Yo titel')
 
+    def test_serialize_add_subitem_translates_title_with_default_domain(self):
+        from colander import null
+        # By default, we get a TranslationString whose domain is 'deform'
+        renderer = DummyRenderer('abc')
+        schema = DummySchema()
+        field = DummyField(schema, renderer, {'title': 'titel'})
+        inner = DummyField()
+        field.children=[inner]
+        widget = self._makeOne()
+        widget.add_subitem_text_template = 'Yo ${subitem_title}'
+        widget.serialize(field, null)
+        self.assertEqual(renderer.kw['add_subitem_text'].domain, 'deform')
+
+    def test_serialize_add_subitem_translates_title_with_another_domain(self):
+        from colander import null
+        from translationstring import TranslationStringFactory
+        renderer = DummyRenderer('abc')
+        schema = DummySchema()
+        field = DummyField(schema, renderer, {'title': 'titel'})
+        inner = DummyField()
+        field.children=[inner]
+        widget = self._makeOne()
+        # Here we provide our own TranslationString with a custom domain
+        custom_domain = 'not_deform'
+        _ = TranslationStringFactory(custom_domain)
+        widget.add_subitem_text_template = _('Yo ${subitem_title}')
+        widget.serialize(field, null)
+        self.assertEqual(renderer.kw['add_subitem_text'].domain,
+                         custom_domain)
+
     def test_serialize_add_subitem_translates_description(self):
         from colander import null
         renderer = DummyRenderer('abc')
@@ -1695,6 +1759,26 @@ class TestResourceRegistry(unittest.TestCase):
         reg.registry = {'abc':{'123':{'js':'123', 'css':'2'}}}
         result = reg([('abc', '123')])
         self.assertEqual(result, {'js':['123'], 'css':['2']})
+
+class TestNormalizeChoices(unittest.TestCase):
+    def _call(self, values):
+        from deform.widget import _normalize_choices
+        return _normalize_choices(values)
+
+    def test_empty(self):
+        self.assertEqual(self._call(()), [])
+
+    def test_string(self):
+        self.assertEqual(self._call((('value', 'description'),)),
+                         [('value', 'description')])
+
+    def test_text_type(self):
+        self.assertEqual(self._call(((text_type('value'), 'description'),)),
+                         [('value', 'description')])
+
+    def test_integer(self):
+        self.assertEqual(self._call(((1, 'description'),)),
+                         [('1', 'description')])
 
 class DummyRenderer(object):
     def __init__(self, result=''):

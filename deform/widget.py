@@ -5,6 +5,8 @@ import json
 from colander import Invalid
 from colander import null
 
+from translationstring import TranslationString
+
 from deform.i18n import _
 
 from deform.compat import (
@@ -15,6 +17,14 @@ from deform.compat import (
     url_quote,
     uppercase,
     )
+
+def _normalize_choices(values):
+    result = []
+    for value, description in values:
+        if not isinstance(value, string_types):
+            value = str(value)
+        result.append((value, description))
+    return result
 
 class Widget(object):
     """
@@ -425,6 +435,9 @@ class DateInputWidget(Widget):
         The template name used to render the widget.  Default:
         ``dateinput``.
 
+    options
+        Options for configuring the widget (eg: date format)
+
     readonly_template
         The template name used to render the widget in read-only mode.
         Default: ``readonly/textinput``.
@@ -433,8 +446,12 @@ class DateInputWidget(Widget):
     readonly_template = 'readonly/textinput'
     size = None
     requirements = ( ('jqueryui', None), )
-    options = {'dateFormat': 'yy-mm-dd',}
+    default_options = (('dateFormat', 'yy-mm-dd'),)
 
+
+    def __init__(self, *args, **kwargs):
+        self.options = dict(self.default_options)
+        Widget.__init__(self, *args, **kwargs)
 
     def serialize(self, field, cstruct, readonly=False):
         if cstruct in (null, None):
@@ -478,11 +495,9 @@ class DateTimeInputWidget(DateInputWidget):
     readonly_template = 'readonly/textinput'
     size = None
     requirements = ( ('jqueryui', None), ('datetimepicker', None), )
-
-    def __init__(self, *args, **kwargs):
-        DateInputWidget.__init__(self, *args, **kwargs)
-        self.options.update({'timeFormat': 'hh:mm:ss',
-                             'separator': ' '})
+    default_options = (DateInputWidget.default_options +
+                       (('timeFormat', 'hh:mm:ss'),
+                        ('separator', ' ')))
 
     def serialize(self, field, cstruct, readonly=False):
         if cstruct in (null, None):
@@ -687,11 +702,12 @@ class SelectWidget(Widget):
     **Attributes/Arguments**
 
     values
-        A sequence of two-tuples (both values must be **string** or
-        **unicode** values) indicating allowable, displayed values,
-        e.g. ``( ('true', 'True'), ('false', 'False') )``.  The first
-        element in the tuple is the value that should be returned when
-        the form is posted.  The second is the display value.
+        A sequence of two-tuples (the first value must be of type
+        string, unicode or integer, the second value must be string or
+        unicode) indicating allowable, displayed values, e.g. ``(
+        ('true', 'True'), ('false', 'False') )``.  The first element
+        in the tuple is the value that should be returned when the
+        form is posted.  The second is the display value.
 
     size
         The ``size`` attribute of the select input field (default:
@@ -722,7 +738,8 @@ class SelectWidget(Widget):
         if cstruct in (null, None):
             cstruct = self.null_value
         template = readonly and self.readonly_template or self.template
-        return field.renderer(template, field=field, cstruct=cstruct)
+        return field.renderer(template, field=field, cstruct=cstruct,
+                              values=_normalize_choices(self.values))
 
     def deserialize(self, field, pstruct):
         if pstruct in (null, self.null_value):
@@ -737,11 +754,12 @@ class RadioChoiceWidget(SelectWidget):
     **Attributes/Arguments**
 
     values
-        A sequence of two-tuples (both values must be **string** or
-        **unicode** values) indicating allowable, displayed values,
-        e.g. ``( ('true', 'True'), ('false', 'False') )``.  The first
-        element in the tuple is the value that should be returned when
-        the form is posted.  The second is the display value.
+        A sequence of two-tuples (the first value must be of type
+        string, unicode or integer, the second value must be string or
+        unicode) indicating allowable, displayed values, e.g. ``(
+        ('true', 'True'), ('false', 'False') )``.  The first element
+        in the tuple is the value that should be returned when the
+        form is posted.  The second is the display value.
 
     template
         The template name used to render the widget.  Default:
@@ -767,11 +785,12 @@ class CheckboxChoiceWidget(Widget):
     **Attributes/Arguments**
 
     values
-        A sequence of two-tuples (both values must be **string** or
-        **unicode** values) indicating allowable, displayed values,
-        e.g. ``( ('true', 'True'), ('false', 'False') )``.  The first
-        element in the tuple is the value that should be returned when
-        the form is posted.  The second is the display value.
+        A sequence of two-tuples (the first value must be of type
+        string, unicode or integer, the second value must be string or
+        unicode) indicating allowable, displayed values, e.g. ``(
+        ('true', 'True'), ('false', 'False') )``.  The first element
+        in the tuple is the value that should be returned when the
+        form is posted.  The second is the display value.
 
     template
         The template name used to render the widget.  Default:
@@ -794,7 +813,8 @@ class CheckboxChoiceWidget(Widget):
         if cstruct in (null, None):
             cstruct = ()
         template = readonly and self.readonly_template or self.template
-        return field.renderer(template, field=field, cstruct=cstruct)
+        return field.renderer(template, field=field, cstruct=cstruct,
+                              values=_normalize_choices(self.values))
 
     def deserialize(self, field, pstruct):
         if pstruct is null:
@@ -866,7 +886,7 @@ class CheckedInputWidget(Widget):
     def serialize(self, field, cstruct, readonly=False):
         if cstruct in (null, None):
             cstruct = ''
-        confirm = getattr(field, '%s-confirm' % (field.name,), '')
+        confirm = getattr(field, '%s-confirm' % (field.name,), cstruct)
         template = readonly and self.readonly_template or self.template
         return field.renderer(template, field=field, cstruct=cstruct,
                               confirm=confirm, subject=self.subject,
@@ -1109,8 +1129,12 @@ class SequenceWidget(Widget):
             subitem_title=translate(item_field.title),
             subitem_description=translate(item_field.description),
             subitem_name=item_field.name)
-        add_subitem_text = _(self.add_subitem_text_template,
-                             mapping=add_template_mapping)
+        if isinstance(self.add_subitem_text_template, TranslationString):
+            add_subitem_text = self.add_subitem_text_template % \
+                add_template_mapping            
+        else:
+            add_subitem_text = _(self.add_subitem_text_template,
+                                 mapping=add_template_mapping)
         return field.renderer(template,
                               field=field,
                               cstruct=cstruct,

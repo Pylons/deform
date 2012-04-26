@@ -4,6 +4,8 @@ Changes
 Next release
 ------------
 
+- Add translations for TinyMCE.  Thanks OCHIAI, Gouji.
+
 - Japanese translation thanks to OCHIAI, Gouji.
 
 - Modified Russian translation thanks to aleksandr.rakov
@@ -17,6 +19,16 @@ Next release
 - Add docs and dev setup.py aliases ala Pyramid.
 
 - Add MoneyInputWidget widget type.
+
+- Allow a custom i18n domain to be used for the "Add ${subitem_title}"
+  link of a SequenceWidget.  See
+  https://github.com/Pylons/deform/issues/85 .
+
+- Allow the use of Integer values with SelectWidget.  See
+  https://github.com/Pylons/deform/issues/81 .
+
+- CheckedInputWidget and CheckedPasswordWidget now populate the "confirm"
+  element with the cstruct value (for edit forms).
 
 0.9.4 (2012-02-14)
 ------------------
@@ -37,7 +49,7 @@ Next release
 - Fix a bug where displaying error could lead on an error when you have
   imbricated Mapping objects
 
-- Fix ssue #54: form.pt does not show validation errors from the top node of
+- Fix issue #54: form.pt does not show validation errors from the top node of
   the schema. See https://github.com/Pylons/deform/issues/54 for more
   information.
 

@@ -77,8 +77,8 @@ try:
     # if babel is installed, advertise message extractors (if we pass
     # this to setup() unconditionally, and babel isn't installed,
     # distutils warns pointlessly)
-    setupkw['message_extractors'] = { ".": [
-        ("deform/**.py",     "lingua_python", None ),
+    setupkw['message_extractors'] = { "deform": [
+        ("**.py",     "lingua_python", None ),
         ("**.pt", "lingua_xml", None ),
         ]}
 except ImportError:

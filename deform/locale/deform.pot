@@ -1,14 +1,14 @@
 # Translations template for deform.
-# Copyright (C) 2011 ORGANIZATION
+# Copyright (C) 2012 ORGANIZATION
 # This file is distributed under the same license as the deform project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: deform 0.9.3\n"
+"Project-Id-Version: deform 0.9.4\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2011-12-07 14:59+0100\n"
+"POT-Creation-Date: 2012-03-30 16:17+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,27 +33,27 @@ msgstr ""
 msgid "Required"
 msgstr ""
 
-#: deform/widget.py:766
+#: deform/widget.py:779
 msgid "Fields did not match"
 msgstr ""
 
-#: deform/widget.py:767
+#: deform/widget.py:780
 msgid "Value"
 msgstr ""
 
-#: deform/widget.py:768
+#: deform/widget.py:781
 msgid "Confirm Value"
 msgstr ""
 
-#: deform/widget.py:816
+#: deform/widget.py:829
 msgid "Password did not match confirm"
 msgstr ""
 
-#: deform/widget.py:967
+#: deform/widget.py:980
 msgid "Add ${subitem_title}"
 msgstr ""
 
-#: deform/widget.py:1226
+#: deform/widget.py:1239
 msgid "Incomplete date"
 msgstr ""
 
@@ -87,6 +87,11 @@ msgstr ""
 
 #: deform/templates/mapping.pt:6
 msgid "There was a problem with this section"
+msgstr ""
+
+#. Default: en
+#: deform/templates/richtext.pt:15
+msgid "language-code"
 msgstr ""
 
 #: deform/templates/sequence_item.pt:6

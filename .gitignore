@@ -18,3 +18,7 @@ pypyenv/
 build/
 dist/
 deform/coverage.xml
+bin/
+include/
+lib/
+local
