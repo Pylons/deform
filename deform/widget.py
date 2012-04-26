@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import csv
 import random
 import json
@@ -314,6 +316,18 @@ class MoneyInputWidget(Widget):
         if pstruct is null:
             return null
         pstruct = pstruct.strip()
+        thousands = ','
+        # Oh jquery-maskMoney, you submit the thousands separator in the
+        # control value.  I'm no genius, but IMO that's not very smart.  But
+        # then again you also don't inject the thousands separator into the
+        # value attached to the control when editing an existing value.
+        # Because it's obvious we should have *both* the server and the
+        # client doing this bullshit on both serialization and
+        # deserialization.  I understand completely, you're just a client
+        # library, IT'S NO PROBLEM.  LET ME HELP YOU.
+        if self.options:
+            thousands = dict(self.options).get('thousands', ',')
+        pstruct = pstruct.replace(thousands, '')
         if not pstruct:
             return null
         return pstruct
@@ -1553,44 +1567,45 @@ class ResourceRegistry(object):
 default_resources = {
     'jquery': {
         None:{
-            'js':'scripts/jquery-1.4.2.min.js',
+            'js':'scripts/jquery-1.7.2.min.js',
             },
         },
     'jqueryui': {
         None:{
-            'js':('scripts/jquery-1.4.2.min.js',
+            'js':('scripts/jquery-1.7.2.min.js',
                   'scripts/jquery-ui-1.8.11.custom.min.js'),
             'css':'css/ui-lightness/jquery-ui-1.8.11.custom.css',
             },
         },
     'jquery.form': {
         None:{
-            'js':('scripts/jquery-1.4.2.min.js',
-                  'scripts/jquery.form.js'),
+            'js':('scripts/jquery-1.7.2.min.js',
+                  'scripts/jquery.form-3.09.js'),
             },
         },
     'jquery.maskedinput': {
         None:{
-            'js':('scripts/jquery-1.4.2.min.js',
+            'js':('scripts/jquery-1.7.2.min.js',
                   'scripts/jquery.maskedinput-1.2.2.min.js'),
             },
         },
     'jquery.maskMoney': {
         None:{
-            'js':('scripts/jquery.maskMoney-1.4.1.js'),
+            'js':('scripts/jquery-1.7.2.min.js',
+                  'scripts/jquery.maskMoney-1.4.1.js'),
             },
         },
     'datetimepicker': {
         None:{
-            'js':('scripts/jquery-1.4.2.min.js',
+            'js':('scripts/jquery-1.7.2.min.js',
                   'scripts/jquery-ui-timepicker-addon.js'),
             'css':'css/jquery-ui-timepicker-addon.css',
             },
         },
     'deform': {
         None:{
-            'js':('scripts/jquery-1.4.2.min.js',
-                  'scripts/jquery.form.js',
+            'js':('scripts/jquery-1.7.2.min.js',
+                  'scripts/jquery.form-3.09.js',
                   'scripts/deform.js'),
             'css':('css/form.css')
 

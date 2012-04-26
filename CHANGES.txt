@@ -30,6 +30,10 @@ Next release
 - CheckedInputWidget and CheckedPasswordWidget now populate the "confirm"
   element with the cstruct value (for edit forms).
 
+- Update to JQuery 1.7.2.
+
+- Update to jquery.form 3.09.
+
 0.9.4 (2012-02-14)
 ------------------
 

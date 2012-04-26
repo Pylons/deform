@@ -212,6 +212,21 @@ class TestMoneyInputWidget(unittest.TestCase):
         result = widget.deserialize(field, pstruct)
         self.assertEqual(result, null)
 
+    def test_deserialize_with_default_thousands_separator(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = '1,000,000.00'
+        result = widget.deserialize(field, pstruct)
+        self.assertEqual(result, '1000000.00')
+
+    def test_deserialize_with_nondefault_thousands_separator(self):
+        widget = self._makeOne()
+        widget.options = {'thousands':'!'}
+        field = DummyField()
+        pstruct = '1!000!000.00'
+        result = widget.deserialize(field, pstruct)
+        self.assertEqual(result, '1000000.00')
+
 class TestAutocompleteInputWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import AutocompleteInputWidget
