@@ -65,6 +65,9 @@ Widget-Related
 .. autoclass:: TextInputWidget
    :members:
 
+.. autoclass:: MoneyInputWidget
+   :members:
+
 .. autoclass:: AutocompleteInputWidget
    :members:
 

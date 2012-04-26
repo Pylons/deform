@@ -16,6 +16,8 @@ Next release
 
 - Add docs and dev setup.py aliases ala Pyramid.
 
+- Add MoneyInputWidget widget type.
+
 0.9.4 (2012-02-14)
 ------------------
 

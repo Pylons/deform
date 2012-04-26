@@ -128,6 +128,90 @@ class TestTextInputWidget(unittest.TestCase):
         result = widget.deserialize(field, pstruct)
         self.assertEqual(result, null)
 
+class TestMoneyInputWidget(unittest.TestCase):
+    def _makeOne(self, **kw):
+        from deform.widget import MoneyInputWidget
+        return MoneyInputWidget(**kw)
+
+    def test_serialize_null(self):
+        from colander import null
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        field = DummyField(None, renderer=renderer)
+        widget.serialize(field, null)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], '')
+        self.assertEqual(renderer.kw['mask_options'], '{}')
+
+    def test_serialize_None(self):
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        field = DummyField(None, renderer=renderer)
+        widget.serialize(field, None)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], '')
+        self.assertEqual(renderer.kw['mask_options'], '{}')
+
+    def test_serialize_not_null(self):
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer=renderer)
+        cstruct = 'abc'
+        widget.serialize(field, cstruct)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], cstruct)
+        self.assertEqual(renderer.kw['mask_options'], '{}')
+
+    def test_serialize_not_null_with_options(self):
+        widget = self._makeOne(options={'allowZero':True})
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer=renderer)
+        cstruct = 'abc'
+        widget.serialize(field, cstruct)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], cstruct)
+        self.assertEqual(renderer.kw['mask_options'], '{"allowZero": true}')
+
+    def test_serialize_not_null_readonly(self):
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer=renderer)
+        cstruct = 'abc'
+        widget.serialize(field, cstruct, readonly=True)
+        self.assertEqual(renderer.template, widget.readonly_template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], cstruct)
+        self.assertEqual(renderer.kw['mask_options'], '{}')
+
+    def test_deserialize_strip(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = ' abc '
+        result = widget.deserialize(field, pstruct)
+        self.assertEqual(result, 'abc')
+
+    def test_deserialize_null(self):
+        from colander import null
+        widget = self._makeOne(strip=False)
+        field = DummyField()
+        result = widget.deserialize(field, null)
+        self.assertEqual(result, null)
+
+    def test_deserialize_emptystring(self):
+        from colander import null
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = ''
+        result = widget.deserialize(field, pstruct)
+        self.assertEqual(result, null)
+
 class TestAutocompleteInputWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import AutocompleteInputWidget

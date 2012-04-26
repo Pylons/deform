@@ -227,6 +227,87 @@ class TextInputWidget(Widget):
             return null
         return pstruct
 
+class MoneyInputWidget(Widget):
+    """
+    Renders an ``<input type="text"/>`` widget with Javascript which enforces
+    a valid currency input.  It should be used along with the
+    ``colander.Decimal`` schema type (at least if you care about your money).
+    This widget depends on the ``jquery-maskMoney`` JQuery plugin.
+
+    **Attributes/Arguments**
+
+    size
+        The size, in columns, of the text input field.  Defaults to
+        ``None``, meaning that the ``size`` is not included in the
+        widget output (uses browser default size).
+
+    template
+       The template name used to render the widget.  Default:
+        ``moneyinput``.
+
+    readonly_template
+        The template name used to render the widget in read-only mode.
+        Default: ``readonly/textinput``.
+
+    options
+        A dictionary or sequence of two-tuples containing ``jquery-maskMoney``
+        options.  The valid options are:
+
+        symbol
+            the symbol to be used before of the user values. default: ``$``
+        
+        showSymbol
+            set if the symbol must be displayed or not. default: ``False``
+            
+        symbolStay
+            set if the symbol will stay in the field after the user exists the
+            field. default: ``False``
+            
+        thousands
+            the thousands separator. default: ``,``
+            
+        decimal
+            the decimal separator. default: ``.``
+            
+        precision
+            how many decimal places are allowed. default: 2
+
+        defaultZero
+            when the user enters the field, it sets a default mask using zero.
+            default: ``True``
+            
+        allowZero
+            use this setting to prevent users from inputing zero. default:
+            ``False``
+            
+        allowNegative
+            use this setting to prevent users from inputing negative values.
+            default: ``False``
+    """
+    template = 'moneyinput'
+    readonly_template = 'readonly/textinput'
+    requirements = ( ('jquery.maskMoney', None), )
+    options = None
+    
+    def serialize(self, field, cstruct, readonly=False):
+        if cstruct in (null, None):
+            cstruct = ''
+        template = readonly and self.readonly_template or self.template
+        options = self.options
+        if options is None:
+            options = {}
+        options = json.dumps(dict(options))
+        return field.renderer(template, mask_options=options, field=field,
+                              cstruct=cstruct)
+    
+    def deserialize(self, field, pstruct):
+        if pstruct is null:
+            return null
+        pstruct = pstruct.strip()
+        if not pstruct:
+            return null
+        return pstruct
+
 class AutocompleteInputWidget(Widget):
     """
     Renders an ``<input type="text"/>`` widget which provides
@@ -1468,6 +1549,11 @@ default_resources = {
         None:{
             'js':('scripts/jquery-1.4.2.min.js',
                   'scripts/jquery.maskedinput-1.2.2.min.js'),
+            },
+        },
+    'jquery.maskMoney': {
+        None:{
+            'js':('scripts/jquery.maskMoney-1.4.1.js'),
             },
         },
     'datetimepicker': {
