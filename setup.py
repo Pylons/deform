@@ -35,7 +35,7 @@ requires = [
     'translationstring',
     ]
 
-testing_extras = ['nose', 'coverage']
+testing_extras = ['nose', 'coverage', 'beautifulsoup4']
 docs_extras = ['Sphinx']
 
 setupkw = dict(
