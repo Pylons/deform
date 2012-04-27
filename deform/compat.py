@@ -14,13 +14,6 @@ else:
     string_types = basestring,
     text_type = unicode
 
-def text_(s, encoding='latin-1', errors='strict'):
-    """ If ``s`` is an instance of ``bytes``, return ``s.decode(encoding,
-    errors)``, otherwise return ``s``"""
-    if isinstance(s, bytes):
-        return s.decode(encoding, errors)
-    return s # pragma: no cover
-
 try:
     from StringIO import StringIO
 except ImportError: # pragma: no cover
