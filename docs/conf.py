@@ -62,7 +62,7 @@ extensions = [
 
 intersphinx_mapping = dict(
     python=('http://docs.python.org/dev',None),
-    colander=('http://docs.pylonsproject.org/projects/colander/dev/',None)
+    colander=('http://docs.pylonsproject.org/projects/colander/en/latest/',None)
     )
 
 # Add any paths that contain templates here, relative to this directory.
@@ -82,7 +82,7 @@ copyright = '2011, Agendaless Consulting <pylons-discuss@googlegroups.com>'
 # other places throughout the built documents.
 #
 # The short X.Y version.
-version = '0.9.4'
+version = '0.9.5'
 # The full version, including alpha/beta/rc tags.
 release = version
 
