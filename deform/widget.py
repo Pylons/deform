@@ -13,7 +13,6 @@ from deform.i18n import _
 
 from deform.compat import (
     string_types,
-    next,
     StringIO,
     string,
     url_quote,

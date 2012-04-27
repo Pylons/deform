@@ -2,7 +2,7 @@ import sys
 import string
 try:
     uppercase = string.uppercase
-except AttributeError:
+except AttributeError: # pragma: no cover
     uppercase = string.ascii_uppercase
 
 PY3 = sys.version_info[0] == 3
@@ -22,22 +22,15 @@ def text_(s, encoding='latin-1', errors='strict'):
     return s # pragma: no cover
 
 try:
-    next = next
-except NameError:
-    # for Python 2.4 & 2.5
-    def next(gen):
-        return gen.next()
-
-try:
     from StringIO import StringIO
-except ImportError:
+except ImportError: # pragma: no cover
     from io import StringIO
 
 import urllib
 try:
     url_quote = urllib.quote
     url_unquote = urllib.unquote
-except AttributeError:
+except AttributeError: # pragma: no cover
     import urllib.parse
     url_quote = urllib.parse.quote
     url_unquote = urllib.parse.unquote

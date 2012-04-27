@@ -8,10 +8,6 @@ from deform import template
 from deform import widget
 from deform import schema
 
-from deform.compat import (
-    next,
-)
-
 class Field(object):
     """ Represents an individual form field (a visible object in a
     form rendering).
