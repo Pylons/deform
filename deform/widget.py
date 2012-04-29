@@ -266,31 +266,31 @@ class MoneyInputWidget(Widget):
 
         symbol
             the symbol to be used before of the user values. default: ``$``
-        
+
         showSymbol
             set if the symbol must be displayed or not. default: ``False``
-            
+
         symbolStay
             set if the symbol will stay in the field after the user exists the
             field. default: ``False``
-            
+
         thousands
             the thousands separator. default: ``,``
-            
+
         decimal
             the decimal separator. default: ``.``
-            
+
         precision
             how many decimal places are allowed. default: 2
 
         defaultZero
             when the user enters the field, it sets a default mask using zero.
             default: ``True``
-            
+
         allowZero
             use this setting to prevent users from inputing zero. default:
             ``False``
-            
+
         allowNegative
             use this setting to prevent users from inputing negative values.
             default: ``False``
@@ -300,7 +300,7 @@ class MoneyInputWidget(Widget):
     requirements = ( ('jquery.maskMoney', None), )
     options = None
     size = None
-    
+
     def serialize(self, field, cstruct, readonly=False):
         if cstruct in (null, None):
             cstruct = ''
@@ -311,7 +311,7 @@ class MoneyInputWidget(Widget):
         options = json.dumps(dict(options))
         return field.renderer(template, mask_options=options, field=field,
                               cstruct=cstruct)
-    
+
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null
@@ -437,6 +437,7 @@ class DateInputWidget(Widget):
     Renders a JQuery UI date picker widget
     (http://jqueryui.com/demos/datepicker/).  Most useful when the
     schema node is a ``colander.Date`` object.
+    alt Tag is used to allow full customization of the displayed input
 
     **Attributes/Arguments**
 
@@ -471,15 +472,19 @@ class DateInputWidget(Widget):
         if cstruct in (null, None):
             cstruct = ''
         template = readonly and self.readonly_template or self.template
+        options = self.options
+        # Force iso format for colander compatibility
+        options['altFormat'] = 'yy-mm-dd'
         return field.renderer(template,
                               field=field,
                               cstruct=cstruct,
                               options=self.options)
 
     def deserialize(self, field, pstruct):
-        if pstruct in ('', null):
+        date = pstruct.get('date', null)
+        if date in ('', null):
             return null
-        return pstruct
+        return date
 
 class DateTimeInputWidget(DateInputWidget):
     """
@@ -1145,7 +1150,7 @@ class SequenceWidget(Widget):
             subitem_name=item_field.name)
         if isinstance(self.add_subitem_text_template, TranslationString):
             add_subitem_text = self.add_subitem_text_template % \
-                add_template_mapping            
+                add_template_mapping
         else:
             add_subitem_text = _(self.add_subitem_text_template,
                                  mapping=add_template_mapping)
