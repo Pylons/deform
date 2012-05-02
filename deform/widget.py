@@ -741,12 +741,15 @@ class SelectWidget(Widget):
         The template name used to render the widget in read-only mode.
         Default: ``readonly/select``.
 
+    multiple
+        Enable multiple on the select widget ( default: ``False`` )
     """
     template = 'select'
     readonly_template = 'readonly/select'
     null_value = ''
     values = ()
     size = None
+    multiple = False
 
     def serialize(self, field, cstruct, readonly=False):
         if cstruct in (null, None):

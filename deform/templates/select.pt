@@ -1,9 +1,14 @@
+<input type="hidden" name="__start__" value="${field.name}:sequence"
+  tal:condition="field.widget.multiple" />
 <select name="${field.name}"
         id="${field.oid}"
-        tal:attributes="size field.widget.size"
-        tal:attributes="class field.widget.css_class">
+        tal:attributes="size field.widget.size;
+        class field.widget.css_class;
+        multiple field.widget.multiple">
  <option tal:repeat="(value, description) values"
          tal:attributes="selected value == cstruct and 'selected';
                          class field.widget.css_class"
          value="${value}">${description}</option>
 </select>
+<input type="hidden" name="__end__" value="${field.name}:sequence"
+  tal:condition="field.widget.multiple" />
