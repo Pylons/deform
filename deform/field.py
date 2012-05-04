@@ -111,6 +111,7 @@ class Field(object):
     error = None
     default_renderer = template.default_renderer
     default_resource_registry = widget.default_resource_registry
+    readonly = False
 
     def __init__(self, schema, renderer=None, counter=None,
                  resource_registry=None, **kw):
@@ -130,6 +131,10 @@ class Field(object):
         self.description = schema.description
         self.required = schema.required
         self.children = []
+        try:
+            self.readonly = schema.readonly
+        except AttributeError:
+            pass
         self.__dict__.update(kw)
         for child in schema.children:
             self.children.append(Field(child,
@@ -405,7 +410,7 @@ class Field(object):
     def serialize(self, cstruct, readonly=False):
         """ Serialize the cstruct into HTML.  If ``readonly`` is
         ``True``, render a read-only rendering (no input fields)."""
-        return self.widget.serialize(self, cstruct=cstruct, readonly=readonly)
+        return self.widget.serialize(self, cstruct=cstruct, readonly=readonly or self.readonly)
 
     def deserialize(self, pstruct):
         """ Deserialize the pstruct into a cstruct."""
