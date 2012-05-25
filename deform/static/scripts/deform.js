@@ -126,7 +126,7 @@ var deform  = {
     removeSequenceItem: function(clicked) {
         var $item_node = $(clicked).parent();
         var $oid_node = $item_node.parent().parent();
-        var $before_node = $oid_node.find('.deformInsertBefore').first();
+        var $before_node = $oid_node.find('.deformInsertBefore').last();
         var min_len = parseInt($before_node.attr('min_len')||'0');
         var max_len = parseInt($before_node.attr('max_len')||'9999');
         var now_len = parseInt($before_node.attr('now_len')||'0');
