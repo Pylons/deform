@@ -1,6 +1,12 @@
 Changes
 =======
 
+Next release
+------------
+
+- Fixed remove bug in nested sequences.  See
+  https://github.com/Pylons/deform/pull/89
+
 0.9.5 (2012-04-27)
 ------------------
 
