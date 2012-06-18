@@ -4,6 +4,7 @@ Changes
 Next release
 ------------
 
+- Give the preview_url method of the tempstore access to the stored item. [tomster]
 - Fixed remove bug in nested sequences.  See
   https://github.com/Pylons/deform/pull/89
 

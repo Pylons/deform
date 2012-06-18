@@ -1275,14 +1275,14 @@ class FileUploadWidget(Widget):
                     uid = self.random_id()
                     if self.tmpstore.get(uid) is None:
                         data['uid'] = uid
-                        data['preview_url'] = self.tmpstore.preview_url(uid)
                         self.tmpstore[uid] = data
+                        self.tmpstore[uid]['preview_url'] = self.tmpstore.preview_url(uid)
                         break
             else:
                 # a previous file exists
                 data['uid'] = uid
-                data['preview_url'] = self.tmpstore.preview_url(uid)
                 self.tmpstore[uid] = data
+                self.tmpstore[uid]['preview_url'] = self.tmpstore.preview_url(uid)
         else:
             # the upload control had no file selected
             if uid is None:
