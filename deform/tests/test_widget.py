@@ -1018,7 +1018,7 @@ class TestFileUploadWidget(unittest.TestCase):
         self.assertEqual(result['filename'], 'filename')
         self.assertEqual(result['mimetype'], 'mimetype')
         self.assertEqual(result['size'], 'size')
-        self.assertEqual(result['preview_url'], 'preview_url')
+        self.assertEqual(result['preview_url'], 'http://localhost/filename')
         self.assertEqual(tmpstore[uid], result)
 
     def test_deserialize_file_selected_with_previous_file(self):
@@ -1033,7 +1033,7 @@ class TestFileUploadWidget(unittest.TestCase):
         self.assertEqual(result['filename'], 'filename')
         self.assertEqual(result['mimetype'], 'mimetype')
         self.assertEqual(result['size'], 'size')
-        self.assertEqual(result['preview_url'], 'preview_url')
+        self.assertEqual(result['preview_url'], 'http://localhost/filename')
         self.assertEqual(tmpstore['uid'], result)
 
     def test_deserialize_file_selected_with_previous_file_IE_whole_path(self):
@@ -1049,7 +1049,7 @@ class TestFileUploadWidget(unittest.TestCase):
         self.assertEqual(result['filename'], 'baz.pt')
         self.assertEqual(result['mimetype'], 'mimetype')
         self.assertEqual(result['size'], 'size')
-        self.assertEqual(result['preview_url'], 'preview_url')
+        self.assertEqual(result['preview_url'], 'http://localhost/filename')
         self.assertEqual(tmpstore['uid'], result)
 
 class TestDatePartsWidget(unittest.TestCase):
@@ -1855,7 +1855,7 @@ class DummyField(object):
 
 class DummyTmpStore(dict):
     def preview_url(self, uid):
-        return 'preview_url'
+        return 'http://localhost/%s' % self[uid]['filename']
 
 class DummyUpload(object):
     file = 'fp'
