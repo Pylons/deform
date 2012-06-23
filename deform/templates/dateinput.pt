@@ -24,11 +24,11 @@
                }
                return strdate;
              }
-             var js_options = ${options};
-             js_options['altField'] = "#${field.oid}_altField";
              deform.addCallback(
                 '${field.oid}',
                 function(oid) {
+                    var js_options = ${options};
+                    js_options['altField'] = "#" + oid + "_altField";
                     var date = getDateFromIso("${cstruct}", js_options['dateFormat']);
                     $('#' + oid).val(date);
                     $('#' + oid).datepicker(js_options);
