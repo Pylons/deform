@@ -393,6 +393,16 @@ class TestDateInputWidget(unittest.TestCase):
         widget.options['dummy'] = 'dummyvalue'
         self.assertTrue(('dummy', 'dummyvalue') in widget.options.items())
 
+    def test_serialize_uneditable_option(self):
+        widget = self._makeOne()
+        widget.options['altFormat'] = "dd/mm/yy"
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer=renderer)
+        cstruct = 'abc'
+        widget.serialize(field, cstruct)
+        self.assertEqual(renderer.kw['options']['altFormat'], "yy-mm-dd")
+
     def test_options_changed_and_default(self):
         widget2 = self._makeOne()
         widget = self._makeOne(options={'dateFormat': 'foo'})
