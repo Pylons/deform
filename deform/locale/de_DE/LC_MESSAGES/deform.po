@@ -95,12 +95,12 @@ msgstr "de"
 
 #: deform/templates/sequence_item.pt:6
 msgid "Remove"
-msgstr ""
+msgstr "Entfernen"
 
 #: deform/templates/readonly/checked_password.pt:2
 #: deform/templates/readonly/password.pt:2
 msgid "Password not displayed."
-msgstr "Passwort wird nicht angezeigt. "
+msgstr "Passwort wird nicht angezeigt."
 
 #: deform/templates/readonly/file_upload.pt:7
 msgid "Read-only."
