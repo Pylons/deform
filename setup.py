@@ -63,6 +63,7 @@ setupkw = dict(
     zip_safe=False,
     tests_require=requires + ['beautifulsoup4'],
     install_requires=requires,
+    setup_requires=['setuptools_git'],
     test_suite="deform",
       extras_require = {
           'testing':testing_extras,
