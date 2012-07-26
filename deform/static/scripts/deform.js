@@ -52,7 +52,7 @@ var deform  = {
         //   that has the string ``deformField(\d+)`` within it, and modify 
         //   its id to have a random component.
         // - For each label referencing an change id, change the label's
-        //   htmlFor attribute to the new id.
+        //   for attribute to the new id.
 
         var fieldmatch = /deformField(\d+)/;
         var namematch = /(.+)?-[#]{3}/;
@@ -73,9 +73,9 @@ var deform  = {
             var newid = oldid.replace(fieldmatch, "deformField$1-" + genid);
             $node.attr('id', newid);
             idmap[oldid] = newid;
-            var labelselector = 'label[htmlFor=' + oldid + ']';
+            var labelselector = 'label[for=' + oldid + ']';
             var $fornodes = $htmlnode.find(labelselector);
-            $fornodes.attr('htmlFor', newid);
+            $fornodes.attr('for', newid);
             });
 
         // replace names a containing ```deformField`` like we do for ids
