@@ -6,7 +6,7 @@
         class field.widget.css_class;
         multiple field.widget.multiple">
  <option tal:repeat="(value, description) values"
-         tal:attributes="selected value == cstruct and 'selected';
+         tal:attributes="selected (field.widget.multiple and value in cstruct or value == cstruct) and 'selected';
                          class field.widget.css_class"
          value="${value}">${description}</option>
 </select>
