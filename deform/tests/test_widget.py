@@ -1049,7 +1049,7 @@ class TestFileUploadWidget(unittest.TestCase):
         self.assertEqual(result['filename'], 'baz.pt')
         self.assertEqual(result['mimetype'], 'mimetype')
         self.assertEqual(result['size'], 'size')
-        self.assertEqual(result['preview_url'], 'http://localhost/filename')
+        self.assertEqual(result['preview_url'], 'http://localhost/baz.pt')
         self.assertEqual(tmpstore['uid'], result)
 
 class TestDatePartsWidget(unittest.TestCase):
