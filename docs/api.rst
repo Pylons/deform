@@ -92,8 +92,12 @@ Widget-Related
 .. autoclass:: CheckboxChoiceWidget
    :members:
 
-.. autoclass:: SelectWidget
+.. autoclass:: OptGroup
    :members:
+
+.. autoclass:: SelectWidget
+.. no ':members:' here if we can avoid it, as it would generate 
+.. a duplicate entry for 'SelectWidget.optgroup_class'.
 
 .. autoclass:: RadioChoiceWidget
    :members:
