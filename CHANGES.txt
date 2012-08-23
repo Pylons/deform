@@ -4,9 +4,14 @@ Changes
 Next release
 ------------
 
-- Give the preview_url method of the tempstore access to the stored item. [tomster]
+- Give the preview_url method of the tempstore access to the stored
+  item. [tomster]
+
 - Fixed remove bug in nested sequences.  See
   https://github.com/Pylons/deform/pull/89
+
+- Allow SelectWidget to produce <optgroup> HTML tags.  See
+  https://github.com/Pylons/deform/pull/87
 
 0.9.5 (2012-04-27)
 ------------------
