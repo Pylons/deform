@@ -1,6 +1,6 @@
 <ul class="deformSet"> 
     <input type="hidden" name="__start__" value="${field.name}:rename"/>
-    <tal:loop tal:repeat="choice field.widget.values">
+    <tal:loop tal:repeat="choice values">
       <tal:def tal:define="(value, title) choice">
         <li class="deformSet-item">
           <input tal:attributes="checked value == cstruct;

@@ -226,8 +226,26 @@ class BlogPostSchema(colander.Schema):
         widget = deferred_category_widget,
         )
 
+class IntSchema(colander.Schema):
+    int_field = colander.SchemaNode(colander.Int(),
+        widget=deform.widget.RadioChoiceWidget(values=((0, 'zero'), (1, 'one')))
+    )
+
 def remove_date(node, kw):
     if kw.get('nodates'): del node['date']
+
+class TestSchemas(unittest.TestCase):
+    def test_int_on_radio_widget(self):
+        schema = IntSchema()
+        form = deform.Form(schema, buttons=('submit',))
+        result_without_checked = form.render()
+
+        self.assertFalse('checked' in result_without_checked)
+
+        result_with_checked = form.render({'int_field': 1})
+        value_index = result_with_checked.index('value="1"')
+        checked_index = result_with_checked.index('checked="True"', value_index)
+        self.assertTrue(checked_index > 0)
 
 class TestDeferredFunction(unittest.TestCase):
     def test_it(self):
