@@ -22,6 +22,7 @@ class TestForm(unittest.TestCase):
         self.assertEqual(button.name, 'button')
         self.assertEqual(button.value, 'button')
         self.assertEqual(button.title, 'Button')
+        self.assertEqual(button.css_class, None)
 
     def test_ctor_buttons_notstrings(self):
         from deform.widget import FormWidget
@@ -116,12 +117,14 @@ class TestButton(unittest.TestCase):
 
     def test_ctor(self):
         button = self._makeOne(name='name', title='title',
-                               type='type', value='value', disabled=True)
+                               type='type', value='value', disabled=True,
+                               css_class='css-class')
         self.assertEqual(button.value, 'value')
         self.assertEqual(button.name, 'name')
         self.assertEqual(button.title, 'title')
         self.assertEqual(button.type, 'type')
         self.assertEqual(button.disabled, True)
+        self.assertEqual(button.css_class, 'css-class')
 
 class TestRaw(unittest.TestCase):
     def _makeOne(self, val):

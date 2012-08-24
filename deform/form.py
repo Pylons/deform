@@ -143,9 +143,13 @@ class Button(object):
 
     disabled
         Render the button as disabled if True.
+
+    css_class
+        The name of the CSS class attached to the button
+        Default: ``None`` (no class).
     """
     def __init__(self, name='submit', title=None, type='submit', value=None,
-                 disabled=False):
+                 disabled=False, css_class=None):
         if title is None:
             title = name.capitalize()
         name = re.sub(r'\s', '_', name)
@@ -156,4 +160,5 @@ class Button(object):
         self.type = type
         self.value = value
         self.disabled = disabled
+        self.css_class = css_class
         
