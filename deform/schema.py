@@ -16,6 +16,9 @@ default_widget_makers = {
     colander.Tuple: widget.TextInputCSVWidget,
 }
 
+# XXX when a new colander release rolls around, set colander.Money to
+# widget.MoneyWidget in defaults.
+
 class FileData(object):
     """
     A type representing file data; used to shuttle data back and forth
