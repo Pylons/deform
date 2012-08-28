@@ -4,7 +4,7 @@
                   oid oid|field.oid;
                   style style|field.widget.style|None"
       tal:omit-tag="">
-    <input type="date"
+    <input type="text"
            name="${name}"
            value="${cstruct}"
            tal:attributes="size size; 
