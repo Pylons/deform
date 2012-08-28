@@ -1,5 +1,5 @@
 <span tal:omit-tag="">
-    <input type="date"
+    <input type="text"
            name="${field.name}"
            value="${cstruct}"
            tal:attributes="size field.widget.size;
