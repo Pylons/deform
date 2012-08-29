@@ -1,5 +1,5 @@
-<li tal:define="css_error  field.widget.error_class                  if field.error            else '';
-                css_class  'deform-item-' + field.widget.css_class   if field.widget.css_class else '';"
+<li tal:define="css_error  field.widget.error_class           if field.error     else '';
+                css_class  'deform-item-' + field.css_class   if field.css_class else '';"
     tal:attributes="class string:field $css_error $css_class"
     title="${field.description}"
     id="item-${field.oid}"

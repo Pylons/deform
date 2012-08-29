@@ -4,7 +4,7 @@
     <label for="${field.oid}">${subject}</label>
     <input type="text" name="${field.name}" value="${cstruct}"
            tal:attributes="size field.widget.size; 
-                           class field.widget.css_class"
+                           class field.css_class"
            id="${field.oid}"/>
   </li>
 
@@ -12,7 +12,7 @@
     <label for="${field.oid}-confirm">${confirm_subject}</label>
     <input type="text" name="${field.name}-confirm" value="${confirm}"
            tal:attributes="size field.widget.size; class
-                           field.widget.css_class"
+                           field.css_class"
            id="${field.oid}-confirm"/>
   </li>
 </ul>

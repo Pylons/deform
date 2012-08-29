@@ -4,7 +4,7 @@
       <tal:def tal:define="(value, title) choice">
         <li class="deformSet-item">
           <input tal:attributes="checked value == cstruct;
-                                 class field.widget.css_class"
+                                 class field.css_class"
                  type="radio"
                  name="${field.oid}"
                  value="${value}"

@@ -1,6 +1,8 @@
 import itertools
+import re
 import colander
 import peppercorn
+import unicodedata
 
 from deform import decorator
 from deform import exception
@@ -81,6 +83,12 @@ class Field(object):
         resource_registry
             The :term:`resource registry` associated with this field.
 
+        css_class
+            The css class added to the field when it is rendered, defaults
+            to a normalized version of the ``name`` attribute (with
+            ``deform-field`` prepended) or the widget's default
+            css_class if one is set.
+        
     *Constructor Arguments*
 
       ``renderer``, ``counter`` and ``resource_registry`` are accepted
@@ -113,7 +121,7 @@ class Field(object):
     default_resource_registry = widget.default_resource_registry
 
     def __init__(self, schema, renderer=None, counter=None,
-                 resource_registry=None, **kw):
+                 resource_registry=None, css_class=None, **kw):
         self.counter = counter or itertools.count()
         self.order = next(self.counter)
         self.oid = 'deformField%s' % self.order
@@ -130,6 +138,8 @@ class Field(object):
         self.description = schema.description
         self.required = schema.required
         self.children = []
+        if css_class is not None:
+            self.css_class = css_class
         self.__dict__.update(kw)
         for child in schema.children:
             self.children.append(Field(child,
@@ -402,6 +412,26 @@ class Field(object):
         the return value will be ``None``."""
         return getattr(self.error, 'msg', None)
 
+    def _get_css_class(self):
+        if hasattr(self, '_css_class'):
+            return self._css_class
+        
+        if self.widget.css_class is not None:
+            return self.widget.css_class
+        
+        if not self.name:
+            return None
+        
+        css_class = unicodedata.normalize('NFKD', unicode(self.name)).encode('ascii', 'ignore')
+        css_class = re.sub('[^\w\s-]', '', css_class).strip().lower()
+        css_class = re.sub('[-\s]+', '-', css_class)
+        return "deform-field-%s" % css_class
+
+    def _set_css_class(self, value):
+        self._css_class = value
+    
+    css_class = property(_get_css_class, _set_css_class)
+    
     def serialize(self, cstruct, readonly=False):
         """ Serialize the cstruct into HTML.  If ``readonly`` is
         ``True``, render a read-only rendering (no input fields)."""

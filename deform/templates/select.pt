@@ -3,7 +3,7 @@
 <select tal:attributes="name field.name;
                         id field.oid;
                         size field.widget.size;
-                        class field.widget.css_class;
+                        class field.css_class;
                         multiple field.widget.multiple">
   <tal:loop tal:repeat="item values">
     <optgroup tal:condition="isinstance(item, field.widget.optgroup_class)"
@@ -11,7 +11,7 @@
       <option tal:repeat="(value, description) item.options"
               tal:attributes="
                  selected (field.widget.multiple and value in cstruct or value == cstruct) and 'selected';
-                 class field.widget.css_class;
+                 class field.css_class;
                  label field.widget.long_label_generator and description;
                  value value"
               tal:content="field.widget.long_label_generator and field.widget.long_label_generator(item.label, description) or description"/>
@@ -19,7 +19,7 @@
     <option tal:condition="not isinstance(item, field.widget.optgroup_class)"
             tal:attributes="
                  selected (field.widget.multiple and item[0] in cstruct or item[0] == cstruct) and 'selected';
-                class field.widget.css_class;
+                class field.css_class;
                 value item[0]">${item[1]}</option>
   </tal:loop>
 </select>
