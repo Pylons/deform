@@ -1,11 +1,10 @@
-<li tal:define="error_class error_class|field.widget.error_class if field.error else '';
-                css_class css_class|field.widget.css_class + '-container' if field.widget.css_class else '';
+<li tal:define="error_class error_class|field.widget.error_class;
                 hidden hidden|field.widget.hidden;
                 description description|field.description;
                 oid oid|field.oid;
                 title title|field.title;
 "
-    tal:attributes="class string:$error_class $css_class"
+    tal:attributes="class field.error and error_class"
     tal:omit-tag="hidden"
     title="${description}" i18n:domain="deform">
   <!-- sequence_item -->

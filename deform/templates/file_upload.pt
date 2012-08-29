@@ -1,7 +1,7 @@
 <div class="deformFileupload"
      tal:define="oid oid|field.oid;
                  size size|field.widget.size;
-                 css_class css_class|field.widget.css_class">
+                 css_class css_class|field.css_class">
 
   ${field.start_mapping()}
 

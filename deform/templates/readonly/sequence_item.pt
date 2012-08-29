@@ -1,5 +1,4 @@
 <li title="${description|field.description}"
-    tal:attributes="class css_class|field.widget.css_class and field.widget.css_class + '-container'"
     tal:omit-tag="hidden|field.widget.hidden">
   <!-- sequence_item -->
   <span tal:replace="structure field.serialize(cstruct, readonly=True)"/>

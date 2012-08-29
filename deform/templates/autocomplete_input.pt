@@ -1,6 +1,6 @@
 <span tal:define="name name|field.name;
                   size size|field.widget.size;
-                  css_class css_class|field.widget.css_class;
+                  css_class css_class|field.css_class;
                   oid oid|field.oid;
                   style style|field.widget.style|None"
       tal:omit-tag="">

@@ -3,7 +3,6 @@
                 category category|field.widget.category;
                 title title|field.title;"
     title="${description}"
-    tal:attributes="class css_class|field.widget.css_class and field.widget.css_class + '-container'"
     tal:omit-tag="hidden or category == 'structural'">
   <!-- mapping_item -->
   <p tal:condition="not (hidden or category == 'structural')"

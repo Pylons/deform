@@ -1,4 +1,4 @@
-<div tal:define="css_class css_class|field.widget.css_class;
+<div tal:define="css_class css_class|field.css_class;
                  oid oid|field.oid;"
      tal:omit-tag="">
 ${field.start_sequence()}
