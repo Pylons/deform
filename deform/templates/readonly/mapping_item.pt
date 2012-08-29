@@ -1,4 +1,5 @@
 <li title="${field.description}"
+    tal:attributes="class field.widget.css_class and 'deform-item-' + field.widget.css_class"
     tal:omit-tag="field.widget.hidden or field.widget.category == 'structural'">
   <!-- mapping_item -->
   <p tal:condition="not (field.widget.hidden or
