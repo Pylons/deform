@@ -13,6 +13,10 @@ Next release
 - Allow SelectWidget to produce <optgroup> HTML tags.  See
   https://github.com/Pylons/deform/pull/87
 
+- Allow ``deform.form.Form`` constructor to accept an ``autocomplete``
+  keyword argument, which controls the ``autocomplete`` attribute of the form
+  tag.
+
 0.9.5 (2012-04-27)
 ------------------
 

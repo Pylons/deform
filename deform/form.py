@@ -46,6 +46,14 @@ class Form(field.Field):
         forms was posted based on the differing values of
         ``__formid__``.  By default, ``formid`` is ``deform``.
 
+    autocomplete
+        Controls this form's ``autocomplete`` attribute.  If ``autocomplete``
+        is ``None``, no autocomplete attribute will be added to the form tag.
+        If ``autocomplete`` is a true value, an ``autocomplete='on'``
+        attribute will be added to the form tag.  If ``autocomplete`` is a
+        false value, an ``autocomplete='off'`` attribute will be added to the
+        form tag.  Default: ``None``.
+
     use_ajax
        If this option is ``True``, the form will use AJAX (actually
        AJAH); when any submit button is clicked, the DOM node related
@@ -92,7 +100,8 @@ class Form(field.Field):
     """
     css_class = 'deform'
     def __init__(self, schema, action='', method='POST', buttons=(),
-                 formid='deform', use_ajax=False, ajax_options='{}', **kw):
+                 formid='deform', use_ajax=False, ajax_options='{}',
+                 autocomplete=None, **kw):
         field.Field.__init__(self, schema, **kw)
         _buttons = []
         for button in buttons:
@@ -104,6 +113,12 @@ class Form(field.Field):
         self.buttons = _buttons
         self.formid = formid
         self.use_ajax = use_ajax
+        if autocomplete is None:
+            self.autocomplete = None
+        elif autocomplete:
+            self.autocomplete = 'on'
+        else:
+            self.autocomplete = 'off'
         self.ajax_options = Raw(ajax_options.strip())
         self.widget = widget.FormWidget()
 

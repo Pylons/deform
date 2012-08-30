@@ -50,6 +50,29 @@ class TestForm(unittest.TestCase):
         self.assertEqual(child.a, 'a')
         self.assertEqual(child.b, 'b')
 
+    def test_ctor_autocomplete_default(self):
+        schema = DummySchema()
+        schema.children = [DummySchema()]
+        form = self._makeOne(schema)
+        self.assertEqual(form.autocomplete, None)
+
+    def test_ctor_autocomplete_None(self):
+        schema = DummySchema()
+        schema.children = [DummySchema()]
+        form = self._makeOne(schema, autocomplete=None)
+        self.assertEqual(form.autocomplete, None)
+
+    def test_ctor_autocomplete_True(self):
+        schema = DummySchema()
+        schema.children = [DummySchema()]
+        form = self._makeOne(schema, autocomplete=True)
+        self.assertEqual(form.autocomplete, 'on')
+
+    def test_ctor_autocomplete_False(self):
+        schema = DummySchema()
+        schema.children = [DummySchema()]
+        form = self._makeOne(schema, autocomplete=False)
+        self.assertEqual(form.autocomplete, 'off')
 
 class TestIssues(unittest.TestCase):
 
