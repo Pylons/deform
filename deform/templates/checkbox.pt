@@ -3,4 +3,5 @@
        id="${field.oid}"
        tal:attributes="checked cstruct == field.widget.true_val;
                        class field.widget.css_class"/>
-
+<label tal:condition="hasattr(field.schema, 'text')" for="${field.oid}"
+  tal:content="field.schema.text" class="checkbox-label" />
