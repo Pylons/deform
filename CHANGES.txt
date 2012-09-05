@@ -4,6 +4,10 @@ Changes
 Next release
 ------------
 
+- Allow ``deform.form.Button`` constructor to accept a ``klass`` keyword
+  argument, which is appended to the defaut ``class`` for the button's
+  tag when rendered. [davidjb]
+
 - Give the preview_url method of the tempstore access to the stored
   item. [tomster]
 

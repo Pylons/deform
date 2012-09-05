@@ -158,9 +158,15 @@ class Button(object):
 
     disabled
         Render the button as disabled if True.
+
+    klass
+        A string or unicode value to append to the default ``class``
+        of the button when rendered (appended to the ``class``
+        attribute of the button or input tag resulting from a form
+        rendering). Default: ``''`` (empty string).
     """
     def __init__(self, name='submit', title=None, type='submit', value=None,
-                 disabled=False):
+                 disabled=False, klass=''):
         if title is None:
             title = name.capitalize()
         name = re.sub(r'\s', '_', name)
@@ -171,4 +177,5 @@ class Button(object):
         self.type = type
         self.value = value
         self.disabled = disabled
+        self.klass = klass
         

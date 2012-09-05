@@ -42,7 +42,7 @@
               id="${field.formid+button.name}"
               name="${button.name}"
               type="${button.type}"
-              class="btnText submit"
+              class="btnText submit ${button.klass}"
               value="${button.value}">
             <span>${button.title}</span>
           </button>

@@ -139,12 +139,14 @@ class TestButton(unittest.TestCase):
 
     def test_ctor(self):
         button = self._makeOne(name='name', title='title',
-                               type='type', value='value', disabled=True)
+                               type='type', value='value', disabled=True,
+                               klass='dom-class')
         self.assertEqual(button.value, 'value')
         self.assertEqual(button.name, 'name')
         self.assertEqual(button.title, 'title')
         self.assertEqual(button.type, 'type')
         self.assertEqual(button.disabled, True)
+        self.assertEqual(button.klass, 'dom-class')
 
 class TestRaw(unittest.TestCase):
     def _makeOne(self, val):
