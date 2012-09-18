@@ -17,6 +17,10 @@ Next release
   keyword argument, which controls the ``autocomplete`` attribute of the form
   tag.
 
+- Allow ``deform.widget.SequenceWidget`` constructor to accept an ``orderable``
+  keyword argument.  Default is ``False``.  If ``True``, allow drag-and-drop
+  reordering of SequenceWidget items (via jQuery UI Sortable).
+
 0.9.5 (2012-04-27)
 ------------------
 

@@ -115,10 +115,11 @@ var deform  = {
         var min_len = parseInt($before_node.attr('min_len')||'0');
         var max_len = parseInt($before_node.attr('max_len')||'9999');
         var now_len = parseInt($before_node.attr('now_len')||'0');
+        var orderable = parseInt($before_node.attr('orderable')||'0');
         if (now_len < max_len) {
             deform.addSequenceItem($proto_node, $before_node);
             deform.processSequenceButtons($oid_node, min_len, max_len, 
-                                          now_len+1);
+                                          now_len+1, orderable);
         };
         return false;
     },
@@ -130,16 +131,18 @@ var deform  = {
         var min_len = parseInt($before_node.attr('min_len')||'0');
         var max_len = parseInt($before_node.attr('max_len')||'9999');
         var now_len = parseInt($before_node.attr('now_len')||'0');
+        var orderable = parseInt($before_node.attr('orderable')||'0');
         if (now_len > min_len) {
             $before_node.attr('now_len', now_len - 1);
             $item_node.remove();
             deform.processSequenceButtons($oid_node, min_len, max_len, 
-                                          now_len-1);
+                                          now_len-1, orderable);
         };
         return false;
     },
 
-    processSequenceButtons: function(oid_node, min_len, max_len, now_len) {
+    processSequenceButtons: function(oid_node, min_len, max_len, now_len,
+                                     orderable) {
         var $ul = oid_node.children('ul');
         var $lis = $ul.children('li');
         $lis.find('.deformClosebutton').removeClass('deformClosebuttonActive');
@@ -150,6 +153,13 @@ var deform  = {
         if (now_len >= max_len) {
             oid_node.children('.deformSeqAdd').hide();
         };
+        if (orderable) {
+            if (now_len > 1) {
+                $lis.find('.deformOrderbutton').addClass('deformOrderbuttonActive');
+            } else {
+                $lis.find('.deformOrderbutton').removeClass('deformOrderbuttonActive');
+            }
+        }
     },
 
     maybeScrollIntoView: function(element_id) {
