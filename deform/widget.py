@@ -1167,6 +1167,11 @@ class SequenceWidget(Widget):
         ``None`` (meaning no maximum).  The JavaScript sequence management
         will not allow more than this many subwidgets to be added to the
         sequence.
+
+    orderable
+        Boolean indicating whether the Javascript sequence management will
+        allow the user to explicitly re-order the subwidgets.
+        Default: ``False``.
     """
     template = 'sequence'
     readonly_template = 'readonly/sequence'
@@ -1177,7 +1182,9 @@ class SequenceWidget(Widget):
     render_initial_item = False
     min_len = None
     max_len = None
-    requirements = ( ('deform', None), )
+    orderable = False
+    # Require 'jqueryui' for jquery.ui.sortable.js (needed if orderable).
+    requirements = ( ('deform', None), ('jqueryui', None), )
 
     def prototype(self, field):
         # we clone the item field to bump the oid (for easier

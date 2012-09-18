@@ -28,7 +28,8 @@
 
 /* deform additions*/
 
-.deformClosebuttonActive {
+.deformClosebuttonActive,
+.deformOrderbuttonActive {
    border: 0;
    cursor: pointer;
    float: left;
@@ -40,7 +41,12 @@
 .deformClosebuttonActive:before {
     content:"✖";
     color:red;
-    margin-right: 2px;
+    margin-right: 5px;
+}
+
+.deformOrderbuttonActive:before {
+    content:"↕";
+    margin-right: 5px;
 }
 
 a.deformSeqAdd:visited {
