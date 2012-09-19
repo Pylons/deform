@@ -52,7 +52,7 @@ var deform  = {
         //   that has the string ``deformField(\d+)`` within it, and modify 
         //   its id to have a random component.
         // - For each label referencing an change id, change the label's
-        //   htmlFor attribute to the new id.
+        //   for attribute to the new id.
 
         var fieldmatch = /deformField(\d+)/;
         var namematch = /(.+)?-[#]{3}/;
@@ -73,9 +73,9 @@ var deform  = {
             var newid = oldid.replace(fieldmatch, "deformField$1-" + genid);
             $node.attr('id', newid);
             idmap[oldid] = newid;
-            var labelselector = 'label[htmlFor=' + oldid + ']';
+            var labelselector = 'label[for=' + oldid + ']';
             var $fornodes = $htmlnode.find(labelselector);
-            $fornodes.attr('htmlFor', newid);
+            $fornodes.attr('for', newid);
             });
 
         // replace names a containing ```deformField`` like we do for ids
@@ -115,10 +115,11 @@ var deform  = {
         var min_len = parseInt($before_node.attr('min_len')||'0');
         var max_len = parseInt($before_node.attr('max_len')||'9999');
         var now_len = parseInt($before_node.attr('now_len')||'0');
+        var orderable = parseInt($before_node.attr('orderable')||'0');
         if (now_len < max_len) {
             deform.addSequenceItem($proto_node, $before_node);
             deform.processSequenceButtons($oid_node, min_len, max_len, 
-                                          now_len+1);
+                                          now_len+1, orderable);
         };
         return false;
     },
@@ -130,16 +131,18 @@ var deform  = {
         var min_len = parseInt($before_node.attr('min_len')||'0');
         var max_len = parseInt($before_node.attr('max_len')||'9999');
         var now_len = parseInt($before_node.attr('now_len')||'0');
+        var orderable = parseInt($before_node.attr('orderable')||'0');
         if (now_len > min_len) {
             $before_node.attr('now_len', now_len - 1);
             $item_node.remove();
             deform.processSequenceButtons($oid_node, min_len, max_len, 
-                                          now_len-1);
+                                          now_len-1, orderable);
         };
         return false;
     },
 
-    processSequenceButtons: function(oid_node, min_len, max_len, now_len) {
+    processSequenceButtons: function(oid_node, min_len, max_len, now_len,
+                                     orderable) {
         var $ul = oid_node.children('ul');
         var $lis = $ul.children('li');
         $lis.find('.deformClosebutton').removeClass('deformClosebuttonActive');
@@ -150,6 +153,13 @@ var deform  = {
         if (now_len >= max_len) {
             oid_node.children('.deformSeqAdd').hide();
         };
+        if (orderable) {
+            if (now_len > 1) {
+                $lis.find('.deformOrderbutton').addClass('deformOrderbuttonActive');
+            } else {
+                $lis.find('.deformOrderbutton').removeClass('deformOrderbuttonActive');
+            }
+        }
     },
 
     maybeScrollIntoView: function(element_id) {

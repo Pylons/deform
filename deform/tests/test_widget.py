@@ -1018,7 +1018,7 @@ class TestFileUploadWidget(unittest.TestCase):
         self.assertEqual(result['filename'], 'filename')
         self.assertEqual(result['mimetype'], 'mimetype')
         self.assertEqual(result['size'], 'size')
-        self.assertEqual(result['preview_url'], 'preview_url')
+        self.assertEqual(result['preview_url'], 'http://localhost/filename')
         self.assertEqual(tmpstore[uid], result)
 
     def test_deserialize_file_selected_with_previous_file(self):
@@ -1033,7 +1033,7 @@ class TestFileUploadWidget(unittest.TestCase):
         self.assertEqual(result['filename'], 'filename')
         self.assertEqual(result['mimetype'], 'mimetype')
         self.assertEqual(result['size'], 'size')
-        self.assertEqual(result['preview_url'], 'preview_url')
+        self.assertEqual(result['preview_url'], 'http://localhost/filename')
         self.assertEqual(tmpstore['uid'], result)
 
     def test_deserialize_file_selected_with_previous_file_IE_whole_path(self):
@@ -1049,7 +1049,7 @@ class TestFileUploadWidget(unittest.TestCase):
         self.assertEqual(result['filename'], 'baz.pt')
         self.assertEqual(result['mimetype'], 'mimetype')
         self.assertEqual(result['size'], 'size')
-        self.assertEqual(result['preview_url'], 'preview_url')
+        self.assertEqual(result['preview_url'], 'http://localhost/baz.pt')
         self.assertEqual(tmpstore['uid'], result)
 
 class TestDatePartsWidget(unittest.TestCase):
@@ -1795,6 +1795,16 @@ class TestNormalizeChoices(unittest.TestCase):
         self.assertEqual(self._call(((1, 'description'),)),
                          [('1', 'description')])
 
+    def test_optgroup_and_tuple(self):
+        from deform.widget import OptGroup
+        optgroup = OptGroup('label', (2, 'two'))
+        normalized = self._call(((1, 'description'), optgroup))
+        self.assertEqual(len(normalized), 2)
+        self.assertEqual(normalized[0], ('1', 'description'))
+        self.assertTrue(isinstance(normalized[1], OptGroup))
+        self.assertEqual(normalized[1].label, 'label')
+        self.assertEqual(normalized[1].options, (('2', 'two'), ))
+
 class DummyRenderer(object):
     def __init__(self, result=''):
         self.result = result
@@ -1855,7 +1865,7 @@ class DummyField(object):
 
 class DummyTmpStore(dict):
     def preview_url(self, uid):
-        return 'preview_url'
+        return 'http://localhost/%s' % self[uid]['filename']
 
 class DummyUpload(object):
     file = 'fp'

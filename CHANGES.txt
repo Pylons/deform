@@ -4,8 +4,22 @@ Changes
 Next release
 ------------
 
+- Give the preview_url method of the tempstore access to the stored
+  item. [tomster]
+
 - Fixed remove bug in nested sequences.  See
   https://github.com/Pylons/deform/pull/89
+
+- Allow SelectWidget to produce <optgroup> HTML tags.  See
+  https://github.com/Pylons/deform/pull/87
+
+- Allow ``deform.form.Form`` constructor to accept an ``autocomplete``
+  keyword argument, which controls the ``autocomplete`` attribute of the form
+  tag.
+
+- Allow ``deform.widget.SequenceWidget`` constructor to accept an ``orderable``
+  keyword argument.  Default is ``False``.  If ``True``, allow drag-and-drop
+  reordering of SequenceWidget items (via jQuery UI Sortable).
 
 0.9.5 (2012-04-27)
 ------------------

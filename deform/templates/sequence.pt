@@ -5,6 +5,7 @@
                  min_len field.widget.min_len or 0;
                  max_len field.widget.max_len or 100000;
                  now_len len(subfields);
+                 orderable field.widget.orderable and 1 or 0;
                  prototype field.widget.prototype(field)">
 
   <!-- sequence -->
@@ -13,7 +14,7 @@
          class="deformProto" 
          tal:attributes="prototype prototype"/>
 
-  <ul>
+  <ul id="${field.oid}-orderable">
 
     <div tal:repeat="tup subfields"
          tal:replace="structure rndr(item_tmpl, field=tup[1], cstruct=tup[0],
@@ -22,7 +23,8 @@
     <span class="deformInsertBefore" 
           tal:attributes="min_len min_len; 
                           max_len max_len; 
-                          now_len now_len"></span>
+                          now_len now_len;
+                          orderable orderable;"></span>
 
   </ul>
   
@@ -39,9 +41,13 @@
        function(oid) {
          oid_node = $('#'+ oid);
          deform.processSequenceButtons(oid_node, ${min_len}, 
-                                       ${max_len}, ${now_len});
+                                       ${max_len}, ${now_len}, ${orderable});
        }
      )
+     <tal:block condition="orderable">
+
+     $( "#${field.oid}-orderable" ).sortable({handle: "span.deformOrderbutton"});
+     </tal:block>
   </script>
 
   <input type="hidden" name="__end__" value="${field.name}:sequence"/>

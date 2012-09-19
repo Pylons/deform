@@ -32,7 +32,7 @@ requires = [
     'Chameleon>=1.2.3', # debug arg
     'colander>=0.8', # Bindings-providing
     'peppercorn>=0.3', # rename operation type
-    'translationstring',
+    'translationstring>=1.0', # add format mapping with %
     ]
 
 testing_extras = ['nose', 'coverage', 'beautifulsoup4']
@@ -63,6 +63,7 @@ setupkw = dict(
     zip_safe=False,
     tests_require=requires + ['beautifulsoup4'],
     install_requires=requires,
+    setup_requires=['setuptools_git'],
     test_suite="deform",
       extras_require = {
           'testing':testing_extras,
