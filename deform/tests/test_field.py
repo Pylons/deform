@@ -329,6 +329,21 @@ class TestField(unittest.TestCase):
         field.children = [child]
         self.assertFalse('nope' in field)
 
+    def test___delitem__success(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        child = DummyField()
+        field.children = [child]
+        del field['name']
+        self.assertEqual(field.children, [])
+
+    def test___delitem__failure(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        child = DummyField()
+        field.children = [child]
+        self.assertRaises(KeyError, field.__delitem__, 'nope')
+
     def test_errormsg_error_None(self):
         schema = DummySchema()
         field = self._makeOne(schema)

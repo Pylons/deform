@@ -207,6 +207,16 @@ class Field(object):
                 return child
         raise KeyError(name)
 
+    def __delitem__(self, name):
+        """ Delete the named subfield if it exists in this field's child
+        list.  A :exc:`KeyError` is raised if a subfield does not exist named
+        ``name``."""
+        for num, child in enumerate(self.children):
+            if child.name == name:
+                del self.children[num]
+                return
+        raise KeyError(name)
+
     def __contains__(self, name):
         for child in self.children:
             if child.name == name:

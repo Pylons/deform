@@ -25,6 +25,9 @@ Next release
   ``True`` if the named field is a subfield of the field on which it is
   called.
 
+- ``deform.field.Field`` now has a ``__delitem__`` method, which removes
+  the subfield matching the name it's passed if it exists.
+
 - ``deform.field.Field`` now has a ``validate_pstruct`` method which works
   like ``validate`` except it accepts a pstruct directly instead of accepting
   a list of controls.
