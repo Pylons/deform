@@ -167,8 +167,8 @@ class Field(object):
 
     def translate(self, msgid):
         """ Use the translator passed to the renderer of this field to
-        translate the msgid into a term.  If the renderer does not have a
-        translator, this method will return the msgid."""
+        translate the msgid into a term and return the term.  If the renderer
+        does not have a translator, this method will return the msgid."""
         translate = getattr(self.renderer, 'translate', None)
         if translate is not None:
             return translate(msgid)
@@ -403,19 +403,20 @@ class Field(object):
         return getattr(self.error, 'msg', None)
 
     def serialize(self, cstruct, readonly=False):
-        """ Serialize the cstruct into HTML.  If ``readonly`` is
-        ``True``, render a read-only rendering (no input fields)."""
+        """ Serialize the cstruct into HTML and return the HTML string.  If
+        ``readonly`` is ``True``, render a read-only rendering (no input
+        fields)."""
         return self.widget.serialize(self, cstruct=cstruct, readonly=readonly)
 
     def deserialize(self, pstruct):
-        """ Deserialize the pstruct into a cstruct."""
+        """ Deserialize the pstruct into a cstruct and return the cstruct."""
         return self.widget.deserialize(self, pstruct)
 
     def render(self, appstruct=colander.null, readonly=False):
-        """ Render the field (or form) to HTML using ``appstruct`` as
-        a set of default values.  ``appstruct`` is typically a
-        dictionary of application values matching the schema used by
-        this form, or ``None``.
+        """ Render the field (or form) to HTML using ``appstruct`` as a set
+        of default values and returns the HTML string.  ``appstruct`` is
+        typically a dictionary of application values matching the schema used
+        by this form, or ``None``.
 
         Calling this method is the same as calling::
 
