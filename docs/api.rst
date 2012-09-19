@@ -11,6 +11,8 @@ Form-Related
 
    .. automethod:: __getitem__
 
+   .. automethod:: __delitem__
+
    .. automethod:: __iter__
 
    .. automethod:: __contains__
