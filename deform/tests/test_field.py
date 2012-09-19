@@ -315,6 +315,20 @@ class TestField(unittest.TestCase):
         field.children = [child]
         self.assertRaises(KeyError, field.__getitem__, 'nope')
 
+    def test___contains__success(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        child = DummyField()
+        field.children = [child]
+        self.assertTrue('name' in field)
+        
+    def test___contains__fail(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        child = DummyField()
+        field.children = [child]
+        self.assertFalse('nope' in field)
+
     def test_errormsg_error_None(self):
         schema = DummySchema()
         field = self._makeOne(schema)

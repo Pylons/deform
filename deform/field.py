@@ -207,6 +207,12 @@ class Field(object):
                 return child
         raise KeyError(name)
 
+    def __contains__(self, name):
+        for child in self.children:
+            if child.name == name:
+                return True
+        return False
+
     def clone(self):
         """ Clone the field and its subfields, retaining attribute
         information.  Return the cloned field.  The ``order``
@@ -433,7 +439,7 @@ class Field(object):
         cstruct = self.schema.serialize(appstruct)
         return self.serialize(cstruct, readonly=readonly)
 
-    def validate(self, controls):
+    def validate(self, controls, subcontrol=None):
         """
         Validate the set of controls returned by a form submission
         against the schema associated with this field or form.
@@ -499,8 +505,31 @@ class Field(object):
                   return {'form':e.render()}
           else:
               return {'form':form.render()} # the form just needs rendering
+
         """
         pstruct = peppercorn.parse(controls)
+        return self.validate_pstruct(pstruct)
+
+    def validate_pstruct(self, pstruct):
+        """
+        Validate the pstruct passed.  Works exactly like the
+        :class:`deform.field.validate` method, except it accepts a pstruct
+        instead of a set of form controls.  A usage example follows::
+        
+          if 'submit' in request.POST:  # the form submission needs validation
+              controls = request.POST.items()
+              pstruct = peppercorn.parse(controls)
+              substruct = pstruct['submapping']
+              try:
+                  deserialized = form.validate_pstruct(substruct)
+                  do_something(deserialized)
+                  return HTTPFound(location='http://example.com/success')
+              except ValidationFailure, e:
+                  return {'form':e.render()}
+          else:
+              return {'form':form.render()} # the form just needs rendering
+        """
+        
         exc = None
 
         try:
