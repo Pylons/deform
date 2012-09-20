@@ -1190,6 +1190,7 @@ class SequenceWidget(Widget):
         # we clone the item field to bump the oid (for easier
         # automated testing; finding last node)
         item_field = field.children[0].clone()
+        # Ref #79 : call the serialize method of subnodes
         proto = field.renderer(self.item_template, field=item_field,
                             cstruct=item_field.schema.serialize(null),
                             parent=field)
@@ -1225,8 +1226,13 @@ class SequenceWidget(Widget):
         else:
             # this serialization is being performed as a result of a
             # first-time rendering
-            subfields = [  (item_field.schema.serialize(val),
-                            item_field.clone()) for val in cstruct ]
+            subfields = []
+            for val in cstruct:
+                if val == null:
+                    # Ref #79 : if val is null maybe some default
+                    # should be set by subnodes
+                    val = item_field.schema.serialize(val)
+                subfields.append((val, item_field.clone()))
 
         template = readonly and self.readonly_template or self.template
         translate = field.translate
