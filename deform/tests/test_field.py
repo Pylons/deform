@@ -351,6 +351,21 @@ class TestField(unittest.TestCase):
         result = field.validate(fields)
         self.assertEqual(result, {'name':'Name', 'title':'Title'})
 
+    def test_validate_succeeds_subcontrol(self):
+        fields = [
+            ('a', 'one'),
+            ('__start__', 'sub:mapping'),
+            ('name', 'Name'),
+            ('title', 'Title'),
+            ('__end__', 'sub:mapping'),
+            ('b', 'two'),
+            ]
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        field.widget = DummyWidget()
+        result = field.validate(fields, subcontrol='sub')
+        self.assertEqual(result, {'name':'Name', 'title':'Title'})
+
     def test_validate_fails_widgeterror(self):
         from colander import Invalid
         fields = [

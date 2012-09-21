@@ -506,8 +506,18 @@ class Field(object):
           else:
               return {'form':form.render()} # the form just needs rendering
 
+        If ``subcontrol`` is supplied, it represents a named subitem in the
+        data returned by ``peppercorn.parse(controls)``.  Use this subitem as
+        the pstruct to validate instead of using the entire result of
+        ``peppercorn.parse(controls)`` as the pstruct to validate.  For
+        example, if you've embedded a mapping in the form named ``user``, and
+        you want to validate only the data contained in that mapping instead
+        if all of the data in the form post, you might use
+        ``form.validate(controls, subcontrol='user').
         """
         pstruct = peppercorn.parse(controls)
+        if subcontrol is not None:
+            pstruct = pstruct.get(subcontrol, colander.null)
         return self.validate_pstruct(pstruct)
 
     def validate_pstruct(self, pstruct):
@@ -559,3 +569,4 @@ class Field(object):
             id(self),
             self.schema.name,
             )
+

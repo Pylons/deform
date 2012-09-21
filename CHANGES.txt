@@ -29,6 +29,9 @@ Next release
   like ``validate`` except it accepts a pstruct directly instead of accepting
   a list of controls.
 
+- ``deform.field.Field.validate`` now accepts a ``subcontrol`` argument for
+  validating a submapping of a form.
+
 0.9.5 (2012-04-27)
 ------------------
 
