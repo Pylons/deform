@@ -138,10 +138,6 @@ class Field(object):
                                        resource_registry=resource_registry,
                                        **kw))
 
-    def __iter__(self):
-        """ Iterate over the children fields of this field. """
-        return iter(self.children)
-
     @classmethod
     def set_zpt_renderer(cls, search_path, auto_reload=True,
                          debug=True, encoding='utf-8',
@@ -164,15 +160,6 @@ class Field(object):
             encoding=encoding,
             translator=translator,
             )
-
-    def translate(self, msgid):
-        """ Use the translator passed to the renderer of this field to
-        translate the msgid into a term and return the term.  If the renderer
-        does not have a translator, this method will return the msgid."""
-        translate = getattr(self.renderer, 'translate', None)
-        if translate is not None:
-            return translate(msgid)
-        return msgid
 
     @classmethod
     def set_default_renderer(cls, renderer):
@@ -198,6 +185,19 @@ class Field(object):
         Calling this method resets the default :term:`resource registry`.
         """
         cls.default_resource_registry = registry
+
+    def translate(self, msgid):
+        """ Use the translator passed to the renderer of this field to
+        translate the msgid into a term and return the term.  If the renderer
+        does not have a translator, this method will return the msgid."""
+        translate = getattr(self.renderer, 'translate', None)
+        if translate is not None:
+            return translate(msgid)
+        return msgid
+
+    def __iter__(self):
+        """ Iterate over the children fields of this field. """
+        return iter(self.children)
 
     def __getitem__(self, name):
         """ Return the subfield of this field named ``name`` or raise
