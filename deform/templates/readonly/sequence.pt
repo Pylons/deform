@@ -3,8 +3,12 @@
                  tmpl field.widget.readonly_item_template">
   <!-- sequence -->
 
-  <div tal:repeat="tup subfields"
-       tal:content="structure rndr(tmpl, field=tup[1], cstruct=tup[0])"/>
+  <ul>
+
+    <div tal:repeat="tup subfields"
+         tal:content="structure rndr(tmpl, field=tup[1], cstruct=tup[0])"/>
+
+  </ul>
 
   <!-- /sequence -->
 </div>
