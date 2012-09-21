@@ -1235,7 +1235,7 @@ class TestSequenceWidget(unittest.TestCase):
         schema = DummySchema()
         field = DummyField(schema, renderer)
         widget = self._makeOne()
-        protofield = DummyField()
+        protofield = DummyField(schema)
         field.children=[protofield]
         result = widget.prototype(field)
         self.assertEqual(type(result), str)
@@ -1248,7 +1248,7 @@ class TestSequenceWidget(unittest.TestCase):
         schema = DummySchema()
         field = DummyField(schema, renderer)
         widget = self._makeOne()
-        protofield = DummyField()
+        protofield = DummyField(schema)
         field.children=[protofield]
         result = widget.prototype(field)
         self.assertEqual(type(result), str)
@@ -1289,7 +1289,7 @@ class TestSequenceWidget(unittest.TestCase):
         renderer = DummyRenderer('abc')
         schema = DummySchema()
         field = DummyField(schema, renderer)
-        inner = DummyField()
+        inner = DummyField(schema)
         field.children=[inner]
         widget = self._makeOne()
         widget.render_initial_item = True
@@ -1305,7 +1305,7 @@ class TestSequenceWidget(unittest.TestCase):
         renderer = DummyRenderer('abc')
         schema = DummySchema()
         field = DummyField(schema, renderer)
-        inner = DummyField()
+        inner = DummyField(schema)
         field.children=[inner]
         widget = self._makeOne()
         widget.min_len = 2
@@ -1321,7 +1321,7 @@ class TestSequenceWidget(unittest.TestCase):
         renderer = DummyRenderer('abc')
         schema = DummySchema()
         field = DummyField(schema, renderer)
-        inner = DummyField()
+        inner = DummyField(schema)
         field.children=[inner]
         widget = self._makeOne()
         widget.min_len = 1
@@ -1824,11 +1824,17 @@ class DummyWidget(object):
             raise self.exc
         return pstruct
 
+    def serialize(self, field, cstruct):
+        if self.exc:
+            raise self.exc
+        return cstruct
+
     def handle_error(self, field, error):
         self.error = error
 
 class DummySchema(object):
-    pass
+    def serialize(self, cstruct):
+        return cstruct
 
 class DummyInvalid(object):
     pos = 0
@@ -1854,6 +1860,9 @@ class DummyField(object):
     def clone(self):
         self.cloned = True
         return self
+
+    def serialize(self, cstruct):
+        return self.widget.serialize(self, cstruct)
 
     def deserialize(self, pstruct):
         return self.widget.deserialize(self, pstruct)
