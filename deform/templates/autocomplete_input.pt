@@ -1,7 +1,7 @@
 <span tal:omit-tag="">
     <input type="text"
            name="${field.name}"
-           value="${cstruct}" 
+           value="${cstruct}"
            tal:attributes="size field.widget.size;
                            class field.widget.css_class"
            id="${field.oid}"/>
@@ -9,7 +9,7 @@
       deform.addCallback(
         '${field.oid}',
         function (oid) {
-            $('#' + oid).autocomplete({source: ${values}});
+            $('#' + oid).autocomplete({source: ${structure:values}});
             $('#' + oid).autocomplete("option", ${options});
         }
       );
