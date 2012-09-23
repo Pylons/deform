@@ -341,18 +341,18 @@ class TestField(unittest.TestCase):
         self.assertEqual(field.errormsg, 'abc')
 
     def test_validate_succeeds(self):
-        fields = [
+        controls = [
             ('name', 'Name'),
             ('title', 'Title'),
             ]
         schema = DummySchema()
         field = self._makeOne(schema)
         field.widget = DummyWidget()
-        result = field.validate(fields)
+        result = field.validate(controls)
         self.assertEqual(result, {'name':'Name', 'title':'Title'})
 
     def test_validate_succeeds_subcontrol(self):
-        fields = [
+        controls = [
             ('a', 'one'),
             ('__start__', 'sub:mapping'),
             ('name', 'Name'),
@@ -363,28 +363,28 @@ class TestField(unittest.TestCase):
         schema = DummySchema()
         field = self._makeOne(schema)
         field.widget = DummyWidget()
-        result = field.validate(fields, subcontrol='sub')
+        result = field.validate(controls, subcontrol='sub')
         self.assertEqual(result, {'name':'Name', 'title':'Title'})
 
     def test_validate_fails_widgeterror(self):
         from colander import Invalid
-        fields = [
+        controls = [
             ('name', 'Name'),
             ('title', 'Title'),
             ]
-        invalid = Invalid(None, None, dict(fields))
+        invalid = Invalid(None, None, dict(controls))
         schema = DummySchema()
         field = self._makeOne(schema)
         field.widget = DummyWidget(exc=invalid)
-        e = validation_failure_exc(field.validate, fields)
+        e = validation_failure_exc(field.validate, controls)
         self.assertEqual(field.widget.error, invalid)
-        self.assertEqual(e.cstruct, dict(fields))
+        self.assertEqual(e.cstruct, dict(controls))
         self.assertEqual(e.field, field)
         self.assertEqual(e.error, invalid)
 
     def test_validate_fails_schemaerror(self):
         from colander import Invalid
-        fields = [
+        controls = [
             ('name', 'Name'),
             ('title', 'Title'),
             ]
@@ -392,7 +392,7 @@ class TestField(unittest.TestCase):
         schema = DummySchema(invalid)
         field = self._makeOne(schema)
         field.widget = DummyWidget()
-        e = validation_failure_exc(field.validate, fields)
+        e = validation_failure_exc(field.validate, controls)
         self.assertEqual(field.widget.error, invalid)
         self.assertEqual(e.cstruct, {'name':'Name', 'title':'Title'})
         self.assertEqual(e.field, field)
@@ -400,18 +400,18 @@ class TestField(unittest.TestCase):
 
     def test_validate_fails_widgeterror_and_schemaerror(self):
         from colander import Invalid
-        fields = [
+        controls = [
             ('name', 'Name'),
             ('title', 'Title'),
             ]
-        widget_invalid = Invalid(None, None, dict(fields))
+        widget_invalid = Invalid(None, None, dict(controls))
         schema_invalid = Invalid(None, None)
         schema = DummySchema(schema_invalid)
         field = self._makeOne(schema)
         field.widget = DummyWidget(exc=widget_invalid)
-        e = validation_failure_exc(field.validate, fields)
+        e = validation_failure_exc(field.validate, controls)
         self.assertEqual(field.widget.error, schema_invalid)
-        self.assertEqual(e.cstruct, dict(fields))
+        self.assertEqual(e.cstruct, dict(controls))
         self.assertEqual(e.field, field)
         self.assertEqual(e.error, schema_invalid)
 
@@ -493,6 +493,9 @@ class DummySchema(object):
     def serialize(self, value):
         return value
 
+    def cstruct_children(self, cstruct):
+        return []
+
 class DummyType(object):
     def __init__(self, maker=None):
         self.widget_maker = maker
@@ -507,7 +510,8 @@ class DummyWidget(object):
             raise self.exc
         return pstruct
 
-    def serialize(self, field, cstruct=None, readonly=True):
+    def serialize(self, field, cstruct, **kw):
+        readonly = kw.get('readonly', False)
         self.rendered = readonly and 'readonly' or 'writable'
         return cstruct
 

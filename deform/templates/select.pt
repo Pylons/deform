@@ -1,3 +1,4 @@
+<div tal:omit-tag="">
 <input type="hidden" name="__start__" value="${field.name}:sequence"
   tal:condition="field.widget.multiple" />
 <select tal:attributes="name field.name;

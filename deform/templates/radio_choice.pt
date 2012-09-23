@@ -1,5 +1,5 @@
 <ul class="deformSet"> 
-    <input type="hidden" name="__start__" value="${field.name}:rename"/>
+    ${structure:field.start_rename()}
     <tal:loop tal:repeat="choice values">
       <tal:def tal:define="(value, title) choice">
         <li class="deformSet-item">
@@ -13,6 +13,6 @@
         </li>
       </tal:def>
     </tal:loop>
-    <input type="hidden" name="__end__"/>
+    ${structure:field.end_rename()}
 </ul>
 

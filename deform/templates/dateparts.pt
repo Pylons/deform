@@ -1,5 +1,5 @@
 <span i18n:domain="deform" tal:omit-tag="">
-<input type="hidden" name="__start__" value="${field.name}:mapping"/>
+${structure:field.start_mapping()}
 <ul class="inline">
   <li>
 	  <label for="${field.oid}" i18n:translate="">Year</label>
@@ -23,5 +23,5 @@
 	         id="${field.oid}-day"/>
   </li>
 </ul>
-<input type="hidden" name="__end__" value="${field.name}:mapping"/>
+${structure:field.end_mapping()}
 </span>

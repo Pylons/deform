@@ -8,6 +8,14 @@ from deform import template
 from deform import widget
 from deform import schema
 
+class _Marker(object):
+    def __repr__(self):
+        return 'Default'
+
+    __str__ = __repr__
+
+_marker = _Marker()
+
 class Field(object):
     """ Represents an individual form field (a visible object in a
     form rendering).
@@ -81,6 +89,12 @@ class Field(object):
         resource_registry
             The :term:`resource registry` associated with this field.
 
+        appstruct
+            The default appstruct to use to prepopulate field values related
+            to this form's schema.  If it is not passed, the form's fields
+            will be rendered without any initial values unless an appstruct
+            is supplied to the ``render`` method explicitly.
+
     *Constructor Arguments*
 
       ``renderer``, ``counter`` and ``resource_registry`` are accepted
@@ -109,11 +123,12 @@ class Field(object):
     """
 
     error = None
+    _cstruct = colander.null
     default_renderer = template.default_renderer
     default_resource_registry = widget.default_resource_registry
 
     def __init__(self, schema, renderer=None, counter=None,
-                 resource_registry=None, **kw):
+                 resource_registry=None, appstruct=_marker, **kw):
         self.counter = counter or itertools.count()
         self.order = next(self.counter)
         self.oid = 'deformField%s' % self.order
@@ -137,6 +152,8 @@ class Field(object):
                                        counter=self.counter,
                                        resource_registry=resource_registry,
                                        **kw))
+        if appstruct is not _marker:
+            self.set_appstruct(appstruct)
 
     @classmethod
     def set_zpt_renderer(cls, search_path, auto_reload=True,
@@ -408,36 +425,66 @@ class Field(object):
         the return value will be ``None``."""
         return getattr(self.error, 'msg', None)
 
-    def serialize(self, cstruct, readonly=False):
-        """ Serialize the cstruct into HTML and return the HTML string.  If
-        ``readonly`` is ``True``, render a read-only rendering (no input
-        fields)."""
-        return self.widget.serialize(self, cstruct=cstruct, readonly=readonly)
+    def serialize(self, cstruct=_marker, **kw):
+        """ Serialize the cstruct into HTML and return the HTML string.  This
+        function just turns around and calls ``self.widget.serialize(cstruct,
+        **kw)``; therefore the field widget's ``serialize`` method should be
+        expecting any values sent in ``kw``.  If ``cstruct`` is not passed,
+        the cstruct attached to this node will be used.
+
+        .. note::
+
+           Deform versions before 0.9.8 only accepted a ``readonly``
+           keyword argument to this function.  Version 0.9.8 and later accept
+           arbitrary keyword arguments.  It also required that
+           ``cstruct`` was passed.
+        """
+        if cstruct is _marker:
+            cstruct = self.cstruct
+        field = kw.pop('field', self)
+        return self.widget.serialize(field, cstruct, **kw)
 
     def deserialize(self, pstruct):
         """ Deserialize the pstruct into a cstruct and return the cstruct."""
         return self.widget.deserialize(self, pstruct)
 
-    def render(self, appstruct=colander.null, readonly=False):
+    def render(self, appstruct=_marker, **kw):
         """ Render the field (or form) to HTML using ``appstruct`` as a set
         of default values and returns the HTML string.  ``appstruct`` is
         typically a dictionary of application values matching the schema used
-        by this form, or ``None``.
+        by this form, or ``colander.null`` to render all defaults.  If it
+        is omitted, the rendering will use the ``appstruct`` passed to the
+        constructor.
 
-        Calling this method is the same as calling::
+        Calling this method passing an appstruct is the same as calling::
 
-           cstruct = form.schema.serialize(appstruct)
-           form.widget.serialize(field, cstruct)
+           cstruct = form.set_appstruct(appstruct)
+           form.serialize(cstruct, **kw)
 
-        The ``readonly`` argument causes the rendering to be entirely
-        read-only (no input elements at all).
+        Calling this method without passing an appstruct is the same as
+        calling::
+
+           cstruct = form.cstruct
+           form.serialize(cstruct, **kw)
 
         See the documentation for
         :meth:`colander.SchemaNode.serialize` and
         :meth:`deform.widget.Widget.serialize` .
+
+        .. note::
+
+           Deform versions before 0.9.8 only accepted a ``readonly``
+           keyword argument to this function.  Version 0.9.8 and later accept
+           arbitrary keyword arguments.  Older versions also required
+           that an ``appstruct`` was passed to this method rather than
+           allowing it to be omitted.
         """
-        cstruct = self.schema.serialize(appstruct)
-        return self.serialize(cstruct, readonly=readonly)
+        if appstruct is not _marker:
+            self.set_appstruct(appstruct)
+        cstruct = self.cstruct
+        kw.pop('cstruct', None) # disallowed
+        html = self.serialize(cstruct, **kw)
+        return html
 
     def validate(self, controls, subcontrol=None):
         """
@@ -550,6 +597,8 @@ class Field(object):
             cstruct = e.value
             exc = e
 
+        self.cstruct = cstruct
+
         try:
             appstruct = self.schema.deserialize(cstruct)
         except colander.Invalid as e:
@@ -562,6 +611,28 @@ class Field(object):
 
         return appstruct
 
+    def _get_cstruct(self):
+        return self._cstruct
+
+    def _set_cstruct(self, cstruct):
+        self._cstruct = cstruct
+        child_cstructs = self.schema.cstruct_children(cstruct)
+        if not isinstance(child_cstructs, colander.SequenceItems):
+            for n, child in enumerate(self.children):
+                child.cstruct = child_cstructs[n]
+
+    def _del_cstruct(self):
+        if '_cstruct' in self.__dict__:
+            # rely on class-scope _cstruct (null)
+            del self._cstruct
+
+    cstruct = property(_get_cstruct, _set_cstruct, _del_cstruct)
+
+    def set_appstruct(self, appstruct):
+        cstruct = self.schema.serialize(appstruct)
+        self.cstruct = cstruct
+        return cstruct
+
     def __repr__(self):
         return '<%s.%s object at %d (schemanode %r)>' % (
             self.__module__,
@@ -569,4 +640,58 @@ class Field(object):
             id(self),
             self.schema.name,
             )
+    
+    # retail API below
+
+    def get_errors(self):
+        error = self.error
+        if error is None:
+            return []
+        return error.messages()
+
+    def render_template(self, template, **kw):
+        values = {'field':self, 'cstruct':self.cstruct}
+        values.update(kw) # allow caller to override field and cstruct
+        return self.renderer(template, **values)
+
+    def render_widget(self, **kw):
+        values = {'field':self, 'cstruct':self.cstruct}
+        values.update(kw) # allow caller to override cstruct
+        return self.serialize(**values)
+
+    def start_mapping(self, name=None):
+        if name is None:
+            name = self.name
+        tag = '<input type="hidden" name="__start__" value="%s:mapping"/>'
+        return tag % (name,)
+
+    def end_mapping(self, name=None):
+        if name is None:
+            name = self.name
+        tag = '<input type="hidden" name="__end__" value="%s:mapping"/>'
+        return tag % (name,)
+
+    def start_sequence(self, name=None):
+        if name is None:
+            name = self.name
+        tag = '<input type="hidden" name="__start__" value="%s:sequence"/>'
+        return tag % (name,)
+
+    def end_sequence(self, name=None):
+        if name is None:
+            name = self.name
+        tag = '<input type="hidden" name="__end__" value="%s:sequence"/>'
+        return tag % (name,)
+
+    def start_rename(self, name=None):
+        if name is None:
+            name = self.name
+        tag = '<input type="hidden" name="__start__" value="%s:rename"/>'
+        return tag % (name,)
+
+    def end_rename(self, name=None):
+        if name is None:
+            name = self.name
+        tag = '<input type="hidden" name="__end__" value="%s:rename"/>'
+        return tag % (name,)
 

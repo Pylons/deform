@@ -1,6 +1,6 @@
 <div class="deformFileupload">
 
-  <input type="hidden" name="__start__" value="${field.name}:mapping"/>
+  ${structure:field.start_mapping()}
 
   <div class="deformReplaces" tal:condition="cstruct.get('uid')">
 
@@ -16,6 +16,6 @@
                          class field.widget.css_class"
          id="${field.oid}"/>
 
-  <input type="hidden" name="__end__" value="${field.name}:mapping"/>
+  ${structure:field.end_mapping()}
 
 </div>

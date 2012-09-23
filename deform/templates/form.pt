@@ -28,12 +28,8 @@
         ${field.description}
       </li>
 
-      <div
-          tal:define="rndr field.renderer;
-                      tmpl field.widget.item_template"
-          tal:repeat="f field.children"
-          tal:replace="structure
-                       rndr(tmpl,field=f,cstruct=cstruct.get(f.name, null))"/>
+      <div tal:repeat="child field"
+           tal:replace="structure child.render_template(field.widget.item_template)"/>
 
       <li class="buttons">
         <tal:block repeat="button field.buttons">

@@ -1,4 +1,5 @@
-<input type="hidden" name="__start__" value="${field.name}:mapping"/>
+<span i18n:domain="deform" tal:omit-tag="">
+${structure:field.start_mapping()}
 <ul>
   <li>
     <label for="${field.oid}">${subject}</label>
@@ -28,5 +29,6 @@
         );
     
   </script>
+${structure:field.end_mapping()}
+</span>
 
-<input type="hidden" name="__end__" value="${field.name}:mapping"/>

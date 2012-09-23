@@ -3,4 +3,3 @@
        id="${field.oid}"
        tal:attributes="checked cstruct == field.widget.true_val;
                        class field.widget.css_class"/>
-

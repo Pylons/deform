@@ -3,19 +3,17 @@
   <legend tal:condition="field.title">${field.title}</legend>
   <ul>
     <li class="errorLi" tal:condition="field.errormsg">
-      <h3 class="errorMsgLbl" i18n:translate="">There was a problem with this section</h3>
+      <h3 class="errorMsgLbl" i18n:translate=""
+          >There was a problem with this section</h3>
       <p class="errorMsg">${field.errormsg}</p>
     </li>
     <li class="section" tal:condition="field.description">
       <div>${field.description}</div>
     </li>
-    <input type="hidden" name="__start__" value="${field.name}:mapping"/>
-    <div
-       tal:define="rndr field.renderer;
-                   tmpl field.widget.item_template"
-       tal:repeat="f field.children"
-       tal:replace="structure rndr(tmpl,field=f,cstruct=cstruct.get(f.name,null))"/>
-    <input type="hidden" name="__end__" value="${field.name}:mapping"/>
+    ${structure:field.start_mapping()}
+      <div tal:repeat="child field"
+           tal:replace="structure child.render_template(field.widget.item_template)"/>
+    ${structure:field.end_mapping()}
   </ul>
   <!-- /mapping -->
 </fieldset>

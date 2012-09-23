@@ -121,6 +121,11 @@ class FileData(object):
     def deserialize(self, node, value):
         return value
 
+    def cstruct_children(self, node, cstruct):
+        return []
+
+    appstruct_children = cstruct_children
+
 class Set(object):
     """ A type representing a non-overlapping set of items.
     Deserializes an iterable to a ``set`` object.
@@ -152,6 +157,11 @@ class Set(object):
         if not value and not self.allow_empty:
             raise colander.Invalid(node, _('Required'))
         return value
+
+    def cstruct_children(self, node, cstruct):
+        return []
+
+    appstruct_children = cstruct_children
     
         
 
