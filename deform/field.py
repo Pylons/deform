@@ -493,18 +493,24 @@ class Field(object):
               color = schema.SchemaNode(schema.String())
 
           schema = MySchema()
-          form = Form(schema)
-          
-          if 'submit' in request.POST:  # the form submission needs validation
-              controls = request.POST.items()
-              try:
-                  deserialized = form.validate(controls)
-                  do_something(deserialized)
-                  return HTTPFound(location='http://example.com/success')
-              except ValidationFailure, e:
-                  return {'form':e.render()}
-          else:
-              return {'form':form.render()} # the form just needs rendering
+
+          def view(request):
+              form = Form(schema, buttons=('submit',))
+              if 'submit' in request.POST:  # the form submission needs validation
+                  controls = request.POST.items()
+                  try:
+                      deserialized = form.validate(controls)
+                      do_something(deserialized)
+                      return HTTPFound(location='http://example.com/success')
+                  except ValidationFailure, e:
+                      return {'form':e.render()}
+              else:
+                  return {'form':form.render()} # the form just needs rendering
+
+        .. warning::
+
+            ``form.validate(controls)`` mutates ``Form`` instance, so ``Form``
+            instance should be constructed (and live) inside one request.
 
         If ``subcontrol`` is supplied, it represents a named subitem in the
         data returned by ``peppercorn.parse(controls)``.  Use this subitem as
