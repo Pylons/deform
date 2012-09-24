@@ -519,7 +519,7 @@ class Field(object):
         example, if you've embedded a mapping in the form named ``user``, and
         you want to validate only the data contained in that mapping instead
         if all of the data in the form post, you might use
-        ``form.validate(controls, subcontrol='user').
+        ``form.validate(controls, subcontrol='user')``.
         """
         pstruct = peppercorn.parse(controls)
         if subcontrol is not None:
