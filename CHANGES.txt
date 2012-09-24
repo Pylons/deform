@@ -57,12 +57,6 @@ Next release
   now accepts arbitrary keyword arguments.  These are passed along to it's
   widget's ``serialize`` method.
 
-- Built-in widgets may have a 'readonly' attribute/constructor-argument, to
-  indicate that a form field associated with the widget should use its
-  readonly template instead of its normal readwrite template.  A ``readonly``
-  keyword argument can still be passed to ``Field.serialize`` to render a
-  field as readonly, like in older versions.
-
 - It is now possible to pass an ``appstruct`` argument to the
   ``deform.Field`` (and by extension, the ``deform.Form``) constructor.  When
   you do so, you can omit passing an ``appstruct`` argument to the ``render``
@@ -78,7 +72,18 @@ Next release
 
 - Form/field objects now have peppercorn-field-outputting methods:
   ``start_mapping``, ``end_mapping``, ``start_sequence``, ``end_sequence``,
-  ``start_rename``, ``end_rename``.
+  ``start_rename``, ``end_rename`` in support of retail form rendering.
+
+- The ``deform.Field`` (and therefore ``deform.Form``) classes now expose a
+  ``render_template`` method, which injects ``field`` and ``cstruct`` into
+  the dictionary passed to the template if they don't already exist in the
+  **kw passed.  This is in support of retail form rendering.
+
+- Built-in widgets may have a 'readonly' attribute/constructor-argument, to
+  indicate that a form field associated with the widget should use its
+  readonly template instead of its normal readwrite template.  A ``readonly``
+  keyword argument can still be passed to ``Field.serialize`` to render a
+  field as readonly, like in older versions.
 
 0.9.5 (2012-04-27)
 ------------------

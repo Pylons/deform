@@ -18,11 +18,11 @@
 
   <span class="deformOrderbutton"
         id="${oid}-order"
-        tal:condition="not field.widget.hidden"
+        tal:condition="not hidden"
         title="Reorder (via drag and drop)"
         i18n:attributes="title title"></span>
 
-  <span tal:replace="structure field.render_widget(cstruct=cstruct)"/>
+  <span tal:replace="structure field.serialize(cstruct=cstruct)"/>
 
   <tal:errors
      condition="field.error and not hidden"

@@ -433,22 +433,26 @@ class Field(object):
 
     def serialize(self, cstruct=_marker, **kw):
         """ Serialize the cstruct into HTML and return the HTML string.  This
-        function just turns around and calls ``self.widget.serialize(cstruct,
-        **kw)``; therefore the field widget's ``serialize`` method should be
-        expecting any values sent in ``kw``.  If ``cstruct`` is not passed,
-        the cstruct attached to this node will be used.
+        function just turns around and calls ``self.widget.serialize(**kw)``;
+        therefore the field widget's ``serialize`` method should be expecting
+        any values sent in ``kw``.  If ``cstruct`` is not passed, the cstruct
+        attached to this node will be injected into ``kw`` as ``cstruct``.
+        If ``field`` is not passed in ``kw``, this field will be injected
+        into ``kw`` as ``field``.
 
         .. note::
 
            Deform versions before 0.9.8 only accepted a ``readonly``
            keyword argument to this function.  Version 0.9.8 and later accept
            arbitrary keyword arguments.  It also required that
-           ``cstruct`` was passed.
+           ``cstruct`` was passed; it's broken out from
+           ``kw`` in the method signature for backwards compatibility.
         """
         if cstruct is _marker:
             cstruct = self.cstruct
-        field = kw.pop('field', self)
-        return self.widget.serialize(field, cstruct, **kw)
+        values = {'field':self, 'cstruct':cstruct}
+        values.update(kw)
+        return self.widget.serialize(**values)
 
     def deserialize(self, pstruct):
         """ Deserialize the pstruct into a cstruct and return the cstruct."""
@@ -656,14 +660,6 @@ class Field(object):
         values = {'field':self, 'cstruct':self.cstruct}
         values.update(kw) # allow caller to override field and cstruct
         return self.renderer(template, **values)
-
-    def render_widget(self, **kw):
-        """ Serialize this field's widget using ``kw`` as the top-level
-        keyword arguments (augmented with ``field`` and ``cstruct`` if
-        necessary)"""
-        values = {'field':self, 'cstruct':self.cstruct}
-        values.update(kw) # allow caller to override field and cstruct
-        return self.serialize(**values)
 
     # peppercorn-outputting API
 
