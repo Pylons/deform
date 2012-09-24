@@ -1,19 +1,19 @@
 <div class="deformSeq"
-     id="${field.oid}"
-     tal:define="item_tmpl field.widget.item_template;
-                 min_len field.widget.min_len or 0;
-                 max_len field.widget.max_len or 100000;
+     id="${oid}"
+     tal:define="item_tmpl item_template;
+                 min_len min_len or 0;
+                 max_len max_len or 100000;
                  now_len len(subfields);
-                 orderable field.widget.orderable and 1 or 0;
+                 orderable orderable and 1 or 0;
                  prototype field.widget.prototype(field)">
 
   <!-- sequence -->
 
-  <input type="hidden" name="__start__" value="${field.name}:sequence"
+  <input type="hidden" name="__start__" value="${name}:sequence"
          class="deformProto" 
          tal:attributes="prototype prototype"/>
 
-  <ul id="${field.oid}-orderable">
+  <ul id="${oid}-orderable">
 
     <div tal:repeat="tup subfields"
          tal:replace="structure field.render_template(
@@ -29,14 +29,14 @@
   
   <a href="#"
      class="deformSeqAdd"
-     id="${field.oid}-seqAdd"
+     id="${oid}-seqAdd"
      onclick="javascript: return deform.appendSequenceItem(this);">
-    <small id="${field.oid}-addtext">${add_subitem_text}</small>
+    <small id="${oid}-addtext">${add_subitem_text}</small>
   </a>
 
   <script type="text/javascript">
      deform.addCallback(
-       '${field.oid}',
+       '${oid}',
        function(oid) {
          oid_node = $('#'+ oid);
          deform.processSequenceButtons(oid_node, ${min_len}, 
@@ -45,11 +45,11 @@
      )
      <tal:block condition="orderable">
 
-     $( "#${field.oid}-orderable" ).sortable({handle: "span.deformOrderbutton"});
+     $( "#${oid}-orderable" ).sortable({handle: "span.deformOrderbutton"});
      </tal:block>
   </script>
 
-  <input type="hidden" name="__end__" value="${field.name}:sequence"/>
+  <input type="hidden" name="__end__" value="${name}:sequence"/>
 
   <!-- /sequence -->
 

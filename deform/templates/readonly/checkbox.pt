@@ -1,4 +1,4 @@
-<span id="${field.oid}"
-      tal:condition="cstruct == field.widget.true_val">Yes</span>
-<em id="${field.oid}"
-      tal:condition="cstruct != field.widget.true_val">No</em>
+<span id="${oid}"
+      tal:condition="cstruct == true_val">Yes</span>
+<em id="${oid}"
+      tal:condition="cstruct != true_val">No</em>

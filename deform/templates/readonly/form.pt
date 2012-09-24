@@ -9,12 +9,8 @@
       </li>
 
   </div>
-      
-  <div 
-      tal:define="rndr field.renderer;
-                  tmpl field.widget.readonly_item_template"
-      tal:repeat="f field.children"
-      tal:replace="structure 
-                  rndr(tmpl,field=f,cstruct=cstruct.get(f.name, null))"/>
-  
+
+   <div tal:repeat="child field"
+        tal:replace="structure child.render_template(field.widget.readonly_item_template)"/>
+
 </div>

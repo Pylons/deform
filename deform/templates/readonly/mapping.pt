@@ -1,15 +1,12 @@
 <div class="deformMappingFieldset">
   <!-- mapping -->
-  <p tal:condition="field.title">${field.title}</p>
+  <p tal:condition="title">${title}</p>
   <ul class="readonly">
-    <li class="section" tal:condition="field.description">
-      <div>${field.description}</div>
+    <li class="section" tal:condition="description">
+      <div>${description}</div>
     </li>
-    <div tal:define="rndr field.renderer;
-                     tmpl field.widget.readonly_item_template"
-         tal:repeat="f field.children"
-         tal:replace="structure
-                        rndr(tmpl,field=f,cstruct=cstruct.get(f.name, null))"/>
+      <div tal:repeat="child field"
+           tal:replace="structure child.render_template(readonly_item_template)"/>
   </ul>
   <!-- /mapping -->
 </div>

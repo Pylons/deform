@@ -4,8 +4,7 @@
     tal:omit-tag="field.widget.hidden"
     i18n:domain="deform">
   <!-- mapping_item -->
-  <label tal:condition="not (field.widget.hidden or
-                             field.widget.category == 'structural')"
+  <label tal:condition="not (field.widget.hidden or field.widget.category == 'structural')"
          class="desc"
          title="${field.description}"
          for="${field.oid}"

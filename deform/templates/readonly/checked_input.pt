@@ -1,6 +1,6 @@
 <div>
   <div>
     <span>${subject}</span>
-    <span id="${field.oid}">"${cstruct}"</span>
+    <span id="${oid}">"${cstruct}"</span>
   </div>
 </div>

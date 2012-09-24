@@ -1,18 +1,18 @@
 <ul class="deformSet"> 
-    ${structure:field.start_rename()}
+    ${field.start_rename()}
     <tal:loop tal:repeat="choice values">
       <tal:def tal:define="(value, title) choice">
         <li class="deformSet-item">
           <input tal:attributes="checked value == cstruct;
-                                 class field.widget.css_class"
+                                 class css_class"
                  type="radio"
-                 name="${field.oid}"
+                 name="${oid}"
                  value="${value}"
-                 id="${field.oid}-${repeat.choice.index}"/>
-          <label for="${field.oid}-${repeat.choice.index}">${title}</label>
+                 id="${oid}-${repeat.choice.index}"/>
+          <label for="${oid}-${repeat.choice.index}">${title}</label>
         </li>
       </tal:def>
     </tal:loop>
-    ${structure:field.end_rename()}
+    ${field.end_rename()}
 </ul>
 

@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import csv
-import random
 import json
+import random
+import types
 
 from colander import Invalid
 from colander import null
@@ -58,6 +59,10 @@ class Widget(object):
         label, no error message, nor any furniture such as a close
         button when the widget is one of a sequence will exist for the
         field in the rendered form.
+
+    readonly
+        If this attribute is true, the readonly rendering of the widget
+        should be output during HTML serialization.
 
     category
         A string value indicating the *category* of this widget.  This
@@ -116,6 +121,7 @@ class Widget(object):
     """
 
     hidden = False
+    readonly = False
     category = 'default'
     error_class = 'error'
     css_class = None
@@ -168,6 +174,31 @@ class Widget(object):
                 if e.pos == num:
                     subfield.widget.handle_error(subfield, e)
 
+    def get_template_values(self, field, cstruct, kw):
+        values = {}
+        for k in dir(self):
+            # before you throw stones, look at inspect.getmembers.
+            if not k.startswith('__'):
+                try:
+                    value =  getattr(self, k)
+                except AttributeError:
+                    continue
+                if not isinstance(value, types.MethodType):
+                    values[k] = value
+        values.pop('template', None)
+        values.update(
+            dict(
+                field=field,
+                cstruct=cstruct,
+                oid=field.oid,
+                name=field.name,
+                description=field.description,
+                title=field.title,
+                required=field.required,
+                )
+            )
+        values.update(kw)
+        return values
 
 class TextInputWidget(Widget):
     """
@@ -229,9 +260,10 @@ class TextInputWidget(Widget):
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
             cstruct = ''
-        readonly = kw.get('readonly', False)
+        readonly = kw.get('readonly', self.readonly)
         template = readonly and self.readonly_template or self.template
-        return field.renderer(template, field=field, cstruct=cstruct, **kw)
+        values = self.get_template_values(field, cstruct, kw)
+        return field.renderer(template, **values)
 
     def deserialize(self, field, pstruct):
         if pstruct is null:
@@ -308,14 +340,15 @@ class MoneyInputWidget(Widget):
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
             cstruct = ''
-        readonly = kw.get('readonly', False)
-        template = readonly and self.readonly_template or self.template
-        options = kw.get('options') or self.options
+        readonly = kw.get('readonly', self.readonly)
+        options = kw.get('options', self.options)
         if options is None:
             options = {}
         options = json.dumps(dict(options))
-        return field.renderer(template, mask_options=options, field=field,
-                              cstruct=cstruct, **kw)
+        kw['mask_options'] = options
+        values = self.get_template_values(field, cstruct, kw)
+        template = readonly and self.readonly_template or self.template
+        return field.renderer(template, **values)
     
     def deserialize(self, field, pstruct):
         if pstruct is null:
@@ -363,7 +396,7 @@ class AutocompleteInputWidget(Widget):
 
     readonly_template
         The template name used to render the widget in read-only mode.
-        Default: ``readonly/autocomplete_textinput``.
+        Default: ``readonly/textinput``.
 
     strip
         If true, during deserialization, strip the value of leading
@@ -411,7 +444,7 @@ class AutocompleteInputWidget(Widget):
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
             cstruct = ''
-        readonly = kw.get('readonly', False)
+        readonly = kw.get('readonly', self.readonly)
         options = dict(kw.pop('options', {}))
         if not 'delay' in options:
             # set default delay if None
@@ -423,13 +456,11 @@ class AutocompleteInputWidget(Widget):
         options = json.dumps(options)
         values = kw.pop('values', self.values)
         values = json.dumps(values)
+        kw['options'] = options
+        kw['values'] = values
+        tmpl_values = self.get_template_values(field, cstruct, kw)
         template = readonly and self.readonly_template or self.template
-        return field.renderer(template,
-                              cstruct=cstruct,
-                              field=field,
-                              options=options,
-                              values=values,
-                              **kw)
+        return field.renderer(template, **tmpl_values)
 
     def deserialize(self, field, pstruct):
         if pstruct is null:
@@ -480,14 +511,11 @@ class DateInputWidget(Widget):
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
             cstruct = ''
-        readonly = kw.get('readonly', False)
+        readonly = kw.get('readonly', self.readonly)
         template = readonly and self.readonly_template or self.template
-        options = kw.pop('options', self.options)
-        return field.renderer(template,
-                              field=field,
-                              cstruct=cstruct,
-                              options=options,
-                              **kw)
+        kw.setdefault('options', self.options)
+        values = self.get_template_values(field, cstruct, kw)
+        return field.renderer(template, **values)
 
     def deserialize(self, field, pstruct):
         if pstruct in ('', null):
@@ -529,20 +557,16 @@ class DateTimeInputWidget(DateInputWidget):
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
             cstruct = ''
-        readonly = kw.get('readonly', False)
-        template = readonly and self.readonly_template or self.template
+        readonly = kw.get('readonly', self.readonly)
         if len(cstruct) == 25: # strip timezone if it's there
             cstruct = cstruct[:-6]
-        options = kw.pop('options', self.options)
+        options = kw.get('options', self.options)
+        kw['options'] = json.dumps(options)
         separator = options.get('separator', ' ')
         cstruct = separator.join(cstruct.split('T'))
-        return field.renderer(
-            template,
-            field=field,
-            cstruct=cstruct,
-            options=json.dumps(options),
-            **kw
-            )
+        values = self.get_template_values(field, cstruct, kw)
+        template = readonly and self.readonly_template or self.template
+        return field.renderer(template, **values)
 
     def deserialize(self, field, pstruct):
         if pstruct in ('', null):
@@ -681,7 +705,8 @@ class HiddenWidget(Widget):
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
             cstruct = ''
-        return field.renderer(self.template, field=field, cstruct=cstruct, **kw)
+        values = self.get_template_values(field, cstruct, kw)
+        return field.renderer(self.template, **values)
 
     def deserialize(self, field, pstruct):
         if not pstruct:
@@ -718,9 +743,10 @@ class CheckboxWidget(Widget):
     readonly_template = 'readonly/checkbox'
 
     def serialize(self, field, cstruct, **kw):
-        readonly = kw.get('readonly', False)
+        readonly = kw.get('readonly', self.readonly)
         template = readonly and self.readonly_template or self.template
-        return field.renderer(template, field=field, cstruct=cstruct, **kw)
+        values = self.get_template_values(field, cstruct, kw)
+        return field.renderer(template, **values)
 
     def deserialize(self, field, pstruct):
         if pstruct is null:
@@ -846,16 +872,12 @@ class SelectWidget(Widget):
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
             cstruct = self.null_value
-        readonly = kw.get('readonly', False)
-        values = kw.pop('values', self.values)
+        readonly = kw.get('readonly', self.readonly)
+        values = kw.get('values', self.values)
         template = readonly and self.readonly_template or self.template
-        return field.renderer(
-            template,
-            field=field,
-            cstruct=cstruct,
-            values=_normalize_choices(values),
-            **kw
-            )
+        kw['values'] = _normalize_choices(values)
+        tmpl_values = self.get_template_values(field, cstruct, kw)
+        return field.renderer(template, **tmpl_values)
 
     def deserialize(self, field, pstruct):
         if pstruct in (null, self.null_value):
@@ -928,16 +950,12 @@ class CheckboxChoiceWidget(Widget):
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
             cstruct = ()
-        readonly = kw.get('readonly', False)
-        values = kw.pop('values', self.values)
+        readonly = kw.get('readonly', self.readonly)
+        values = kw.get('values', self.values)
+        kw['values'] = _normalize_choices(values)
         template = readonly and self.readonly_template or self.template
-        return field.renderer(
-            template,
-            field=field,
-            cstruct=cstruct,
-            values=_normalize_choices(values),
-            **kw
-            )
+        tmpl_values = self.get_template_values(field, cstruct, kw)
+        return field.renderer(template, **tmpl_values)
 
     def deserialize(self, field, pstruct):
         if pstruct is null:
@@ -1009,21 +1027,14 @@ class CheckedInputWidget(Widget):
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
             cstruct = ''
-        readonly = kw.get('readonly', False)
-        kw.pop('confirm', None) # not allowed to pass this
-        subject = kw.pop('subject', self.subject)
-        confirm_subject = kw.pop('confirm_subject', self.confirm_subject)
+        readonly = kw.get('readonly', self.readonly)
+        kw.setdefault('subject', self.subject)
+        kw.setdefault('confirm_subject', self.confirm_subject)
         confirm = getattr(field, '%s-confirm' % (field.name,), cstruct)
+        kw['confirm'] = confirm
         template = readonly and self.readonly_template or self.template
-        return field.renderer(
-            template,
-            field=field,
-            cstruct=cstruct,
-            confirm=confirm,
-            subject=subject,
-            confirm_subject=confirm_subject,
-            **kw
-            )
+        values = self.get_template_values(field, cstruct, kw)
+        return field.renderer(template, **values)
 
     def deserialize(self, field, pstruct):
         if pstruct is null:
@@ -1095,16 +1106,11 @@ class MappingWidget(Widget):
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
             cstruct = {}
-        readonly = kw.get('readonly', False)
-        kw.pop('null', None) # not allowed to pass this
+        readonly = kw.get('readonly', self.readonly)
+        kw.setdefault('null', null)
         template = readonly and self.readonly_template or self.template
-        return field.renderer(
-            template,
-            field=field,
-            cstruct=cstruct,
-            null=null,
-            **kw
-            )
+        values = self.get_template_values(field, cstruct, kw)
+        return field.renderer(template, **values)
 
     def deserialize(self, field, pstruct):
         error = None
@@ -1274,11 +1280,7 @@ class SequenceWidget(Widget):
                 cloned.cstruct = val
                 subfields.append((val, cloned))
 
-        kw.pop('subfields', None) # disallowed
-        kw.pop('add_subitem_text', None) # disallowed
-        kw.pop('item_field', None) # disallowed
-
-        readonly = kw.get('readonly', False)
+        readonly = kw.get('readonly', self.readonly)
         template = readonly and self.readonly_template or self.template
         translate = field.translate
         subitem_title = kw.get('subitem_title', item_field.title)
@@ -1300,15 +1302,14 @@ class SequenceWidget(Widget):
         else:
             add_subitem_text = _(add_subitem_text_template,
                                  mapping=add_template_mapping)
-        return field.renderer(
-            template,
-            field=field,
-            cstruct=cstruct,
-            subfields=subfields,
-            item_field=item_field,
-            add_subitem_text=add_subitem_text,
-            **kw
-            )
+
+        kw.setdefault('subfields', subfields)
+        kw.setdefault('add_subitem_text', add_subitem_text)
+        kw.setdefault('item_field', item_field)
+
+        values = self.get_template_values(field, cstruct, kw)
+
+        return field.renderer(template, **values)
 
     def deserialize(self, field, pstruct):
         result = []
@@ -1401,9 +1402,10 @@ class FileUploadWidget(Widget):
             if not uid in self.tmpstore:
                 self.tmpstore[uid] = cstruct
 
-        readonly = kw.get('readonly', False)
+        readonly = kw.get('readonly', self.readonly)
         template = readonly and self.readonly_template or self.template
-        return field.renderer(template, field=field, cstruct=cstruct, **kw)
+        values = self.get_template_values(field, cstruct, kw)
+        return field.renderer(template, **values)
 
     def deserialize(self, field, pstruct):
         if pstruct is null:
@@ -1496,22 +1498,14 @@ class DatePartsWidget(Widget):
         else:
             year, month, day = cstruct.split('-', 2)
 
-        # all disallowed
-        kw.pop('year', None)
-        kw.pop('day', None)
-        kw.pop('month', None)
+        kw.setdefault('year', year)
+        kw.setdefault('day', day)
+        kw.setdefault('month', month)
         
-        readonly = kw.get('readonly', False)
+        readonly = kw.get('readonly', self.readonly)
         template = readonly and self.readonly_template or self.template
-        return field.renderer(
-            template,
-            field=field,
-            cstruct=cstruct,
-            year=year,
-            month=month,
-            day=day,
-            **kw
-            )
+        values = self.get_template_values(field, cstruct, kw)
+        return field.renderer(template, **values)
 
     def deserialize(self, field, pstruct):
         if pstruct is null:
@@ -1574,12 +1568,13 @@ class TextAreaCSVWidget(Widget):
             writer = csv.writer(outfile)
             writer.writerows(cstruct)
             textrows = outfile.getvalue()
-        readonly = kw.get('readonly', False)
+        readonly = kw.get('readonly', self.readonly)
         if readonly:
             template = self.readonly_template
         else:
             template = self.template
-        return field.renderer(template, field=field, cstruct=textrows, **kw)
+        values = self.get_template_values(field, textrows, kw)
+        return field.renderer(template, **values)
 
     def deserialize(self, field, pstruct):
         if pstruct is null:
@@ -1641,12 +1636,13 @@ class TextInputCSVWidget(Widget):
             writer = csv.writer(outfile)
             writer.writerow(cstruct)
             textrow = outfile.getvalue().strip()
-        readonly = kw.get('readonly', False)
+        readonly = kw.get('readonly', self.readonly)
         if readonly:
             template = self.readonly_template
         else:
             template = self.template
-        return field.renderer(template, field=field, cstruct=textrow, **kw)
+        values = self.get_template_values(field, textrow, kw)
+        return field.renderer(template, **values)
 
     def deserialize(self, field, pstruct):
         if pstruct is null:

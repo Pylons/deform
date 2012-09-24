@@ -1,12 +1,10 @@
-<div class="deformSeq readonly"
-     tal:define="rndr field.renderer;
-                 tmpl field.widget.readonly_item_template">
+<div class="deformSeq readonly">
   <!-- sequence -->
 
   <ul>
 
     <div tal:repeat="tup subfields"
-         tal:content="structure rndr(tmpl, field=tup[1], cstruct=tup[0])"/>
+         tal:content="structure field.render_template(readonly_item_template, field=tup[1], cstruct=tup[0])"/>
 
   </ul>
 

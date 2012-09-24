@@ -1,19 +1,19 @@
 <fieldset class="deformMappingFieldset" i18n:domain="deform">
   <!-- mapping -->
-  <legend tal:condition="field.title">${field.title}</legend>
+  <legend tal:condition="title">${title}</legend>
   <ul>
     <li class="errorLi" tal:condition="field.errormsg">
       <h3 class="errorMsgLbl" i18n:translate=""
           >There was a problem with this section</h3>
       <p class="errorMsg">${field.errormsg}</p>
     </li>
-    <li class="section" tal:condition="field.description">
-      <div>${field.description}</div>
+    <li class="section" tal:condition="description">
+      <div>${description}</div>
     </li>
-    ${structure:field.start_mapping()}
+    ${field.start_mapping()}
       <div tal:repeat="child field"
-           tal:replace="structure child.render_template(field.widget.item_template)"/>
-    ${structure:field.end_mapping()}
+           tal:replace="structure child.render_template(item_template)"/>
+    ${field.end_mapping()}
   </ul>
   <!-- /mapping -->
 </fieldset>

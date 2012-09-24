@@ -29,8 +29,8 @@ except:
     CHANGES = ''
 
 requires = [
-    'Chameleon>=1.2.3', # debug arg
-    'colander>=0.8', # Bindings-providing
+    'Chameleon>=2.5.1', # Markup class
+    'colander>=0.9.9dev', # cstruct_children/appstruct_children
     'peppercorn>=0.3', # rename operation type
     'translationstring>=1.0', # add format mapping with %
     ]
@@ -40,7 +40,7 @@ docs_extras = ['Sphinx']
 
 setupkw = dict(
     name='deform',
-    version='0.9.5',
+    version='0.9.6dev',
     description='Another form generation library',
     long_description=README + '\n\n' + CHANGES,
     classifiers=[
@@ -61,14 +61,13 @@ setupkw = dict(
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
-    tests_require=requires + ['beautifulsoup4'],
+    tests_require=testing_extras,
     install_requires=requires,
-    setup_requires=['setuptools_git'],
     test_suite="deform",
-      extras_require = {
-          'testing':testing_extras,
-          'docs':docs_extras,
-          },
+    extras_require = {
+        'testing':testing_extras,
+        'docs':docs_extras,
+        },
     )
 
 # to update catalogs, use babel and lingua !

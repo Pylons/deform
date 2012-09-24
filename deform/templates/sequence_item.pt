@@ -7,14 +7,14 @@
         id="${field.oid}-close"
         tal:condition="not field.widget.hidden"
         title="Remove"
-        i18n:attributes="title"
+        i18n:attributes="title field.title"
         onclick="javascript:deform.removeSequenceItem(this);"></span>
 
   <span class="deformOrderbutton"
         id="${field.oid}-order"
         tal:condition="not field.widget.hidden"
         title="Reorder (via drag and drop)"
-        i18n:attributes="title"></span>
+        i18n:attributes="title field.title"></span>
 
   <span tal:replace="structure field.render_widget(cstruct=cstruct)"/>
 

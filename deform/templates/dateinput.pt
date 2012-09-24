@@ -1,13 +1,13 @@
 <span tal:omit-tag="">
     <input type="date"
-           name="${field.name}"
+           name="${name}"
            value="${cstruct}"
-           tal:attributes="size field.widget.size;
-                           class field.widget.css_class"
-           id="${field.oid}"/>
+           tal:attributes="size size;
+                           class css_class"
+           id="${oid}"/>
     <script type="text/javascript">
       deform.addCallback(
-        '${field.oid}',
+        '${oid}',
         function(oid) {
         $('#' + oid).datepicker(${options});
         }

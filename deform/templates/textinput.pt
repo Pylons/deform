@@ -1,14 +1,14 @@
 <span tal:omit-tag="">
-    <input type="text" name="${field.name}" value="${cstruct}" 
-           tal:attributes="size field.widget.size;
-                           class field.widget.css_class"
-           id="${field.oid}"/>
-    <script tal:condition="field.widget.mask" type="text/javascript">
+    <input type="text" name="${name}" value="${cstruct}" 
+           tal:attributes="size size;
+                           class css_class"
+           id="${oid}"/>
+    <script tal:condition="mask" type="text/javascript">
       deform.addCallback(
-         '${field.oid}',
+         '${oid}',
          function (oid) {
-            $("#" + oid).mask("${field.widget.mask}", 
-                              {placeholder:"${field.widget.mask_placeholder}"});
+            $("#" + oid).mask("${mask}", 
+                              {placeholder:"${mask_placeholder}"});
          });
     </script>
 </span>

@@ -14,10 +14,8 @@ default_widget_makers = {
     colander.Date: widget.DateInputWidget,
     colander.DateTime: widget.DateTimeInputWidget,
     colander.Tuple: widget.TextInputCSVWidget,
+    colander.Money: widget.MoneyInputWidget,
 }
-
-# XXX when a new colander release rolls around, set colander.Money to
-# widget.MoneyWidget in defaults.
 
 class FileData(object):
     """
@@ -124,8 +122,6 @@ class FileData(object):
     def cstruct_children(self, node, cstruct):
         return []
 
-    appstruct_children = cstruct_children
-
 class Set(object):
     """ A type representing a non-overlapping set of items.
     Deserializes an iterable to a ``set`` object.
@@ -160,8 +156,4 @@ class Set(object):
 
     def cstruct_children(self, node, cstruct):
         return []
-
-    appstruct_children = cstruct_children
-    
-        
 

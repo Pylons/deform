@@ -169,3 +169,14 @@ class DummySchema(object):
     sdefault = 'sdefault'
     def __init__(self, exc=None):
         self.exc = exc
+
+    def serialize(self, appstruct):
+        return appstruct
+
+    def cstruct_children(self, cstruct):
+        import colander
+        children = []
+        for child in self.children:
+            children.append(colander.null)
+        return children
+        

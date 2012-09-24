@@ -483,8 +483,10 @@ class DummySchema(object):
     children = ()
     default = 'default'
     sdefault = 'sdefault'
+
     def __init__(self, exc=None):
         self.exc = exc
+
     def deserialize(self, value):
         if self.exc:
             raise self.exc
@@ -494,7 +496,11 @@ class DummySchema(object):
         return value
 
     def cstruct_children(self, cstruct):
-        return []
+        import colander
+        children = []
+        for child in self.children:
+            children.append(colander.null)
+        return children
 
 class DummyType(object):
     def __init__(self, maker=None):
