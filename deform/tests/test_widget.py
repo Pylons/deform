@@ -1846,6 +1846,7 @@ class DummyField(object):
     name = 'name'
     cloned = False
     oid = 'deformField1'
+    required = True
     def __init__(self, schema=None, renderer=None, translations=None):
         self.schema = schema
         self.renderer = renderer

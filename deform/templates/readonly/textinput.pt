@@ -1,1 +1,1 @@
-<p id="${oid}">${cstruct}</p>
+<p id="${oid|field.oid}">${cstruct}</p>

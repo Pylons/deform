@@ -1,9 +1,12 @@
-<span tal:omit-tag="">
+<span tal:define="size size|field.widget.size;
+                  css_class css_class|field.widget.css_class;
+                  name name|field.name;
+                  oid oid|field.oid;"
+      tal:omit-tag="">
     <input type="date"
            name="${name}"
            value="${cstruct}"
-           tal:attributes="size size;
-                           class css_class"
+           tal:attributes="size size; class css_class"
            id="${oid}"/>
     <script type="text/javascript">
       deform.addCallback(

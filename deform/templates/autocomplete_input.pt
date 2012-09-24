@@ -1,4 +1,8 @@
-<span tal:omit-tag="">
+<span tal:define="name name|field.name;
+                  size size|field.widget.size;
+                  css_class css_class|field.widget.css_class;
+                  oid oid|field.oid"
+      tal:omit-tag="">
     <input type="text"
            name="${name}"
            value="${cstruct}" 

@@ -57,40 +57,6 @@ Next release
   now accepts arbitrary keyword arguments.  These are passed along to it's
   widget's ``serialize`` method.
 
-- Built-in widgets now pass more top-level names to their templates.
-  Previously only two names were always passed to templates: ``field`` and
-  ``cstruct``.  Those are still passed, but now many others are passed.  The
-  top-level template rendering dictionary is created in the following way:
-
-  - All non-method, non-dunder attributes of the widget (both its __dict__
-    and its' class' __dict__ and any other attributes in the widget's mro)
-    are scraped off the widget and turned into top-level names.  These are
-    turned in to a dictionary.  One exception: ``template`` is omitted (it is
-    used in method calls so it can't be a part of the dict).
-
-  - The values ``field`` (representing the form field) and ``cstruct``
-    (representing the cstruct value passed to the renderer) are added to the
-    dictionary.  These replace any attributes that already exist in the
-    dictionary.
-
-  - The following attributes are scraped off the field and added to the
-    dictionary: ``oid``, ``name``, ``description``, ``title``, and
-    ``required``.  These replace any of the attributes that already exist in
-    the dictionary.
-
-  - An arbitrary set of key-value pairs passed to the widget's ``serialize``
-    method are added to the dictionary.  These replace any values that
-    already exist in the dictionary.
-
-  The ultimate dictionary composed this way is used as the top-level
-  dictionary passed to every template rendered by built-in widgets.  This
-  feature is in support of "retail" form rendering.
-
-- Built-in templates have been changed to use top-level names where feasible
-  instead of attributes of ``field`` and/or ``cstruct`` so their uses may be
-  overridden by a caller to ``serialize``.  This is in support of "retail"
-  form rendering.
-
 - Built-in widgets may have a 'readonly' attribute/constructor-argument, to
   indicate that a form field associated with the widget should use its
   readonly template instead of its normal readwrite template.  A ``readonly``
@@ -101,7 +67,8 @@ Next release
   ``deform.Field`` (and by extension, the ``deform.Form``) constructor.  When
   you do so, you can omit passing an ``appstruct`` argument to the ``render``
   method of the field/form.  Fields set a cstruct value recursively when
-  supplied with an appstruct.  This is in support of "retail" form rendering.
+  supplied with an ``appstruct`` argument to their constructor.  This is in
+  support of "retail" form rendering.
 
 - Form/field objects are now initialized with a cstruct (recursively) when
   created.  This means that accessing form.cstruct will return the current

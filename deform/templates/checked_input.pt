@@ -1,4 +1,11 @@
-<span i18n:domain="deform" tal:omit-tag="">
+<span tal:define="oid oid|field.oid;
+                  name name|field.name;
+                  size size|field.widget.size;
+                  css_class css_class|field.widget.css_class;
+                  mask mask|field.widget.mask;
+                  mask_placeholder mask_placeholder|field.widget.mask_placeholder;"
+      i18n:domain="deform"
+      tal:omit-tag="">
 ${field.start_mapping()}
 <ul>
   <li>

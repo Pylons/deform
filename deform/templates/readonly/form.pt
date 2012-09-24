@@ -1,16 +1,23 @@
-<div class="deform"
-     tal:attributes="id field.name or None">
+<div 
+     tal:define="name name|field.name;
+                 title title|field.title;
+                 description description|field.description;
+                 item_tmpl item_template|field.widget.readonly_item_template;
+                 "
+     tal:attributes="id name or None"
+     class="deform"
+     >
 
   <div class="deformFormFieldset">
 
-      <li class="section first" tal:condition="field.title">
-        <h3>${field.title}</h3>
-        <div tal:condition="field.description">${field.description}</div>
+      <li class="section first" tal:condition="title">
+        <h3>${title}</h3>
+        <div tal:condition="description">${description}</div>
       </li>
 
   </div>
 
    <div tal:repeat="child field"
-        tal:replace="structure child.render_template(field.widget.readonly_item_template)"/>
+        tal:replace="structure child.render_template(item_tmpl)"/>
 
 </div>

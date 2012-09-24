@@ -1,19 +1,32 @@
 <form
-  id="${field.formid}"
-  action="${field.action}"
-  method="${field.method}"
+  tal:define="title title|field.title;
+              css_class css_class|field.css_class;
+              autocomplete autocomplete|field.autocomplete;
+              formid formid|field.formid;
+              errormsg errormsg|field.errormsg;
+              description description|field.description;
+              item_template item_template|field.widget.item_template;
+              buttons buttons|field.buttons;
+              use_ajax use_ajax|field.use_ajax;
+              ajax_options ajax_options|field.ajax_options;
+              formid formid|field.formid;
+              action action|field.action;
+              method method|field.method;"
+  tal:attributes="class css_class; autocomplete autocomplete"
+  id="${formid}"
+  action="${action}"
+  method="${method}"
   enctype="multipart/form-data"
   accept-charset="utf-8"
   i18n:domain="deform"
-  tal:attributes="class field.css_class;
-                  autocomplete field.autocomplete">
+  >
 
   <fieldset class="deformFormFieldset">
 
-    <legend tal:condition="field.title">${field.title}</legend>
+    <legend tal:condition="title">${title}</legend>
 
     <input type="hidden" name="_charset_" />
-    <input type="hidden" name="__formid__" value="${field.formid}"/>
+    <input type="hidden" name="__formid__" value="${formid}"/>
     <ul>
 
       <li class="errorLi" tal:condition="field.error">
@@ -21,21 +34,21 @@
             >There was a problem with your submission</h3>
         <p class="errorMsg" i18n:translate="" i18n:domain="deform"
            >Errors have been highlighted below</p>
-        <p class="errorMsg">${field.errormsg}</p>
+        <p class="errorMsg">${errormsg}</p>
       </li>
 
-      <li class="section first" tal:condition="field.description">
-        ${field.description}
+      <li class="section first" tal:condition="description">
+        ${description}
       </li>
 
       <div tal:repeat="child field"
-           tal:replace="structure child.render_template(field.widget.item_template)"/>
+           tal:replace="structure child.render_template(item_template)"/>
 
       <li class="buttons">
-        <tal:block repeat="button field.buttons">
+        <tal:block repeat="button buttons">
           <button
               tal:attributes="disabled button.disabled"
-              id="${field.formid+button.name}"
+              id="${formid+button.name}"
               name="${button.name}"
               type="${button.type}"
               class="btnText submit ${button.css_class}"
@@ -49,9 +62,9 @@
 
   </fieldset>
 
-<script type="text/javascript" tal:condition="field.use_ajax">
+<script type="text/javascript" tal:condition="use_ajax">
   deform.addCallback(
-     '${field.formid}',
+     '${formid}',
      function(oid) {
        var options = {
          target: '#' + oid,
@@ -61,7 +74,7 @@
            deform.focusFirstInput();
          }
        };
-       var extra_options = ${field.ajax_options} || {};
+       var extra_options = ${ajax_options} || {};
        $('#' + oid).ajaxForm($.extend(options, extra_options));
      }
   );

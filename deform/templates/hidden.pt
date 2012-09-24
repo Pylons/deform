@@ -1,3 +1,3 @@
-<input type="hidden" name="${name}" value="${cstruct}" 
-       id="${oid}"/>
+<input type="hidden" name="${name|field.name}" value="${cstruct}" 
+       id="${oid|field.oid}"/>
 

@@ -1,5 +1,8 @@
-<tal:loop tal:repeat="item values" i18n:domain="deform">
-  <tal:if tal:condition="isinstance(item, optgroup_class)">
+<tal:loop 
+    define="optgroup_class optgroup_class|field.widget.optgroup_class"
+    repeat="item values" 
+    i18n:domain="deform">
+  <tal:if condition="isinstance(item, optgroup_class)">
     <p tal:condition="not field.widget.long_label_generator"
        class="optgroup">${item.label}</p>
     <p tal:repeat="(value, description) item.options">

@@ -15,7 +15,7 @@ default_widget_makers = {
     colander.DateTime: widget.DateTimeInputWidget,
     colander.Tuple: widget.TextInputCSVWidget,
     colander.Money: widget.MoneyInputWidget,
-}
+    }
 
 class FileData(object):
     """

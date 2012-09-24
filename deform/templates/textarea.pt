@@ -1,4 +1,9 @@
-<textarea tal:attributes="rows rows;
+<textarea tal:define="rows rows|field.widget.rows;
+                      cols cols|field.widget.cols;
+                      css_class css_class|field.widget.css_class;
+                      oid oid|field.oid;
+                      name name|field.name"
+          tal:attributes="rows rows;
                           cols cols;
                           class css_class"
           id="${oid}"

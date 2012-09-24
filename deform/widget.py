@@ -3,10 +3,11 @@
 import csv
 import json
 import random
-import types
 
-from colander import Invalid
-from colander import null
+from colander import (
+    Invalid,
+    null,
+    )
 
 from translationstring import TranslationString
 
@@ -168,36 +169,15 @@ class Widget(object):
         """
         if field.error is None:
             field.error = error
-        # XXX exponential time
         for e in error.children:
             for num, subfield in enumerate(field.children):
                 if e.pos == num:
                     subfield.widget.handle_error(subfield, e)
 
     def get_template_values(self, field, cstruct, kw):
-        values = {}
-        for k in dir(self):
-            # before you throw stones, look at inspect.getmembers.
-            if not k.startswith('__'):
-                try:
-                    value =  getattr(self, k)
-                except AttributeError:
-                    continue
-                if not isinstance(value, types.MethodType):
-                    values[k] = value
-        values.pop('template', None)
-        values.update(
-            dict(
-                field=field,
-                cstruct=cstruct,
-                oid=field.oid,
-                name=field.name,
-                description=field.description,
-                title=field.title,
-                required=field.required,
-                )
-            )
+        values = {'cstruct':cstruct, 'field':field}
         values.update(kw)
+        values.pop('template', None)
         return values
 
 class TextInputWidget(Widget):
@@ -1625,6 +1605,7 @@ class TextInputCSVWidget(Widget):
     readonly_template = 'readonly/textinput'
     size = None
     mask = None
+    mask_placeholder = "_"
 
     def serialize(self, field, cstruct, **kw):
         # XXX make size and mask overrideable

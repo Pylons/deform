@@ -1,4 +1,7 @@
-<ul class="deformSet"> 
+<ul tal:define="oid oid|field.oid;
+                title title|field.title;
+                css_class css_class|field.widget.css_class;"
+    class="deformSet"> 
     ${field.start_rename()}
     <tal:loop tal:repeat="choice values">
       <tal:def tal:define="(value, title) choice">

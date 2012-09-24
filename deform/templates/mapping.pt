@@ -1,11 +1,15 @@
-<fieldset class="deformMappingFieldset" i18n:domain="deform">
+<fieldset tal:define="title title|field.title;
+                      description description|field.description;
+                      errormsg errormsg|field.errormsg;
+                      item_template item_template|field.widget.item_template"
+          class="deformMappingFieldset" i18n:domain="deform">
   <!-- mapping -->
   <legend tal:condition="title">${title}</legend>
   <ul>
-    <li class="errorLi" tal:condition="field.errormsg">
+    <li class="errorLi" tal:condition="errormsg">
       <h3 class="errorMsgLbl" i18n:translate=""
           >There was a problem with this section</h3>
-      <p class="errorMsg">${field.errormsg}</p>
+      <p class="errorMsg">${errormsg}</p>
     </li>
     <li class="section" tal:condition="description">
       <div>${description}</div>

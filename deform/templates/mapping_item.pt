@@ -1,26 +1,37 @@
-<li class="field${field.error and ' ' + (field.widget.error_class or '')}"
-    title="${field.description}"
-    id="item-${field.oid}"
-    tal:omit-tag="field.widget.hidden"
+<li tal:define="error_class error_class|field.widget.error_class;
+                description description|field.description;
+                title title|field.title;
+                oid oid|field.oid;
+                hidden hidden|field.widget.hidden;
+                category category|field.widget.category;
+                required required|field.required;
+                "
+    class="field${field.error and ' ' + (error_class or '')}"
+    title="${description}"
+    id="item-${oid}"
+    tal:omit-tag="hidden"
     i18n:domain="deform">
+
   <!-- mapping_item -->
-  <label tal:condition="not (field.widget.hidden or field.widget.category == 'structural')"
+
+  <label tal:condition="not (hidden or category == 'structural')"
          class="desc"
-         title="${field.description}"
-         for="${field.oid}"
-         >${field.title}<span tal:condition="field.required" class="req"
-                              id="req-${field.oid}">*</span>
+         title="${description}"
+         for="${oid}"
+         >${title}<span tal:condition="required" class="req"
+                        id="req-${oid}">*</span>
   </label>
+
   <span tal:replace="structure field.serialize(cstruct)"/>
 
-
-  <p tal:condition="field.error and not field.widget.hidden and not field.typ.__class__.__name__=='Mapping'"
-     tal:define="errstr 'error-%s' % field.oid"
+  <p tal:condition="field.error and not hidden and not field.typ.__class__.__name__=='Mapping'"
+     tal:define="errstr 'error-%s' % oid"
      tal:repeat="msg field.error.messages()"
      tal:attributes="id repeat.msg.index==0 and errstr or
      ('%s-%s' % (errstr, repeat.msg.index))"
-     class="${field.widget.error_class}"
+     class="${error_class}"
      i18n:translate="">${msg}</p>
 
   <!-- /mapping_item -->
+
 </li>

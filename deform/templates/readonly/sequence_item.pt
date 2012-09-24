@@ -1,7 +1,6 @@
-<li title="${field.description}"
-    tal:omit-tag="field.widget.hidden">
+<li title="${description|field.description}"
+    tal:omit-tag="hidden|field.widget.hidden">
   <!-- sequence_item -->
-  <span tal:replace="structure
-        field.serialize(cstruct, readonly=True)"/>
+  <span tal:replace="structure field.serialize(cstruct, readonly=True)"/>
   <!-- /sequence_item -->
 </li>

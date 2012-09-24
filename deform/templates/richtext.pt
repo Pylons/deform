@@ -1,6 +1,17 @@
-<tal:block tal:omit-tag="" xmlns:i18n="http://xml.zope.org/namespaces/i18n" i18n:domain="deform">
-  <textarea id="${oid}" name="${name}" class='tinymce' tal:content="structure cstruct" />
-  <span id="${oid}-preload" class="tinymce-preload" tal:content="structure cstruct" />
+<div tal:define="height height|field.widget.height;
+                 width width|field.widget.width;
+                 skin skin|field.widget.skin;
+                 theme theme|field.widget.theme;
+                 delayed_load delayed_load|field.widget.delayed_load;
+                 oid oid|field.oid;
+                 name name|field.name;"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n" 
+    i18n:domain="deform"
+    tal:omit-tag="">
+  <textarea id="${oid}" name="${name}" 
+            class='tinymce' tal:content="structure cstruct" />
+  <span id="${oid}-preload" class="tinymce-preload" 
+        tal:content="structure cstruct" />
   <script language="javascript" type="text/javascript">
     (function($){
       deform.addCallback('${oid}', function(oid) {
@@ -34,4 +45,4 @@
       });
     })(jQuery);
   </script>
-</tal:block>
+</div>

@@ -1,4 +1,10 @@
-<div tal:omit-tag="">
+<div tal:define="name name|field.name;
+                 oid oid|field.oid;
+                 size size|field.widget.size;
+                 css_class css_class|field.widget.css_class;
+                 optgroup_class optgroup_class|field.widget.optgroup_class;
+                 multiple multiple|field.widget.multiple;"
+     tal:omit-tag="">
 <input type="hidden" name="__start__" value="${name}:sequence"
   tal:condition="multiple" />
 <select tal:attributes="name name;
@@ -25,4 +31,6 @@
   </tal:loop>
 </select>
 <input type="hidden" name="__end__" value="${name}:sequence"
-  tal:condition="field.widget.multiple" />
+  tal:condition="multiple" />
+</div>
+

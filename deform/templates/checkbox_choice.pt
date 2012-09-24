@@ -1,11 +1,13 @@
-<div tal:omit-tag="">
+<div tal:define="css_class css_class|field.widget.css_class;
+                 oid oid|field.oid;"
+     tal:omit-tag="">
 ${field.start_sequence()}
 <ul class="deformSet">
   <tal:loop tal:repeat="choice values">
     <tal:def tal:define="(value, title) choice">
       <li class="deformSet-item">
-        <input tal:attributes="checked value in cstruct;
-                               class css_class"
+        <input tal:attributes="class css_class;
+                               checked value in cstruct"
                type="checkbox"
                name="checkbox"
                value="${value}"
@@ -16,4 +18,5 @@ ${field.start_sequence()}
   </tal:loop>
 </ul>
 ${field.end_sequence()}
+</div>
 

@@ -1,11 +1,16 @@
-<div class="deformSeq"
-     id="${oid}"
-     tal:define="item_tmpl item_template;
+<div tal:define="item_tmpl item_template|field.widget.item_template;
+                 oid oid|field.oid;
+                 name name|field.name;
+                 min_len min_len|field.widget.min_len;
                  min_len min_len or 0;
+                 max_len max_len|field.widget.max_len;
                  max_len max_len or 100000;
                  now_len len(subfields);
+                 orderable orderable|field.widget.orderable;
                  orderable orderable and 1 or 0;
-                 prototype field.widget.prototype(field)">
+                 prototype field.widget.prototype(field)"
+     class="deformSeq"
+     id="${oid}">
 
   <!-- sequence -->
 

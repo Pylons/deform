@@ -1,4 +1,5 @@
-<div i18n:domain="deform">
+<div tal:define="oid oid|field.oid"
+     i18n:domain="deform">
   <span i18n:translate="">Year</span>
   <span id="${oid}-year">${year}</span>
   <span i18n:translate="">Month</span>
