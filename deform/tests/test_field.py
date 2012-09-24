@@ -436,6 +436,14 @@ class TestField(unittest.TestCase):
         self.assertEqual(field.serialize('abc'), 'abc')
         self.assertEqual(widget.rendered, 'writable')
 
+    def test_serialize_no_cstruct(self):
+        import colander
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        widget = field.widget = DummyWidget()
+        self.assertEqual(field.serialize(), colander.null)
+        self.assertEqual(widget.rendered, 'writable')
+
     def test_serialize_null(self):
         from colander import null
         schema = DummySchema()

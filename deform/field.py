@@ -13,8 +13,8 @@ from . import (
     )
 
 class _Marker(object):
-    def __repr__(self):
-        return 'Default'
+    def __repr__(self): # pragma: no cover
+        return '(Default)'
 
     __str__ = __repr__
 

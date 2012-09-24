@@ -119,7 +119,7 @@ class FileData(object):
     def deserialize(self, node, value):
         return value
 
-    def cstruct_children(self, node, cstruct):
+    def cstruct_children(self, node, cstruct): # pragma: no cover
         return []
 
 class Set(object):
@@ -154,6 +154,6 @@ class Set(object):
             raise colander.Invalid(node, _('Required'))
         return value
 
-    def cstruct_children(self, node, cstruct):
+    def cstruct_children(self, node, cstruct): # pragma: no cover
         return []
 
