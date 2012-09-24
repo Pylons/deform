@@ -112,3 +112,4 @@ Contributors
 - Josh Finnie, 2012/02/16
 - Daniel Nouri, 2012/03/30
 - Sam Brauer, 2012/09/15
+- Domen Kožar, 2012/09/23
