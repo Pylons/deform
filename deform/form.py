@@ -160,8 +160,12 @@ class Button(object):
         Render the button as disabled if True.
 
     css_class
-        The name of the CSS class attached to the button
-        Default: ``None`` (no class).
+        The name of a CSS class to attach to the button. In the default
+        form rendering, this string will be appended to ``btnText submit``
+        to become part of the ``class`` attribute of the button. For
+        example, if ``css_class`` was ``foobar`` then the resulting default
+        class becomes ``btnText submit foobar``. Default: ``None`` (no
+        additional class).
     """
     def __init__(self, name='submit', title=None, type='submit', value=None,
                  disabled=False, css_class=None):
