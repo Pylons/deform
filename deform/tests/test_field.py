@@ -467,6 +467,151 @@ class TestField(unittest.TestCase):
         self.assertTrue(r.startswith('<deform.field.Field object at '))
         self.assertTrue(r.endswith("(schemanode 'name')>"))
 
+    def test_get_cstruct(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        field._cstruct = 'abc'
+        self.assertEqual(field.cstruct, 'abc')
+
+    def test_set_cstruct_child_cstructs_is_SequenceItems(self):
+        from colander import SequenceItems
+        schema = DummySchema()
+        schema.cstruct_children = lambda *arg: SequenceItems(['1'])
+        field = self._makeOne(schema)
+        child = DummyField()
+        child.cstruct = 'foo'
+        field.children = [child]
+        field.cstruct = ['yo']
+        self.assertEqual(field.cstruct, ['yo'])
+        self.assertEqual(child.cstruct, 'foo') # unchanged
+
+    def test_set_cstruct_with_child_cstructs(self):
+        schema = DummySchema()
+        schema.cstruct_children = lambda *arg: ['1']
+        field = self._makeOne(schema)
+        child = DummyField()
+        child.cstruct = 'foo'
+        field.children = [child]
+        field.cstruct = ['yo']
+        self.assertEqual(field.cstruct, ['yo'])
+        self.assertEqual(child.cstruct, '1')
+
+    def test_del_cstruct(self):
+        from colander import null
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        field._cstruct = 'foo'
+        del field.cstruct
+        self.assertEqual(field.cstruct, null)
+
+    def test_start_mapping_withname(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        result = field.start_mapping('foo')
+        self.assertEqual(
+            result,
+            '<input type="hidden" name="__start__" value="foo:mapping"/>'
+            )
+        
+    def test_start_mapping_withoutname(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        result = field.start_mapping()
+        self.assertEqual(
+            result,
+            '<input type="hidden" name="__start__" value="name:mapping"/>'
+            )
+
+    def test_end_mapping_withname(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        result = field.end_mapping('foo')
+        self.assertEqual(
+            result,
+            '<input type="hidden" name="__end__" value="foo:mapping"/>'
+            )
+
+    def test_end_mapping_withoutname(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        result = field.end_mapping()
+        self.assertEqual(
+            result,
+            '<input type="hidden" name="__end__" value="name:mapping"/>'
+            )
+
+    def test_start_sequence_withname(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        result = field.start_sequence('foo')
+        self.assertEqual(
+            result,
+            '<input type="hidden" name="__start__" value="foo:sequence"/>'
+            )
+
+    def test_start_sequence_withoutname(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        result = field.start_sequence()
+        self.assertEqual(
+            result,
+            '<input type="hidden" name="__start__" value="name:sequence"/>'
+            )
+
+    def test_end_sequence_withname(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        result = field.end_sequence('foo')
+        self.assertEqual(
+            result,
+            '<input type="hidden" name="__end__" value="foo:sequence"/>'
+            )
+
+    def test_end_sequence_withoutname(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        result = field.end_sequence()
+        self.assertEqual(
+            result,
+            '<input type="hidden" name="__end__" value="name:sequence"/>'
+            )
+
+    def test_start_rename_withname(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        result = field.start_rename('foo')
+        self.assertEqual(
+            result,
+            '<input type="hidden" name="__start__" value="foo:rename"/>'
+            )
+
+    def test_start_rename_withoutname(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        result = field.start_rename()
+        self.assertEqual(
+            result,
+            '<input type="hidden" name="__start__" value="name:rename"/>'
+            )
+
+    def test_end_rename_withname(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        result = field.end_rename('foo')
+        self.assertEqual(
+            result,
+            '<input type="hidden" name="__end__" value="foo:rename"/>'
+            )
+
+    def test_end_rename_withoutname(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        result = field.end_rename()
+        self.assertEqual(
+            result,
+            '<input type="hidden" name="__end__" value="name:rename"/>'
+            )
+
 class DummyField(object):
     oid = 'oid'
     requirements = ( ('abc', '123'), ('def', '456'))

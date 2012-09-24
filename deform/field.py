@@ -642,13 +642,6 @@ class Field(object):
 
     cstruct = property(_get_cstruct, _set_cstruct, _del_cstruct)
 
-    def set_appstruct(self, appstruct):
-        """ Set the cstruct of this node (and its child nodes) using
-        ``appstruct`` as input."""
-        cstruct = self.schema.serialize(appstruct)
-        self.cstruct = cstruct
-        return cstruct
-
     def __repr__(self):
         return '<%s.%s object at %d (schemanode %r)>' % (
             self.__module__,
@@ -657,7 +650,12 @@ class Field(object):
             self.schema.name,
             )
     
-    # retail API
+    def set_appstruct(self, appstruct):
+        """ Set the cstruct of this node (and its child nodes) using
+        ``appstruct`` as input."""
+        cstruct = self.schema.serialize(appstruct)
+        self.cstruct = cstruct
+        return cstruct
 
     def render_template(self, template, **kw):
         """ Render the template named ``template`` using ``kw`` as the
@@ -667,7 +665,7 @@ class Field(object):
         values.update(kw) # allow caller to override field and cstruct
         return self.renderer(template, **values)
 
-    # peppercorn-outputting API
+    # retail API
 
     def start_mapping(self, name=None):
         """ Create a start-mapping tag (a literal).  If ``name`` is ``None``,
@@ -694,7 +692,6 @@ class Field(object):
         the name of this node will be used to generate the name in the tag.
         See the :term:`Peppercorn` documentation for more information.
         """
-        
         if name is None:
             name = self.name
         tag = '<input type="hidden" name="__start__" value="%s:sequence"/>'
