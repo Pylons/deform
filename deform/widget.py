@@ -1220,7 +1220,7 @@ class SequenceWidget(Widget):
         # automated testing; finding last node)
         item_field = field.children[0].clone()
         proto = field.renderer(self.item_template, field=item_field,
-                               cstruct=null, parent=field)
+                               cstruct=item_field.schema.serialize(null), parent=field)
         if isinstance(proto, string_types):
             proto = proto.encode('utf-8')
         proto = url_quote(proto)
