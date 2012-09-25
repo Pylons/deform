@@ -4,11 +4,13 @@
                   oid oid|field.oid;
                   mask mask|field.widget.mask;
                   mask_placeholder mask_placeholder|field.widget.mask_placeholder;
+                  style style|False;
 "
       tal:omit-tag="">
     <input type="text" name="${name}" value="${cstruct}" 
            tal:attributes="size size;
-                           class css_class"
+                           class css_class;
+                           style style"
            id="${oid}"/>
     <script tal:condition="mask" type="text/javascript">
       deform.addCallback(
