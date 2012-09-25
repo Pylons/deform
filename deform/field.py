@@ -632,6 +632,13 @@ class Field(object):
         self._cstruct = cstruct
         child_cstructs = self.schema.cstruct_children(cstruct)
         if not isinstance(child_cstructs, colander.SequenceItems):
+            # If the schema's type returns SequenceItems, it means that the
+            # node is a sequence node, which means it has one child
+            # representing its prototype instead of a set of "real" children;
+            # our widget handle cloning the prototype node.  The prototype's
+            # cstruct will already be set up with its default value by virtue
+            # of set_appstruct having been called in its constructor, and we
+            # needn't (and can't) do anything more.
             for n, child in enumerate(self.children):
                 child.cstruct = child_cstructs[n]
 

@@ -1219,8 +1219,8 @@ class SequenceWidget(Widget):
         # we clone the item field to bump the oid (for easier
         # automated testing; finding last node)
         item_field = field.children[0].clone()
-        proto = field.renderer(self.item_template, field=item_field,
-                               cstruct=null, parent=field)
+        # NB: item_field default should already be set up
+        proto = item_field.render_template(self.item_template, parent=field)
         if isinstance(proto, string_types):
             proto = proto.encode('utf-8')
         proto = url_quote(proto)
@@ -1257,8 +1257,12 @@ class SequenceWidget(Widget):
             subfields = []
             for val in cstruct:
                 cloned = item_field.clone()
-                cloned.cstruct = val
-                subfields.append((val, cloned))
+                if val is not null:
+                    # item field has already been set up with a default by
+                    # virtue of its constructor and setting cstruct to null
+                    # here wil overwrite the real default
+                    cloned.cstruct = val
+                subfields.append((cloned.cstruct, cloned))
 
         readonly = kw.get('readonly', self.readonly)
         template = readonly and self.readonly_template or self.template

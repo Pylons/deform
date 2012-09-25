@@ -10,6 +10,10 @@ Next release
 - Fixed remove bug in nested sequences.  See
   https://github.com/Pylons/deform/pull/89
 
+- Fixed bug wherein items added to a sequence nor the initial items rendered
+  in a sequence would not reflect the correct defaults of the item widget.
+  See https://github.com/Pylons/deform/pull/79
+
 - Allow SelectWidget to produce <optgroup> HTML tags.  See
   https://github.com/Pylons/deform/pull/87
 
