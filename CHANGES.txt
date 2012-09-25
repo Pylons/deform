@@ -7,6 +7,9 @@ Next release
 - Give the preview_url method of the tempstore access to the stored
   item. [tomster]
 
+- Add ``style`` attribute/arguments to textinput-related widgets allowing you
+  to set the style of the tag by hand.
+
 - Fixed remove bug in nested sequences.  See
   https://github.com/Pylons/deform/pull/89
 

@@ -2,8 +2,9 @@
                   name name|field.name;
                   mask_options mask_options|'{}';
                   size size|field.widget.size;
-                  css_class css_class|field.widget.css_class"
-tal:omit-tag="">
+                  css_class css_class|field.widget.css_class;
+                  style style|field.widget.style|False"
+      tal:omit-tag="">
     <input type="text" name="${name}" value="${cstruct}" 
            tal:attributes="size size;
                            class css_class"

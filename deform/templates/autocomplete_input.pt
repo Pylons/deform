@@ -1,13 +1,15 @@
 <span tal:define="name name|field.name;
                   size size|field.widget.size;
                   css_class css_class|field.widget.css_class;
-                  oid oid|field.oid"
+                  oid oid|field.oid;
+                  style style|field.widget.style|None"
       tal:omit-tag="">
     <input type="text"
            name="${name}"
            value="${cstruct}" 
            tal:attributes="size size;
-                           class css_class"
+                           class css_class;
+                           style style"
            id="${oid}"/>
     <script tal:condition="values" type="text/javascript">
       deform.addCallback(

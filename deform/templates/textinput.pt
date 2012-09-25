@@ -4,7 +4,7 @@
                   oid oid|field.oid;
                   mask mask|field.widget.mask;
                   mask_placeholder mask_placeholder|field.widget.mask_placeholder;
-                  style style|False;
+                  style style|field.widget.style|None;
 "
       tal:omit-tag="">
     <input type="text" name="${name}" value="${cstruct}" 

@@ -203,6 +203,11 @@ class TextInputWidget(Widget):
         If true, during deserialization, strip the value of leading
         and trailing whitespace (default ``True``).
 
+    style
+        A string that will be placed literally in a ``style`` attribute on
+        the text input tag.  For example, 'width:150px;'.  Default: ``None``,
+        meaning no style attribute will be added to the input tag.
+        
     mask
         A :term:`jquery.maskedinput` input mask, as a string.
 
@@ -228,6 +233,7 @@ class TextInputWidget(Widget):
     mask_placeholder
         The placeholder for required nonliteral elements when a mask
         is used.  Default: ``_`` (underscore).
+
     """
     template = 'textinput'
     readonly_template = 'readonly/textinput'
@@ -235,6 +241,7 @@ class TextInputWidget(Widget):
     strip = True
     mask = None
     mask_placeholder = "_"
+    style = None
     requirements = ( ('jquery.maskedinput', None), )
 
     def serialize(self, field, cstruct, **kw):
@@ -276,6 +283,11 @@ class MoneyInputWidget(Widget):
         The template name used to render the widget in read-only mode.
         Default: ``readonly/textinput``.
 
+    style
+        A string that will be placed literally in a ``style`` attribute on
+        the text input tag.  For example, 'width:150px;'.  Default: ``None``,
+        meaning no style attribute will be added to the input tag.
+
     options
         A dictionary or sequence of two-tuples containing ``jquery-maskMoney``
         options.  The valid options are:
@@ -316,6 +328,7 @@ class MoneyInputWidget(Widget):
     requirements = ( ('jquery.maskMoney', None), )
     options = None
     size = None
+    style = None
     
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
@@ -372,7 +385,7 @@ class AutocompleteInputWidget(Widget):
 
     template
         The template name used to render the widget.  Default:
-        ``autocomplete_textinput``.
+        ``autocomplete_input``.
 
     readonly_template
         The template name used to render the widget in read-only mode.
@@ -411,12 +424,18 @@ class AutocompleteInputWidget(Widget):
         :term:`jquery.ui.autocomplete`. It sets the time to wait after a
         keypress to activate the autocomplete call.
         Defaults to ``10`` ms or ``400`` ms if a url is passed.
+
+    style
+        A string that will be placed literally in a ``style`` attribute on
+        the text input tag.  For example, 'width:150px;'.  Default: ``None``,
+        meaning no style attribute will be added to the input tag.
     """
     delay = None
     min_length = 2
     readonly_template = 'readonly/textinput'
     size = None
     strip = True
+    style = None
     template = 'autocomplete_input'
     values = None
     requirements = ( ('jqueryui', None), )
@@ -466,12 +485,17 @@ class DateInputWidget(Widget):
         ``None``, meaning that the ``size`` is not included in the
         widget output (uses browser default size).
 
-    template
-        The template name used to render the widget.  Default:
-        ``dateinput``.
+    style
+        A string that will be placed literally in a ``style`` attribute on
+        the text input tag.  For example, 'width:150px;'.  Default: ``None``,
+        meaning no style attribute will be added to the input tag.
 
     options
         Options for configuring the widget (eg: date format)
+
+    template
+        The template name used to render the widget.  Default:
+        ``dateinput``.
 
     readonly_template
         The template name used to render the widget in read-only mode.
@@ -480,9 +504,9 @@ class DateInputWidget(Widget):
     template = 'dateinput'
     readonly_template = 'readonly/textinput'
     size = None
+    style = None
     requirements = ( ('jqueryui', None), )
     default_options = (('dateFormat', 'yy-mm-dd'),)
-
 
     def __init__(self, *args, **kwargs):
         self.options = dict(self.default_options)
@@ -518,6 +542,11 @@ class DateTimeInputWidget(DateInputWidget):
         ``None``, meaning that the ``size`` is not included in the
         widget output (uses browser default size).
 
+    style
+        A string that will be placed literally in a ``style`` attribute on
+        the text input tag.  For example, 'width:150px;'.  Default: ``None``,
+        meaning no style attribute will be added to the input tag.
+        
     template
         The template name used to render the widget.  Default:
         ``dateinput``.
@@ -529,6 +558,7 @@ class DateTimeInputWidget(DateInputWidget):
     template = 'datetimeinput'
     readonly_template = 'readonly/textinput'
     size = None
+    style = None
     requirements = ( ('jqueryui', None), ('datetimepicker', None), )
     default_options = (DateInputWidget.default_options +
                        (('timeFormat', 'hh:mm:ss'),
@@ -569,6 +599,11 @@ class TextAreaWidget(TextInputWidget):
         ``None``, meaning that the ``rows`` is not included in the
         widget output (uses browser default cols).
 
+    style
+        A string that will be placed literally in a ``style`` attribute on
+        the textarea input tag.  For example, 'width:150px;'.  Default:
+        ``None``, meaning no style attribute will be added to the input tag.
+        
     template
         The template name used to render the widget.  Default:
         ``textarea``.
@@ -587,6 +622,7 @@ class TextAreaWidget(TextInputWidget):
     cols = None
     rows = None
     strip = True
+    style = None
 
 class RichTextWidget(TextInputWidget):
     """
@@ -665,9 +701,15 @@ class PasswordWidget(TextInputWidget):
     strip
         If true, during deserialization, strip the value of leading
         and trailing whitespace (default ``True``).
+
+    style
+        A string that will be placed literally in a ``style`` attribute on
+        the password input tag.  For example, 'width:150px;'.  Default:
+        ``None``, meaning no style attribute will be added to the input tag.
     """
     template = 'password'
     readonly_template = 'readonly/password'
+    style = None
 
 class HiddenWidget(Widget):
     """

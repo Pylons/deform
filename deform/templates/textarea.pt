@@ -2,9 +2,11 @@
                       cols cols|field.widget.cols;
                       css_class css_class|field.widget.css_class;
                       oid oid|field.oid;
-                      name name|field.name"
+                      name name|field.name;
+                      style style|field.widget.style|None"
           tal:attributes="rows rows;
                           cols cols;
-                          class css_class"
+                          class css_class;
+                          style style"
           id="${oid}"
           name="${name}">${cstruct}</textarea>
