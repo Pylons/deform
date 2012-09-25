@@ -548,18 +548,24 @@ class Field(object):
               color = schema.SchemaNode(schema.String())
 
           schema = MySchema()
-          form = Form(schema)
-          
-          if 'submit' in request.POST:  # the form submission needs validation
-              controls = request.POST.items()
-              try:
-                  deserialized = form.validate(controls)
-                  do_something(deserialized)
-                  return HTTPFound(location='http://example.com/success')
-              except ValidationFailure, e:
-                  return {'form':e.render()}
-          else:
-              return {'form':form.render()} # the form just needs rendering
+
+          def view(request):
+              form = Form(schema, buttons=('submit',))
+              if 'submit' in request.POST:  # the form submission needs validation
+                  controls = request.POST.items()
+                  try:
+                      deserialized = form.validate(controls)
+                      do_something(deserialized)
+                      return HTTPFound(location='http://example.com/success')
+                  except ValidationFailure, e:
+                      return {'form':e.render()}
+              else:
+                  return {'form':form.render()} # the form just needs rendering
+
+        .. warning::
+
+            ``form.validate(controls)`` mutates ``Form`` instance, so ``Form``
+            instance should be constructed (and live) inside one request.
 
         If ``subcontrol`` is supplied, it represents a named subitem in the
         data returned by ``peppercorn.parse(controls)``.  Use this subitem as
@@ -568,7 +574,7 @@ class Field(object):
         example, if you've embedded a mapping in the form named ``user``, and
         you want to validate only the data contained in that mapping instead
         if all of the data in the form post, you might use
-        ``form.validate(controls, subcontrol='user').
+        ``form.validate(controls, subcontrol='user')``.
         """
         pstruct = peppercorn.parse(controls)
         if subcontrol is not None:
@@ -643,13 +649,6 @@ class Field(object):
 
     cstruct = property(_get_cstruct, _set_cstruct, _del_cstruct)
 
-    def set_appstruct(self, appstruct):
-        """ Set the cstruct of this node (and its child nodes) using
-        ``appstruct`` as input."""
-        cstruct = self.schema.serialize(appstruct)
-        self.cstruct = cstruct
-        return cstruct
-
     def __repr__(self):
         return '<%s.%s object at %d (schemanode %r)>' % (
             self.__module__,
@@ -658,7 +657,12 @@ class Field(object):
             self.schema.name,
             )
     
-    # retail API
+    def set_appstruct(self, appstruct):
+        """ Set the cstruct of this node (and its child nodes) using
+        ``appstruct`` as input."""
+        cstruct = self.schema.serialize(appstruct)
+        self.cstruct = cstruct
+        return cstruct
 
     def render_template(self, template, **kw):
         """ Render the template named ``template`` using ``kw`` as the
@@ -668,7 +672,7 @@ class Field(object):
         values.update(kw) # allow caller to override field and cstruct
         return self.renderer(template, **values)
 
-    # peppercorn-outputting API
+    # retail API
 
     def start_mapping(self, name=None):
         """ Create a start-mapping tag (a literal).  If ``name`` is ``None``,
@@ -695,7 +699,6 @@ class Field(object):
         the name of this node will be used to generate the name in the tag.
         See the :term:`Peppercorn` documentation for more information.
         """
-        
         if name is None:
             name = self.name
         tag = '<input type="hidden" name="__start__" value="%s:sequence"/>'
