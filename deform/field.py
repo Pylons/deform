@@ -664,6 +664,14 @@ class Field(object):
         self.cstruct = cstruct
         return cstruct
 
+    def set_pstruct(self, pstruct):
+        try:
+            cstruct = self.deserialize(pstruct)
+        except colander.Invalid as e:
+            # explicitly don't set errors
+            cstruct = e.value
+        self.cstruct = cstruct
+
     def render_template(self, template, **kw):
         """ Render the template named ``template`` using ``kw`` as the
         top-level keyword arguments (augmented with ``field`` and ``cstruct``
