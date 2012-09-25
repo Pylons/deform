@@ -504,6 +504,30 @@ class TestField(unittest.TestCase):
         del field.cstruct
         self.assertEqual(field.cstruct, null)
 
+    def test_set_appstruct(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        field.set_appstruct('a')
+        self.assertEqual(field.cstruct, 'a')
+
+    def test_set_pstruct(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        field.set_pstruct('a')
+        self.assertEqual(field.cstruct, 'a')
+
+    def test_set_pstruct_invalid(self):
+        import colander
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        def deserialize(pstruct):
+            err = colander.Invalid(None)
+            err.value = 'foo'
+            raise err
+        field.deserialize = deserialize
+        field.set_pstruct('a')
+        self.assertEqual(field.cstruct, 'foo')
+
     def test_start_mapping_withname(self):
         schema = DummySchema()
         field = self._makeOne(schema)

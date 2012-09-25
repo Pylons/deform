@@ -665,6 +665,8 @@ class Field(object):
         return cstruct
 
     def set_pstruct(self, pstruct):
+        """ Set the cstruct of this node (and its child nodes) using
+        ``pstruct`` as input."""
         try:
             cstruct = self.deserialize(pstruct)
         except colander.Invalid as e:

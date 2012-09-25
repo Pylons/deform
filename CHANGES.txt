@@ -92,6 +92,10 @@ Next release
   keyword argument can still be passed to ``Field.serialize`` to render a
   field as readonly, like in older versions.
 
+- Add ``set_appstruct`` and ``set_pstruct`` methods to Field; these accept,
+  respectively, an appstruct or a pstruct and set the cstruct related to the
+  field to the deserialized or serialized value.
+
 0.9.5 (2012-04-27)
 ------------------
 
