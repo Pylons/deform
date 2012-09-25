@@ -1199,7 +1199,7 @@ class TestSequenceWidget(unittest.TestCase):
         schema = DummySchema()
         field = DummyField(schema, renderer)
         widget = self._makeOne()
-        protofield = DummyField()
+        protofield = DummyField(None, renderer)
         field.children=[protofield]
         result = widget.prototype(field)
         self.assertEqual(type(result), str)
@@ -1212,7 +1212,7 @@ class TestSequenceWidget(unittest.TestCase):
         schema = DummySchema()
         field = DummyField(schema, renderer)
         widget = self._makeOne()
-        protofield = DummyField()
+        protofield = DummyField(None, renderer)
         field.children=[protofield]
         result = widget.prototype(field)
         self.assertEqual(type(result), str)
@@ -1792,6 +1792,7 @@ class DummyField(object):
     cloned = False
     oid = 'deformField1'
     required = True
+    cstruct = colander.null
     def __init__(self, schema=None, renderer=None, translations=None):
         self.schema = schema
         self.renderer = renderer
@@ -1808,6 +1809,9 @@ class DummyField(object):
         if self.translations is None:
             return term
         return self.translations.get(term, term)
+
+    def render_template(self, template, **kw):
+        return self.renderer(template, **kw)
 
 class DummyTmpStore(dict):
     def preview_url(self, uid):
