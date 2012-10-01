@@ -551,7 +551,7 @@ class Field(object):
 
           def view(request):
               form = Form(schema, buttons=('submit',))
-              if 'submit' in request.POST:  # the form submission needs validation
+              if 'submit' in request.POST:  # form submission needs validation
                   controls = request.POST.items()
                   try:
                       deserialized = form.validate(controls)

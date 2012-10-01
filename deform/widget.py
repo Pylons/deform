@@ -871,12 +871,16 @@ class SelectWidget(Widget):
 
            <option value="">Select your favorite musician</option>
            <optgroup label="Guitarists">
-             <option value="page" label="Jimmy Page">Guitarists - Jimmy Page</option>
-             <option value="hendrix" label="Jimi Hendrix">Guitarists - Jimi Hendrix</option>
+             <option value="page"
+                 label="Jimmy Page">Guitarists - Jimmy Page</option>
+             <option value="hendrix"
+                 label="Jimi Hendrix">Guitarists - Jimi Hendrix</option>
            </optgroup>
            <optgroup label="Drummers">
-             <option value="cobham" label="Billy Cobham">Drummers - Billy Cobham</option>
-             <option value="bonham" label="John Bonham">Drummers - John Bonham</option>
+             <option value="cobham"
+                 label="Billy Cobham">Drummers - Billy Cobham</option>
+             <option value="bonham"
+                 label="John Bonham">Drummers - John Bonham</option>
            </optgroup>
 
         Default: ``None`` (which means that the ``label`` attribute is
