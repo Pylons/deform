@@ -1,6 +1,6 @@
 from pkg_resources import resource_filename
 
-from deform.exception import TemplateError
+from .exception import TemplateError
 from translationstring import ChameleonTranslate
 
 from chameleon.zpt.loader import TemplateLoader

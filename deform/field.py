@@ -539,13 +539,13 @@ class Field(object):
 
           from webob.exc import HTTPFound
           from deform.exception import ValidationFailure
-          from deform import schema
-          from deform.form import Form
+          from deform import Form
+          import colander
 
           from my_application import do_something
 
-          class MySchema(schema.MappingSchema):
-              color = schema.SchemaNode(schema.String())
+          class MySchema(colander.MappingSchema):
+              color = colander.SchemaNode(colander.String())
 
           schema = MySchema()
 
@@ -557,15 +557,16 @@ class Field(object):
                       deserialized = form.validate(controls)
                       do_something(deserialized)
                       return HTTPFound(location='http://example.com/success')
-                  except ValidationFailure, e:
+                  except ValidationFailure as e:
                       return {'form':e.render()}
               else:
                   return {'form':form.render()} # the form just needs rendering
 
         .. warning::
 
-            ``form.validate(controls)`` mutates ``Form`` instance, so ``Form``
-            instance should be constructed (and live) inside one request.
+            ``form.validate(controls)`` mutates the ``form`` instance, so the
+            ``form`` instance should be constructed (and live) inside one
+            request.
 
         If ``subcontrol`` is supplied, it represents a named subitem in the
         data returned by ``peppercorn.parse(controls)``.  Use this subitem as

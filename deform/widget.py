@@ -11,9 +11,9 @@ from colander import (
 
 from translationstring import TranslationString
 
-from deform.i18n import _
+from .i18n import _
 
-from deform.compat import (
+from .compat import (
     string_types,
     StringIO,
     string,

@@ -149,15 +149,6 @@ class TestButton(unittest.TestCase):
         self.assertEqual(button.disabled, True)
         self.assertEqual(button.css_class, 'css-class')
 
-class TestRaw(unittest.TestCase):
-    def _makeOne(self, val):
-        from deform.form import Raw
-        return Raw(val)
-
-    def test___html__(self):
-        inst = self._makeOne('abc')
-        self.assertEqual(inst.__html__(), 'abc')
-
 class DummySchema(object):
     typ = None
     name = 'name'

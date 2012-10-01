@@ -1,13 +1,12 @@
 import re
 
-from deform import widget
-from deform import field
+from chameleon.utils import Markup
 
-from deform.compat import (
-    string_types,
-    text_type,
-)
-
+from . import (
+    compat,
+    field,
+    widget,
+    )
 
 class Form(field.Field):
     """
@@ -105,7 +104,7 @@ class Form(field.Field):
         field.Field.__init__(self, schema, **kw)
         _buttons = []
         for button in buttons:
-            if isinstance(button, string_types):
+            if isinstance(button, compat.string_types):
                 button = Button(button)
             _buttons.append(button)
         self.action = action
@@ -119,12 +118,8 @@ class Form(field.Field):
             self.autocomplete = 'on'
         else:
             self.autocomplete = 'off'
-        self.ajax_options = Raw(ajax_options.strip())
+        self.ajax_options = Markup(ajax_options.strip())
         self.widget = widget.FormWidget()
-
-class Raw(text_type):
-    def __html__(self):
-        return self
 
 class Button(object):
     """

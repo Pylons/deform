@@ -1,6 +1,6 @@
 import colander
 
-from deform import widget
+from . import widget
 from deform.i18n import _
 
 default_widget_makers = {
