@@ -1,21 +1,21 @@
-
 /* 
  * Register a top-level callback to the deform.load() function 
  * this will be called when the DOM has finished loading. No need
  * to include the call at the end of the page.
  */
+
 $(document).ready(function(){
     deform.load();
 });
 
 
-
 var deform_loaded = false;
+
 var deform  = {
     callbacks: [],
 
     addCallback: function (oid, callback) {
-        deform.callbacks.push([oid, callback])
+        deform.callbacks.push([oid, callback]);
     },
 
     clearCallbacks: function () {
@@ -88,7 +88,7 @@ var deform  = {
             });
 
         var anchorid = genid + '-anchor';
-        var anchortext = '<a name="' + anchorid +'" id="' + anchorid + '"/>' 
+        var anchortext = '<a name="' + anchorid +'" id="' + anchorid + '"/>';
         $(anchortext).insertBefore(before);
         $htmlnode.insertBefore(before);
 
@@ -97,12 +97,12 @@ var deform  = {
             var callback = item[1];
             var newid = idmap[oid];
             if (newid) { 
-                callback(newid)
-                };
+                callback(newid);
+                }
             });
 
         deform.clearCallbacks();
-        var old_len = parseInt(before.attr('now_len')||'0');
+        var old_len = parseInt(before.attr('now_len')||'0', 10);
         before.attr('now_len', old_len + 1);
         //deform.maybeScrollIntoView('#' + anchorid);
     },
@@ -112,15 +112,15 @@ var deform  = {
         var $proto_node = $oid_node.children('.deformProto').first();
         var $before_node = $oid_node.children('ul').first().children(
                                               '.deformInsertBefore');
-        var min_len = parseInt($before_node.attr('min_len')||'0');
-        var max_len = parseInt($before_node.attr('max_len')||'9999');
-        var now_len = parseInt($before_node.attr('now_len')||'0');
-        var orderable = parseInt($before_node.attr('orderable')||'0');
+        var min_len = parseInt($before_node.attr('min_len')||'0', 10);
+        var max_len = parseInt($before_node.attr('max_len')||'9999', 10);
+        var now_len = parseInt($before_node.attr('now_len')||'0', 10);
+        var orderable = parseInt($before_node.attr('orderable')||'0', 10);
         if (now_len < max_len) {
             deform.addSequenceItem($proto_node, $before_node);
             deform.processSequenceButtons($oid_node, min_len, max_len, 
                                           now_len+1, orderable);
-        };
+        }
         return false;
     },
 
@@ -128,16 +128,16 @@ var deform  = {
         var $item_node = $(clicked).parent();
         var $oid_node = $item_node.parent().parent();
         var $before_node = $oid_node.find('.deformInsertBefore').last();
-        var min_len = parseInt($before_node.attr('min_len')||'0');
-        var max_len = parseInt($before_node.attr('max_len')||'9999');
-        var now_len = parseInt($before_node.attr('now_len')||'0');
-        var orderable = parseInt($before_node.attr('orderable')||'0');
+        var min_len = parseInt($before_node.attr('min_len')||'0', 10);
+        var max_len = parseInt($before_node.attr('max_len')||'9999', 10);
+        var now_len = parseInt($before_node.attr('now_len')||'0', 10);
+        var orderable = parseInt($before_node.attr('orderable')||'0', 10);
         if (now_len > min_len) {
             $before_node.attr('now_len', now_len - 1);
             $item_node.remove();
             deform.processSequenceButtons($oid_node, min_len, max_len, 
                                           now_len-1, orderable);
-        };
+        }
         return false;
     },
 
@@ -149,10 +149,10 @@ var deform  = {
         oid_node.children('.deformSeqAdd').show();
         if (now_len > min_len) {
             $lis.find('.deformClosebutton').addClass('deformClosebuttonActive');
-        };
+        }
         if (now_len >= max_len) {
             oid_node.children('.deformSeqAdd').hide();
-        };
+        }
         if (orderable) {
             if (now_len > 1) {
                 $lis.find('.deformOrderbutton').addClass('deformOrderbuttonActive');
@@ -178,7 +178,7 @@ var deform  = {
             !(elementOffset.left > minLeft && elementOffset.left < maxLeft)
             ) {
                 element.scrollIntoView();
-            };
+            }
     },
 
     focusFirstInput: function () {
@@ -191,24 +191,24 @@ var deform  = {
                     raw.type == 'textarea') { 
                     if (raw.className != "hasDatepicker") {
                         input.focus();
-                    };
-                };
-            };
-        };
+                    }
+                }
+            }
+        }
     },
 
     randomString: function (length) {
         var chr='0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';
-        var chr = chr.split('');
+        chr = chr.split('');
     
         if (! length) {
             length = Math.floor(Math.random() * chr.length);
-        };
+        }
     
         var str = '';
         for (var i = 0; i < length; i++) {
             str += chr[Math.floor(Math.random() * chr.length)];
-        };
+        }
         return str;
     }
 
