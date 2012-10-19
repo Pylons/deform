@@ -631,13 +631,16 @@ class RichTextWidget(TextInputWidget):
 
     To use this widget the :term:`TinyMCE Editor` library must be
     provided in the page where the widget is rendered. A version of
-    :term:`TinyMCE Editor` is included in deform's static directory.
+    :term:`TinyMCE Editor` is included in Deform's ``static`` directory.
 
 
     **Attributes/Arguments**
 
     height
-        The height, in pixels, of the text editor.  Defaults to 240.
+        The height of the text editor. May be specified as an integer
+        value representing height in pixels (such as ``240``) or as a
+        string value (such as ``10em`` or ``auto``). Default: ``240``
+        (integer).
 
     readonly_template
         The template name used to render the widget in read-only mode.
@@ -645,12 +648,12 @@ class RichTextWidget(TextInputWidget):
 
     delayed_load
         If you have many richtext fields, you can set this option to
-        ``true``, and the richtext editor will only be loaded when
-        clicking on the field (default ``false``)
+        ``True``, and the richtext editor will only be loaded upon
+        the user clicking the field. Default: ``False``.
 
     strip
         If true, during deserialization, strip the value of leading
-        and trailing whitespace (default ``True``).
+        and trailing whitespace. Default: ``True``.
 
     template
         The template name used to render the widget.  Default:
@@ -659,16 +662,19 @@ class RichTextWidget(TextInputWidget):
     skin
         The skin for the WYSIWYG editor. Normally only needed if you
         plan to reuse a TinyMCE js from another framework that
-        defined a skin.
+        defined a skin. Default: ``default``.
 
     theme
-        The theme for the WYSIWYG editor, ``simple`` or ``advanced``.
-        Defaults to ``simple``.
+        The theme for the WYSIWYG editor: ``simple`` or ``advanced``.
+        Default: ``simple``.
 
     width
-        The width, in pixels, of the editor.  Defaults to 500.
-        The width can also be given as a percentage (e.g. '100%')
-        relative to the width of the enclosing element.
+        The width of the text editor. May be specified as an integer
+        value representing width in pixels (such as ``500``) or as a
+        string value (such as ``10em`` or ``auto``). By specifying
+        a string-based percentage (such as ``50%``) the width will
+        be relative to the width of the enclosing element.
+        Default: ``500`` (integer).
     """
     height = 240
     width = 500

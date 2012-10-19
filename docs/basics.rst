@@ -215,8 +215,7 @@ Creating Schemas Without Using a Class Statement (Imperatively)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 See
-`http://docs.pylonsproject.org/projects/colander/dev/basics.html#defining-a-schema-imperatively
-<http://docs.pylonsproject.org/projects/colander/dev/basics.html#defining-a-schema-imperatively>`_
+http://docs.pylonsproject.org/projects/colander/dev/basics.html#defining-a-schema-imperatively
 for information about how to create schemas without using a ``class``
 statement.
 

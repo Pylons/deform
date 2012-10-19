@@ -84,7 +84,7 @@ Next release
 - The ``deform.Field`` (and therefore ``deform.Form``) classes now expose a
   ``render_template`` method, which injects ``field`` and ``cstruct`` into
   the dictionary passed to the template if they don't already exist in the
-  **kw passed.  This is in support of retail form rendering.
+  ``**kw`` passed.  This is in support of retail form rendering.
 
 - Built-in widgets may have a 'readonly' attribute/constructor-argument, to
   indicate that a form field associated with the widget should use its
