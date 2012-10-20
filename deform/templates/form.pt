@@ -66,12 +66,13 @@
   deform.addCallback(
      '${formid}',
      function(oid) {
+       var target = '#' + oid;
        var options = {
-         target: '#' + oid,
+         target: target,
          replaceTarget: true,
          success: function() {
            deform.processCallbacks();
-           deform.focusFirstInput();
+           deform.focusFirstInput(target);
          }
        };
        var extra_options = ${ajax_options} || {};

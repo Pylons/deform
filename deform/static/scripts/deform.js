@@ -181,8 +181,12 @@ var deform  = {
             }
     },
 
-    focusFirstInput: function () {
-        var input = $(':input').filter('[id ^= deformField]').first();
+    focusFirstInput: function (el) {
+        el = el || document.body;
+        var input = $(el).find(':input')
+          .filter('[id ^= deformField]')
+          .filter('[type != hidden]')
+          .first();
         if (input) {
             var raw = input.get(0);
             if (raw) {
