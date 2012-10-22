@@ -504,6 +504,36 @@ class TestRichTextWidget(TestTextInputWidget):
         from deform.widget import RichTextWidget
         return RichTextWidget(**kw)
 
+    def test_options(self):
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+        options = {
+            'theme_advanced_buttons1': 'bold,italic,bullist,numlist',
+            'verify_html': True,
+            'element_format': 'html'
+        }
+        widget = self._makeOne(options=options)
+        #Deprecated class-level attributes
+        widget.skin = 'dummy'
+        widget.theme = 'advanced'
+        cstruct = 'abc'
+        widget.serialize(field, cstruct)
+
+        #Default options should be provided
+        result = renderer.kw['tinymce_options']
+        self.assertTrue('"height": 240' in result)
+        self.assertTrue('"width": 500' in result)
+
+        #Deprecated class-level options should still come through
+        self.assertTrue('"skin": "dummy"' in result)
+        self.assertTrue('"theme": "advanced"' in result)
+
+        #Custom options should be set
+        self.assertTrue('"theme_advanced_buttons1": "bold,italic,bullist,numlist"' in result)
+        self.assertTrue('"verify_html": true' in result)
+        self.assertTrue('"element_format": "html"' in result)
+
 class TestCheckboxWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import CheckboxWidget

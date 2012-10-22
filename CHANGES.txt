@@ -1,6 +1,15 @@
 Next Release
 ------------
 
+Features
+~~~~~~~~
+
+- ``deform.widget.RichTextWidget`` now accepts a dict/two-tuple ``options`` 
+  for specifying arbitrary options to pass to TinyMCE's ``init`` function.
+  All default options are now part of the class itself (where possible)
+  and can be customised by using ``options``.
+  [davidjb]
+
 Bug Fixes
 ~~~~~~~~~
 
