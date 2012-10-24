@@ -13,7 +13,7 @@
 
   <input type="file" name="upload" 
          tal:attributes="size field.widget.size;
-                         class field.css_class"
+                         class field.widget.css_class"
          id="${field.oid}"/>
 
   <input type="hidden" name="__end__" value="${field.name}:mapping"/>

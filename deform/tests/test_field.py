@@ -1,4 +1,3 @@
-# -*- encoding: utf-8 -*-
 import unittest
 
 def validation_failure_exc(func, *arg, **kw):
@@ -83,44 +82,6 @@ class TestField(unittest.TestCase):
         field.renderer.translate = lambda foo: 'translated'
         self.assertEqual(field.translate('term'), 'translated')
 
-    def test_has_css_class(self):
-        schema = DummySchema()
-        field = self._makeOne(schema)
-        self.assertEqual(field.css_class, 'deform-field-name')
-
-    def test_has_no_css_class_if_no_name(self):
-        schema = DummySchema()
-        field = self._makeOne(schema)
-        field.name = None
-        self.assertEqual(field.css_class, None)
-
-    def test_normalizes_css_class(self):
-        schema = DummySchema()
-        schema.name = u"a bö[] c"
-        field = self._makeOne(schema)
-        self.assertEqual(field.css_class, 'deform-field-a-bo-c')
-
-    def test_can_override_css_class(self):
-        schema = DummySchema()
-        field = self._makeOne(schema, css_class="override")
-        self.assertEqual(field.css_class, 'override')
-
-    def test_can_uses_widget_css_class_if_set(self):
-        widget = DummyWidget()
-        widget.css_class = 'css-widget'
-        schema = DummySchema()
-        schema.widget = widget
-        field = self._makeOne(schema)
-        self.assertEqual(field.css_class, 'css-widget')
-
-    def test_can_override_widget_css_class(self):
-        widget = DummyWidget()
-        widget.css_class = 'css-widget'
-        schema = DummySchema()
-        schema.widget = widget
-        field = self._makeOne(schema, css_class="override")
-        self.assertEqual(field.css_class, 'override')
-            
     def test_set_default_renderer(self):
         cls = self._getTargetClass()
         old = cls.default_renderer

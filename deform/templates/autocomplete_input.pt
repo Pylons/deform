@@ -3,7 +3,7 @@
            name="${field.name}"
            value="${cstruct}" 
            tal:attributes="size field.widget.size;
-                           class field.css_class"
+                           class field.widget.css_class"
            id="${field.oid}"/>
     <script tal:condition="field.widget.values" type="text/javascript">
       deform.addCallback(

@@ -1,5 +1,5 @@
 <li title="${field.description}"
-    tal:attributes="class field.css_class and 'deform-item-' + field.css_class"
+    tal:attributes="class field.widget.css_class and 'deform-item-' + field.widget.css_class"
     tal:omit-tag="field.widget.hidden">
   <!-- sequence_item -->
   <span tal:replace="structure
