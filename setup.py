@@ -30,7 +30,7 @@ except:
 
 requires = [
     'Chameleon>=2.5.1', # Markup class
-    'colander>=0.9.9dev', # cstruct_children/appstruct_children
+    'colander>=0.9.9.1dev', # cstruct_children/appstruct_children, Set
     'peppercorn>=0.3', # rename operation type
     'translationstring>=1.0', # add format mapping with %
     ]
