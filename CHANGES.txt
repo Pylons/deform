@@ -4,6 +4,8 @@ Changes
 Next release
 ------------
 
+- ``deform.Set`` type deprecated in favor of use of ``colander.Set``.
+
 - Give the preview_url method of the tempstore access to the stored
   item. [tomster]
 

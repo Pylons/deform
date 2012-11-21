@@ -143,7 +143,7 @@ class Set(object):
 
     def __init__(self, allow_empty=False):
         self.allow_empty = allow_empty
-        warnings.warn('Deprecated in favor of colander.Set'
+        warnings.warn('Deprecated in favor of colander.Set',
                       DeprecationWarning,
                       stacklevel=2)
 
