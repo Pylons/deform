@@ -1,4 +1,5 @@
 import colander
+import warnings
 
 from . import widget
 from deform.i18n import _
@@ -15,7 +16,8 @@ default_widget_makers = {
     colander.DateTime: widget.DateTimeInputWidget,
     colander.Tuple: widget.TextInputCSVWidget,
     colander.Money: widget.MoneyInputWidget,
-    }
+    colander.Set: widget.CheckboxChoiceWidget,
+}
 
 class FileData(object):
     """
@@ -131,13 +133,20 @@ class Set(object):
     ``allow_empty``
        Boolean representing whether an empty set input to
        deserialize will be considered valid.  Default: ``False``.
+
+    .. deprecated:: 0.9.6
+        Use ``colander.Set`` instead.
+
     """
 
     widget_maker = widget.CheckboxChoiceWidget
 
     def __init__(self, allow_empty=False):
         self.allow_empty = allow_empty
-        
+        warnings.warn('Deprecated in favor of colander.Set'
+                      DeprecationWarning,
+                      stacklevel=2)
+
     def serialize(self, node, value):
         return value
 
