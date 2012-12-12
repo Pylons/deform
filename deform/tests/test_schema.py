@@ -10,6 +10,14 @@ def invalid_exc(func, *arg, **kw):
         raise AssertionError('Invalid not raised') # pragma: no cover
 
 class TestSet(unittest.TestCase):
+    def setUp(self):
+        from zope.deprecation import __show__
+        __show__.off()
+        
+    def tearDown(self):
+        from zope.deprecation import __show__
+        __show__.on()
+
     def _makeOne(self, **kw):
         from deform.schema import Set
         return Set(**kw)
@@ -115,7 +123,28 @@ class TestFileData(unittest.TestCase):
         self.assertEqual(result['size'], 'size')
         self.assertEqual(result['fp'], 'fp')
         self.assertEqual(result['preview_url'], 'preview_url')
-        
+
+    def test_serialize_with_only_required_values(self):
+        typ = self._makeOne()
+        node = DummySchemaNode()
+        result = typ.serialize(node, {'filename':'filename', 'uid':'uid'})
+        self.assertEqual(result['filename'], 'filename')
+        self.assertEqual(result['uid'], 'uid')
+        self.assertEqual(result['mimetype'], None)
+        self.assertEqual(result['size'], None)
+        self.assertEqual(result['fp'], None)
+        self.assertEqual(result['preview_url'], None)
+
+    def test_serialize_with_unexpected_value(self):
+        typ = self._makeOne()
+        node = DummySchemaNode()
+        result = typ.serialize(
+            node,
+            {'filename':'filename', 'uid':'uid', 'morg':'moo'}
+            )
+        self.assertEqual(result['filename'], 'filename')
+        self.assertEqual(result['uid'], 'uid')
+        self.assertEqual(result['morg'], 'moo')
 
 class DummySchemaNode(object):
     def __init__(self, typ=None, name='', exc=None, default=None):

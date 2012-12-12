@@ -1,8 +1,9 @@
 import colander
-import warnings
 
 from . import widget
 from deform.i18n import _
+
+from zope.deprecation import deprecated
 
 default_widget_makers = {
     colander.Mapping: widget.MappingWidget,
@@ -109,9 +110,8 @@ class FileData(object):
                     node,
                     _('${value} has no ${key} key', mapping=mapping)
                     )
-        result = widget.filedict()
-        result['filename'] = value['filename']
-        result['uid'] = value['uid']
+        result = widget.filedict(value)
+        # provide a value for these entries even if None
         result['mimetype'] = value.get('mimetype')
         result['size'] = value.get('size')
         result['fp'] = value.get('fp')
@@ -143,9 +143,6 @@ class Set(object):
 
     def __init__(self, allow_empty=False):
         self.allow_empty = allow_empty
-        warnings.warn('Deprecated in favor of colander.Set',
-                      DeprecationWarning,
-                      stacklevel=2)
 
     def serialize(self, node, value):
         return value
@@ -166,3 +163,11 @@ class Set(object):
     def cstruct_children(self, node, cstruct): # pragma: no cover
         return []
 
+deprecated(
+    'Set',
+    'deform.Set is deprecated as of the release of Colander > 0.9.9, which '
+    'includes its own Set class.  colander.Set is not exactly a drop-in '
+    'replacement (it has no allow_empty constructor argument), but you should '
+    'switch to it as soon as possible.  The deform.Set class will be removed '
+    'in Deform 1.1'
+    )

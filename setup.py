@@ -33,6 +33,7 @@ requires = [
     'colander>=0.9.9.1dev', # cstruct_children/appstruct_children, Set
     'peppercorn>=0.3', # rename operation type
     'translationstring>=1.0', # add format mapping with %
+    'zope.deprecation',
     ]
 
 testing_extras = ['nose', 'coverage', 'beautifulsoup4']
@@ -50,6 +51,7 @@ setupkw = dict(
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.2",
+        "Programming Language :: Python :: 3.3",
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
         ],
@@ -63,7 +65,7 @@ setupkw = dict(
     zip_safe=False,
     tests_require=testing_extras,
     install_requires=requires,
-    test_suite="deform",
+    test_suite="deform.tests",
     extras_require = {
         'testing':testing_extras,
         'docs':docs_extras,

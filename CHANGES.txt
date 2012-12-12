@@ -4,6 +4,13 @@ Changes
 Next release
 ------------
 
+- Depend on and use zope.deprecation to deprecate Set class.
+
+- Add Python 3.3 Trove classifier.
+
+- Pass through unknown keys in a ``filedict`` FileData serialization (FBO of
+  passing out of band information).
+
 - ``deform.Set`` type deprecated in favor of use of ``colander.Set``.
 
 - Give the preview_url method of the tempstore access to the stored
