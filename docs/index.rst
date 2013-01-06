@@ -59,8 +59,16 @@ To report bugs, use the `bug tracker
 
 If you've got questions that aren't answered by this documentation, contact
 the `Pylons-discuss maillist
-<http://groups.google.com/group/pylons-discuss>`_ or join the `#pylons IRC
-channel <irc://irc.freenode.net/#pylons>`_.
+<http://groups.google.com/group/pylons-discuss>`_ or join the 
+
+.. only:: not latex
+
+  `#pylons IRC channel <irc://irc.freenode.net/#pylons>`_.
+
+.. only:: latex
+    
+  #pylons IRC channel ``irc://irc.freenode.net/#pylons``.
+
 
 Browse and check out tagged and trunk versions of :mod:`deform` via the
 `deform package on GitHub <https://github.com/Pylons/deform>`_.  To check out
