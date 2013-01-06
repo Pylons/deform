@@ -60,6 +60,9 @@ setupkw = dict(
     author_email="pylons-discuss@googlegroups.com",
     url="http://docs.pylonsproject.org/projects/deform/en/latest/",
     license="BSD-derived (http://www.repoze.org/LICENSE.txt)",
+    dependency_links=[
+        'http://github.com/Pylons/colander/tarball/a83fe3d36/#egg=colander-0.9.9.1dev'
+        ],
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
