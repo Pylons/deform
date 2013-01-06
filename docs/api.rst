@@ -98,8 +98,10 @@ Widget-Related
    :members:
 
 .. autoclass:: SelectWidget
-.. no ':members:' here if we can avoid it, as it would generate 
-.. a duplicate entry for 'SelectWidget.optgroup_class'.
+   :members:
+   :exclude-members: optgroup_class
+.. exclude optgroup_class to avoid generating
+.. a duplicate entry for OptGroup
 
 .. autoclass:: RadioChoiceWidget
    :members:
