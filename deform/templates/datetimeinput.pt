@@ -4,7 +4,7 @@
                   oid oid|field.oid;
                   style style|field.widget.style|None"
     tal:omit-tag="">
-    <input type="text"
+    <input type="datetime"
            name="${name}"
            value="${cstruct}" 
            tal:attributes="size size; class css_class; style style"
@@ -13,7 +13,9 @@
       deform.addCallback(
         '${oid}',
         function(oid) {
-            $('#' + oid).datetimepicker(${options});
+            if (!Modernizr.inputtypes['datetime']) {
+                $('#' + oid).datetimepicker(${options});
+            }
         }
       );
     </script>

@@ -505,7 +505,7 @@ class DateInputWidget(Widget):
     readonly_template = 'readonly/textinput'
     size = None
     style = None
-    requirements = ( ('jqueryui', None), )
+    requirements = ( ('modernizr', None), ('jqueryui', None), )
     default_options = (('dateFormat', 'yy-mm-dd'),)
 
     def __init__(self, *args, **kwargs):
@@ -559,7 +559,7 @@ class DateTimeInputWidget(DateInputWidget):
     readonly_template = 'readonly/textinput'
     size = None
     style = None
-    requirements = ( ('jqueryui', None), ('datetimepicker', None), )
+    requirements = ( ('modernizr', None), ('jqueryui', None), ('datetimepicker', None), )
     default_options = (DateInputWidget.default_options +
                        (('timeFormat', 'hh:mm:ss'),
                         ('separator', ' ')))
@@ -1823,6 +1823,11 @@ default_resources = {
     'tinymce': {
         None:{
             'js':'tinymce/jscripts/tiny_mce/tiny_mce.js',
+            },
+        },
+    'modernizr': {
+        None:{
+            'js':('scripts/modernizr.custom.input-types-and-atts.js',),
             },
         },
     }
