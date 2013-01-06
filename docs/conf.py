@@ -12,7 +12,7 @@
 # All configuration values have a default value; values that are commented
 # out serve to show the default value.
 
-import sys, os
+import sys, os, datetime
 
 # If your extensions are in another directory, add it here. If the
 # directory is relative to the documentation root, use os.path.abspath to
@@ -227,3 +227,43 @@ latex_logo = '.static/logo_hi.gif'
 
 # If false, no module index is generated.
 #latex_use_modindex = True
+
+# -- Options for Epub output ---------------------------------------------------
+
+# Bibliographic Dublin Core info.
+epub_title = 'deform, Version %s' \
+             % release
+epub_author = 'Pylons Developers'
+epub_publisher = 'Agendaless Consulting'
+epub_copyright = '2011-%d' % datetime.datetime.now().year
+
+# The language of the text. It defaults to the language option
+# or en if the language is not set.
+epub_language = 'en'
+
+# The scheme of the identifier. Typical schemes are ISBN or URL.
+epub_scheme = 'URL'
+
+# The unique identifier of the text. This can be a ISBN number
+# or the project homepage.
+epub_identifier = 'https://deform.readthedocs.org/'
+
+# A unique identification for the text.
+epub_uid = epub_title
+
+# HTML files that should be inserted before the pages created by sphinx.
+# The format is a list of tuples containing the path and title.
+#epub_pre_files = []
+
+# HTML files shat should be inserted after the pages created by sphinx.
+# The format is a list of tuples containing the path and title.
+#epub_post_files = []
+
+# A list of files that should not be packed into the epub file.
+epub_exclude_files = ['_static/opensearch.xml', '_static/doctools.js',
+    '_static/jquery.js', '_static/searchtools.js', '_static/underscore.js',
+    '_static/basic.css', 'search.html', '_static/websupport.js']
+
+# The depth of the table of contents in toc.ncx.
+epub_tocdepth = 3
+
