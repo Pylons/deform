@@ -165,9 +165,9 @@ class Set(object):
 
 deprecated(
     'Set',
-    'deform.Set is deprecated as of the release of Colander > 0.9.9, which '
+    'deform.Set is deprecated as of the release of Colander > 1.0a1, which '
     'includes its own Set class.  colander.Set is not exactly a drop-in '
     'replacement (it has no allow_empty constructor argument), but you should '
     'switch to it as soon as possible.  The deform.Set class will be removed '
-    'in Deform 1.1'
+    'in Deform 1.1+'
     )
