@@ -2,9 +2,10 @@
                   css_class css_class|field.widget.css_class;
                   name name|field.name;
                   oid oid|field.oid;
-                  style style|field.widget.style|None"
+                  style style|field.widget.style|None;
+                  type_name type_name|field.widget.type_name"
       tal:omit-tag="">
-    <input type="date"
+    <input type="${type_name}"
            name="${name}"
            value="${cstruct}"
            tal:attributes="size size; 
@@ -15,10 +16,11 @@
       deform.addCallback(
         '${oid}',
         function(oid) {
-            if (!Modernizr.inputtypes['date']) {
+            if ('${type_name}' == 'text' || !Modernizr.inputtypes['date']) {
                 $('#' + oid).datepicker(${options});
             }
         }
       );
     </script>
+    ${type_name}
 </span>

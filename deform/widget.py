@@ -500,17 +500,27 @@ class DateInputWidget(Widget):
     readonly_template
         The template name used to render the widget in read-only mode.
         Default: ``readonly/textinput``.
+
+    prefer_jquery
+        A boolean to replace native rendering of a html5 date input widget
+        with a jqueryui .datepicker
     """
     template = 'dateinput'
     readonly_template = 'readonly/textinput'
+    html5_type_name = 'date'
     size = None
     style = None
     requirements = ( ('modernizr', None), ('jqueryui', None), )
     default_options = (('dateFormat', 'yy-mm-dd'),)
+    prefer_jquery = False
 
     def __init__(self, *args, **kwargs):
         self.options = dict(self.default_options)
         Widget.__init__(self, *args, **kwargs)
+        if self.prefer_jquery:
+            self.type_name = 'text'
+        else:
+            self.type_name = self.html5_type_name
 
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
@@ -554,9 +564,14 @@ class DateTimeInputWidget(DateInputWidget):
     readonly_template
         The template name used to render the widget in read-only mode.
         Default: ``readonly/textinput``.
+
+    prefer_jquery
+        A boolean to replace native rendering of a html5 date input widget
+        with a jqueryui .datetimepicker
     """
     template = 'datetimeinput'
     readonly_template = 'readonly/textinput'
+    html5_type_name = 'datetime'
     size = None
     style = None
     requirements = ( ('modernizr', None), ('jqueryui', None), ('datetimepicker', None), )
