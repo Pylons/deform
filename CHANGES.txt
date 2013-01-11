@@ -1,5 +1,5 @@
-Next release
-------------
+0.9.6 (2013-01-10)
+------------------
 
 Bug Fixes
 ~~~~~~~~~
@@ -16,8 +16,8 @@ Dependencies
 
 - Depend on and use zope.deprecation to deprecate Set class.
 
-- Deform now depends on Colander >= 0.9.9dev (previously it depended on >=
-  0.8).  It requires Colander 0.9.9's newer ``cstruct_children`` and
+- Deform now depends on Colander >= 1.0a1 (previously it depended on >= 0.8).
+  It requires Colander 1.0a1's newer ``cstruct_children`` and
   ``appstruct_children`` methods of schema objects as well as being able to
   import objects from Colander that don't exist in earlier versions.
 

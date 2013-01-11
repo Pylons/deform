@@ -30,7 +30,7 @@ except:
 
 requires = [
     'Chameleon>=2.5.1', # Markup class
-    'colander>=0.9.9.1dev', # cstruct_children/appstruct_children, Set
+    'colander>=1.0a1', # cstruct_children/appstruct_children, Set
     'peppercorn>=0.3', # rename operation type
     'translationstring>=1.0', # add format mapping with %
     'zope.deprecation',
@@ -41,7 +41,7 @@ docs_extras = ['Sphinx']
 
 setupkw = dict(
     name='deform',
-    version='0.9.6dev',
+    version='0.9.6',
     description='Another form generation library',
     long_description=README + '\n\n' + CHANGES,
     classifiers=[
