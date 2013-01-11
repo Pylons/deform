@@ -365,10 +365,11 @@ For these widgets to work properly, we'll need to arrange that files
 in the directory named ``static`` within the :mod:`deform` package can
 be resolved via a URL which lives at the same hostname and port number
 as the page which serves up the form itself.  For example, the URL
-``/static/images/close.png`` should be willing to return the
-``close.png`` image in the ``static/images`` directory in the
-:mod:`deform` package and ``/static/scripts/deform.js`` as
-``image/png`` content .  How you arrange to do this is dependent on
+``/static/css/form.css`` should be willing to return the
+``form.css`` CSS file in the ``static/css`` directory in the
+:mod:`deform` package as ``text/css`` content and return 
+``/static/scripts/deform.js`` as``text/javascript`` content.  
+How you arrange to do this is dependent on
 your web framework.  It's done in :mod:`pyramid` imperative
 configuration via:
 
