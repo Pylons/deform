@@ -141,7 +141,7 @@ html_theme_options = dict(github_url='https://github.com/Pylons/deform')
 
 # The name of an image file (within the static path) to place at the top of
 # the sidebar.
-#html_logo = '.static/logo_hi.gif'
+#html_logo = ''
 
 # The name of an image file (within the static path) to use as favicon of
 # the docs.  This file should be a Windows icon file (.ico) being 16x16 or
@@ -213,7 +213,7 @@ latex_documents = [
 
 # The name of an image file (relative to this directory) to place at the
 # top of the title page.
-latex_logo = '.static/logo_hi.gif'
+#latex_logo = ''
 
 # For "manual" documents, if this is true, then toplevel headings are
 # parts, not chapters.
