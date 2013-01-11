@@ -1,10 +1,44 @@
-Changes
-=======
+0.9.6 (2013-01-10)
+------------------
 
-Next release
-------------
+Bug Fixes
+~~~~~~~~~
+
+- Fixed remove bug in nested sequences.  See
+  https://github.com/Pylons/deform/pull/89
+
+- Fixed bug wherein items added to a sequence nor the initial items rendered
+  in a sequence would not reflect the correct defaults of the item widget.
+  See https://github.com/Pylons/deform/pull/79
+
+Dependencies
+~~~~~~~~~~~~
 
 - Depend on and use zope.deprecation to deprecate Set class.
+
+- Deform now depends on Colander >= 0.9.9dev (previously it depended on >=
+  0.8).  It requires Colander 0.9.9's newer ``cstruct_children`` and
+  ``appstruct_children`` methods of schema objects as well as being able to
+  import objects from Colander that don't exist in earlier versions.
+
+- Deform now depends on Chameleon >= 2.5.1 (previously it depended on
+  >= 1.2.3).  It requires the Markup class supplied by this version or better.
+
+- Deform no longer has a setup_requires dependency on setuptools_git
+  (useless, as the version on PyPI is broken).
+
+- Setup.py now includes all testing requirements in tests_require that are in
+  testing extras and vice versa.
+
+Features
+~~~~~~~~
+
+- Allow SelectWidget to produce <optgroup> HTML tags.  See
+  https://github.com/Pylons/deform/pull/87
+
+- Allow ``deform.form.Form`` constructor to accept an ``autocomplete``
+  keyword argument, which controls the ``autocomplete`` attribute of the form
+  tag.
 
 - Add Python 3.3 Trove classifier.
 
@@ -19,23 +53,18 @@ Next release
 - Add ``style`` attribute/arguments to textinput-related widgets allowing you
   to set the style of the tag by hand.
 
-- Fixed remove bug in nested sequences.  See
-  https://github.com/Pylons/deform/pull/89
-
-- Fixed bug wherein items added to a sequence nor the initial items rendered
-  in a sequence would not reflect the correct defaults of the item widget.
-  See https://github.com/Pylons/deform/pull/79
-
-- Allow SelectWidget to produce <optgroup> HTML tags.  See
-  https://github.com/Pylons/deform/pull/87
-
-- Allow ``deform.form.Form`` constructor to accept an ``autocomplete``
-  keyword argument, which controls the ``autocomplete`` attribute of the form
-  tag.
-
 - Allow ``deform.widget.SequenceWidget`` constructor to accept an ``orderable``
   keyword argument.  Default is ``False``.  If ``True``, allow drag-and-drop
   reordering of SequenceWidget items (via jQuery UI Sortable).
+
+- The default widget for the colander.Money type is now
+  deform.widgets.MoneyInputWidget.
+
+- Built-in widgets may have a 'readonly' attribute/constructor-argument, to
+  indicate that a form field associated with the widget should use its
+  readonly template instead of its normal readwrite template.  A ``readonly``
+  keyword argument can still be passed to ``Field.serialize`` to render a
+  field as readonly, like in older versions.
 
 - ``deform.field.Field`` now has a ``__contains__`` method, which returns
   ``True`` if the named field is a subfield of the field on which it is
@@ -47,23 +76,6 @@ Next release
 
 - ``deform.field.Field.validate`` now accepts a ``subcontrol`` argument for
   validating a submapping of a form.
-
-- Deform now depends on Colander >= 0.9.9dev (previously it depended on >=
-  0.8).  It requires Colander 0.9.9's newer ``cstruct_children`` and
-  ``appstruct_children`` methods of schema objects as well as being able to
-  import objects from Colander that don't exist in earlier versions.
-
-- Deform now depends on Chameleon >= 2.5.1 (previously it depended on
-  >= 1.2.3).  It requires the Markup class supplied by this version or better.
-
-- Deform no longer has a setup_requires dependency on setuptools_git
-  (useless, as the version on PyPI is broken).
-
-- The default widget for the colander.Money type is now
-  deform.widgets.MoneyInputWidget.
-
-- Setup.py now includes all testing requirements in tests_require that are in
-  testing extras and vice versa.
 
 - In support of "retail" form rendering, the ``serialize`` method of widgets
   now accepts arbitrary keyword arguments.  These are used as top-level value
@@ -95,15 +107,14 @@ Next release
   the dictionary passed to the template if they don't already exist in the
   ``**kw`` passed.  This is in support of retail form rendering.
 
-- Built-in widgets may have a 'readonly' attribute/constructor-argument, to
-  indicate that a form field associated with the widget should use its
-  readonly template instead of its normal readwrite template.  A ``readonly``
-  keyword argument can still be passed to ``Field.serialize`` to render a
-  field as readonly, like in older versions.
-
 - Add ``set_appstruct`` and ``set_pstruct`` methods to Field; these accept,
   respectively, an appstruct or a pstruct and set the cstruct related to the
   field to the deserialized or serialized value.
+
+Documentation
+~~~~~~~~~~~~~
+
+- Add a (weak) "Retail Form Rendering" chapter to the docs.
 
 0.9.5 (2012-04-27)
 ------------------
