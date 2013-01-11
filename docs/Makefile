@@ -57,10 +57,6 @@ htmlhelp:
 latex:
 	mkdir -p _build/latex _build/doctrees
 	$(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) _build/latex
-	cp _static/*.png _build/latex
-	./convert_images.sh
-	cp _static/latex-warning.png _build/latex
-	cp _static/latex-note.png _build/latex
 	@echo
 	@echo "Build finished; the LaTeX files are in _build/latex."
 	@echo "Run \`make all-pdf' or \`make all-ps' in that directory to" \
