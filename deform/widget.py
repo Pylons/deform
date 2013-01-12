@@ -91,6 +91,9 @@ class Widget(object):
         the form renderering specifying a new class for the field
         associated with this widget.  Default: ``None`` (no class).
 
+    prefer_html5
+        A boolean asking for html5 rendering of the widget
+
     requirements
         A sequence of two-tuples in the form ``( (requirement_name,
         version_id), ...)`` indicating the logical external
@@ -126,10 +129,17 @@ class Widget(object):
     category = 'default'
     error_class = 'error'
     css_class = None
+    prefer_html5 = False
     requirements = ()
+    html5_requirements = ()
+    html5_type_name = ''
+    type_name = ''
 
     def __init__(self, **kw):
         self.__dict__.update(kw)
+        if self.prefer_html5:
+            self.type_name = self.html5_type_name
+            self.requirements = self.html5_requirements
 
     def serialize(self, field, cstruct, **kw):
         """
@@ -473,10 +483,15 @@ class AutocompleteInputWidget(Widget):
 
 class DateInputWidget(Widget):
     """
+    Renders a date picker widget.
 
-    Renders a JQuery UI date picker widget
-    (http://jqueryui.com/demos/datepicker/).  Most useful when the
-    schema node is a ``colander.Date`` object.
+    The default rendering is as a JQuery UI date picker widget
+    (http://jqueryui.com/demos/datepicker/).
+
+    If **prefer_html5** is set, render as a ```<input type="date">```
+    form element, enabling a conditional fall-back to JQuery UI date picker.
+
+    Most useful when the schema node is a ``colander.Date`` object.
 
     **Attributes/Arguments**
 
@@ -500,27 +515,20 @@ class DateInputWidget(Widget):
     readonly_template
         The template name used to render the widget in read-only mode.
         Default: ``readonly/textinput``.
-
-    prefer_jquery
-        A boolean to replace native rendering of a html5 date input widget
-        with a jqueryui .datepicker
     """
     template = 'dateinput'
     readonly_template = 'readonly/textinput'
     html5_type_name = 'date'
+    type_name = 'text'
     size = None
     style = None
-    requirements = ( ('modernizr', None), ('jqueryui', None), )
+    requirements = ( ('jqueryui', None), )
+    html5_requirements = ( ('modernizr', None), ('jqueryui', None), )
     default_options = (('dateFormat', 'yy-mm-dd'),)
-    prefer_jquery = False
 
     def __init__(self, *args, **kwargs):
         self.options = dict(self.default_options)
         Widget.__init__(self, *args, **kwargs)
-        if self.prefer_jquery:
-            self.type_name = 'text'
-        else:
-            self.type_name = self.html5_type_name
 
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
@@ -538,9 +546,15 @@ class DateInputWidget(Widget):
 
 class DateTimeInputWidget(DateInputWidget):
     """
-    Renders a a jQuery UI date picker with a JQuery Timepicker add-on
-    (http://trentrichardson.com/examples/timepicker/).  Used for
-    ``colander.DateTime`` schema nodes.
+    Renders a datetime picker widget.
+
+    The default rendering is as a jQuery UI date picker with a JQuery Timepicker add-on
+    (http://trentrichardson.com/examples/timepicker/).
+
+    If **prefer_html5** is set, render as a ```<input type="datetime">```
+    form element, enabling a conditional fall-back to above-described datetime picker.
+
+    Used for ``colander.DateTime`` schema nodes.
 
     **Attributes/Arguments**
 
@@ -564,17 +578,14 @@ class DateTimeInputWidget(DateInputWidget):
     readonly_template
         The template name used to render the widget in read-only mode.
         Default: ``readonly/textinput``.
-
-    prefer_jquery
-        A boolean to replace native rendering of a html5 date input widget
-        with a jqueryui .datetimepicker
     """
     template = 'datetimeinput'
     readonly_template = 'readonly/textinput'
     html5_type_name = 'datetime'
     size = None
     style = None
-    requirements = ( ('modernizr', None), ('jqueryui', None), ('datetimepicker', None), )
+    requirements = ( ('jqueryui', None), ('datetimepicker', None), )
+    html5_requirements = ( ('modernizr', None), ('jqueryui', None), ('datetimepicker', None), )
     default_options = (DateInputWidget.default_options +
                        (('timeFormat', 'hh:mm:ss'),
                         ('separator', ' ')))
