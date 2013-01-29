@@ -14,10 +14,10 @@
     <script type="text/javascript">
       deform.addCallback(
         '${oid}',
-        function(oid) {<span tal:condition="prefer_html5" tal:omit-tag="">
-              if (!Modernizr.inputtypes['datetime']){</span>
+        function(oid) {<tal:if condition="prefer_html5">
+              if (!Modernizr.inputtypes['datetime']){</tal:if>
                 $('#' + oid).datetimepicker(${options});
-              <span tal:condition="prefer_html5" tal:omit-tag="">}</span>
+              <tal:if condition="prefer_html5">}</tal:if>
         }
       );
     </script>
