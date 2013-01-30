@@ -302,13 +302,28 @@ Instead of a list of values a URL can be provided to values:
    form['frobsnozz'].widget = AutocompleteInputWidget(
                                 values='http://example.com/someapi')
 
-In the above case a call to the url should provide results one item
-per line in the response. Something like::
+In the above case a call to the url should provide results in a JSON-compatible
+format or JSONP-compatible response if on a different host than the
+application. Note that the autocomplete plugin will add ``?term=foo``,
+where ``foo`` is the user's input at that moment, as a 
+query string to the request being made to the URL, so data can be filtered
+to return relevant results.
 
-    item-one
-    item-two
-    item-three
+Something like either of these structures in JSON are suitable::
 
+    //Items are used as both value and label
+    ['item-one', 'item-two', 'item-three']
+
+    //Separate values and labels
+    [
+        {'value': 'item-one', 'label': 'Item One'},
+        {'value': 'item-two', 'label': 'Item Two'},
+        {'value': 'item-three', 'label': 'Item Three'}
+    ]
+
+For more information, see http://api.jqueryui.com/autocomplete/#option-source
+- specifically, the section concerning the ``String`` type for the ``source``
+option.
 
 Some options for the :term:`jquery.autocomplete` plugin are mapped and
 can be passed to the widget. See
