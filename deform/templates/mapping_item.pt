@@ -7,7 +7,7 @@
                 category category|field.widget.category;
                 required required|field.required;
                 "
-    class="field${field.error and ' ' + (error_class or '')}"
+    class="field${field.error and ' ' + (error_class or '')} ${css_class}"
     title="${description}"
     id="item-${oid}"
     tal:omit-tag="hidden"
