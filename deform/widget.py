@@ -207,7 +207,7 @@ class TextInputWidget(Widget):
         A string that will be placed literally in a ``style`` attribute on
         the text input tag.  For example, 'width:150px;'.  Default: ``None``,
         meaning no style attribute will be added to the input tag.
-        
+
     mask
         A :term:`jquery.maskedinput` input mask, as a string.
 
@@ -294,31 +294,31 @@ class MoneyInputWidget(Widget):
 
         symbol
             the symbol to be used before of the user values. default: ``$``
-        
+
         showSymbol
             set if the symbol must be displayed or not. default: ``False``
-            
+
         symbolStay
             set if the symbol will stay in the field after the user exists the
             field. default: ``False``
-            
+
         thousands
             the thousands separator. default: ``,``
-            
+
         decimal
             the decimal separator. default: ``.``
-            
+
         precision
             how many decimal places are allowed. default: 2
 
         defaultZero
             when the user enters the field, it sets a default mask using zero.
             default: ``True``
-            
+
         allowZero
             use this setting to prevent users from inputing zero. default:
             ``False``
-            
+
         allowNegative
             use this setting to prevent users from inputing negative values.
             default: ``False``
@@ -329,7 +329,7 @@ class MoneyInputWidget(Widget):
     options = None
     size = None
     style = None
-    
+
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
             cstruct = ''
@@ -342,7 +342,7 @@ class MoneyInputWidget(Widget):
         values = self.get_template_values(field, cstruct, kw)
         template = readonly and self.readonly_template or self.template
         return field.renderer(template, **values)
-    
+
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null
@@ -546,7 +546,7 @@ class DateTimeInputWidget(DateInputWidget):
         A string that will be placed literally in a ``style`` attribute on
         the text input tag.  For example, 'width:150px;'.  Default: ``None``,
         meaning no style attribute will be added to the input tag.
-        
+
     template
         The template name used to render the widget.  Default:
         ``dateinput``.
@@ -603,7 +603,7 @@ class TextAreaWidget(TextInputWidget):
         A string that will be placed literally in a ``style`` attribute on
         the textarea input tag.  For example, 'width:150px;'.  Default:
         ``None``, meaning no style attribute will be added to the input tag.
-        
+
     template
         The template name used to render the widget.  Default:
         ``textarea``.
@@ -1468,7 +1468,8 @@ class FileUploadWidget(Widget):
                         data['uid'] = uid
                         self.tmpstore[uid] = data
                         preview_url = self.tmpstore.preview_url(uid)
-                        self.tmpstore[uid]['preview_url'] = preview_url
+                        data['preview_url'] = preview_url
+                        self.tmpstore[uid] = data
                         break
             else:
                 # a previous file exists
@@ -1537,7 +1538,7 @@ class DatePartsWidget(Widget):
         kw.setdefault('year', year)
         kw.setdefault('day', day)
         kw.setdefault('month', month)
-        
+
         readonly = kw.get('readonly', self.readonly)
         template = readonly and self.readonly_template or self.template
         values = self.get_template_values(field, cstruct, kw)
