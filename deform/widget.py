@@ -1469,7 +1469,7 @@ class FileUploadWidget(Widget):
                         self.tmpstore[uid] = data
                         preview_url = self.tmpstore.preview_url(uid)
                         data['preview_url'] = preview_url
-                        self.tmpstore[uid] = data
+                        self.tmpstore[uid]['preview_url'] = preview_url
                         break
             else:
                 # a previous file exists
