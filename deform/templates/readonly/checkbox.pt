@@ -1,5 +1,5 @@
 <span tal:define="oid oid|field.oid;
-                  true_val|field.widget.true_val;"
+                  true_val true_val|field.widget.true_val;"
       tal:omit-tag="">
   <span id="${oid}"
         tal:condition="cstruct == true_val">Yes</span>
