@@ -3,8 +3,7 @@
                   name name|field.name;
                   oid oid|field.oid;
                   style style|field.widget.style|None;
-                  type_name type_name|field.widget.type_name;
-                  prefer_html5 prefer_html5|field.widget.prefer_html5"
+                  type_name type_name|field.widget.type_name;"
       tal:omit-tag="">
     <input type="${type_name}"
            name="${name}"
@@ -16,10 +15,10 @@
     <script type="text/javascript">
       deform.addCallback(
         '${oid}',
-        function(oid) {<tal:if condition="prefer_html5">
-              if (!Modernizr.inputtypes['date']){</tal:if>
+        function(oid) {
+              if (!Modernizr.inputtypes['date']){
                 $('#' + oid).datepicker(${options});
-              <tal:if condition="prefer_html5">}</tal:if>
+              }
         }
       );
     </script>
