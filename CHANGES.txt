@@ -6,6 +6,11 @@ Bug Fixes
 
 - Readonly checkbox template had a logic error.
 
+Documentation
+~~~~~~~~~~~~~
+
+- Corrected the expected server response when using the Autocomplete widget.
+
 0.9.6 (2013-01-10)
 ------------------
 
