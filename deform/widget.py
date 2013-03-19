@@ -476,7 +476,8 @@ class DateInputWidget(Widget):
     """
     Renders a date picker widget.
 
-    The default rendering is as a JQuery UI date picker widget
+    The default rendering is as a native HTML5 date input widget,
+    falling back to JQuery UI date picker widget
     (http://jqueryui.com/demos/datepicker/).
 
     Most useful when the schema node is a ``colander.Date`` object.
@@ -534,7 +535,8 @@ class DateTimeInputWidget(DateInputWidget):
     """
     Renders a datetime picker widget.
 
-    The default rendering is as a jQuery UI date picker with a JQuery Timepicker add-on
+    The default rendering is as a native HTML5 datetime  input widget, 
+    falling back to jQuery UI date picker with a JQuery Timepicker add-on
     (http://trentrichardson.com/examples/timepicker/).
 
     Used for ``colander.DateTime`` schema nodes.
