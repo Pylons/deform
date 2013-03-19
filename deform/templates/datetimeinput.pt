@@ -14,7 +14,8 @@
       deform.addCallback(
         '${oid}',
         function(oid) {
-              if (!Modernizr.inputtypes['datetime']){
+              if (!Modernizr.inputtypes['datetime'] || 
+                   "${type_name}" != "datetime"){
                 $('#' + oid).datetimepicker(${options});
               }
         }
