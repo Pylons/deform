@@ -32,6 +32,13 @@ class TestField(unittest.TestCase):
         self.assertEqual(field.children, [])
         self.assertEqual(field.typ, schema.typ)
 
+    def test_ctor_custom_oid(self):
+        from deform.template import default_renderer
+        schema = DummySchema()
+        schema.oid = 'customOid'
+        field = self._makeOne(schema)
+        self.assertEqual(field.oid, 'customOid')
+
     def test_ctor_with_children_in_schema(self):
         from deform.field import Field
         schema = DummySchema()
