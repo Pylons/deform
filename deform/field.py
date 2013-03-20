@@ -47,8 +47,10 @@ class Field(object):
         oid
             A string incorporating the ``order`` attribute that can be
             used as a unique identifier in HTML code (often for ``id``
-            attributes of field-related elements).  An example oid is
-            ``deformField0``.
+            attributes of field-related elements).  A default oid is
+            generated that looks like this: ``deformField0``.  A
+            custom oid can provided, but if the field is cloned,
+            the clones will get unique default oids.
 
         name
             An alias for self.schema.name
@@ -134,7 +136,7 @@ class Field(object):
                  **kw):
         self.counter = counter or itertools.count()
         self.order = next(self.counter)
-        self.oid = 'deformField%s' % self.order
+        self.oid = getattr(schema, 'oid', 'deformField%s' % self.order)
         self.schema = schema
         self.typ = schema.typ # required by Invalid exception
         self.name = schema.name
