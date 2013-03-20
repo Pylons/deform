@@ -6,6 +6,10 @@ Bug Fixes
 
 - Trigger a change event when adding/removing sequence items.
 
+- Add optional label to checkbox widget.
+
+- Make setup_requires depend once again on setuptools_git.
+
 0.9.7 (2013-03-06)
 ------------------
 
