@@ -65,6 +65,7 @@ setupkw = dict(
     zip_safe=False,
     tests_require=testing_extras,
     install_requires=requires,
+    setup_requires=['setuptools_git'],
     test_suite="deform.tests",
     extras_require = {
         'testing':testing_extras,
