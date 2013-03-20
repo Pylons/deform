@@ -1,3 +1,11 @@
+Unreleased
+----------
+
+Bug Fixes
+~~~~~~~~~
+
+- Trigger a change event when adding/removing sequence items.
+
 0.9.7 (2013-03-06)
 ------------------
 

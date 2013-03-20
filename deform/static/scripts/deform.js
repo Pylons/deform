@@ -105,6 +105,9 @@ var deform  = {
         var old_len = parseInt(before.attr('now_len')||'0', 10);
         before.attr('now_len', old_len + 1);
         //deform.maybeScrollIntoView('#' + anchorid);
+        // we added something to the dom, trigger a change event
+        var e = jQuery.Event("change");
+        $('#deform').trigger(e);
     },
 
     appendSequenceItem: function(node) {
@@ -138,6 +141,9 @@ var deform  = {
             deform.processSequenceButtons($oid_node, min_len, max_len, 
                                           now_len-1, orderable);
         }
+        // we removed something from the dom, trigger a change event
+        var e = jQuery.Event("change");
+        $('#deform').trigger(e);
         return false;
     },
 
