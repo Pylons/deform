@@ -1271,6 +1271,9 @@ class SequenceWidget(Widget):
         # we clone the item field to bump the oid (for easier
         # automated testing; finding last node)
         item_field = field.children[0].clone()
+        if not item_field.name:
+            info = 'Prototype for %r has no name' % field
+            raise ValueError(info)
         # NB: item_field default should already be set up
         proto = item_field.render_template(self.item_template, parent=field)
         if isinstance(proto, string_types):
