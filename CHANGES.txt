@@ -40,6 +40,10 @@ Bug Fixes
   in a sequence would not reflect the correct defaults of the item widget.
   See https://github.com/Pylons/deform/pull/79
 
+- Fix bug where native datetime/date widget rendering competed with jQuery
+  datetime/date widget rendering.  See
+  https://github.com/Pylons/deform/pull/142
+
 Dependencies
 ~~~~~~~~~~~~
 

@@ -127,6 +127,7 @@ class Widget(object):
     error_class = 'error'
     css_class = None
     requirements = ()
+    type_name = ''
 
     def __init__(self, **kw):
         self.__dict__.update(kw)
@@ -473,10 +474,13 @@ class AutocompleteInputWidget(Widget):
 
 class DateInputWidget(Widget):
     """
+    Renders a date picker widget.
 
-    Renders a JQuery UI date picker widget
-    (http://jqueryui.com/demos/datepicker/).  Most useful when the
-    schema node is a ``colander.Date`` object.
+    The default rendering is as a native HTML5 date input widget,
+    falling back to JQuery UI date picker widget
+    (http://jqueryui.com/demos/datepicker/).
+
+    Most useful when the schema node is a ``colander.Date`` object.
 
     **Attributes/Arguments**
 
@@ -503,9 +507,10 @@ class DateInputWidget(Widget):
     """
     template = 'dateinput'
     readonly_template = 'readonly/textinput'
+    type_name = 'date'
     size = None
     style = None
-    requirements = ( ('jqueryui', None), )
+    requirements = ( ('modernizr', None), ('jqueryui', None) )
     default_options = (('dateFormat', 'yy-mm-dd'),)
 
     def __init__(self, *args, **kwargs):
@@ -528,9 +533,13 @@ class DateInputWidget(Widget):
 
 class DateTimeInputWidget(DateInputWidget):
     """
-    Renders a a jQuery UI date picker with a JQuery Timepicker add-on
-    (http://trentrichardson.com/examples/timepicker/).  Used for
-    ``colander.DateTime`` schema nodes.
+    Renders a datetime picker widget.
+
+    The default rendering is as a native HTML5 datetime  input widget, 
+    falling back to jQuery UI date picker with a JQuery Timepicker add-on
+    (http://trentrichardson.com/examples/timepicker/).
+
+    Used for ``colander.DateTime`` schema nodes.
 
     **Attributes/Arguments**
 
@@ -557,9 +566,10 @@ class DateTimeInputWidget(DateInputWidget):
     """
     template = 'datetimeinput'
     readonly_template = 'readonly/textinput'
+    type_name = 'datetime'
     size = None
     style = None
-    requirements = ( ('jqueryui', None), ('datetimepicker', None), )
+    requirements = ( ('modernizr', None), ('jqueryui', None), ('datetimepicker', None), )
     default_options = (DateInputWidget.default_options +
                        (('timeFormat', 'hh:mm:ss'),
                         ('separator', ' ')))
@@ -1826,6 +1836,11 @@ default_resources = {
     'tinymce': {
         None:{
             'js':'tinymce/jscripts/tiny_mce/tiny_mce.js',
+            },
+        },
+    'modernizr': {
+        None:{
+            'js':('scripts/modernizr.custom.input-types-and-atts.js',),
             },
         },
     }
