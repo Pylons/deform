@@ -1,3 +1,10 @@
+Next Release
+------------
+
+- Raise a ValueError exception when the prototype
+  for a field in a sequence has no name. See
+  https://github.com/Pylons/deform/issues/149
+
 0.9.7 (2013-03-06)
 ------------------
 
