@@ -7,3 +7,5 @@
        id="${oid}"
        tal:attributes="checked cstruct == true_val;
                        class css_class"/>
+<label tal:condition="hasattr(field.schema, 'label')" for="${field.oid}"
+       tal:content="field.schema.label" class="checkbox-label" />
