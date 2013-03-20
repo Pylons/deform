@@ -1206,6 +1206,17 @@ class TestSequenceWidget(unittest.TestCase):
         self.assertEqual(url_unquote(result), 'abc')
         self.assertEqual(protofield.cloned, True)
 
+    def test_prototype_field_has_no_name(self):
+        from deform.compat import url_unquote
+        renderer = DummyRenderer(text_type('abc'))
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+        widget = self._makeOne()
+        protofield = DummyField(None, renderer)
+        protofield.name = ''
+        field.children=[protofield]
+        self.assertRaises(ValueError, widget.prototype, field)
+
     def test_prototype_str(self):
         from deform.compat import url_unquote
         renderer = DummyRenderer('abc')
