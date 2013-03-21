@@ -646,12 +646,6 @@ class RichTextWidget(TextInputWidget):
 
     **Attributes/Arguments**
 
-    height
-        The height of the text editor. May be specified as an integer
-        value representing height in pixels (such as ``240``) or as a
-        string value (such as ``10em`` or ``auto``). Default: ``240``
-        (integer).
-
     readonly_template
         The template name used to render the widget in read-only mode.
         Default: ``readonly/richtext``.
@@ -669,32 +663,72 @@ class RichTextWidget(TextInputWidget):
         The template name used to render the widget.  Default:
         ``richtext``.
 
-    skin
-        The skin for the WYSIWYG editor. Normally only needed if you
-        plan to reuse a TinyMCE js from another framework that
-        defined a skin. Default: ``default``.
+    options
+        A dictionary or sequence of two-tuples containing additional
+        options to pass to the TinyMCE ``init`` function call. All types
+        within such structure should be Python native as the structure
+        will be converted to JSON on serialization. This widget provides
+        some sensible defaults, as described below in
+        :attr:`default_options`.
 
-    theme
-        The theme for the WYSIWYG editor: ``simple`` or ``advanced``.
-        Default: ``simple``.
+        You should refer to the `TinyMCE Configuration
+        <http://www.tinymce.com/wiki.php/Configuration>`_ documentation
+        for details regarding all available configuration options.
 
-    width
-        The width of the text editor. May be specified as an integer
-        value representing width in pixels (such as ``500``) or as a
-        string value (such as ``10em`` or ``auto``). By specifying
-        a string-based percentage (such as ``50%``) the width will
-        be relative to the width of the enclosing element.
-        Default: ``500`` (integer).
+        The ``language`` option is passed to TinyMCE within the default
+        template, using i18n machinery to determine the language to use.
+        This option can be overriden if it is specified here in ``options``.
+
+        *Note*: the ``elements`` option for TinyMCE is set automatically
+        according to the given field's ``oid``.
+
+        Default: ``None`` (no additional options)
+
     """
-    height = 240
-    width = 500
     readonly_template = 'readonly/richtext'
     delayed_load = False
     strip = True
     template = 'richtext'
-    skin = 'default'
-    theme = 'simple'
     requirements = ( ('tinymce', None), )
+
+    #: Default options passed to TinyMCE. Customise by using :attr:`options`.
+    default_options = (('height', 240),
+                       ('width', 500),
+                       ('skin', 'default'),
+                       ('theme', 'simple'),
+                       ('mode', 'exact'),
+                       ('strict_loading_mode', True),
+                       ('theme_advanced_resizing', True),
+                       ('theme_advanced_toolbar_align', 'left'),
+                       ('theme_advanced_toolbar_location', 'top'))
+    #: Options to pass to TinyMCE that will override :attr:`default_options`.
+    options = None
+
+    #Deprecated class-level options
+    height = None
+    width = None
+    skin = None
+    theme = None
+
+    def serialize(self, field, cstruct, **kw):
+        if cstruct in (null, None):
+            cstruct = ''
+        readonly = kw.get('readonly', self.readonly)
+
+        options = dict(self.default_options)
+        #Backwards compatibility for class-level options
+        for attr in ('height', 'width', 'skin', 'theme'):
+            if getattr(self, attr):
+                options[attr] = getattr(self, attr)
+        #Accept overrides from keywords or as an attribute
+        options_overrides = dict(kw.get('options', self.options or {}))
+        options.update(options_overrides)
+        #Dump to JSON and strip curly braces at start and end
+        kw['tinymce_options'] = json.dumps(options)[1:-1]
+
+        values = self.get_template_values(field, cstruct, kw)
+        template = readonly and self.readonly_template or self.template
+        return field.renderer(template, **values)
 
 class PasswordWidget(TextInputWidget):
     """

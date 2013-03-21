@@ -3,6 +3,7 @@
                  skin skin|field.widget.skin;
                  theme theme|field.widget.theme;
                  delayed_load delayed_load|field.widget.delayed_load;
+                 tinymce_options tinymce_options|field.widget.tinymce_options;
                  oid oid|field.oid;
                  name name|field.name;"
     xmlns:i18n="http://xml.zope.org/namespaces/i18n" 
@@ -22,17 +23,9 @@
           jqoid.show();
           jqoid_preload.remove();
           tinyMCE.init({
-            mode: 'exact',
             language: '<tal:block i18n:translate="language-code">en</tal:block>',
-            elements: oid,
-            strict_loading_mode: true,
-            height: '${height}',
-            width: '${width}',
-            skin: '${skin}',
-            theme: '${theme}',
-            theme_advanced_resizing: true,
-            theme_advanced_toolbar_align: 'left',
-            theme_advanced_toolbar_location: 'top'
+            <tal:block condition="tinymce_options">${tinymce_options},</tal:block>
+            elements: oid
           });
           jqoid_preload.unbind('click');
         });
