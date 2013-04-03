@@ -11,8 +11,8 @@ Features
   [davidjb]
 
 - ``deform.field.Field`` now renders a ``css_class`` on its fieldset, which
-  is set on the schema. This works analog setting a schemas the title inside
-  the fieldset.
+  is set on the schema. This works in the same way as setting a schemas the
+  title inside the fieldset.
 
 Bug Fixes
 ~~~~~~~~~

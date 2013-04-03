@@ -116,3 +116,4 @@ Contributors
 - Domen Kožar, 2012/09/23
 - Patricio Paez, 2013/03/19
 - Lorenzo M. Catucci, 2013/01/29
+- Sebastian Wehrmann, 2013/04/03
