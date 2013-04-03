@@ -129,9 +129,9 @@ the class :class:`colander.SchemaNode`, usually in a nested arrangement.
 Each schema node object has a required *type*, an optional *preparer*
 for adjusting data after deserialization, an optional
 *validator* for deserialized prepared data, an optional *default*, an
-optional *missing*, an optional *title*, an optional *description*,
-and a slightly less optional *name*.  It also accepts *arbitrary*
-keyword arguments, which are attached directly as attributes to the
+optional *missing*, an optional *title*, an optinal *css_class*, an optional
+*description*, and a slightly less optional *name*.  It also accepts
+*arbitrary* keyword arguments, which are attached directly as attributes to the
 node instance.
 
 The *type* of a schema node indicates its data type (such as
@@ -167,6 +167,9 @@ other.  It is also used as the title if a title is not provided.
 The *title* of a schema node is metadata about a schema node.  It
 shows up in the legend above the form field(s) related to the schema
 node.  By default, it is a capitalization of the *name*.
+
+The *css_class* of a schema node is metadata about a schema node. It shows up
+as a CSS class on the fieldset, which is rendered from the schema node.
 
 The *description* of a schema node is metadata about a schema node.
 It shows up as a tooltip when someone hovers over the form control(s)
