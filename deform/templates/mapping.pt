@@ -1,8 +1,11 @@
 <fieldset tal:define="title title|field.title;
+                      css_class css_class|field.css_class;
                       description description|field.description;
                       errormsg errormsg|field.errormsg;
                       item_template item_template|field.widget.item_template"
-          class="deformMappingFieldset" i18n:domain="deform">
+          tal:attributes="class css_class"
+          class="deformMappingFieldset"
+          i18n:domain="deform">
   <!-- mapping -->
   <legend tal:condition="title">${title}</legend>
   <ul>
