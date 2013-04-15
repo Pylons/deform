@@ -52,7 +52,7 @@ msgstr "Hasło nie jest takie samo jak potwierdzenie"
 
 #: deform/widget.py:980
 msgid "Add ${subitem_title}"
-msgstr ""
+msgstr "Dodaj ${subitem_title}"
 
 #: deform/widget.py:1239
 msgid "Incomplete date"
@@ -60,23 +60,23 @@ msgstr "Niekompletne"
 
 #: deform/templates/checked_password.pt:5
 msgid "Password"
-msgstr ""
+msgstr "Hasło"
 
 #: deform/templates/checked_password.pt:10
 msgid "Confirm Password"
-msgstr ""
+msgstr "Potwierdź hasło"
 
 #: deform/templates/dateparts.pt:5 deform/templates/readonly/dateparts.pt:2
 msgid "Year"
-msgstr ""
+msgstr "Rok"
 
 #: deform/templates/dateparts.pt:12 deform/templates/readonly/dateparts.pt:4
 msgid "Month"
-msgstr ""
+msgstr "Miesiąc"
 
 #: deform/templates/dateparts.pt:19 deform/templates/readonly/dateparts.pt:6
 msgid "Day"
-msgstr ""
+msgstr "Dzień"
 
 #: deform/templates/form.pt:19
 msgid "There was a problem with your submission"
@@ -97,24 +97,24 @@ msgstr "pl"
 
 #: deform/templates/sequence_item.pt:6
 msgid "Remove"
-msgstr ""
+msgstr "Usuń"
 
 #: deform/templates/readonly/checked_password.pt:2
 #: deform/templates/readonly/password.pt:2
 msgid "Password not displayed."
-msgstr ""
+msgstr "Hasło niewidoczne."
 
 #: deform/templates/readonly/file_upload.pt:7
 msgid "Read-only."
-msgstr ""
+msgstr "Tylko do odczytu."
 
 #: deform/templates/readonly/radio_choice.pt:4
 #: deform/templates/readonly/select.pt:3
 msgid "Selected"
-msgstr ""
+msgstr "Zaznaczony"
 
 #: deform/templates/readonly/radio_choice.pt:5
 #: deform/templates/readonly/select.pt:4
 msgid "Not Selected"
-msgstr ""
+msgstr "Nie zaznaczony"
 
