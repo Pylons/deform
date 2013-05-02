@@ -515,6 +515,7 @@ class DateInputWidget(Widget):
 
     def __init__(self, *args, **kwargs):
         self.options = dict(self.default_options)
+        self._update_options_with_kwargs(kwargs)
         Widget.__init__(self, *args, **kwargs)
 
     def serialize(self, field, cstruct, **kw):
@@ -530,6 +531,11 @@ class DateInputWidget(Widget):
         if pstruct in ('', null):
             return null
         return pstruct
+
+    def _update_options_with_kwargs(self, kwargs):
+        option_keys = self.options.keys()
+        kwoptions = dict([ (k, v) for k, v in kwargs.iteritems() if k in option_keys ])
+        self.options.update(kwoptions)
 
 class DateTimeInputWidget(DateInputWidget):
     """
