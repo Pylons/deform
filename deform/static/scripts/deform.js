@@ -1,28 +1,8 @@
-/* 
- * Register a top-level callback to the deform.load() function 
+/*
+ * Register a top-level callback to the deform.load() function
  * this will be called when the DOM has finished loading. No need
  * to include the call at the end of the page.
  */
-
-
-
-// XXX: Since `deform` is needed for things like autocompletion, but the deform
-// holds this callbacks until load, it's desirabled to load jquery and
-// jquery-ui at the end of the page. But placing this, requires that jquery is
-// loaded before this tiny script.  Since, it's documented that you should call
-// deform.load() this is probably redundant. See:
-// http://docs.pylonsproject.org/projects/deform/en/latest/basics.html#serving-up-the-rendered-form
-//
-//     "The JavaScript function deform.load() must be called by the HTML page
-//     (usually in a script tag near the end of the page, ala
-//     <script..>deform.load()</script>) which renders a Deform form in order
-//     for widgets which use JavaScript to do proper event and behavior
-//     binding."
-//
-// $(document).ready(function(){
-//     deform.load();
-// });
-
 
 var deform_loaded = false;
 
