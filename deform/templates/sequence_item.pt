@@ -13,14 +13,14 @@
         id="${oid}-close"
         tal:condition="not hidden"
         title="Remove"
-        i18n:attributes="title title"
+        i18n:attributes="title"
         onclick="javascript:deform.removeSequenceItem(this);"></span>
 
   <span class="deformOrderbutton"
         id="${oid}-order"
         tal:condition="not hidden"
         title="Reorder (via drag and drop)"
-        i18n:attributes="title title"></span>
+        i18n:attributes="title"></span>
 
   <span tal:replace="structure field.serialize(cstruct=cstruct)"/>
 
