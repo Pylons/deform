@@ -21,8 +21,6 @@ Bug Fixes
 
 - Add optional label to checkbox widget.
 
-- Make setup_requires depend once again on setuptools_git.
-
 - Raise a ValueError exception when the prototype
   for a field in a sequence has no name. See
   https://github.com/Pylons/deform/issues/149
