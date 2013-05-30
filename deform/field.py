@@ -141,8 +141,6 @@ class Field(object):
         self.typ = schema.typ # required by Invalid exception
         self.name = schema.name
         self.title = schema.title
-        self.css_class = getattr(schema, 'css_class', '')
-        self.css_class += ' deformMappingFieldset'
         self.description = schema.description
         self.required = schema.required
         if renderer is None:
