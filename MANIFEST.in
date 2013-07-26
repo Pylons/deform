@@ -1,0 +1,5 @@
+recursive-include deform *.pt *.html *.htm *.css *.js *.jpg *.png *.gif *.py
+recursive-include deform/locale *.mo *.po
+recursive-include docs *.rst *.gif *.css
+
+include README* LICENSE* CHANGES*
