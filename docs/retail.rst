@@ -1,3 +1,5 @@
+.. _retail:
+
 Retail Form Rendering
 =====================
 
