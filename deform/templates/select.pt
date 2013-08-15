@@ -1,7 +1,7 @@
 <div tal:define="name name|field.name;
                  oid oid|field.oid;
                  size size|field.widget.size;
-                 css_class css_class|field.widget.css_class;
+                 css_class css_class|field.css_class;
                  optgroup_class optgroup_class|field.widget.optgroup_class;
                  multiple multiple|field.widget.multiple;"
      tal:omit-tag="">

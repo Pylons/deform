@@ -89,7 +89,8 @@ class Widget(object):
     css_class
         The name of the CSS class attached to various tags in
         the form renderering specifying a new class for the field
-        associated with this widget.  Default: ``None`` (no class).
+        associated with this widget.  Default: ``deform-field-$name``
+        where name is the name of this field.
 
     requirements
         A sequence of two-tuples in the form ``( (requirement_name,

@@ -1,6 +1,6 @@
 <ul tal:define="oid oid|field.oid;
                 title title|field.title;
-                css_class css_class|field.widget.css_class;"
+                css_class css_class|field.css_class;"
     class="deformSet"> 
     ${field.start_rename()}
     <tal:loop tal:repeat="choice values">
