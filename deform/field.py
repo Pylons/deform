@@ -12,6 +12,7 @@ from . import (
     template,
     widget,
     schema,
+    compat,
     )
 
 class _Marker(object):
@@ -285,7 +286,7 @@ class Field(object):
         if not self.name:
             return None
         
-        css_class = unicodedata.normalize('NFKD', unicode(self.name)).encode('ascii', 'ignore')
+        css_class = unicodedata.normalize('NFKD', compat.text_type(self.name)).encode('ascii', 'ignore').decode('ascii')
         css_class = re.sub('[^\w\s-]', '', css_class).strip().lower()
         css_class = re.sub('[-\s]+', '-', css_class)
         return "item-%s" % css_class
