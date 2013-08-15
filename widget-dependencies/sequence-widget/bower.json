@@ -1,0 +1,8 @@
+{
+  "name": "sequence-widget",
+  "version": "0.9.7",
+  "main": [],
+  "dependencies": {
+    "jquery-ui": "*"
+  }
+}

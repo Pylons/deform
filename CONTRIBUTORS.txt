@@ -117,3 +117,5 @@ Contributors
 - Patricio Paez, 2013/03/19
 - Lorenzo M. Catucci, 2013/01/29
 - Sebastian Wehrmann, 2013/04/03
+- Balazs Ree, 2013/08/15
+

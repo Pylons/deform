@@ -1,0 +1,11 @@
+{
+  "name": "deform",
+  "version": "1.10.3",
+  "dependencies": {
+    "jquery": "*", 
+    "jquery-ui": "*",
+    "jquery.maskedinput": "*",
+    "tinymce": "*",
+    "modernizr": "*"
+  }
+}

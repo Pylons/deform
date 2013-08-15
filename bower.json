@@ -1,0 +1,32 @@
+{
+  "name": "deform",
+  "version": "0.9.7",
+  "main": [
+    "./deform/static/scripts/deform.js",
+    "./deform/static/scripts/jquery.form-3.09.js",
+    "./deform/static/scripts/css/form.css"
+  ],
+  "dependencies": {
+    "jquery": "1.7.2",
+    "text-input-widget": "./widget-dependencies/text-input-widget",
+    "money-input-widget": "./widget-dependencies/money-input-widget",
+    "autocomplete-input-widget": "./widget-dependencies/autocomplete-input-widget",
+    "date-time-input-widget": "./widget-dependencies/date-time-input-widget",
+    "text-area-widget": "./widget-dependencies/text-area-widget",
+    "rich-text-widget": "./widget-dependencies/rich-text-widget",
+    "password-widget": "./widget-dependencies/password-widget",
+    "hidden-widget": "./widget-dependencies/hidden-widget",
+    "checkbox-widget": "./widget-dependencies/checkbox-widget",
+    "select-widget": "./widget-dependencies/select-widget",
+    "radio-choice-widget": "./widget-dependencies/radio-choice-widget",
+    "checked-input-widget": "./widget-dependencies/checked-input-widget",
+    "checked-password-widget": "./widget-dependencies/checked-password-widget",
+    "mapping-widget": "./widget-dependencies/mapping-widget",
+    "form-widget": "./widget-dependencies/form-widget",
+    "sequence-widget": "./widget-dependencies/sequence-widget",
+    "file-upload-widget": "./widget-dependencies/file-upload-widget",
+    "date-parts-widget": "./widget-dependencies/date-parts-widget",
+    "text-area-cs-widget": "./widget-dependencies/text-area-cs-widget",
+    "text-input-cs-widget": "./widget-dependencies/text-input-cs-widget"
+  }
+}

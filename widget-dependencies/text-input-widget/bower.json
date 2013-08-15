@@ -1,0 +1,8 @@
+{
+  "name": "text-input-widget",
+  "version": "0.9.7",
+  "main": [],
+  "dependencies": {
+    "jquery.maskedinput": "*"
+  }
+}
