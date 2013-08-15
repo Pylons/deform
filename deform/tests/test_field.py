@@ -1,4 +1,5 @@
 import unittest
+from deform.compat import text_
 
 def validation_failure_exc(func, *arg, **kw):
     from deform.exception import ValidationFailure
@@ -156,9 +157,9 @@ class TestField(unittest.TestCase):
 
     def test_normalizes_css_class(self):
         schema = DummySchema()
-        schema.name = u"a b\xf6[] c"
+        schema.name = text_(b'a b\xc3\xb1[] c', 'utf-8')
         field = self._makeOne(schema)
-        self.assertEqual(field.widget.item_css_class, 'item-a-bo-c')
+        self.assertEqual(field.widget.item_css_class, 'item-a-bn-c')
 
     def test_widget_no_maker_with_default_widget_maker(self):
         from deform.widget import MappingWidget
