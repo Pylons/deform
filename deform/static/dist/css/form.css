@@ -1,0 +1,86 @@
+.deform .req{
+   color: red;
+}
+
+.deform label.desc{
+    display: block;
+    font-weight:bold;
+}
+
+.deform ul {
+    margin: 0;
+    padding: 0;
+}
+
+.deform li {
+    clear: left;
+    display: block;
+    margin: 6px 0px;
+    padding: 3px;
+}
+
+.deform .tinymce-preload{
+    border: 1px solid #CCC;
+    height: 240px;
+    width: 500px;
+    display: block;
+}
+
+/* deform additions*/
+
+.deformClosebuttonActive,
+.deformOrderbuttonActive {
+   border: 0;
+   cursor: pointer;
+   float: left;
+   /* width: 1em; */
+   /* height: 1em; */
+   /* margin: .5em; */
+}
+
+.deformClosebuttonActive:before {
+    content:"✖";
+    color:red;
+    margin-right: 5px;
+}
+
+.deformOrderbuttonActive:before {
+    content:"↕";
+    margin-right: 5px;
+}
+
+a.deformSeqAdd:visited {
+   color: blue;
+}
+
+div.deformReplaces {
+    float: left;
+}
+
+.deformSet-item {
+    padding: 1px;
+}
+
+.deform ul.inline > li{
+    display:inline-block;
+}
+
+/* error handling */
+.deform .errorLi {
+    border:1px solid red;
+    text-align: center;
+    -webkit-border-radius:20px;
+    -moz-border-radius:20px;
+}
+
+.deform li.error{
+    background-color: #FFDFDF;
+}
+
+.deform li.error label.desc, .deform p.error, .deform h3.errorMsgLbl{
+    color: #DF0000;
+}
+
+.deform p.error{
+    font-size: 70%;
+}

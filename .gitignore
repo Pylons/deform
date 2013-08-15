@@ -17,7 +17,6 @@ jyenv/
 pypyenv/
 2xenv/
 build/
-dist/
 deform/coverage.xml
 bin/
 include/
