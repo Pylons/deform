@@ -1,6 +1,8 @@
 import itertools
 import colander
 import peppercorn
+import unicodedata
+import re
 
 from chameleon.utils import Markup
 
@@ -10,6 +12,7 @@ from . import (
     template,
     widget,
     schema,
+    compat,
     )
 
 class _Marker(object):
@@ -38,7 +41,11 @@ class Field(object):
             The schema node associated with this field.
 
         widget
-            The widget associated with this field.
+            The widget associated with this field. When no widget is
+            defined in the schema node, a default widget will be created.
+            The default widget will have a generated item_css_class
+            containing the normalized version of the ``name`` attribute
+            (with ``item`` prepended, e.g. ``item-username``).
 
         order
             An integer indicating the relative order of this field's
@@ -273,7 +280,17 @@ class Field(object):
                         break
         if widget_maker is None:
             widget_maker = widget.TextInputWidget
-        return widget_maker()
+        return widget_maker(item_css_class=self._default_item_css_class())
+
+    def _default_item_css_class(self):
+        if not self.name:
+            return None
+        
+        css_class = unicodedata.normalize('NFKD', compat.text_type(self.name)).encode('ascii', 'ignore').decode('ascii')
+        css_class = re.sub('[^\w\s-]', '', css_class).strip().lower()
+        css_class = re.sub('[-\s]+', '-', css_class)
+        return "item-%s" % css_class
+
 
     def get_widget_requirements(self):
         """ Return a sequence of two tuples in the form
