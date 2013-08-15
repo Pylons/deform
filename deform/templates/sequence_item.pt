@@ -4,7 +4,7 @@
                 oid oid|field.oid;
                 title title|field.title;
 "
-    tal:attributes="class field.error and error_class"
+    class="${field.widget.item_css_class or ''} ${field.error and error_class or ''}"
     tal:omit-tag="hidden"
     title="${description}" i18n:domain="deform">
   <!-- sequence_item -->

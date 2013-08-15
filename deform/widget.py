@@ -91,6 +91,10 @@ class Widget(object):
         the form renderering specifying a new class for the field
         associated with this widget.  Default: ``None`` (no class).
 
+    item_css_class
+        The name of the CSS class attached to the li which surrounds the field
+        when it is rendered inside the mapping_item or sequence_item template.
+
     requirements
         A sequence of two-tuples in the form ``( (requirement_name,
         version_id), ...)`` indicating the logical external
@@ -126,6 +130,7 @@ class Widget(object):
     category = 'default'
     error_class = 'error'
     css_class = None
+    item_css_class = None
     requirements = ()
     type_name = ''
 
