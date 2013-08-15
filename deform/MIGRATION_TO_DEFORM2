@@ -1,0 +1,3 @@
+- removed deprecated `height, width, skin, theme` parameters from RichTextWidget
+- removed deprecated `render_initial_item` from SequenceWidget
+- removed deprecated deform.Set (use colander.Set instead)

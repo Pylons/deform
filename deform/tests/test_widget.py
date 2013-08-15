@@ -514,9 +514,6 @@ class TestRichTextWidget(TestTextInputWidget):
             'element_format': 'html'
         }
         widget = self._makeOne(options=options)
-        #Deprecated class-level attributes
-        widget.skin = 'dummy'
-        widget.theme = 'advanced'
         cstruct = 'abc'
         widget.serialize(field, cstruct)
 
@@ -524,10 +521,6 @@ class TestRichTextWidget(TestTextInputWidget):
         result = renderer.kw['tinymce_options']
         self.assertTrue('"height": 240' in result)
         self.assertTrue('"width": 500' in result)
-
-        #Deprecated class-level options should still come through
-        self.assertTrue('"skin": "dummy"' in result)
-        self.assertTrue('"theme": "advanced"' in result)
 
         #Custom options should be set
         self.assertTrue('"theme_advanced_buttons1": "bold,italic,bullist,numlist"' in result)

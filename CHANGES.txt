@@ -1,6 +1,8 @@
 Next Release
 ------------
 
+- removed deprecation warnings prior to 2.0 release
+
 Features
 ~~~~~~~~
 

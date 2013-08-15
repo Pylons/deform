@@ -704,22 +704,12 @@ class RichTextWidget(TextInputWidget):
     #: Options to pass to TinyMCE that will override :attr:`default_options`.
     options = None
 
-    #Deprecated class-level options
-    height = None
-    width = None
-    skin = None
-    theme = None
-
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
             cstruct = ''
         readonly = kw.get('readonly', self.readonly)
 
         options = dict(self.default_options)
-        #Backwards compatibility for class-level options
-        for attr in ('height', 'width', 'skin', 'theme'):
-            if getattr(self, attr):
-                options[attr] = getattr(self, attr)
         #Accept overrides from keywords or as an attribute
         options_overrides = dict(kw.get('options', self.options or {}))
         options.update(options_overrides)
@@ -1273,13 +1263,6 @@ class SequenceWidget(Widget):
 
         Default: ``Add ${subitem_title}``.
 
-    render_initial_item
-        Deprecated boolean attribute indicating whether, on the first
-        rendering of a form including this sequence widget, a single child
-        widget rendering should be performed.  Default: ``False``.  This
-        attribute is honored for backwards compatibility only: in new
-        applications, please use ``min_len=1`` instead.
-
     min_len
         Integer indicating minimum number of acceptable subitems.  Default:
         ``None`` (meaning no minimum).  On the first rendering of a form
@@ -1304,7 +1287,6 @@ class SequenceWidget(Widget):
     readonly_item_template = 'readonly/sequence_item'
     error_class = None
     add_subitem_text_template = _('Add ${subitem_title}')
-    render_initial_item = False
     min_len = None
     max_len = None
     orderable = False
@@ -1327,10 +1309,6 @@ class SequenceWidget(Widget):
 
     def serialize(self, field, cstruct, **kw):
         # XXX make it possible to override min_len in kw
-        if (self.render_initial_item and self.min_len is None):
-            # This is for compat only: ``render_initial_item=True`` should
-            # now be spelled as ``min_len = 1``
-            self.min_len = 1
 
         if cstruct in (null, None):
             if self.min_len is not None:

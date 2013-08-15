@@ -9,64 +9,6 @@ def invalid_exc(func, *arg, **kw):
     else:
         raise AssertionError('Invalid not raised') # pragma: no cover
 
-class TestSet(unittest.TestCase):
-    def setUp(self):
-        from zope.deprecation import __show__
-        __show__.off()
-        
-    def tearDown(self):
-        from zope.deprecation import __show__
-        __show__.on()
-
-    def _makeOne(self, **kw):
-        from deform.schema import Set
-        return Set(**kw)
-
-    def test_serialize(self):
-        node = DummySchemaNode()
-        typ = self._makeOne()
-        provided = []
-        result = typ.serialize(node, provided)
-        self.assertTrue(result is provided)
-
-    def test_serialize_null(self):
-        from colander import null
-        node = DummySchemaNode()
-        typ = self._makeOne()
-        result = typ.serialize(node, null)
-        self.assertEqual(result, null)
-
-    def test_deserialize_no_iter(self):
-        node = DummySchemaNode()
-        typ = self._makeOne()
-        #e = invalid_exc(typ.deserialize, node, 'str')
-        e = invalid_exc(typ.deserialize, node, 1)
-        self.assertEqual(e.msg, '${value} is not iterable')
-
-    def test_deserialize_null(self):
-        from colander import null
-        node = DummySchemaNode()
-        typ = self._makeOne()
-        result = typ.deserialize(node, null)
-        self.assertEqual(result, null)
-
-    def test_deserialize_valid(self):
-        node = DummySchemaNode()
-        typ = self._makeOne()
-        result = typ.deserialize(node, ('a',))
-        self.assertEqual(result, set(('a',)))
-
-    def test_deserialize_empty_allow_empty_false(self):
-        node = DummySchemaNode()
-        typ = self._makeOne()
-        e = invalid_exc(typ.deserialize, node, ())
-        self.assertEqual(e.msg, 'Required')
-
-    def test_deserialize_empty_allow_empty_true(self):
-        node = DummySchemaNode()
-        typ = self._makeOne(allow_empty=True)
-        result = typ.deserialize(node, ())
-        self.assertEqual(result, set())
 
 class TestFileData(unittest.TestCase):
     def _makeOne(self):
