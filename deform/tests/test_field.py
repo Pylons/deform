@@ -136,12 +136,29 @@ class TestField(unittest.TestCase):
 
     def test_widget_has_maker(self):
         schema = DummySchema()
-        def maker():
+        def maker(**kw):
             return 'a widget'
         schema.typ = DummyType(maker=maker)
         field = self._makeOne(schema)
         widget = field.widget
         self.assertEqual(widget, 'a widget')
+
+    def test_widget_has_generated_item_css_class(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        self.assertEqual(field.widget.item_css_class, 'item-name')
+
+    def test_has_no_css_class_if_no_name(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        field.name = None
+        self.assertEqual(field.widget.item_css_class, None)
+
+    def test_normalizes_css_class(self):
+        schema = DummySchema()
+        schema.name = u"a b\xf6[] c"
+        field = self._makeOne(schema)
+        self.assertEqual(field.widget.item_css_class, 'item-a-bo-c')
 
     def test_widget_no_maker_with_default_widget_maker(self):
         from deform.widget import MappingWidget
@@ -692,7 +709,7 @@ class DummyType(object):
         
 class DummyWidget(object):
     rendered = None
-    def __init__(self, exc=None):
+    def __init__(self, exc=None, **kw):
         self.exc = exc
 
     def deserialize(self, field, pstruct):
