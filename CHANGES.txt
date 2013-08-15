@@ -10,6 +10,10 @@ Features
   and can be customised by using ``options``.
   [davidjb]
 
+- Widgets now accept an ``item_css_class`` argument.  This argument, when
+  provided, sets a class value on the top level element of the item template
+  which surrounds the widget (usually an <li>).
+
 Bug Fixes
 ~~~~~~~~~
 
