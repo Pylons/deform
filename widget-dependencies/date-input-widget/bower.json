@@ -1,11 +1,9 @@
 {
-  "name": "deform",
-  "version": "1.10.3",
+  "name": "date-input-widget",
+  "version": "0.9.7",
+  "main": [],
   "dependencies": {
-    "jquery": "*", 
     "jquery-ui": "*",
-    "jquery.maskedinput": "*",
-    "tinymce": "*",
     "modernizr": "*"
   }
 }

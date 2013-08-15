@@ -1,0 +1,40 @@
+{
+  "name": "deform",
+  "preferGlobal": true,
+  "version": "0.9.7",
+  "author": "Chris McDonough, Agendaless Consulting",
+  "description": "Another form generation library",
+  "contributors": [ 
+    {
+      "name": "Chris McDonough, Agendaless Consulting",
+      "email": "pylons-discuss@googlegroups.com"
+    } 
+  ],
+  "bin": {
+    "process-dependencies": "./deform/scripts/process_dependencies.js"
+  },
+  "scripts": {
+    "process-dependencies": "./deform/scripts/process_dependencies.js"
+  },
+  "main": "../deform/scripts/process_dependencies.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Pylons/deform.git"
+  },
+  "keywords": [
+  ],
+  "dependencies" : {
+  },
+  "analyze": false,
+  "devDependencies": {
+    "bower"    :  "*",
+    "lodash"   :  "*"
+  },
+  "bundledDependencies": [
+  ],  
+  "license": "BSD-derived (http://www.repoze.org/LICENSE.txt)",
+  "engines": {
+    "node": ">=0.8"
+  }
+}
+

@@ -2,7 +2,7 @@
   "name": "money-input-widget",
   "version": "0.9.7",
   "main": [
-    "./deform/static/scripts/jquery.maskMoney-1.4.1.js"
+    "../../deform/static/scripts/jquery.maskMoney-1.4.1.js"
     ],
   "dependencies": {
   }

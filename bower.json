@@ -4,14 +4,14 @@
   "main": [
     "./deform/static/scripts/deform.js",
     "./deform/static/scripts/jquery.form-3.09.js",
-    "./deform/static/scripts/css/form.css"
+    "./deform/static/css/form.css"
   ],
   "dependencies": {
-    "jquery": "1.7.2",
     "text-input-widget": "./widget-dependencies/text-input-widget",
     "money-input-widget": "./widget-dependencies/money-input-widget",
     "autocomplete-input-widget": "./widget-dependencies/autocomplete-input-widget",
     "date-time-input-widget": "./widget-dependencies/date-time-input-widget",
+    "date-input-widget": "./widget-dependencies/date-input-widget",
     "text-area-widget": "./widget-dependencies/text-area-widget",
     "rich-text-widget": "./widget-dependencies/rich-text-widget",
     "password-widget": "./widget-dependencies/password-widget",

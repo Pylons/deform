@@ -2,8 +2,8 @@
   "name": "date-time-input-widget",
   "version": "0.9.7",
   "main": [
-    "./deform/static/scripts/jquery-ui-timepicker-addon.js",
-    "./deform/static/css/jquery-ui-timepicker-addon.css"
+    "../../deform/static/scripts/jquery-ui-timepicker-addon.js",
+    "../../deform/static/css/jquery-ui-timepicker-addon.css"
   ],
   "dependencies": {
     "jquery-ui": "*",
