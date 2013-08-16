@@ -67,7 +67,7 @@ bower.commands
 
     console.log('Copied resources to ' + outputDir);
 
-    fs.writeFile(outputFilename, result, function(err) {
+    fs.writeFile(outputFilename, formatted, function(err) {
         if (err) {
             console.log('File write error:', err);
             process.exit(1);

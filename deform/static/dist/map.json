@@ -1,1 +1,1063 @@
-[object Object]
+{
+    "endpoint": {
+        "name": "deform",
+        "source": "/Users/ree/work/deform/00",
+        "target": "0.9.7"
+    },
+    "canonicalDir": "/Users/ree/work/deform/00",
+    "pkgMeta": {
+        "name": "deform",
+        "version": "0.9.7",
+        "main": [
+            "./deform/static/scripts/deform.js",
+            "./deform/static/scripts/jquery.form-3.09.js",
+            "./deform/static/css/form.css"
+        ],
+        "dependencies": {
+            "text-input-widget": "./widget-dependencies/text-input-widget",
+            "money-input-widget": "./widget-dependencies/money-input-widget",
+            "autocomplete-input-widget": "./widget-dependencies/autocomplete-input-widget",
+            "date-time-input-widget": "./widget-dependencies/date-time-input-widget",
+            "date-input-widget": "./widget-dependencies/date-input-widget",
+            "text-area-widget": "./widget-dependencies/text-area-widget",
+            "rich-text-widget": "./widget-dependencies/rich-text-widget",
+            "password-widget": "./widget-dependencies/password-widget",
+            "hidden-widget": "./widget-dependencies/hidden-widget",
+            "checkbox-widget": "./widget-dependencies/checkbox-widget",
+            "select-widget": "./widget-dependencies/select-widget",
+            "radio-choice-widget": "./widget-dependencies/radio-choice-widget",
+            "checked-input-widget": "./widget-dependencies/checked-input-widget",
+            "checked-password-widget": "./widget-dependencies/checked-password-widget",
+            "mapping-widget": "./widget-dependencies/mapping-widget",
+            "form-widget": "./widget-dependencies/form-widget",
+            "sequence-widget": "./widget-dependencies/sequence-widget",
+            "file-upload-widget": "./widget-dependencies/file-upload-widget",
+            "date-parts-widget": "./widget-dependencies/date-parts-widget",
+            "text-area-cs-widget": "./widget-dependencies/text-area-cs-widget",
+            "text-input-cs-widget": "./widget-dependencies/text-input-cs-widget"
+        }
+    },
+    "dependencies": {
+        "autocomplete-input-widget": {
+            "endpoint": {
+                "name": "autocomplete-input-widget",
+                "source": "./widget-dependencies/autocomplete-input-widget",
+                "target": "*"
+            },
+            "canonicalDir": "/Users/ree/work/deform/00/bower_components/autocomplete-input-widget",
+            "pkgMeta": {
+                "name": "autocomplete-input-widget",
+                "version": "0.9.7",
+                "main": [],
+                "dependencies": {
+                    "jquery-ui": "*"
+                },
+                "_source": "/Users/ree/work/deform/00/widget-dependencies/autocomplete-input-widget",
+                "_target": "*"
+            },
+            "dependencies": {
+                "jquery-ui": {
+                    "endpoint": {
+                        "name": "jquery-ui",
+                        "source": "jquery-ui",
+                        "target": "*"
+                    },
+                    "canonicalDir": "/Users/ree/work/deform/00/bower_components/jquery-ui",
+                    "pkgMeta": {
+                        "name": "jquery-ui",
+                        "version": "1.10.3",
+                        "main": [
+                            "ui/jquery-ui.js"
+                        ],
+                        "dependencies": {
+                            "jquery": "~> 1.10.1"
+                        },
+                        "homepage": "https://github.com/components/jqueryui",
+                        "_release": "1.10.3",
+                        "_resolution": {
+                            "type": "version",
+                            "tag": "1.10.3",
+                            "commit": "6c476bd548e777b23fdbed295b8518beb049a2d0"
+                        },
+                        "_source": "git://github.com/components/jqueryui.git",
+                        "_target": "*"
+                    },
+                    "dependencies": {
+                        "jquery": {
+                            "endpoint": {
+                                "name": "jquery",
+                                "source": "jquery",
+                                "target": "~> 1.10.1"
+                            },
+                            "canonicalDir": "/Users/ree/work/deform/00/bower_components/jquery",
+                            "pkgMeta": {
+                                "name": "jquery",
+                                "version": "1.10.2",
+                                "description": "jQuery component",
+                                "keywords": [
+                                    "jquery",
+                                    "component"
+                                ],
+                                "main": "jquery.js",
+                                "license": "MIT",
+                                "homepage": "https://github.com/components/jquery",
+                                "_release": "1.10.2",
+                                "_resolution": {
+                                    "type": "version",
+                                    "tag": "1.10.2",
+                                    "commit": "6b2390db24ba3490ca75251eec4888f7342bf4da"
+                                },
+                                "_source": "git://github.com/components/jquery.git",
+                                "_target": "~> 1.10.1"
+                            },
+                            "dependencies": {},
+                            "nrDependants": 1,
+                            "versions": [
+                                "2.0.3",
+                                "2.0.2",
+                                "2.0.1",
+                                "2.0.0",
+                                "1.10.2",
+                                "1.10.1",
+                                "1.10.0",
+                                "1.9.1",
+                                "1.9.0",
+                                "1.8.3",
+                                "1.8.2",
+                                "1.8.1",
+                                "1.8.0",
+                                "1.7.2",
+                                "1.7.1",
+                                "1.7.0",
+                                "1.6.4",
+                                "1.6.3",
+                                "1.6.2",
+                                "1.6.1",
+                                "1.6.0",
+                                "1.5.2",
+                                "1.5.1",
+                                "1.5.0",
+                                "1.4.4",
+                                "1.4.3",
+                                "1.4.2",
+                                "1.4.1",
+                                "1.4.0",
+                                "1.3.2",
+                                "1.3.1",
+                                "1.3.0",
+                                "1.2.6",
+                                "1.2.3"
+                            ],
+                            "update": {
+                                "target": "1.10.2",
+                                "latest": "2.0.3"
+                            }
+                        }
+                    },
+                    "nrDependants": 4,
+                    "versions": [
+                        "1.10.3",
+                        "1.10.2",
+                        "1.10.1",
+                        "1.10.0",
+                        "1.9.2",
+                        "1.9.1",
+                        "1.9.0",
+                        "1.8.23"
+                    ],
+                    "update": {
+                        "target": "1.10.3",
+                        "latest": "1.10.3"
+                    }
+                }
+            },
+            "nrDependants": 1,
+            "versions": []
+        },
+        "checkbox-widget": {
+            "endpoint": {
+                "name": "checkbox-widget",
+                "source": "./widget-dependencies/checkbox-widget",
+                "target": "*"
+            },
+            "canonicalDir": "/Users/ree/work/deform/00/bower_components/checkbox-widget",
+            "pkgMeta": {
+                "name": "checkbox-widget",
+                "version": "0.9.7",
+                "main": [],
+                "dependencies": {},
+                "_source": "/Users/ree/work/deform/00/widget-dependencies/checkbox-widget",
+                "_target": "*"
+            },
+            "dependencies": {},
+            "nrDependants": 1,
+            "versions": []
+        },
+        "checked-input-widget": {
+            "endpoint": {
+                "name": "checked-input-widget",
+                "source": "./widget-dependencies/checked-input-widget",
+                "target": "*"
+            },
+            "canonicalDir": "/Users/ree/work/deform/00/bower_components/checked-input-widget",
+            "pkgMeta": {
+                "name": "checked-input-widget",
+                "version": "0.9.7",
+                "main": [],
+                "dependencies": {
+                    "jquery.maskedinput": "*"
+                },
+                "_source": "/Users/ree/work/deform/00/widget-dependencies/checked-input-widget",
+                "_target": "*"
+            },
+            "dependencies": {
+                "jquery.maskedinput": {
+                    "endpoint": {
+                        "name": "jquery.maskedinput",
+                        "source": "jquery.maskedinput",
+                        "target": "*"
+                    },
+                    "canonicalDir": "/Users/ree/work/deform/00/bower_components/jquery.maskedinput",
+                    "pkgMeta": {
+                        "name": "jquery.maskedinput",
+                        "version": "1.3.1",
+                        "main": "./jquery.maskedinput.js",
+                        "dependencies": {
+                            "jquery": ">=1.7.x"
+                        },
+                        "homepage": "https://github.com/gustavohenke/jquery.maskedinput",
+                        "_release": "1.3.1",
+                        "_resolution": {
+                            "type": "version",
+                            "tag": "1.3.1",
+                            "commit": "e519e86e9c7c44994f112695312dc9b2111938a7"
+                        },
+                        "_source": "git://github.com/gustavohenke/jquery.maskedinput.git",
+                        "_target": "*"
+                    },
+                    "dependencies": {
+                        "jquery": {
+                            "endpoint": {
+                                "name": "jquery",
+                                "source": "jquery",
+                                "target": ">=1.7.x"
+                            },
+                            "canonicalDir": "/Users/ree/work/deform/00/bower_components/jquery",
+                            "pkgMeta": {
+                                "name": "jquery",
+                                "version": "1.10.2",
+                                "description": "jQuery component",
+                                "keywords": [
+                                    "jquery",
+                                    "component"
+                                ],
+                                "main": "jquery.js",
+                                "license": "MIT",
+                                "homepage": "https://github.com/components/jquery",
+                                "_release": "1.10.2",
+                                "_resolution": {
+                                    "type": "version",
+                                    "tag": "1.10.2",
+                                    "commit": "6b2390db24ba3490ca75251eec4888f7342bf4da"
+                                },
+                                "_source": "git://github.com/components/jquery.git",
+                                "_target": "~> 1.10.1"
+                            },
+                            "dependencies": {},
+                            "nrDependants": 1,
+                            "versions": [
+                                "2.0.3",
+                                "2.0.2",
+                                "2.0.1",
+                                "2.0.0",
+                                "1.10.2",
+                                "1.10.1",
+                                "1.10.0",
+                                "1.9.1",
+                                "1.9.0",
+                                "1.8.3",
+                                "1.8.2",
+                                "1.8.1",
+                                "1.8.0",
+                                "1.7.2",
+                                "1.7.1",
+                                "1.7.0",
+                                "1.6.4",
+                                "1.6.3",
+                                "1.6.2",
+                                "1.6.1",
+                                "1.6.0",
+                                "1.5.2",
+                                "1.5.1",
+                                "1.5.0",
+                                "1.4.4",
+                                "1.4.3",
+                                "1.4.2",
+                                "1.4.1",
+                                "1.4.0",
+                                "1.3.2",
+                                "1.3.1",
+                                "1.3.0",
+                                "1.2.6",
+                                "1.2.3"
+                            ],
+                            "update": {
+                                "target": "2.0.3",
+                                "latest": "2.0.3"
+                            }
+                        }
+                    },
+                    "nrDependants": 2,
+                    "versions": [
+                        "1.3.1",
+                        "1.2.2"
+                    ],
+                    "update": {
+                        "target": "1.3.1",
+                        "latest": "1.3.1"
+                    }
+                }
+            },
+            "nrDependants": 1,
+            "versions": []
+        },
+        "checked-password-widget": {
+            "endpoint": {
+                "name": "checked-password-widget",
+                "source": "./widget-dependencies/checked-password-widget",
+                "target": "*"
+            },
+            "canonicalDir": "/Users/ree/work/deform/00/bower_components/checked-password-widget",
+            "pkgMeta": {
+                "name": "checked-password-widget",
+                "version": "0.9.7",
+                "main": [],
+                "dependencies": {},
+                "_source": "/Users/ree/work/deform/00/widget-dependencies/checked-password-widget",
+                "_target": "*"
+            },
+            "dependencies": {},
+            "nrDependants": 1,
+            "versions": []
+        },
+        "date-input-widget": {
+            "endpoint": {
+                "name": "date-input-widget",
+                "source": "./widget-dependencies/date-input-widget",
+                "target": "*"
+            },
+            "canonicalDir": "/Users/ree/work/deform/00/bower_components/date-input-widget",
+            "pkgMeta": {
+                "name": "date-input-widget",
+                "version": "0.9.7",
+                "main": [],
+                "dependencies": {
+                    "jquery-ui": "*",
+                    "modernizr": "*"
+                },
+                "_source": "/Users/ree/work/deform/00/widget-dependencies/date-input-widget",
+                "_target": "*"
+            },
+            "dependencies": {
+                "jquery-ui": {
+                    "endpoint": {
+                        "name": "jquery-ui",
+                        "source": "jquery-ui",
+                        "target": "*"
+                    },
+                    "canonicalDir": "/Users/ree/work/deform/00/bower_components/jquery-ui",
+                    "pkgMeta": {
+                        "name": "jquery-ui",
+                        "version": "1.10.3",
+                        "main": [
+                            "ui/jquery-ui.js"
+                        ],
+                        "dependencies": {
+                            "jquery": "~> 1.10.1"
+                        },
+                        "homepage": "https://github.com/components/jqueryui",
+                        "_release": "1.10.3",
+                        "_resolution": {
+                            "type": "version",
+                            "tag": "1.10.3",
+                            "commit": "6c476bd548e777b23fdbed295b8518beb049a2d0"
+                        },
+                        "_source": "git://github.com/components/jqueryui.git",
+                        "_target": "*"
+                    },
+                    "dependencies": {
+                        "jquery": {
+                            "endpoint": {
+                                "name": "jquery",
+                                "source": "jquery",
+                                "target": "~> 1.10.1"
+                            },
+                            "canonicalDir": "/Users/ree/work/deform/00/bower_components/jquery",
+                            "pkgMeta": {
+                                "name": "jquery",
+                                "version": "1.10.2",
+                                "description": "jQuery component",
+                                "keywords": [
+                                    "jquery",
+                                    "component"
+                                ],
+                                "main": "jquery.js",
+                                "license": "MIT",
+                                "homepage": "https://github.com/components/jquery",
+                                "_release": "1.10.2",
+                                "_resolution": {
+                                    "type": "version",
+                                    "tag": "1.10.2",
+                                    "commit": "6b2390db24ba3490ca75251eec4888f7342bf4da"
+                                },
+                                "_source": "git://github.com/components/jquery.git",
+                                "_target": "~> 1.10.1"
+                            },
+                            "dependencies": {},
+                            "nrDependants": 1
+                        }
+                    },
+                    "nrDependants": 4
+                },
+                "modernizr": {
+                    "endpoint": {
+                        "name": "modernizr",
+                        "source": "modernizr",
+                        "target": "*"
+                    },
+                    "canonicalDir": "/Users/ree/work/deform/00/bower_components/modernizr",
+                    "pkgMeta": {
+                        "name": "modernizr",
+                        "homepage": "https://github.com/Modernizr/Modernizr",
+                        "version": "2.6.2",
+                        "_release": "2.6.2",
+                        "_resolution": {
+                            "type": "version",
+                            "tag": "v2.6.2",
+                            "commit": "ca45d02757b83367d8455d477e3cbc42dfdee035"
+                        },
+                        "_source": "git://github.com/Modernizr/Modernizr.git",
+                        "_target": "*"
+                    },
+                    "dependencies": {},
+                    "nrDependants": 2,
+                    "versions": [
+                        "2.6.2",
+                        "2.6.1",
+                        "2.5.3",
+                        "2.5.2",
+                        "2.5.1",
+                        "2.0.6"
+                    ],
+                    "update": {
+                        "target": "2.6.2",
+                        "latest": "2.6.2"
+                    }
+                }
+            },
+            "nrDependants": 1,
+            "versions": []
+        },
+        "date-parts-widget": {
+            "endpoint": {
+                "name": "date-parts-widget",
+                "source": "./widget-dependencies/date-parts-widget",
+                "target": "*"
+            },
+            "canonicalDir": "/Users/ree/work/deform/00/bower_components/date-parts-widget",
+            "pkgMeta": {
+                "name": "date-parts-widget",
+                "version": "0.9.7",
+                "main": [],
+                "dependencies": {},
+                "_source": "/Users/ree/work/deform/00/widget-dependencies/date-parts-widget",
+                "_target": "*"
+            },
+            "dependencies": {},
+            "nrDependants": 1,
+            "versions": []
+        },
+        "date-time-input-widget": {
+            "endpoint": {
+                "name": "date-time-input-widget",
+                "source": "./widget-dependencies/date-time-input-widget",
+                "target": "*"
+            },
+            "canonicalDir": "/Users/ree/work/deform/00/bower_components/date-time-input-widget",
+            "pkgMeta": {
+                "name": "date-time-input-widget",
+                "version": "0.9.7",
+                "main": [
+                    "../../deform/static/scripts/jquery-ui-timepicker-addon.js",
+                    "../../deform/static/css/jquery-ui-timepicker-addon.css"
+                ],
+                "dependencies": {
+                    "jquery-ui": "*",
+                    "modernizr": "*"
+                },
+                "_source": "/Users/ree/work/deform/00/widget-dependencies/date-time-input-widget",
+                "_target": "*"
+            },
+            "dependencies": {
+                "jquery-ui": {
+                    "endpoint": {
+                        "name": "jquery-ui",
+                        "source": "jquery-ui",
+                        "target": "*"
+                    },
+                    "canonicalDir": "/Users/ree/work/deform/00/bower_components/jquery-ui",
+                    "pkgMeta": {
+                        "name": "jquery-ui",
+                        "version": "1.10.3",
+                        "main": [
+                            "ui/jquery-ui.js"
+                        ],
+                        "dependencies": {
+                            "jquery": "~> 1.10.1"
+                        },
+                        "homepage": "https://github.com/components/jqueryui",
+                        "_release": "1.10.3",
+                        "_resolution": {
+                            "type": "version",
+                            "tag": "1.10.3",
+                            "commit": "6c476bd548e777b23fdbed295b8518beb049a2d0"
+                        },
+                        "_source": "git://github.com/components/jqueryui.git",
+                        "_target": "*"
+                    },
+                    "dependencies": {
+                        "jquery": {
+                            "endpoint": {
+                                "name": "jquery",
+                                "source": "jquery",
+                                "target": "~> 1.10.1"
+                            },
+                            "canonicalDir": "/Users/ree/work/deform/00/bower_components/jquery",
+                            "pkgMeta": {
+                                "name": "jquery",
+                                "version": "1.10.2",
+                                "description": "jQuery component",
+                                "keywords": [
+                                    "jquery",
+                                    "component"
+                                ],
+                                "main": "jquery.js",
+                                "license": "MIT",
+                                "homepage": "https://github.com/components/jquery",
+                                "_release": "1.10.2",
+                                "_resolution": {
+                                    "type": "version",
+                                    "tag": "1.10.2",
+                                    "commit": "6b2390db24ba3490ca75251eec4888f7342bf4da"
+                                },
+                                "_source": "git://github.com/components/jquery.git",
+                                "_target": "~> 1.10.1"
+                            },
+                            "dependencies": {},
+                            "nrDependants": 1
+                        }
+                    },
+                    "nrDependants": 4
+                },
+                "modernizr": {
+                    "endpoint": {
+                        "name": "modernizr",
+                        "source": "modernizr",
+                        "target": "*"
+                    },
+                    "canonicalDir": "/Users/ree/work/deform/00/bower_components/modernizr",
+                    "pkgMeta": {
+                        "name": "modernizr",
+                        "homepage": "https://github.com/Modernizr/Modernizr",
+                        "version": "2.6.2",
+                        "_release": "2.6.2",
+                        "_resolution": {
+                            "type": "version",
+                            "tag": "v2.6.2",
+                            "commit": "ca45d02757b83367d8455d477e3cbc42dfdee035"
+                        },
+                        "_source": "git://github.com/Modernizr/Modernizr.git",
+                        "_target": "*"
+                    },
+                    "dependencies": {},
+                    "nrDependants": 2
+                }
+            },
+            "nrDependants": 1,
+            "versions": []
+        },
+        "file-upload-widget": {
+            "endpoint": {
+                "name": "file-upload-widget",
+                "source": "./widget-dependencies/file-upload-widget",
+                "target": "*"
+            },
+            "canonicalDir": "/Users/ree/work/deform/00/bower_components/file-upload-widget",
+            "pkgMeta": {
+                "name": "file-upload-widget",
+                "version": "0.9.7",
+                "main": [],
+                "dependencies": {},
+                "_source": "/Users/ree/work/deform/00/widget-dependencies/file-upload-widget",
+                "_target": "*"
+            },
+            "dependencies": {},
+            "nrDependants": 1,
+            "versions": []
+        },
+        "form-widget": {
+            "endpoint": {
+                "name": "form-widget",
+                "source": "./widget-dependencies/form-widget",
+                "target": "*"
+            },
+            "canonicalDir": "/Users/ree/work/deform/00/bower_components/form-widget",
+            "pkgMeta": {
+                "name": "form-widget",
+                "version": "0.9.7",
+                "main": [],
+                "dependencies": {},
+                "_source": "/Users/ree/work/deform/00/widget-dependencies/form-widget",
+                "_target": "*"
+            },
+            "dependencies": {},
+            "nrDependants": 1,
+            "versions": []
+        },
+        "hidden-widget": {
+            "endpoint": {
+                "name": "hidden-widget",
+                "source": "./widget-dependencies/hidden-widget",
+                "target": "*"
+            },
+            "canonicalDir": "/Users/ree/work/deform/00/bower_components/hidden-widget",
+            "pkgMeta": {
+                "name": "hidden-widget",
+                "version": "0.9.7",
+                "main": [],
+                "dependencies": {},
+                "_source": "/Users/ree/work/deform/00/widget-dependencies/hidden-widget",
+                "_target": "*"
+            },
+            "dependencies": {},
+            "nrDependants": 1,
+            "versions": []
+        },
+        "mapping-widget": {
+            "endpoint": {
+                "name": "mapping-widget",
+                "source": "./widget-dependencies/mapping-widget",
+                "target": "*"
+            },
+            "canonicalDir": "/Users/ree/work/deform/00/bower_components/mapping-widget",
+            "pkgMeta": {
+                "name": "mapping-widget",
+                "version": "0.9.7",
+                "main": [],
+                "dependencies": {},
+                "_source": "/Users/ree/work/deform/00/widget-dependencies/mapping-widget",
+                "_target": "*"
+            },
+            "dependencies": {},
+            "nrDependants": 1,
+            "versions": []
+        },
+        "money-input-widget": {
+            "endpoint": {
+                "name": "money-input-widget",
+                "source": "./widget-dependencies/money-input-widget",
+                "target": "*"
+            },
+            "canonicalDir": "/Users/ree/work/deform/00/bower_components/money-input-widget",
+            "pkgMeta": {
+                "name": "money-input-widget",
+                "version": "0.9.7",
+                "main": [
+                    "../../deform/static/scripts/jquery.maskMoney-1.4.1.js"
+                ],
+                "dependencies": {},
+                "_source": "/Users/ree/work/deform/00/widget-dependencies/money-input-widget",
+                "_target": "*"
+            },
+            "dependencies": {},
+            "nrDependants": 1,
+            "versions": []
+        },
+        "password-widget": {
+            "endpoint": {
+                "name": "password-widget",
+                "source": "./widget-dependencies/password-widget",
+                "target": "*"
+            },
+            "canonicalDir": "/Users/ree/work/deform/00/bower_components/password-widget",
+            "pkgMeta": {
+                "name": "password-widget",
+                "version": "0.9.7",
+                "main": [],
+                "dependencies": {},
+                "_source": "/Users/ree/work/deform/00/widget-dependencies/password-widget",
+                "_target": "*"
+            },
+            "dependencies": {},
+            "nrDependants": 1,
+            "versions": []
+        },
+        "radio-choice-widget": {
+            "endpoint": {
+                "name": "radio-choice-widget",
+                "source": "./widget-dependencies/radio-choice-widget",
+                "target": "*"
+            },
+            "canonicalDir": "/Users/ree/work/deform/00/bower_components/radio-choice-widget",
+            "pkgMeta": {
+                "name": "radio-form-widget",
+                "version": "0.9.7",
+                "main": [],
+                "dependencies": {},
+                "_source": "/Users/ree/work/deform/00/widget-dependencies/radio-choice-widget",
+                "_target": "*"
+            },
+            "dependencies": {},
+            "nrDependants": 1,
+            "versions": []
+        },
+        "rich-text-widget": {
+            "endpoint": {
+                "name": "rich-text-widget",
+                "source": "./widget-dependencies/rich-text-widget",
+                "target": "*"
+            },
+            "canonicalDir": "/Users/ree/work/deform/00/bower_components/rich-text-widget",
+            "pkgMeta": {
+                "name": "rich-text-widget",
+                "version": "0.9.7",
+                "main": [],
+                "dependencies": {
+                    "tinymce": "*"
+                },
+                "_source": "/Users/ree/work/deform/00/widget-dependencies/rich-text-widget",
+                "_target": "*"
+            },
+            "dependencies": {
+                "tinymce": {
+                    "endpoint": {
+                        "name": "tinymce",
+                        "source": "tinymce",
+                        "target": "*"
+                    },
+                    "canonicalDir": "/Users/ree/work/deform/00/bower_components/tinymce",
+                    "pkgMeta": {
+                        "name": "tinymce",
+                        "homepage": "https://github.com/tinymce/tinymce",
+                        "version": "4.0.3",
+                        "_release": "4.0.3",
+                        "_resolution": {
+                            "type": "version",
+                            "tag": "4.0.3",
+                            "commit": "17abdd401716f5a40f9dbf668caec3a3f9e0ef4f"
+                        },
+                        "_source": "git://github.com/tinymce/tinymce.git",
+                        "_target": "*"
+                    },
+                    "dependencies": {},
+                    "nrDependants": 1,
+                    "versions": [
+                        "4.0.3",
+                        "4.0.2",
+                        "4.0.1",
+                        "3.5.8",
+                        "3.5.7",
+                        "3.5.6",
+                        "3.5.5",
+                        "3.5.4",
+                        "3.5.3",
+                        "3.5.2",
+                        "3.5.1",
+                        "3.4.9",
+                        "3.4.8",
+                        "3.4.7",
+                        "3.4.6",
+                        "3.4.5",
+                        "3.4.4",
+                        "3.4.3",
+                        "3.4.2",
+                        "3.4.1",
+                        "3.3.9",
+                        "3.3.8",
+                        "3.3.7",
+                        "3.3.6",
+                        "3.3.5",
+                        "3.3.4",
+                        "3.3.3",
+                        "3.3.2",
+                        "3.3.1",
+                        "3.2.7",
+                        "3.2.6",
+                        "3.2.3",
+                        "3.2.2",
+                        "3.2.1",
+                        "3.1.0",
+                        "3.0.9",
+                        "3.0.7",
+                        "3.0.6",
+                        "3.0.5",
+                        "3.0.4",
+                        "3.0.3",
+                        "3.0.2",
+                        "3.0.1",
+                        "2.1.2",
+                        "2.1.1",
+                        "2.0.9",
+                        "2.0.7"
+                    ],
+                    "update": {
+                        "target": "4.0.3",
+                        "latest": "4.0.3"
+                    }
+                }
+            },
+            "nrDependants": 1,
+            "versions": []
+        },
+        "select-widget": {
+            "endpoint": {
+                "name": "select-widget",
+                "source": "./widget-dependencies/select-widget",
+                "target": "*"
+            },
+            "canonicalDir": "/Users/ree/work/deform/00/bower_components/select-widget",
+            "pkgMeta": {
+                "name": "select-widget",
+                "version": "0.9.7",
+                "main": [],
+                "dependencies": {},
+                "_source": "/Users/ree/work/deform/00/widget-dependencies/select-widget",
+                "_target": "*"
+            },
+            "dependencies": {},
+            "nrDependants": 1,
+            "versions": []
+        },
+        "sequence-widget": {
+            "endpoint": {
+                "name": "sequence-widget",
+                "source": "./widget-dependencies/sequence-widget",
+                "target": "*"
+            },
+            "canonicalDir": "/Users/ree/work/deform/00/bower_components/sequence-widget",
+            "pkgMeta": {
+                "name": "sequence-widget",
+                "version": "0.9.7",
+                "main": [],
+                "dependencies": {
+                    "jquery-ui": "*"
+                },
+                "_source": "/Users/ree/work/deform/00/widget-dependencies/sequence-widget",
+                "_target": "*"
+            },
+            "dependencies": {
+                "jquery-ui": {
+                    "endpoint": {
+                        "name": "jquery-ui",
+                        "source": "jquery-ui",
+                        "target": "*"
+                    },
+                    "canonicalDir": "/Users/ree/work/deform/00/bower_components/jquery-ui",
+                    "pkgMeta": {
+                        "name": "jquery-ui",
+                        "version": "1.10.3",
+                        "main": [
+                            "ui/jquery-ui.js"
+                        ],
+                        "dependencies": {
+                            "jquery": "~> 1.10.1"
+                        },
+                        "homepage": "https://github.com/components/jqueryui",
+                        "_release": "1.10.3",
+                        "_resolution": {
+                            "type": "version",
+                            "tag": "1.10.3",
+                            "commit": "6c476bd548e777b23fdbed295b8518beb049a2d0"
+                        },
+                        "_source": "git://github.com/components/jqueryui.git",
+                        "_target": "*"
+                    },
+                    "dependencies": {
+                        "jquery": {
+                            "endpoint": {
+                                "name": "jquery",
+                                "source": "jquery",
+                                "target": "~> 1.10.1"
+                            },
+                            "canonicalDir": "/Users/ree/work/deform/00/bower_components/jquery",
+                            "pkgMeta": {
+                                "name": "jquery",
+                                "version": "1.10.2",
+                                "description": "jQuery component",
+                                "keywords": [
+                                    "jquery",
+                                    "component"
+                                ],
+                                "main": "jquery.js",
+                                "license": "MIT",
+                                "homepage": "https://github.com/components/jquery",
+                                "_release": "1.10.2",
+                                "_resolution": {
+                                    "type": "version",
+                                    "tag": "1.10.2",
+                                    "commit": "6b2390db24ba3490ca75251eec4888f7342bf4da"
+                                },
+                                "_source": "git://github.com/components/jquery.git",
+                                "_target": "~> 1.10.1"
+                            },
+                            "dependencies": {},
+                            "nrDependants": 1
+                        }
+                    },
+                    "nrDependants": 4
+                }
+            },
+            "nrDependants": 1,
+            "versions": []
+        },
+        "text-area-cs-widget": {
+            "endpoint": {
+                "name": "text-area-cs-widget",
+                "source": "./widget-dependencies/text-area-cs-widget",
+                "target": "*"
+            },
+            "canonicalDir": "/Users/ree/work/deform/00/bower_components/text-area-cs-widget",
+            "pkgMeta": {
+                "name": "text-area-cs-widget",
+                "version": "0.9.7",
+                "main": [],
+                "dependencies": {},
+                "_source": "/Users/ree/work/deform/00/widget-dependencies/text-area-cs-widget",
+                "_target": "*"
+            },
+            "dependencies": {},
+            "nrDependants": 1,
+            "versions": []
+        },
+        "text-area-widget": {
+            "endpoint": {
+                "name": "text-area-widget",
+                "source": "./widget-dependencies/text-area-widget",
+                "target": "*"
+            },
+            "canonicalDir": "/Users/ree/work/deform/00/bower_components/text-area-widget",
+            "pkgMeta": {
+                "name": "text-area-widget",
+                "version": "0.9.7",
+                "main": [],
+                "dependencies": {},
+                "_source": "/Users/ree/work/deform/00/widget-dependencies/text-area-widget",
+                "_target": "*"
+            },
+            "dependencies": {},
+            "nrDependants": 1,
+            "versions": []
+        },
+        "text-input-cs-widget": {
+            "endpoint": {
+                "name": "text-input-cs-widget",
+                "source": "./widget-dependencies/text-input-cs-widget",
+                "target": "*"
+            },
+            "canonicalDir": "/Users/ree/work/deform/00/bower_components/text-input-cs-widget",
+            "pkgMeta": {
+                "name": "text-input-cs-widget",
+                "version": "0.9.7",
+                "main": [],
+                "dependencies": {},
+                "_source": "/Users/ree/work/deform/00/widget-dependencies/text-input-cs-widget",
+                "_target": "*"
+            },
+            "dependencies": {},
+            "nrDependants": 1,
+            "versions": []
+        },
+        "text-input-widget": {
+            "endpoint": {
+                "name": "text-input-widget",
+                "source": "./widget-dependencies/text-input-widget",
+                "target": "*"
+            },
+            "canonicalDir": "/Users/ree/work/deform/00/bower_components/text-input-widget",
+            "pkgMeta": {
+                "name": "text-input-widget",
+                "version": "0.9.7",
+                "main": [],
+                "dependencies": {
+                    "jquery.maskedinput": "*"
+                },
+                "_source": "/Users/ree/work/deform/00/widget-dependencies/text-input-widget",
+                "_target": "*"
+            },
+            "dependencies": {
+                "jquery.maskedinput": {
+                    "endpoint": {
+                        "name": "jquery.maskedinput",
+                        "source": "jquery.maskedinput",
+                        "target": "*"
+                    },
+                    "canonicalDir": "/Users/ree/work/deform/00/bower_components/jquery.maskedinput",
+                    "pkgMeta": {
+                        "name": "jquery.maskedinput",
+                        "version": "1.3.1",
+                        "main": "./jquery.maskedinput.js",
+                        "dependencies": {
+                            "jquery": ">=1.7.x"
+                        },
+                        "homepage": "https://github.com/gustavohenke/jquery.maskedinput",
+                        "_release": "1.3.1",
+                        "_resolution": {
+                            "type": "version",
+                            "tag": "1.3.1",
+                            "commit": "e519e86e9c7c44994f112695312dc9b2111938a7"
+                        },
+                        "_source": "git://github.com/gustavohenke/jquery.maskedinput.git",
+                        "_target": "*"
+                    },
+                    "dependencies": {
+                        "jquery": {
+                            "endpoint": {
+                                "name": "jquery",
+                                "source": "jquery",
+                                "target": ">=1.7.x"
+                            },
+                            "canonicalDir": "/Users/ree/work/deform/00/bower_components/jquery",
+                            "pkgMeta": {
+                                "name": "jquery",
+                                "version": "1.10.2",
+                                "description": "jQuery component",
+                                "keywords": [
+                                    "jquery",
+                                    "component"
+                                ],
+                                "main": "jquery.js",
+                                "license": "MIT",
+                                "homepage": "https://github.com/components/jquery",
+                                "_release": "1.10.2",
+                                "_resolution": {
+                                    "type": "version",
+                                    "tag": "1.10.2",
+                                    "commit": "6b2390db24ba3490ca75251eec4888f7342bf4da"
+                                },
+                                "_source": "git://github.com/components/jquery.git",
+                                "_target": "~> 1.10.1"
+                            },
+                            "dependencies": {},
+                            "nrDependants": 1
+                        }
+                    },
+                    "nrDependants": 2
+                }
+            },
+            "nrDependants": 1,
+            "versions": []
+        }
+    },
+    "nrDependants": 0,
+    "versions": []
+}
