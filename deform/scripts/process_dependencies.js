@@ -1,6 +1,10 @@
 #!/bin/sh
 ':' //; exec "`command -v nodejs || command -v node`" "$0"
 
+// You can run this file in the following ways:
+// 1. execute the file from the console
+// 2. "npm run-script process-dependencies"
+
 var bower = require('bower');
 var fs = require('fs');
 var path = require('path');
