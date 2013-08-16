@@ -9,6 +9,7 @@ var bower = require('bower');
 var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
+var q = require('q');
 
 function basename(file) {
     return file.replace(/\\/g,'/').replace( /.*\//, '' );
@@ -80,26 +81,6 @@ bower.commands
     // get the dependencies
     var deps = processDependencies(result);
     
-    // separate js and css
-    var jsDeps = _.filter(deps, function(elem) {
-        return /.js$/.test(elem.toLowerCase());
-    });
-    var cssDeps = _.filter(deps, function(elem) {
-        return /.css$/.test(elem.toLowerCase());
-    });
-
-    // Copy the files.
-    _.forEach(jsDeps, function(elem) {
-        fs.createReadStream(elem)
-            .pipe(fs.createWriteStream(path.join(outputDir, 'js', basename(elem))));
-    });
-    _.forEach(cssDeps, function(elem) {
-        fs.createReadStream(elem)
-            .pipe(fs.createWriteStream(path.join(outputDir, 'css', basename(elem))));
-    });
-
-    console.log('Copied resources to ' + outputDir);
-
     var map = processMap(result, outputDir);
     var outputFilename = path.join(outputDir, 'map.json');
     var formatted = JSON.stringify(map, null, 4);
@@ -113,6 +94,46 @@ bower.commands
             console.log('OK');
         }
     });
+
+    // separate js and css
+    var jsDeps = _.filter(deps, function(elem) {
+        return /.js$/.test(elem.toLowerCase());
+    });
+    var cssDeps = _.filter(deps, function(elem) {
+        return /.css$/.test(elem.toLowerCase());
+    });
+
+    var jsDirQ = q.defer();
+    fs.mkdir(path.join(outputDir, 'js'), function(err){
+        if(! err || (err && err.code === 'EEXIST')){
+            jsDirQ.resolve();
+        } else {
+            console.log('Directory creation failed: ', err);
+            process.exit(1);
+        }
+    });
+    var cssDirQ = q.defer();
+    fs.mkdir(path.join(outputDir, 'css'), function(err){
+        if(! err || (err && err.code === 'EEXIST')){
+            cssDirQ.resolve();
+        } else {
+            console.log('Directory creation failed: ', err);
+            process.exit(1);
+        }
+    });
+    q.all([jsDirQ, cssDirQ]).then(function() {
+        // Copy the files.
+        _.forEach(jsDeps, function(elem) {
+            fs.createReadStream(elem)
+                .pipe(fs.createWriteStream(path.join(outputDir, 'js', basename(elem))));
+        });
+        _.forEach(cssDeps, function(elem) {
+            fs.createReadStream(elem)
+                .pipe(fs.createWriteStream(path.join(outputDir, 'css', basename(elem))));
+        });
+        console.log('Copied resources to ' + outputDir);
+    });
+
 })
 .on('error', function (error) {
     console.log('Bower error:', error);

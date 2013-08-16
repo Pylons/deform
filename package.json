@@ -28,7 +28,8 @@
   "analyze": false,
   "devDependencies": {
     "bower"    :  "*",
-    "lodash"   :  "*"
+    "lodash"   :  "*",
+    "q"        :  "*"
   },
   "bundledDependencies": [
   ],  
