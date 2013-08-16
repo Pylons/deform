@@ -19,6 +19,11 @@
     padding: 3px;
 }
 
+.deform ul.mapping > li {
+    margin: 0;
+    padding: 0;
+}
+
 .deform .tinymce-preload{
     border: 1px solid #CCC;
     height: 240px;

@@ -1,3 +1,4 @@
+<ul>
 <li tal:define="error_class error_class|field.widget.error_class;
                 description description|field.description;
                 title title|field.title;
@@ -35,3 +36,4 @@
   <!-- /mapping_item -->
 
 </li>
+</ul>
