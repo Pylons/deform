@@ -41,7 +41,7 @@ function processDependencies(pkg) {
 }
 
 // 2nd pass uses depResult
-function processMap(pkg, outputDir) {
+function processMap(pkg, basePath) {
     var depResult = pkg._depResult;
     var pkgInfo = {
         name: pkg.pkgMeta.name,
@@ -51,20 +51,20 @@ function processMap(pkg, outputDir) {
         _.filter(depResult, function(elem) {
             return /.js$/.test(elem.toLowerCase());
         }), function(elem) {
-            return path.join(outputDir, 'js', basename(elem));
+            return path.join(basePath, 'js', basename(elem));
         }
     );
     pkgInfo.css = _.map(
         _.filter(depResult, function(elem) {
             return /.css$/.test(elem.toLowerCase());
         }), function(elem) {
-            return path.join(outputDir, 'css', basename(elem));
+            return path.join(basePath, 'css', basename(elem));
         }
     );
     pkgInfo.dependencies = [];
     // add other dependencies
     _.forEach(pkg.dependencies, function(depPkg) {
-        var depMap = processMap(depPkg, outputDir);
+        var depMap = processMap(depPkg, basePath);
         pkgInfo.dependencies.push(depMap);
     });
     return pkgInfo;
@@ -76,12 +76,15 @@ bower.commands
 .on('end', function (result) {
     console.log('Listing finished.');
 
+    // where files go, relative from cd
     var outputDir = 'deform/static/dist';
+    // path of the files starting from static (will be part of the output)
+    var basePath = 'dist';
 
     // get the dependencies
     var deps = processDependencies(result);
-    
-    var map = processMap(result, outputDir);
+
+    var map = processMap(result, basePath);
     var outputFilename = path.join(outputDir, 'map.json');
     var formatted = JSON.stringify(map, null, 4);
 
@@ -139,7 +142,3 @@ bower.commands
     console.log('Bower error:', error);
     process.exit(1);
 });
-
-
-
-

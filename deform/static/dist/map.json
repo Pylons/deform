@@ -2,11 +2,11 @@
     "name": "deform",
     "version": "0.9.7",
     "js": [
-        "deform/static/dist/js/deform.js",
-        "deform/static/dist/js/jquery.form-3.09.js"
+        "dist/js/deform.js",
+        "dist/js/jquery.form-3.09.js"
     ],
     "css": [
-        "deform/static/dist/css/form.css"
+        "dist/css/form.css"
     ],
     "dependencies": [
         {
@@ -19,7 +19,7 @@
                     "name": "jquery-ui",
                     "version": "1.10.3",
                     "js": [
-                        "deform/static/dist/js/jquery-ui.js"
+                        "dist/js/jquery-ui.js"
                     ],
                     "css": [],
                     "dependencies": [
@@ -27,7 +27,7 @@
                             "name": "jquery",
                             "version": "1.10.2",
                             "js": [
-                                "deform/static/dist/js/jquery.js"
+                                "dist/js/jquery.js"
                             ],
                             "css": [],
                             "dependencies": []
@@ -53,7 +53,7 @@
                     "name": "jquery.maskedinput",
                     "version": "1.3.1",
                     "js": [
-                        "deform/static/dist/js/jquery.maskedinput.js"
+                        "dist/js/jquery.maskedinput.js"
                     ],
                     "css": [],
                     "dependencies": [
@@ -61,7 +61,7 @@
                             "name": "jquery",
                             "version": "1.10.2",
                             "js": [
-                                "deform/static/dist/js/jquery.js"
+                                "dist/js/jquery.js"
                             ],
                             "css": [],
                             "dependencies": []
@@ -87,7 +87,7 @@
                     "name": "jquery-ui",
                     "version": "1.10.3",
                     "js": [
-                        "deform/static/dist/js/jquery-ui.js"
+                        "dist/js/jquery-ui.js"
                     ],
                     "css": [],
                     "dependencies": [
@@ -95,7 +95,7 @@
                             "name": "jquery",
                             "version": "1.10.2",
                             "js": [
-                                "deform/static/dist/js/jquery.js"
+                                "dist/js/jquery.js"
                             ],
                             "css": [],
                             "dependencies": []
@@ -122,17 +122,17 @@
             "name": "date-time-input-widget",
             "version": "0.9.7",
             "js": [
-                "deform/static/dist/js/jquery-ui-timepicker-addon.js"
+                "dist/js/jquery-ui-timepicker-addon.js"
             ],
             "css": [
-                "deform/static/dist/css/jquery-ui-timepicker-addon.css"
+                "dist/css/jquery-ui-timepicker-addon.css"
             ],
             "dependencies": [
                 {
                     "name": "jquery-ui",
                     "version": "1.10.3",
                     "js": [
-                        "deform/static/dist/js/jquery-ui.js"
+                        "dist/js/jquery-ui.js"
                     ],
                     "css": [],
                     "dependencies": [
@@ -140,7 +140,7 @@
                             "name": "jquery",
                             "version": "1.10.2",
                             "js": [
-                                "deform/static/dist/js/jquery.js"
+                                "dist/js/jquery.js"
                             ],
                             "css": [],
                             "dependencies": []
@@ -188,7 +188,7 @@
             "name": "money-input-widget",
             "version": "0.9.7",
             "js": [
-                "deform/static/dist/js/jquery.maskMoney-1.4.1.js"
+                "dist/js/jquery.maskMoney-1.4.1.js"
             ],
             "css": [],
             "dependencies": []
@@ -239,7 +239,7 @@
                     "name": "jquery-ui",
                     "version": "1.10.3",
                     "js": [
-                        "deform/static/dist/js/jquery-ui.js"
+                        "dist/js/jquery-ui.js"
                     ],
                     "css": [],
                     "dependencies": [
@@ -247,7 +247,7 @@
                             "name": "jquery",
                             "version": "1.10.2",
                             "js": [
-                                "deform/static/dist/js/jquery.js"
+                                "dist/js/jquery.js"
                             ],
                             "css": [],
                             "dependencies": []
@@ -287,7 +287,7 @@
                     "name": "jquery.maskedinput",
                     "version": "1.3.1",
                     "js": [
-                        "deform/static/dist/js/jquery.maskedinput.js"
+                        "dist/js/jquery.maskedinput.js"
                     ],
                     "css": [],
                     "dependencies": [
@@ -295,7 +295,7 @@
                             "name": "jquery",
                             "version": "1.10.2",
                             "js": [
-                                "deform/static/dist/js/jquery.js"
+                                "dist/js/jquery.js"
                             ],
                             "css": [],
                             "dependencies": []
