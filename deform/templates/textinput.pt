@@ -9,7 +9,7 @@
       tal:omit-tag="">
     <input type="text" name="${name}" value="${cstruct}" 
            tal:attributes="size size;
-                           class css_class;
+           class string: form-control ${css_class};
                            style style"
            id="${oid}"/>
     <script tal:condition="mask" type="text/javascript">

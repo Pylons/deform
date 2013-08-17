@@ -7,35 +7,30 @@
       i18n:domain="deform"
       tal:omit-tag="">
 ${field.start_mapping()}
-<ul>
-  <li>
-    <label for="${oid}">${subject}</label>
-    <input type="text" name="${name}" value="${cstruct}"
-           tal:attributes="size size; 
-                           class css_class"
-           id="${oid}"/>
-  </li>
-
-  <li>
-    <label for="${oid}-confirm">${confirm_subject}</label>
-    <input type="text" name="${name}-confirm" value="${confirm}"
-           tal:attributes="size size;
-                           class css_class"
-           id="${oid}-confirm"/>
-  </li>
-</ul>
-  <script tal:condition="mask" type="text/javascript">
-    deform.addCallback(
-        '${oid}',
-        function (oid) {
-           $("#" + oid).mask("${mask}", 
-                              {placeholder:"${mask_placeholder}"});
-           $("#" + oid + "-confirm").mask("${mask}", 
-                              {placeholder:"${mask_placeholder}"});
-        }
-        );
-    
-  </script>
+<div>
+  <input type="text" name="${name}" value="${cstruct}"
+         tal:attributes="size size;
+                         class string: form-control ${css_class};
+                         placeholder subject;"
+         id="${oid}"/>
+</div>
+<div>
+  <input type="text" name="${name}-confirm" value="${confirm}"
+         tal:attributes="size size;
+                         class string: form-control ${css_class};
+                         placeholder confirm_subject;"
+         id="${oid}-confirm"/>
+</div>
+<script tal:condition="field.widget.mask" type="text/javascript">
+  deform.addCallback(
+    '${oid}',
+    function (oid) {
+       $("#" + oid).mask("${mask}",
+                         {placeholder:"${mask_placeholder}"});
+       $("#" + oid + "-confirm").mask("${mask}",
+                                      {placeholder:"${mask_placeholder}"});
+    }
+  );
+</script>
 ${field.end_mapping()}
 </span>
-

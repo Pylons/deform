@@ -1,23 +1,26 @@
-<fieldset tal:define="title title|field.title;
-                      description description|field.description;
-                      errormsg errormsg|field.errormsg;
-                      item_template item_template|field.widget.item_template"
-          class="deformMappingFieldset" i18n:domain="deform">
-  <!-- mapping -->
-  <legend tal:condition="title">${title}</legend>
-  <ul>
-    <li class="errorLi" tal:condition="errormsg">
-      <h3 class="errorMsgLbl" i18n:translate=""
-          >There was a problem with this section</h3>
-      <p class="errorMsg">${errormsg}</p>
-    </li>
-    <li class="section" tal:condition="description">
-      <div>${description}</div>
-    </li>
-    ${field.start_mapping()}
-      <div tal:repeat="child field"
-           tal:replace="structure child.render_template(item_template)"/>
-    ${field.end_mapping()}
-  </ul>
-  <!-- /mapping -->
-</fieldset>
+<tal:def tal:define="title title|field.title;
+                     description description|field.description;
+                     errormsg errormsg|field.errormsg;
+                     item_template item_template|field.widget.item_template"
+         i18n:domain="deform">
+
+  <div class="clearfix alert alert-message error" tal:condition="errormsg">
+    <p i18n:translate="">
+      There was a problem with this section
+    </p>
+    <p>${errormsg}</p>
+  </div>
+
+  <div tal:condition="description">
+    ${description}
+  </div>  
+
+  ${field.start_mapping()}
+  <div tal:define="rndr field.renderer;
+                   tmpl item_template"
+       tal:repeat="child field.children"
+       tal:replace="structure structure child.render_template(item_template)" >
+  </div>     
+  ${field.end_mapping()}
+
+</tal:def>

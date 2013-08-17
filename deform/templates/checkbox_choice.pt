@@ -2,21 +2,20 @@
                  oid oid|field.oid;"
      tal:omit-tag="">
 ${field.start_sequence()}
-<ul class="deformSet">
-  <tal:loop tal:repeat="choice values">
-    <tal:def tal:define="(value, title) choice">
-      <li class="deformSet-item">
-        <input tal:attributes="class css_class;
-                               checked value in cstruct"
+  <tal:loop tal:repeat="choice values | field.widget.values">
+    <tal:def tal:define="(value, title) choice;
+                         inline getattr(field.widget, 'inline', False);
+                         label_class inline and 'checkbox inline' or 'checkbox'">
+      <label class="${label_class}" for="${oid}-${repeat.choice.index}">
+        <input tal:attributes="checked value in cstruct;
+                               class css_class"
                type="checkbox"
                name="checkbox"
                value="${value}"
                id="${oid}-${repeat.choice.index}"/>
-        <label for="${oid}-${repeat.choice.index}">${title}</label>
-      </li>
+        ${title}
+      </label>
     </tal:def>
   </tal:loop>
-</ul>
 ${field.end_sequence()}
 </div>
-

@@ -1,37 +1,46 @@
-<li tal:define="error_class error_class|field.widget.error_class;
-                description description|field.description;
-                title title|field.title;
-                oid oid|field.oid;
-                hidden hidden|field.widget.hidden;
-                category category|field.widget.category;
-                required required|field.required;
-                "
-    class="field${field.error and ' ' + (error_class or '')}"
-    title="${description}"
-    id="item-${oid}"
-    tal:omit-tag="hidden"
-    i18n:domain="deform">
+<div tal:define="error_class error_class|field.widget.error_class;
+                 description description|field.description;
+                 title title|field.title;
+                 oid oid|field.oid;
+                 hidden hidden|field.widget.hidden;
+                 category category|field.widget.category;
+                 structural hidden or category == 'structural';
+                 required required|field.required;"
+     class="form-group ${field.error and 'has-error' or ''}"
+     title="${description}"
+     id="item-${oid}"
+     tal:omit-tag="structural"
+     i18n:domain="deform">
 
-  <!-- mapping_item -->
-
-  <label tal:condition="not (hidden or category == 'structural')"
-         class="desc"
-         title="${description}"
-         for="${oid}"
-         >${title}<span tal:condition="required" class="req"
-                        id="req-${oid}">*</span>
+  <label for="${oid}"
+         class="control-label"
+         tal:condition="not structural">
+       ${title}
+       <span tal:condition="field.required" class="req" id="req-${oid}">*</span>
   </label>
 
-  <span tal:replace="structure field.serialize(cstruct)"/>
+    <div tal:define="input_prepend field.widget.input_prepend | None;
+                     input_append field.widget.input_append  | None;
+                     prepend_class input_prepend and 'input-prepend' or '';
+                     append_class input_append and 'input-append' or ''"
+         tal:omit-tag="not (input_prepend or input_append)"
+         class="${prepend_class + ' ' + append_class}">
 
-  <p tal:condition="field.error and not hidden and not field.typ.__class__.__name__=='Mapping'"
-     tal:define="errstr 'error-%s' % oid"
-     tal:repeat="msg field.error.messages()"
-     tal:attributes="id repeat.msg.index==0 and errstr or
-     ('%s-%s' % (errstr, repeat.msg.index))"
-     class="${error_class}"
-     i18n:translate="">${msg}</p>
+      <span class="add-on" tal:condition="input_prepend">${input_prepend}</span>
+      <span class="add-on" tal:condition="input_append">${input_append}</span>
 
-  <!-- /mapping_item -->
+      <p class="help-block"
+         tal:define="errstr 'error-%s' % field.oid"
+         tal:repeat="msg field.error.messages()"
+         i18n:translate=""
+         tal:attributes="id repeat.msg.index==0 and errstr or
+                         ('%s-%s' % (errstr, repeat.msg.index))"
+         tal:condition="field.error and not field.widget.hidden and not field.typ.__class__.__name__=='Mapping'">
+          ${msg}
+      </p>
 
-</li>
+      <p class="help-block" tal:condition="field.description and not field.widget.hidden">
+        ${field.description}
+      </p>
+    </div>
+</div>

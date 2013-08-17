@@ -19,13 +19,6 @@
     padding: 3px;
 }
 
-.deform .tinymce-preload{
-    border: 1px solid #CCC;
-    height: 240px;
-    width: 500px;
-    display: block;
-}
-
 /* deform additions*/
 
 .deformClosebuttonActive,

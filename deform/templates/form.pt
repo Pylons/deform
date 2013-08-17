@@ -1,7 +1,11 @@
 <form
-  tal:define="title title|field.title;
-              css_class css_class|field.css_class;
+  role="form"
+  tal:define="inline getattr(field, 'bootstrap_form_style', None) == 'form-inline';
+              tabify_form import: deform.widget.tabify_form;
+              fields_list python: tabify_form(field);
               autocomplete autocomplete|field.autocomplete;
+              title title|field.title;
+              css_class css_class|field.css_class;
               formid formid|field.formid;
               errormsg errormsg|field.errormsg;
               description description|field.description;
@@ -12,73 +16,132 @@
               formid formid|field.formid;
               action action|field.action;
               method method|field.method;"
-  tal:attributes="class css_class; autocomplete autocomplete"
-  id="${formid}"
+
+  id="${field.formid}"
+  class="deform ${field.bootstrap_form_style | 'form-horizontal'}
+         ${css_class}"
   action="${action}"
   method="${method}"
   enctype="multipart/form-data"
   accept-charset="utf-8"
   i18n:domain="deform"
-  >
+  tal:attributes="autocomplete autocomplete">
 
-  <fieldset class="deformFormFieldset">
 
-    <legend tal:condition="title">${title}</legend>
 
-    <input type="hidden" name="_charset_" />
-    <input type="hidden" name="__formid__" value="${formid}"/>
-    <ul>
+  <!-- Hidden inputs and alerts at the top -->
+  <input type="hidden" name="_charset_" />
+  <input type="hidden" name="__formid__" value="${field.formid}"/>
 
-      <li class="errorLi" tal:condition="field.error">
-        <h3 class="errorMsgLbl" i18n:translate=""
-            >There was a problem with your submission</h3>
-        <p class="errorMsg" i18n:translate="" i18n:domain="deform"
-           >Errors have been highlighted below</p>
-        <p class="errorMsg">${errormsg}</p>
-      </li>
+  <div class="alert alert-danger" tal:condition="field.error">
+    <span class="errorMsgLbl" i18n:translate="">
+      There was a problem with your submission, errors have been highlighted below:
+    </span>
+    <br />
+    <strong>${errormsg}</strong>
+  </div>
 
-      <li class="section first" tal:condition="description">
-        ${description}
-      </li>
+  <!-- Make the tabs -->
+  <tal:block tal:condition="not: fields_list.only_one">
+    <ul class="nav nav-tabs form-tabs">
 
-      <div tal:repeat="child field"
-           tal:replace="structure child.render_template(item_template)"/>
-
-      <li class="buttons">
-        <tal:block repeat="button buttons">
-          <button
-              tal:attributes="disabled button.disabled"
-              id="${formid+button.name}"
-              name="${button.name}"
-              type="${button.type}"
-              class="btnText submit ${button.css_class}"
-              value="${button.value}">
-            <span>${button.title}</span>
-          </button>
-        </tal:block>
-      </li>
-
+      <!-- Show the 'basic' tab only if we have some info to put in -->
+      <tal:block tal:condition="fields_list.have_basic">
+        <li class="active" id="basic-list"><a href="#basic" data-toggle="tab" i18n:translate="">Basic</a></li>
+      </tal:block>
+      <!-- Add other tabs, if we don't have 'basic' tab, make the first one active -->
+      <tal:block tal:repeat="mapping fields_list.other">
+        <li id="${mapping.name}-list"
+            tal:attributes="class python: not fields_list['have_basic'] and repeat['mapping'].index == 0 and 'active' or ''">
+          <a href="#${mapping.name}" data-toggle="tab">${mapping.title}</a>
+        </li>
+      </tal:block>
     </ul>
+  </tal:block>
 
-  </fieldset>
 
-<script type="text/javascript" tal:condition="use_ajax">
-  deform.addCallback(
-     '${formid}',
-     function(oid) {
-       var target = '#' + oid;
-       var options = {
-         target: target,
-         replaceTarget: true,
-         success: function() {
-           deform.processCallbacks();
-           deform.focusFirstInput(target);
-         }
-       };
-       var extra_options = ${ajax_options} || {};
-       $('#' + oid).ajaxForm($.extend(options, extra_options));
-     }
-  );
-</script>
+  <!-- Populate the tabs -->
+  <div class="tab-content">
+    <!-- If we have a basic tab, this should be active -->
+    <fieldset
+      tal:attributes="class python: fields_list['have_basic'] and 'tab-pane fade active in' or 'tab-pane fade'"
+      id="basic">
+      <div
+          tal:repeat="f fields_list.basic"
+          tal:replace="structure
+                       f.render_template(item_template)" />
+    </fieldset>
+    <!-- If we don't have a basic tab, the first one here should be active -->
+    <tal:block tal:repeat="mapping fields_list.other">
+      <fieldset
+        tal:attributes="class python: not fields_list['have_basic'] and repeat['mapping'].index == 0 and 'tab-pane face active in' or 'tab-pane face'"
+        id="${mapping.name}">
+        <div
+          tal:replace="structure
+                       mapping.child.render_template(item_template)" />
+      </fieldset>
+    </tal:block>
+  </div>
+
+  <!-- Append the buttons at the end -->
+  <div tal:condition="field.buttons" tal:omit-tag="inline" class="form-actions">
+    <tal:block repeat="button field.buttons">
+      <button
+          tal:attributes="disabled button.disabled"
+          id="${field.formid+button.name}"
+          name="${button.name}"
+          type="${button.type}"
+          class="btn ${repeat.button.start and 'btn-primary' or ''} ${button.css_class}"
+          value="${button.value}">
+        <i tal:condition="hasattr(button, 'icon') and button.icon"
+                   class="${button.icon}"></i>
+        ${button.title}
+      </button>
+    </tal:block>
+  </div>
+
+  <script type="text/javascript" tal:condition="field.use_ajax">
+    deform.addCallback(
+       '${field.formid}',
+       function(oid) {
+         var options = {
+           target: '#' + oid,
+           replaceTarget: true,
+           success: function() {
+             deform.processCallbacks();
+             deform.focusFirstInput();
+           }
+         };
+         var extra_options = ${field.ajax_options} || {};
+         $('#' + oid).ajaxForm($.extend(options, extra_options));
+       }
+    );
+  </script>
+  <script>
+    // Highlight all tabs with errors, move to the first one with the error
+    deform.addCallback(
+       '${field.formid}',
+       function() {
+        var alreadySelected = false;
+
+        // If we get some errors, remove the active classes
+        if($("div.tab-content fieldset div.error").length !== 0){
+          $("ul.form-tabs li.active").removeClass('active');
+          $("div.tab-content fieldset.active").removeClass('active in');
+        }
+        // Go through the errors, set first one to active and focus the field,
+        // and add an 'error' class to all of the tabs with errors in them
+        $("div.tab-content fieldset div.error").each( function() {
+          var errorId = $(this.parentNode).attr('id');
+          if(!alreadySelected){
+            $("ul.form-tabs li#" + errorId + '-list').addClass('active');
+            $("div.tab-content fieldset#" + errorId).addClass('active in');
+            $("#" + $(this).attr('id') + " div.controls input").focus();
+            alreadySelected = true;
+          }
+          $("ul.form-tabs li#" +errorId + '-list').addClass('error');
+        });
+    });
+  </script>
 
 </form>

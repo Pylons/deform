@@ -10,7 +10,7 @@
 <select tal:attributes="name name;
                         id oid;
                         size size;
-                        class css_class;
+                        class string: form-control ${css_class};
                         multiple multiple">
   <tal:loop tal:repeat="item values">
     <optgroup tal:condition="isinstance(item, optgroup_class)"

@@ -13,52 +13,45 @@
      id="${oid}">
 
   <!-- sequence -->
-
-  <input type="hidden" name="__start__" value="${name}:sequence"
-         class="deformProto" 
+  <input type="hidden" name="__start__"
+         value="${field.name}:sequence"
+         class="deformProto"
          tal:attributes="prototype prototype"/>
 
-  <ul id="${oid}-orderable">
-
-    <!--! subfields is a tuple for bw compat with 3rdparty templates;
-          we ignore the first element (the cstruct) because it's already
-          attached to the field -->
-    <div tal:define="subfields [ x[1] for x in subfields ]"
-         tal:repeat="subfield subfields"
-         tal:replace="structure subfield.render_template(item_tmpl, parent=field)"/>
-
-    <span class="deformInsertBefore" 
-          tal:attributes="min_len min_len; 
-                          max_len max_len; 
+  <div class="deformSeqContainer"
+       id="${oid}-orderable">
+      <div tal:define="subfields [ x[1] for x in subfields ]"
+           tal:repeat="subfield subfields"
+           tal:replace="structure subfield.render_template(item_tmpl, parent=field)" />
+    <span class="deformInsertBefore"
+          tal:attributes="min_len min_len;
+                          max_len max_len;
                           now_len now_len;
                           orderable orderable;"></span>
+  </div>
 
-  </ul>
-  
+
   <a href="#"
-     class="deformSeqAdd"
-     id="${oid}-seqAdd"
+     class="btn deformSeqAdd"
+     id="${field.oid}-seqAdd"
      onclick="javascript: return deform.appendSequenceItem(this);">
-    <small id="${oid}-addtext">${add_subitem_text}</small>
+    <small id="${field.oid}-addtext">${add_subitem_text}</small>
   </a>
 
   <script type="text/javascript">
      deform.addCallback(
-       '${oid}',
+       '${field.oid}',
        function(oid) {
          oid_node = $('#'+ oid);
-         deform.processSequenceButtons(oid_node, ${min_len}, 
-                                       ${max_len}, ${now_len}, ${orderable});
+         deform.processSequenceButtons(oid_node, ${min_len},
+                                       ${max_len}, ${now_len},
+                                       ${orderable});
        }
      )
-     <tal:block condition="orderable">
-
+  <tal:block condition="orderable">
      $( "#${oid}-orderable" ).sortable({handle: "span.deformOrderbutton"});
-     </tal:block>
+  </tal:block>
   </script>
-
-  <input type="hidden" name="__end__" value="${name}:sequence"/>
-
+  <input type="hidden" name="__end__" value="${field.name}:sequence"/>
   <!-- /sequence -->
-
 </div>

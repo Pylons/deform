@@ -1,32 +1,34 @@
-<span tal:define="oid oid|field.oid;
-                name name|field.name;
-                size size|field.widget.size;
-                css_class css_class|field.widget.css_class"
-      i18n:domain="deform"
-      tal:omit-tag="">
+<span i18n:domain="deform"
+      tal:omit-tag=""
+      tal:define="oid oid|field.oid;
+                  name name|field.name;
+                  size size|field.widget.size;
+                  css_class css_class|field.widget.css_class"
+
+  >
 ${field.start_mapping()}
-<ul class="inline">
-  <li>
-	  <label for="${oid}" i18n:translate="">Year</label>
-	  <input type="text" name="year" value="${year}"
-	         tal:attributes="size size;
-	                         class css_class"
-	         id="${oid}"/>
-  </li>
-  <li>
-	  <label for="${oid}-month" i18n:translate="">Month</label>
-	  <input type="text" name="month" value="${month}"
-	         tal:attributes="size size;
-	                         class css_class"
-	         id="${oid}-month"/>
-  </li>
-  <li>
-	  <label for="${oid}-day" i18n:translate="">Day</label>
-	  <input type="text" name="day" value="${day}"
-	         tal:attributes="size size;
-	                         class css_class"
-	         id="${oid}-day"/>
-  </li>
-</ul>
+<div class="row">
+    <div class="input-prepend span2">
+      <span class="add-on" i18n:translate="">Year</span
+      ><input type="text" name="year" value="${year}"
+              class="span1 ${css_class}"
+              tal:attributes="size size; maxlength size"
+              id="${oid}"/>
+    </div>
+    <div class="input-prepend span2">
+      <span class="add-on" i18n:translate="">Month</span
+      ><input type="text" name="month" value="${month}"
+              class="span1 ${css_class}"
+              tal:attributes="size size; maxlength size"
+              id="${oid}-month"/>
+    </div>
+    <div class="input-prepend span2">
+      <span class="add-on" i18n:translate="">Day</span
+      ><input type="text" name="day" value="${day}"
+              class="span1 ${css_class}"
+              tal:attributes="size size; maxlength size"
+              id="${oid}-day"/>
+    </div>
+</div>
 ${field.end_mapping()}
 </span>

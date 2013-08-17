@@ -6,18 +6,18 @@
       tal:omit-tag="">
     <input type="text"
            name="${name}"
-           value="${cstruct}" 
+           value="${cstruct}"
+           data-provide="typeahead"
            tal:attributes="size size;
                            class css_class;
                            style style"
            id="${oid}"/>
-    <script tal:condition="values" type="text/javascript">
-      deform.addCallback(
-        '${oid}',
-        function (oid) {
-            $('#' + oid).autocomplete({source: ${values}});
-            $('#' + oid).autocomplete("option", ${options});
-        }
-      );
+    <script tal:condition="field.widget.values" type="text/javascript">
+        deform.addCallback(
+          '${field.oid}',
+          function (oid) {
+              $('#' + oid).typeahead(${options});
+          }
+        );
     </script>
 </span>

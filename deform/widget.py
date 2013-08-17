@@ -365,17 +365,10 @@ class MoneyInputWidget(Widget):
         return pstruct
 
 class AutocompleteInputWidget(Widget):
-    """
+    """ 
     Renders an ``<input type="text"/>`` widget which provides
-    autocompletion via a list of values.
-
-    When this option is used, the :term:`jquery.ui.autocomplete`
-    library must be loaded into the page serving the form for
-    autocompletion to have any effect.  See also
-    :ref:`autocomplete_input`.  A version of :term:`JQuery UI` which
-    includes the autoinclude sublibrary is included in the deform
-    static directory. The default styles for JQuery UI are also
-    available in the deform static/css directory.
+    autocompletion via a list of values using bootstrap's typeahead plugin
+    http://twitter.github.com/bootstrap/javascript.html#typeahead.
 
     **Attributes/Arguments**
 
@@ -386,21 +379,19 @@ class AutocompleteInputWidget(Widget):
 
     template
         The template name used to render the widget.  Default:
-        ``autocomplete_input``.
+        ``typeahead_textinput``.
 
     readonly_template
         The template name used to render the widget in read-only mode.
-        Default: ``readonly/textinput``.
+        Default: ``readonly/typeahead_textinput``.
 
     strip
         If true, during deserialization, strip the value of leading
         and trailing whitespace (default ``True``).
 
     values
-        ``values`` from which :term:`jquery.ui.autocomplete` provides
-        autocompletion. It MUST be an iterable that can be converted
-        to a json array by [simple]json.dumps. It is also possible
-        to pass a [base]string representing a remote URL.
+        A list of strings or string.
+        Defaults to ``[]``.
 
         If ``values`` is a string it will be treated as a
         URL. If values is an iterable which can be serialized to a
@@ -412,26 +403,22 @@ class AutocompleteInputWidget(Widget):
 
           ['foo', 'bar', 'baz']
 
-        Defaults to ``None``.
-
     min_length
         ``min_length`` is an optional argument to
         :term:`jquery.ui.autocomplete`. The number of characters to
         wait for before activating the autocomplete call.  Defaults to
-        ``2``.
-
-    delay
-        ``delay`` is an optional argument to
-        :term:`jquery.ui.autocomplete`. It sets the time to wait after a
-        keypress to activate the autocomplete call.
-        Defaults to ``10`` ms or ``400`` ms if a url is passed.
+        ``1``.
 
     style
         A string that will be placed literally in a ``style`` attribute on
         the text input tag.  For example, 'width:150px;'.  Default: ``None``,
         meaning no style attribute will be added to the input tag.
+
+    items
+        The max number of items to display in the dropdown. Defaults to
+        ``8``.
+
     """
-    delay = None
     min_length = 2
     readonly_template = 'readonly/textinput'
     size = None
@@ -439,25 +426,30 @@ class AutocompleteInputWidget(Widget):
     style = None
     template = 'autocomplete_input'
     values = None
-    requirements = ( ('jqueryui', None), )
+    requirements = (('typeahead', None), ('deform', None))
+
+    def __init__(self, **kw):
+        if 'delay' in kw:
+            raise ValueError('AutocompleteWidget does not support *delay* parameter anymore.')
+        Widget.__init__(self, **kw)
 
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
             cstruct = ''
+        self.values = self.values or []
         readonly = kw.get('readonly', self.readonly)
-        options = dict(kw.pop('options', {}))
-        if not 'delay' in options:
-            # set default delay if None
-            if self.delay is None:
-                is_url = isinstance(self.values, string_types)
-                options['delay'] = (is_url and 400) or 10
-        min_length = kw.pop('min_length', self.min_length)
-        options['minLength'] = min_length
-        options = json.dumps(options)
-        values = kw.pop('values', self.values)
-        values = json.dumps(values)
-        kw['options'] = options
-        kw['values'] = values
+
+        options = {}
+        if isinstance(self.values, string_types):
+            options['remote'] = '%s?term=%%QUERY' % self.values
+        else:
+            options['local'] = self.values
+
+        if 'min_length' in self.__dict__ or 'min_length' in kw:
+            options['minLength'] = kw.pop('min_length', self.min_length)
+        if 'items' in self.__dict__ or 'items' in kw:
+            options['items'] = kw.pop('items', self.items)
+        kw['options'] = json.dumps(options)
         tmpl_values = self.get_template_values(field, cstruct, kw)
         template = readonly and self.readonly_template or self.template
         return field.renderer(template, **tmpl_values)
@@ -1290,8 +1282,7 @@ class SequenceWidget(Widget):
     min_len = None
     max_len = None
     orderable = False
-    # Require 'jqueryui' for jquery.ui.sortable.js (needed if orderable).
-    requirements = ( ('deform', None), ('jqueryui', None), )
+    requirements = ( ('deform', None),)
 
     def prototype(self, field):
         # we clone the item field to bump the oid (for easier
@@ -1798,56 +1789,72 @@ class ResourceRegistry(object):
         return result
 
 
+def tabify_form(form):
+    """
+        A function that returns data from the form in a nice way ready for
+        tabbed view.
+    """
+    children = []
+    mappings = []
+    for child in form.children:
+        if child.typ.__class__.__name__ == 'Mapping':
+            mappings.append({'title': child.title,
+                             'name': child.name,
+                             'child': child,
+                             })
+        else:
+            children.append(child)
+
+    return {
+        'basic': children,
+        'other': mappings,
+        'only_one': mappings == [],
+        'have_basic': len(children) > 1 or len(children) == 1 and children[0].name != 'csrf_token'
+    }
+
+
 default_resources = {
     'jquery': {
         None:{
-            'js':'scripts/jquery-1.7.2.min.js',
-            },
-        },
-    'jqueryui': {
-        None:{
-            'js':('scripts/jquery-1.7.2.min.js',
-                  'scripts/jquery-ui-1.8.11.custom.min.js'),
-            'css':'css/ui-lightness/jquery-ui-1.8.11.custom.css',
+            'js':'scripts/jquery-2.0.3.min.js',
             },
         },
     'jquery.form': {
         None:{
-            'js':('scripts/jquery-1.7.2.min.js',
+            'js':('scripts/jquery-2.0.3.min.js',
                   'scripts/jquery.form-3.09.js'),
             },
         },
     'jquery.maskedinput': {
         None:{
-            'js':('scripts/jquery-1.7.2.min.js',
-                  'scripts/jquery.maskedinput-1.2.2.min.js'),
+            'js':('scripts/jquery-2.0.3.min.js',
+                  'scripts/jquery.maskedinput-1.3.1.min.js'),
             },
         },
     'jquery.maskMoney': {
         None:{
-            'js':('scripts/jquery-1.7.2.min.js',
+            'js':('scripts/jquery-2.0.3.min.js',
                   'scripts/jquery.maskMoney-1.4.1.js'),
-            },
-        },
-    'datetimepicker': {
-        None:{
-            'js':('scripts/jquery-1.7.2.min.js',
-                  'scripts/jquery-ui-timepicker-addon.js'),
-            'css':'css/jquery-ui-timepicker-addon.css',
             },
         },
     'deform': {
         None:{
-            'js':('scripts/jquery-1.7.2.min.js',
+            'js':('scripts/jquery-2.0.3.min.js',
                   'scripts/jquery.form-3.09.js',
+                  'scripts/bootstrap.min.js',
                   'scripts/deform.js'),
-            'css':('css/form.css')
-
+            'css':('css/bootstrap.min.css',)
             },
         },
     'tinymce': {
         None:{
             'js':'tinymce/jscripts/tiny_mce/tiny_mce.js',
+            },
+        },
+    'typeahead': {
+        None:{
+            'js':'scripts/typeahead.js',
+            'css':'css/typeahead.css'
             },
         },
     'modernizr': {
