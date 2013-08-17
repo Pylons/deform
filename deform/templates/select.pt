@@ -3,7 +3,7 @@
                  size size|field.widget.size;
                  css_class css_class|field.widget.css_class;
                  optgroup_class optgroup_class|field.widget.optgroup_class;
-                 multiple multiple|field.widget.multiple;"
+                 multiple multiple|field.widget.multiple and 'multiple' or '';"
      tal:omit-tag="">
 <input type="hidden" name="__start__" value="${name}:sequence"
   tal:condition="multiple" />
