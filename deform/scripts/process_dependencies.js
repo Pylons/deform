@@ -71,7 +71,7 @@ function processMap(pkg, basePath) {
 }
 
 
-function main() {
+function main(log) {
 
     function getBowerListing() {
         // do a 'bower list'
@@ -79,7 +79,7 @@ function main() {
         bower.commands
         .list({})
         .on('end', function (result) {
-            console.log('"bower list" finished.');
+            log('"bower list" finished.');
             d.resolve(result);
         }).on('error', function (error) {
             d.reject('Bower error: ' + error);
@@ -105,7 +105,7 @@ function main() {
                 if (err) {
                     d.reject('File write error: ' + err);
                 } else {
-                    console.log("JSON saved to " + outputFilename);
+                    log("JSON saved to " + outputFilename);
                     d.resolve();
                 }
             });
@@ -127,7 +127,7 @@ function main() {
                     var dirName = path.join(outputDir, dir);
                     fs.mkdir(dirName, function(err) {
                         if (! err) {
-                            console.log('Created directory "' + dirName + '"');
+                            log('Created directory "' + dirName + '"');
                         }
                         if (! err || (err && err.code === 'EEXIST')) {
                             d.resolve();
@@ -154,7 +154,7 @@ function main() {
                             d.reject('File error: ' + err);
                         });
                         wr.on("close", function(ex) {
-                            console.log('Copied "' + fname + '" to "' + outputDir + '"');
+                            log('Copied "' + fname + '" to "' + outputDir + '"');
                             d.resolve();
                         });
                         rd.pipe(wr);
@@ -176,8 +176,11 @@ function main() {
     return getBowerListing().then(processListing);
 }
 
+function log() {
+    console.log.apply(null, arguments);
+}
 
-main().then(function() {
+main(log).then(function() {
     console.log('OK, all went good.');
     process.exit(0);
 }, function(error) {
