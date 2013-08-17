@@ -3,7 +3,7 @@
      tal:define="hidden hidden|field.widget.hidden;
                  error_class error_class|field.widget.error_class;
                  description description|field.description;
-                 title title|field.title
+                 title title|field.title;
                  oid oid|field.oid"
      title="${description}"
      i18n:domain="deform">

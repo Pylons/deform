@@ -27,6 +27,7 @@
          class="${prepend_class + ' ' + append_class}">
 
       <span class="add-on" tal:condition="input_prepend">${input_prepend}</span>
+      <span tal:replace="structure field.serialize(cstruct)" />
       <span class="add-on" tal:condition="input_append">${input_append}</span>
 
       <p class="help-block"

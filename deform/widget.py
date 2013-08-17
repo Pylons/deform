@@ -1282,7 +1282,7 @@ class SequenceWidget(Widget):
     min_len = None
     max_len = None
     orderable = False
-    requirements = ( ('deform', None),)
+    requirements = (('deform', None),)
 
     def prototype(self, field):
         # we clone the item field to bump the oid (for easier

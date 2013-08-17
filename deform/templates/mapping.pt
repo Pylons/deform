@@ -16,10 +16,8 @@
   </div>  
 
   ${field.start_mapping()}
-  <div tal:define="rndr field.renderer;
-                   tmpl item_template"
-       tal:repeat="child field.children"
-       tal:replace="structure structure child.render_template(item_template)" >
+  <div tal:repeat="child field.children"
+       tal:replace="structure child.render_template(item_template)" >
   </div>     
   ${field.end_mapping()}
 

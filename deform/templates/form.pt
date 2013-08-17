@@ -72,13 +72,13 @@
                        f.render_template(item_template)" />
     </fieldset>
     <!-- If we don't have a basic tab, the first one here should be active -->
-    <tal:block tal:repeat="mapping fields_list.other">
+    <tal:block tal:repeat="f fields_list.other">
       <fieldset
-        tal:attributes="class python: not fields_list['have_basic'] and repeat['mapping'].index == 0 and 'tab-pane face active in' or 'tab-pane face'"
-        id="${mapping.name}">
+        tal:attributes="class python: not fields_list['have_basic'] and repeat['f'].index == 0 and 'tab-pane face active in' or 'tab-pane face'"
+        id="${f.name}">
         <div
           tal:replace="structure
-                       mapping.child.render_template(item_template)" />
+                       f.child.render_template(item_template)" />
       </fieldset>
     </tal:block>
   </div>
