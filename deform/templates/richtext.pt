@@ -13,7 +13,7 @@
             class='tinymce' tal:content="structure cstruct" />
   <span id="${oid}-preload" class="tinymce-preload" 
         tal:content="structure cstruct" />
-  <script language="javascript" type="text/javascript">
+  <script type="text/javascript">
     (function($){
       deform.addCallback('${oid}', function(oid) {
         var jqoid = $('#' + oid);

@@ -1,5 +1,4 @@
-<ul>
-<li tal:define="error_class error_class|field.widget.error_class;
+<ul tal:define="error_class error_class|field.widget.error_class;
                 description description|field.description;
                 title title|field.title;
                 oid oid|field.oid;
@@ -7,7 +6,8 @@
                 category category|field.widget.category;
                 required required|field.required;
                 "
-    class="field ${field.widget.item_css_class or ''} ${field.error and error_class or ''}"
+    tal:omit-tag="hidden">
+<li class="field ${field.widget.item_css_class or ''} ${field.error and error_class or ''}"
     title="${description}"
     id="item-${oid}"
     tal:omit-tag="hidden"
