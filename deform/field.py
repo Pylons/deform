@@ -694,9 +694,7 @@ class Field(object):
         """
         if name is None:
             name = self.name
-        tag = """
-<input type="hidden" name="__start__" value="%s:mapping"/>
-        """
+        tag = '<input type="hidden" name="__start__" value="%s:mapping"/>'
         return Markup(tag % (name,))
 
     def end_mapping(self, name=None):
@@ -706,9 +704,7 @@ class Field(object):
         """
         if name is None:
             name = self.name
-        tag = """
-<input type="hidden" name="__end__" value="%s:mapping"/>
-        """
+        tag = '<input type="hidden" name="__end__" value="%s:mapping"/>'
         return Markup(tag % (name,))
 
     def start_sequence(self, name=None):
