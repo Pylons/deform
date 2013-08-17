@@ -14,7 +14,7 @@ var q = require('q');
 function basename(file) {
     return file.replace(/\\/g,'/').replace( /.*\//, '' );
 }
- 
+
 function dirname(file) {
     return file.replace(/\\/g,'/').replace(/\/[^\/]*$/, '');
 }
@@ -71,74 +71,116 @@ function processMap(pkg, basePath) {
 }
 
 
-bower.commands
-.list({})
-.on('end', function (result) {
-    console.log('Listing finished.');
+function main() {
 
-    // where files go, relative from cd
-    var outputDir = 'deform/static/dist';
-    // path of the files starting from static (will be part of the output)
-    var basePath = 'dist';
-
-    // get the dependencies
-    var deps = processDependencies(result);
-
-    var map = processMap(result, basePath);
-    var outputFilename = path.join(outputDir, 'map.json');
-    var formatted = JSON.stringify(map, null, 4);
-
-    fs.writeFile(outputFilename, formatted, function(err) {
-        if (err) {
-            console.log('File write error:', err);
-            process.exit(1);
-        } else {
-            console.log("JSON saved to " + outputFilename);
-            console.log('OK');
-        }
-    });
-
-    // separate js and css
-    var jsDeps = _.filter(deps, function(elem) {
-        return /.js$/.test(elem.toLowerCase());
-    });
-    var cssDeps = _.filter(deps, function(elem) {
-        return /.css$/.test(elem.toLowerCase());
-    });
-
-    var jsDirQ = q.defer();
-    fs.mkdir(path.join(outputDir, 'js'), function(err){
-        if(! err || (err && err.code === 'EEXIST')){
-            jsDirQ.resolve();
-        } else {
-            console.log('Directory creation failed: ', err);
-            process.exit(1);
-        }
-    });
-    var cssDirQ = q.defer();
-    fs.mkdir(path.join(outputDir, 'css'), function(err){
-        if(! err || (err && err.code === 'EEXIST')){
-            cssDirQ.resolve();
-        } else {
-            console.log('Directory creation failed: ', err);
-            process.exit(1);
-        }
-    });
-    q.all([jsDirQ, cssDirQ]).then(function() {
-        // Copy the files.
-        _.forEach(jsDeps, function(elem) {
-            fs.createReadStream(elem)
-                .pipe(fs.createWriteStream(path.join(outputDir, 'js', basename(elem))));
+    function getBowerListing() {
+        // do a 'bower list'
+        var d = q.defer();
+        bower.commands
+        .list({})
+        .on('end', function (result) {
+            console.log('"bower list" finished.');
+            d.resolve(result);
+        }).on('error', function (error) {
+            d.reject('Bower error: ' + error);
         });
-        _.forEach(cssDeps, function(elem) {
-            fs.createReadStream(elem)
-                .pipe(fs.createWriteStream(path.join(outputDir, 'css', basename(elem))));
-        });
-        console.log('Copied resources to ' + outputDir);
-    });
+        return d.promise;
+    }
 
-})
-.on('error', function (error) {
-    console.log('Bower error:', error);
+    function processListing(result) {
+        // where files go, relative from cd
+        var outputDir = 'deform/static/dist';
+        // path of the files starting from static (will be part of the output)
+        var basePath = 'dist';
+
+        // get the dependencies
+        var deps = processDependencies(result);
+        var map = processMap(result, basePath);
+        var outputFilename = path.join(outputDir, 'map.json');
+        var formatted = JSON.stringify(map, null, 4);
+
+        function saveMap() {
+            var d = q.defer();
+            fs.writeFile(outputFilename, formatted, function(err) {
+                if (err) {
+                    d.reject('File write error: ' + err);
+                } else {
+                    console.log("JSON saved to " + outputFilename);
+                    d.resolve();
+                }
+            });
+            return d.promise;
+        }
+
+        function copyAllFiles() {
+            // separate js and css
+            var jsDeps = _.filter(deps, function(elem) {
+                return /.js$/.test(elem.toLowerCase());
+            });
+            var cssDeps = _.filter(deps, function(elem) {
+                return /.css$/.test(elem.toLowerCase());
+            });
+
+            function makeDir(dir) {
+                return function() {
+                    var d = q.defer();
+                    var dirName = path.join(outputDir, dir);
+                    fs.mkdir(dirName, function(err) {
+                        if (! err) {
+                            console.log('Created directory "' + dirName + '"');
+                        }
+                        if (! err || (err && err.code === 'EEXIST')) {
+                            d.resolve();
+                        } else {
+                            d.reject('Directory creation of " + dir + " failed: ' + err);
+                        }
+                    });
+                    return d.promise;
+                };
+            }
+
+            function copy(type, deps) {
+                return function() {
+                    // Copy the files.
+                    function copyOne(fname) {
+                        var d = q.defer();
+                        var dest = path.join(outputDir, type, basename(fname));
+                        var rd = fs.createReadStream(fname);
+                        rd.on("error", function(err) {
+                            d.reject('File error: ' + err);
+                        });
+                        var wr = fs.createWriteStream(dest);
+                        wr.on("error", function(err) {
+                            d.reject('File error: ' + err);
+                        });
+                        wr.on("close", function(ex) {
+                            console.log('Copied "' + fname + '" to "' + outputDir + '"');
+                            d.resolve();
+                        });
+                        rd.pipe(wr);
+                        return d.promise;
+                    }
+                    return q.all(_.map(deps, copyOne));
+                };
+            }
+
+            return q.all([
+                makeDir('js')().then(copy('js', jsDeps)),
+                makeDir('css')().then(copy('css', cssDeps))
+            ]);
+        }
+
+        return q.all([saveMap(), copyAllFiles()]);
+    }
+
+    return getBowerListing().then(processListing);
+}
+
+
+main().then(function() {
+    console.log('OK, all went good.');
+    process.exit(0);
+}, function(error) {
+    console.log('Error: ' + error);
     process.exit(1);
 });
