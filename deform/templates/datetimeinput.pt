@@ -16,7 +16,7 @@
         function(oid) {
               if (!Modernizr.inputtypes['datetime'] || 
                    "${type_name}" != "datetime"){
-                $('#' + oid).datetimepicker(${options});
+                $('#' + oid).pickadate(${options});
               }
         }
       );

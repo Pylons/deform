@@ -469,8 +469,7 @@ class DateInputWidget(Widget):
     Renders a date picker widget.
 
     The default rendering is as a native HTML5 date input widget,
-    falling back to JQuery UI date picker widget
-    (http://jqueryui.com/demos/datepicker/).
+    falling back to pickadate (https://github.com/amsul/pickadate.js.)
 
     Most useful when the schema node is a ``colander.Date`` object.
 
@@ -502,7 +501,7 @@ class DateInputWidget(Widget):
     type_name = 'date'
     size = None
     style = None
-    requirements = ( ('modernizr', None), ('jqueryui', None) )
+    requirements = ( ('modernizr', None), ('pickadate', None))
     default_options = (('dateFormat', 'yy-mm-dd'),)
 
     def __init__(self, *args, **kwargs):
@@ -528,15 +527,14 @@ class DateTimeInputWidget(DateInputWidget):
     Renders a datetime picker widget.
 
     The default rendering is as a native HTML5 datetime  input widget, 
-    falling back to jQuery UI date picker with a JQuery Timepicker add-on
-    (http://trentrichardson.com/examples/timepicker/).
+    falling back to pickadate.js (https://github.com/amsul/pickadate.js)
 
     Used for ``colander.DateTime`` schema nodes.
 
     **Attributes/Arguments**
 
     options
-        A dictionary of options that's passed to the datetimepicker.
+        A dictionary of options that's passed to pickadate.
 
     size
         The size, in columns, of the text input field.  Defaults to
@@ -561,7 +559,7 @@ class DateTimeInputWidget(DateInputWidget):
     type_name = 'datetime'
     size = None
     style = None
-    requirements = ( ('modernizr', None), ('jqueryui', None), ('datetimepicker', None), )
+    requirements = ( ('modernizr', None), ('pickadate', None))
     default_options = (DateInputWidget.default_options +
                        (('timeFormat', 'hh:mm:ss'),
                         ('separator', ' ')))
@@ -1862,6 +1860,18 @@ default_resources = {
             'js':('scripts/modernizr.custom.input-types-and-atts.js',),
             },
         },
+    'pickadate': {
+        None: {
+            'js': (
+                'scripts/pickadate.date.min.js',
+                'scripts/pickadate.min.js'
+            ),
+            'css': (
+                'css/pickadate-classic.date.min.css',
+                'css/pickadate-classic.min.css'
+            )
+        }
+    }
     }
 
 default_resource_registry = ResourceRegistry()
