@@ -502,7 +502,7 @@ class DateInputWidget(Widget):
     size = None
     style = None
     requirements = ( ('modernizr', None), ('pickadate', None))
-    default_options = (('dateFormat', 'yy-mm-dd'),)
+    default_options = (('format', 'yyyy-mm-dd'),)
 
     def __init__(self, *args, **kwargs):
         self.options = dict(self.default_options)
