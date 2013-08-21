@@ -113,7 +113,7 @@ var deform  = {
     appendSequenceItem: function(node) {
         var $oid_node = $(node).parent();
         var $proto_node = $oid_node.children('.deformProto').first();
-        var $before_node = $oid_node.children('ul').first().children(
+        var $before_node = $oid_node.children('ul').children('li').first().children(
                                               '.deformInsertBefore');
         var min_len = parseInt($before_node.attr('min_len')||'0', 10);
         var max_len = parseInt($before_node.attr('max_len')||'9999', 10);
