@@ -1,3 +1,4 @@
+<ul>
 <li tal:define="error_class error_class|field.widget.error_class;
                 hidden hidden|field.widget.hidden;
                 description description|field.description;
@@ -33,3 +34,4 @@
 
   <!-- /sequence_item -->
 </li>
+</ul>

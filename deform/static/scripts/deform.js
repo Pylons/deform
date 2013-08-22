@@ -149,7 +149,7 @@ var deform  = {
 
     processSequenceButtons: function(oid_node, min_len, max_len, now_len,
                                      orderable) {
-        var $ul = oid_node.children('ul');
+        var $ul = oid_node.children('ul').children('li').children('ul');
         var $lis = $ul.children('li');
         $lis.find('.deformClosebutton').removeClass('deformClosebuttonActive');
         oid_node.children('.deformSeqAdd').show();
