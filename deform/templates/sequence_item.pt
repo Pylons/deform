@@ -1,4 +1,3 @@
-<ul>
 <li tal:define="error_class error_class|field.widget.error_class;
                 hidden hidden|field.widget.hidden;
                 description description|field.description;
@@ -8,6 +7,8 @@
     class="${field.widget.item_css_class or ''} ${field.error and error_class or ''}"
     tal:omit-tag="hidden"
     title="${description}" i18n:domain="deform">
+  <a tal:define="anc oid.split('-')[-1]" name="${anc}-anchor" id="${anc}-anchor"/>
+
   <!-- sequence_item -->
 
   <span class="deformClosebutton"
@@ -34,4 +35,3 @@
 
   <!-- /sequence_item -->
 </li>
-</ul>

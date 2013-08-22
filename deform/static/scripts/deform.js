@@ -89,7 +89,7 @@ var deform  = {
 
         var anchorid = genid + '-anchor';
         var anchortext = '<a name="' + anchorid +'" id="' + anchorid + '"/>';
-        $(anchortext).insertBefore(before);
+        //$(anchortext).insertBefore(before);
         $htmlnode.insertBefore(before);
 
         $(deform.callbacks).each(function(num, item) {
@@ -113,8 +113,7 @@ var deform  = {
     appendSequenceItem: function(node) {
         var $oid_node = $(node).parent();
         var $proto_node = $oid_node.children('.deformProto').first();
-        var $before_node = $oid_node.children('ul').children('li').last().children(
-                                              '.deformInsertBefore');
+        var $before_node = $oid_node.children('ul').children('li').last();
         var min_len = parseInt($before_node.attr('min_len')||'0', 10);
         var max_len = parseInt($before_node.attr('max_len')||'9999', 10);
         var now_len = parseInt($before_node.attr('now_len')||'0', 10);
@@ -149,7 +148,8 @@ var deform  = {
 
     processSequenceButtons: function(oid_node, min_len, max_len, now_len,
                                      orderable) {
-        var $ul = oid_node.children('ul').children('li').children('ul');
+        orderable = 1;
+        var $ul = oid_node.children('ul');
         var $lis = $ul.children('li');
         $lis.find('.deformClosebutton').removeClass('deformClosebuttonActive');
         oid_node.children('.deformSeqAdd').show();
