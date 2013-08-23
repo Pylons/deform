@@ -1,23 +1,24 @@
-- tests
+TODO
+
+- run all tests
+- docs
 - select2
 - pickadate
 - check out form.css
-- include glyicons
-- readonly templates
-- prepend/append stuff
+- include glyicons (they are already commited but not loaded)
+- readonly templates changes
 - horizontal/inline forms + structural things
-- sequence widgets
 - tinymce label/help text have strange positions
-- docs
+- autocomplete input text has some UI fail
+- UX of sequence remove button sux
+- multiple_error_messages_seq/ - doesn't display sequence items on error
+- date parts widget - currently it's inline as a whole, see custom_classes_on_outermost_html_element for demo
+- if errors are not on first displayed tabs for mappings, we have to let the user know where they are, see edit/ for demo
 
 borken tests:
 
-- readonly_sequence_of_mappings
-- multiple_error_messages_seq
-- mapping/
-- edit/
-- deferred_schema_bindings/
-- custom_classes_on_outermost_html_element/
+- readonly_sequence_of_mappings - totally broken layout
+- deferred_schema_bindings/ - due to date widget
 
 MIGRATION NOTES: 
 
@@ -28,9 +29,11 @@ MIGRATION NOTES:
 - merged TypeaheadInputWidget to AutocompleteInputWidget (removed delay parameter)
 - AutocompleteInputWidget now accepts string type for "values"
 
+- chaining schemas now means tabs are generated
+
 NICE TO HAVE
 
-- deform tabs (utils.py)
 - tinymce4?
 - structural widget (mapping_item.pt) - do we need that or not or what? + add a demo
 - deformdemo1.repoze.org, deformdemo2.repoze.org
+- prepend/append stuff
