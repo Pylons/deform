@@ -9,7 +9,7 @@
            value="${cstruct}"
            data-provide="typeahead"
            tal:attributes="size size;
-                           class css_class;
+                           class string: form-control ${css_class};
                            style style"
            id="${oid}"/>
     <script tal:condition="field.widget.values" type="text/javascript">
