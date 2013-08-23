@@ -26,6 +26,7 @@ MIGRATION NOTES:
 - removed deprecated `render_initial_item` from SequenceWidget
 - removed deprecated deform.Set (use colander.Set instead)
 
+- DateInputWidget renamed parameter `dateFormat` to `format`
 - merged TypeaheadInputWidget to AutocompleteInputWidget (removed delay parameter)
 - AutocompleteInputWidget now accepts string type for "values"
 
