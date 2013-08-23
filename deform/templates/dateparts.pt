@@ -7,27 +7,33 @@
 
   >
 ${field.start_mapping()}
-<div class="row">
-    <div class="input-prepend span2">
-      <span class="add-on" i18n:translate="">Year</span
+<div class="controls-row">
+    <div class="control-group col col-lg-2">
+        <div class="input-group">
+      <span class="input-group-addon" i18n:translate="">Year</span
       ><input type="text" name="year" value="${year}"
-              class="span1 ${css_class}"
+              class="span1 form-control ${css_class}"
               tal:attributes="size size; maxlength size"
               id="${oid}"/>
+        </div>
     </div>
-    <div class="input-prepend span2">
-      <span class="add-on" i18n:translate="">Month</span
+    <div class="control-group col col-lg-2">
+        <div class="input-group">
+      <span class="input-group-addon" i18n:translate="">Month</span
       ><input type="text" name="month" value="${month}"
-              class="span1 ${css_class}"
+              class="span1 form-control ${css_class}"
               tal:attributes="size size; maxlength size"
               id="${oid}-month"/>
+        </div>
     </div>
-    <div class="input-prepend span2">
-      <span class="add-on" i18n:translate="">Day</span
+    <div class="control-group col col-lg-2">
+        <div class="input-group">
+      <span class="input-group-addon" i18n:translate="">Day</span
       ><input type="text" name="day" value="${day}"
-              class="span1 ${css_class}"
+              class="span1 form-control ${css_class}"
               tal:attributes="size size; maxlength size"
               id="${oid}-day"/>
+        </div>
     </div>
 </div>
 ${field.end_mapping()}
