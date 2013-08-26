@@ -1851,7 +1851,7 @@ default_resources = {
         },
     'typeahead': {
         None:{
-            'js':'scripts/typeahead.js',
+            'js':'scripts/typeahead.min.js',
             'css':'css/typeahead.css'
             },
         },
