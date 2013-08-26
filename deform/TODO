@@ -1,11 +1,10 @@
 TODO
 
-- make demo use widget resource
+- fix i18n template in deformdemo
 - docs
 - select2
 - pickadate
 - check out form.css
-- include glyicons (they are already commited but not loaded)
 - readonly templates changes
 - horizontal/inline forms + structural things
 - tinymce label/help text have strange positions
@@ -15,6 +14,7 @@ TODO
 - date parts widget - currently it's inline as a whole, see custom_classes_on_outermost_html_element for demo
 - if errors are not on first displayed tabs for mappings, we have to let the user know where they are, see edit/ for demo
 - run all tests
+- doesn't star mean required?
 
 borken tests:
 
@@ -31,6 +31,10 @@ MIGRATION NOTES:
 - AutocompleteInputWidget now accepts string type for "values"
 - chaining schemas now means tabs are generated
 
+OPEN QUESTIONS:
+
+- deform 2.0 requires twitter bootstrap 3.0, should we tell users to always load basic requirements?
+
 NICE TO HAVE
 
 - tinymce4?
@@ -38,4 +42,5 @@ NICE TO HAVE
 - deformdemo1.repoze.org, deformdemo2.repoze.org
 - prepend/append t.bootstrap stuff
 - https://github.com/Pylons/deform/pull/116#issuecomment-23210460
+- group demos by widget type
 
