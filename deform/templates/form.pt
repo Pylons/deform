@@ -18,7 +18,7 @@
               method method|field.method;"
 
   id="${field.formid}"
-  class="deform ${field.bootstrap_form_style | 'form-horizontal'}
+  class="deform ${field.bootstrap_form_style | ''}
          ${css_class}"
   action="${action}"
   method="${method}"
