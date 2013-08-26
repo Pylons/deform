@@ -1,6 +1,6 @@
 TODO
 
-- run all tests
+- make demo use widget resource
 - docs
 - select2
 - pickadate
@@ -14,6 +14,7 @@ TODO
 - multiple_error_messages_seq/ - doesn't display sequence items on error
 - date parts widget - currently it's inline as a whole, see custom_classes_on_outermost_html_element for demo
 - if errors are not on first displayed tabs for mappings, we have to let the user know where they are, see edit/ for demo
+- run all tests
 
 borken tests:
 
@@ -25,11 +26,9 @@ MIGRATION NOTES:
 - removed deprecated `height, width, skin, theme` parameters from RichTextWidget
 - removed deprecated `render_initial_item` from SequenceWidget
 - removed deprecated deform.Set (use colander.Set instead)
-
 - DateInputWidget renamed parameter `dateFormat` to `format`
 - merged TypeaheadInputWidget to AutocompleteInputWidget (removed delay parameter)
 - AutocompleteInputWidget now accepts string type for "values"
-
 - chaining schemas now means tabs are generated
 
 NICE TO HAVE
@@ -37,4 +36,6 @@ NICE TO HAVE
 - tinymce4?
 - structural widget (mapping_item.pt) - do we need that or not or what? + add a demo
 - deformdemo1.repoze.org, deformdemo2.repoze.org
-- prepend/append stuff
+- prepend/append t.bootstrap stuff
+- https://github.com/Pylons/deform/pull/116#issuecomment-23210460
+
