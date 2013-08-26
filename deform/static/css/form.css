@@ -57,23 +57,3 @@ div.deformReplaces {
 .deform ul.inline > li{
     display:inline-block;
 }
-
-/* error handling */
-.deform .errorLi {
-    border:1px solid red;
-    text-align: center;
-    -webkit-border-radius:20px;
-    -moz-border-radius:20px;
-}
-
-.deform li.error{
-    background-color: #FFDFDF;
-}
-
-.deform li.error label.desc, .deform p.error, .deform h3.errorMsgLbl{
-    color: #DF0000;
-}
-
-.deform p.error{
-    font-size: 70%;
-}
