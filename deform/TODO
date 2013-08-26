@@ -1,6 +1,5 @@
 TODO
 
-- fix i18n template in deformdemo
 - docs
 - select2
 - pickadate
@@ -37,10 +36,8 @@ OPEN QUESTIONS:
 
 NICE TO HAVE
 
-- tinymce4?
 - structural widget (mapping_item.pt) - do we need that or not or what? + add a demo
 - deformdemo1.repoze.org, deformdemo2.repoze.org
 - prepend/append t.bootstrap stuff
 - https://github.com/Pylons/deform/pull/116#issuecomment-23210460
 - group demos by widget type
-

@@ -684,8 +684,8 @@ class RichTextWidget(TextInputWidget):
     #: Default options passed to TinyMCE. Customise by using :attr:`options`.
     default_options = (('height', 240),
                        ('width', 500),
-                       ('skin', 'default'),
-                       ('theme', 'simple'),
+                       ('skin', 'lightgray'),
+                       ('theme', 'modern'),
                        ('mode', 'exact'),
                        ('strict_loading_mode', True),
                        ('theme_advanced_resizing', True),
@@ -1846,7 +1846,7 @@ default_resources = {
         },
     'tinymce': {
         None:{
-            'js':'tinymce/jscripts/tiny_mce/tiny_mce.js',
+            'js':'tinymce/tinymce.min.js',
             },
         },
     'typeahead': {
