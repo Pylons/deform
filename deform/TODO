@@ -6,7 +6,6 @@ TODO
 - check out form.css
 - readonly templates changes
 - horizontal/inline forms + structural things
-- tinymce label/help text have strange positions
 - autocomplete input text has some UI fail
 - UX of sequence remove button sux
 - multiple_error_messages_seq/ - doesn't display sequence items on error

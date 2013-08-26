@@ -15,7 +15,7 @@
       }
     </style>  
   <textarea id="${oid}" name="${name}" 
-            class='tinymce' tal:content="structure cstruct" />
+            class='tinymce form-control' tal:content="structure cstruct" />
   <span id="${oid}-preload" class="tinymce-preload" 
         tal:content="structure cstruct" />
   <script language="javascript" type="text/javascript">
