@@ -6,18 +6,20 @@ TODO
 - check out form.css
 - readonly templates changes
 - horizontal/inline forms + structural things
-- autocomplete input text has some UI fail
-- UX of sequence remove button sux
-- multiple_error_messages_seq/ - doesn't display sequence items on error
-- date parts widget - currently it's inline as a whole, see custom_classes_on_outermost_html_element for demo
-- if errors are not on first displayed tabs for mappings, we have to let the user know where they are, see edit/ for demo
 - run all tests
-- doesn't star mean required?
+- if errors are not on first displayed tabs for mappings, we have to let the user know where they are, see edit/ for demo
 
-borken tests:
+BROKEN STUFF:
 
 - readonly_sequence_of_mappings - totally broken layout
 - deferred_schema_bindings/ - due to date widget
+- sequence_of_fileuploads/ - submitting empty form renders it without controls
+- autocomplete input text has some UI fail
+- checkbox widget newline
+- custom_classes_on_outermost_html_element/ - endline, too short year field
+- UX of sequence remove button sux
+- multiple_error_messages_seq/ - doesn't display sequence items on error
+- date parts widget - currently it's inline as a whole, see custom_classes_on_outermost_html_element for demo
 
 MIGRATION NOTES: 
 
