@@ -29,6 +29,7 @@
           jqoid_preload.remove();
           tinyMCE.init({
             language: '<tal:block i18n:translate="language-code">en</tal:block>',
+            body_class: 'form-control',
             <tal:block condition="tinymce_options">${tinymce_options},</tal:block>
             elements: oid
           });

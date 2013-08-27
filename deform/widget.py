@@ -683,7 +683,7 @@ class RichTextWidget(TextInputWidget):
 
     #: Default options passed to TinyMCE. Customise by using :attr:`options`.
     default_options = (('height', 240),
-                       ('width', 500),
+                       ('width', ''),
                        ('skin', 'lightgray'),
                        ('theme', 'modern'),
                        ('mode', 'exact'),
