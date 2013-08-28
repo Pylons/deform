@@ -415,6 +415,16 @@ class TestDateTimeInputWidget(TestDateInputWidget):
         self.assertNotEqual(renderer.kw['cstruct'], cstruct)
         self.assertEqual(renderer.kw['cstruct'], cstruct[:-6].replace('T', ' '))
 
+    def test_serialize_with_timezone_and_microseconds(self):
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        field = DummyField(DummySchema(), renderer=renderer)
+        cstruct = '2011-12-13T14:15:16.10932+01:00'
+        widget.serialize(field, cstruct)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertNotEqual(renderer.kw['cstruct'], cstruct)
+        self.assertEqual(renderer.kw['cstruct'], cstruct[:-6].replace('T', ' '))
+
     def test_serialize_without_timezone(self):
         widget = self._makeOne()
         renderer = DummyRenderer()

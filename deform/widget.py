@@ -9,6 +9,8 @@ from colander import (
     null,
     )
 
+from colander.iso8601 import ISO8601_REGEX
+
 from translationstring import TranslationString
 
 from .i18n import _
@@ -574,7 +576,8 @@ class DateTimeInputWidget(DateInputWidget):
     type_name = 'datetime'
     size = None
     style = None
-    requirements = ( ('modernizr', None), ('jqueryui', None), ('datetimepicker', None), )
+    requirements = ( ('modernizr', None), ('jqueryui', None),
+                     ('datetimepicker', None), )
     default_options = (DateInputWidget.default_options +
                        (('timeFormat', 'hh:mm:ss'),
                         ('separator', ' ')))
@@ -583,8 +586,12 @@ class DateTimeInputWidget(DateInputWidget):
         if cstruct in (null, None):
             cstruct = ''
         readonly = kw.get('readonly', self.readonly)
-        if len(cstruct) == 25: # strip timezone if it's there
-            cstruct = cstruct[:-6]
+        if cstruct:
+            parsed = ISO8601_REGEX.match(cstruct)
+            if parsed: # strip timezone if it's there
+                timezone = parsed.groupdict()['timezone']
+                if timezone and cstruct.endswith(timezone):
+                    cstruct = cstruct[:-len(timezone)]
         options = kw.get('options', self.options)
         kw['options'] = json.dumps(options)
         separator = options.get('separator', ' ')
