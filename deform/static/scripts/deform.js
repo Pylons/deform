@@ -112,8 +112,8 @@ var deform  = {
     appendSequenceItem: function(node) {
         var $oid_node = $(node).parent();
 		var $oid_node = $(node).closest('.deformSeq');
-        var $proto_node = $oid_node.children('.deformProto').first();
-        var $before_node = $oid_node.children('ul').children('li').last();
+        var $proto_node = $oid_node.find('.deformProto').first();
+        var $before_node = $oid_node.find('.deformInsertBefore').last();
         var min_len = parseInt($before_node.attr('min_len')||'0', 10);
         var max_len = parseInt($before_node.attr('max_len')||'9999', 10);
         var now_len = parseInt($before_node.attr('now_len')||'0', 10);
@@ -128,8 +128,8 @@ var deform  = {
 
     removeSequenceItem: function(clicked) {
         var $item_node = $(clicked).parent();
-        var $oid_node = $item_node.parent().parent();
-        var $before_node = $oid_node.children('ul').children('li').last();
+        var $oid_node = $item_node.closest('.deformSeq');
+        var $before_node = $oid_node.find('.deformInsertBefore').last();
         var min_len = parseInt($before_node.attr('min_len')||'0', 10);
         var max_len = parseInt($before_node.attr('max_len')||'9999', 10);
         var now_len = parseInt($before_node.attr('now_len')||'0', 10);

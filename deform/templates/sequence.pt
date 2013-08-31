@@ -27,11 +27,11 @@
          tal:repeat="subfield subfields"
          tal:replace="structure subfield.render_template(item_tmpl, parent=field)"/>
 
-    <li><span class="deformInsertBefore" 
+    <li class="deformInsertBefore" 
           tal:attributes="min_len min_len; 
                           max_len max_len; 
                           now_len now_len;
-                          orderable orderable;"></span></li>
+                          orderable orderable;"></li>
 
   </ul>
   
