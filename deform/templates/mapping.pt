@@ -5,7 +5,8 @@
           class="deformMappingFieldset" i18n:domain="deform">
   <!-- mapping -->
   <legend tal:condition="title">${title}</legend>
-  <ul>
+  ${field.start_mapping()}
+  <ul class="mapping">
     <li class="errorLi" tal:condition="errormsg">
       <h3 class="errorMsgLbl" i18n:translate=""
           >There was a problem with this section</h3>
@@ -14,10 +15,11 @@
     <li class="section" tal:condition="description">
       <div>${description}</div>
     </li>
-    ${field.start_mapping()}
+    <li>
       <div tal:repeat="child field"
            tal:replace="structure child.render_template(item_template)"/>
-    ${field.end_mapping()}
+    </li>
   </ul>
+  ${field.end_mapping()}
   <!-- /mapping -->
 </fieldset>

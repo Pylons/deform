@@ -34,7 +34,7 @@ class Field(object):
     implementations of state-retaining widgets while instances of
     those widget still only need to be constructed once instead of on
     each request.
-    
+
     *Attributes*
 
         schema
@@ -61,7 +61,7 @@ class Field(object):
 
         name
             An alias for self.schema.name
-        
+
         title
             An alias for self.schema.title
 
@@ -302,7 +302,7 @@ class Field(object):
         Javascript resources need to be loaded by the page performing
         the form rendering in order for some widget on the page to
         function properly.
-        
+
         The second element in each two-tuple is the reqested version
         of the library resource.  It may be ``None``, in which case
         the version is unspecified.
@@ -414,7 +414,7 @@ class Field(object):
 
           Set the ``first_name`` field's widget to a
           ``TextAreaWidget``.
-        
+
         ``form.set_widgets({'people':MySequenceWidget()})``
 
           Set the ``people`` sequence field's widget to a
@@ -442,7 +442,7 @@ class Field(object):
                     else:
                         field = field[element]
                 field.widget = v
-                
+
     @property
     def errormsg(self):
         """ Return the ``msg`` attribute of the ``error`` attached to
@@ -606,7 +606,7 @@ class Field(object):
         Validate the pstruct passed.  Works exactly like the
         :class:`deform.field.validate` method, except it accepts a pstruct
         instead of a set of form controls.  A usage example follows::
-        
+
           if 'submit' in request.POST:  # the form submission needs validation
               controls = request.POST.items()
               pstruct = peppercorn.parse(controls)
@@ -620,7 +620,7 @@ class Field(object):
           else:
               return {'form':form.render()} # the form just needs rendering
         """
-        
+
         exc = None
 
         try:
@@ -676,7 +676,7 @@ class Field(object):
             id(self),
             self.schema.name,
             )
-    
+
     def set_appstruct(self, appstruct):
         """ Set the cstruct of this node (and its child nodes) using
         ``appstruct`` as input."""
@@ -739,7 +739,7 @@ class Field(object):
         the name of this node will be used to generate the name in the tag.
         See the :term:`Peppercorn` documentation for more information.
         """
-        
+
         if name is None:
             name = self.name
         tag = '<input type="hidden" name="__end__" value="%s:sequence"/>'
@@ -748,7 +748,7 @@ class Field(object):
     def start_rename(self, name=None):
         """ Create a start-rename tag (a literal).  If ``name`` is ``None``,
         the name of this node will be used to generate the name in the tag.
-        See the :term:`Peppercorn` documentation for more information. 
+        See the :term:`Peppercorn` documentation for more information.
         """
         if name is None:
             name = self.name
@@ -758,7 +758,7 @@ class Field(object):
     def end_rename(self, name=None):
         """ Create a start-rename tag (a literal).  If ``name`` is ``None``,
         the name of this node will be used to generate the name in the tag.
-        See the :term:`Peppercorn` documentation for more information. 
+        See the :term:`Peppercorn` documentation for more information.
         """
         if name is None:
             name = self.name

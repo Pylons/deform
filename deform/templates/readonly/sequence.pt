@@ -4,8 +4,8 @@
 
   <ul>
 
-    <div tal:repeat="tup subfields"
-         tal:content="structure field.render_template(item_tmpl, field=tup[1], cstruct=tup[0])"/>
+    <tal:block repeat="tup subfields"
+         content="structure field.render_template(item_tmpl, field=tup[1], cstruct=tup[0])"/>
 
   </ul>
 

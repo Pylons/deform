@@ -1,3 +1,4 @@
+<ul>
 <li tal:define="description description|field.description;
                 hidden hidden|field.widget.hidden;
                 category category|field.widget.category;
@@ -12,3 +13,4 @@
   <span tal:replace="structure field.serialize(cstruct, readonly=True)"/>
   <!-- /mapping_item -->
 </li>
+</ul>
