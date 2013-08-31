@@ -7,6 +7,7 @@
     class="${field.widget.item_css_class or ''} ${field.error and error_class or ''}"
     tal:omit-tag="hidden"
     title="${description}" i18n:domain="deform">
+
   <!-- sequence_item -->
 
   <span class="deformClosebutton"

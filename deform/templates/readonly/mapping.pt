@@ -8,8 +8,10 @@
     <li class="section" tal:condition="description">
       <div>${description}</div>
     </li>
+    <li>
       <div tal:repeat="child field"
            tal:replace="structure child.render_template(item_tmpl)"/>
+    </li>
   </ul>
   <!-- /mapping -->
 </div>

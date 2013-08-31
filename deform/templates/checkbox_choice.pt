@@ -6,13 +6,14 @@ ${field.start_sequence()}
   <tal:loop tal:repeat="choice values">
     <tal:def tal:define="(value, title) choice">
       <li class="deformSet-item">
+        <label tal:define="idx repeat.choice.start and oid or '%s-%s' % (oid, repeat.choice.index)" for="${idx}">
         <input tal:attributes="class css_class;
                                checked value in cstruct"
                type="checkbox"
                name="checkbox"
                value="${value}"
-               id="${oid}-${repeat.choice.index}"/>
-        <label for="${oid}-${repeat.choice.index}">${title}</label>
+               id="${idx}"/>${title}
+        </label>
       </li>
     </tal:def>
   </tal:loop>
