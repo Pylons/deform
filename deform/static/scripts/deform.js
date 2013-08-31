@@ -112,6 +112,7 @@ var deform  = {
 
     appendSequenceItem: function(node) {
         var $oid_node = $(node).parent();
+		var $oid_node = $(node).closest('.deformSeq');
         var $proto_node = $oid_node.children('.deformProto').first();
         var $before_node = $oid_node.children('ul').children('li').last();
         var min_len = parseInt($before_node.attr('min_len')||'0', 10);
@@ -148,7 +149,6 @@ var deform  = {
 
     processSequenceButtons: function(oid_node, min_len, max_len, now_len,
                                      orderable) {
-        orderable = 1;
         var $ul = oid_node.children('ul');
         var $lis = $ul.children('li');
         $lis.find('.deformClosebutton').removeClass('deformClosebuttonActive');
