@@ -87,8 +87,6 @@ var deform  = {
             $node.attr('name', newname);
             });
 
-        var anchorid = genid + '-anchor';
-        var anchortext = '<a name="' + anchorid +'" id="' + anchorid + '"/>';
         $htmlnode.insertBefore(before);
 
         $(deform.callbacks).each(function(num, item) {
