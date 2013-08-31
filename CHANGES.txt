@@ -24,6 +24,19 @@ Bug Fixes
 - Raise a ValueError exception when the prototype
   for a field in a sequence has no name. See
   https://github.com/Pylons/deform/issues/149
+  
+- Worked on the templates to make as many widgets be proper HTML. Deformdemo
+  now includes a validator which can be used for checking. The major changes
+  involve ensuring that only `<li>` can be children of `<ul>` and that labels
+  always refer to distinct fields. Also labels are set around fields to provide
+  better touch targets: you can click on the label as well as the field.
+  Validation still raises some errors about invalid attributes such as
+  `prototype` but these can be safely ignored: browsers will ignore things they
+  don't know about - this is defined in HTML 5 (it used to be guess work).
+  Having the right `<label>` added a wart to mappings where the first item
+  doesn't get a counter because the label is already assigned. This may be
+  revisited as it seems to affect only mappings.
+  See https://github.com/Pylons/deformdemo/pull/20 for futher context.
 
 0.9.7 (2013-03-06)
 ------------------
