@@ -41,7 +41,7 @@ docs_extras = ['Sphinx']
 
 setupkw = dict(
     name='deform',
-    version='0.9.7',
+    version='0.9.8',
     description='Another form generation library',
     long_description=README + '\n\n' + CHANGES,
     classifiers=[
