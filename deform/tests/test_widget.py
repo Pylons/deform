@@ -384,10 +384,13 @@ class TestDateInputWidget(unittest.TestCase):
 
     def test_options_changed_and_default(self):
         widget2 = self._makeOne()
-        widget = self._makeOne(options={'dateFormat': 'foo'})
-        self.assertEqual(widget.options['dateFormat'], 'foo')
-        self.assertEqual(widget2.options['dateFormat'], 'yy-mm-dd')
+        widget = self._makeOne(options={'format': 'foo'})
+        self.assertEqual(widget.options['format'], 'foo')
+        self.assertEqual(widget2.options['format'], 'yyyy-mm-dd')
 
+    def test_bwcompat_dateFormat(self):
+        widget = self._makeOne(options={'dateFormat': 'foo'})
+        self.assertEqual(widget.options['format'], 'foo')
 
 class TestDateTimeInputWidget(TestDateInputWidget):
     def _makeOne(self, **kw):
@@ -401,9 +404,13 @@ class TestDateTimeInputWidget(TestDateInputWidget):
 
     def test_options_changed_and_default(self):
         widget2 = self._makeOne()
+        widget = self._makeOne(options={'format': 'foo'})
+        self.assertEqual(widget.options['format'], 'foo')
+        self.assertEqual(widget2.options['format'], 'yyyy-mm-dd')
+
+    def test_bwcompat_dateFormat(self):
         widget = self._makeOne(options={'dateFormat': 'foo'})
-        self.assertEqual(widget.options['dateFormat'], 'foo')
-        self.assertEqual(widget2.options['dateFormat'], 'yy-mm-dd')
+        self.assertEqual(widget.options['format'], 'foo')
 
     def test_serialize_with_timezone(self):
         widget = self._makeOne()

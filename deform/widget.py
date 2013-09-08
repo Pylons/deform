@@ -507,6 +507,10 @@ class DateInputWidget(Widget):
     def __init__(self, *args, **kwargs):
         self.options = dict(self.default_options)
         Widget.__init__(self, *args, **kwargs)
+        # bw compat
+        dateformat = self.options.pop('dateFormat', None)
+        if dateformat is not None:
+            self.options['format'] = dateformat
 
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
@@ -1812,36 +1816,25 @@ def tabify_form(form):
 
 
 default_resources = {
-    'jquery': {
-        None:{
-            'js':'scripts/jquery-2.0.3.min.js',
-            },
-        },
     'jquery.form': {
         None:{
-            'js':('scripts/jquery-2.0.3.min.js',
-                  'scripts/jquery.form-3.09.js'),
+            'js':'scripts/jquery.form-3.09.js',
             },
         },
     'jquery.maskedinput': {
         None:{
-            'js':('scripts/jquery-2.0.3.min.js',
-                  'scripts/jquery.maskedinput-1.3.1.min.js'),
+            'js':'scripts/jquery.maskedinput-1.3.1.min.js',
             },
         },
     'jquery.maskMoney': {
         None:{
-            'js':('scripts/jquery-2.0.3.min.js',
-                  'scripts/jquery.maskMoney-1.4.1.js'),
+            'js':'scripts/jquery.maskMoney-1.4.1.js',
             },
         },
     'deform': {
         None:{
-            'js':('scripts/jquery-2.0.3.min.js',
-                  'scripts/jquery.form-3.09.js',
-                  'scripts/bootstrap.min.js',
+            'js':('scripts/jquery.form-3.09.js',
                   'scripts/deform.js'),
-            'css':('css/bootstrap.min.css',)
             },
         },
     'tinymce': {
@@ -1857,7 +1850,7 @@ default_resources = {
         },
     'modernizr': {
         None:{
-            'js':('scripts/modernizr.custom.input-types-and-atts.js',),
+            'js':'scripts/modernizr.custom.input-types-and-atts.js',
             },
         },
     'pickadate': {

@@ -8,7 +8,6 @@ class TestAPI(unittest.TestCase):
         from deform import Field
 
         from deform import FileData
-        from deform import Set
 
         from deform import ValidationFailure
         from deform import TemplateError
