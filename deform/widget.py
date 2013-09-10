@@ -947,6 +947,10 @@ class SelectWidget(Widget):
             return null
         return pstruct
 
+class Select2Widget(SelectWidget):
+    template = 'select2'
+    requirements = (('select2', None), )
+    
 class RadioChoiceWidget(SelectWidget):
     """
     Renders a sequence of ``<input type="radio"/>`` buttons based on a
@@ -1842,8 +1846,14 @@ default_resources = {
                 'css/pickadate-classic.date.min.css',
                 'css/pickadate-classic.min.css'
             )
-        }
-    }
+            },
+        },
+    'select2': {
+        None:{
+              'js':'select2/select2.js',
+              'css':'select2/select2.css',
+            },
+        },
     }
 
 default_resource_registry = ResourceRegistry()

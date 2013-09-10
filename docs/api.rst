@@ -103,6 +103,13 @@ Widget-Related
 .. exclude optgroup_class to avoid generating
 .. a duplicate entry for OptGroup
 
+.. autoclass:: Select2Widget
+   :members:
+   :inherited-members:
+   :exclude-members: optgroup_class
+.. exclude optgroup_class to avoid generating
+.. a duplicate entry for OptGroup
+
 .. autoclass:: RadioChoiceWidget
    :members:
 
