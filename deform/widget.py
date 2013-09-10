@@ -430,7 +430,10 @@ class AutocompleteInputWidget(Widget):
 
     def __init__(self, **kw):
         if 'delay' in kw:
-            raise ValueError('AutocompleteWidget does not support *delay* parameter anymore.')
+            raise ValueError(
+                'AutocompleteWidget does not support *delay* parameter '
+                'any longer.'
+                )
         Widget.__init__(self, **kw)
 
     def serialize(self, field, cstruct, **kw):
@@ -1789,30 +1792,6 @@ class ResourceRegistry(object):
                     if not source in result[thing]:
                         result[thing].append(source)
         return result
-
-
-def tabify_form(form):
-    """
-        A function that returns data from the form in a nice way ready for
-        tabbed view.
-    """
-    children = []
-    mappings = []
-    for child in form.children:
-        if child.typ.__class__.__name__ == 'Mapping':
-            mappings.append({'title': child.title,
-                             'name': child.name,
-                             'child': child,
-                             })
-        else:
-            children.append(child)
-
-    return {
-        'basic': children,
-        'other': mappings,
-        'only_one': mappings == [],
-        'have_basic': len(children) > 1 or len(children) == 1 and children[0].name != 'csrf_token'
-    }
 
 
 default_resources = {
