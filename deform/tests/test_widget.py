@@ -236,6 +236,13 @@ class TestAutocompleteInputWidget(unittest.TestCase):
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], '')
 
+    def test_removed_delay(self):
+        widget = self._makeOne()
+        widget.delay = 300
+        renderer = DummyRenderer()
+        field = DummyField(None, renderer=renderer)
+        self.assertRaises(ValueError, widget.serialize, field, None)
+
     def test_serialize_None(self):
         widget = self._makeOne()
         renderer = DummyRenderer()
@@ -258,10 +265,10 @@ class TestAutocompleteInputWidget(unittest.TestCase):
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], cstruct)
-        self.assertEqual(renderer.kw['options'],
-                         json.dumps({"delay": 400, "minLength": 2}))
-        self.assertEqual(renderer.kw['values'],
-                         json.dumps(url))
+        self.assertEqual(json.loads(renderer.kw['options']),
+                         {"limit": 8,
+                          "minLength": 2,
+                          "remote": "http://example.com?term=%QUERY"})
 
     def test_serialize_iterable(self):
         import json
@@ -276,10 +283,10 @@ class TestAutocompleteInputWidget(unittest.TestCase):
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], cstruct)
-        self.assertEqual(renderer.kw['options'],
-                         json.dumps({"delay": 10, "minLength": 2}))
-        self.assertEqual(renderer.kw['values'],
-                         json.dumps(vals))
+        self.assertEqual(json.loads(renderer.kw['options']),
+                         {"local": [1,2,3,4],
+                          "minLength": 2,
+                          "limit": 8})
 
     def test_serialize_not_null_readonly(self):
         widget = self._makeOne()
@@ -527,7 +534,7 @@ class TestRichTextWidget(TestTextInputWidget):
         #Default options should be provided
         result = renderer.kw['tinymce_options']
         self.assertTrue('"height": 240' in result)
-        self.assertTrue('"width": 500' in result)
+        self.assertTrue('"width": 0' in result)
 
         #Custom options should be set
         self.assertTrue('"theme_advanced_buttons1": "bold,italic,bullist,numlist"' in result)

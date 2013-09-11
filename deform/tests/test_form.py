@@ -95,7 +95,7 @@ class TestIssues(unittest.TestCase):
         except deform.ValidationFailure as e:
             rendered = e.render()
             self.assertTrue(
-                '<strong>Username does not match password</strong>'
+                'Username does not match password'
                 in rendered)
 
     def test_issue_71(self):
