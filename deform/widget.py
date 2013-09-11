@@ -1818,7 +1818,6 @@ default_resources = {
         None:{
             'js':('deform:static/scripts/jquery.form-3.09.js',
                   'deform:static/scripts/deform.js'),
-            'css':'deform:static/css/form.css',
             },
         },
     'tinymce': {
