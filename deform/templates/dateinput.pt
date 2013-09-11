@@ -8,8 +8,9 @@
     <input type="${type_name}"
            name="${name}"
            value="${cstruct}"
+           
            tal:attributes="size size;
-                           class css_class;
+                           class string: ${css_class} form-control;
                            style style"
            id="${oid}"/>
     <script type="text/javascript">
