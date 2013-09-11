@@ -50,7 +50,7 @@
      )
   <tal:block condition="orderable">
     $( "#${oid}-orderable" ).sortable({
-      handle: ".deformOrderbutton",
+      handle: ".deformOrderbutton, .panel-heading",
       containerSelector: "#${oid}-orderable",
       itemSelector: ".deformSeqItem",
       placeholder: '<span class="glyphicon glyphicon-arrow-right placeholder"></span>'

@@ -7,6 +7,19 @@
                  oid oid|field.oid"
      title="${description}"
      i18n:domain="deform">
+     <style>
+      .deformOrderbutton,
+      .deformClosebutton {
+         display: none;
+      }
+
+      .deformClosebuttonActive,
+      .deformOrderbuttonActive {
+         cursor: pointer;
+         float: left;
+         display: block;
+      }
+     </style>
   <!-- sequence_item -->
   <span class="deformOrderbutton close glyphicon glyphicon-resize-vertical"
         id="${oid}-order"
