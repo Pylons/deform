@@ -430,14 +430,14 @@ class AutocompleteInputWidget(Widget):
     requirements = (('typeahead', None), ('deform', None))
 
     def __init__(self, **kw):
-        if 'delay' in kw:
+        Widget.__init__(self, **kw)
+
+    def serialize(self, field, cstruct, **kw):
+        if 'delay' in kw or getattr(self, 'delay', None):
             raise ValueError(
                 'AutocompleteWidget does not support *delay* parameter '
                 'any longer.'
                 )
-        Widget.__init__(self, **kw)
-
-    def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
             cstruct = ''
         self.values = self.values or []

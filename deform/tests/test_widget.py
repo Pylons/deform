@@ -236,6 +236,13 @@ class TestAutocompleteInputWidget(unittest.TestCase):
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], '')
 
+    def test_removed_delay(self):
+        widget = self._makeOne()
+        widget.delay = 300
+        renderer = DummyRenderer()
+        field = DummyField(None, renderer=renderer)
+        self.assertRaises(ValueError, widget.serialize, field, None)
+
     def test_serialize_None(self):
         widget = self._makeOne()
         renderer = DummyRenderer()
