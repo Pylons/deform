@@ -31,6 +31,8 @@ MIGRATION NOTES:
 - AutocompleteInputWidget now accepts string type for "values"
 - chaining schemas now means tabs are generated
 - select widget no longer accepts "size" (instead use style="width: x")
+- get_widget_resources now returns asset specifications rather than
+  deform-static-relative paths
 
 OPEN QUESTIONS:
 

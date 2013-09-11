@@ -949,7 +949,7 @@ class SelectWidget(Widget):
 
 class Select2Widget(SelectWidget):
     template = 'select2'
-    requirements = (('select2', None), )
+    requirements = (('deform', None), ('select2', None))
     
 class RadioChoiceWidget(SelectWidget):
     """
@@ -1052,7 +1052,7 @@ class CheckedInputWidget(Widget):
 
     mismatch_message
         The message to be displayed when the value in the primary
-        field doesn't match the value in the confirm field.
+        field does not match the value in the confirm field.
 
     mask
         A :term:`jquery.maskedinput` input mask, as a string.  Both
@@ -1765,17 +1765,16 @@ class ResourceRegistry(object):
         ver['css'] = resources
 
     def __call__(self, requirements):
-        """ Return a dictionary representing the resources required
-        for a particular set of requirements (as returned by
-        :meth:`deform.Field.get_widget_requirements`).  The dictionary
-        will be a mapping from resource type (``js`` and ``css`` are
-        both keys in the dictionary) to a list of relative resource
-        paths.  Each path is relative to wherever you've mounted
-        Deform's ``static`` directory in your web server.  You can use
-        the paths for each resource type to inject CSS and Javascript
-        on-demand into the head of dynamic pages that render Deform
-        forms.  """
-        result = {'js':[], 'css':[]}
+        """ Return a dictionary representing the resources required for a
+        particular set of requirements (as returned by
+        :meth:`deform.Field.get_widget_requirements`).  The dictionary will be
+        a mapping from resource type (``js`` and ``css`` are both keys in the
+        dictionary) to a list of asset specifications paths.  Each asset
+        specification is a full path to a static resource in the form
+        ``package:path``.  You can use the paths for each resource type to
+        inject CSS and Javascript on-demand into the head of dynamic pages that
+        render Deform forms."""
+        result = { 'js':[], 'css':[] }
         for requirement, version in requirements:
             tmp = self.registry.get(requirement)
             if tmp is None:
@@ -1795,63 +1794,65 @@ class ResourceRegistry(object):
                 for source in sources:
                     if not source in result[thing]:
                         result[thing].append(source)
+                        
         return result
 
 
 default_resources = {
     'jquery.form': {
         None:{
-            'js':'scripts/jquery.form-3.09.js',
+            'js':'deform:static/scripts/jquery.form-3.09.js',
             },
         },
     'jquery.maskedinput': {
         None:{
-            'js':'scripts/jquery.maskedinput-1.3.1.min.js',
+            'js':'deform:static/scripts/jquery.maskedinput-1.3.1.min.js',
             },
         },
     'jquery.maskMoney': {
         None:{
-            'js':'scripts/jquery.maskMoney-1.4.1.js',
+            'js':'deform:static/scripts/jquery.maskMoney-1.4.1.js',
             },
         },
     'deform': {
         None:{
-            'js':('scripts/jquery.form-3.09.js',
-                  'scripts/deform.js'),
+            'js':('deform:static/scripts/jquery.form-3.09.js',
+                  'deform:static/scripts/deform.js'),
+            'css':'deform:static/css/form.css',
             },
         },
     'tinymce': {
         None:{
-            'js':'tinymce/tinymce.min.js',
+            'js':'deform:static/tinymce/tinymce.min.js',
             },
         },
     'typeahead': {
         None:{
-            'js':'scripts/typeahead.min.js',
-            'css':'css/typeahead.css'
+            'js':'deform:static/scripts/typeahead.min.js',
+            'css':'deform:static/css/typeahead.css'
             },
         },
     'modernizr': {
         None:{
-            'js':'scripts/modernizr.custom.input-types-and-atts.js',
+            'js':'deform:static/scripts/modernizr.custom.input-types-and-atts.js',
             },
         },
     'pickadate': {
         None: {
             'js': (
-                'scripts/pickadate.date.min.js',
-                'scripts/pickadate.min.js'
+                'deform:static/scripts/pickadate.date.min.js',
+                'deform:static/scripts/pickadate.min.js'
             ),
             'css': (
-                'css/pickadate-classic.date.min.css',
-                'css/pickadate-classic.min.css'
+                'deform:static/css/pickadate-classic.date.min.css',
+                'deform:static/css/pickadate-classic.min.css'
             )
             },
         },
     'select2': {
         None:{
-              'js':'select2/select2.js',
-              'css':'select2/select2.css',
+              'js':'deform:static/select2/select2.js',
+              'css':'deform:static/select2/select2.css',
             },
         },
     }
