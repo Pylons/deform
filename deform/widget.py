@@ -423,6 +423,7 @@ class AutocompleteInputWidget(Widget):
     readonly_template = 'readonly/textinput'
     size = None
     strip = True
+    items = 8
     style = None
     template = 'autocomplete_input'
     values = None
@@ -448,10 +449,8 @@ class AutocompleteInputWidget(Widget):
         else:
             options['local'] = self.values
 
-        if 'min_length' in self.__dict__ or 'min_length' in kw:
-            options['minLength'] = kw.pop('min_length', self.min_length)
-        if 'items' in self.__dict__ or 'items' in kw:
-            options['items'] = kw.pop('items', self.items)
+        options['minLength'] = kw.pop('min_length', self.min_length)
+        options['limit'] = kw.pop('items', self.items)
         kw['options'] = json.dumps(options)
         tmpl_values = self.get_template_values(field, cstruct, kw)
         template = readonly and self.readonly_template or self.template

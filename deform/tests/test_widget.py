@@ -258,10 +258,10 @@ class TestAutocompleteInputWidget(unittest.TestCase):
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], cstruct)
-        self.assertEqual(renderer.kw['options'],
-                         json.dumps({"delay": 400, "minLength": 2}))
-        self.assertEqual(renderer.kw['values'],
-                         json.dumps(url))
+        self.assertEqual(json.loads(renderer.kw['options']),
+                         {"limit": 8,
+                          "minLength": 2,
+                          "remote": "http://example.com?term=%QUERY"})
 
     def test_serialize_iterable(self):
         import json
@@ -276,10 +276,10 @@ class TestAutocompleteInputWidget(unittest.TestCase):
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], cstruct)
-        self.assertEqual(renderer.kw['options'],
-                         json.dumps({"delay": 10, "minLength": 2}))
-        self.assertEqual(renderer.kw['values'],
-                         json.dumps(vals))
+        self.assertEqual(json.loads(renderer.kw['options']),
+                         {"local": [1,2,3,4],
+                          "minLength": 2,
+                          "limit": 8})
 
     def test_serialize_not_null_readonly(self):
         widget = self._makeOne()

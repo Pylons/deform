@@ -29,17 +29,12 @@
 
     <input type="hidden" name="_charset_" />
     <input type="hidden" name="__formid__" value="${formid}"/>
-    <ul tal:condition="field.error">
 
-      <li class="errorLi">
-        <h3 class="errorMsgLbl" i18n:translate=""
-            >There was a problem with your submission</h3>
-        <p class="errorMsg" i18n:translate="" i18n:domain="deform"
-           >Errors have been highlighted below</p>
-        <p class="errorMsg">${errormsg}</p>
-      </li>
-
-    </ul>
+    <div class="alert alert-danger" tal:condition="field.error">
+      There was a problem with your submission,
+      errors have been highlighted below:
+      <p class="errorMsg">${field.errormsg}</p>
+    </div>
 
     <p class="section first" tal:condition="description">
       ${description}
