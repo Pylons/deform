@@ -8,7 +8,7 @@ TODO
 - run all tests
 - need to test select2-related widget renderings via selenium
 - if errors are not on first displayed tabs for mappings, we have to let the user know where they are, see edit/ for demo
-- assets for templates
+- assets for templates: deform should provide a tool to resolve that?
 - https://github.com/Pylons/substanced/pull/109
 
 BROKEN STUFF:
@@ -16,7 +16,6 @@ BROKEN STUFF:
 - readonly_sequence_of_mappings - totally broken layout
 - deferred_schema_bindings/ - due to date widget
 - sequence_of_fileuploads/ - submitting empty form renders it without controls
-- autocomplete input text has some UI fail
 - checkbox widget newline
 - custom_classes_on_outermost_html_element/ - endline, too short year field
 - UX of sequence remove button sux
