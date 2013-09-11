@@ -527,7 +527,7 @@ class TestRichTextWidget(TestTextInputWidget):
         #Default options should be provided
         result = renderer.kw['tinymce_options']
         self.assertTrue('"height": 240' in result)
-        self.assertTrue('"width": 500' in result)
+        self.assertTrue('"width": 0' in result)
 
         #Custom options should be set
         self.assertTrue('"theme_advanced_buttons1": "bold,italic,bullist,numlist"' in result)
