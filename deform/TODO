@@ -2,7 +2,7 @@ TODO
 
 - docs
 - pickadate
-- check out form.css
+- check out form.css (add "required" css as shown below to it at least)
 - readonly templates changes
 - horizontal/inline forms + structural things
 - run all tests
