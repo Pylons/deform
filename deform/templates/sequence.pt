@@ -35,7 +35,7 @@
      class="btn deformSeqAdd"
      id="${field.oid}-seqAdd"
      onclick="javascript: return deform.appendSequenceItem(this);">
-    <small id="${field.oid}-addtext">${add_subitem_text}</small>
+    <small class="btn btn-default" id="${field.oid}-addtext">${add_subitem_text}</small>
   </a>
 
   <script type="text/javascript">
@@ -49,7 +49,12 @@
        }
      )
   <tal:block condition="orderable">
-     $( "#${oid}-orderable" ).sortable({handle: "span.deformOrderbutton"});
+    $( "#${oid}-orderable" ).sortable({
+      handle: ".deformOrderbutton",
+      containerSelector: "#${oid}-orderable",
+      itemSelector: ".deformSeqItem",
+      placeholder: '<span class="glyphicon glyphicon-arrow-right placeholder"></span>'
+    });
   </tal:block>
   </script>
   <input type="hidden" name="__end__" value="${field.name}:sequence"/>

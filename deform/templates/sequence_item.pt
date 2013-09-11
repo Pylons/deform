@@ -8,11 +8,12 @@
      title="${description}"
      i18n:domain="deform">
   <!-- sequence_item -->
-  <span class="deformOrderbutton close"
+  <span class="deformOrderbutton close glyphicon glyphicon-resize-vertical"
         id="${oid}-order"
         tal:condition="not hidden"
         title="Reorder (via drag and drop)"
-        i18n:attributes="title title"></span>
+        i18n:attributes="title title"
+        style="padding: 0.4em"></span>    
   <a class="deformClosebutton close"
      id="${oid}-close"
      tal:condition="not field.widget.hidden"
