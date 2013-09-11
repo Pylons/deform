@@ -11,6 +11,10 @@ TODO
 - assets for templates: deform should provide a tool to resolve that?
 - https://github.com/Pylons/substanced/pull/109
 
+NEW FEATURES:
+
+- input_prepend/input_append in mapping_item widget.
+
 BROKEN STUFF:
 
 - readonly_sequence_of_mappings - totally broken layout
