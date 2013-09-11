@@ -7,7 +7,7 @@ TODO
 - readonly templates changes
 - horizontal/inline forms + structural things
 - run all tests
-- if errors are not on first displayed tabs for mappings, we have to let the user know where they are, see edit/ for demo
+- need to test select2-related widget renderings via selenium
 
 BROKEN STUFF:
 
@@ -30,10 +30,11 @@ MIGRATION NOTES:
 - merged TypeaheadInputWidget to AutocompleteInputWidget (removed delay parameter)
 - AutocompleteInputWidget now accepts string type for "values"
 - chaining schemas now means tabs are generated
+- select widget no longer accepts "size" (instead use style="width: x")
 
 OPEN QUESTIONS:
 
-- deform 2.0 requires twitter bootstrap 3.0, should we tell users to always load basic requirements?
+- deform 2.0 requires twitter bootstrap 3.0, should we tell users to always load basic requirements?  cm: yes, they should load jquery and bootstrap themselves.
 
 NICE TO HAVE
 

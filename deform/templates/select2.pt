@@ -1,22 +1,51 @@
-<div i18n:domain="deform" tal:omit-tag="">
+<div tal:define="
+     name name|field.name;
+     style field.widget.style|'width: 50%';
+     oid oid|field.oid;
+     css_class css_class|field.widget.css_class;
+     optgroup_class optgroup_class|field.widget.optgroup_class;
+     multiple multiple|field.widget.multiple;"
+     tal:omit-tag="">
 
-  <select name="${field.name}"
-          id="${field.oid}"
-          tal:attributes="size field.widget.size;
-                          data-placeholder field.widget.placeholder|None">
-   <option tal:repeat="(value, description) values"
-           tal:attributes="selected value == cstruct and 'selected';
-                           class field.widget.css_class"
-           value="${value}">${description}</option>
+  <input type="hidden" name="__start__" value="${name}:sequence"
+         tal:condition="multiple" />
+
+  <select tal:attributes="
+          name name;
+          id oid;
+          class string: form-control ${css_class};
+          data-placeholder field.widget.placeholder|None;
+          multiple multiple"
+          style="${style}">
+    <tal:loop tal:repeat="item values">
+      <optgroup tal:condition="isinstance(item, optgroup_class)"
+                tal:attributes="label item.label">
+        <option tal:repeat="(value, description) item.options"
+                tal:attributes="
+                selected (multiple and value in cstruct or value == cstruct) and 'selected';
+                class css_class;
+                label field.widget.long_label_generator and description;
+                value value"
+                tal:content="field.widget.long_label_generator and field.widget.long_label_generator(item.label, description) or description"/>
+      </optgroup>
+      <option tal:condition="not isinstance(item, optgroup_class)"
+              tal:attributes="
+              selected (multiple and item[0] in cstruct or item[0] == cstruct) and 'selected';
+              class css_class;
+              value item[0]">${item[1]}</option>
+    </tal:loop>
   </select>
 
   <script type="text/javascript">
-    deform.addCallback(
-        '${field.oid}',
-        function(oid) {
-            $('#' + oid).select2();
-        }
-    );
+   deform.addCallback(
+     '${field.oid}',
+     function(oid) {
+       $('#' + oid).select2();
+     }
+   );
   </script>
 
+  <input type="hidden" name="__end__" value="${name}:sequence"
+         tal:condition="multiple" />
 </div>
+

@@ -852,9 +852,9 @@ class SelectWidget(Widget):
         - or an instance of ``optgroup_class`` (which is
           ``deform.widget.OptGroup`` by default).
 
-    size
-        The ``size`` attribute of the select input field (default:
-        ``None``).
+    style
+        The ``style`` attribute of the select input field (default:
+        ``width: 50%``).
 
     null_value
         The value which represents the null value.  When the null
@@ -927,7 +927,7 @@ class SelectWidget(Widget):
     readonly_template = 'readonly/select'
     null_value = ''
     values = ()
-    size = None
+    style = 'width: 50%'
     multiple = False
     optgroup_class = OptGroup
     long_label_generator = None
