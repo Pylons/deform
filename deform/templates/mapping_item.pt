@@ -13,10 +13,10 @@
      i18n:domain="deform">
 
   <label for="${oid}"
-         class="control-label"
-         tal:condition="not structural">
+         class="control-label ${required and 'required' or ''}"
+         tal:condition="not structural"
+         >
     ${title}
-    <span tal:condition="field.required" class="req" id="req-${oid}">*</span>
   </label>
 
   <div tal:define="input_prepend field.widget.input_prepend | None;

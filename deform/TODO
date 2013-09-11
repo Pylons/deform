@@ -39,6 +39,18 @@ MIGRATION NOTES:
 - get_widget_resources now returns asset specifications rather than
   deform-static-relative paths
 - deform 2.0 requires users to manually load TB 3.0 and jquery 2.0
+- required labels no longer insert an asterisk inside a <span class="req">
+  inside themselves.  instead the label element has a required class
+  if the field is required; use "form .required:after" to style the element, 
+  e.g.
+           form .required {
+             font-weight: bold;
+           }
+           form .required:after {
+             color: #e32;
+             content: '*';
+             display:inline;
+           }
 
 NICE TO HAVE
 
