@@ -13,13 +13,13 @@
         tal:condition="not hidden"
         title="Reorder (via drag and drop)"
         i18n:attributes="title title"></span>
-    <a class="deformClosebutton close"
-       id="${oid}-close"
-       tal:condition="not field.widget.hidden"
-       title="Remove"
-       style="padding-right:0.4em"
-       i18n:attributes="title"
-       onclick="javascript:deform.removeSequenceItem(this);">&times;</a>
+  <a class="deformClosebutton close"
+     id="${oid}-close"
+     tal:condition="not field.widget.hidden"
+     title="Remove"
+     style="padding: 0.5em"
+     i18n:attributes="title"
+     onclick="javascript:deform.removeSequenceItem(this);">&times;</a>
 
   <span tal:replace="structure field.serialize(cstruct)"/>
   <tal:errors condition="field.error and not hidden"
