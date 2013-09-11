@@ -1,13 +1,15 @@
 TODO
 
 - docs
-- select2
 - pickadate
 - check out form.css
 - readonly templates changes
 - horizontal/inline forms + structural things
 - run all tests
 - need to test select2-related widget renderings via selenium
+- if errors are not on first displayed tabs for mappings, we have to let the user know where they are, see edit/ for demo
+- assets for templates
+- https://github.com/Pylons/substanced/pull/109
 
 BROKEN STUFF:
 
@@ -20,6 +22,7 @@ BROKEN STUFF:
 - UX of sequence remove button sux
 - multiple_error_messages_seq/ - doesn't display sequence items on error
 - date parts widget - currently it's inline as a whole, see custom_classes_on_outermost_html_element for demo
+- sequence_orderable/ - not orderable
 
 MIGRATION NOTES: 
 
@@ -33,10 +36,7 @@ MIGRATION NOTES:
 - select widget no longer accepts "size" (instead use style="width: x")
 - get_widget_resources now returns asset specifications rather than
   deform-static-relative paths
-
-OPEN QUESTIONS:
-
-- deform 2.0 requires twitter bootstrap 3.0, should we tell users to always load basic requirements?  cm: yes, they should load jquery and bootstrap themselves.
+- deform 2.0 requires users to manually load TB 3.0 and jquery 2.0
 
 NICE TO HAVE
 
@@ -45,3 +45,4 @@ NICE TO HAVE
 - prepend/append t.bootstrap stuff
 - https://github.com/Pylons/deform/pull/116#issuecomment-23210460
 - group demos by widget type
+- handle ajax demo more UX friendly
