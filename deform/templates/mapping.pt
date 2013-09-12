@@ -17,7 +17,7 @@
       </div>
 
       <div tal:condition="description">
-        ${description} ABC
+        ${description}
       </div>
 
       ${field.start_mapping()}

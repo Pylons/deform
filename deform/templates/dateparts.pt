@@ -8,26 +8,24 @@ ${field.start_mapping()}
 
 <div class="row">
     <div class="col-xs-12">
-        <div class="input-group col-xs-4">
+        <div class="input-group col-xs-3">
           <span class="input-group-addon" i18n:translate="">Year</span>
           <input type="text" name="year" value="${year}"
-                 class="span1 form-control ${css_class}"
-                 placeholder="year"
+                 class="span2 form-control ${css_class}"
                  tal:attributes="size size; maxlength size"
                  id="${oid}"/>
         </div>
-        <div class="input-group col-xs-4">
+        <div class="input-group col-xs-3">
           <span class="input-group-addon" i18n:translate="">Month</span>
-          <input type="text" name="month" value="${month}" class="span1 form-control ${css_class}"
-                 placeholder="month"
+          <input type="text" name="month" value="${month}"
+                 class="span2 form-control ${css_class}"
                  tal:attributes="size size; maxlength size"
                  id="${oid}-month"/>
         </div>
-        <div class="input-group col-xs-4">
+        <div class="input-group col-xs-3">
           <span class="input-group-addon" i18n:translate="">Day</span>
           <input type="text" name="day" value="${day}"
-                 placeholder="day"
-                 class="span1 form-control ${css_class}"
+                 class="span2 form-control ${css_class}"
                  tal:attributes="size size; maxlength size"
                  id="${oid}-day"/>
         </div>

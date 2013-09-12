@@ -21,7 +21,6 @@ BROKEN STUFF:
 - deferred_schema_bindings/ - due to date widget
 - sequence_of_fileuploads/ - submitting empty form renders it without controls
 - checkbox widget newline
-- custom_classes_on_outermost_html_element/ - endline, too short year field
 - multiple_error_messages_seq/ - doesn't display sequence items on error
 
 MIGRATION NOTES: 
