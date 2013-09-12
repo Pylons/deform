@@ -1,36 +1,14 @@
-.deform .req{
-   color: red;
+.deformOrderbutton,
+.deformClosebutton {
+    display: none;
 }
-
-.deform label.desc{
-    display: block;
-    font-weight:bold;
-}
-
-.deform ul {
-    margin: 0;
-    padding: 0;
-}
-
-.deform li {
-    clear: left;
-    display: block;
-    margin: 6px 0px;
-    padding: 3px;
-}
-
-/* deform additions*/
 
 .deformClosebuttonActive,
 .deformOrderbuttonActive {
-   border: 0;
-   cursor: pointer;
-   float: left;
-   /* width: 1em; */
-   /* height: 1em; */
-   /* margin: .5em; */
+    cursor: pointer;
+    float: left;
+    display: block;
 }
-
 .deformClosebuttonActive:before {
     content:"✖";
     color:red;
@@ -42,11 +20,11 @@
     margin-right: 5px;
 }
 
-a.deformSeqAdd:visited {
+.deformSeqAdd:visited {
    color: blue;
 }
 
-div.deformReplaces {
+.deformReplaces {
     float: left;
 }
 
@@ -54,6 +32,3 @@ div.deformReplaces {
     padding: 1px;
 }
 
-.deform ul.inline > li{
-    display:inline-block;
-}
