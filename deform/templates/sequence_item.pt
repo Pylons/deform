@@ -13,12 +13,12 @@
         tal:condition="not hidden"
         title="Reorder (via drag and drop)"
         i18n:attributes="title title"
-        style="padding: 0.4em"></span>    
+        style="padding: 0.3em"></span>    
   <a class="deformClosebutton close"
      id="${oid}-close"
      tal:condition="not field.widget.hidden"
      title="Remove"
-     style="padding: 0.5em"
+     style="padding: 0.3em"
      i18n:attributes="title"
      onclick="javascript:deform.removeSequenceItem(this);">&times;</a>
 
