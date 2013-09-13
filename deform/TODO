@@ -23,6 +23,9 @@ BROKEN STUFF:
 - checkbox widget newline
 - multiple_error_messages_seq/ - doesn't display sequence items on error
 - sequence_of_autocompletes: text boxes do not autocomplete
+- sequence_of_sequences: js that processes close/order buttons has to 
+  be less promiscuous (it uses e.g. "find"); symptom: buttons
+  appear/disappear, act on the wrong element, etc.
 
 MIGRATION NOTES: 
 
