@@ -17,8 +17,6 @@ BROKEN STUFF:
 
 - datetimeinput - missing widgets
 - readonly_sequence_of_mappings - totally broken layout
-- sequence_of_fileuploads/ - submitting empty form renders it without controls
-- checkbox widget newline
 - sequence_of_sequences: js that processes close/order buttons has to 
   be less promiscuous (it uses e.g. "find"); symptom: buttons
   appear/disappear, act on the wrong element, etc.
