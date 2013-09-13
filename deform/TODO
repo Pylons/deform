@@ -22,6 +22,7 @@ BROKEN STUFF:
 - sequence_of_fileuploads/ - submitting empty form renders it without controls
 - checkbox widget newline
 - multiple_error_messages_seq/ - doesn't display sequence items on error
+- sequence_of_autocompletes: text boxes do not autocomplete
 
 MIGRATION NOTES: 
 
