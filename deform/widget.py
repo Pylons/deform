@@ -853,7 +853,7 @@ class SelectWidget(Widget):
 
     style
         The ``style`` attribute of the select input field (default:
-        ``width: 50%``).
+        ``None``).  For example:  ``style = 'width: 50%'``
 
     null_value
         The value which represents the null value.  When the null
@@ -924,9 +924,9 @@ class SelectWidget(Widget):
     """
     template = 'select'
     readonly_template = 'readonly/select'
+    style = None
     null_value = ''
     values = ()
-    style = 'width: 50%'
     multiple = False
     optgroup_class = OptGroup
     long_label_generator = None
