@@ -13,6 +13,18 @@
      class="deformSeq"
      id="${oid}">
 
+  <style>
+    body.dragging, body.dragging * {
+      cursor: move !important;
+    }
+
+    .dragged {
+      position: absolute;
+      opacity: 0.5;
+      z-index: 2000;
+    }
+  </style>   
+
   <!-- sequence -->
   <input type="hidden" name="__start__"
          value="${field.name}:sequence"
@@ -62,7 +74,24 @@
                handle: ".deformOrderbutton, .panel-heading",
                containerSelector: "#${oid}-orderable",
                itemSelector: ".deformSeqItem",
-               placeholder: '<span class="glyphicon glyphicon-arrow-right placeholder"></span>'
+               placeholder: '<span class="glyphicon glyphicon-arrow-right placeholder"></span>',
+               onDragStart: function ($item, container, _super) {
+                 var offset = $item.offset(),
+                 pointer = container.rootGroup.pointer
+
+                 adjustment = {
+                   left: pointer.left - offset.left,
+                   top: pointer.top - offset.top
+                 }
+
+                 _super($item, container)
+               },
+               onDrag: function ($item, position) {
+                   $item.css({
+                     left: position.left - adjustment.left,
+                     top: position.top - adjustment.top
+                   })
+                 }
                });
          </tal:block>
       </script>
