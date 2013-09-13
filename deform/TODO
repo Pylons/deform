@@ -8,7 +8,6 @@ TODO
 - run all tests
 - need to test select2-related widget renderings via selenium
 - assets for templates: deform should provide a tool to resolve that?
-- https://github.com/Pylons/substanced/pull/109
 
 NEW FEATURES:
 
