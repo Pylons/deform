@@ -23,7 +23,6 @@ BROKEN STUFF:
   be less promiscuous (it uses e.g. "find"); symptom: buttons
   appear/disappear, act on the wrong element, etc.
 - sequence_of_sequences/
-- multiple_error_messages_seq/ - doesn't color mulitple errors with red
 
 MIGRATION NOTES: 
 
