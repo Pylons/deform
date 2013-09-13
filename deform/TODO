@@ -61,3 +61,4 @@ NICE TO HAVE
 - https://github.com/Pylons/deform/pull/116#issuecomment-23210460
 - group demos by widget type
 - handle ajax demo more UX friendly
+- Put drag handles in panel headers: https://github.com/Pylons/deform/issues/180
