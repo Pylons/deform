@@ -7,29 +7,32 @@
                  oid oid|field.oid"
      title="${description}"
      i18n:domain="deform">
-  <!-- sequence_item -->
-  <span class="deformOrderbutton close glyphicon glyphicon-resize-vertical"
-        id="${oid}-order"
-        tal:condition="not hidden"
-        title="Reorder (via drag and drop)"
-        i18n:attributes="title title"
-        style="padding: 0.3em"></span>    
-  <a class="deformClosebutton close"
-     id="${oid}-close"
-     tal:condition="not field.widget.hidden"
-     title="Remove"
-     style="padding: 0.3em"
-     i18n:attributes="title"
-     onclick="javascript:deform.removeSequenceItem(this);">&times;</a>
-
-  <span tal:replace="structure field.serialize(cstruct)"/>
-  <tal:errors condition="field.error and not hidden"
-              define="errstr 'error-%s' % oid"
-              repeat="msg field.error.messages()">
-    <p tal:condition="msg"
-       id="${errstr if repeat.msg.index==0 else '%s-%s' % (errstr, repeat.msg.index)}"
-       class="${error_class}"
-       i18n:translate="">${msg}</p>
-  </tal:errors>
+  <div class="container">
+    <div class="col-md-11">
+      <span tal:replace="structure field.serialize(cstruct)"/>
+      <tal:errors condition="field.error and not hidden"
+                  define="errstr 'error-%s' % oid"
+                  repeat="msg field.error.messages()">
+        <p tal:condition="msg"
+           id="${errstr if repeat.msg.index==0 else '%s-%s' % (errstr, repeat.msg.index)}"
+           class="${error_class}"
+           i18n:translate="">${msg}</p>
+      </tal:errors>
+    </div>
+    <div class="col-md-1" style="padding:0">
+      <!-- sequence_item -->
+      <span class="deformOrderbutton close glyphicon glyphicon-resize-vertical"
+            id="${oid}-order"
+            tal:condition="not hidden"
+            title="Reorder (via drag and drop)"
+            i18n:attributes="title title"></span>    
+      <a class="deformClosebutton close"
+         id="${oid}-close"
+         tal:condition="not field.widget.hidden"
+         title="Remove"
+         i18n:attributes="title"
+         onclick="javascript:deform.removeSequenceItem(this);">&times;</a>
+    </div>
+  </div>
   <!-- /sequence_item -->
 </div>

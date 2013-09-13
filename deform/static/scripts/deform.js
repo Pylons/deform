@@ -124,7 +124,7 @@ var deform  = {
     },
 
     removeSequenceItem: function(clicked) {
-        var $item_node = $(clicked).parent();
+        var $item_node = $(clicked).closest('.deformSeqItem');
         var $oid_node = $item_node.closest('.deformSeq');
         var $before_node = $oid_node.find('.deformInsertBefore').last();
         var min_len = parseInt($before_node.attr('min_len')||'0', 10);
@@ -145,19 +145,15 @@ var deform  = {
 
     processSequenceButtons: function(oid_node, min_len, max_len, now_len,
                                      orderable) {
+        orderable = !!orderable; // convert to bool
+        var has_multiple = now_len > 1;
         var $ul = oid_node.find('.deformSeqContainer');
-        var $lis = $ul.children('.deformSeqItem');
-        $lis.children('.deformClosebutton').toggle(now_len > min_len);
-        oid_node.find('.deformSeqAdd').toggle(now_len < max_len);
-        if (orderable) {
-            if (now_len > 1) {
-                $lis.find('.deformOrderbutton').addClass(
-                    'deformOrderbuttonActive');
-            } else {
-                $lis.find('.deformOrderbutton').removeClass(
-                    'deformOrderbuttonActive');
-            }
-        }
+        var $lis = $ul.find('.deformSeqItem');
+        var show_closebutton = now_len > min_len;
+        var show_addbutton = now_len < max_len;
+        $lis.find('.deformClosebutton').toggle(show_closebutton);
+        oid_node.find('.deformSeqAdd').toggle(show_addbutton);
+        $lis.find('.deformOrderbutton').toggle(orderable && has_multiple);
      },
 
     focusFirstInput: function (el) {

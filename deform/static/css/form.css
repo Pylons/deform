@@ -1,25 +1,3 @@
-.deformOrderbutton,
-.deformClosebutton {
-    display: none;
-}
-
-.deformClosebuttonActive,
-.deformOrderbuttonActive {
-    cursor: pointer;
-    float: left;
-    display: block;
-}
-.deformClosebuttonActive:before {
-    content:"✖";
-    color:red;
-    margin-right: 5px;
-}
-
-.deformOrderbuttonActive:before {
-    content:"↕";
-    margin-right: 5px;
-}
-
 .deformSeqAdd:visited {
    color: blue;
 }

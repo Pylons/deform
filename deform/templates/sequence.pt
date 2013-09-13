@@ -27,7 +27,8 @@
            id="${oid}-orderable">
         <div tal:define="subfields [ x[1] for x in subfields ]"
              tal:repeat="subfield subfields"
-             tal:replace="structure subfield.render_template(item_tmpl, parent=field)" />
+             tal:replace="structure subfield.render_template(item_tmpl, 
+                                                          parent=field)" />
         <span class="deformInsertBefore"
               tal:attributes="
                  min_len min_len;
@@ -43,7 +44,7 @@
          class="btn deformSeqAdd"
          id="${field.oid}-seqAdd"
          onclick="javascript: return deform.appendSequenceItem(this);">
-        <small class="btn btn-default" id="${field.oid}-addtext">${add_subitem_text}</small>
+        <small id="${field.oid}-addtext">${add_subitem_text}</small>
       </a>
 
       <script type="text/javascript">
