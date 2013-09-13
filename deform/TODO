@@ -7,7 +7,6 @@ TODO
 - horizontal/inline forms + structural things
 - run all tests
 - need to test select2-related widget renderings via selenium
-- if errors are not on first displayed tabs for mappings, we have to let the user know where they are, see edit/ for demo
 - assets for templates: deform should provide a tool to resolve that?
 - https://github.com/Pylons/substanced/pull/109
 
@@ -17,15 +16,16 @@ NEW FEATURES:
 
 BROKEN STUFF:
 
+- datetimeinput - missing widgets
 - readonly_sequence_of_mappings - totally broken layout
-- deferred_schema_bindings/ - due to date widget
 - sequence_of_fileuploads/ - submitting empty form renders it without controls
 - checkbox widget newline
-- multiple_error_messages_seq/ - doesn't display sequence items on error
 - sequence_of_autocompletes: text boxes do not autocomplete
 - sequence_of_sequences: js that processes close/order buttons has to 
   be less promiscuous (it uses e.g. "find"); symptom: buttons
   appear/disappear, act on the wrong element, etc.
+- sequence_of_sequences/
+- multiple_error_messages_seq/ - doesn't color mulitple errors with red
 
 MIGRATION NOTES: 
 

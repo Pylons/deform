@@ -927,6 +927,7 @@ class SelectWidget(Widget):
     style = None
     null_value = ''
     values = ()
+    style = ''
     multiple = False
     optgroup_class = OptGroup
     long_label_generator = None

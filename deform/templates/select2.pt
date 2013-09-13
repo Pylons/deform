@@ -1,12 +1,41 @@
 <div tal:define="
      name name|field.name;
-     style field.widget.style|'width: 50%';
+     style field.widget.style|'';
      oid oid|field.oid;
      css_class css_class|field.widget.css_class;
      optgroup_class optgroup_class|field.widget.optgroup_class;
      multiple multiple|field.widget.multiple;"
      tal:omit-tag="">
 
+   <style>
+    .form-control .select2-choice {
+        border: 0;
+        border-radius: 2px;
+    }
+
+    .form-control .select2-choice .select2-arrow {
+        border-radius: 0 2px 2px 0;   
+    }
+
+    .form-control.select2-container {
+        height: auto !important;
+        padding: 0px;
+    }
+
+    .form-control.select2-container.select2-dropdown-open {
+        border-color: #5897FB;
+        border-radius: 3px 3px 0 0;
+    }
+
+    .form-control .select2-container.select2-dropdown-open .select2-choices {
+        border-radius: 3px 3px 0 0;
+    }
+
+    .form-control.select2-container .select2-choices {
+        border: 0 !important;
+        border-radius: 3px;
+    }
+   </style>
   <input type="hidden" name="__start__" value="${name}:sequence"
          tal:condition="multiple" />
 
@@ -40,7 +69,7 @@
    deform.addCallback(
      '${field.oid}',
      function(oid) {
-       $('#' + oid).select2();
+       $('#' + oid).select2({containerCssClass: 'form-control'});
      }
    );
   </script>
