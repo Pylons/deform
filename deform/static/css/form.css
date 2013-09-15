@@ -10,3 +10,12 @@
     padding: 1px;
 }
 
+form .required {
+    font-weight: bold;
+}
+
+form .required:after {
+    color: #e32;
+    content: '*';
+    display:inline;
+}
