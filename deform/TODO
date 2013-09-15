@@ -25,6 +25,7 @@ BROKEN STUFF:
 MIGRATION NOTES: 
 
 - removed deprecated `height, width, skin, theme` parameters from RichTextWidget
+  (use "options" instead)
 - removed deprecated `render_initial_item` from SequenceWidget
 - removed deprecated deform.Set (use colander.Set instead)
 - DateInputWidget renamed parameter `dateFormat` to `format`
