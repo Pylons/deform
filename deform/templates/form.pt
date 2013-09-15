@@ -30,7 +30,7 @@
     <input type="hidden" name="_charset_" />
     <input type="hidden" name="__formid__" value="${formid}"/>
 
-    <div class="alert alert-danger" tal:condition="field.error">
+    <div class="alert alert-danger errorMsgLbl" tal:condition="field.error">
       There was a problem with your submission,
       errors have been highlighted below:
       <p class="errorMsg">${field.errormsg}</p>
