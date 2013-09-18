@@ -4,6 +4,9 @@ Unreleased
 Bug Fixes
 ~~~~~~~~~
 
+- rename country specific locales to only include language
+  [iElectric] 
+
 - Un-break single select widget.  See
   https://github.com/Pylons/deform/issues/181
 
