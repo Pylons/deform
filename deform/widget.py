@@ -424,7 +424,7 @@ class AutocompleteInputWidget(Widget):
         ``8``.
 
     """
-    min_length = 2
+    min_length = 1
     readonly_template = 'readonly/textinput'
     size = None
     strip = True
