@@ -1,6 +1,7 @@
 import itertools
 import colander
 import peppercorn
+import weakref
 
 from chameleon.utils import Markup
 
@@ -70,6 +71,12 @@ class Field(object):
         children
             Child fields of this field.
 
+        parent
+            The parent field of this field or ``None`` if this field is
+            the root.  This is actually a ``weakref.proxy`` object to the field
+            to avoid leaks due to circular references, but it can
+            be treated like the field itself.
+
         error
             The exception raised by the last attempted validation of the
             schema element associated with this field.  By default, this
@@ -133,7 +140,7 @@ class Field(object):
 
     def __init__(self, schema, renderer=None, counter=None,
                  resource_registry=None, appstruct=colander.null,
-                 **kw):
+                 parent=None, **kw):
         self.counter = counter or itertools.count()
         self.order = next(self.counter)
         self.oid = getattr(schema, 'oid', 'deformField%s' % self.order)
@@ -150,6 +157,9 @@ class Field(object):
         self.renderer = renderer
         self.resource_registry = resource_registry
         self.children = []
+        if parent is not None:
+            parent = weakref.proxy(parent)
+        self.parent = parent
         self.__dict__.update(kw)
         for child in schema.children:
             self.children.append(
@@ -158,10 +168,21 @@ class Field(object):
                     renderer=renderer,
                     counter=self.counter,
                     resource_registry=resource_registry,
+                    parent=self,
                     **kw
                     )
                 )
         self.set_appstruct(appstruct)
+
+    def get_root(self):
+        """ Return the root field in the field herarchy (the form field) """
+        node = self
+        while True:
+            parent = node.parent
+            if parent is None:
+                break
+            node = parent
+        return node
 
     @classmethod
     def set_zpt_renderer(cls, search_path, auto_reload=True,

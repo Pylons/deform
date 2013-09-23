@@ -12,6 +12,8 @@ TODO
 NEW FEATURES:
 
 - input_prepend/input_append in mapping_item widget.
+- field.parent
+- field.get_root
 
 BROKEN STUFF:
 

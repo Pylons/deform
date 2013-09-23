@@ -17,6 +17,8 @@ Form-Related
 
    .. automethod:: translate
 
+   .. automethod:: get_root
+
 .. autoclass:: Form
    :members:
 
@@ -25,9 +27,6 @@ Form-Related
 
 Type-Related
 ------------
-
-.. autoclass:: Set
-   :members:
 
 .. autoclass:: FileData
    :members:
