@@ -270,7 +270,8 @@ class Field(object):
         information.  Return the cloned field.  The ``order``
         attribute of the node is not cloned; instead the field
         receives a new order attribute; it will be a number larger
-        than the last renderered field of this set."""
+        than the last renderered field of this set.  The parent of the cloned
+        node will become ``None`` unconditionally."""
         cloned = self.__class__(self.schema)
         cloned.__dict__.update(self.__dict__)
         cloned.order = next(cloned.counter)
