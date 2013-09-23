@@ -2,7 +2,7 @@ TODO
 
 - docs
 - pickadate
-- check out form.css (add "required" css as shown below to it at least)
+- decide how to explain form.css (include in requirements or?)
 - readonly templates changes
 - horizontal/inline forms + structural things
 - run all tests
@@ -10,6 +10,7 @@ TODO
 - assets for templates: deform should provide a tool to resolve that?
 - remove all mentions of "size" as horizontal width control (use 
   style="width: 50%" instead).
+- placeholder support for all textual inputs
 
 NEW FEATURES:
 
@@ -24,7 +25,6 @@ BROKEN STUFF:
 - sequence_of_sequences: js that processes close/order buttons has to 
   be less promiscuous (it uses e.g. "find"); symptom: buttons
   appear/disappear, act on the wrong element, etc.
-- sequence_of_sequences/
 - readd "size" attr to select (it doesnt mean horizontal size)
 
 MIGRATION NOTES: 
