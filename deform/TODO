@@ -47,6 +47,7 @@ MIGRATION NOTES:
              content: '*';
              display:inline;
            }
+- min_length of AutocompleteInputWidget now defaults to 1 (was 2)
 
 NICE TO HAVE
 
