@@ -8,6 +8,8 @@ TODO
 - run all tests
 - need to test select2-related widget renderings via selenium
 - assets for templates: deform should provide a tool to resolve that?
+- remove all mentions of "size" as horizontal width control (use 
+  style="width: 50%" instead).
 
 NEW FEATURES:
 
@@ -23,6 +25,7 @@ BROKEN STUFF:
   be less promiscuous (it uses e.g. "find"); symptom: buttons
   appear/disappear, act on the wrong element, etc.
 - sequence_of_sequences/
+- readd "size" attr to select (it doesnt mean horizontal size)
 
 MIGRATION NOTES: 
 
