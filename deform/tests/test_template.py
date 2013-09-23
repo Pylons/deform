@@ -115,8 +115,9 @@ class Test_default_renderer(unittest.TestCase):
         result = result.strip()
         self.assertEqual(
             result,
-            text_type('<label for="oid"> <input type="checkbox" '
-                      'name="name" value="true" id="oid"/> </label>')
+            text_type('<div class="checkbox"> <label for="oid"> '
+                      '<input type="checkbox" '
+                      'name="name" value="true" id="oid"/> </label> </div>')
             )
 
 class DummyWidget(object):
