@@ -267,7 +267,7 @@ class TestAutocompleteInputWidget(unittest.TestCase):
         self.assertEqual(renderer.kw['cstruct'], cstruct)
         self.assertEqual(json.loads(renderer.kw['options']),
                          {"limit": 8,
-                          "minLength": 2,
+                          "minLength": 1,
                           "remote": "http://example.com?term=%QUERY"})
 
     def test_serialize_iterable(self):
