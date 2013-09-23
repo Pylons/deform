@@ -73,9 +73,9 @@ class Field(object):
 
         parent
             The parent field of this field or ``None`` if this field is
-            the root.  This is actually a ``weakref.proxy`` object to the field
-            to avoid leaks due to circular references, but it can
-            be treated like the field itself.
+            the root.  This is actually a property that returns the result
+            of ``weakref.ref(actualparent)()`` to avoid leaks due to circular
+            references, but it can be treated like the field itself.
 
         error
             The exception raised by the last attempted validation of the
@@ -158,8 +158,8 @@ class Field(object):
         self.resource_registry = resource_registry
         self.children = []
         if parent is not None:
-            parent = weakref.proxy(parent)
-        self.parent = parent
+            parent = weakref.ref(parent)
+        self._parent = parent
         self.__dict__.update(kw)
         for child in schema.children:
             self.children.append(
@@ -173,6 +173,12 @@ class Field(object):
                     )
                 )
         self.set_appstruct(appstruct)
+
+    @property
+    def parent(self):
+        if self._parent is None:
+            return None
+        return self._parent()
 
     def get_root(self):
         """ Return the root field in the field herarchy (the form field) """
@@ -269,10 +275,11 @@ class Field(object):
         cloned.__dict__.update(self.__dict__)
         cloned.order = next(cloned.counter)
         cloned.oid = 'deformField%s' % cloned.order
+        cloned._parent = None
         children = []
         for field in self.children:
             cloned_child = field.clone()
-            cloned_child.parent = weakref.proxy(cloned)
+            cloned_child._parent = weakref.ref(cloned)
             children.append(cloned_child)
         cloned.children = children
         return cloned

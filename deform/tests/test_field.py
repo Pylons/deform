@@ -45,21 +45,21 @@ class TestField(unittest.TestCase):
         child = DummySchema(children=[grandchild], name='child')
         root = DummySchema(children=[child], name='root')
         
-        field = self._makeOne(root, renderer='abc')
-        self.assertEqual(len(field.children), 1)
-        self.assertEqual(field.parent, None)
+        root_field = self._makeOne(root, renderer='abc')
+        self.assertEqual(len(root_field.children), 1)
+        self.assertEqual(root_field.parent, None)
 
-        child_field = field.children[0]
+        child_field = root_field.children[0]
         self.assertEqual(child_field.__class__, Field)
         self.assertEqual(child_field.schema, child)
         self.assertEqual(child_field.renderer, 'abc')
-        self.assertEqual(child_field.parent.name, 'root')
+        self.assertEqual(child_field.parent, root_field)
 
-        grandchild_field = field.children[0].children[0]
+        grandchild_field = child_field.children[0]
         self.assertEqual(grandchild_field.__class__, Field)
         self.assertEqual(grandchild_field.schema, grandchild)
         self.assertEqual(grandchild_field.renderer, 'abc')
-        self.assertEqual(grandchild_field.parent.name, 'child')
+        self.assertEqual(grandchild_field.parent, child_field)
 
     def test_get_root(self):
         grandchild = DummySchema(name='grandchild')
@@ -303,7 +303,6 @@ class TestField(unittest.TestCase):
         self.assertEqual(result, 'OK')
 
     def test_clone(self):
-        import weakref
         schema = DummySchema()
         field = self._makeOne(schema, renderer='abc')
         child = DummyField()
@@ -318,7 +317,7 @@ class TestField(unittest.TestCase):
         self.assertEqual(result.foo, 1)
         self.assertEqual(result.children, [child])
         self.assertEqual(result.children[0].cloned, True)
-        self.assertEqual(result.children[0].parent, weakref.proxy(result))
+        self.assertEqual(result.children[0]._parent(), result)
 
     def test___iter__(self):
         schema = DummySchema()
