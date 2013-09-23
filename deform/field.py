@@ -269,7 +269,12 @@ class Field(object):
         cloned.__dict__.update(self.__dict__)
         cloned.order = next(cloned.counter)
         cloned.oid = 'deformField%s' % cloned.order
-        cloned.children = [ field.clone() for field in self.children ]
+        children = []
+        for field in self.children:
+            cloned_child = field.clone()
+            cloned_child.parent = weakref.proxy(cloned)
+            children.append(cloned_child)
+        cloned.children = children
         return cloned
 
     @decorator.reify

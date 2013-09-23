@@ -303,6 +303,7 @@ class TestField(unittest.TestCase):
         self.assertEqual(result, 'OK')
 
     def test_clone(self):
+        import weakref
         schema = DummySchema()
         field = self._makeOne(schema, renderer='abc')
         child = DummyField()
@@ -317,6 +318,7 @@ class TestField(unittest.TestCase):
         self.assertEqual(result.foo, 1)
         self.assertEqual(result.children, [child])
         self.assertEqual(result.children[0].cloned, True)
+        self.assertEqual(result.children[0].parent, weakref.proxy(result))
 
     def test___iter__(self):
         schema = DummySchema()
