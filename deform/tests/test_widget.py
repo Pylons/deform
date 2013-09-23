@@ -285,7 +285,7 @@ class TestAutocompleteInputWidget(unittest.TestCase):
         self.assertEqual(renderer.kw['cstruct'], cstruct)
         self.assertEqual(json.loads(renderer.kw['options']),
                          {"local": [1,2,3,4],
-                          "minLength": 2,
+                          "minLength": 1,
                           "limit": 8})
 
     def test_serialize_not_null_readonly(self):
