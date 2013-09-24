@@ -11,6 +11,7 @@ TODO
 - remove all mentions of "size" as horizontal width control (use 
   style="width: 50%" instead).
 - placeholder support for all textual inputs
+- display help-blocks for readonly fields?
 
 NEW FEATURES:
 

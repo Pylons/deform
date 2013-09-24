@@ -1,9 +1,10 @@
-<tal:def tal:define="css_class css_class|field.widget.css_class;
+<tal:def tal:define="
+                  css_class css_class|field.widget.css_class;
                   oid oid|field.oid;
                   style style|field.widget.style|None">
-    <span tal:attributes="class string:uneditable-input form-control ${css_class};
-                          style style"
-          id="${oid}">
-              ${cstruct}
-    </span>
+    <p class="form-control-static ${css_class}"
+         tal:attributes="style style"
+         id="${oid}">
+        ${cstruct}
+    </p>
 </tal:def>

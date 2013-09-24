@@ -1,2 +1,10 @@
-<span id="${oid|field.oid}" name="${name|field.name}" 
-      tal:content="structure cstruct" />
+<tal:def tal:define="
+                  css_class css_class|field.widget.css_class;
+                  oid oid|field.oid;
+                  style style|field.widget.style|None">
+  <div class="form-control-static ${css_class}"
+     tal:attributes="style style"
+     id="${oid}">
+    ${structure:cstruct}
+  </div>
+</tal:def>

@@ -1,1 +1,10 @@
-<p id="${oid|field.oid}">${cstruct}</p>
+<tal:def tal:define="
+                  css_class css_class|field.widget.css_class;
+                  oid oid|field.oid;
+                  style style|field.widget.style|None">
+    <p class="form-control-static ${css_class}"
+         tal:attributes="style style"
+         id="${oid}">
+        ${cstruct}
+    </p>
+</tal:def>
