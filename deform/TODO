@@ -12,6 +12,7 @@ TODO
   style="width: 50%" instead).
 - placeholder support for all textual inputs
 - display help-blocks for readonly fields?
+- maybe readonly should be a property of the schema, not the widget.
 
 NEW FEATURES:
 
