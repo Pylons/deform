@@ -1849,12 +1849,15 @@ default_resources = {
     'pickadate': {
         None: {
             'js': (
-                'deform:static/scripts/pickadate.date.min.js',
-                'deform:static/scripts/pickadate.min.js'
+                'deform:static/pickadate/picker.js',
+                'deform:static/pickadate/picker.date.js',
+                'deform:static/pickadate/picker.time.js',
+                'deform:static/pickadate/legacy.js',
             ),
             'css': (
-                'deform:static/css/pickadate-classic.date.min.css',
-                'deform:static/css/pickadate-classic.min.css'
+                'deform:static/pickadate/themes/default.css',
+                'deform:static/pickadate/themes/default.date.css',
+                'deform:static/pickadate/themes/default.time.css',
             )
             },
         },

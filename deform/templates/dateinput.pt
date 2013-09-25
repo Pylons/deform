@@ -10,7 +10,7 @@
            value="${cstruct}"
            
            tal:attributes="size size;
-                           class string: ${css_class} form-control;
+                           class string: ${css_class} form-control hasDatepicker;
                            style style"
            id="${oid}"/>
     <script type="text/javascript">
