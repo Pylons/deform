@@ -1,24 +1,30 @@
-<span tal:define="size size|field.widget.size;
-                  css_class css_class|field.widget.css_class;
+<tal:block define="css_class css_class|field.widget.css_class;
                   name name|field.name;
                   oid oid|field.oid;
                   style style|field.widget.style|None;
-                  type_name type_name|field.widget.type_name;"
+                  type_name type_name|field.widget.type_name;
+                  display_format display_format|field.widget.display_format"
     tal:omit-tag="">
-    <input type="${type_name}"
-           name="${name}"
-           value="${cstruct}" 
-           tal:attributes="size size; class css_class; style style"
-           id="${oid}"/>
+  <div class="form-group">
+    <div class="input-group date" id="${oid}">
+      <input data-format="${display_format}"
+             type="text"
+             name="${name}"
+             value="${cstruct}" 
+             tal:attributes="class string:${css_class} form-control hasDatepicker;
+             style style"
+             />
+      <span class="input-group-addon">
+        <span class="glyphicon glyphicon-calendar"></span>
+      </span>
+    </div>
+  </div>
     <script type="text/javascript">
       deform.addCallback(
-        '${oid}',
-        function(oid) {
-              if (!Modernizr.inputtypes['datetime'] || 
-                   "${type_name}" != "datetime"){
-                $('#' + oid).pickadate(${options});
-              }
-        }
-      );
+       '${oid}',
+       function(oid) {
+         $('#' + oid).datetimepicker(${options});
+       }
+     );
     </script>
-</span>
+</tal:block>
