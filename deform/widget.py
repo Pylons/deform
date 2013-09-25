@@ -579,8 +579,9 @@ class DateTimeInputWidget(DateInputWidget):
         ('pickTime', True),
         ('pick12HourFormat', False),
         ('pickSeconds', True),
+        ('submitFormat', 'yyyy-MM-dd HH:mm:ss'),
         )
-    display_format = 'yyyy-MM-dd HH:mm:ss'
+    display_format = 'yyyy/MM/dd HH:mm:ss'
     separator = ' '
 
     def serialize(self, field, cstruct, **kw):

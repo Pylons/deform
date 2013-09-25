@@ -3,11 +3,13 @@
                   oid oid|field.oid;
                   style style|field.widget.style|None;
                   type_name type_name|field.widget.type_name;
+                  formid field.get_root().formid;
                   display_format display_format|field.widget.display_format"
     tal:omit-tag="">
   <div class="form-group">
     <div class="input-group date" id="${oid}">
       <input data-format="${display_format}"
+             id="${oid}-input"
              type="text"
              name="${name}"
              value="${cstruct}" 
@@ -24,6 +26,15 @@
        '${oid}',
        function(oid) {
          $('#' + oid).datetimepicker(${options});
+         var form = $('#${formid}');
+         form.submit(function () {
+           // normalize the value passed to the server, because hurr durr
+           var picker = $('#' + oid).data('datetimepicker');
+           var date = picker._date;
+           /* var val = $('#${oid}-input').attr('value'); */
+           reformatted = picker.submitFormat.formatDate(date);
+           $('#${oid}-input').val(reformatted);
+         });
        }
      );
     </script>

@@ -33,6 +33,9 @@
         this.id = dpgId++;
         this.init(element, options);
     };
+    var DateTimeFormat = function (format) {
+        this.init(format);
+    };
 
     var dateToDate = function (dt) {
         if (typeof dt === 'string') {
@@ -41,11 +44,135 @@
         return dt;
     };
 
+    DateTimeFormat.prototype = {
+        constructor: DateTimeFormat,
+
+        init: function (formatStr) {
+            var match,
+               component,
+               components = [],
+               mask = [],
+               str = formatStr,
+               propertiesByIndex = {},
+               i = 0,
+               pos = 0;
+            this.formatStr = formatStr;
+            while (match = formatComponent.exec(str)) {
+                component = match[0];
+                if (component in dateFormatComponents) {
+                    i++;
+                    propertiesByIndex[i] = dateFormatComponents[component].property;
+                    components.push('\\s*' + dateFormatComponents[component].getPattern(
+                      this) + '\\s*');
+                    mask.push({
+                        pattern: new RegExp(dateFormatComponents[component].getPattern(
+                          this)),
+                        property: dateFormatComponents[component].property,
+                        start: pos,
+                        end: pos += component.length
+                    });
+                }
+                else {
+                    components.push(escapeRegExp(component));
+                    mask.push({
+                        pattern: new RegExp(escapeRegExp(component)),
+                        character: component,
+                        start: pos,
+                        end: ++pos
+                    });
+                }
+                str = str.slice(component.length);
+            }
+            this.mask = mask;
+            this.formatPattern = new RegExp(
+              '^\\s*' + components.join('') + '\\s*$');
+            this.propertiesByIndex = propertiesByIndex;
+        },
+
+        formatDate: function (d) {
+            return this.formatStr.replace(formatReplacer, function (match) {
+                var methodName, property, rv, len = match.length;
+                if (match === 'ms')
+                    len = 1;
+                property = dateFormatComponents[match].property;
+                if (property === 'Hours12') {
+                    rv = d.getUTCHours();
+                    if (rv === 0) rv = 12;
+                    else if (rv !== 12) rv = rv % 12;
+                } else if (property === 'Period12') {
+                    if (d.getUTCHours() >= 12) return 'PM';
+                    else return 'AM';
+                } else {
+                    methodName = 'get' + property;
+                    if (methodName == 'getUTCYear') {
+                        rv = d['getUTCFullYear']();
+                    } else {
+                        rv = d[methodName]();
+                    }
+                }
+                if (methodName === 'getUTCMonth') rv = rv + 1;
+                if (methodName === 'getUTCYear') {
+                    rv = rv.toString();
+                    rv = rv.length > 2 ? rv.substring(rv.length - 2, rv.length) : rv;
+                }
+                return padLeft(rv.toString(), len, '0');
+            });
+
+        },
+
+        parseDate: function (str) {
+            var match, i, property, methodName, value, parsed = {};
+            if (!(match = this.formatPattern.exec(str)))
+                return null;
+            for (i = 1; i < match.length; i++) {
+                property = this.propertiesByIndex[i];
+                if (!property)
+                    continue;
+                value = match[i];
+                if (/^\d+$/.test(value))
+                    value = parseInt(value, 10);
+                parsed[property] = value;
+            }
+            return this._finishParsingDate(parsed);
+        },
+
+
+        _finishParsingDate: function (parsed) {
+            var year, month, date, hours, minutes, seconds, milliseconds;
+            year = parsed.UTCFullYear;
+            if (parsed.UTCYear) year = 2000 + parsed.UTCYear;
+            if (!year) year = 1970;
+            if (parsed.UTCMonth) month = parsed.UTCMonth - 1;
+            else month = 0;
+            date = parsed.UTCDate || 1;
+            hours = parsed.UTCHours || 0;
+            minutes = parsed.UTCMinutes || 0;
+            seconds = parsed.UTCSeconds || 0;
+            milliseconds = parsed.UTCMilliseconds || 0;
+            if (parsed.Hours12) {
+                hours = parsed.Hours12;
+            }
+            if (parsed.Period12) {
+                if (/pm/i.test(parsed.Period12)) {
+                    if (hours != 12) hours = (hours + 12) % 24;
+                } else {
+                    hours = hours % 12;
+                }
+            }
+            return UTCDate(year, month, date, hours, minutes, seconds, 
+                           milliseconds);
+        },
+
+    };
+
+
     DateTimePicker.prototype = {
         constructor: DateTimePicker,
 
         init: function (element, options) {
-            var icon;
+            var icon,
+                format = options.format,
+                submitFormat = options.submitFormat;
             if (!(options.pickTime || options.pickDate))
                 throw new Error('Must choose at least one picker');
             this.options = options;
@@ -57,13 +184,15 @@
             this.component = false;
             if (this.$element.find('.input-group'))
                 this.component = this.$element.find('.input-group-addon');
-            this.format = options.format;
-            if (!this.format) {
-                if (this.isInput) this.format = this.$element.data('format');
-                else this.format = this.$element.find('input').data('format');
-                if (!this.format) this.format = 'MM/dd/yyyy' + (this.pickTime ? ' hh:mm' : '') + (this.pickSeconds ? ':ss' : '');
+            if (!format) {
+                if (this.isInput) format = this.$element.data('format');
+                else format = this.$element.find('input').data('format');
+                if (!format) format = 'MM/dd/yyyy' + (this.pickTime ? ' hh:mm' : '') + (this.pickSeconds ? ':ss' : '');
             }
-            this._compileFormat();
+            if (!submitFormat) submitFormat = format;
+            this.format = new DateTimeFormat(format);
+            this.submitFormat = new DateTimeFormat(submitFormat);
+            this._maskPos = 0;
             if (this.component) {
                 icon = this.component.find('span');
             }
@@ -173,7 +302,7 @@
 
         set: function () {
             var formatted = '';
-            if (!this._unset) formatted = this.formatDate(this._date);
+            if (!this._unset) formatted = this.format.formatDate(this._date);
             if (!this.isInput) {
                 if (this.component) {
                     var input = this.$element.find('input');
@@ -195,12 +324,14 @@
                 this._unset = false;
             }
             if (typeof newDate === 'string') {
-                this._date = this.parseDate(newDate);
+                this._date = this.format.parseDate(newDate);
             } else if (newDate) {
                 this._date = new Date(newDate);
             }
             this.set();
-            this.viewDate = UTCDate(this._date.getUTCFullYear(), this._date.getUTCMonth(), 1, 0, 0, 0, 0);
+            this.viewDate = UTCDate(
+                this._date.getUTCFullYear(), 
+                this._date.getUTCMonth(), 1, 0, 0, 0, 0);
             this.fillDate();
             this.fillTime();
         },
@@ -250,8 +381,15 @@
         getLocalDate: function () {
             if (this._unset) return null;
             var d = this._date;
-            return new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(),
-                            d.getUTCHours(), d.getUTCMinutes(), d.getUTCSeconds(), d.getUTCMilliseconds());
+            return new Date(
+                d.getUTCFullYear(),
+                d.getUTCMonth(),
+                d.getUTCDate(),
+                d.getUTCHours(),
+                d.getUTCMinutes(),
+                d.getUTCSeconds(),
+                d.getUTCMilliseconds()
+            );
         },
 
         setLocalDate: function (localDate) {
@@ -324,7 +462,7 @@
                     dateStr = this.$element.find('input').val();
                 }
                 if (dateStr) {
-                    this._date = this.parseDate(dateStr);
+                    this._date = this.format.parseDate(dateStr);
                 }
                 if (!this._date) {
                     var tmp = new Date();
@@ -337,7 +475,10 @@
                                         tmp.getMilliseconds());
                 }
             }
-            this.viewDate = UTCDate(this._date.getUTCFullYear(), this._date.getUTCMonth(), 1, 0, 0, 0, 0);
+            this.viewDate = UTCDate(
+                this._date.getUTCFullYear(),
+                this._date.getUTCMonth(), 1, 0, 0, 0, 0
+            );
             this.fillDate();
             this.fillTime();
         },
@@ -767,7 +908,7 @@
             var c = String.fromCharCode(k);
             var val = input.val() || '';
             val += c;
-            var mask = this._mask[this._maskPos];
+            var mask = this.format.mask[this._maskPos];
             if (!mask) {
                 return false;
             }
@@ -776,7 +917,7 @@
             }
             if (!mask.pattern.test(val.slice(mask.start))) {
                 val = val.slice(0, val.length - 1);
-                while ((mask = this._mask[this._maskPos]) && mask.character) {
+                while ((mask = this.format.mask[this._maskPos]) && mask.character) {
                     val += mask.character;
                     // advance mask position past static
                     // part
@@ -804,7 +945,7 @@
         change: function (e) {
             var input = $(e.target);
             var val = input.val();
-            if (this._formatPattern.test(val)) {
+            if (this.format.formatPattern.test(val)) {
                 this.update();
                 this.setValue(this._date.getTime());
                 this.notifyChange();
@@ -842,127 +983,19 @@
             this.component.removeData('datetimepicker');
         },
 
-        formatDate: function (d) {
-            return this.format.replace(formatReplacer, function (match) {
-                var methodName, property, rv, len = match.length;
-                if (match === 'ms')
-                    len = 1;
-                property = dateFormatComponents[match].property;
-                if (property === 'Hours12') {
-                    rv = d.getUTCHours();
-                    if (rv === 0) rv = 12;
-                    else if (rv !== 12) rv = rv % 12;
-                } else if (property === 'Period12') {
-                    if (d.getUTCHours() >= 12) return 'PM';
-                    else return 'AM';
-                } else {
-                    methodName = 'get' + property;
-                    if (methodName == 'getUTCYear') {
-                        rv = d['getUTCFullYear']();
-                    } else {
-                        rv = d[methodName]();
-                    }
-                }
-                if (methodName === 'getUTCMonth') rv = rv + 1;
-                if (methodName === 'getUTCYear') {
-                    rv = rv.toString();
-                    rv = rv.length > 2 ? rv.substring(rv.length - 2, rv.length) : rv;
-                }
-                return padLeft(rv.toString(), len, '0');
-            });
-
-        },
-
-        parseDate: function (str) {
-            var match, i, property, methodName, value, parsed = {};
-            if (!(match = this._formatPattern.exec(str)))
-                return null;
-            for (i = 1; i < match.length; i++) {
-                property = this._propertiesByIndex[i];
-                if (!property)
-                    continue;
-                value = match[i];
-                if (/^\d+$/.test(value))
-                    value = parseInt(value, 10);
-                parsed[property] = value;
-            }
-            return this._finishParsingDate(parsed);
-        },
-
         _resetMaskPos: function (input) {
             var val = input.val();
-            for (var i = 0; i < this._mask.length; i++) {
-                if (this._mask[i].end > val.length) {
+            for (var i = 0; i < this.format.mask.length; i++) {
+                if (this.format.mask[i].end > val.length) {
                     // If the mask has ended then jump to
                     // the next
                     this._maskPos = i;
                     break;
-                } else if (this._mask[i].end === val.length) {
+                } else if (this.format.mask[i].end === val.length) {
                     this._maskPos = i + 1;
                     break;
                 }
             }
-        },
-
-        _finishParsingDate: function (parsed) {
-            var year, month, date, hours, minutes, seconds, milliseconds;
-            year = parsed.UTCFullYear;
-            if (parsed.UTCYear) year = 2000 + parsed.UTCYear;
-            if (!year) year = 1970;
-            if (parsed.UTCMonth) month = parsed.UTCMonth - 1;
-            else month = 0;
-            date = parsed.UTCDate || 1;
-            hours = parsed.UTCHours || 0;
-            minutes = parsed.UTCMinutes || 0;
-            seconds = parsed.UTCSeconds || 0;
-            milliseconds = parsed.UTCMilliseconds || 0;
-            if (parsed.Hours12) {
-                hours = parsed.Hours12;
-            }
-            if (parsed.Period12) {
-                if (/pm/i.test(parsed.Period12)) {
-                    if (hours != 12) hours = (hours + 12) % 24;
-                } else {
-                    hours = hours % 12;
-                }
-            }
-            return UTCDate(year, month, date, hours, minutes, seconds, milliseconds);
-        },
-
-        _compileFormat: function () {
-            var match, component, components = [], mask = [],
-            str = this.format, propertiesByIndex = {}, i = 0, pos = 0;
-            while (match = formatComponent.exec(str)) {
-                component = match[0];
-                if (component in dateFormatComponents) {
-                    i++;
-                    propertiesByIndex[i] = dateFormatComponents[component].property;
-                    components.push('\\s*' + dateFormatComponents[component].getPattern(
-                      this) + '\\s*');
-                    mask.push({
-                        pattern: new RegExp(dateFormatComponents[component].getPattern(
-                          this)),
-                        property: dateFormatComponents[component].property,
-                        start: pos,
-                        end: pos += component.length
-                    });
-                }
-                else {
-                    components.push(escapeRegExp(component));
-                    mask.push({
-                        pattern: new RegExp(escapeRegExp(component)),
-                        character: component,
-                        start: pos,
-                        end: ++pos
-                    });
-                }
-                str = str.slice(component.length);
-            }
-            this._mask = mask;
-            this._maskPos = 0;
-            this._formatPattern = new RegExp(
-              '^\\s*' + components.join('') + '\\s*$');
-            this._propertiesByIndex = propertiesByIndex;
         },
 
         _attachDatePickerEvents: function () {
@@ -1311,4 +1344,5 @@
         '</div>' : '')
         );
     };
-})(window.jQuery)
+})(window.jQuery);
+
