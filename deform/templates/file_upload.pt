@@ -1,4 +1,4 @@
-<div class="deformFileupload"
+<div class="deformFileupload form-control-static"
      tal:define="oid oid|field.oid;
                  css_class css_class|field.widget.css_class;
                  style style|field.widget.style">
