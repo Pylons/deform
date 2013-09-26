@@ -1,21 +1,22 @@
 <div tal:define="css_class css_class|field.widget.css_class;
-                 oid oid|field.oid;"
-     tal:omit-tag="">
-${field.start_sequence()}
-  <tal:loop tal:repeat="choice values | field.widget.values">
-    <tal:def tal:define="(value, title) choice;
-                         inline getattr(field.widget, 'inline', False);
-                         label_class inline and 'checkbox inline' or 'checkbox'">
-      <label class="${label_class}" for="${oid}-${repeat.choice.index}">
-        <input tal:attributes="checked value in cstruct;
-                               class css_class"
-               type="checkbox"
-               name="checkbox"
-               value="${value}"
-               id="${oid}-${repeat.choice.index}"/>
-        ${title}
-      </label>
-    </tal:def>
-  </tal:loop>
-${field.end_sequence()}
+                 oid oid|field.oid;
+                 inline getattr(field.widget, 'inline', False)"
+     tal:omit-tag="not inline">
+  ${field.start_sequence()}
+  <div tal:repeat="choice values | field.widget.values"
+       tal:omit-tag="inline"
+       class="checkbox">
+    <label for="${oid}-${repeat.choice.index}"
+           tal:define="(value, title) choice"
+           tal:attributes="class inline and 'checkbox-inline'">
+      <input tal:attributes="checked value in cstruct;
+                             class css_class"
+             type="checkbox"
+             name="checkbox"
+             value="${value}"
+             id="${oid}-${repeat.choice.index}"/>
+      ${title}
+    </label>
+  </div>
+  ${field.end_sequence()}
 </div>

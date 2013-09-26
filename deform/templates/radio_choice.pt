@@ -1,12 +1,14 @@
-<tal:def tal:define="oid oid|field.oid;
-                     title title|field.title;
-                     css_class css_class|field.widget.css_class;"> 
-${field.start_rename()}
-<tal:loop tal:repeat="choice values | field.widget.values">
-  <tal:def tal:define="(value, title) choice;
-                       inline getattr(field.widget, 'inline', False);
-                       label_class inline and 'radio inline' or 'radio'">
-    <label class="${label_class}" for="${field.oid}-${repeat.choice.index}">
+<div tal:define="oid oid|field.oid;
+                 css_class css_class|field.widget.css_class;
+                 inline getattr(field.widget, 'inline', False);"
+     tal:omit-tag="not inline">
+  ${field.start_rename()}
+  <div tal:repeat="choice values | field.widget.values"
+       tal:omit-tag="inline"
+       class="radio">
+    <label for="${oid}-${repeat.choice.index}"
+           tal:define="(value, title) choice"
+           tal:attributes="class inline and 'radio-inline'">
       <input tal:attributes="checked value == cstruct;
                              class css_class"
              type="radio"
@@ -15,7 +17,6 @@ ${field.start_rename()}
              id="${oid}-${repeat.choice.index}"/>
       ${title}
     </label>
-  </tal:def>
-</tal:loop>
-${field.end_rename()}
-</tal:def>
+  </div>
+  ${field.end_rename()}
+</div>
