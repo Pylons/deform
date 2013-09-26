@@ -983,6 +983,11 @@ class RadioChoiceWidget(SelectWidget):
         The value used to replace the ``colander.null`` value when it
         is passed to the ``serialize`` or ``deserialize`` method.
         Default: the empty string.
+
+    inline
+        If true, choices will be rendered on a single line.
+        Otherwise choices will be rendered one per line.
+        Default: false.
     """
     template = 'radio_choice'
     readonly_template = 'readonly/radio_choice'
@@ -1014,6 +1019,11 @@ class CheckboxChoiceWidget(Widget):
         The value used to replace the ``colander.null`` value when it
         is passed to the ``serialize`` or ``deserialize`` method.
         Default: the empty string.
+
+    inline
+        If true, choices will be rendered on a single line.
+        Otherwise choices will be rendered one per line.
+        Default: false.
     """
     template = 'checkbox_choice'
     readonly_template = 'readonly/checkbox_choice'
