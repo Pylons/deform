@@ -4,6 +4,7 @@
 import csv
 import json
 import random
+from warnings import warn
 
 # Pyramid
 from colander import Invalid
@@ -400,6 +401,35 @@ class MoneyInputWidget(Widget):
         return pstruct
 
 
+class literal_js(text_type):
+    """ A marker class which can be used to include literal javascript within
+    the configurations for javascript functions.
+
+    """
+    def __json__(self):
+        return self
+
+
+class JSConfigSerializer(json.JSONEncoder):
+    """ A hack-up of the stock python JSON encoder to support the inclusion
+    of literal javascript in the JSON output.
+
+    """
+    def _iterencode(self, o, markers):
+        if hasattr(o, '__json__') and callable(o.__json__):
+            return (chunk for chunk in (o.__json__(),))
+        else:
+            return super(JSConfigSerializer, self)._iterencode(o, markers)
+
+    def encode(self, o):
+        # bypass "extremely simple cases and benchmarks" optimization
+        chunks = list(self.iterencode(o))
+        return ''.join(chunks)
+
+
+serialize_js_config = JSConfigSerializer().encode
+
+
 class AutocompleteInputWidget(Widget):
     """
     Renders an ``<input type="text"/>`` widget which provides
@@ -444,6 +474,30 @@ class AutocompleteInputWidget(Widget):
         The max number of items to display in the dropdown. Defaults to
         ``8``.
 
+    datasets
+        This is an alternative way to configure the typeahead
+        javascript plugin.  Use of this parameter provides access to
+        the complete set of functionality provided by ``typeahead.js``.
+
+        If set to other than ``None`` (the default), a JSONified
+        version of this value is used to configure the typeahead
+        plugin.  (In this case any value specified for the ``values``
+        parameter is ignored.  The ``min_length`` and ``items``
+        parameters will be used to fill in ``minLength`` and ``limit``
+        in ``datasets`` if they are not already there.)
+
+        Literal javascript can be included in the configuration using
+        the :class:`literal_js` marker.  For example, assuming your
+        data provider yields datums that have an ``html`` attribute
+        containing HTML markup you want displayed for the choice::
+
+            datasets = {
+                'remote': 'https://example.com/search.json?q=%QUERY',
+                'template':
+                    literal_js('function (datum) { return datum.html; }'),
+                }
+
+        might do the trick.
     """
 
     min_length = 1
@@ -452,6 +506,7 @@ class AutocompleteInputWidget(Widget):
     items = 8
     template = "autocomplete_input"
     values = None
+    datasets = None
     requirements = (("typeahead", None), ("deform", None))
 
     def serialize(self, field, cstruct, **kw):
@@ -466,14 +521,32 @@ class AutocompleteInputWidget(Widget):
         readonly = kw.get("readonly", self.readonly)
 
         options = {}
-        if isinstance(self.values, string_types):
-            options["remote"] = "%s?term=%%QUERY" % self.values
-        else:
-            options["local"] = self.values
-
         options["minLength"] = kw.pop("min_length", self.min_length)
         options["limit"] = kw.pop("items", self.items)
-        kw["options"] = json.dumps(options)
+
+        datasets = kw.pop('datasets', self.datasets)
+        if datasets is None:
+            if isinstance(self.values, string_types):
+                options['remote'] = '%s?term=%%QUERY' % self.values
+            elif self.values:
+                options['local'] = self.values
+            datasets = options
+        else:
+            if self.values:
+                warn('AutocompleteWidget ignores the *values* parameter '
+                     'when *datasets* is also specified.')
+
+            if isinstance(datasets, dict):
+                datasets = [datasets]
+            elif not isinstance(datasets, (list, tuple)):
+                raise TypeError(
+                    'Expected list, dict, or tuple, not %r' % datasets)
+
+            def set_defaults(dataset):
+                return dict(options, **dataset)
+            datasets = list(map(set_defaults, datasets))
+
+        kw['options'] = serialize_js_config(datasets) if datasets else None
         tmpl_values = self.get_template_values(field, cstruct, kw)
         template = readonly and self.readonly_template or self.template
         return field.renderer(template, **tmpl_values)

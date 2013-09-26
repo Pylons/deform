@@ -1,6 +1,7 @@
 """Widget tests."""
 # Standard Library
 import unittest
+import warnings
 
 # Pyramid
 import colander
@@ -243,6 +244,25 @@ class TestMoneyInputWidget(unittest.TestCase):
         self.assertRaises(colander.Invalid, widget.deserialize, field, {})
 
 
+class Test_serialize_js_config(unittest.TestCase):
+    def _makeLiteral(self, js):
+        from deform.widget import literal_js
+        return literal_js(js)
+
+    def _callIt(self, obj):
+        from deform.widget import serialize_js_config
+        return serialize_js_config(obj)
+
+    def test_serialize_literal(self):
+        literal = self._makeLiteral('func()')
+        serialized = self._callIt(literal)
+        self.assertEqual(serialized, 'func()')
+
+    def test_serialize_literal_in_object(self):
+        literal = self._makeLiteral('func()')
+        serialized = self._callIt({'x': literal})
+        self.assertEqual(serialized, '{"x": func()}')
+
 class TestAutocompleteInputWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import AutocompleteInputWidget
@@ -315,6 +335,49 @@ class TestAutocompleteInputWidget(unittest.TestCase):
             json.loads(renderer.kw["options"]),
             {"local": [1, 2, 3, 4], "minLength": 1, "limit": 8},
         )
+
+    def test_serialize_dataset(self):
+        import json
+        widget = self._makeOne()
+        dataset = {'local': [5,6,7,8],
+                   'minLength': 2,
+                   }
+        widget.datasets = dataset
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer=renderer)
+        cstruct = 'abc'
+        widget.serialize(field, cstruct)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], cstruct)
+        self.assertEqual(json.loads(renderer.kw['options']),
+                         [{"local": [5,6,7,8],
+                           "minLength": 2,
+                           "limit": 8}])
+
+    def test_serialize_warns_if_datasets_and_values(self):
+        widget = self._makeOne()
+        widget.datasets = [{'local': [42]}]
+        widget.values = [9]
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer=renderer)
+        cstruct = 'abc'
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter('always')
+            widget.serialize(field, cstruct)
+        self.assertEqual(len(w), 1)
+        self.assertTrue(' ignores ' in str(w[0].message))
+
+    def test_serialize_datasets_type_error(self):
+        widget = self._makeOne()
+        widget.datasets = 2
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer=renderer)
+        cstruct = 'abc'
+        self.assertRaises(TypeError, widget.serialize, field, cstruct)
 
     def test_serialize_not_null_readonly(self):
         widget = self._makeOne()
