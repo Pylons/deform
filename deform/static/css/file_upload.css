@@ -1,0 +1,39 @@
+/* Ripped off from
+*  http://www.abeautifulsite.net/blog/2013/08/whipping-file-inputs-into-shape-with-bootstrap-3/
+*/
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file {
+    background-color: #f2f2f2;
+}
+.btn-file:hover {
+    background-color: #ededed;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 999px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    background: red;
+    cursor: inherit;
+    display: block;
+}
+.btn-file .upload-change,
+.upload-have-file .upload-select
+{
+    display: none;
+}
+.upload-have-file .upload-change
+{
+    display: inline;
+}
+.upload-filename[readonly] {
+    background-color: #fdfdfd;
+}

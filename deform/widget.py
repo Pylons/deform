@@ -1387,6 +1387,8 @@ class FileUploadWidget(Widget):
     template = 'file_upload'
     readonly_template = 'readonly/file_upload'
 
+    requirements = ( ('fileupload', None), )
+
     def __init__(self, tmpstore, **kw):
         Widget.__init__(self, **kw)
         self.tmpstore = tmpstore
@@ -1790,6 +1792,12 @@ default_resources = {
         None:{
               'js':'deform:static/select2/select2.js',
               'css':'deform:static/select2/select2.css',
+            },
+        },
+    'fileupload': {
+        None: {
+            'js': 'deform:static/scripts/file_upload.js',
+            'css': 'deform:static/css/file_upload.css',
             },
         },
     }
