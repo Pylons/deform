@@ -11,7 +11,8 @@
       <span class="btn btn-default btn-file${have_file}">
         <span class="upload-select">Select file…</span>
         <span class="upload-change">Change file…</span>
-        <input type="file" name="upload"/>
+        <input type="file" name="${oid}"
+               tal:attributes="accept accept|field.widget.accept"/>
       </span>
     </span>
     <input type="text" readonly=""

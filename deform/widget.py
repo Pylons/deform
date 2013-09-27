@@ -1613,9 +1613,12 @@ class FileUploadWidget(Widget):
         The template name used to render the widget in read-only mode.
         Default: ``readonly/file_upload``.
 
+    accept
+        The ``accept`` attribute of the input field (default ``None``).
     """
     template = 'file_upload'
     readonly_template = 'readonly/file_upload'
+    accept = None
 
     requirements = (('fileupload', None),)
 
