@@ -1,24 +1,25 @@
-<div class="deform-file-upload form-control-static"
+<div class="deform-file-upload"
      tal:define="oid oid|field.oid;
                  css_class css_class|field.widget.css_class;
-                 style style|field.widget.style">
-
+                 style style|field.widget.style;
+                 uid cstruct.get('uid');
+                 have_file uid and ' upload-have-file' or '';"
+     tal:omit-tag="">
   ${field.start_mapping()}
-
-  <div class="deform-replaces" tal:condition="cstruct.get('uid')">
-
-    <input type="hidden" name="uid" value="${cstruct['uid']}"
-           id="${oid}-uid"/>
-    <span tal:content="cstruct.get('filename')"
-          id="${oid}-filename"/>
-
+  <div class="input-group">
+    <span class="input-group-btn">
+      <span class="btn btn-default btn-file${have_file}">
+        <span class="upload-select">Select file…</span>
+        <span class="upload-change">Change file…</span>
+        <input type="file" name="upload"/>
+      </span>
+    </span>
+    <input type="text" readonly=""
+           tal:attributes="
+           class string: form-control upload-filename ${css_class or ''};
+           value cstruct.get('filename');
+           style style"/>
   </div>
-
-  <input type="file" name="upload" 
-         tal:attributes="class css_class;
-                         style style;"
-         id="${oid}"/>
-
+  <input type="hidden" name="uid" value="${uid}" tal:condition="uid"/>
   ${field.end_mapping()}
-
 </div>

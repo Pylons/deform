@@ -1617,6 +1617,8 @@ class FileUploadWidget(Widget):
     template = 'file_upload'
     readonly_template = 'readonly/file_upload'
 
+    requirements = (('fileupload', None),)
+
     _pstruct_schema = SchemaNode(
         Mapping(),
         SchemaNode(_FieldStorage(), name='upload', missing=None),
@@ -2043,6 +2045,12 @@ default_resources = {
         None:{
               'js':'deform:static/select2/select2.js',
               'css':'deform:static/select2/select2.css',
+            },
+        },
+    'fileupload': {
+        None: {
+            'js': 'deform:static/scripts/file_upload.js',
+            'css': 'deform:static/css/file_upload.css',
             },
         },
     }
