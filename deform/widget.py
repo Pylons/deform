@@ -433,8 +433,8 @@ serialize_js_config = JSConfigSerializer().encode
 class AutocompleteInputWidget(Widget):
     """
     Renders an ``<input type="text"/>`` widget which provides
-    autocompletion via a list of values using bootstrap's typeahead plugin
-    https://github.com/twitter/typeahead.js/
+    autocompletion via a list of values using twitters's typeahead plugin
+    https://github.com/twitter/typeahead.js
 
     **Attributes/Arguments**
 
