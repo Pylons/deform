@@ -17,8 +17,8 @@
      label_class (not horizontal or column_classes) and 'control-label' or '';
      label_class inline and 'sr-only' or label_class;"
      class="form-group ${field.error and 'has-error' or ''} ${field.widget.item_css_class or ''}"
-     title="${description}"
      id="item-${oid}"
+     tal:attributes="title inline and description or None"
      tal:omit-tag="hidden or (structural and not horizontal)"
      i18n:domain="deform">
 
