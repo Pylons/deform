@@ -11,7 +11,9 @@
               ajax_options ajax_options|field.ajax_options;
               formid formid|field.formid;
               action action|field.action or None;
-              method method|field.method;"
+              method method|field.method;
+              column_classes column_classes|field.widget.column_classes;"
+
   tal:attributes="autocomplete autocomplete;
                   style style;
                   class css_class;
@@ -41,11 +43,19 @@
     </p>
 
     <div tal:repeat="child field"
-         tal:replace="structure child.render_template(item_template)"/>
+         tal:replace="structure child.render_template(item_template, form_class=css_class, column_classes=column_classes)"/>
 
-    <div class="form-group">
-      <tal:loop tal:repeat="button buttons">
-        <button
+    <div tal:define="horizontal css_class == 'form-horizontal';
+                     left_column_class column_classes[0]|'col-xs-12';
+                     right_column_class column_classes[1]|'col-xs-12';"
+         tal:omit-tag="not horizontal"
+         class="form-group">
+      <div class="${left_column_class}"
+           tal:condition="horizontal and column_classes">
+      </div>
+      <div class="${right_column_class}" tal:omit-tag="not horizontal">
+        <tal:loop tal:repeat="button buttons">
+          <button
               tal:define="btn_disposition repeat.button.start and 'btn-primary' or 'btn-default';
               btn_icon button.icon|None"
               tal:attributes="disabled button.disabled if button.disabled else None"
@@ -54,12 +64,12 @@
               type="${button.type}"
               class="btn ${btn_disposition} ${button.css_class}"
               value="${button.value}">
-          <i tal:condition="btn_icon" class="${btn_icon}"> </i>
-          ${button.title}
-        </button>
-      </tal:loop>
+            <i tal:condition="btn_icon" class="${btn_icon}"> </i>
+            ${button.title}
+          </button>
+        </tal:loop>
+      </div>
     </div>
-
   </fieldset>
 
   <script type="text/javascript" tal:condition="use_ajax">
