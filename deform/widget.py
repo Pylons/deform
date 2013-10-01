@@ -1324,6 +1324,16 @@ class MappingWidget(Widget):
         The template name used to render each item in the form.
         Default: ``readonly/mapping_item``.
 
+    column_classes
+        A 2-tuple of strings specifying the classes used to set the widths
+        of the left and right columns in a horizontal form layout.
+        This is ignored unless the ``bootstrap_form_style`` attribute
+        of the form is set to ``form-horizontal``.
+
+        If ``column_classes`` is ``None`` (or some other false value)
+        within a horizontal form, the default templates will attempt
+        emulate to emulate the “vertical” form layout.
+
     Note that the MappingWidget template does not honor the ``css_class``
     or ``style`` attributes of the widget.
     """
@@ -1332,6 +1342,7 @@ class MappingWidget(Widget):
     item_template = 'mapping_item'
     readonly_item_template = 'readonly/mapping_item'
     error_class = None
+    column_classes = None
     category = 'structural'
     requirements = ( ('deform', None), )
 
@@ -1396,6 +1407,7 @@ class FormWidget(MappingWidget):
     """
     template = 'form'
     readonly_template = 'readonly/form'
+    column_classes = ('col-sm-4 col-md-3', 'col-sm-8 col-md-9')
 
 class SequenceWidget(Widget):
     """Renders a sequence (0 .. N widgets, each the same as the other)
