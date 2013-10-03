@@ -19,6 +19,8 @@ NEW FEATURES:
 - input_prepend/input_append in mapping_item widget.
 - field.parent
 - field.get_root
+- inline attr of checkboxchoice and radiochoice widgets (see
+  https://github.com/Pylons/deform/pull/182)
 
 BROKEN STUFF:
 
