@@ -168,7 +168,7 @@ var deform  = {
                 if (raw.type === 'text' || raw.type === 'file' || 
                     raw.type == 'password' || raw.type == 'text' || 
                     raw.type == 'textarea') { 
-                    if (raw.className != "hasDatepicker") {
+                    if (!input.hasClass("hasDatepicker")) {
                         input.focus();
                     }
                 }

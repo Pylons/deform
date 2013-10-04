@@ -19,3 +19,9 @@ form .required:after {
     content: '*';
     display:inline;
 }
+
+/* ugh, terrible selector coming up */
+
+.hasDatepicker[readonly] {
+    cursor: pointer !important;
+}
