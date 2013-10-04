@@ -139,7 +139,6 @@ class Widget(object):
     item_css_class = None
     style = None
     requirements = ()
-    type_name = ''
 
     def __init__(self, **kw):
         self.__dict__.update(kw)
