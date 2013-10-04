@@ -990,7 +990,7 @@ class CheckedInputWidget(Widget):
 
     readonly_template
         The template name used to render the widget in read-only mode.
-        Default: ``readonly/checked_input``.
+        Default: ``readonly/textinput``.
 
     mismatch_message
         The message to be displayed when the value in the primary
@@ -1024,7 +1024,7 @@ class CheckedInputWidget(Widget):
         is used.  Default: ``_`` (underscore).
     """
     template = 'checked_input'
-    readonly_template = 'readonly/checked_input'
+    readonly_template = 'readonly/textinput'
     mismatch_message = _('Fields did not match')
     subject = _('Value')
     confirm_subject = _('Confirm Value')

@@ -14,7 +14,8 @@ TODO
 - audit use of e.g. string:${css_class} so we don't see unexpected class="None"
   in widget rendering output.
 - some sort of test for mapping_item input_prepend/input_append
-- descriptions as tooltips (maybe optionally?)
+- Currently description shows up as both tooltip of label and as help-block.
+  Maybe make these two things separate?
 
 NEW FEATURES:
 

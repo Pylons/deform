@@ -2,12 +2,12 @@
      oid oid|field.oid;
      true_val true_val|field.widget.true_val;"
      i18n:domain="deform">
-  <div class="deform-readonly-true" 
+  <p class="deform-readonly-true form-control-static" 
        id="${oid}"
        tal:condition="cstruct == true_val"
-       i18n:translate="">True</div>
-  <div class="deform-readonly-false" 
+       i18n:translate="">True</p>
+  <p class="deform-readonly-false form-control-static" 
        id="${oid}"
        tal:condition="cstruct != true_val"
-       i18n:translate="">False</div>
+       i18n:translate="">False</p>
 </div>
