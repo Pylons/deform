@@ -1,4 +1,4 @@
-<span i18n:domain="deform"
+<div i18n:domain="deform"
       tal:omit-tag=""
       tal:define="oid oid|field.oid;
                   name name|field.name;
@@ -6,21 +6,21 @@
                   css_class css_class|field.widget.css_class">
   ${field.start_mapping()}
   <div class="row">
-    <div class="input-group col-xs-3">
+    <div class="input-group col-xs-4">
       <span class="input-group-addon" i18n:translate="">Year</span>
       <input type="text" name="year" value="${year}"
              class="span2 form-control ${css_class}"
              tal:attributes="size size; maxlength size"
              id="${oid}"/>
     </div>
-    <div class="input-group col-xs-3">
+    <div class="input-group col-xs-4">
       <span class="input-group-addon" i18n:translate="">Month</span>
       <input type="text" name="month" value="${month}"
              class="span2 form-control ${css_class}"
              tal:attributes="size size; maxlength size"
              id="${oid}-month"/>
     </div>
-    <div class="input-group col-xs-3">
+    <div class="input-group col-xs-4">
       <span class="input-group-addon" i18n:translate="">Day</span>
       <input type="text" name="day" value="${day}"
              class="span2 form-control ${css_class}"
@@ -29,4 +29,4 @@
     </div>
   </div>
   ${field.end_mapping()}
-</span>
+</div>
