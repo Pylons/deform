@@ -1,14 +1,13 @@
-<span tal:define="size size|field.widget.size;
-                  css_class css_class|field.widget.css_class;
+<div tal:define="css_class css_class|field.widget.css_class;
                   name name|field.name;
                   oid oid|field.oid;
-                  style style|field.widget.style|None;
+                  style style|field.widget.style;
                   type_name type_name|field.widget.type_name;"
     tal:omit-tag="">
     <input type="${type_name}"
            name="${name}"
            value="${cstruct}" 
-           tal:attributes="size size; class css_class; style style"
+           tal:attributes="class css_class; style style"
            id="${oid}"/>
     <script type="text/javascript">
       deform.addCallback(
@@ -21,4 +20,4 @@
         }
       );
     </script>
-</span>
+</div>

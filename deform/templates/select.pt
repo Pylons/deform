@@ -2,6 +2,7 @@
      name name|field.name;
      oid oid|field.oid;
      style style|field.widget.style;
+     size size|field.widget.size;
      css_class css_class|field.widget.css_class;
      optgroup_class optgroup_class|field.widget.optgroup_class;
      multiple multiple|field.widget.multiple;"
@@ -12,8 +13,9 @@
           name name;
           id oid;
           class string: form-control ${css_class};
-          multiple multiple"
-          style="${style}">
+          multiple multiple;
+          size size;
+          style style;">
     <tal:loop tal:repeat="item values">
       <optgroup tal:condition="isinstance(item, optgroup_class)"
                 tal:attributes="label item.label">

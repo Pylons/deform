@@ -1,15 +1,13 @@
 <span tal:define="name name|field.name;
-                  size size|field.widget.size;
                   css_class css_class|field.widget.css_class;
                   oid oid|field.oid;
-                  style style|field.widget.style|None"
+                  style style|field.widget.style"
       tal:omit-tag="">
     <input type="text"
            name="${name}"
            value="${cstruct}"
            data-provide="typeahead"
-           tal:attributes="size size;
-                           class string: form-control ${css_class};
+           tal:attributes="class string: form-control ${css_class};
                            style style"
            id="${oid}"/>
     <script tal:condition="field.widget.values" type="text/javascript">

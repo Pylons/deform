@@ -1,21 +1,21 @@
 <form
-  tal:define="bs_form_style field.bootstrap_form_style|'';
-              inline bs_form_style == 'form-inline';
-              title title|field.title;
-              css_class css_class|field.css_class;
+  tal:define="style style|field.widget.style;
+              css_class css_class|string:${field.widget.css_class or field.css_class or ''};
+              item_template item_template|field.widget.item_template;
               autocomplete autocomplete|field.autocomplete;
-              formid formid|field.formid;
+              title title|field.title;
               errormsg errormsg|field.errormsg;
               description description|field.description;
-              item_template item_template|field.widget.item_template;
               buttons buttons|field.buttons;
               use_ajax use_ajax|field.use_ajax;
               ajax_options ajax_options|field.ajax_options;
               formid formid|field.formid;
               action action|field.action or None;
               method method|field.method;"
-  tal:attributes="autocomplete autocomplete; action action"
-  class="deform ${bs_form_style} ${css_class}"
+  tal:attributes="autocomplete autocomplete;
+                  style style;
+                  class css_class;
+                  action action;"
   id="${formid}"
   method="${method}"
   enctype="multipart/form-data"

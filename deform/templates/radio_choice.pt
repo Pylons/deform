@@ -1,5 +1,6 @@
 <div tal:define="oid oid|field.oid;
                  css_class css_class|field.widget.css_class;
+                 style style|field.widget.style;
                  inline getattr(field.widget, 'inline', False);"
      tal:omit-tag="not inline">
   ${field.start_rename()}
@@ -10,7 +11,8 @@
            tal:define="(value, title) choice"
            tal:attributes="class inline and 'radio-inline'">
       <input tal:attributes="checked value == cstruct;
-                             class css_class"
+                             class css_class;
+                             style style;"
              type="radio"
              name="${oid}"
              value="${value}"

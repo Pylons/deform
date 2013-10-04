@@ -95,6 +95,12 @@ class Widget(object):
         The name of the CSS class attached to the li which surrounds the field
         when it is rendered inside the mapping_item or sequence_item template.
 
+    style
+        A string that will be placed literally in a ``style`` attribute on
+        the primary input tag(s) related to the widget.  For example,
+        'width:150px;'.  Default: ``None``, meaning no style attribute will
+        be added to the input tag.
+        
     requirements
         A sequence of two-tuples in the form ``( (requirement_name,
         version_id), ...)`` indicating the logical external
@@ -131,6 +137,7 @@ class Widget(object):
     error_class = 'error'
     css_class = None
     item_css_class = None
+    style = None
     requirements = ()
     type_name = ''
 
@@ -192,11 +199,6 @@ class TextInputWidget(Widget):
 
     **Attributes/Arguments**
 
-    size
-        The size, in columns, of the text input field.  Defaults to
-        ``None``, meaning that the ``size`` is not included in the
-        widget output (uses browser default size).
-
     template
        The template name used to render the widget.  Default:
         ``textinput``.
@@ -209,11 +211,6 @@ class TextInputWidget(Widget):
         If true, during deserialization, strip the value of leading
         and trailing whitespace (default ``True``).
 
-    style
-        A string that will be placed literally in a ``style`` attribute on
-        the text input tag.  For example, 'width:150px;'.  Default: ``None``,
-        meaning no style attribute will be added to the input tag.
-        
     mask
         A :term:`jquery.maskedinput` input mask, as a string.
 
@@ -243,11 +240,9 @@ class TextInputWidget(Widget):
     """
     template = 'textinput'
     readonly_template = 'readonly/textinput'
-    size = None
     strip = True
     mask = None
     mask_placeholder = "_"
-    style = None
     requirements = ( ('jquery.maskedinput', None), )
 
     def serialize(self, field, cstruct, **kw):
@@ -276,11 +271,6 @@ class MoneyInputWidget(Widget):
 
     **Attributes/Arguments**
 
-    size
-        The size, in columns, of the text input field.  Defaults to
-        ``None``, meaning that the ``size`` is not included in the
-        widget output (uses browser default size).
-
     template
        The template name used to render the widget.  Default:
         ``moneyinput``.
@@ -288,11 +278,6 @@ class MoneyInputWidget(Widget):
     readonly_template
         The template name used to render the widget in read-only mode.
         Default: ``readonly/textinput``.
-
-    style
-        A string that will be placed literally in a ``style`` attribute on
-        the text input tag.  For example, 'width:150px;'.  Default: ``None``,
-        meaning no style attribute will be added to the input tag.
 
     options
         A dictionary or sequence of two-tuples containing ``jquery-maskMoney``
@@ -333,8 +318,6 @@ class MoneyInputWidget(Widget):
     readonly_template = 'readonly/textinput'
     requirements = ( ('jquery.maskMoney', None), )
     options = None
-    size = None
-    style = None
     
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
@@ -377,11 +360,6 @@ class AutocompleteInputWidget(Widget):
 
     **Attributes/Arguments**
 
-    size
-        The size, in columns, of the text input field.  Defaults to
-        ``None``, meaning that the ``size`` is not included in the
-        widget output (uses browser default size).
-
     template
         The template name used to render the widget.  Default:
         ``typeahead_textinput``.
@@ -414,11 +392,6 @@ class AutocompleteInputWidget(Widget):
         wait for before activating the autocomplete call.  Defaults to
         ``1``.
 
-    style
-        A string that will be placed literally in a ``style`` attribute on
-        the text input tag.  For example, 'width:150px;'.  Default: ``None``,
-        meaning no style attribute will be added to the input tag.
-
     items
         The max number of items to display in the dropdown. Defaults to
         ``8``.
@@ -426,16 +399,11 @@ class AutocompleteInputWidget(Widget):
     """
     min_length = 1
     readonly_template = 'readonly/textinput'
-    size = None
     strip = True
     items = 8
-    style = None
     template = 'autocomplete_input'
     values = None
     requirements = (('typeahead', None), ('deform', None))
-
-    def __init__(self, **kw):
-        Widget.__init__(self, **kw)
 
     def serialize(self, field, cstruct, **kw):
         if 'delay' in kw or getattr(self, 'delay', None):
@@ -482,16 +450,6 @@ class DateInputWidget(Widget):
 
     **Attributes/Arguments**
 
-    size
-        The size, in columns, of the text input field.  Defaults to
-        ``None``, meaning that the ``size`` is not included in the
-        widget output (uses browser default size).
-
-    style
-        A string that will be placed literally in a ``style`` attribute on
-        the text input tag.  For example, 'width:150px;'.  Default: ``None``,
-        meaning no style attribute will be added to the input tag.
-
     options
         Options for configuring the widget (eg: date format)
 
@@ -506,8 +464,6 @@ class DateInputWidget(Widget):
     template = 'dateinput'
     readonly_template = 'readonly/textinput'
     type_name = 'date'
-    size = None
-    style = None
     requirements = ( ('modernizr', None), ('pickadate', None))
     default_options = (('format', 'yyyy-mm-dd'),)
 
@@ -547,16 +503,6 @@ class DateTimeInputWidget(DateInputWidget):
     options
         A dictionary of options that's passed to pickadate.
 
-    size
-        The size, in columns, of the text input field.  Defaults to
-        ``None``, meaning that the ``size`` is not included in the
-        widget output (uses browser default size).
-
-    style
-        A string that will be placed literally in a ``style`` attribute on
-        the text input tag.  For example, 'width:150px;'.  Default: ``None``,
-        meaning no style attribute will be added to the input tag.
-        
     template
         The template name used to render the widget.  Default:
         ``dateinput``.
@@ -568,8 +514,6 @@ class DateTimeInputWidget(DateInputWidget):
     template = 'datetimeinput'
     readonly_template = 'readonly/textinput'
     type_name = 'datetime'
-    size = None
-    style = None
     requirements = ( ('modernizr', None), ('pickadate', None))
     default_options = (DateInputWidget.default_options +
                        (('timeFormat', 'hh:mm:ss'),
@@ -610,11 +554,6 @@ class TextAreaWidget(TextInputWidget):
         ``None``, meaning that the ``rows`` is not included in the
         widget output (uses browser default cols).
 
-    style
-        A string that will be placed literally in a ``style`` attribute on
-        the textarea input tag.  For example, 'width:150px;'.  Default:
-        ``None``, meaning no style attribute will be added to the input tag.
-        
     template
         The template name used to render the widget.  Default:
         ``textarea``.
@@ -633,7 +572,6 @@ class TextAreaWidget(TextInputWidget):
     cols = None
     rows = None
     strip = True
-    style = None
 
 class RichTextWidget(TextInputWidget):
     """
@@ -685,6 +623,9 @@ class RichTextWidget(TextInputWidget):
 
         Default: ``None`` (no additional options)
 
+    Note that the RichTextWidget template does not honor the ``css_class``
+    or ``style`` attributes of the widget.
+
     """
     readonly_template = 'readonly/richtext'
     delayed_load = False
@@ -735,22 +676,13 @@ class PasswordWidget(TextInputWidget):
         The template name used to render the widget in read-only mode.
         Default: ``readonly/password``.
 
-    size
-        The ``size`` attribute of the password input field (default:
-        ``None``).
-
     strip
         If true, during deserialization, strip the value of leading
         and trailing whitespace (default ``True``).
 
-    style
-        A string that will be placed literally in a ``style`` attribute on
-        the password input tag.  For example, 'width:150px;'.  Default:
-        ``None``, meaning no style attribute will be added to the input tag.
     """
     template = 'password'
     readonly_template = 'readonly/password'
-    style = None
 
 class HiddenWidget(Widget):
     """
@@ -856,10 +788,6 @@ class SelectWidget(Widget):
         - or an instance of ``optgroup_class`` (which is
           ``deform.widget.OptGroup`` by default).
 
-    style
-        The ``style`` attribute of the select input field (default:
-        ``None``).  For example:  ``style = 'width: 50%'``
-
     null_value
         The value which represents the null value.  When the null
         value is encountered during serialization, the
@@ -926,13 +854,17 @@ class SelectWidget(Widget):
 
         Default: ``None`` (which means that the ``label`` attribute is
         not rendered).
+
+    size
+        The size, in rows, of the select list.  Defaults to
+        ``None``, meaning that the ``size`` is not included in the
+        widget output (uses browser default size).
     """
     template = 'select'
     readonly_template = 'readonly/select'
-    style = None
     null_value = ''
     values = ()
-    style = ''
+    size = None
     multiple = False
     optgroup_class = OptGroup
     long_label_generator = None
@@ -1061,10 +993,6 @@ class CheckedInputWidget(Widget):
         The template name used to render the widget in read-only mode.
         Default: ``readonly/checked_input``.
 
-    size
-        The ``size`` attribute of the input fields (default:
-        ``None``, default browser size).
-
     mismatch_message
         The message to be displayed when the value in the primary
         field does not match the value in the confirm field.
@@ -1098,7 +1026,6 @@ class CheckedInputWidget(Widget):
     """
     template = 'checked_input'
     readonly_template = 'readonly/checked_input'
-    size = None
     mismatch_message = _('Fields did not match')
     subject = _('Value')
     confirm_subject = _('Confirm Value')
@@ -1145,14 +1072,10 @@ class CheckedPasswordWidget(CheckedInputWidget):
         The template name used to render the widget in read-only mode.
         Default: ``readonly/checked_password``.
 
-    size
-        The ``size`` attribute of the password input field (default:
-        ``None``).
     """
     template = 'checked_password'
     readonly_template = 'readonly/checked_password'
     mismatch_message = _('Password did not match confirm')
-    size = None
 
 class MappingWidget(Widget):
     """
@@ -1176,6 +1099,8 @@ class MappingWidget(Widget):
         The template name used to render each item in the form.
         Default: ``readonly/mapping_item``.
 
+    Note that the MappingWidget template does not honor the ``css_class``
+    or ``style`` attributes of the widget.
     """
     template = 'mapping'
     readonly_template = 'readonly/mapping'
@@ -1296,6 +1221,10 @@ class SequenceWidget(Widget):
         Boolean indicating whether the Javascript sequence management will
         allow the user to explicitly re-order the subwidgets.
         Default: ``False``.
+
+    Note that the SequenceWidget template does not honor the ``css_class``
+    or ``style`` attributes of the widget.
+        
     """
     template = 'sequence'
     readonly_template = 'readonly/sequence'
@@ -1455,12 +1384,9 @@ class FileUploadWidget(Widget):
         The template name used to render the widget in read-only mode.
         Default: ``readonly/file_upload``.
 
-    size
-        The ``size`` attribute of the input field (default ``None``).
     """
     template = 'file_upload'
     readonly_template = 'readonly/file_upload'
-    size = None
 
     def __init__(self, tmpstore, **kw):
         Widget.__init__(self, **kw)
@@ -1552,10 +1478,6 @@ class DatePartsWidget(Widget):
         The template name used to render the widget in read-only mode.
         Default: ``readonly/dateparts``.
 
-    size
-        The size (in columns) of each date part input control.
-        Default: ``None`` (let browser decide).
-
     assume_y2k
         If a year is provided in 2-digit form, assume it means
         2000+year.  Default: ``True``.
@@ -1563,7 +1485,6 @@ class DatePartsWidget(Widget):
     """
     template = 'dateparts'
     readonly_template = 'readonly/dateparts'
-    size = None
     assume_y2k = True
 
     def serialize(self, field, cstruct, **kw):
@@ -1692,14 +1613,9 @@ class TextInputCSVWidget(Widget):
         The template name used to render the widget in read-only mode.
         Default: ``readonly/textinput``.
 
-    size
-        The size, in columns, of the text input field.  Defaults to
-        ``None``, meaning that the ``size`` is not included in the
-        widget output (uses browser default size).
     """
     template = 'textinput'
     readonly_template = 'readonly/textinput'
-    size = None
     mask = None
     mask_placeholder = "_"
 

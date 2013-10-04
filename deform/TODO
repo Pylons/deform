@@ -8,11 +8,11 @@ TODO
 - run all tests
 - need to test select2-related widget renderings via selenium
 - assets for templates: deform should provide a tool to resolve that?
-- remove all mentions of "size" as horizontal width control (use 
-  style="width: 50%" instead).
 - placeholder support for all textual inputs
 - display help-blocks for readonly fields?
 - maybe readonly should be a property of the schema, not the widget.
+- consider whether "style"/"css_class" on multi-input widgets should apply to
+  a container or each element.
 
 NEW FEATURES:
 
@@ -29,7 +29,6 @@ BROKEN STUFF:
 - sequence_of_sequences: js that processes close/order buttons has to 
   be less promiscuous (it uses e.g. "find"); symptom: buttons
   appear/disappear, act on the wrong element, etc.
-- readd "size" attr to select (it doesnt mean horizontal size)
 
 MIGRATION NOTES: 
 
@@ -40,7 +39,8 @@ MIGRATION NOTES:
 - DateInputWidget renamed parameter `dateFormat` to `format`
 - merged TypeaheadInputWidget to AutocompleteInputWidget (removed delay parameter)
 - AutocompleteInputWidget now accepts string type for "values"
-- select widget no longer accepts "size" (instead use style="width: x")
+- widgets no longer accepts "size" (instead use style="width: x"), except
+  SelectWidget (it means the size of the dropdown)
 - get_widget_resources now returns asset specifications rather than
   deform-static-relative paths
 - deform 2.0 requires users to manually load TB 3.0 and jquery 2.0

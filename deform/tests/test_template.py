@@ -125,6 +125,7 @@ class DummyWidget(object):
     true_val = 'true'
     false_val = 'false'
     css_class = None
+    style = None
     
 class DummyField(object):
     widget = DummyWidget()
