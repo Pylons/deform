@@ -5,7 +5,6 @@ TODO
 - decide how to explain form.css (include in requirements or?)
 - readonly templates changes
 - horizontal/inline forms + structural things
-- run all tests
 - assets for templates: deform should provide a tool to resolve that?
 - placeholder support for all textual inputs
 - display help-blocks for readonly fields?
