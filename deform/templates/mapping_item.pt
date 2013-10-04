@@ -21,29 +21,28 @@
   </label>
 
   <div tal:define="input_prepend field.widget.input_prepend | None;
-                   input_append field.widget.input_append  | None;
-                   prepend_class input_prepend and 'input-prepend' or '';
-                   append_class input_append and 'input-append' or ''"
+                   input_append field.widget.input_append  | None"
        tal:omit-tag="not (input_prepend or input_append)"
-       class="${prepend_class + ' ' + append_class}">
-
-    <span class="add-on" tal:condition="input_prepend">${input_prepend}</span>
-    <span tal:replace="structure field.serialize(cstruct)" />
-    <span class="add-on" tal:condition="input_append">${input_append}</span>
-
-    <p class="help-block"
-       tal:define="errstr 'error-%s' % field.oid"
-       tal:repeat="msg field.error.messages()"
-       i18n:translate=""
-       tal:attributes="id repeat.msg.index==0 and errstr or
-       ('%s-%s' % (errstr, repeat.msg.index))"
-       tal:condition="field.error and not field.widget.hidden and not field.typ.__class__.__name__=='Mapping'">
-      ${msg}
-    </p>
-
-    <p tal:condition="field.description and not field.widget.hidden" 
-       class="help-block" >
-      ${field.description}
-    </p>
+       class="input-group">
+    <span class="input-group-addon"
+          tal:condition="input_prepend">${input_prepend}</span
+    ><span tal:replace="structure field.serialize(cstruct).strip()"
+    /><span class="input-group-addon"
+            tal:condition="input_append">${input_append}</span>
   </div>
+
+  <p class="help-block"
+     tal:define="errstr 'error-%s' % field.oid"
+     tal:repeat="msg field.error.messages()"
+     i18n:translate=""
+     tal:attributes="id repeat.msg.index==0 and errstr or
+     ('%s-%s' % (errstr, repeat.msg.index))"
+     tal:condition="field.error and not field.widget.hidden and not field.typ.__class__.__name__=='Mapping'">
+    ${msg}
+  </p>
+
+  <p tal:condition="field.description and not field.widget.hidden"
+     class="help-block" >
+    ${field.description}
+  </p>
 </div>
