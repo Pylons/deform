@@ -6,7 +6,6 @@ TODO
 - readonly templates changes
 - horizontal/inline forms + structural things
 - run all tests
-- need to test select2-related widget renderings via selenium
 - assets for templates: deform should provide a tool to resolve that?
 - placeholder support for all textual inputs
 - display help-blocks for readonly fields?
