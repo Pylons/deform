@@ -1,5 +1,6 @@
 <div tal:define="css_class css_class|field.widget.css_class;
-                 oid oid|field.oid;"
+                 oid oid|field.oid;
+                 cstruct [str(x) for x in cstruct];"
      tal:omit-tag="">
 ${field.start_sequence()}
 <ul class="deformSet">
