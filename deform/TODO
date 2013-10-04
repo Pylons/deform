@@ -13,6 +13,8 @@ TODO
 - maybe readonly should be a property of the schema, not the widget.
 - consider whether "style"/"css_class" on multi-input widgets should apply to
   a container or each element.
+- audit use of e.g. string:${css_class} so we don't see unexpected class="None"
+  in widget rendering output.
 
 NEW FEATURES:
 
