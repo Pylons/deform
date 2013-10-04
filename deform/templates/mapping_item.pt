@@ -23,11 +23,11 @@
      i18n:domain="deform">
 
   <label for="${oid}"
-         class="${label_class} ${horizontal and left_column_class or ''} ${required and 'required' or ''}"
+         class="${label_class} ${horizontal and left_column_class or ''} ${required and not structural and 'required' or ''}"
          tal:condition="not (hidden or (structural and not horizontal))"
          id="req-${oid}"
          >
-    <tal:span tal:condition="not (hidden or structural)">${title}</tal:span>
+    <tal:span tal:condition="not structural">${title}</tal:span>
   </label>
 
   <div class="${right_column_class}" tal:omit-tag="hidden or not horizontal">
