@@ -43,8 +43,8 @@
     <div tal:repeat="child field"
          tal:replace="structure child.render_template(item_template)"/>
 
-    <div class="form-actions">
-      <div class="btn-group" tal:repeat="button buttons">
+    <div class="form-group">
+      <tal:loop tal:repeat="button buttons">
         <button
               tal:define="btn_disposition repeat.button.start and 'btn-primary' or 'btn-default';
               btn_icon button.icon|None"
@@ -57,7 +57,7 @@
           <i tal:condition="btn_icon" class="${btn_icon}"> </i>
           ${button.title}
         </button>
-      </div>
+      </tal:loop>
     </div>
 
   </fieldset>
