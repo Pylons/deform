@@ -26,6 +26,7 @@ NEW FEATURES:
 - field.get_root
 - inline attr of checkboxchoice and radiochoice widgets (see
   https://github.com/Pylons/deform/pull/182)
+- http://deform2demo.repoze.org/
 
 BROKEN STUFF:
 
@@ -41,7 +42,8 @@ MIGRATION NOTES:
 - removed deprecated `render_initial_item` from SequenceWidget
 - removed deprecated deform.Set (use colander.Set instead)
 - DateInputWidget renamed parameter `dateFormat` to `format`
-- merged TypeaheadInputWidget to AutocompleteInputWidget (removed delay parameter)
+- merged TypeaheadInputWidget to AutocompleteInputWidget (removed delay 
+  parameter)
 - AutocompleteInputWidget now accepts string type for "values"
 - widgets no longer accepts "size" (instead use style="width: x"), except
   SelectWidget (it means the size of the dropdown)
@@ -50,22 +52,13 @@ MIGRATION NOTES:
 - deform 2.0 requires users to manually load TB 3.0 and jquery 2.0
 - required labels no longer insert an asterisk inside a <span class="req">
   inside themselves.  instead the label element has a required class
-  if the field is required; use "form .required:after" to style the element, 
-  e.g.
-           form .required {
-             font-weight: bold;
-           }
-           form .required:after {
-             color: #e32;
-             content: '*';
-             display:inline;
-           }
+  if the field is required; use form.css to display this as an asterisk.
 - min_length of AutocompleteInputWidget now defaults to 1 (was 2)
 
 NICE TO HAVE
 
-- structural widget (mapping_item.pt) - do we need that or not or what? + add a demo
-- deformdemo1.repoze.org, deformdemo2.repoze.org
+- structural widget (mapping_item.pt) - do we need that or not or what? + 
+  add a demo
 - prepend/append t.bootstrap stuff
 - https://github.com/Pylons/deform/pull/116#issuecomment-23210460
 - group demos by widget type
