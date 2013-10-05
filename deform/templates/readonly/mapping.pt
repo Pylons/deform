@@ -1,15 +1,22 @@
-<div tal:define="title title|field.title;
-                 description description|field.description;
-                 item_tmpl item_template|field.widget.readonly_item_template;"
-     class="deformMappingFieldset">
-  <!-- mapping -->
-  <p tal:condition="title">${title}</p>
-  <ul class="readonly">
-    <li class="section" tal:condition="description">
-      <div>${description}</div>
-    </li>
-      <div tal:repeat="child field"
-           tal:replace="structure child.render_template(item_tmpl)"/>
-  </ul>
-  <!-- /mapping -->
-</div>
+<tal:def tal:define="title title|field.title;
+                     description description|field.description;
+                     errormsg errormsg|field.errormsg;
+                     item_template item_template|field.widget.readonly_item_template"
+         i18n:domain="deform">
+  
+  <div class="panel panel-default" title="${description}">
+    <div class="panel-heading">${title}</div>
+    <div class="panel-body">
+
+      <div tal:condition="description">
+        ${description}
+      </div>
+
+      <div tal:repeat="child field.children"
+           tal:replace="structure child.render_template(item_template)" >
+      </div>     
+
+    </div>
+  </div>
+
+</tal:def>

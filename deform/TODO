@@ -18,6 +18,7 @@ TODO
 - Currently description shows up as both tooltip of label and as help-block.
   Maybe make these two things separate or at least don't show them both using
   the same value.
+- normalize CSS class names to deform-foo rather than deformFoo
 
 NEW FEATURES:
 
