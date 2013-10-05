@@ -8,7 +8,7 @@
          name="${name}"
          value="${cstruct}"
          
-         tal:attributes="class string: ${css_class} form-control hasDatepicker;
+         tal:attributes="class string: ${css_class or ''} form-control hasDatepicker;
                          style style"
          id="${oid}"/>
   <script type="text/javascript">
@@ -17,7 +17,7 @@
      function(oid) {
        if (!Modernizr.inputtypes['date'] ||
            "${type_name}" != "date"){
-         $('#' + oid).pickadate(${options});
+         $('#' + oid).pickadate(${options_json});
        }
      }
    );

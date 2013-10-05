@@ -9,7 +9,7 @@
     <div class="input-group col-xs-4">
       <span class="input-group-addon" i18n:translate="">Year</span>
       <input type="text" name="year" value="${year}"
-             class="span2 form-control ${css_class}"
+             class="span2 form-control ${css_class or ''}"
              tal:attributes="style style"
              maxlength="4"
              id="${oid}"/>
@@ -17,7 +17,7 @@
     <div class="input-group col-xs-4">
       <span class="input-group-addon" i18n:translate="">Month</span>
       <input type="text" name="month" value="${month}"
-             class="span2 form-control ${css_class}"
+             class="span2 form-control ${css_class or ''}"
              tal:attributes="style style"
              maxlength="2"
              id="${oid}-month"/>
@@ -25,7 +25,7 @@
     <div class="input-group col-xs-4">
       <span class="input-group-addon" i18n:translate="">Day</span>
       <input type="text" name="day" value="${day}"
-             class="span2 form-control ${css_class}"
+             class="span2 form-control ${css_class or ''}"
              tal:attributes="style style"
              maxlength="2"
              id="${oid}-day"/>

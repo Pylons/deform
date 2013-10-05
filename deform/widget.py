@@ -8,6 +8,7 @@ from colander import (
     Invalid,
     null,
     )
+from colander.iso8601 import ISO8601_REGEX
 
 from translationstring import TranslationString
 
@@ -450,7 +451,7 @@ class DateInputWidget(Widget):
     **Attributes/Arguments**
 
     options
-        Options for configuring the widget (eg: date format)
+        Dictionary of options for configuring the widget (eg: date format)
 
     template
         The template name used to render the widget.  Default:
@@ -464,22 +465,23 @@ class DateInputWidget(Widget):
     readonly_template = 'readonly/textinput'
     type_name = 'date'
     requirements = ( ('modernizr', None), ('pickadate', None))
-    default_options = (('format', 'yyyy-mm-dd'),)
-
-    def __init__(self, *args, **kwargs):
-        self.options = dict(self.default_options)
-        Widget.__init__(self, *args, **kwargs)
-        # bw compat
-        dateformat = self.options.pop('dateFormat', None)
-        if dateformat is not None:
-            self.options['format'] = dateformat
+    default_options = (
+        ('format', 'yyyy-mm-dd'),
+        ('selectMonths', True),
+        ('selectYears', True),
+        )
+    options = None
 
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
             cstruct = ''
         readonly = kw.get('readonly', self.readonly)
         template = readonly and self.readonly_template or self.template
-        kw.setdefault('options', self.options)
+        options = dict(
+            kw.get('options') or self.options or self.default_options
+            )
+        options['submitFormat'] = 'yyyy-mm-dd'
+        kw.setdefault('options_json', json.dumps(options))
         values = self.get_template_values(field, cstruct, kw)
         return field.renderer(template, **values)
 
@@ -488,20 +490,23 @@ class DateInputWidget(Widget):
             return null
         return pstruct
 
-class DateTimeInputWidget(DateInputWidget):
+class DateTimeInputWidget(Widget):
     """
     Renders a datetime picker widget.
 
-    The default rendering is as a native HTML5 datetime  input widget, 
-    falling back to pickadate.js (https://github.com/amsul/pickadate.js)
+    The default rendering is as a pair of inputs (a date and a time) using
+    pickadate.js (https://github.com/amsul/pickadate.js).
 
     Used for ``colander.DateTime`` schema nodes.
 
     **Attributes/Arguments**
 
-    options
-        A dictionary of options that's passed to pickadate.
+    date_options
+        A dictionary of date options passed to pickadate.
 
+    time_options
+        A dictionary of time options passed to pickadate.
+        
     template
         The template name used to render the widget.  Default:
         ``dateinput``.
@@ -511,31 +516,80 @@ class DateTimeInputWidget(DateInputWidget):
         Default: ``readonly/textinput``.
     """
     template = 'datetimeinput'
-    readonly_template = 'readonly/textinput'
+    readonly_template = 'readonly/datetimeinput'
     type_name = 'datetime'
-    requirements = ( ('modernizr', None), ('pickadate', None))
-    default_options = (DateInputWidget.default_options +
-                       (('timeFormat', 'hh:mm:ss'),
-                        ('separator', ' ')))
+    requirements = ( ('pickadate', None), )
+    default_date_options = (
+        ('format', 'yyyy-mm-dd'),
+        ('selectMonths', True),
+        ('selectYears', True),
+        )
+    date_options = None
+    default_time_options = (
+        ('format', 'h:i A'),
+        ('interval', 30)
+        )
+    time_options = None
 
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
             cstruct = ''
         readonly = kw.get('readonly', self.readonly)
-        if len(cstruct) == 25: # strip timezone if it's there
-            cstruct = cstruct[:-6]
-        options = kw.get('options', self.options)
-        kw['options'] = json.dumps(options)
-        separator = options.get('separator', ' ')
-        cstruct = separator.join(cstruct.split('T'))
+        if cstruct:
+            parsed = ISO8601_REGEX.match(cstruct)
+            if parsed: # strip timezone if it's there
+                timezone = parsed.groupdict()['timezone']
+                if timezone and cstruct.endswith(timezone):
+                    cstruct = cstruct[:-len(timezone)]
+
+        try:
+            kw['date'], kw['time'] = cstruct.split('T', 1)
+        except ValueError: # need more than one item to unpack
+            kw['date'] = kw['time'] = ''
+            
+        
+        date_options = dict(
+            kw.get('date_options') or self.date_options or
+            self.default_date_options
+            )
+        date_options['formatSubmit'] = 'yyyy-mm-dd'
+        kw['date_options_json'] = json.dumps(date_options)
+
+        time_options = dict(
+            kw.get('time_options') or self.time_options or
+            self.default_time_options
+            )
+        time_options['formatSubmit'] = 'HH:i'
+        kw['time_options_json'] = json.dumps(time_options)
+        
         values = self.get_template_values(field, cstruct, kw)
         template = readonly and self.readonly_template or self.template
         return field.renderer(template, **values)
 
     def deserialize(self, field, pstruct):
-        if pstruct in ('', null):
+        if pstruct is null:
             return null
-        return pstruct.replace(self.options['separator'], 'T')
+        else:
+            # seriously pickadate?  oh.  right.  i forgot.  you're javascript.
+            date = pstruct['date'].strip()
+            time = pstruct['time'].strip()
+            date_submit = pstruct['date_submit'].strip()
+            time_submit = pstruct['time_submit'].strip()
+            date = date_submit or date
+            time = time_submit or time
+
+            if (not time and not date):
+                return null
+            
+            result = 'T'.join([date, time])
+
+            if not date:
+                raise Invalid(field.schema, _('Incomplete date'), result)
+
+            if not time:
+                raise Invalid(field.schema, _('Incomplete time'), result)
+            
+            return result
 
 class TextAreaWidget(TextInputWidget):
     """

@@ -1,8 +1,6 @@
 import unittest
 
-from deform.compat import (
-    text_type,
-)
+from deform.compat import text_type
 
 import colander
 
@@ -384,40 +382,22 @@ class TestDateInputWidget(unittest.TestCase):
         result = widget.deserialize(field, '')
         self.assertEqual(result, colander.null)
 
-    def test_options(self):
-        widget = self._makeOne()
-        widget.options['dummy'] = 'dummyvalue'
-        self.assertTrue(('dummy', 'dummyvalue') in widget.options.items())
-
     def test_options_changed_and_default(self):
         widget2 = self._makeOne()
         widget = self._makeOne(options={'format': 'foo'})
         self.assertEqual(widget.options['format'], 'foo')
-        self.assertEqual(widget2.options['format'], 'yyyy-mm-dd')
+        self.assertEqual(widget2.options, None)
 
-    def test_bwcompat_dateFormat(self):
-        widget = self._makeOne(options={'dateFormat': 'foo'})
-        self.assertEqual(widget.options['format'], 'foo')
-
-class TestDateTimeInputWidget(TestDateInputWidget):
+class TestDateTimeInputWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import DateTimeInputWidget
         return DateTimeInputWidget(**kw)
 
-    def test_options(self):
-        widget = self._makeOne()
-        widget.options['dummy'] = 'dummyvalue'
-        self.assertTrue(('dummy', 'dummyvalue') in widget.options.items())
-
-    def test_options_changed_and_default(self):
+    def test_date_options_changed_and_default(self):
         widget2 = self._makeOne()
-        widget = self._makeOne(options={'format': 'foo'})
-        self.assertEqual(widget.options['format'], 'foo')
-        self.assertEqual(widget2.options['format'], 'yyyy-mm-dd')
-
-    def test_bwcompat_dateFormat(self):
-        widget = self._makeOne(options={'dateFormat': 'foo'})
-        self.assertEqual(widget.options['format'], 'foo')
+        widget = self._makeOne(date_options={'format': 'foo'})
+        self.assertEqual(widget.date_options['format'], 'foo')
+        self.assertEqual(widget2.date_options, None)
 
     def test_serialize_with_timezone(self):
         widget = self._makeOne()
@@ -426,8 +406,8 @@ class TestDateTimeInputWidget(TestDateInputWidget):
         cstruct = '2011-12-13T14:15:16+01:00'
         widget.serialize(field, cstruct)
         self.assertEqual(renderer.template, widget.template)
-        self.assertNotEqual(renderer.kw['cstruct'], cstruct)
-        self.assertEqual(renderer.kw['cstruct'], cstruct[:-6].replace('T', ' '))
+        self.assertEqual(renderer.kw['date'], '2011-12-13')
+        self.assertEqual(renderer.kw['time'], '14:15:16')
 
     def test_serialize_without_timezone(self):
         widget = self._makeOne()
@@ -435,21 +415,117 @@ class TestDateTimeInputWidget(TestDateInputWidget):
         field = DummyField(DummySchema(), renderer=renderer)
         cstruct = '2011-12-13T14:15:16'
         widget.serialize(field, cstruct)
-        self.assertEqual(renderer.template, widget.template)
-        self.assertEqual(renderer.kw['cstruct'], cstruct.replace('T', ' '))
+        self.assertEqual(renderer.kw['date'], '2011-12-13')
+        self.assertEqual(renderer.kw['time'], '14:15:16')
 
-    def test_deserialize_with_timezone(self):
+    def test_serialize_no_separator(self):
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        field = DummyField(DummySchema(), renderer=renderer)
+        cstruct = ''
+        widget.serialize(field, cstruct)
+        self.assertEqual(renderer.kw['date'], '')
+        self.assertEqual(renderer.kw['time'], '')
+
+    def test_serialize_null(self):
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        field = DummyField(DummySchema(), renderer=renderer)
+        cstruct = colander.null
+        widget.serialize(field, cstruct)
+        self.assertEqual(renderer.kw['date'], '')
+        self.assertEqual(renderer.kw['time'], '')
+
+    def test_deserialize_null(self):
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field, '2011-12-13 14:15:16+01:00')
-        self.assertEqual(result, '2011-12-13T14:15:16+01:00')
-
-    def test_deserialize_without_timezone(self):
+        pstruct = colander.null
+        result = widget.deserialize(field, pstruct)
+        self.assertEqual(result, colander.null)
+        
+    def test_deserialize_nochanges(self):
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field, '2011-12-13 14:15:16')
+        pstruct = {
+            'date':'2011-12-13',
+            'date_submit':'',
+            'time':'14:15:16',
+            'time_submit':''
+            }
+        result = widget.deserialize(field, pstruct)
         self.assertEqual(result, '2011-12-13T14:15:16')
 
+    def test_deserialize_date_changed(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = {
+            'date':'2011-12-13',
+            'date_submit':'2011-12-12',
+            'time':'14:15:16',
+            'time_submit':''
+            }
+        result = widget.deserialize(field, pstruct)
+        self.assertEqual(result, '2011-12-12T14:15:16')
+
+    def test_deserialize_time_changed(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = {
+            'date':'2011-12-13',
+            'date_submit':'',
+            'time':'14:15:16',
+            'time_submit':'14:15:15'
+            }
+        result = widget.deserialize(field, pstruct)
+        self.assertEqual(result, '2011-12-13T14:15:15')
+        
+
+    def test_deserialize_date_and_time_changed(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = {
+            'date':'2011-12-13',
+            'date_submit':'2011-12-12',
+            'time':'14:15:16',
+            'time_submit':'14:15:15'
+            }
+        result = widget.deserialize(field, pstruct)
+        self.assertEqual(result, '2011-12-12T14:15:15')
+
+    def test_deserialize_no_date(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = {
+            'date':'',
+            'date_submit':'',
+            'time':'14:15:16',
+            'time_submit':'14:15:15'
+            }
+        self.assertRaises(colander.Invalid, widget.deserialize, field, pstruct)
+
+    def test_deserialize_no_time(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = {
+            'date':'2011-12-13',
+            'date_submit':'2011-12-12',
+            'time':'',
+            'time_submit':''
+            }
+        self.assertRaises(colander.Invalid, widget.deserialize, field, pstruct)
+
+    def test_deserialize_no_time_no_date(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = {
+            'date':'',
+            'date_submit':'',
+            'time':'',
+            'time_submit':''
+            }
+        result = widget.deserialize(field, pstruct)
+        self.assertEqual(result, colander.null)
+        
 class TestHiddenWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import HiddenWidget

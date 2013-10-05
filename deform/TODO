@@ -1,7 +1,6 @@
 TODO
 
 - docs
-- pickadate
 - decide how to explain form.css (include in requirements or?)
 - horizontal/inline forms + structural things
 - assets for templates: deform should provide a tool to resolve that?
@@ -30,7 +29,6 @@ NEW FEATURES:
 
 BROKEN STUFF:
 
-- datetimeinput - missing widgets
 - sequence_of_sequences: js that processes close/order buttons has to 
   be less promiscuous (it uses e.g. "find"); symptom: buttons
   appear/disappear, act on the wrong element, etc.
@@ -41,7 +39,18 @@ MIGRATION NOTES:
   (use "options" instead)
 - removed deprecated `render_initial_item` from SequenceWidget
 - removed deprecated deform.Set (use colander.Set instead)
-- DateInputWidget renamed parameter `dateFormat` to `format`
+- DateInputWidget renamed parameter `dateFormat` to `format` (dateFormat
+  now unsupported).
+- DateTimeInputWidget now renders as two fields: one for a date and one
+  for a time, using pickadate.
+- We no longer bother trying to use the native datetimeinput widget on any
+  browser, because the support is so spotty.
+- DateTimeInputWidget takes two options now: date_options and time_options
+  instead of a single options dictionary.  The options are pickadate
+  date/time options respectively.
+- It is no longer possible to do DateTimeWidget().options['a'] = 'foo'
+  or DateTimeWidget().date_options['a'] = 'foo'.  If you need to change
+  options imperatively, set the entire .options/.date_options dictionary.
 - merged TypeaheadInputWidget to AutocompleteInputWidget (removed delay 
   parameter)
 - AutocompleteInputWidget now accepts string type for "values"
