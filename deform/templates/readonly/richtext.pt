@@ -1,10 +1,2 @@
-<tal:def tal:define="
-                  css_class css_class|field.widget.css_class;
-                  oid oid|field.oid;
-                  style style|field.widget.style|None">
-  <div class="form-control-static ${css_class}"
-     tal:attributes="style style"
-     id="${oid}">
-    ${structure:cstruct}
-  </div>
-</tal:def>
+<pre id="${oid|field.oid}" 
+     class="form-control-static pre-scrollable">${cstruct}</pre>
