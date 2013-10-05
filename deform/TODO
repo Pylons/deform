@@ -17,6 +17,11 @@ TODO
   Maybe make these two things separate or at least don't show them both using
   the same value.
 - normalize CSS class names to deform-foo rather than deformFoo
+- sequence_of_sequences: js that processes close/order buttons has to 
+  be less promiscuous (it uses e.g. "find"); symptom: buttons
+  appear/disappear, act on the wrong element, etc... ugh 2013/10/05
+  cannot replicate, but still believe there may be an issue, but
+  maybe iElectric fixed it
 
 NEW FEATURES:
 
@@ -26,12 +31,6 @@ NEW FEATURES:
 - inline attr of checkboxchoice and radiochoice widgets (see
   https://github.com/Pylons/deform/pull/182)
 - http://deform2demo.repoze.org/
-
-BROKEN STUFF:
-
-- sequence_of_sequences: js that processes close/order buttons has to 
-  be less promiscuous (it uses e.g. "find"); symptom: buttons
-  appear/disappear, act on the wrong element, etc.
 
 MIGRATION NOTES: 
 
