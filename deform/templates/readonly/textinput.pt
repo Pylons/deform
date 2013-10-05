@@ -1,3 +1,4 @@
-<p tal:define="oid oid|field.oid;"
-   class="form-control-static"
-   id="${oid}"> ${cstruct}</p>
+<p class="form-control-static"
+   id="${oid|field.oid}">
+  ${cstruct}
+</p>

@@ -559,7 +559,7 @@ class TextAreaWidget(TextInputWidget):
 
     readonly_template
         The template name used to render the widget in read-only mode.
-        Default: ``readonly/textarea``.
+        Default: ``readonly/textinput``.
 
 
     strip
@@ -567,7 +567,7 @@ class TextAreaWidget(TextInputWidget):
         and trailing whitespace (default ``True``).
     """
     template = 'textarea'
-    readonly_template = 'readonly/textarea'
+    readonly_template = 'readonly/textinput'
     cols = None
     rows = None
     strip = True

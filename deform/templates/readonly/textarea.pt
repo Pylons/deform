@@ -1,4 +1,0 @@
-<p class="form-control-static"
-   id="${oid|field.oid}">
-  ${cstruct}
-</p>
