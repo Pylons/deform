@@ -25,6 +25,14 @@ are translated from the native Chameleon templates to your templating
 system of choice and a suitable :term:`renderer` is supplied to
 :mod:`deform`.
 
+.. warning::
+
+   Despite the version number at the top, this documentation has not been 
+   updated for the 2.X release line of Deform.  Most of the documentation 
+   will still apply, but where it does not, see the :ref:`changelog` for 
+   an overview of changes between 0.9.9 and this release.  
+   Also, please see http://deform2demo.repoze.org .
+
 Topics
 ======
 
@@ -49,7 +57,7 @@ Topics
 Demonstration Site
 ==================
 
-Visit `deformdemo.repoze.org <http://deformdemo.repoze.org>`_ to view an
+Visit `deform2demo.repoze.org <http://deform2demo.repoze.org>`_ to view an
 application which demonstrates most of Deform's features.  The source code
 for this application is also available in the `deform package on GitHub
 <https://github.com/Pylons/deform>`_.
