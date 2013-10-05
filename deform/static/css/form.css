@@ -25,3 +25,7 @@ form .required:after {
 .hasDatepicker[readonly] {
     cursor: pointer !important;
 }
+
+form .deform-password-not-displayed {
+    font-style: italic;
+}

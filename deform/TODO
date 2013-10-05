@@ -6,7 +6,8 @@ TODO
 - readonly templates changes
 - horizontal/inline forms + structural things
 - assets for templates: deform should provide a tool to resolve that?
-- placeholder support for all textual inputs
+- placeholder support for all textual inputs (and required/maxlength
+  see also https://github.com/Pylons/deform/pull/116)
 - display help-blocks for readonly fields?
 - maybe readonly should be a property of the schema, not the widget.
 - consider whether "style"/"css_class" on multi-input widgets should apply to
@@ -15,7 +16,8 @@ TODO
   in widget rendering output.
 - some sort of test for mapping_item input_prepend/input_append
 - Currently description shows up as both tooltip of label and as help-block.
-  Maybe make these two things separate?
+  Maybe make these two things separate or at least don't show them both using
+  the same value.
 
 NEW FEATURES:
 
