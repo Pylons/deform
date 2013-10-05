@@ -1,5 +1,5 @@
-Next release
-------------
+2.0a1 (2013-10-05)
+------------------
 
 This is an alpha release of Deform v2.  Deform v2 is backwards incompatible
 with Deform v1.  It requires the use of Twitter Bootstrap v3, whereas 
