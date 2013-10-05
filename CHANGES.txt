@@ -11,7 +11,7 @@ http://deform2demo.repoze.org.
 Both Deform 1 and Deform 2 will be maintained going forward.  If you wish
 to continue using Deform 1, because you cannot upgrade, or cannot depend on
 Bootstrap 3, please pin your deform distribution requirement to
-something below 2.0a1, e.g. "deform<=1.999".
+something below 2.0a1, e.g. ``deform<=1.999``.
 
 This first alpha release is missing formal documentation updates.  Apologies, 
 we needed to get a release out onto PyPI, as not having one is holding back
@@ -24,7 +24,6 @@ able to make use of the demo site at http://deform2demo.repoze.org to divine
 how things have changed, and what CSS and JavaScript resources you'll need
 to include in your pages to make use of this release.
 
-```
 TODO
 
 - docs
@@ -99,4 +98,3 @@ MIGRATION NOTES:
   inside themselves.  instead the label element has a required class
   if the field is required; use form.css to display this as an asterisk.
 - min_length of AutocompleteInputWidget now defaults to 1 (was 2)
-```
