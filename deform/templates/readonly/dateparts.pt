@@ -1,9 +1,3 @@
-<div tal:define="oid oid|field.oid"
-     i18n:domain="deform">
-  <span i18n:translate="">Year</span>
-  <span id="${oid}-year">${year}</span>
-  <span i18n:translate="">Month</span>
-  <span id="${oid}-month">${month}</span>
-  <span i18n:translate="">Day</span>
-  <span id="${oid}-day">${day}</span>
+<div>
+  <p class="form-control-static" id=${oid|field.oid}>${year}/${month}/${day}</p>
 </div>
