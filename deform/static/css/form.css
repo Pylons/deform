@@ -26,6 +26,6 @@ form .required:after {
     cursor: pointer !important;
 }
 
-form .deform-password-not-displayed {
+form .deform-readonly-text {
     font-style: italic;
 }
