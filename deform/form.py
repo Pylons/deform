@@ -97,10 +97,15 @@ class Form(field.Field):
     keywords mean the same thing in the context of a Form as they do
     in the context of a Field (a Form is just another kind of Field).
     """
-    css_class = 'deform'
+    css_class = 'deform' # bw compat only; pass a widget to override
     def __init__(self, schema, action='', method='POST', buttons=(),
                  formid='deform', use_ajax=False, ajax_options='{}',
                  autocomplete=None, **kw):
+        if autocomplete:
+            autocomplete = 'on'
+        elif autocomplete is not None:
+            autocomplete = 'off'
+        self.autocomplete = autocomplete
         field.Field.__init__(self, schema, **kw)
         _buttons = []
         for button in buttons:
@@ -112,14 +117,11 @@ class Form(field.Field):
         self.buttons = _buttons
         self.formid = formid
         self.use_ajax = use_ajax
-        if autocomplete is None:
-            self.autocomplete = None
-        elif autocomplete:
-            self.autocomplete = 'on'
-        else:
-            self.autocomplete = 'off'
         self.ajax_options = Markup(ajax_options.strip())
-        self.widget = widget.FormWidget()
+        form_widget = getattr(schema, 'widget', None)
+        if form_widget is None:
+            form_widget = widget.FormWidget()
+        self.widget = form_widget
 
 class Button(object):
     """

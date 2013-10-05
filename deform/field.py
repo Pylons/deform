@@ -3,6 +3,7 @@ import colander
 import peppercorn
 import unicodedata
 import re
+import weakref
 
 from chameleon.utils import Markup
 
@@ -77,6 +78,12 @@ class Field(object):
         children
             Child fields of this field.
 
+        parent
+            The parent field of this field or ``None`` if this field is
+            the root.  This is actually a property that returns the result
+            of ``weakref.ref(actualparent)()`` to avoid leaks due to circular
+            references, but it can be treated like the field itself.
+
         error
             The exception raised by the last attempted validation of the
             schema element associated with this field.  By default, this
@@ -140,7 +147,7 @@ class Field(object):
 
     def __init__(self, schema, renderer=None, counter=None,
                  resource_registry=None, appstruct=colander.null,
-                 **kw):
+                 parent=None, **kw):
         self.counter = counter or itertools.count()
         self.order = next(self.counter)
         self.oid = getattr(schema, 'oid', 'deformField%s' % self.order)
@@ -157,6 +164,9 @@ class Field(object):
         self.renderer = renderer
         self.resource_registry = resource_registry
         self.children = []
+        if parent is not None:
+            parent = weakref.ref(parent)
+        self._parent = parent
         self.__dict__.update(kw)
         for child in schema.children:
             self.children.append(
@@ -165,10 +175,27 @@ class Field(object):
                     renderer=renderer,
                     counter=self.counter,
                     resource_registry=resource_registry,
+                    parent=self,
                     **kw
                     )
                 )
         self.set_appstruct(appstruct)
+
+    @property
+    def parent(self):
+        if self._parent is None:
+            return None
+        return self._parent()
+
+    def get_root(self):
+        """ Return the root field in the field herarchy (the form field) """
+        node = self
+        while True:
+            parent = node.parent
+            if parent is None:
+                break
+            node = parent
+        return node
 
     @classmethod
     def set_zpt_renderer(cls, search_path, auto_reload=True,
@@ -250,12 +277,19 @@ class Field(object):
         information.  Return the cloned field.  The ``order``
         attribute of the node is not cloned; instead the field
         receives a new order attribute; it will be a number larger
-        than the last renderered field of this set."""
+        than the last renderered field of this set.  The parent of the cloned
+        node will become ``None`` unconditionally."""
         cloned = self.__class__(self.schema)
         cloned.__dict__.update(self.__dict__)
         cloned.order = next(cloned.counter)
         cloned.oid = 'deformField%s' % cloned.order
-        cloned.children = [ field.clone() for field in self.children ]
+        cloned._parent = None
+        children = []
+        for field in self.children:
+            cloned_child = field.clone()
+            cloned_child._parent = weakref.ref(cloned)
+            children.append(cloned_child)
+        cloned.children = children
         return cloned
 
     @decorator.reify

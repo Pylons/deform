@@ -1,13 +1,23 @@
-<div tal:define="item_tmpl item_template|field.widget.readonly_item_template;"
-     class="deformSeq readonly">
-  <!-- sequence -->
+<div tal:define="
+     item_tmpl item_template|field.widget.readonly_item_template;
+     oid oid|field.oid;
+     name name|field.name;
+     title title|field.title;"
+     class="deformSeq"
+     id="${oid}">
 
-  <ul>
+  <div class="panel panel-default">
+    <div class="panel-heading">${title}</div>
+    <div class="panel-body">
 
-    <tal:block repeat="tup subfields"
-         content="structure field.render_template(item_tmpl, field=tup[1], cstruct=tup[0])"/>
+      <div class="deformSeqContainer">
+        <div tal:define="subfields [ x[1] for x in subfields ]"
+             tal:repeat="subfield subfields"
+             tal:replace="structure subfield.render_template(item_tmpl, 
+                                                          parent=field)" />
+      </div>
 
-  </ul>
+    </div>
 
-  <!-- /sequence -->
+  </div>
 </div>

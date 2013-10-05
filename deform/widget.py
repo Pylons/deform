@@ -8,7 +8,6 @@ from colander import (
     Invalid,
     null,
     )
-
 from colander.iso8601 import ISO8601_REGEX
 
 from translationstring import TranslationString
@@ -97,6 +96,12 @@ class Widget(object):
         The name of the CSS class attached to the li which surrounds the field
         when it is rendered inside the mapping_item or sequence_item template.
 
+    style
+        A string that will be placed literally in a ``style`` attribute on
+        the primary input tag(s) related to the widget.  For example,
+        'width:150px;'.  Default: ``None``, meaning no style attribute will
+        be added to the input tag.
+        
     requirements
         A sequence of two-tuples in the form ``( (requirement_name,
         version_id), ...)`` indicating the logical external
@@ -133,8 +138,8 @@ class Widget(object):
     error_class = 'error'
     css_class = None
     item_css_class = None
+    style = None
     requirements = ()
-    type_name = ''
 
     def __init__(self, **kw):
         self.__dict__.update(kw)
@@ -194,11 +199,6 @@ class TextInputWidget(Widget):
 
     **Attributes/Arguments**
 
-    size
-        The size, in columns, of the text input field.  Defaults to
-        ``None``, meaning that the ``size`` is not included in the
-        widget output (uses browser default size).
-
     template
        The template name used to render the widget.  Default:
         ``textinput``.
@@ -211,11 +211,6 @@ class TextInputWidget(Widget):
         If true, during deserialization, strip the value of leading
         and trailing whitespace (default ``True``).
 
-    style
-        A string that will be placed literally in a ``style`` attribute on
-        the text input tag.  For example, 'width:150px;'.  Default: ``None``,
-        meaning no style attribute will be added to the input tag.
-        
     mask
         A :term:`jquery.maskedinput` input mask, as a string.
 
@@ -245,11 +240,9 @@ class TextInputWidget(Widget):
     """
     template = 'textinput'
     readonly_template = 'readonly/textinput'
-    size = None
     strip = True
     mask = None
     mask_placeholder = "_"
-    style = None
     requirements = ( ('jquery.maskedinput', None), )
 
     def serialize(self, field, cstruct, **kw):
@@ -278,11 +271,6 @@ class MoneyInputWidget(Widget):
 
     **Attributes/Arguments**
 
-    size
-        The size, in columns, of the text input field.  Defaults to
-        ``None``, meaning that the ``size`` is not included in the
-        widget output (uses browser default size).
-
     template
        The template name used to render the widget.  Default:
         ``moneyinput``.
@@ -290,11 +278,6 @@ class MoneyInputWidget(Widget):
     readonly_template
         The template name used to render the widget in read-only mode.
         Default: ``readonly/textinput``.
-
-    style
-        A string that will be placed literally in a ``style`` attribute on
-        the text input tag.  For example, 'width:150px;'.  Default: ``None``,
-        meaning no style attribute will be added to the input tag.
 
     options
         A dictionary or sequence of two-tuples containing ``jquery-maskMoney``
@@ -335,8 +318,6 @@ class MoneyInputWidget(Widget):
     readonly_template = 'readonly/textinput'
     requirements = ( ('jquery.maskMoney', None), )
     options = None
-    size = None
-    style = None
     
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
@@ -372,42 +353,28 @@ class MoneyInputWidget(Widget):
         return pstruct
 
 class AutocompleteInputWidget(Widget):
-    """
+    """ 
     Renders an ``<input type="text"/>`` widget which provides
-    autocompletion via a list of values.
-
-    When this option is used, the :term:`jquery.ui.autocomplete`
-    library must be loaded into the page serving the form for
-    autocompletion to have any effect.  See also
-    :ref:`autocomplete_input`.  A version of :term:`JQuery UI` which
-    includes the autoinclude sublibrary is included in the deform
-    static directory. The default styles for JQuery UI are also
-    available in the deform static/css directory.
+    autocompletion via a list of values using bootstrap's typeahead plugin
+    http://twitter.github.com/bootstrap/javascript.html#typeahead.
 
     **Attributes/Arguments**
 
-    size
-        The size, in columns, of the text input field.  Defaults to
-        ``None``, meaning that the ``size`` is not included in the
-        widget output (uses browser default size).
-
     template
         The template name used to render the widget.  Default:
-        ``autocomplete_input``.
+        ``typeahead_textinput``.
 
     readonly_template
         The template name used to render the widget in read-only mode.
-        Default: ``readonly/textinput``.
+        Default: ``readonly/typeahead_textinput``.
 
     strip
         If true, during deserialization, strip the value of leading
         and trailing whitespace (default ``True``).
 
     values
-        ``values`` from which :term:`jquery.ui.autocomplete` provides
-        autocompletion. It MUST be an iterable that can be converted
-        to a json array by [simple]json.dumps. It is also possible
-        to pass a [base]string representing a remote URL.
+        A list of strings or string.
+        Defaults to ``[]``.
 
         If ``values`` is a string it will be treated as a
         URL. If values is an iterable which can be serialized to a
@@ -419,52 +386,45 @@ class AutocompleteInputWidget(Widget):
 
           ['foo', 'bar', 'baz']
 
-        Defaults to ``None``.
-
     min_length
         ``min_length`` is an optional argument to
         :term:`jquery.ui.autocomplete`. The number of characters to
         wait for before activating the autocomplete call.  Defaults to
-        ``2``.
+        ``1``.
 
-    delay
-        ``delay`` is an optional argument to
-        :term:`jquery.ui.autocomplete`. It sets the time to wait after a
-        keypress to activate the autocomplete call.
-        Defaults to ``10`` ms or ``400`` ms if a url is passed.
+    items
+        The max number of items to display in the dropdown. Defaults to
+        ``8``.
 
-    style
-        A string that will be placed literally in a ``style`` attribute on
-        the text input tag.  For example, 'width:150px;'.  Default: ``None``,
-        meaning no style attribute will be added to the input tag.
     """
-    delay = None
-    min_length = 2
+    min_length = 1
     readonly_template = 'readonly/textinput'
-    size = None
     strip = True
-    style = None
+    items = 8
     template = 'autocomplete_input'
     values = None
-    requirements = ( ('jqueryui', None), )
+    requirements = (('typeahead', None), ('deform', None))
 
     def serialize(self, field, cstruct, **kw):
+        if 'delay' in kw or getattr(self, 'delay', None):
+            raise ValueError(
+                'AutocompleteWidget does not support *delay* parameter '
+                'any longer.'
+                )
         if cstruct in (null, None):
             cstruct = ''
+        self.values = self.values or []
         readonly = kw.get('readonly', self.readonly)
-        options = dict(kw.pop('options', {}))
-        if not 'delay' in options:
-            # set default delay if None
-            if self.delay is None:
-                is_url = isinstance(self.values, string_types)
-                options['delay'] = (is_url and 400) or 10
-        min_length = kw.pop('min_length', self.min_length)
-        options['minLength'] = min_length
-        options = json.dumps(options)
-        values = kw.pop('values', self.values)
-        values = json.dumps(values)
-        kw['options'] = options
-        kw['values'] = values
+
+        options = {}
+        if isinstance(self.values, string_types):
+            options['remote'] = '%s?term=%%QUERY' % self.values
+        else:
+            options['local'] = self.values
+
+        options['minLength'] = kw.pop('min_length', self.min_length)
+        options['limit'] = kw.pop('items', self.items)
+        kw['options'] = json.dumps(options)
         tmpl_values = self.get_template_values(field, cstruct, kw)
         template = readonly and self.readonly_template or self.template
         return field.renderer(template, **tmpl_values)
@@ -484,25 +444,14 @@ class DateInputWidget(Widget):
     Renders a date picker widget.
 
     The default rendering is as a native HTML5 date input widget,
-    falling back to JQuery UI date picker widget
-    (http://jqueryui.com/demos/datepicker/).
+    falling back to pickadate (https://github.com/amsul/pickadate.js.)
 
     Most useful when the schema node is a ``colander.Date`` object.
 
     **Attributes/Arguments**
 
-    size
-        The size, in columns, of the text input field.  Defaults to
-        ``None``, meaning that the ``size`` is not included in the
-        widget output (uses browser default size).
-
-    style
-        A string that will be placed literally in a ``style`` attribute on
-        the text input tag.  For example, 'width:150px;'.  Default: ``None``,
-        meaning no style attribute will be added to the input tag.
-
     options
-        Options for configuring the widget (eg: date format)
+        Dictionary of options for configuring the widget (eg: date format)
 
     template
         The template name used to render the widget.  Default:
@@ -515,21 +464,24 @@ class DateInputWidget(Widget):
     template = 'dateinput'
     readonly_template = 'readonly/textinput'
     type_name = 'date'
-    size = None
-    style = None
-    requirements = ( ('modernizr', None), ('jqueryui', None) )
-    default_options = (('dateFormat', 'yy-mm-dd'),)
-
-    def __init__(self, *args, **kwargs):
-        self.options = dict(self.default_options)
-        Widget.__init__(self, *args, **kwargs)
+    requirements = ( ('modernizr', None), ('pickadate', None))
+    default_options = (
+        ('format', 'yyyy-mm-dd'),
+        ('selectMonths', True),
+        ('selectYears', True),
+        )
+    options = None
 
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
             cstruct = ''
         readonly = kw.get('readonly', self.readonly)
         template = readonly and self.readonly_template or self.template
-        kw.setdefault('options', self.options)
+        options = dict(
+            kw.get('options') or self.options or self.default_options
+            )
+        options['submitFormat'] = 'yyyy-mm-dd'
+        kw.setdefault('options_json', json.dumps(options))
         values = self.get_template_values(field, cstruct, kw)
         return field.renderer(template, **values)
 
@@ -538,30 +490,22 @@ class DateInputWidget(Widget):
             return null
         return pstruct
 
-class DateTimeInputWidget(DateInputWidget):
+class DateTimeInputWidget(Widget):
     """
     Renders a datetime picker widget.
 
-    The default rendering is as a native HTML5 datetime  input widget, 
-    falling back to jQuery UI date picker with a JQuery Timepicker add-on
-    (http://trentrichardson.com/examples/timepicker/).
+    The default rendering is as a pair of inputs (a date and a time) using
+    pickadate.js (https://github.com/amsul/pickadate.js).
 
     Used for ``colander.DateTime`` schema nodes.
 
     **Attributes/Arguments**
 
-    options
-        A dictionary of options that's passed to the datetimepicker.
+    date_options
+        A dictionary of date options passed to pickadate.
 
-    size
-        The size, in columns, of the text input field.  Defaults to
-        ``None``, meaning that the ``size`` is not included in the
-        widget output (uses browser default size).
-
-    style
-        A string that will be placed literally in a ``style`` attribute on
-        the text input tag.  For example, 'width:150px;'.  Default: ``None``,
-        meaning no style attribute will be added to the input tag.
+    time_options
+        A dictionary of time options passed to pickadate.
         
     template
         The template name used to render the widget.  Default:
@@ -572,15 +516,20 @@ class DateTimeInputWidget(DateInputWidget):
         Default: ``readonly/textinput``.
     """
     template = 'datetimeinput'
-    readonly_template = 'readonly/textinput'
+    readonly_template = 'readonly/datetimeinput'
     type_name = 'datetime'
-    size = None
-    style = None
-    requirements = ( ('modernizr', None), ('jqueryui', None),
-                     ('datetimepicker', None), )
-    default_options = (DateInputWidget.default_options +
-                       (('timeFormat', 'hh:mm:ss'),
-                        ('separator', ' ')))
+    requirements = ( ('pickadate', None), )
+    default_date_options = (
+        ('format', 'yyyy-mm-dd'),
+        ('selectMonths', True),
+        ('selectYears', True),
+        )
+    date_options = None
+    default_time_options = (
+        ('format', 'h:i A'),
+        ('interval', 30)
+        )
+    time_options = None
 
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
@@ -592,18 +541,61 @@ class DateTimeInputWidget(DateInputWidget):
                 timezone = parsed.groupdict()['timezone']
                 if timezone and cstruct.endswith(timezone):
                     cstruct = cstruct[:-len(timezone)]
-        options = kw.get('options', self.options)
-        kw['options'] = json.dumps(options)
-        separator = options.get('separator', ' ')
-        cstruct = separator.join(cstruct.split('T'))
+
+        try:
+            date, time = cstruct.split('T', 1)
+            try:
+                # get rid of milliseconds
+                time, _ = time.split('.', 1)
+            except ValueError:
+                pass
+            kw['date'], kw['time'] = date, time
+        except ValueError: # need more than one item to unpack
+            kw['date'] = kw['time'] = ''
+            
+        
+        date_options = dict(
+            kw.get('date_options') or self.date_options or
+            self.default_date_options
+            )
+        date_options['formatSubmit'] = 'yyyy-mm-dd'
+        kw['date_options_json'] = json.dumps(date_options)
+
+        time_options = dict(
+            kw.get('time_options') or self.time_options or
+            self.default_time_options
+            )
+        time_options['formatSubmit'] = 'HH:i'
+        kw['time_options_json'] = json.dumps(time_options)
+        
         values = self.get_template_values(field, cstruct, kw)
         template = readonly and self.readonly_template or self.template
         return field.renderer(template, **values)
 
     def deserialize(self, field, pstruct):
-        if pstruct in ('', null):
+        if pstruct is null:
             return null
-        return pstruct.replace(self.options['separator'], 'T')
+        else:
+            # seriously pickadate?  oh.  right.  i forgot.  you're javascript.
+            date = pstruct['date'].strip()
+            time = pstruct['time'].strip()
+            date_submit = pstruct['date_submit'].strip()
+            time_submit = pstruct['time_submit'].strip()
+            date = date_submit or date
+            time = time_submit or time
+
+            if (not time and not date):
+                return null
+            
+            result = 'T'.join([date, time])
+
+            if not date:
+                raise Invalid(field.schema, _('Incomplete date'), result)
+
+            if not time:
+                raise Invalid(field.schema, _('Incomplete time'), result)
+            
+            return result
 
 class TextAreaWidget(TextInputWidget):
     """
@@ -621,18 +613,13 @@ class TextAreaWidget(TextInputWidget):
         ``None``, meaning that the ``rows`` is not included in the
         widget output (uses browser default cols).
 
-    style
-        A string that will be placed literally in a ``style`` attribute on
-        the textarea input tag.  For example, 'width:150px;'.  Default:
-        ``None``, meaning no style attribute will be added to the input tag.
-        
     template
         The template name used to render the widget.  Default:
         ``textarea``.
 
     readonly_template
         The template name used to render the widget in read-only mode.
-        Default: ``readonly/textarea``.
+        Default: ``readonly/textinput``.
 
 
     strip
@@ -640,11 +627,10 @@ class TextAreaWidget(TextInputWidget):
         and trailing whitespace (default ``True``).
     """
     template = 'textarea'
-    readonly_template = 'readonly/textarea'
+    readonly_template = 'readonly/textinput'
     cols = None
     rows = None
     strip = True
-    style = None
 
 class RichTextWidget(TextInputWidget):
     """
@@ -696,6 +682,9 @@ class RichTextWidget(TextInputWidget):
 
         Default: ``None`` (no additional options)
 
+    Note that the RichTextWidget template does not honor the ``css_class``
+    or ``style`` attributes of the widget.
+
     """
     readonly_template = 'readonly/richtext'
     delayed_load = False
@@ -705,9 +694,9 @@ class RichTextWidget(TextInputWidget):
 
     #: Default options passed to TinyMCE. Customise by using :attr:`options`.
     default_options = (('height', 240),
-                       ('width', 500),
-                       ('skin', 'default'),
-                       ('theme', 'simple'),
+                       ('width', 0),
+                       ('skin', 'lightgray'),
+                       ('theme', 'modern'),
                        ('mode', 'exact'),
                        ('strict_loading_mode', True),
                        ('theme_advanced_resizing', True),
@@ -716,22 +705,12 @@ class RichTextWidget(TextInputWidget):
     #: Options to pass to TinyMCE that will override :attr:`default_options`.
     options = None
 
-    #Deprecated class-level options
-    height = None
-    width = None
-    skin = None
-    theme = None
-
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
             cstruct = ''
         readonly = kw.get('readonly', self.readonly)
 
         options = dict(self.default_options)
-        #Backwards compatibility for class-level options
-        for attr in ('height', 'width', 'skin', 'theme'):
-            if getattr(self, attr):
-                options[attr] = getattr(self, attr)
         #Accept overrides from keywords or as an attribute
         options_overrides = dict(kw.get('options', self.options or {}))
         options.update(options_overrides)
@@ -756,22 +735,13 @@ class PasswordWidget(TextInputWidget):
         The template name used to render the widget in read-only mode.
         Default: ``readonly/password``.
 
-    size
-        The ``size`` attribute of the password input field (default:
-        ``None``).
-
     strip
         If true, during deserialization, strip the value of leading
         and trailing whitespace (default ``True``).
 
-    style
-        A string that will be placed literally in a ``style`` attribute on
-        the password input tag.  For example, 'width:150px;'.  Default:
-        ``None``, meaning no style attribute will be added to the input tag.
     """
     template = 'password'
     readonly_template = 'readonly/password'
-    style = None
 
 class HiddenWidget(Widget):
     """
@@ -877,10 +847,6 @@ class SelectWidget(Widget):
         - or an instance of ``optgroup_class`` (which is
           ``deform.widget.OptGroup`` by default).
 
-    size
-        The ``size`` attribute of the select input field (default:
-        ``None``).
-
     null_value
         The value which represents the null value.  When the null
         value is encountered during serialization, the
@@ -947,6 +913,11 @@ class SelectWidget(Widget):
 
         Default: ``None`` (which means that the ``label`` attribute is
         not rendered).
+
+    size
+        The size, in rows, of the select list.  Defaults to
+        ``None``, meaning that the ``size`` is not included in the
+        widget output (uses browser default size).
     """
     template = 'select'
     readonly_template = 'readonly/select'
@@ -972,6 +943,10 @@ class SelectWidget(Widget):
             return null
         return pstruct
 
+class Select2Widget(SelectWidget):
+    template = 'select2'
+    requirements = (('deform', None), ('select2', None))
+    
 class RadioChoiceWidget(SelectWidget):
     """
     Renders a sequence of ``<input type="radio"/>`` buttons based on a
@@ -999,6 +974,11 @@ class RadioChoiceWidget(SelectWidget):
         The value used to replace the ``colander.null`` value when it
         is passed to the ``serialize`` or ``deserialize`` method.
         Default: the empty string.
+
+    inline
+        If true, choices will be rendered on a single line.
+        Otherwise choices will be rendered one per line.
+        Default: false.
     """
     template = 'radio_choice'
     readonly_template = 'readonly/radio_choice'
@@ -1030,6 +1010,11 @@ class CheckboxChoiceWidget(Widget):
         The value used to replace the ``colander.null`` value when it
         is passed to the ``serialize`` or ``deserialize`` method.
         Default: the empty string.
+
+    inline
+        If true, choices will be rendered on a single line.
+        Otherwise choices will be rendered one per line.
+        Default: false.
     """
     template = 'checkbox_choice'
     readonly_template = 'readonly/checkbox_choice'
@@ -1065,15 +1050,11 @@ class CheckedInputWidget(Widget):
 
     readonly_template
         The template name used to render the widget in read-only mode.
-        Default: ``readonly/checked_input``.
-
-    size
-        The ``size`` attribute of the input fields (default:
-        ``None``, default browser size).
+        Default: ``readonly/textinput``.
 
     mismatch_message
         The message to be displayed when the value in the primary
-        field doesn't match the value in the confirm field.
+        field does not match the value in the confirm field.
 
     mask
         A :term:`jquery.maskedinput` input mask, as a string.  Both
@@ -1103,8 +1084,7 @@ class CheckedInputWidget(Widget):
         is used.  Default: ``_`` (underscore).
     """
     template = 'checked_input'
-    readonly_template = 'readonly/checked_input'
-    size = None
+    readonly_template = 'readonly/textinput'
     mismatch_message = _('Fields did not match')
     subject = _('Value')
     confirm_subject = _('Confirm Value')
@@ -1151,14 +1131,10 @@ class CheckedPasswordWidget(CheckedInputWidget):
         The template name used to render the widget in read-only mode.
         Default: ``readonly/checked_password``.
 
-    size
-        The ``size`` attribute of the password input field (default:
-        ``None``).
     """
     template = 'checked_password'
     readonly_template = 'readonly/checked_password'
     mismatch_message = _('Password did not match confirm')
-    size = None
 
 class MappingWidget(Widget):
     """
@@ -1182,6 +1158,8 @@ class MappingWidget(Widget):
         The template name used to render each item in the form.
         Default: ``readonly/mapping_item``.
 
+    Note that the MappingWidget template does not honor the ``css_class``
+    or ``style`` attributes of the widget.
     """
     template = 'mapping'
     readonly_template = 'readonly/mapping'
@@ -1285,13 +1263,6 @@ class SequenceWidget(Widget):
 
         Default: ``Add ${subitem_title}``.
 
-    render_initial_item
-        Deprecated boolean attribute indicating whether, on the first
-        rendering of a form including this sequence widget, a single child
-        widget rendering should be performed.  Default: ``False``.  This
-        attribute is honored for backwards compatibility only: in new
-        applications, please use ``min_len=1`` instead.
-
     min_len
         Integer indicating minimum number of acceptable subitems.  Default:
         ``None`` (meaning no minimum).  On the first rendering of a form
@@ -1309,6 +1280,10 @@ class SequenceWidget(Widget):
         Boolean indicating whether the Javascript sequence management will
         allow the user to explicitly re-order the subwidgets.
         Default: ``False``.
+
+    Note that the SequenceWidget template does not honor the ``css_class``
+    or ``style`` attributes of the widget.
+        
     """
     template = 'sequence'
     readonly_template = 'readonly/sequence'
@@ -1316,12 +1291,10 @@ class SequenceWidget(Widget):
     readonly_item_template = 'readonly/sequence_item'
     error_class = None
     add_subitem_text_template = _('Add ${subitem_title}')
-    render_initial_item = False
     min_len = None
     max_len = None
     orderable = False
-    # Require 'jqueryui' for jquery.ui.sortable.js (needed if orderable).
-    requirements = ( ('deform', None), ('jqueryui', None), )
+    requirements = (('deform', None), ('sortable', None))
 
     def prototype(self, field):
         # we clone the item field to bump the oid (for easier
@@ -1339,10 +1312,6 @@ class SequenceWidget(Widget):
 
     def serialize(self, field, cstruct, **kw):
         # XXX make it possible to override min_len in kw
-        if (self.render_initial_item and self.min_len is None):
-            # This is for compat only: ``render_initial_item=True`` should
-            # now be spelled as ``min_len = 1``
-            self.min_len = 1
 
         if cstruct in (null, None):
             if self.min_len is not None:
@@ -1474,12 +1443,9 @@ class FileUploadWidget(Widget):
         The template name used to render the widget in read-only mode.
         Default: ``readonly/file_upload``.
 
-    size
-        The ``size`` attribute of the input field (default ``None``).
     """
     template = 'file_upload'
     readonly_template = 'readonly/file_upload'
-    size = None
 
     def __init__(self, tmpstore, **kw):
         Widget.__init__(self, **kw)
@@ -1571,10 +1537,6 @@ class DatePartsWidget(Widget):
         The template name used to render the widget in read-only mode.
         Default: ``readonly/dateparts``.
 
-    size
-        The size (in columns) of each date part input control.
-        Default: ``None`` (let browser decide).
-
     assume_y2k
         If a year is provided in 2-digit form, assume it means
         2000+year.  Default: ``True``.
@@ -1582,7 +1544,6 @@ class DatePartsWidget(Widget):
     """
     template = 'dateparts'
     readonly_template = 'readonly/dateparts'
-    size = None
     assume_y2k = True
 
     def serialize(self, field, cstruct, **kw):
@@ -1711,14 +1672,9 @@ class TextInputCSVWidget(Widget):
         The template name used to render the widget in read-only mode.
         Default: ``readonly/textinput``.
 
-    size
-        The size, in columns, of the text input field.  Defaults to
-        ``None``, meaning that the ``size`` is not included in the
-        widget output (uses browser default size).
     """
     template = 'textinput'
     readonly_template = 'readonly/textinput'
-    size = None
     mask = None
     mask_placeholder = "_"
 
@@ -1799,17 +1755,16 @@ class ResourceRegistry(object):
         ver['css'] = resources
 
     def __call__(self, requirements):
-        """ Return a dictionary representing the resources required
-        for a particular set of requirements (as returned by
-        :meth:`deform.Field.get_widget_requirements`).  The dictionary
-        will be a mapping from resource type (``js`` and ``css`` are
-        both keys in the dictionary) to a list of relative resource
-        paths.  Each path is relative to wherever you've mounted
-        Deform's ``static`` directory in your web server.  You can use
-        the paths for each resource type to inject CSS and Javascript
-        on-demand into the head of dynamic pages that render Deform
-        forms.  """
-        result = {'js':[], 'css':[]}
+        """ Return a dictionary representing the resources required for a
+        particular set of requirements (as returned by
+        :meth:`deform.Field.get_widget_requirements`).  The dictionary will be
+        a mapping from resource type (``js`` and ``css`` are both keys in the
+        dictionary) to a list of asset specifications paths.  Each asset
+        specification is a full path to a static resource in the form
+        ``package:path``.  You can use the paths for each resource type to
+        inject CSS and Javascript on-demand into the head of dynamic pages that
+        render Deform forms."""
+        result = { 'js':[], 'css':[] }
         for requirement, version in requirements:
             tmp = self.registry.get(requirement)
             if tmp is None:
@@ -1829,64 +1784,72 @@ class ResourceRegistry(object):
                 for source in sources:
                     if not source in result[thing]:
                         result[thing].append(source)
+                        
         return result
 
 
 default_resources = {
-    'jquery': {
-        None:{
-            'js':'scripts/jquery-1.7.2.min.js',
-            },
-        },
-    'jqueryui': {
-        None:{
-            'js':('scripts/jquery-1.7.2.min.js',
-                  'scripts/jquery-ui-1.8.11.custom.min.js'),
-            'css':'css/ui-lightness/jquery-ui-1.8.11.custom.css',
-            },
-        },
     'jquery.form': {
         None:{
-            'js':('scripts/jquery-1.7.2.min.js',
-                  'scripts/jquery.form-3.09.js'),
+            'js':'deform:static/scripts/jquery.form-3.09.js',
             },
         },
     'jquery.maskedinput': {
         None:{
-            'js':('scripts/jquery-1.7.2.min.js',
-                  'scripts/jquery.maskedinput-1.2.2.min.js'),
+            'js':'deform:static/scripts/jquery.maskedinput-1.3.1.min.js',
             },
         },
     'jquery.maskMoney': {
         None:{
-            'js':('scripts/jquery-1.7.2.min.js',
-                  'scripts/jquery.maskMoney-1.4.1.js'),
-            },
-        },
-    'datetimepicker': {
-        None:{
-            'js':('scripts/jquery-1.7.2.min.js',
-                  'scripts/jquery-ui-timepicker-addon.js'),
-            'css':'css/jquery-ui-timepicker-addon.css',
+            'js':'deform:static/scripts/jquery.maskMoney-1.4.1.js',
             },
         },
     'deform': {
         None:{
-            'js':('scripts/jquery-1.7.2.min.js',
-                  'scripts/jquery.form-3.09.js',
-                  'scripts/deform.js'),
-            'css':('css/form.css')
-
+            'js':('deform:static/scripts/jquery.form-3.09.js',
+                  'deform:static/scripts/deform.js'),
             },
         },
     'tinymce': {
         None:{
-            'js':'tinymce/jscripts/tiny_mce/tiny_mce.js',
+            'js':'deform:static/tinymce/tinymce.min.js',
+            },
+        },
+    'sortable': {
+        None:{
+            'js':'deform:static/scripts/jquery-sortable.js',
+            },
+        },
+    'typeahead': {
+        None:{
+            'js':'deform:static/scripts/typeahead.min.js',
+            'css':'deform:static/css/typeahead.css'
             },
         },
     'modernizr': {
         None:{
-            'js':('scripts/modernizr.custom.input-types-and-atts.js',),
+            'js':'deform:static/scripts/modernizr.custom.input-types-and-atts.js',
+            },
+        },
+    'pickadate': {
+        None: {
+            'js': (
+                'deform:static/pickadate/picker.js',
+                'deform:static/pickadate/picker.date.js',
+                'deform:static/pickadate/picker.time.js',
+                'deform:static/pickadate/legacy.js',
+            ),
+            'css': (
+                'deform:static/pickadate/themes/default.css',
+                'deform:static/pickadate/themes/default.date.css',
+                'deform:static/pickadate/themes/default.time.css',
+            )
+            },
+        },
+    'select2': {
+        None:{
+              'js':'deform:static/select2/select2.js',
+              'css':'deform:static/select2/select2.css',
             },
         },
     }

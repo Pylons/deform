@@ -24,3 +24,5 @@ bin/
 include/
 lib/
 local
+coverage
+test

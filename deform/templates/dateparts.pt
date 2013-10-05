@@ -1,32 +1,35 @@
-<span tal:define="oid oid|field.oid;
-                name name|field.name;
-                size size|field.widget.size;
-                css_class css_class|field.widget.css_class"
-      i18n:domain="deform"
-      tal:omit-tag="">
-${field.start_mapping()}
-<ul class="inline">
-  <li>
-	  <label for="${oid}" i18n:translate="">Year</label>
-	  <input type="text" name="year" value="${year}"
-	         tal:attributes="size size;
-	                         class css_class"
-	         id="${oid}"/>
-  </li>
-  <li>
-	  <label for="${oid}-month" i18n:translate="">Month</label>
-	  <input type="text" name="month" value="${month}"
-	         tal:attributes="size size;
-	                         class css_class"
-	         id="${oid}-month"/>
-  </li>
-  <li>
-	  <label for="${oid}-day" i18n:translate="">Day</label>
-	  <input type="text" name="day" value="${day}"
-	         tal:attributes="size size;
-	                         class css_class"
-	         id="${oid}-day"/>
-  </li>
-</ul>
-${field.end_mapping()}
-</span>
+<div i18n:domain="deform"
+      tal:omit-tag=""
+      tal:define="oid oid|field.oid;
+                  name name|field.name;
+                  css_class css_class|field.widget.css_class;
+                  style style|field.widget.style;">
+  ${field.start_mapping()}
+  <div class="row">
+    <div class="input-group col-xs-4">
+      <span class="input-group-addon" i18n:translate="">Year</span>
+      <input type="text" name="year" value="${year}"
+             class="span2 form-control ${css_class or ''}"
+             tal:attributes="style style"
+             maxlength="4"
+             id="${oid}"/>
+    </div>
+    <div class="input-group col-xs-4">
+      <span class="input-group-addon" i18n:translate="">Month</span>
+      <input type="text" name="month" value="${month}"
+             class="span2 form-control ${css_class or ''}"
+             tal:attributes="style style"
+             maxlength="2"
+             id="${oid}-month"/>
+    </div>
+    <div class="input-group col-xs-4">
+      <span class="input-group-addon" i18n:translate="">Day</span>
+      <input type="text" name="day" value="${day}"
+             class="span2 form-control ${css_class or ''}"
+             tal:attributes="style style"
+             maxlength="2"
+             id="${oid}-day"/>
+    </div>
+  </div>
+  ${field.end_mapping()}
+</div>
