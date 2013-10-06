@@ -16,7 +16,7 @@
             .replaceAll(this.$element)
             .attr('style', this.orig_style)
             .css({position: 'relative', overflow: 'hidden'});
-        this.$input_group.children('input').before(this.$element);
+        this.$input_group.find(':text').before(this.$element);
         this.$element
             .on('change.deform.upload', $.proxy(this, 'update'))
             .css(this.options.element_style);
@@ -28,12 +28,14 @@
         selectfile: 'Select file…',
         changefile: 'Change file…',
 
-        template: '<div class="input-group">'
+        template: '<div>'
+            + '<div class="input-group">'
             + '<span class="input-group-btn">'
             + '<span class="btn btn-default btn-file"></span>'
             + '</span>'
             + '<input type="text" readonly=""'
             + ' class="form-control upload-filename"/>'
+            + '</div>'
             + '</div>',
 
         element_style: {
