@@ -40,7 +40,13 @@
 
         element_style: {
             position: 'absolute',
-            bottom: '0',
+            /* Older FF (3.5) seems to put a margin on the bottom of
+            *  the file input (the margin is proportional to
+            *  font-size, so in this case it's significant.)  Shift
+            *  bottom a bit to allow for some slop.
+            */
+            //bottom: '0',
+            bottom: '-40px',
             right: '0',
             minWidth: '100%',
             minHeight: '100%',
