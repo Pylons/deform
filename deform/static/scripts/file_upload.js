@@ -15,8 +15,8 @@
         this.$input_group = $(this.options.template)
             .replaceAll(this.$element)
             .attr('style', this.orig_style)
-            .css({position: 'relative', overflow: 'hidden'})
-            .append(this.$element);
+            .css({position: 'relative', overflow: 'hidden'});
+        this.$input_group.children('input').before(this.$element);
         this.$element
             .on('change.deform.upload', $.proxy(this, 'update'))
             .css(this.options.element_style);
