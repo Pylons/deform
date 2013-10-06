@@ -29,3 +29,14 @@ form .required:after {
 form .deform-readonly-text {
     font-style: italic;
 }
+
+/* styles for file_upload.js, file_upload.pt */
+.btn-file {
+    background-color: #f2f2f2;
+}
+.btn-file:hover {
+    background-color: #ededed;
+}
+.upload-filename[readonly] {
+    background-color: #fdfdfd;
+}
