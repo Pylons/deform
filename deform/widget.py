@@ -1800,7 +1800,6 @@ default_resources = {
     'fileupload': {
         None: {
             'js': 'deform:static/scripts/file_upload.js',
-            'css': 'deform:static/css/file_upload.css',
             },
         },
     }

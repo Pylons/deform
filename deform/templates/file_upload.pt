@@ -1,26 +1,18 @@
-<div class="deformFileupload"
-     tal:define="oid oid|field.oid;
-                 css_class css_class|field.widget.css_class;
-                 style style|field.widget.style;
-                 uid cstruct.get('uid');
-                 have_file uid and ' upload-have-file' or '';"
-     tal:omit-tag="">
+<tal:block tal:define="oid oid|field.oid;
+                       css_class css_class|field.widget.css_class;
+                       style style|field.widget.style;">
   ${field.start_mapping()}
-  <div class="input-group">
-    <span class="input-group-btn">
-      <span class="btn btn-default btn-file${have_file}">
-        <span class="upload-select">Select file…</span>
-        <span class="upload-change">Change file…</span>
-        <input type="file" name="upload"
-               tal:attributes="accept accept|field.widget.accept"/>
-      </span>
-    </span>
-    <input type="text" readonly=""
-           tal:attributes="
-           class string: form-control upload-filename ${css_class or ''};
-           value cstruct.get('filename');
-           style style"/>
-  </div>
-  <input type="hidden" name="uid" value="${uid}" tal:condition="uid"/>
+  <input type="file" name="upload" id="${oid}"
+         tal:attributes="style style;
+                         accept accept|field.widget.accept;
+                         data-filename cstruct.get('filename');"/>
+  <input tal:define="uid cstruct.get('uid')"
+         tal:condition="uid"
+         type="hidden" name="uid" value="${uid}"/>
   ${field.end_mapping()}
-</div>
+  <script type="text/javascript">
+    deform.addCallback('${oid}', function (oid) {
+      $('#' + oid).upload();
+    });
+  </script>
+</tal:block>
