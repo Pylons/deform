@@ -14,8 +14,8 @@
         this.orig_style = this.$element.attr('style');
         this.$input_group = $(this.options.template)
             .replaceAll(this.$element)
-            .attr('style', this.orig_style);
-        this.$input_group.find('.input-group-btn')
+            .attr('style', this.orig_style)
+            .css({position: 'relative', overflow: 'hidden'})
             .append(this.$element);
         this.$element
             .on('change.deform.upload', $.proxy(this, 'update'))
@@ -29,8 +29,7 @@
         changefile: 'Change file…',
 
         template: '<div class="input-group">'
-            + '<span class="input-group-btn"'
-            + ' style="position: relative; overflow: hidden;">'
+            + '<span class="input-group-btn">'
             + '<span class="btn btn-default btn-file"></span>'
             + '</span>'
             + '<input type="text" readonly=""'
