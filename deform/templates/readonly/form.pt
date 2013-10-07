@@ -1,23 +1,35 @@
-<div 
-     tal:define="name name|field.name;
-                 title title|field.title;
-                 description description|field.description;
-                 item_tmpl item_template|field.widget.readonly_item_template;
-                 "
-     tal:attributes="id name or None"
-     class="deform"
-     >
+<form
+  tal:define="style style|field.widget.style;
+              css_class css_class|string:${field.widget.css_class or field.css_class or ''};
+              item_template item_template|field.widget.readonly_item_template;
+              title title|field.title;
+              errormsg errormsg|field.errormsg;
+              description description|field.description;
+              buttons buttons|field.buttons;
+              use_ajax use_ajax|field.use_ajax;
+              ajax_options ajax_options|field.ajax_options;
+              formid formid|field.formid;
+              method method|field.method;"
+  tal:attributes="style style;
+                  class css_class;"
+  id="${formid}"
+  method="${method}"
+  enctype="multipart/form-data"
+  accept-charset="utf-8"
+  i18n:domain="deform"
+  >
 
-  <div class="deformFormFieldset">
+  <fieldset class="deformFormFieldset">
 
-      <li class="section first" tal:condition="title">
-        <h3>${title}</h3>
-        <div tal:condition="description">${description}</div>
-      </li>
+    <legend tal:condition="title">${title}</legend>
 
-  </div>
+    <p class="section first" tal:condition="description">
+      ${description}
+    </p>
 
-   <div tal:repeat="child field"
-        tal:replace="structure child.render_template(item_tmpl)"/>
+    <div tal:repeat="child field"
+         tal:replace="structure child.render_template(item_template)"/>
 
-</div>
+  </fieldset>
+
+</form>

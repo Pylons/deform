@@ -1,14 +1,14 @@
 # Translations template for deform.
-# Copyright (C) 2012 ORGANIZATION
+# Copyright (C) 2013 ORGANIZATION
 # This file is distributed under the same license as the deform project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: deform 0.9.4\n"
+"Project-Id-Version: deform 0.9.7\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2012-03-30 16:17+0200\n"
+"POT-Creation-Date: 2013-05-19 16:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,85 +17,89 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: deform/schema.py:100
+#: deform/schema.py:104
 msgid "${value} is not a dictionary"
 msgstr ""
 
-#: deform/schema.py:107
+#: deform/schema.py:111
 msgid "${value} has no ${key} key"
 msgstr ""
 
-#: deform/schema.py:146
+#: deform/schema.py:156
 msgid "${value} is not iterable"
 msgstr ""
 
-#: deform/schema.py:150
+#: deform/schema.py:160
 msgid "Required"
 msgstr ""
 
-#: deform/widget.py:779
+#: deform/widget.py:1096
 msgid "Fields did not match"
 msgstr ""
 
-#: deform/widget.py:780
+#: deform/widget.py:1097
 msgid "Value"
 msgstr ""
 
-#: deform/widget.py:781
+#: deform/widget.py:1098
 msgid "Confirm Value"
 msgstr ""
 
-#: deform/widget.py:829
+#: deform/widget.py:1148
 msgid "Password did not match confirm"
 msgstr ""
 
-#: deform/widget.py:980
+#: deform/widget.py:1306
 msgid "Add ${subitem_title}"
 msgstr ""
 
-#: deform/widget.py:1239
+#: deform/widget.py:1609
 msgid "Incomplete date"
 msgstr ""
 
-#: deform/templates/checked_password.pt:5
+#: deform/templates/checked_password.pt:8
 msgid "Password"
 msgstr ""
 
-#: deform/templates/checked_password.pt:10
+#: deform/templates/checked_password.pt:14
 msgid "Confirm Password"
 msgstr ""
 
-#: deform/templates/dateparts.pt:5 deform/templates/readonly/dateparts.pt:2
+#: deform/templates/dateparts.pt:10 deform/templates/readonly/dateparts.pt:3
 msgid "Year"
 msgstr ""
 
-#: deform/templates/dateparts.pt:12 deform/templates/readonly/dateparts.pt:4
+#: deform/templates/dateparts.pt:17 deform/templates/readonly/dateparts.pt:5
 msgid "Month"
 msgstr ""
 
-#: deform/templates/dateparts.pt:19 deform/templates/readonly/dateparts.pt:6
+#: deform/templates/dateparts.pt:24 deform/templates/readonly/dateparts.pt:7
 msgid "Day"
 msgstr ""
 
-#: deform/templates/form.pt:19
+#: deform/templates/form.pt:33
 msgid "There was a problem with your submission"
 msgstr ""
 
-#: deform/templates/form.pt:21
+#: deform/templates/form.pt:35
 msgid "Errors have been highlighted below"
 msgstr ""
 
-#: deform/templates/mapping.pt:6
+#: deform/templates/mapping.pt:13
 msgid "There was a problem with this section"
 msgstr ""
 
 #. Default: en
-#: deform/templates/richtext.pt:15
+#: deform/templates/richtext.pt:26
 msgid "language-code"
 msgstr ""
 
-#: deform/templates/sequence_item.pt:6
+#: deform/templates/sequence_item.pt:12
 msgid "Remove"
+msgstr ""
+
+#: deform/templates/sequence_item.pt:19
+msgid "Reorder (via drag and drop)"
 msgstr ""
 
 #: deform/templates/readonly/checked_password.pt:2
@@ -108,12 +112,16 @@ msgid "Read-only."
 msgstr ""
 
 #: deform/templates/readonly/radio_choice.pt:4
-#: deform/templates/readonly/select.pt:3
+#: deform/templates/readonly/select.pt:10 deform/templates/readonly/select.pt:16
 msgid "Selected"
 msgstr ""
 
 #: deform/templates/readonly/radio_choice.pt:5
-#: deform/templates/readonly/select.pt:4
+#: deform/templates/readonly/select.pt:11 deform/templates/readonly/select.pt:17
 msgid "Not Selected"
+msgstr ""
+
+#: deform/tests/test_widget.py:1383
+msgid "Yo ${subitem_title}"
 msgstr ""
 

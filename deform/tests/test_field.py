@@ -1,4 +1,5 @@
 import unittest
+from deform.compat import text_
 
 def validation_failure_exc(func, *arg, **kw):
     from deform.exception import ValidationFailure
@@ -31,9 +32,9 @@ class TestField(unittest.TestCase):
         self.assertEqual(field.oid, 'deformField0')
         self.assertEqual(field.children, [])
         self.assertEqual(field.typ, schema.typ)
+        self.assertEqual(field.parent, None)
 
     def test_ctor_custom_oid(self):
-        from deform.template import default_renderer
         schema = DummySchema()
         schema.oid = 'customOid'
         field = self._makeOne(schema)
@@ -41,16 +42,35 @@ class TestField(unittest.TestCase):
 
     def test_ctor_with_children_in_schema(self):
         from deform.field import Field
-        schema = DummySchema()
-        node = DummySchema()
-        schema.children = [node]
-        field = self._makeOne(schema, renderer='abc')
-        self.assertEqual(len(field.children), 1)
-        child_field = field.children[0]
-        self.assertEqual(child_field.__class__, Field)
-        self.assertEqual(child_field.schema, node)
-        self.assertEqual(child_field.renderer, 'abc')
+        grandchild = DummySchema(name='grandchild')
+        child = DummySchema(children=[grandchild], name='child')
+        root = DummySchema(children=[child], name='root')
+        
+        root_field = self._makeOne(root, renderer='abc')
+        self.assertEqual(len(root_field.children), 1)
+        self.assertEqual(root_field.parent, None)
 
+        child_field = root_field.children[0]
+        self.assertEqual(child_field.__class__, Field)
+        self.assertEqual(child_field.schema, child)
+        self.assertEqual(child_field.renderer, 'abc')
+        self.assertEqual(child_field.parent, root_field)
+
+        grandchild_field = child_field.children[0]
+        self.assertEqual(grandchild_field.__class__, Field)
+        self.assertEqual(grandchild_field.schema, grandchild)
+        self.assertEqual(grandchild_field.renderer, 'abc')
+        self.assertEqual(grandchild_field.parent, child_field)
+
+    def test_get_root(self):
+        grandchild = DummySchema(name='grandchild')
+        child = DummySchema(children=[grandchild], name='child')
+        root = DummySchema(children=[child], name='root')
+        field = self._makeOne(root, renderer='abc')
+        grandchild_field = field.children[0].children[0]
+        root = grandchild_field.get_root()
+        self.assertEqual(root.name, 'root')
+        
     def test_ctor_with_resource_registry(self):
         from deform.field import Field
         schema = DummySchema()
@@ -136,12 +156,29 @@ class TestField(unittest.TestCase):
 
     def test_widget_has_maker(self):
         schema = DummySchema()
-        def maker():
+        def maker(**kw):
             return 'a widget'
         schema.typ = DummyType(maker=maker)
         field = self._makeOne(schema)
         widget = field.widget
         self.assertEqual(widget, 'a widget')
+
+    def test_widget_has_generated_item_css_class(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        self.assertEqual(field.widget.item_css_class, 'item-name')
+
+    def test_has_no_css_class_if_no_name(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        field.name = None
+        self.assertEqual(field.widget.item_css_class, None)
+
+    def test_normalizes_css_class(self):
+        schema = DummySchema()
+        schema.name = text_(b'a b\xc3\xb1[] c', 'utf-8')
+        field = self._makeOne(schema)
+        self.assertEqual(field.widget.item_css_class, 'item-a-bn-c')
 
     def test_widget_no_maker_with_default_widget_maker(self):
         from deform.widget import MappingWidget
@@ -298,6 +335,7 @@ class TestField(unittest.TestCase):
         self.assertEqual(result.foo, 1)
         self.assertEqual(result.children, [child])
         self.assertEqual(result.children[0].cloned, True)
+        self.assertEqual(result.children[0]._parent(), result)
 
     def test___iter__(self):
         schema = DummySchema()
@@ -660,16 +698,16 @@ class DummyField(object):
 
 class DummySchema(object):
     typ = None
-    name = 'name'
     title = 'title'
     description = 'description'
     required = True
-    children = ()
     default = 'default'
     sdefault = 'sdefault'
 
-    def __init__(self, exc=None):
+    def __init__(self, exc=None, children=(), name='name'):
         self.exc = exc
+        self.children = children
+        self.name = name
 
     def deserialize(self, value):
         if self.exc:
@@ -692,7 +730,7 @@ class DummyType(object):
         
 class DummyWidget(object):
     rendered = None
-    def __init__(self, exc=None):
+    def __init__(self, exc=None, **kw):
         self.exc = exc
 
     def deserialize(self, field, pstruct):

@@ -1,12 +1,12 @@
 <div tal:define="oid oid|field.oid;">
+  <ul class="list-group">
     <tal:loop tal:repeat="choice values">
-     <tal:def tal:define="(value, description) choice">
-      <span>${description}</span>
-        <em id="${oid}-${repeat.choice.index}"
-            tal:condition="value in cstruct">Yes</em>
-        <em id="${oid}-${repeat.choice.index}"
-            tal:condition="value not in cstruct">No</em>
-     </tal:def>
-    </tal:loop>
+      <li class="list-group-item"
+          tal:define="(value, description) choice"
+          tal:condition="value in cstruct">
+        <span id="${oid}-${repeat.choice.index}">${description}</span>
+      </li>
+  </tal:loop>
+  </ul>
 </div>
 

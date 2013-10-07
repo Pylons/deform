@@ -1,0 +1,80 @@
+<div tal:define="
+     name name|field.name;
+     style field.widget.style;
+     oid oid|field.oid;
+     css_class css_class|field.widget.css_class;
+     optgroup_class optgroup_class|field.widget.optgroup_class;
+     multiple multiple|field.widget.multiple;"
+     tal:omit-tag="">
+
+   <style>
+    .form-control .select2-choice {
+        border: 0;
+        border-radius: 2px;
+    }
+
+    .form-control .select2-choice .select2-arrow {
+        border-radius: 0 2px 2px 0;   
+    }
+
+    .form-control.select2-container {
+        height: auto !important;
+        padding: 0px;
+    }
+
+    .form-control.select2-container.select2-dropdown-open {
+        border-color: #5897FB;
+        border-radius: 3px 3px 0 0;
+    }
+
+    .form-control .select2-container.select2-dropdown-open .select2-choices {
+        border-radius: 3px 3px 0 0;
+    }
+
+    .form-control.select2-container .select2-choices {
+        border: 0 !important;
+        border-radius: 3px;
+    }
+   </style>
+  <input type="hidden" name="__start__" value="${name}:sequence"
+         tal:condition="multiple" />
+
+  <select tal:attributes="
+          name name;
+          id oid;
+          class string: form-control ${css_class};
+          data-placeholder field.widget.placeholder|None;
+          multiple multiple;
+          style style;">
+    <tal:loop tal:repeat="item values">
+      <optgroup tal:condition="isinstance(item, optgroup_class)"
+                tal:attributes="label item.label">
+        <option tal:repeat="(value, description) item.options"
+                tal:attributes="
+                selected (multiple and value in cstruct or value == cstruct) and 'selected';
+                class css_class;
+                label field.widget.long_label_generator and description;
+                value value"
+                tal:content="field.widget.long_label_generator and field.widget.long_label_generator(item.label, description) or description"/>
+      </optgroup>
+      <option tal:condition="not isinstance(item, optgroup_class)"
+              tal:attributes="
+              selected (multiple and item[0] in cstruct or item[0] == cstruct) and 'selected';
+              class css_class;
+              value item[0]">${item[1]}</option>
+    </tal:loop>
+  </select>
+
+  <script type="text/javascript">
+   deform.addCallback(
+     '${field.oid}',
+     function(oid) {
+       $('#' + oid).select2({containerCssClass: 'form-control'});
+     }
+   );
+  </script>
+
+  <input type="hidden" name="__end__" value="${name}:sequence"
+         tal:condition="multiple" />
+</div>
+

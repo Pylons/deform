@@ -11,7 +11,7 @@ class TestFunctional(unittest.TestCase):
         from colander import String
         from colander import Boolean
         from colander import Date
-    
+
         class DatesSchema(SequenceSchema):
             date = SchemaNode(Date())
 
@@ -42,7 +42,7 @@ class TestFunctional(unittest.TestCase):
         html = form.render()
         soup = self._soupify(html)
         form = soup.form
-        self.assertEqual(form['action'], '')
+        self.assertEqual(form.get('action', ''), '')
         inputs = form.findAll('input')
         self.assertEqual(inputs[0]['name'], '_charset_')
         self.assertEqual(inputs[1]['name'], '__formid__')
@@ -76,7 +76,7 @@ class TestFunctional(unittest.TestCase):
         html = form.render(appstruct)
         soup = self._soupify(html)
         form = soup.form
-        self.assertEqual(form['action'], '')
+        self.assertEqual(form.get('action', ''), '')
         inputs = form.findAll('input')
         self.assertEqual(inputs[0]['name'], '_charset_')
         self.assertEqual(inputs[1]['name'], '__formid__')
@@ -145,7 +145,7 @@ class TestFunctional(unittest.TestCase):
                 'title': null,
              }
             )
-        
+
 @colander.deferred
 def deferred_date_validator(node, kw):
     max_date = kw.get('max_date')
@@ -268,7 +268,7 @@ class TestDeferredFunction(unittest.TestCase):
         self.assertEqual(schema['category'].validator.choices, ['one', 'two'])
         self.assertEqual(schema['category'].widget.values,
                          [('one', 'One'), ('two', 'Two')])
-        
-        
-        
-        
+
+
+
+

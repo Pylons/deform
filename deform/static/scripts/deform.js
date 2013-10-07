@@ -82,9 +82,6 @@ var deform  = {
             $node.attr('name', newname);
             });
 
-        var anchorid = genid + '-anchor';
-        var anchortext = '<a name="' + anchorid +'" id="' + anchorid + '"/>';
-        $(anchortext).insertBefore(before);
         $htmlnode.insertBefore(before);
 
         $(deform.callbacks).each(function(num, item) {
@@ -99,32 +96,31 @@ var deform  = {
         deform.clearCallbacks();
         var old_len = parseInt(before.attr('now_len')||'0', 10);
         before.attr('now_len', old_len + 1);
-        //deform.maybeScrollIntoView('#' + anchorid);
         // we added something to the dom, trigger a change event
         var e = jQuery.Event("change");
         $('#deform').trigger(e);
     },
 
     appendSequenceItem: function(node) {
-        var $oid_node = $(node).parent();
-        var $proto_node = $oid_node.children('.deformProto').first();
-        var $before_node = $oid_node.children('ul').first().children(
-                                              '.deformInsertBefore');
+        var $oid_node = $(node).closest('.deformSeq');
+        var $proto_node = $oid_node.find('.deformProto').first();
+        var $before_node = $oid_node.find('.deformInsertBefore').last();
         var min_len = parseInt($before_node.attr('min_len')||'0', 10);
         var max_len = parseInt($before_node.attr('max_len')||'9999', 10);
         var now_len = parseInt($before_node.attr('now_len')||'0', 10);
         var orderable = parseInt($before_node.attr('orderable')||'0', 10);
+  
         if (now_len < max_len) {
-            deform.addSequenceItem($proto_node, $before_node);
+          deform.addSequenceItem($proto_node, $before_node);
             deform.processSequenceButtons($oid_node, min_len, max_len, 
-                                          now_len+1, orderable);
+                                          now_len + 1, orderable);
         }
         return false;
     },
 
     removeSequenceItem: function(clicked) {
-        var $item_node = $(clicked).parent();
-        var $oid_node = $item_node.parent().parent();
+        var $item_node = $(clicked).closest('.deformSeqItem');
+        var $oid_node = $item_node.closest('.deformSeq');
         var $before_node = $oid_node.find('.deformInsertBefore').last();
         var min_len = parseInt($before_node.attr('min_len')||'0', 10);
         var max_len = parseInt($before_node.attr('max_len')||'9999', 10);
@@ -144,43 +140,16 @@ var deform  = {
 
     processSequenceButtons: function(oid_node, min_len, max_len, now_len,
                                      orderable) {
-        var $ul = oid_node.children('ul');
-        var $lis = $ul.children('li');
-        $lis.find('.deformClosebutton').removeClass('deformClosebuttonActive');
-        oid_node.children('.deformSeqAdd').show();
-        if (now_len > min_len) {
-            $lis.find('.deformClosebutton').addClass('deformClosebuttonActive');
-        }
-        if (now_len >= max_len) {
-            oid_node.children('.deformSeqAdd').hide();
-        }
-        if (orderable) {
-            if (now_len > 1) {
-                $lis.find('.deformOrderbutton').addClass('deformOrderbuttonActive');
-            } else {
-                $lis.find('.deformOrderbutton').removeClass('deformOrderbuttonActive');
-            }
-        }
-    },
-
-    maybeScrollIntoView: function(element_id) {
-        var viewportWidth = $(window).width(),
-            viewportHeight = $(window).height(),
-            documentScrollTop = $(document).scrollTop(),
-            documentScrollLeft = $(document).scrollLeft(),
-            minTop = documentScrollTop,
-            maxTop = documentScrollTop + viewportHeight,
-            minLeft = documentScrollLeft,
-            maxLeft = documentScrollLeft + viewportWidth,
-            element = document.getElementById(element_id),
-            elementOffset = $(element_id).offset();
-        if (
-            !(elementOffset.top > minTop && elementOffset.top < maxTop) &&
-            !(elementOffset.left > minLeft && elementOffset.left < maxLeft)
-            ) {
-                element.scrollIntoView();
-            }
-    },
+        orderable = !!orderable; // convert to bool
+        var has_multiple = now_len > 1;
+        var $ul = oid_node.find('.deformSeqContainer');
+        var $lis = $ul.find('.deformSeqItem');
+        var show_closebutton = now_len > min_len;
+        var show_addbutton = now_len < max_len;
+        $lis.find('.deformClosebutton').toggle(show_closebutton);
+        oid_node.find('.deformSeqAdd').toggle(show_addbutton);
+        $lis.find('.deformOrderbutton').toggle(orderable && has_multiple);
+     },
 
     focusFirstInput: function (el) {
         el = el || document.body;
@@ -194,7 +163,7 @@ var deform  = {
                 if (raw.type === 'text' || raw.type === 'file' || 
                     raw.type == 'password' || raw.type == 'text' || 
                     raw.type == 'textarea') { 
-                    if (raw.className != "hasDatepicker") {
+                    if (!input.hasClass("hasDatepicker")) {
                         input.focus();
                     }
                 }

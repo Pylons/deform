@@ -3,8 +3,6 @@ import colander
 from . import widget
 from deform.i18n import _
 
-from zope.deprecation import deprecated
-
 default_widget_makers = {
     colander.Mapping: widget.MappingWidget,
     colander.Sequence: widget.SequenceWidget,
@@ -123,51 +121,3 @@ class FileData(object):
 
     def cstruct_children(self, node, cstruct): # pragma: no cover
         return []
-
-class Set(object):
-    """ A type representing a non-overlapping set of items.
-    Deserializes an iterable to a ``set`` object.
-
-    This type constructor accepts one argument:
-
-    ``allow_empty``
-       Boolean representing whether an empty set input to
-       deserialize will be considered valid.  Default: ``False``.
-
-    .. deprecated:: 0.9.6
-        Use ``colander.Set`` instead.
-
-    """
-
-    widget_maker = widget.CheckboxChoiceWidget
-
-    def __init__(self, allow_empty=False):
-        self.allow_empty = allow_empty
-
-    def serialize(self, node, value):
-        return value
-
-    def deserialize(self, node, value):
-        if value is colander.null:
-            return colander.null
-        if not hasattr(value, '__iter__'):
-            raise colander.Invalid(
-                node,
-                _('${value} is not iterable', mapping={'value':value})
-                )
-        value =  set(value)
-        if not value and not self.allow_empty:
-            raise colander.Invalid(node, _('Required'))
-        return value
-
-    def cstruct_children(self, node, cstruct): # pragma: no cover
-        return []
-
-deprecated(
-    'Set',
-    'deform.Set is deprecated as of the release of Colander > 1.0a1, which '
-    'includes its own Set class.  colander.Set is not exactly a drop-in '
-    'replacement (it has no allow_empty constructor argument), but you should '
-    'switch to it as soon as possible.  The deform.Set class will be removed '
-    'in Deform 1.1+'
-    )

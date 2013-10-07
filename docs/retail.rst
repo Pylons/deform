@@ -1,3 +1,5 @@
+.. _retail:
+
 Retail Form Rendering
 =====================
 
@@ -100,7 +102,7 @@ form object.
 
        try:
            appstruct = form.validate(controls)  # call validate
-       except ValidationFailure, e: # catch the exception
+       except ValidationFailure as e: # catch the exception
             # .. rerender the form .. its field's .error attributes
             # will be set
 

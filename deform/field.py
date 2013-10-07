@@ -1,6 +1,9 @@
 import itertools
 import colander
 import peppercorn
+import unicodedata
+import re
+import weakref
 
 from chameleon.utils import Markup
 
@@ -10,6 +13,7 @@ from . import (
     template,
     widget,
     schema,
+    compat,
     )
 
 class _Marker(object):
@@ -31,14 +35,18 @@ class Field(object):
     implementations of state-retaining widgets while instances of
     those widget still only need to be constructed once instead of on
     each request.
-    
+
     *Attributes*
 
         schema
             The schema node associated with this field.
 
         widget
-            The widget associated with this field.
+            The widget associated with this field. When no widget is
+            defined in the schema node, a default widget will be created.
+            The default widget will have a generated item_css_class
+            containing the normalized version of the ``name`` attribute
+            (with ``item`` prepended, e.g. ``item-username``).
 
         order
             An integer indicating the relative order of this field's
@@ -54,7 +62,7 @@ class Field(object):
 
         name
             An alias for self.schema.name
-        
+
         title
             An alias for self.schema.title
 
@@ -69,6 +77,12 @@ class Field(object):
 
         children
             Child fields of this field.
+
+        parent
+            The parent field of this field or ``None`` if this field is
+            the root.  This is actually a property that returns the result
+            of ``weakref.ref(actualparent)()`` to avoid leaks due to circular
+            references, but it can be treated like the field itself.
 
         error
             The exception raised by the last attempted validation of the
@@ -133,7 +147,7 @@ class Field(object):
 
     def __init__(self, schema, renderer=None, counter=None,
                  resource_registry=None, appstruct=colander.null,
-                 **kw):
+                 parent=None, **kw):
         self.counter = counter or itertools.count()
         self.order = next(self.counter)
         self.oid = getattr(schema, 'oid', 'deformField%s' % self.order)
@@ -141,8 +155,6 @@ class Field(object):
         self.typ = schema.typ # required by Invalid exception
         self.name = schema.name
         self.title = schema.title
-        self.css_class = getattr(schema, 'css_class', '')
-        self.css_class += ' deformMappingFieldset'
         self.description = schema.description
         self.required = schema.required
         if renderer is None:
@@ -152,6 +164,9 @@ class Field(object):
         self.renderer = renderer
         self.resource_registry = resource_registry
         self.children = []
+        if parent is not None:
+            parent = weakref.ref(parent)
+        self._parent = parent
         self.__dict__.update(kw)
         for child in schema.children:
             self.children.append(
@@ -160,10 +175,27 @@ class Field(object):
                     renderer=renderer,
                     counter=self.counter,
                     resource_registry=resource_registry,
+                    parent=self,
                     **kw
                     )
                 )
         self.set_appstruct(appstruct)
+
+    @property
+    def parent(self):
+        if self._parent is None:
+            return None
+        return self._parent()
+
+    def get_root(self):
+        """ Return the root field in the field herarchy (the form field) """
+        node = self
+        while True:
+            parent = node.parent
+            if parent is None:
+                break
+            node = parent
+        return node
 
     @classmethod
     def set_zpt_renderer(cls, search_path, auto_reload=True,
@@ -245,12 +277,19 @@ class Field(object):
         information.  Return the cloned field.  The ``order``
         attribute of the node is not cloned; instead the field
         receives a new order attribute; it will be a number larger
-        than the last renderered field of this set."""
+        than the last renderered field of this set.  The parent of the cloned
+        node will become ``None`` unconditionally."""
         cloned = self.__class__(self.schema)
         cloned.__dict__.update(self.__dict__)
         cloned.order = next(cloned.counter)
         cloned.oid = 'deformField%s' % cloned.order
-        cloned.children = [ field.clone() for field in self.children ]
+        cloned._parent = None
+        children = []
+        for field in self.children:
+            cloned_child = field.clone()
+            cloned_child._parent = weakref.ref(cloned)
+            children.append(cloned_child)
+        cloned.children = children
         return cloned
 
     @decorator.reify
@@ -275,7 +314,17 @@ class Field(object):
                         break
         if widget_maker is None:
             widget_maker = widget.TextInputWidget
-        return widget_maker()
+        return widget_maker(item_css_class=self._default_item_css_class())
+
+    def _default_item_css_class(self):
+        if not self.name:
+            return None
+        
+        css_class = unicodedata.normalize('NFKD', compat.text_type(self.name)).encode('ascii', 'ignore').decode('ascii')
+        css_class = re.sub('[^\w\s-]', '', css_class).strip().lower()
+        css_class = re.sub('[-\s]+', '-', css_class)
+        return "item-%s" % css_class
+
 
     def get_widget_requirements(self):
         """ Return a sequence of two tuples in the form
@@ -287,7 +336,7 @@ class Field(object):
         Javascript resources need to be loaded by the page performing
         the form rendering in order for some widget on the page to
         function properly.
-        
+
         The second element in each two-tuple is the reqested version
         of the library resource.  It may be ``None``, in which case
         the version is unspecified.
@@ -399,7 +448,7 @@ class Field(object):
 
           Set the ``first_name`` field's widget to a
           ``TextAreaWidget``.
-        
+
         ``form.set_widgets({'people':MySequenceWidget()})``
 
           Set the ``people`` sequence field's widget to a
@@ -427,7 +476,7 @@ class Field(object):
                     else:
                         field = field[element]
                 field.widget = v
-                
+
     @property
     def errormsg(self):
         """ Return the ``msg`` attribute of the ``error`` attached to
@@ -591,7 +640,7 @@ class Field(object):
         Validate the pstruct passed.  Works exactly like the
         :class:`deform.field.validate` method, except it accepts a pstruct
         instead of a set of form controls.  A usage example follows::
-        
+
           if 'submit' in request.POST:  # the form submission needs validation
               controls = request.POST.items()
               pstruct = peppercorn.parse(controls)
@@ -605,7 +654,7 @@ class Field(object):
           else:
               return {'form':form.render()} # the form just needs rendering
         """
-        
+
         exc = None
 
         try:
@@ -661,7 +710,7 @@ class Field(object):
             id(self),
             self.schema.name,
             )
-    
+
     def set_appstruct(self, appstruct):
         """ Set the cstruct of this node (and its child nodes) using
         ``appstruct`` as input."""
@@ -724,7 +773,7 @@ class Field(object):
         the name of this node will be used to generate the name in the tag.
         See the :term:`Peppercorn` documentation for more information.
         """
-        
+
         if name is None:
             name = self.name
         tag = '<input type="hidden" name="__end__" value="%s:sequence"/>'
@@ -733,7 +782,7 @@ class Field(object):
     def start_rename(self, name=None):
         """ Create a start-rename tag (a literal).  If ``name`` is ``None``,
         the name of this node will be used to generate the name in the tag.
-        See the :term:`Peppercorn` documentation for more information. 
+        See the :term:`Peppercorn` documentation for more information.
         """
         if name is None:
             name = self.name
@@ -743,7 +792,7 @@ class Field(object):
     def end_rename(self, name=None):
         """ Create a start-rename tag (a literal).  If ``name`` is ``None``,
         the name of this node will be used to generate the name in the tag.
-        See the :term:`Peppercorn` documentation for more information. 
+        See the :term:`Peppercorn` documentation for more information.
         """
         if name is None:
             name = self.name

@@ -17,6 +17,8 @@ Form-Related
 
    .. automethod:: translate
 
+   .. automethod:: get_root
+
 .. autoclass:: Form
    :members:
 
@@ -25,9 +27,6 @@ Form-Related
 
 Type-Related
 ------------
-
-.. autoclass:: Set
-   :members:
 
 .. autoclass:: FileData
    :members:
@@ -99,6 +98,13 @@ Widget-Related
 
 .. autoclass:: SelectWidget
    :members:
+   :exclude-members: optgroup_class
+.. exclude optgroup_class to avoid generating
+.. a duplicate entry for OptGroup
+
+.. autoclass:: Select2Widget
+   :members:
+   :inherited-members:
    :exclude-members: optgroup_class
 .. exclude optgroup_class to avoid generating
 .. a duplicate entry for OptGroup

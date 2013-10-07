@@ -9,6 +9,7 @@
 .coverage
 .tox/
 nosetests.xml
+coverage.xml
 env26/
 env25/
 env24/
@@ -23,3 +24,5 @@ bin/
 include/
 lib/
 local
+coverage
+test

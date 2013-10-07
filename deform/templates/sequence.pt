@@ -8,57 +8,97 @@
                  now_len len(subfields);
                  orderable orderable|field.widget.orderable;
                  orderable orderable and 1 or 0;
-                 prototype field.widget.prototype(field)"
+                 prototype field.widget.prototype(field);
+                 title title|field.title;"
      class="deformSeq"
      id="${oid}">
 
-  <!-- sequence -->
+  <style>
+    body.dragging, body.dragging * {
+      cursor: move !important;
+    }
 
-  <input type="hidden" name="__start__" value="${name}:sequence"
-         class="deformProto" 
+    .dragged {
+      position: absolute;
+      opacity: 0.5;
+      z-index: 2000;
+    }
+  </style>   
+
+  <!-- sequence -->
+  <input type="hidden" name="__start__"
+         value="${field.name}:sequence"
+         class="deformProto"
          tal:attributes="prototype prototype"/>
 
-  <ul id="${oid}-orderable">
+  <div class="panel panel-default">
+    <div class="panel-heading">${title}</div>
+    <div class="panel-body">
 
-    <!--! subfields is a tuple for bw compat with 3rdparty templates;
-          we ignore the first element (the cstruct) because it's already
-          attached to the field -->
-    <div tal:define="subfields [ x[1] for x in subfields ]"
-         tal:repeat="subfield subfields"
-         tal:replace="structure subfield.render_template(item_tmpl, parent=field)"/>
+      <div class="deformSeqContainer"
+           id="${oid}-orderable">
+        <div tal:define="subfields [ x[1] for x in subfields ]"
+             tal:repeat="subfield subfields"
+             tal:replace="structure subfield.render_template(item_tmpl, 
+                                                          parent=field)" />
+        <span class="deformInsertBefore"
+              tal:attributes="
+                 min_len min_len;
+                 max_len max_len;
+                 now_len now_len;
+                 orderable orderable;"></span>
+      </div>
 
-    <span class="deformInsertBefore" 
-          tal:attributes="min_len min_len; 
-                          max_len max_len; 
-                          now_len now_len;
-                          orderable orderable;"></span>
+    </div>
 
-  </ul>
-  
-  <a href="#"
-     class="deformSeqAdd"
-     id="${oid}-seqAdd"
-     onclick="javascript: return deform.appendSequenceItem(this);">
-    <small id="${oid}-addtext">${add_subitem_text}</small>
-  </a>
+    <div class="panel-footer">
+      <a href="#"
+         class="btn deformSeqAdd"
+         id="${field.oid}-seqAdd"
+         onclick="javascript: return deform.appendSequenceItem(this);">
+        <small id="${field.oid}-addtext">${add_subitem_text}</small>
+      </a>
 
-  <script type="text/javascript">
-     deform.addCallback(
-       '${oid}',
-       function(oid) {
-         oid_node = $('#'+ oid);
-         deform.processSequenceButtons(oid_node, ${min_len}, 
-                                       ${max_len}, ${now_len}, ${orderable});
-       }
-     )
-     <tal:block condition="orderable">
+      <script type="text/javascript">
+       deform.addCallback(
+         '${field.oid}',
+         function(oid) {
+           oid_node = $('#'+ oid);
+           deform.processSequenceButtons(oid_node, ${min_len},
+                                         ${max_len}, ${now_len},
+                                         ${orderable});
+           }
+         )
+         <tal:block condition="orderable">
+             $( "#${oid}-orderable" ).sortable({
+               handle: ".deformOrderbutton, .panel-heading",
+               containerSelector: "#${oid}-orderable",
+               itemSelector: ".deformSeqItem",
+               placeholder: '<span class="glyphicon glyphicon-arrow-right placeholder"></span>',
+               onDragStart: function ($item, container, _super) {
+                 var offset = $item.offset(),
+                 pointer = container.rootGroup.pointer
 
-     $( "#${oid}-orderable" ).sortable({handle: "span.deformOrderbutton"});
-     </tal:block>
-  </script>
+                 adjustment = {
+                   left: pointer.left - offset.left,
+                   top: pointer.top - offset.top
+                 }
 
-  <input type="hidden" name="__end__" value="${name}:sequence"/>
+                 _super($item, container)
+               },
+               onDrag: function ($item, position) {
+                   $item.css({
+                     left: position.left - adjustment.left,
+                     top: position.top - adjustment.top
+                   })
+                 }
+               });
+         </tal:block>
+      </script>
 
-  <!-- /sequence -->
+      <input type="hidden" name="__end__" value="${field.name}:sequence"/>
+      <!-- /sequence -->
+    </div>
 
+  </div>
 </div>

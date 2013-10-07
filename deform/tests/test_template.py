@@ -1,8 +1,5 @@
 import unittest
-from deform.compat import (
-    string_types,
-    text_type,
-)
+from deform.compat import text_type
 
 class TestZPTTemplateLoader(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -110,20 +107,25 @@ class Test_default_renderer(unittest.TestCase):
     
     def test_call_defaultdir(self):
         import re
-        result = self._callFUT('checkbox',
-                               **{'cstruct':None, 'field':DummyField()})
+        result = self._callFUT(
+            'checkbox',
+            **{'cstruct':None, 'field':DummyField()})
         result = re.sub('[ \n]+', ' ', result)
         result = re.sub(' />', '/>', result)
         result = result.strip()
-        self.assertEqual(result,
-                         text_type('<input type="checkbox" name="name" value="true" '
-                         'id="oid"/>'))
+        self.assertEqual(
+            result,
+            text_type('<div class="checkbox"> <label for="oid"> '
+                      '<input type="checkbox" '
+                      'name="name" value="true" id="oid"/> </label> </div>')
+            )
 
 class DummyWidget(object):
     name = 'name'
     true_val = 'true'
     false_val = 'false'
     css_class = None
+    style = None
     
 class DummyField(object):
     widget = DummyWidget()
