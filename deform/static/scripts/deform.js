@@ -1,9 +1,3 @@
-/*
- * Register a top-level callback to the deform.load() function
- * this will be called when the DOM has finished loading. No need
- * to include the call at the end of the page.
- */
-
 var deform_loaded = false;
 
 var deform  = {
