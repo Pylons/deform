@@ -10,7 +10,7 @@
                   "
       tal:omit-tag="">
     <input type="${type_name}" name="${name}" value="${cstruct}" 
-          ng-model="fields.${oid}"
+          ng-model="fields.${oid}" id="${oid}"
           class="${css_class_full}" style="${style}" 
           tal:attributes="field.widget.client_validators"
           autocomplete="off">
