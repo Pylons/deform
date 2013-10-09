@@ -247,9 +247,17 @@ class TextInputWidget(Widget):
     mask = None
     mask_placeholder = "_"
     requirements = ( ('jquery.maskedinput', None), )
-    client_validators = []
+
+    def get_client_validators(self, field):
+        client_validators = dict(getattr(self, 'client_validators', {}))
+        if field.required:
+            client_validators['required'] = 'true'
+        return client_validators
 
     def serialize(self, field, cstruct, **kw):
+
+        self.client_validators = self.get_client_validators(field)
+
         if cstruct in (null, None):
             cstruct = ''
         readonly = kw.get('readonly', self.readonly)
@@ -258,6 +266,9 @@ class TextInputWidget(Widget):
         return field.renderer(template, **values)
 
     def deserialize(self, field, pstruct):
+
+        self.client_validators = self.get_client_validators(field)
+
         if pstruct is null:
             return null
         if self.strip:

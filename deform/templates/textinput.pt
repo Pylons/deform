@@ -5,19 +5,14 @@
                   mask mask|field.widget.mask;
                   mask_placeholder mask_placeholder|field.widget.mask_placeholder;
                   style style|field.widget.style;
-                  client_validators_class ' '.join(['ng-' + name for name in field.widget.client_validators]);
-                  required_name 'required';
-
-                  field_classes {required_name: 'true'};
-
+                  client_validators_class field.widget.client_validators;
                   "
       tal:omit-tag="">
       {{deform.text.$error.required}}
       <!-- We use ng-xxx classes for the validators, because of chameleon issue -->
     <input type="text" name="${name}" value="${cstruct}" ng-model="fields.${oid}"
            class="${css_class_full}" style="${style}" 
-           tal:attributes="field_classes"
-           id="${oid}"
+           tal:attributes="field.widget.client_validators"
            >
 
     <script tal:condition="mask" type="text/javascript">
