@@ -6,7 +6,8 @@
                  category category|field.widget.category;
                  structural hidden or category == 'structural';
                  required required|field.required;"
-     class="form-group ${field.error and 'has-error' or ''} ${field.widget.item_css_class or ''}"
+     class="form-group ${field.error and 'has-error' or ''} ${field.widget.item_css_class or ''};"
+     ng-class="{'has-error': ${field.get_root().formid}.${field.name}.$error.required && ${field.get_root().formid}.${field.name}.$dirty}"
      title="${description}"
      id="item-${oid}"
      tal:omit-tag="structural"
@@ -40,7 +41,7 @@
      tal:condition="field.error and not field.widget.hidden and not field.typ.__class__.__name__=='Mapping'">
     ${msg}
   </p>
-  <p ng-show="${field.get_root().formid}.${field.oid}" class="help-block">
+  <p ng-show="${field.get_root().formid}.${field.name}.$error.required && ${field.get_root().formid}.${field.name}.$dirty" class="help-block">
     Required
   </p>
 

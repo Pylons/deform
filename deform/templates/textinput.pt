@@ -8,11 +8,11 @@
                   client_validators_class field.widget.client_validators;
                   "
       tal:omit-tag="">
-      {{deform.text.$error.required}}
       <!-- We use ng-xxx classes for the validators, because of chameleon issue -->
     <input type="text" name="${name}" value="${cstruct}" ng-model="fields.${oid}"
            class="${css_class_full}" style="${style}" 
            tal:attributes="field.widget.client_validators"
+           autocomplete="off"
            >
 
     <script tal:condition="mask" type="text/javascript">
