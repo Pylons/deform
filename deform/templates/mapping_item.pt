@@ -40,6 +40,10 @@
      tal:condition="field.error and not field.widget.hidden and not field.typ.__class__.__name__=='Mapping'">
     ${msg}
   </p>
+  <p ng-show="${field.get_root().formid}.${field.oid}" class="help-block">
+    Required
+  </p>
+
 
   <p tal:condition="field.description and not field.widget.hidden"
      class="help-block" >

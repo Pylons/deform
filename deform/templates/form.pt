@@ -17,12 +17,13 @@
                   class css_class;
                   action action;"
   id="${formid}"
+  name="${formid}"
   method="${method}"
   enctype="multipart/form-data"
   accept-charset="utf-8"
   i18n:domain="deform"
+  novalidate
   >
-
   <fieldset class="deformFormFieldset">
 
     <legend tal:condition="title">${title}</legend>
@@ -63,6 +64,9 @@
   </fieldset>
 
   <script type="text/javascript" tal:condition="use_ajax">
+   // Boot the angular app
+   // (we don't need ng-app in this case, which allows us to
+   // coexist with more apps in the same page)
    deform.addCallback(
      '${formid}',
      function(oid) {
@@ -89,6 +93,19 @@
        var extra_options = ${ajax_options} || {};
        $('#' + oid).ajaxForm($.extend(options, extra_options));
      }
+   );
+  </script>
+  <script type="text/javascript">
+   deform.addCallback(
+     '${formid}',
+     function(oid) {
+       if (angular) {
+          // Boot the angular app
+          // (we don't need ng-app in this case, which allows us to
+          // coexist with more apps in the same page)
+          angular.bootstrap(document.getElementById(oid), []);
+       }
+      }
    );
   </script>
 

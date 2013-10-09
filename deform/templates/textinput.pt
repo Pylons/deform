@@ -1,15 +1,25 @@
 <span tal:define="name name|field.name;
                   css_class css_class|field.widget.css_class;
+                  css_class_full string:form-control ${css_class};
                   oid oid|field.oid;
                   mask mask|field.widget.mask;
                   mask_placeholder mask_placeholder|field.widget.mask_placeholder;
                   style style|field.widget.style;
-"
+                  client_validators_class ' '.join(['ng-' + name for name in field.widget.client_validators]);
+                  required_name 'required';
+
+                  field_classes {required_name: 'true'};
+
+                  "
       tal:omit-tag="">
-    <input type="text" name="${name}" value="${cstruct}" 
-           tal:attributes="class string: form-control ${css_class};
-                           style style"
-           id="${oid}"/>
+      {{deform.text.$error.required}}
+      <!-- We use ng-xxx classes for the validators, because of chameleon issue -->
+    <input type="text" name="${name}" value="${cstruct}" ng-model="fields.${oid}"
+           class="${css_class_full}" style="${style}" 
+           tal:attributes="field_classes"
+           id="${oid}"
+           >
+
     <script tal:condition="mask" type="text/javascript">
       deform.addCallback(
          '${oid}',

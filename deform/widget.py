@@ -122,6 +122,9 @@ class Widget(object):
         Default: ``()`` (the empty tuple, meaning no special
         requirements).
 
+    client_validators: the thing that the template uses for Angular.
+    (XXX TODO write this down in a way that it's possible to understand)
+
     These attributes are also accepted as keyword arguments to all
     widget constructors; if they are passed, they will override the
     defaults.
@@ -244,6 +247,7 @@ class TextInputWidget(Widget):
     mask = None
     mask_placeholder = "_"
     requirements = ( ('jquery.maskedinput', None), )
+    client_validators = []
 
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
