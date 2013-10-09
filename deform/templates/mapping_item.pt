@@ -43,7 +43,9 @@
   <p ng-show="${field.get_root().formid}.${field.name}.$error.required && ${field.get_root().formid}.${field.name}.$dirty" class="help-block">
     Required
   </p>
-
+  <p ng-show="${field.get_root().formid}.${field.name}.$error.email && ${field.get_root().formid}.${field.name}.$dirty" class="help-block">
+    Invalid email address
+  </p>
 
   <p tal:condition="field.description and not field.widget.hidden"
      class="help-block" >
