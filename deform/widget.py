@@ -253,6 +253,8 @@ class TextInputWidget(Widget):
         client_validators = dict(getattr(self, 'client_validators', {}))
         if field.required:
             client_validators['required'] = 'true'
+        if self.mask:
+            client_validators['ui-mask'] = self.mask
         return client_validators
 
     def serialize(self, field, cstruct, **kw):

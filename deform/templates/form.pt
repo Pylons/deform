@@ -103,7 +103,7 @@
           // Boot the angular app
           // (we don't need ng-app in this case, which allows us to
           // coexist with more apps in the same page)
-          angular.bootstrap(document.getElementById(oid), []);
+          angular.bootstrap(document.getElementById(oid), ['deform']);
        }
       }
    );

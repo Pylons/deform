@@ -16,10 +16,12 @@
           autocomplete="off">
     <script tal:condition="mask" type="text/javascript">
       deform.addCallback(
-         '${oid}',
-         function (oid) {
-            $("#" + oid).mask("${mask}", 
-                 {placeholder:"${mask_placeholder}"});
-         });
+          '${oid}',
+          function (oid) {
+              if (angular !== undefined) {
+                  $("#" + oid).mask("${mask}", 
+                     {placeholder:"${mask_placeholder}"});
+             });
+      }
     </script>
 </span>

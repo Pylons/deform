@@ -8,6 +8,9 @@ $(document).ready(function(){
     deform.load();
 });
 
+
+angular.module('deform', ['ui.mask']);
+
 var deform_loaded = false;
 
 var deform  = {
