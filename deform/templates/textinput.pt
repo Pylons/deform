@@ -4,17 +4,16 @@
                   oid oid|field.oid;
                   mask mask|field.widget.mask;
                   mask_placeholder mask_placeholder|field.widget.mask_placeholder;
+                  type_name type_name|field.widget.type_name;
                   style style|field.widget.style;
                   client_validators_class field.widget.client_validators;
                   "
       tal:omit-tag="">
-      <!-- We use ng-xxx classes for the validators, because of chameleon issue -->
-    <input type="text" name="${name}" value="${cstruct}" ng-model="fields.${oid}"
-           class="${css_class_full}" style="${style}" 
-           tal:attributes="field.widget.client_validators"
-           autocomplete="off"
-           >
-
+    <input type="${type_name}" name="${name}" value="${cstruct}" 
+          ng-model="fields.${oid}"
+          class="${css_class_full}" style="${style}" 
+          tal:attributes="field.widget.client_validators"
+          autocomplete="off">
     <script tal:condition="mask" type="text/javascript">
       deform.addCallback(
          '${oid}',

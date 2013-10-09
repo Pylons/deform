@@ -7,12 +7,11 @@
                  structural hidden or category == 'structural';
                  required required|field.required;"
      class="form-group ${field.error and 'has-error' or ''} ${field.widget.item_css_class or ''};"
-     ng-class="{'has-error': ${field.get_root().formid}.${field.name}.$error.required && ${field.get_root().formid}.${field.name}.$dirty}"
+     ng-class="{'has-error': ! ${field.get_root().formid}.${field.name}.$valid && ${field.get_root().formid}.${field.name}.$dirty}"
      title="${description}"
      id="item-${oid}"
      tal:omit-tag="structural"
      i18n:domain="deform">
-
   <label for="${oid}"
          class="control-label ${required and 'required' or ''}"
          tal:condition="not structural"

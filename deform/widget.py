@@ -247,6 +247,7 @@ class TextInputWidget(Widget):
     mask = None
     mask_placeholder = "_"
     requirements = ( ('jquery.maskedinput', None), )
+    type_name = "text"
 
     def get_client_validators(self, field):
         client_validators = dict(getattr(self, 'client_validators', {}))

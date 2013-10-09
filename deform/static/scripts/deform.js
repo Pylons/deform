@@ -8,30 +8,6 @@ $(document).ready(function(){
     deform.load();
 });
 
-
-/*
-angular.module('deform', []).directive('addDirective', function($compile, $timeout) {
-    return {
-        //restrict: 'A',
-        require : 'ngModel',
-        scope: true,
-        link : function(scope, $elm, attrs) {
-
-            if ($elm.attr('data-add-directive-processed') === undefined) {
-                console.log('Start Linking');
-
-                var $new = $elm.clone();
-                $new.attr('required', 'true');
-                $new.attr('data-add-directive-processed', 'true');
-                $new = $compile($new.contents())(scope);
-                $elm.replaceWith($new);
-                console.log('Linking!!!!');
-            }
-        }
-    };
-});
-*/
-
 var deform_loaded = false;
 
 var deform  = {
