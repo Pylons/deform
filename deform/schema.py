@@ -14,6 +14,7 @@ default_widget_makers = {
     colander.Date: widget.DateInputWidget,
     colander.DateTime: widget.DateTimeInputWidget,
     colander.Tuple: widget.TextInputCSVWidget,
+    colander.Time: widget.TimeInputWidget,
     colander.Money: widget.MoneyInputWidget,
     colander.Set: widget.CheckboxChoiceWidget,
 }
