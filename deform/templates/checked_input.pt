@@ -10,13 +10,13 @@
   <div>
     <input type="text" name="${name}" value="${cstruct}"
            tal:attributes="style style;
-                           class string: form-control ${css_class};
+                           class string: form-control ${css_class or ''};
                            placeholder subject;"
            id="${oid}"/>
   </div>
   <div>
     <input type="text" name="${name}-confirm" value="${confirm}"
-           tal:attributes="class string: form-control ${css_class};
+           tal:attributes="class string: form-control ${css_class or ''};
                            style style;
                            placeholder confirm_subject;"
            id="${oid}-confirm"/>

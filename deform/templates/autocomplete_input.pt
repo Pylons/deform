@@ -7,7 +7,7 @@
            name="${name}"
            value="${cstruct}"
            data-provide="typeahead"
-           tal:attributes="class string: form-control ${css_class};
+           tal:attributes="class string: form-control ${css_class or ''};
                            style style"
            id="${oid}"/>
     <script tal:condition="field.widget.values" type="text/javascript">
