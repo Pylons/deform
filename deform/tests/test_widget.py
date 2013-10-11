@@ -382,6 +382,18 @@ class TestDateInputWidget(unittest.TestCase):
         result = widget.deserialize(field, '')
         self.assertEqual(result, colander.null)
 
+    def test_deserialize_date_submit(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, {'date': 'foo', 'date_submit': 'bar'})
+        self.assertEqual(result, 'bar')
+
+    def test_deserialize_date(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, {'date': 'foo', 'date_submit': ''})
+        self.assertEqual(result, 'foo')
+
     def test_options_changed_and_default(self):
         widget2 = self._makeOne()
         widget = self._makeOne(options={'format': 'foo'})

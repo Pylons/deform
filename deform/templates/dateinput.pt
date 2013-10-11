@@ -4,6 +4,7 @@
                  style style|field.widget.style;
                  type_name type_name|field.widget.type_name;"
       tal:omit-tag="">
+  ${field.start_mapping()}
   <input type="${type_name}"
          name="${name}"
          value="${cstruct}"
@@ -11,6 +12,7 @@
          tal:attributes="class string: ${css_class or ''} form-control hasDatepicker;
                          style style"
          id="${oid}"/>
+  ${field.end_mapping()}
   <script type="text/javascript">
    deform.addCallback(
      '${oid}',

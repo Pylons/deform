@@ -548,7 +548,10 @@ class DateInputWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct in ('', null):
             return null
-        return pstruct
+        date = pstruct['date'].strip()
+        date_submit = pstruct.get('date_submit', '').strip()
+        return date_submit or date
+
 
 class DateTimeInputWidget(Widget):
     """
