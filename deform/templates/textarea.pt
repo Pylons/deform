@@ -6,7 +6,7 @@
                       style style|field.widget.style"
           tal:attributes="rows rows;
                           cols cols;
-                          class string: form-control ${css_class};
+                          class string: form-control ${css_class or ''};
                           style style"
           id="${oid}"
           name="${name}">${cstruct}</textarea>

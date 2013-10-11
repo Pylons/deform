@@ -12,7 +12,7 @@
   <select tal:attributes="
           name name;
           id oid;
-          class string: form-control ${css_class};
+          class string: form-control ${css_class or ''};
           multiple multiple;
           size size;
           style style;">
