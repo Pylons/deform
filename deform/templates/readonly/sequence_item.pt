@@ -3,7 +3,7 @@
      hidden hidden|field.widget.hidden;
      description description|field.description;"
      title="${description}"
-     class="form-group row deformSeqItem"
+     class="form-group row deform-seq-item"
      i18n:domain="deform">
   <div class="col-xs-12">
     <span tal:replace="structure field.serialize(cstruct, readonly=True)"/>

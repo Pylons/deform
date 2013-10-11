@@ -1,6 +1,7 @@
 TODO
 
 - docs
+- delete beautify.css?
 - decide how to explain form.css (include in requirements or?)
 - horizontal/inline forms + structural things
 - assets for templates: deform should provide a tool to resolve that?
@@ -16,7 +17,6 @@ TODO
 - Currently description shows up as both tooltip of label and as help-block.
   Maybe make these two things separate or at least don't show them both using
   the same value.
-- normalize CSS class names to deform-foo rather than deformFoo
 - sequence_of_sequences: js that processes close/order buttons has to 
   be less promiscuous (it uses e.g. "find"); symptom: buttons
   appear/disappear, act on the wrong element, etc... ugh 2013/10/05
