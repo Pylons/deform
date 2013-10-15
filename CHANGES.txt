@@ -1,3 +1,13 @@
+Next release
+------------
+
+- ``PasswordWidget`` and ``CheckedPasswordWidget`` have grown an additional
+  argument/attribute named ``show``, which controls what happens on a
+  validation failure of a form involving such a field.  If ``show`` is ``True``
+  (the default), the password will be re-rendered into the form when the form
+  is re-rendered after validation failure.  If ``show`` is ``False``, the
+  password will not be re-rendered.
+  
 2.0a1 (2013-10-05)
 ------------------
 
