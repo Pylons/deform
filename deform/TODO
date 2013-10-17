@@ -22,6 +22,7 @@ TODO
   appear/disappear, act on the wrong element, etc... ugh 2013/10/05
   cannot replicate, but still believe there may be an issue, but
   maybe iElectric fixed it
+- template names maybe should be asset specs
 
 NEW FEATURES:
 

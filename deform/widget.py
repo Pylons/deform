@@ -737,17 +737,17 @@ class PasswordWidget(TextInputWidget):
 
     strip
         If true, during deserialization, strip the value of leading
-        and trailing whitespace (default ``True``).
+        and trailing whitespace. Default: ``True``.
 
     redisplay
         If true, on validation failure, retain and redisplay the password
         input.  If false, on validation failure, this field will be
-        rendered empty.
+        rendered empty.  Default: ``False``.
 
     """
     template = 'password'
     readonly_template = 'readonly/password'
-    redisplay = True
+    redisplay = False
 
 class HiddenWidget(Widget):
     """
@@ -1137,16 +1137,21 @@ class CheckedPasswordWidget(CheckedInputWidget):
         The template name used to render the widget in read-only mode.
         Default: ``readonly/checked_password``.
 
+    mismatch_message
+        The string shown in the error message when a validation failure is
+        caused by the confirm field value does not match the password
+        field value.  Default: ``Password did not match confirm``.
+        
     redisplay
         If true, on validation failure involving a field with this widget,
         retain and redisplay the provided values in the password inputs.  If
         false, on validation failure, the fields will be rendered empty.
-        Default:: ``True``.
+        Default:: ``False``.
         """
     template = 'checked_password'
     readonly_template = 'readonly/checked_password'
     mismatch_message = _('Password did not match confirm')
-    redisplay = True
+    redisplay = False
 
 class MappingWidget(Widget):
     """
