@@ -1,5 +1,5 @@
-Next release
-------------
+2.0a2 (2013-10-18)
+------------------
 
 - ``PasswordWidget`` and ``CheckedPasswordWidget`` have grown an additional
   argument/attribute named ``redisplay``, which controls what happens on a
