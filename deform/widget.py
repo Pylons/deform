@@ -439,6 +439,66 @@ class AutocompleteInputWidget(Widget):
         return pstruct
 
 
+class TimeInputWidget(Widget):
+    """
+    Renders a time picker widget.
+
+    The default rendering is as a native HTML5 time input widget,
+    falling back to pickadate (https://github.com/amsul/pickadate.js.)
+
+    Most useful when the schema node is a ``colander.Time`` object.
+
+    **Attributes/Arguments**
+
+    style
+        A string that will be placed literally in a ``style`` attribute on
+        the text input tag.  For example, 'width:150px;'.  Default: ``None``,
+        meaning no style attribute will be added to the input tag.
+
+    options
+        Options for configuring the widget (eg: date format)
+
+    template
+        The template name used to render the widget.  Default:
+        ``timeinput``.
+
+    readonly_template
+        The template name used to render the widget in read-only mode.
+        Default: ``readonly/timeinput``.
+    """
+    template = 'timeinput'
+    readonly_template = 'readonly/textinput'
+    type_name = 'time'
+    size = None
+    style = None
+    requirements = ( ('modernizr', None), ('pickadate', None))
+    default_options = (('format', 'HH:i'),)
+
+    def __init__(self, *args, **kwargs):
+        self.options = dict(self.default_options)
+        self.options['formatSubmit'] = 'HH:i'
+        Widget.__init__(self, *args, **kwargs)
+
+    def serialize(self, field, cstruct, **kw):
+        if cstruct in (null, None):
+            cstruct = ''
+        readonly = kw.get('readonly', self.readonly)
+        template = readonly and self.readonly_template or self.template
+        options = dict(
+            kw.get('options') or self.options or self.default_options
+            )
+        options['formatSubmit'] = 'HH:i'
+        kw.setdefault('options_json', json.dumps(options))
+        values = self.get_template_values(field, cstruct, kw)
+        return field.renderer(template, **values)
+
+    def deserialize(self, field, pstruct):
+        if pstruct in ('', null):
+            return null
+        time = pstruct['time'].strip()
+        time_submit = pstruct.get('time_submit', '').strip()
+        return time_submit or time
+
 class DateInputWidget(Widget):
     """
     Renders a date picker widget.
@@ -488,7 +548,10 @@ class DateInputWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct in ('', null):
             return null
-        return pstruct
+        date = pstruct['date'].strip()
+        date_submit = pstruct.get('date_submit', '').strip()
+        return date_submit or date
+
 
 class DateTimeInputWidget(Widget):
     """
@@ -737,11 +800,17 @@ class PasswordWidget(TextInputWidget):
 
     strip
         If true, during deserialization, strip the value of leading
-        and trailing whitespace (default ``True``).
+        and trailing whitespace. Default: ``True``.
+
+    redisplay
+        If true, on validation failure, retain and redisplay the password
+        input.  If false, on validation failure, this field will be
+        rendered empty.  Default: ``False``.
 
     """
     template = 'password'
     readonly_template = 'readonly/password'
+    redisplay = False
 
 class HiddenWidget(Widget):
     """
@@ -1131,10 +1200,21 @@ class CheckedPasswordWidget(CheckedInputWidget):
         The template name used to render the widget in read-only mode.
         Default: ``readonly/checked_password``.
 
-    """
+    mismatch_message
+        The string shown in the error message when a validation failure is
+        caused by the confirm field value does not match the password
+        field value.  Default: ``Password did not match confirm``.
+        
+    redisplay
+        If true, on validation failure involving a field with this widget,
+        retain and redisplay the provided values in the password inputs.  If
+        false, on validation failure, the fields will be rendered empty.
+        Default:: ``False``.
+        """
     template = 'checked_password'
     readonly_template = 'readonly/checked_password'
     mismatch_message = _('Password did not match confirm')
+    redisplay = False
 
 class MappingWidget(Widget):
     """

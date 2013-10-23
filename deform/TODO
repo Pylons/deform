@@ -11,8 +11,6 @@ TODO
 - maybe readonly should be a property of the schema, not the widget.
 - consider whether "style"/"css_class" on multi-input widgets should apply to
   a container or each element.
-- audit use of e.g. string:${css_class} so we don't see unexpected class="None"
-  in widget rendering output.
 - some sort of test for mapping_item input_prepend/input_append
 - Currently description shows up as both tooltip of label and as help-block.
   Maybe make these two things separate or at least don't show them both using

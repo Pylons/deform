@@ -42,7 +42,7 @@
   <select tal:attributes="
           name name;
           id oid;
-          class string: form-control ${css_class};
+          class string: form-control ${css_class or ''};
           data-placeholder field.widget.placeholder|None;
           multiple multiple;
           style style;">

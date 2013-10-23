@@ -1,3 +1,38 @@
+Next release
+------------
+
+- Readd a time widget.
+
+- Fix a bug in the DateInputWidget.  See
+  https://github.com/Pylons/deform/pull/192.
+
+- Ensured that ``None`` would not show up as a css class name in rendered
+  template output.  See https://github.com/Pylons/deform/pull/191
+
+2.0a2 (2013-10-18)
+------------------
+
+- ``PasswordWidget`` and ``CheckedPasswordWidget`` have grown an additional
+  argument/attribute named ``redisplay``, which controls what happens on a
+  validation failure of a form involving such a field.  If ``redisplay`` is
+  ``True`` (the default), the password will be re-rendered into the form when
+  the form is re-rendered after validation failure.  If ``redisplay`` is
+  ``False``, the password will not be re-rendered into the form.  The default
+  is ``False``, which means that, as of this release, passwords will not
+  be redisplayed; this changes the default behavior wrt previous releases.
+  Values typed into password fields are not redisplayed by default during
+  validation failure, as a security measure (the value winds up in browser
+  history).  Use ``PasswordWidget(redisplay=True)`` or
+  ``CheckedPasswordWidget(redisplay=True)`` to make these widgets redisplay
+  passwords on validation failures, matching the old behavior.
+
+- When using the default Chameleon template renderer, template names can now 
+  be "asset specifications" e.g. ``mypackage:subdir1/subdir2/mytemplate.pt``
+  instead of extensionless paths relative to a search path.  When
+  template names are specified as asset specifications, the 
+  ``pkg_resources.resource_filename`` API is used to dereference them
+  into an actual file path.
+
 2.0a1 (2013-10-05)
 ------------------
 
