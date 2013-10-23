@@ -1,3 +1,4 @@
+import os.path
 from pkg_resources import resource_filename
 
 from .exception import TemplateError
@@ -11,6 +12,13 @@ class ZPTTemplateLoader(TemplateLoader):
         super(ZPTTemplateLoader, self).__init__(*args, **kwargs)
 
     def load(self, filename, *args, **kwargs):
+        if ':' in filename:
+            pkg_name, fn = filename.split(':', 1)
+            filename = resource_filename(pkg_name, fn)
+        else:
+            path, ext = os.path.splitext(filename)
+            if not ext:
+                filename = filename + '.pt'
         try:
             return super(ZPTTemplateLoader, self).load(
                 filename, *args, **kwargs)
@@ -19,10 +27,15 @@ class ZPTTemplateLoader(TemplateLoader):
 
 class ZPTRendererFactory(object):
     """
-    Construct a Chameleon ZPT :term:`renderer`.
+    Construct a custom Chameleon ZPT :term:`renderer` for Deform.
 
-    The resulting renderer callable accepts a template name *without*
-    the ``.pt`` file extension and a set of keyword` values.
+    If the template name is an asset spec (has a colon in it, e.g.
+    ``mypackage:subdir/subdir2/mytemplate.pt``), use
+    ``pkg_resources.resource_filename`` to resolve it.
+    Otherwise, fall back to search-path-based machinery to resolve it.
+
+    Allowing an asset spec allows users to specify templates without the
+    trouble of needing to add search paths to the deform rendering machinery.
 
     **Arguments**
 
@@ -31,7 +44,8 @@ class ZPTRendererFactory(object):
       directories containing Deform Chameleon template sources.  The
       order in which the directories are listed within ``search_path``
       is the order in which they are checked for the template provided
-      to the renderer.
+      to the renderer.  If every resource is an asset spec, however,
+      the search path is never used.
 
     auto_reload
        If true, automatically reload templates when they change (slows
@@ -58,19 +72,20 @@ class ZPTRendererFactory(object):
     def __init__(self, search_path, auto_reload=True, debug=False,
                  encoding='utf-8', translator=None):
         self.translate = translator
-        loader = ZPTTemplateLoader(search_path=search_path,
-                                   auto_reload=auto_reload,
-                                   debug=debug,
-                                   encoding=encoding,
-                                   translate=ChameleonTranslate(translator))
+        loader = ZPTTemplateLoader(
+            search_path=search_path,
+            auto_reload=auto_reload,
+            debug=debug,
+            encoding=encoding,
+            translate=ChameleonTranslate(translator)
+            )
         self.loader = loader
 
     def __call__(self, template_name, **kw):
         return self.load(template_name)(**kw)
 
     def load(self, template_name):
-        return self.loader.load(template_name + '.pt')
-
-
+        return self.loader.load(template_name)
+        
 default_dir = resource_filename('deform', 'templates/')
 default_renderer = ZPTRendererFactory((default_dir,))
