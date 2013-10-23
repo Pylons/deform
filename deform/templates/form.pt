@@ -23,7 +23,7 @@
   i18n:domain="deform"
   >
 
-  <fieldset class="deformFormFieldset">
+  <fieldset class="deform-form-fieldset">
 
     <legend tal:condition="title">${title}</legend>
 
@@ -31,9 +31,9 @@
     <input type="hidden" name="__formid__" value="${formid}"/>
 
     <div class="alert alert-danger" tal:condition="field.error">
-      <div class="errorMsgLbl" i18n:translate=""
+      <div class="error-msg-lbl" i18n:translate=""
         >There was a problem with your submission</div>
-      <p class="errorMsg">${field.errormsg}</p>
+      <p class="error-msg">${field.errormsg}</p>
     </div>
 
     <p class="section first" tal:condition="description">

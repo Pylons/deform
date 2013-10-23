@@ -19,7 +19,7 @@
   i18n:domain="deform"
   >
 
-  <fieldset class="deformFormFieldset">
+  <fieldset class="deform-form-fieldset">
 
     <legend tal:condition="title">${title}</legend>
 

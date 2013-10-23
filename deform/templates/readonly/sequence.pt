@@ -3,14 +3,14 @@
      oid oid|field.oid;
      name name|field.name;
      title title|field.title;"
-     class="deformSeq"
+     class="deform-seq"
      id="${oid}">
 
   <div class="panel panel-default">
     <div class="panel-heading">${title}</div>
     <div class="panel-body">
 
-      <div class="deformSeqContainer">
+      <div class="deform-seq-container">
         <div tal:define="subfields [ x[1] for x in subfields ]"
              tal:repeat="subfield subfields"
              tal:replace="structure subfield.render_template(item_tmpl, 
