@@ -1,3 +1,11 @@
+Next release
+------------
+
+- Readd a time widget.
+
+- Fix a bug in the DateInputWidget.  See
+  https://github.com/Pylons/deform/pull/192.
+
 2.0a2 (2013-10-18)
 ------------------
 
