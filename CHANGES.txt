@@ -6,6 +6,9 @@ Next release
 - Fix a bug in the DateInputWidget.  See
   https://github.com/Pylons/deform/pull/192.
 
+- Ensured that ``None`` would not show up as a css class name in rendered
+  template output.  See https://github.com/Pylons/deform/pull/191
+
 2.0a2 (2013-10-18)
 ------------------
 
