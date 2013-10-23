@@ -9,6 +9,27 @@ Next release
 - Ensured that ``None`` would not show up as a css class name in rendered
   template output.  See https://github.com/Pylons/deform/pull/191
 
+- CSS class names normalized.  Instead of camelCase names (e.g. ``deformSeq``),
+  we now use dashed-names (e.g. ``deform-seq``).  A full list of changes is
+  below::
+
+    Old                               New
+
+    deformClosebutton                 deform-closebutton
+    deformFileupload                  deform-file-upload
+    deformFormFieldset                deform-form-fieldset
+    deformInsertBefore                deform-insert-before
+    deformOrderbutton                 deform-orderbutton
+    deformProto                       deform-proto
+    deformReplaces                    deform-replaces
+    deformSeq                         deform-seq
+    deformSeqAdd                      deform-seq-add
+    deformSeqContainer                deform-seq-container
+    deformSeqItem                     deform-seq-item
+    deformSet-item                    deform-set-item
+    errorMsg                          error-msg
+    errorMsgLbl                       error-msg-lbl
+
 2.0a2 (2013-10-18)
 ------------------
 
