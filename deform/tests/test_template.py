@@ -21,6 +21,18 @@ class TestZPTTemplateLoader(unittest.TestCase):
         result = loader.load('test.pt')
         self.assertTrue(result)
 
+    def test_load_exists_asset_spec_with_search_path(self):
+        import os
+        fixtures = os.path.join(os.path.dirname(__file__), 'fixtures')
+        loader = self._makeOne(search_path=[fixtures])
+        result = loader.load('deform.tests:fixtures/test.pt')
+        self.assertTrue(result)
+
+    def test_load_exists_asset_spec_without_search_path(self):
+        loader = self._makeOne()
+        result = loader.load('deform.tests:fixtures/test.pt')
+        self.assertTrue(result)
+        
     def test_load_with_translate(self):
         import os
         fixtures = os.path.join(os.path.dirname(__file__), 'fixtures')
