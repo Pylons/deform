@@ -439,6 +439,66 @@ class AutocompleteInputWidget(Widget):
         return pstruct
 
 
+class TimeInputWidget(Widget):
+    """
+    Renders a time picker widget.
+
+    The default rendering is as a native HTML5 time input widget,
+    falling back to pickadate (https://github.com/amsul/pickadate.js.)
+
+    Most useful when the schema node is a ``colander.Time`` object.
+
+    **Attributes/Arguments**
+
+    style
+        A string that will be placed literally in a ``style`` attribute on
+        the text input tag.  For example, 'width:150px;'.  Default: ``None``,
+        meaning no style attribute will be added to the input tag.
+
+    options
+        Options for configuring the widget (eg: date format)
+
+    template
+        The template name used to render the widget.  Default:
+        ``timeinput``.
+
+    readonly_template
+        The template name used to render the widget in read-only mode.
+        Default: ``readonly/timeinput``.
+    """
+    template = 'timeinput'
+    readonly_template = 'readonly/textinput'
+    type_name = 'time'
+    size = None
+    style = None
+    requirements = ( ('modernizr', None), ('pickadate', None))
+    default_options = (('format', 'HH:i'),)
+
+    def __init__(self, *args, **kwargs):
+        self.options = dict(self.default_options)
+        self.options['formatSubmit'] = 'HH:i'
+        Widget.__init__(self, *args, **kwargs)
+
+    def serialize(self, field, cstruct, **kw):
+        if cstruct in (null, None):
+            cstruct = ''
+        readonly = kw.get('readonly', self.readonly)
+        template = readonly and self.readonly_template or self.template
+        options = dict(
+            kw.get('options') or self.options or self.default_options
+            )
+        options['formatSubmit'] = 'HH:i'
+        kw.setdefault('options_json', json.dumps(options))
+        values = self.get_template_values(field, cstruct, kw)
+        return field.renderer(template, **values)
+
+    def deserialize(self, field, pstruct):
+        if pstruct in ('', null):
+            return null
+        time = pstruct['time'].strip()
+        time_submit = pstruct.get('time_submit', '').strip()
+        return time_submit or time
+
 class DateInputWidget(Widget):
     """
     Renders a date picker widget.
@@ -488,7 +548,10 @@ class DateInputWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct in ('', null):
             return null
-        return pstruct
+        date = pstruct['date'].strip()
+        date_submit = pstruct.get('date_submit', '').strip()
+        return date_submit or date
+
 
 class DateTimeInputWidget(Widget):
     """
