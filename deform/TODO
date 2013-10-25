@@ -60,6 +60,26 @@ MIGRATION NOTES:
   inside themselves.  instead the label element has a required class
   if the field is required; use form.css to display this as an asterisk.
 - min_length of AutocompleteInputWidget now defaults to 1 (was 2)
+- CSS class names normalized.  Instead of camelCase names (e.g. ``deformSeq``),
+  we now use dashed-names (e.g. ``deform-seq``).  A full list of changes is
+  below::
+
+    Old                               New
+
+    deformClosebutton                 deform-closebutton
+    deformFileupload                  deform-file-upload
+    deformFormFieldset                deform-form-fieldset
+    deformInsertBefore                deform-insert-before
+    deformOrderbutton                 deform-orderbutton
+    deformProto                       deform-proto
+    deformReplaces                    deform-replaces
+    deformSeq                         deform-seq
+    deformSeqAdd                      deform-seq-add
+    deformSeqContainer                deform-seq-container
+    deformSeqItem                     deform-seq-item
+    deformSet-item                    deform-set-item
+    errorMsg                          error-msg
+    errorMsgLbl                       error-msg-lbl
 
 NICE TO HAVE
 
