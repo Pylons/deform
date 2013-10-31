@@ -84,6 +84,21 @@
                    top: pointer.top - offset.top
                  }
 
+                 if(typeof tinyMCE != "undefined"){
+                   $item.find(".tinymce").each(function(i, obj) {
+                     tinyMCE.execCommand('mceRemoveEditor', false, $(obj).attr('id'));
+                   });
+                 }
+
+                 _super($item, container)
+               },
+               onDrop: function($item, container, _super) {
+                 if(typeof tinyMCE != "undefined"){
+                   $item.find(".tinymce").each(function(i, obj) {
+                     tinyMCE.execCommand('mceAddEditor', true, $(obj).attr('id'));
+                   });
+                 }
+                 $(this).sortable("refresh");
                  _super($item, container)
                },
                onDrag: function ($item, position) {
