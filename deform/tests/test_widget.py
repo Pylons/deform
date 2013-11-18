@@ -382,11 +382,98 @@ class TestDateInputWidget(unittest.TestCase):
         result = widget.deserialize(field, '')
         self.assertEqual(result, colander.null)
 
+    def test_deserialize_date_submit(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, {'date': 'foo', 'date_submit': 'bar'})
+        self.assertEqual(result, 'bar')
+
+    def test_deserialize_date(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, {'date': 'foo', 'date_submit': ''})
+        self.assertEqual(result, 'foo')
+
     def test_options_changed_and_default(self):
         widget2 = self._makeOne()
         widget = self._makeOne(options={'format': 'foo'})
         self.assertEqual(widget.options['format'], 'foo')
         self.assertEqual(widget2.options, None)
+
+class TestTimeInputWidget(unittest.TestCase):
+    def _makeOne(self, **kw):
+        from deform.widget import TimeInputWidget
+        return TimeInputWidget(**kw)
+
+    def test_serialize_null(self):
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        field = DummyField(None, renderer=renderer)
+        widget.serialize(field, colander.null)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], '')
+
+    def test_serialize_None(self):
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        field = DummyField(None, renderer=renderer)
+        widget.serialize(field, None)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], '')
+
+    def test_serialize_not_null(self):
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer=renderer)
+        cstruct = 'abc'
+        widget.serialize(field, cstruct)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], cstruct)
+
+    def test_serialize_not_null_readonly(self):
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer=renderer)
+        cstruct = 'abc'
+        widget.serialize(field, cstruct, readonly=True)
+        self.assertEqual(renderer.template, widget.readonly_template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], cstruct)
+
+    def test_deserialize_null(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, colander.null)
+        self.assertEqual(result, colander.null)
+
+    def test_deserialize_emptystring(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, '')
+        self.assertEqual(result, colander.null)
+
+    def test_deserialize_success(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, {'time': '14:15:16'})
+        self.assertEqual(result, '14:15:16')
+
+    def test_deserialize_time_submit(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, {'time': '14:15:16', 'time_submit': '14:15:17'})
+        self.assertEqual(result, '14:15:17')
+
+    def test_options_changed_and_default(self):
+        widget2 = self._makeOne()
+        widget = self._makeOne(options={'format': 'foo'})
+        self.assertEqual(widget.options['format'], 'foo')
+        self.assertEqual(widget2.options['format'], 'HH:i')
 
 class TestDateTimeInputWidget(unittest.TestCase):
     def _makeOne(self, **kw):

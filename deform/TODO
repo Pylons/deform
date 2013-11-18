@@ -1,6 +1,7 @@
 TODO
 
 - docs
+- delete beautify.css?
 - decide how to explain form.css (include in requirements or?)
 - horizontal/inline forms + structural things
 - assets for templates: deform should provide a tool to resolve that?
@@ -10,13 +11,10 @@ TODO
 - maybe readonly should be a property of the schema, not the widget.
 - consider whether "style"/"css_class" on multi-input widgets should apply to
   a container or each element.
-- audit use of e.g. string:${css_class} so we don't see unexpected class="None"
-  in widget rendering output.
 - some sort of test for mapping_item input_prepend/input_append
 - Currently description shows up as both tooltip of label and as help-block.
   Maybe make these two things separate or at least don't show them both using
   the same value.
-- normalize CSS class names to deform-foo rather than deformFoo
 - sequence_of_sequences: js that processes close/order buttons has to 
   be less promiscuous (it uses e.g. "find"); symptom: buttons
   appear/disappear, act on the wrong element, etc... ugh 2013/10/05
@@ -62,6 +60,26 @@ MIGRATION NOTES:
   inside themselves.  instead the label element has a required class
   if the field is required; use form.css to display this as an asterisk.
 - min_length of AutocompleteInputWidget now defaults to 1 (was 2)
+- CSS class names normalized.  Instead of camelCase names (e.g. ``deformSeq``),
+  we now use dashed-names (e.g. ``deform-seq``).  A full list of changes is
+  below::
+
+    Old                               New
+
+    deformClosebutton                 deform-closebutton
+    deformFileupload                  deform-file-upload
+    deformFormFieldset                deform-form-fieldset
+    deformInsertBefore                deform-insert-before
+    deformOrderbutton                 deform-orderbutton
+    deformProto                       deform-proto
+    deformReplaces                    deform-replaces
+    deformSeq                         deform-seq
+    deformSeqAdd                      deform-seq-add
+    deformSeqContainer                deform-seq-container
+    deformSeqItem                     deform-seq-item
+    deformSet-item                    deform-set-item
+    errorMsg                          error-msg
+    errorMsgLbl                       error-msg-lbl
 
 NICE TO HAVE
 

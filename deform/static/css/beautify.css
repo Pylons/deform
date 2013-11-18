@@ -8,7 +8,7 @@
     zoom: 1;
 }
 
-.deform .deformSet-item > label{
+.deform .deform-set-item > label{
     display: inline-block;
 }
 
@@ -125,16 +125,8 @@
     border-radius: 25px;
 }
 
-.deform .errorMsgLbl{
+.deform .error-msg-lbl{
     background-color: rgb(255, 77, 0);
-}
-.deform .errorLi h3{
-    margin: 0px;
-    font-weight: bold;
-}
-
-.deform .errorLi p {
-    margin: 0px;
 }
 
 /* alter font sizes */
