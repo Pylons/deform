@@ -3,6 +3,10 @@ Next release
 
 - Updated bootstrap to 3.3.6.
 
+- Fix dateparts.pt and datetimeinput.pt for changes in bootstrap v3.0.3.
+  (The culprit is boostrap commit
+  `853b69f <https://github.com/twbs/bootstrap/commit/853b69f2d>`_.)
+
 - Make ``dateinput`` work again by using the fixed name "date" as expected
   by the pstruct schema.  See https://github.com/Pylons/deform/pull/221.
 
