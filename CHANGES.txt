@@ -30,6 +30,10 @@ Next release
     errorMsg                          error-msg
     errorMsgLbl                       error-msg-lbl
 
+- Fix dateparts.pt and datetimeinput.pt for changes in bootstrap v3.0.3.
+  (The culprit is boostrap commit
+  `853b69f <https://github.com/twbs/bootstrap/commit/853b69f2d>`_.)
+
 2.0a2 (2013-10-18)
 ------------------
 
