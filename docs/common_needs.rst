@@ -98,7 +98,7 @@ schema:
    import colander
 
    from deform import Form
-   from deform.widget import TextInputWidget
+   from deform.widget import TextAreaWidget
 
    class Person(colander.MappingSchema):
        name = colander.SchemaNode(colander.String(),
