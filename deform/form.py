@@ -98,7 +98,7 @@ class Form(field.Field):
     in the context of a Field (a Form is just another kind of Field).
     """
     css_class = 'deform' # bw compat only; pass a widget to override
-    def __init__(self, schema, action='', method='POST', buttons=(),
+    def __init__(self, schema, action='#', method='POST', buttons=(),
                  formid='deform', use_ajax=False, ajax_options='{}',
                  autocomplete=None, **kw):
         if autocomplete:
