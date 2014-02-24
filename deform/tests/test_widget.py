@@ -124,6 +124,13 @@ class TestTextInputWidget(unittest.TestCase):
         result = widget.deserialize(field, pstruct)
         self.assertEqual(result, colander.null)
 
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = {}
+        result = widget.deserialize(field, pstruct)
+        self.assertEqual(result, colander.null)
+
 class TestMoneyInputWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import MoneyInputWidget
@@ -219,6 +226,12 @@ class TestMoneyInputWidget(unittest.TestCase):
         pstruct = '1!000!000.00'
         result = widget.deserialize(field, pstruct)
         self.assertEqual(result, '1000000.00')
+
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne(strip=False)
+        field = DummyField()
+        result = widget.deserialize(field, {})
+        self.assertEqual(result, colander.null)
 
 class TestAutocompleteInputWidget(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -324,6 +337,12 @@ class TestAutocompleteInputWidget(unittest.TestCase):
         result = widget.deserialize(field, pstruct)
         self.assertEqual(result, colander.null)
 
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, {})
+        self.assertEqual(result, colander.null)
+
 
 class TestDateInputWidget(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -393,6 +412,12 @@ class TestDateInputWidget(unittest.TestCase):
         field = DummyField()
         result = widget.deserialize(field, {'date': 'foo', 'date_submit': ''})
         self.assertEqual(result, 'foo')
+
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, 'garbage')
+        self.assertEqual(result, colander.null)
 
     def test_options_changed_and_default(self):
         widget2 = self._makeOne()
@@ -468,6 +493,12 @@ class TestTimeInputWidget(unittest.TestCase):
         field = DummyField()
         result = widget.deserialize(field, {'time': '14:15:16', 'time_submit': '14:15:17'})
         self.assertEqual(result, '14:15:17')
+
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, 'garbage')
+        self.assertEqual(result, colander.null)
 
     def test_options_changed_and_default(self):
         widget2 = self._makeOne()
@@ -624,7 +655,13 @@ class TestDateTimeInputWidget(unittest.TestCase):
             }
         result = widget.deserialize(field, pstruct)
         self.assertEqual(result, colander.null)
-        
+
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, 'garbage')
+        self.assertEqual(result, colander.null)
+
 class TestHiddenWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import HiddenWidget
@@ -676,6 +713,12 @@ class TestHiddenWidget(unittest.TestCase):
         widget = self._makeOne(strip=False)
         field = DummyField()
         result = widget.deserialize(field, '')
+        self.assertEqual(result, colander.null)
+
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, ['a', 'b'])
         self.assertEqual(result, colander.null)
 
 class TestPasswordWidget(TestTextInputWidget):
@@ -761,6 +804,12 @@ class TestCheckboxWidget(unittest.TestCase):
         result = widget.deserialize(field, 'false')
         self.assertEqual(result, 'false')
 
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, {})
+        self.assertEqual(result, widget.false_val)
+
 class TestRadioChoiceWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import RadioChoiceWidget
@@ -820,6 +869,12 @@ class TestRadioChoiceWidget(unittest.TestCase):
         field = DummyField()
         result = widget.deserialize(field, 'true')
         self.assertEqual(result, 'true')
+
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, {})
+        self.assertEqual(result, colander.null)
 
 class TestSelectWidget(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -905,6 +960,12 @@ class TestSelectWidget(unittest.TestCase):
         result = widget.deserialize(field, 'true')
         self.assertEqual(result, 'true')
 
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, {})
+        self.assertEqual(result, colander.null)
+
 class TestCheckboxChoiceWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import CheckboxChoiceWidget
@@ -978,6 +1039,12 @@ class TestCheckboxChoiceWidget(unittest.TestCase):
         field = DummyField()
         result = widget.deserialize(field, ['abc'])
         self.assertEqual(result, ('abc',))
+
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, {})
+        self.assertEqual(result, colander.null)
 
 class TestCheckedInputWidget(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -1075,6 +1142,13 @@ class TestCheckedInputWidget(unittest.TestCase):
         result = widget.deserialize(field, {'name':'password',
                                             'name-confirm':'password'})
         self.assertEqual(result, 'password')
+        self.assertEqual(field.error, None)
+
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, 'garbage')
+        self.assertEqual(result, colander.null)
         self.assertEqual(field.error, None)
 
 class TestCheckedPasswordWidget(TestCheckedInputWidget):
@@ -1233,6 +1307,13 @@ class TestFileUploadWidget(unittest.TestCase):
         self.assertEqual(result['preview_url'], 'http://localhost/baz.pt')
         self.assertEqual(tmpstore['uid'], result)
 
+    def test_deserialize_bad_type(self):
+        tmpstore = DummyTmpStore()
+        widget = self._makeOne(tmpstore)
+        field = DummyField()
+        result = widget.deserialize(field, 'garbage')
+        self.assertEqual(result, colander.null)
+
 class TestDatePartsWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import DatePartsWidget
@@ -1318,6 +1399,11 @@ class TestDatePartsWidget(unittest.TestCase):
                         field, {'year':'1', 'month':'', 'day':''})
         self.assertEqual(e.msg, 'Incomplete date')
 
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, 'garbage')
+        self.assertEqual(result, colander.null)
 
 class TestMappingWidget(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -1399,6 +1485,18 @@ class TestMappingWidget(unittest.TestCase):
         e = invalid_exc(widget.deserialize, field, pstruct)
         self.assertEqual(e.value, {'a':'a'})
         self.assertEqual(e.children[0].value, 'a')
+
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        inner_field = DummyField()
+        inner_field.name = 'a'
+        inner_widget = DummyWidget()
+        inner_widget.name = 'a'
+        inner_field.widget = inner_widget
+        field.children = [inner_field]
+        result = widget.deserialize(field, ['a', 1])
+        self.assertEqual(result, {'a': colander.null})
 
 class TestSequenceWidget(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -1675,6 +1773,16 @@ class TestSequenceWidget(unittest.TestCase):
         widget.handle_error(field, error)
         self.assertEqual(widget.error, 'abc')
 
+    def test_deserialize_bad_type(self):
+        field = DummyField()
+        inner_field = DummyField()
+        inner_field.widget = DummyWidget()
+        field.children = [inner_field]
+        widget = self._makeOne()
+        result = widget.deserialize(field, {'x': '123'})
+        self.assertEqual(result, [])
+        self.assertEqual(len(field.sequence_fields), 0)
+
 class TestFormWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import FormWidget
@@ -1758,6 +1866,12 @@ class TestTextAreaCSVWidget(unittest.TestCase):
         schema.required = False
         field = DummyField(schema=schema)
         result = widget.deserialize(field, '')
+        self.assertEqual(result, colander.null)
+
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, [])
         self.assertEqual(result, colander.null)
 
     def test_handle_error_outermost_has_msg(self):
@@ -1858,6 +1972,12 @@ class TestTextInputCSVWidget(unittest.TestCase):
         schema.required = False
         field = DummyField(schema=schema)
         result = widget.deserialize(field, '')
+        self.assertEqual(result, colander.null)
+
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, [])
         self.assertEqual(result, colander.null)
 
     def test_handle_error_outermost_has_msg(self):

@@ -256,6 +256,8 @@ class TextInputWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null
+        if not isinstance(pstruct, string_types):
+            return null                 # unexpected type
         if self.strip:
             pstruct = pstruct.strip()
         if not pstruct:
@@ -335,6 +337,8 @@ class MoneyInputWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null
+        if not isinstance(pstruct, string_types):
+            return null                 # unexpected type
         pstruct = pstruct.strip()
         thousands = ','
         # Oh jquery-maskMoney, you submit the thousands separator in the
@@ -432,6 +436,8 @@ class AutocompleteInputWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null
+        if not isinstance(pstruct, string_types):
+            return null                 # unexpected type
         if self.strip:
             pstruct = pstruct.strip()
         if not pstruct:
@@ -495,6 +501,8 @@ class TimeInputWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct in ('', null):
             return null
+        if not isinstance(pstruct, dict):
+            return null                 # unexpected type
         time = pstruct['time'].strip()
         time_submit = pstruct.get('time_submit', '').strip()
         return time_submit or time
@@ -548,6 +556,8 @@ class DateInputWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct in ('', null):
             return null
+        if not isinstance(pstruct, dict):
+            return null                 # unexpected type
         date = pstruct['date'].strip()
         date_submit = pstruct.get('date_submit', '').strip()
         return date_submit or date
@@ -638,6 +648,8 @@ class DateTimeInputWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null
+        elif not isinstance(pstruct, dict):
+            return null                 # unexpected type
         else:
             # seriously pickadate?  oh.  right.  i forgot.  you're javascript.
             date = pstruct['date'].strip()
@@ -834,6 +846,8 @@ class HiddenWidget(Widget):
     def deserialize(self, field, pstruct):
         if not pstruct:
             return null
+        if not isinstance(pstruct, string_types):
+            return null                 # unexpected type
         return pstruct
 
 class CheckboxWidget(Widget):
@@ -874,6 +888,8 @@ class CheckboxWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return self.false_val
+        if not isinstance(pstruct, string_types):
+            return self.false_val       # unexpected type
         return (pstruct == self.true_val) and self.true_val or self.false_val
 
 class OptGroup(object):
@@ -1010,6 +1026,8 @@ class SelectWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct in (null, self.null_value):
             return null
+        if not isinstance(pstruct, string_types):
+            return null                 # unexpected type
         return pstruct
 
 class Select2Widget(SelectWidget):
@@ -1104,6 +1122,8 @@ class CheckboxChoiceWidget(Widget):
             return null
         if isinstance(pstruct, string_types):
             return (pstruct,)
+        elif not isinstance(pstruct, (list, tuple)):
+            return null                 # unexpected type
         return tuple(pstruct)
 
 class CheckedInputWidget(Widget):
@@ -1176,6 +1196,8 @@ class CheckedInputWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null
+        if not isinstance(pstruct, dict):
+            return null                 # unexpected type
         value = pstruct.get(field.name) or ''
         confirm = pstruct.get('%s-confirm' % (field.name,)) or ''
         setattr(field, '%s-confirm' % (field.name,), confirm)
@@ -1265,6 +1287,8 @@ class MappingWidget(Widget):
 
         if pstruct is null:
             pstruct = {}
+        elif not isinstance(pstruct, dict):
+            pstruct = {}                # unexpected type
 
         for num, subfield in enumerate(field.children):
             name = subfield.name
@@ -1461,6 +1485,9 @@ class SequenceWidget(Widget):
 
         if pstruct is null:
             pstruct = []
+        elif not isinstance(pstruct, list):
+            pstruct = []                # unexpected type
+
 
         field.sequence_fields = []
         item_field = field.children[0]
@@ -1551,7 +1578,9 @@ class FileUploadWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null
-
+        if not isinstance(pstruct, dict):
+            return null                 # unexpected type
+        
         upload = pstruct.get('upload')
         uid = pstruct.get('uid')
 
@@ -1646,6 +1675,8 @@ class DatePartsWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null
+        elif not isinstance(pstruct, dict):
+            return null                 # unexpected type
         else:
             year = pstruct['year'].strip()
             month = pstruct['month'].strip()
@@ -1715,6 +1746,8 @@ class TextAreaCSVWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null
+        if not isinstance(pstruct, string_types):
+            return null                 # unexpected type
         if not pstruct.strip():
             return null
         try:
@@ -1779,6 +1812,8 @@ class TextInputCSVWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null
+        if not isinstance(pstruct, string_types):
+            return null                 # unexpected type
         if not pstruct.strip():
             return null
         try:
