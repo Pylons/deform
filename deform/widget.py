@@ -62,6 +62,10 @@ class _FieldStorage(SchemaType):
             raise Invalid(node, "%s is not a FieldStorage instance" % cstruct)
         return cstruct
 
+_sequence_of_strings = SchemaNode(
+    Sequence(),
+    SchemaNode(_PossiblyEmptyString()))
+
 class Widget(object):
     """
     A widget is the building block for rendering logic.  The
@@ -1068,9 +1072,15 @@ class SelectWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct in (null, self.null_value):
             return null
-        elif not isinstance(pstruct, string_types):
-            raise Invalid(field.schema, "Pstruct is not a string")
-        return pstruct
+        if self.multiple:
+            try:
+                return _sequence_of_strings.deserialize(pstruct)
+            except Invalid as exc:
+                raise Invalid(field.schema, "Invalid pstruct: %s" % exc)
+        else:
+            if not isinstance(pstruct, string_types):
+                raise Invalid(field.schema, "Pstruct is not a string")
+            return pstruct
 
 class Select2Widget(SelectWidget):
     template = 'select2'
@@ -1149,10 +1159,6 @@ class CheckboxChoiceWidget(Widget):
     readonly_template = 'readonly/checkbox_choice'
     values = ()
 
-    _pstruct_schema = SchemaNode(
-        Sequence(),
-        SchemaNode(_PossiblyEmptyString()))
-
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
             cstruct = ()
@@ -1169,7 +1175,7 @@ class CheckboxChoiceWidget(Widget):
         if isinstance(pstruct, string_types):
             return (pstruct,)
         try:
-            validated = self._pstruct_schema.deserialize(pstruct)
+            validated = _sequence_of_strings.deserialize(pstruct)
         except Invalid as exc:
             raise Invalid(field.schema, "Invalid pstruct: %s" % exc)
         return tuple(validated)

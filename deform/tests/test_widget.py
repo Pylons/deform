@@ -1005,6 +1005,23 @@ class TestSelectWidget(unittest.TestCase):
         field = DummyField()
         self.assertRaises(colander.Invalid, widget.deserialize, field, {})
 
+    def test_deserialize_multiple(self):
+        widget = self._makeOne(multiple=True)
+        field = DummyField()
+        result = widget.deserialize(field, ['foo', 'bar'])
+        self.assertEqual(result, ['foo', 'bar'])
+
+    def test_deserialize_multiple_bad_type(self):
+        widget = self._makeOne(multiple=True)
+        field = DummyField()
+        self.assertRaises(colander.Invalid, widget.deserialize, field, {})
+
+    def test_deserialize_multiple_bad_item(self):
+        widget = self._makeOne(multiple=True)
+        field = DummyField()
+        pstruct = ['foo', {}]
+        self.assertRaises(colander.Invalid, widget.deserialize, field, pstruct)
+
 class TestCheckboxChoiceWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import CheckboxChoiceWidget
