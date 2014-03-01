@@ -55,7 +55,7 @@ class _StrippedString(_PossiblyEmptyString):
 
 class _FieldStorage(SchemaType):
     def deserialize(self, node, cstruct):
-        if not cstruct:
+        if cstruct in (null, None, ''):
             return null
         # weak attempt at duck-typing
         if not hasattr(cstruct, 'file'):

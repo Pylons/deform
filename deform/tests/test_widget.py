@@ -2238,3 +2238,6 @@ class DummyUpload(object):
     type = 'mimetype'
     length = 'size'
 
+    def __nonzero__(self):              # pragma: no cover
+        # cgi.FieldStorage for file uploads are falsey
+        return False
