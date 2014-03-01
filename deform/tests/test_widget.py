@@ -128,8 +128,8 @@ class TestTextInputWidget(unittest.TestCase):
         widget = self._makeOne()
         field = DummyField()
         pstruct = {}
-        result = widget.deserialize(field, pstruct)
-        self.assertEqual(result, colander.null)
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, pstruct)
 
 class TestMoneyInputWidget(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -230,8 +230,7 @@ class TestMoneyInputWidget(unittest.TestCase):
     def test_deserialize_bad_type(self):
         widget = self._makeOne(strip=False)
         field = DummyField()
-        result = widget.deserialize(field, {})
-        self.assertEqual(result, colander.null)
+        self.assertRaises(colander.Invalid, widget.deserialize, field, {})
 
 class TestAutocompleteInputWidget(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -340,8 +339,7 @@ class TestAutocompleteInputWidget(unittest.TestCase):
     def test_deserialize_bad_type(self):
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field, {})
-        self.assertEqual(result, colander.null)
+        self.assertRaises(colander.Invalid, widget.deserialize, field, {})
 
 
 class TestDateInputWidget(unittest.TestCase):
@@ -416,8 +414,8 @@ class TestDateInputWidget(unittest.TestCase):
     def test_deserialize_bad_type(self):
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field, 'garbage')
-        self.assertEqual(result, colander.null)
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, 'garbage')
 
     def test_options_changed_and_default(self):
         widget2 = self._makeOne()
@@ -497,8 +495,8 @@ class TestTimeInputWidget(unittest.TestCase):
     def test_deserialize_bad_type(self):
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field, 'garbage')
-        self.assertEqual(result, colander.null)
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, 'garbage')
 
     def test_options_changed_and_default(self):
         widget2 = self._makeOne()
@@ -659,8 +657,8 @@ class TestDateTimeInputWidget(unittest.TestCase):
     def test_deserialize_bad_type(self):
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field, 'garbage')
-        self.assertEqual(result, colander.null)
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, 'garbage')
 
 class TestHiddenWidget(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -718,8 +716,8 @@ class TestHiddenWidget(unittest.TestCase):
     def test_deserialize_bad_type(self):
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field, ['a', 'b'])
-        self.assertEqual(result, colander.null)
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, ['a', 'b'])
 
 class TestPasswordWidget(TestTextInputWidget):
     def _makeOne(self, **kw):
@@ -807,8 +805,7 @@ class TestCheckboxWidget(unittest.TestCase):
     def test_deserialize_bad_type(self):
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field, {})
-        self.assertEqual(result, widget.false_val)
+        self.assertRaises(colander.Invalid, widget.deserialize, field, {})
 
 class TestRadioChoiceWidget(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -873,8 +870,7 @@ class TestRadioChoiceWidget(unittest.TestCase):
     def test_deserialize_bad_type(self):
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field, {})
-        self.assertEqual(result, colander.null)
+        self.assertRaises(colander.Invalid, widget.deserialize, field, {})
 
 class TestSelectWidget(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -963,8 +959,7 @@ class TestSelectWidget(unittest.TestCase):
     def test_deserialize_bad_type(self):
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field, {})
-        self.assertEqual(result, colander.null)
+        self.assertRaises(colander.Invalid, widget.deserialize, field, {})
 
 class TestCheckboxChoiceWidget(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -1043,8 +1038,7 @@ class TestCheckboxChoiceWidget(unittest.TestCase):
     def test_deserialize_bad_type(self):
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field, {})
-        self.assertEqual(result, colander.null)
+        self.assertRaises(colander.Invalid, widget.deserialize, field, {})
 
 class TestCheckedInputWidget(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -1147,8 +1141,8 @@ class TestCheckedInputWidget(unittest.TestCase):
     def test_deserialize_bad_type(self):
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field, 'garbage')
-        self.assertEqual(result, colander.null)
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, 'garbage')
         self.assertEqual(field.error, None)
 
 class TestCheckedPasswordWidget(TestCheckedInputWidget):
@@ -1311,8 +1305,8 @@ class TestFileUploadWidget(unittest.TestCase):
         tmpstore = DummyTmpStore()
         widget = self._makeOne(tmpstore)
         field = DummyField()
-        result = widget.deserialize(field, 'garbage')
-        self.assertEqual(result, colander.null)
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, 'garbage')
 
 class TestDatePartsWidget(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -1402,8 +1396,8 @@ class TestDatePartsWidget(unittest.TestCase):
     def test_deserialize_bad_type(self):
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field, 'garbage')
-        self.assertEqual(result, colander.null)
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, 'garbage')
 
 class TestMappingWidget(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -1489,14 +1483,8 @@ class TestMappingWidget(unittest.TestCase):
     def test_deserialize_bad_type(self):
         widget = self._makeOne()
         field = DummyField()
-        inner_field = DummyField()
-        inner_field.name = 'a'
-        inner_widget = DummyWidget()
-        inner_widget.name = 'a'
-        inner_field.widget = inner_widget
-        field.children = [inner_field]
-        result = widget.deserialize(field, ['a', 1])
-        self.assertEqual(result, {'a': colander.null})
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, ['a', 1])
 
 class TestSequenceWidget(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -1779,10 +1767,9 @@ class TestSequenceWidget(unittest.TestCase):
         inner_field.widget = DummyWidget()
         field.children = [inner_field]
         widget = self._makeOne()
-        result = widget.deserialize(field, {'x': '123'})
-        self.assertEqual(result, [])
-        self.assertEqual(len(field.sequence_fields), 0)
-
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, {'x': '123'})
+        
 class TestFormWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import FormWidget
@@ -1871,8 +1858,7 @@ class TestTextAreaCSVWidget(unittest.TestCase):
     def test_deserialize_bad_type(self):
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field, [])
-        self.assertEqual(result, colander.null)
+        self.assertRaises(colander.Invalid, widget.deserialize, field, [])
 
     def test_handle_error_outermost_has_msg(self):
         widget = self._makeOne()
@@ -1977,8 +1963,7 @@ class TestTextInputCSVWidget(unittest.TestCase):
     def test_deserialize_bad_type(self):
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field, [])
-        self.assertEqual(result, colander.null)
+        self.assertRaises(colander.Invalid, widget.deserialize, field, [])
 
     def test_handle_error_outermost_has_msg(self):
         widget = self._makeOne()
