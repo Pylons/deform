@@ -6,6 +6,11 @@ import random
 
 from colander import (
     Invalid,
+    Mapping,
+    SchemaNode,
+    SchemaType,
+    Sequence,
+    String,
     null,
     )
 from colander.iso8601 import ISO8601_REGEX
@@ -34,6 +39,28 @@ def _normalize_choices(values):
                 value = str(value)
             result.append((value, description))
     return result
+
+class _PossiblyEmptyString(String):
+    def deserialize(self, node, cstruct):
+        if cstruct == '':
+            return u''                  # String.deserialize returns null
+        return super(_PossiblyEmptyString, self).deserialize(node, cstruct)
+
+class _StrippedString(_PossiblyEmptyString):
+    def deserialize(self, node, cstruct):
+        appstruct = super(_StrippedString, self).deserialize(node, cstruct)
+        if isinstance(appstruct, string_types):
+            appstruct = appstruct.strip()
+        return appstruct
+
+class _FieldStorage(SchemaType):
+    def deserialize(self, node, cstruct):
+        if not cstruct:
+            return null
+        # weak attempt at duck-typing
+        if not hasattr(cstruct, 'file'):
+            raise Invalid(node, "%s is not a FieldStorage instance" % cstruct)
+        return cstruct
 
 class Widget(object):
     """
@@ -480,6 +507,11 @@ class TimeInputWidget(Widget):
     requirements = ( ('modernizr', None), ('pickadate', None))
     default_options = (('format', 'HH:i'),)
 
+    _pstruct_schema = SchemaNode(
+        Mapping(),
+        SchemaNode(_StrippedString(), name='time'),
+        SchemaNode(_StrippedString(), name='time_submit', missing=''))
+
     def __init__(self, *args, **kwargs):
         self.options = dict(self.default_options)
         self.options['formatSubmit'] = 'HH:i'
@@ -501,11 +533,11 @@ class TimeInputWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct in ('', null):
             return null
-        elif not isinstance(pstruct, dict):
-            raise Invalid(field.schema, "Pstruct is not a dict")
-        time = pstruct['time'].strip()
-        time_submit = pstruct.get('time_submit', '').strip()
-        return time_submit or time
+        try:
+            validated = self._pstruct_schema.deserialize(pstruct)
+        except Invalid as exc:
+            raise Invalid(field.schema, u"Invalid pstruct: %s" % exc)
+        return validated['time_submit'] or validated['time']
 
 class DateInputWidget(Widget):
     """
@@ -540,6 +572,11 @@ class DateInputWidget(Widget):
         )
     options = None
 
+    _pstruct_schema = SchemaNode(
+        Mapping(),
+        SchemaNode(_StrippedString(), name='date'),
+        SchemaNode(_StrippedString(), name='date_submit', missing=''))
+
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
             cstruct = ''
@@ -556,11 +593,11 @@ class DateInputWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct in ('', null):
             return null
-        elif not isinstance(pstruct, dict):
-            raise Invalid(field.schema, "Pstruct is not a dict")
-        date = pstruct['date'].strip()
-        date_submit = pstruct.get('date_submit', '').strip()
-        return date_submit or date
+        try:
+            validated = self._pstruct_schema.deserialize(pstruct)
+        except Invalid as exc:
+            raise Invalid(field.schema, "Invalid pstruct: %s" % exc)
+        return validated['date_submit'] or validated['date']
 
 
 class DateTimeInputWidget(Widget):
@@ -603,6 +640,13 @@ class DateTimeInputWidget(Widget):
         ('interval', 30)
         )
     time_options = None
+
+    _pstruct_schema = SchemaNode(
+        Mapping(),
+        SchemaNode(_StrippedString(), name='date'),
+        SchemaNode(_StrippedString(), name='time'),
+        SchemaNode(_StrippedString(), name='date_submit'),
+        SchemaNode(_StrippedString(), name='time_submit'))
 
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
@@ -648,16 +692,14 @@ class DateTimeInputWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null
-        elif not isinstance(pstruct, dict):
-            raise Invalid(field.schema, "Pstruct is not a dict")
         else:
+            try:
+                validated = self._pstruct_schema.deserialize(pstruct)
+            except Invalid as exc:
+                raise Invalid(field.schema, "Invalid pstruct: %s" % exc)
             # seriously pickadate?  oh.  right.  i forgot.  you're javascript.
-            date = pstruct['date'].strip()
-            time = pstruct['time'].strip()
-            date_submit = pstruct['date_submit'].strip()
-            time_submit = pstruct['time_submit'].strip()
-            date = date_submit or date
-            time = time_submit or time
+            date = validated['date_submit'] or validated['date']
+            time = validated['time_submit'] or validated['time']
 
             if (not time and not date):
                 return null
@@ -1107,6 +1149,10 @@ class CheckboxChoiceWidget(Widget):
     readonly_template = 'readonly/checkbox_choice'
     values = ()
 
+    _pstruct_schema = SchemaNode(
+        Sequence(),
+        SchemaNode(_PossiblyEmptyString()))
+
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
             cstruct = ()
@@ -1122,9 +1168,11 @@ class CheckboxChoiceWidget(Widget):
             return null
         if isinstance(pstruct, string_types):
             return (pstruct,)
-        elif not isinstance(pstruct, (list, tuple)):
-            raise Invalid(field.schema, "Pstruct is not a sequence")
-        return tuple(pstruct)
+        try:
+            validated = self._pstruct_schema.deserialize(pstruct)
+        except Invalid as exc:
+            raise Invalid(field.schema, "Invalid pstruct: %s" % exc)
+        return tuple(validated)
 
 class CheckedInputWidget(Widget):
     """
@@ -1196,11 +1244,18 @@ class CheckedInputWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null
-        elif not isinstance(pstruct, dict):
-            raise Invalid(field.schema, "Pstruct is not a dict")
-        value = pstruct.get(field.name) or ''
-        confirm = pstruct.get('%s-confirm' % (field.name,)) or ''
-        setattr(field, '%s-confirm' % (field.name,), confirm)
+        confirm_name = '%s-confirm' % field.name
+        schema = SchemaNode(
+            Mapping(),
+            SchemaNode(_PossiblyEmptyString(), name=field.name),
+            SchemaNode(_PossiblyEmptyString(), name=confirm_name))
+        try:
+            validated = schema.deserialize(pstruct)
+        except Invalid as exc:
+            raise Invalid(field.schema, "Invalid pstruct: %s" % exc)
+        value = validated[field.name]
+        confirm = validated[confirm_name]
+        setattr(field, confirm_name, confirm)
         if (value or confirm) and (value != confirm):
             raise Invalid(field.schema, self.mismatch_message, value)
         if not value:
@@ -1553,6 +1608,11 @@ class FileUploadWidget(Widget):
     template = 'file_upload'
     readonly_template = 'readonly/file_upload'
 
+    _pstruct_schema = SchemaNode(
+        Mapping(),
+        SchemaNode(_FieldStorage(), name='upload', missing=None),
+        SchemaNode(_PossiblyEmptyString(), name='uid', missing=None))
+
     def __init__(self, tmpstore, **kw):
         Widget.__init__(self, **kw)
         self.tmpstore = tmpstore
@@ -1577,11 +1637,13 @@ class FileUploadWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null
-        elif not isinstance(pstruct, dict):
-            raise Invalid(field.schema, "Pstruct is not a dict")
-        
-        upload = pstruct.get('upload')
-        uid = pstruct.get('uid')
+        try:
+            validated = self._pstruct_schema.deserialize(pstruct)
+        except Invalid as exc:
+            raise Invalid(field.schema, "Invalid pstruct: %s" % exc)
+
+        upload = validated['upload']
+        uid = validated['uid']
 
         if hasattr(upload, 'file'):
             # the upload control had a file selected
@@ -1654,6 +1716,12 @@ class DatePartsWidget(Widget):
     readonly_template = 'readonly/dateparts'
     assume_y2k = True
 
+    _pstruct_schema = SchemaNode(
+        Mapping(),
+        SchemaNode(_StrippedString(), name='year'),
+        SchemaNode(_StrippedString(), name='month'),
+        SchemaNode(_StrippedString(), name='day'))
+
     def serialize(self, field, cstruct, **kw):
         if cstruct is null:
             year = ''
@@ -1674,12 +1742,14 @@ class DatePartsWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null
-        elif not isinstance(pstruct, dict):
-            raise Invalid(field.schema, "Pstruct is not a dict")
         else:
-            year = pstruct['year'].strip()
-            month = pstruct['month'].strip()
-            day = pstruct['day'].strip()
+            try:
+                validated = self._pstruct_schema.deserialize(pstruct)
+            except Invalid as exc:
+                raise Invalid(field.schema, u"Invalid pstruct: %s" % exc)
+            year = validated['year']
+            month = validated['month']
+            day = validated['day']
 
             if (not year and not month and not day):
                 return null

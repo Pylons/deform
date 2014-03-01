@@ -417,6 +417,19 @@ class TestDateInputWidget(unittest.TestCase):
         self.assertRaises(colander.Invalid,
                           widget.deserialize, field, 'garbage')
 
+    def test_deserialize_missing_fields(self):
+        widget = self._makeOne()
+        field = DummyField()
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, {})
+
+    def test_deserialize_bad_field(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = {'date': {}, 'date_submit': {}}
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, pstruct)
+
     def test_options_changed_and_default(self):
         widget2 = self._makeOne()
         widget = self._makeOne(options={'format': 'foo'})
@@ -497,6 +510,19 @@ class TestTimeInputWidget(unittest.TestCase):
         field = DummyField()
         self.assertRaises(colander.Invalid,
                           widget.deserialize, field, 'garbage')
+
+    def test_deserialize_missing_fields(self):
+        widget = self._makeOne()
+        field = DummyField()
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, {})
+
+    def test_deserialize_bad_field(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = {'time': {}, 'time_submit': '14:15:17'}
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, pstruct)
 
     def test_options_changed_and_default(self):
         widget2 = self._makeOne()
@@ -659,6 +685,24 @@ class TestDateTimeInputWidget(unittest.TestCase):
         field = DummyField()
         self.assertRaises(colander.Invalid,
                           widget.deserialize, field, 'garbage')
+
+    def test_deserialize_missing_fields(self):
+        widget = self._makeOne()
+        field = DummyField()
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, {})
+
+    def test_deserialize_bad_field(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = {
+            'date':'2011-12-13',
+            'date_submit':'2011-12-12',
+            'time':'14:15:16',
+            'time_submit': {},
+            }
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, pstruct)
 
 class TestHiddenWidget(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -1040,6 +1084,13 @@ class TestCheckboxChoiceWidget(unittest.TestCase):
         field = DummyField()
         self.assertRaises(colander.Invalid, widget.deserialize, field, {})
 
+    def test_deserialize_bad_field(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = ['abd', []]
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, pstruct)
+
 class TestCheckedInputWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import CheckedInputWidget
@@ -1109,8 +1160,8 @@ class TestCheckedInputWidget(unittest.TestCase):
     def test_deserialize_empty(self):
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field, {'value':'',
-                                            'confirm':''})
+        result = widget.deserialize(field, {'name':'',
+                                            'name-confirm':''})
         self.assertEqual(result, colander.null)
         self.assertEqual(field.error, None)
 
@@ -1144,6 +1195,19 @@ class TestCheckedInputWidget(unittest.TestCase):
         self.assertRaises(colander.Invalid,
                           widget.deserialize, field, 'garbage')
         self.assertEqual(field.error, None)
+
+    def test_deserialize_missing_fields(self):
+        widget = self._makeOne()
+        field = DummyField()
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, {})
+
+    def test_deserialize_bad_field(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = {'name': 'x', 'name-confirm': ['x']}
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, pstruct)
 
 class TestCheckedPasswordWidget(TestCheckedInputWidget):
     def _makeOne(self, **kw):
@@ -1308,6 +1372,14 @@ class TestFileUploadWidget(unittest.TestCase):
         self.assertRaises(colander.Invalid,
                           widget.deserialize, field, 'garbage')
 
+    def test_deserialize_bad_field(self):
+        tmpstore = DummyTmpStore()
+        widget = self._makeOne(tmpstore)
+        field = DummyField()
+        pstruct = {'upload': 'garbage'}
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, pstruct)
+
 class TestDatePartsWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import DatePartsWidget
@@ -1398,6 +1470,19 @@ class TestDatePartsWidget(unittest.TestCase):
         field = DummyField()
         self.assertRaises(colander.Invalid,
                           widget.deserialize, field, 'garbage')
+
+    def test_deserialize_missing_fields(self):
+        widget = self._makeOne()
+        field = DummyField()
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, {})
+
+    def test_deserialize_bad_field(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = {'year': '1970', 'month': '1', 'day': []}
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, pstruct)
 
 class TestMappingWidget(unittest.TestCase):
     def _makeOne(self, **kw):
