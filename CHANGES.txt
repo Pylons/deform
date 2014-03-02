@@ -1,6 +1,10 @@
 Next release
 ------------
 
+- Raise ``Invalid`` rather than other errors when deserializing broken
+  or malicious pstructs with invalid types.  See
+  https://github.com/Pylons/deform/pull/203
+
 - Readd a time widget.
 
 - Fix a bug in the DateInputWidget.  See
