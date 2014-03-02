@@ -23,9 +23,12 @@ from .compat import (
     string_types,
     StringIO,
     string,
+    text_,
     url_quote,
     uppercase,
     )
+
+_BLANK = text_('')
 
 def _normalize_choices(values):
     result = []
@@ -43,7 +46,7 @@ def _normalize_choices(values):
 class _PossiblyEmptyString(String):
     def deserialize(self, node, cstruct):
         if cstruct == '':
-            return u''                  # String.deserialize returns null
+            return _BLANK               # String.deserialize returns null
         return super(_PossiblyEmptyString, self).deserialize(node, cstruct)
 
 class _StrippedString(_PossiblyEmptyString):
@@ -540,7 +543,7 @@ class TimeInputWidget(Widget):
         try:
             validated = self._pstruct_schema.deserialize(pstruct)
         except Invalid as exc:
-            raise Invalid(field.schema, u"Invalid pstruct: %s" % exc)
+            raise Invalid(field.schema, text_("Invalid pstruct: %s" % exc))
         return validated['time_submit'] or validated['time']
 
 class DateInputWidget(Widget):
@@ -1752,7 +1755,7 @@ class DatePartsWidget(Widget):
             try:
                 validated = self._pstruct_schema.deserialize(pstruct)
             except Invalid as exc:
-                raise Invalid(field.schema, u"Invalid pstruct: %s" % exc)
+                raise Invalid(field.schema, text_("Invalid pstruct: %s" % exc))
             year = validated['year']
             month = validated['month']
             day = validated['day']
