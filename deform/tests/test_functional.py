@@ -231,6 +231,11 @@ class IntSchema(colander.Schema):
         widget=deform.widget.RadioChoiceWidget(values=((0, 'zero'), (1, 'one')))
     )
 
+class RichTextSchema(colander.Schema):
+    richtext = colander.SchemaNode(
+        colander.String(),
+        widget=deform.widget.RichTextWidget())
+
 def remove_date(node, kw):
     if kw.get('nodates'): del node['date']
 
@@ -246,6 +251,14 @@ class TestSchemas(unittest.TestCase):
         value_index = result_with_checked.index('value="1"')
         checked_index = result_with_checked.index('checked="True"', value_index)
         self.assertTrue(checked_index > 0)
+
+    def test_rich_text_textarea_escaped(self):
+        schema = RichTextSchema()
+        form = deform.Form(schema, buttons=('submit',))
+        unescaped = '<script>boom</script>'
+        result = form.render({'richtext': unescaped})
+        self.assertTrue('boom' in result)
+        self.assertTrue(unescaped not in result)
 
 class TestDeferredFunction(unittest.TestCase):
     def test_it(self):
