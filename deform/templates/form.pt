@@ -33,7 +33,7 @@
     <div class="alert alert-danger" tal:condition="field.error">
       <div class="error-msg-lbl" i18n:translate=""
         >There was a problem with your submission</div>
-      <div class="error-msg-detaol" i18n:translate=""
+      <div class="error-msg-detail" i18n:translate=""
         >Errors have been highlighted below</div>
       <p class="error-msg">${field.errormsg}</p>
     </div>
