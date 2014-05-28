@@ -92,7 +92,7 @@ msgstr "Det uppstod problem med denna sektion"
 #. Default: en
 #: deform/templates/richtext.pt:15
 msgid "language-code"
-msgstr "sv"
+msgstr "sv_SE"
 
 #: deform/templates/sequence_item.pt:6
 msgid "Remove"
