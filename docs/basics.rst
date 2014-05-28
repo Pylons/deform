@@ -311,7 +311,8 @@ data might look like this:
 .. code-block:: python
    :linenos:
 
-    appstruct = [
+    appstruct = {
+        'people' = [
         {
             'name':'keith',
             'age':20,
@@ -320,7 +321,7 @@ data might look like this:
             'name':'fred',
             'age':23,
             },
-        ]
+        ]}
 
 To inject it into the serialized form as the data to be edited, we'd
 pass it in to the :meth:`deform.Field.render` method to get a form
