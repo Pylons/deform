@@ -178,7 +178,7 @@ class Button(object):
         if title is None:
             title = name.capitalize()
         name = re.sub(r'\s', '_', name)
-        if value is None:
+        if value is None and type != 'link':
             value = name
         self.name = name
         self.title = title
@@ -187,4 +187,3 @@ class Button(object):
         self.disabled = disabled
         self.css_class = css_class
         self.icon = icon
-        

@@ -48,8 +48,7 @@
     <div class="form-group">
       <tal:loop tal:repeat="button buttons">
         <button
-              tal:define="btn_disposition repeat.button.start and 'btn-primary' or 'btn-default';
-              btn_icon button.icon|None"
+              tal:define="btn_disposition repeat.button.start and 'btn-primary' or 'btn-default';"
               tal:attributes="disabled button.disabled if button.disabled else None"
               id="${formid+button.name}"
               name="${button.name}"
@@ -57,17 +56,17 @@
               class="btn ${btn_disposition} ${button.css_class}"
               value="${button.value}"
               tal:condition="button.type != 'link'">
-          <span tal:condition="btn_icon" class="glyphicon glyphicon-${btn_icon}"></span>
+          <span tal:condition="button.icon" class="glyphicon glyphicon-${button.icon}"></span>
           ${button.title}
         </button>
-        <a 
+        <a
               tal:define="btn_disposition repeat.button.start and 'btn-primary' or 'btn-default';
-              btn_icon button.icon|None"
+              btn_href button.value|''"
               class="btn ${btn_disposition} ${button.css_class}"
-              id="${field.formid + button.name}" 
-              href="${button.value}"
+              id="${field.formid + button.name}"
+              href="${btn_href}"
               tal:condition="button.type == 'link'">
-              <span tal:condition="btn_icon" class="glyphicon glyphicon-${btn_icon}"></span>
+              <span tal:condition="button.icon" class="glyphicon glyphicon-${button.icon}"></span>
               ${button.title}
         </a>
       </tal:loop>
