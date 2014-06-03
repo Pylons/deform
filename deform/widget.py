@@ -277,7 +277,15 @@ class TextInputWidget(Widget):
     strip = True
     mask = None
     mask_placeholder = "_"
-    requirements = ( ('jquery.maskedinput', None), )
+    requirements = ()
+
+    def __init__(self, **kw):
+        super().__init__(**kw)
+        if getattr(self, 'mask', False):
+            self.requirements = tuple(
+                list(self.requirements)
+                + [('jquery.maskedinput', None)]
+            )
 
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
@@ -1236,7 +1244,15 @@ class CheckedInputWidget(Widget):
     confirm_subject = _('Confirm Value')
     mask = None
     mask_placeholder = "_"
-    requirements = ( ('jquery.maskedinput', None), )
+    requirements = ()
+
+    def __init__(self, **kw):
+        super().__init__(**kw)
+        if getattr(self, 'mask', False):
+            self.requirements = tuple(
+                list(self.requirements)
+                + [('jquery.maskedinput', None)]
+            )
 
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
