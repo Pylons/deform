@@ -55,10 +55,21 @@
               name="${button.name}"
               type="${button.type}"
               class="btn ${btn_disposition} ${button.css_class}"
-              value="${button.value}">
-          <i tal:condition="btn_icon" class="${btn_icon}"> </i>
+              value="${button.value}"
+              tal:condition="button.type != 'link'">
+          <span tal:condition="btn_icon" class="glyphicon glyphicon-${btn_icon}"></span>
           ${button.title}
         </button>
+        <a 
+              tal:define="btn_disposition repeat.button.start and 'btn-primary' or 'btn-default';
+              btn_icon button.icon|None"
+              class="btn ${btn_disposition} ${button.css_class}"
+              id="${field.formid + button.name}" 
+              href="${button.value}"
+              tal:condition="button.type == 'link'">
+              <span tal:condition="btn_icon" class="glyphicon glyphicon-${btn_icon}"></span>
+              ${button.title}
+        </a>
       </tal:loop>
     </div>
 

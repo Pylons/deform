@@ -34,6 +34,8 @@ Next release
     errorMsg                          error-msg
     errorMsgLbl                       error-msg-lbl
 
+- Add ``link`` button type See https://github.com/Pylons/deform/issues/166
+
 2.0a2 (2013-10-18)
 ------------------
 

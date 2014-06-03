@@ -145,13 +145,22 @@ class Button(object):
         ``submit``, ``title`` will be ``Submit``.
 
     type
-        The value used as the type of button. The HTML spec supports 
-        ``submit``, ``reset`` and ``button``. Default: ``submit``. 
+        The value used as the type of button. The HTML spec supports
+        ``submit``, ``reset`` and ``button``.  A special value of
+        ``link`` will create a regular HTML link that's styled to look
+        like a button.  Default: ``submit``.
 
     value
         The value used as the value of the button when rendered (the
         ``value`` attribute of the button or input tag resulting from
-        a form rendering).  Default: same as ``name`` passed.
+        a form rendering).  If the button ``type`` is ``link`` then
+        this setting is used as the URL for the link button.
+        Default: same as ``name`` passed.
+
+    icon
+        glyph icon name to include as part of button.  (Ex. If you
+        wanted to add the glyphicon-plus to this button then you'd pass
+        in a value of ``plus``)  Default: ``None`` (no icon is added)
 
     disabled
         Render the button as disabled if True.
@@ -165,7 +174,7 @@ class Button(object):
         additional class).
     """
     def __init__(self, name='submit', title=None, type='submit', value=None,
-                 disabled=False, css_class=None):
+                 disabled=False, css_class=None, icon=None):
         if title is None:
             title = name.capitalize()
         name = re.sub(r'\s', '_', name)
@@ -177,4 +186,5 @@ class Button(object):
         self.value = value
         self.disabled = disabled
         self.css_class = css_class
+        self.icon = icon
         
