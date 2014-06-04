@@ -7,7 +7,7 @@
       tal:omit-tag="">
   ${field.start_mapping()}
   <input type="${type_name}"
-         name="${name}"
+         name="time"
          value="${cstruct}"
          tal:attributes="size size;
                          class string: ${css_class or ''} form-control hasDatepicker;
