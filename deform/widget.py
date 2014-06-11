@@ -393,7 +393,7 @@ class MoneyInputWidget(Widget):
 class AutocompleteInputWidget(Widget):
     """ 
     Renders an ``<input type="text"/>`` widget which provides
-    auto-completion via a list of values using bootstrap's typeahead plugin
+    autocompletion via a list of values using bootstrap's typeahead plugin
     http://twitter.github.com/bootstrap/javascript.html#typeahead.
 
     **Attributes/Arguments**
@@ -427,11 +427,11 @@ class AutocompleteInputWidget(Widget):
     min_length
         ``min_length`` is an optional argument to
         :term:`jquery.ui.autocomplete`. The number of characters to
-        wait for before activating the auto-complete call.  Defaults to
+        wait for before activating the autocomplete call.  Defaults to
         ``1``.
 
     items
-        The max number of items to display in the drop-down. Defaults to
+        The max number of items to display in the dropdown. Defaults to
         ``8``.
 
     """

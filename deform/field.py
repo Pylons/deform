@@ -125,7 +125,7 @@ class Field(object):
       If any of these values is not passed, a suitable default values is used
       in its place.
 
-      The ``appstruct`` constructor argument is used to pre-populate field
+      The ``appstruct`` constructor argument is used to prepopulate field
       values related to this form's schema.  If an appstruct is not supplied,
       the form's fields will be rendered with default values unless an
       appstruct is supplied to the ``render`` method explicitly.

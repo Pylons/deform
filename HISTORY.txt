@@ -245,7 +245,7 @@ Documentation
   information.
 
 - Previously, all CheckedInputWidget and CheckedPasswordWidget fields had
-  hard-coded input[name] attributes of 'value' and 'confirm'.  When
+  hardcoded input[name] attributes of 'value' and 'confirm'.  When
   deserializing a form, this caused colander.null to be passed to the widget
   deserialization function since neither submitted value matched the name of
   the field.  This change simply replaces 'value' with the name of the field
@@ -311,7 +311,7 @@ Documentation
 - Remove unused ``jquery.autocomplete.min.js`` file from static directory.
 
 - SelectWidget now has a ``size`` attribute to support single select widgets
-  that are not drop-downs.
+  that are not dropdowns.
 
 - The value fed to the ``deform.form.Button`` class as ``name`` would
   generate an invalid HTML id if it contained spaces.  Now it converts spaces
@@ -456,7 +456,7 @@ Features
   previously.
 
 - The ``deform.widget.AutocompleteInputWidget`` widget now uses
-  `JQuery UI's autocomplete sub-library
+  `JQuery UI's autocomplete sublibrary
   <http://docs.jquery.com/UI/Autocomplete>` instead of the
   ``jquery.autocomplete`` library to perform its job in order to
   reduce the number of libraries needed by Deform.  Some options have
