@@ -268,7 +268,7 @@ class TextInputWidget(Widget):
         mask argument to have any effect.  See :ref:`masked_input`.
 
     mask_placeholder
-        The placeholder for required nonliteral elements when a mask
+        The placeholder for required non-literal elements when a mask
         is used.  Default: ``_`` (underscore).
 
     """
@@ -393,7 +393,7 @@ class MoneyInputWidget(Widget):
 class AutocompleteInputWidget(Widget):
     """ 
     Renders an ``<input type="text"/>`` widget which provides
-    autocompletion via a list of values using bootstrap's typeahead plugin
+    auto-completion via a list of values using bootstrap's typeahead plugin
     http://twitter.github.com/bootstrap/javascript.html#typeahead.
 
     **Attributes/Arguments**
@@ -427,11 +427,11 @@ class AutocompleteInputWidget(Widget):
     min_length
         ``min_length`` is an optional argument to
         :term:`jquery.ui.autocomplete`. The number of characters to
-        wait for before activating the autocomplete call.  Defaults to
+        wait for before activating the auto-complete call.  Defaults to
         ``1``.
 
     items
-        The max number of items to display in the dropdown. Defaults to
+        The max number of items to display in the drop-down. Defaults to
         ``8``.
 
     """
@@ -799,7 +799,8 @@ class RichTextWidget(TextInputWidget):
 
         The ``language`` option is passed to TinyMCE within the default
         template, using i18n machinery to determine the language to use.
-        This option can be overriden if it is specified here in ``options``.
+        This option can be overridden if it is specified here in 
+        ``options``.
 
         *Note*: the ``elements`` option for TinyMCE is set automatically
         according to the given field's ``oid``.
@@ -1226,7 +1227,7 @@ class CheckedInputWidget(Widget):
         mask argument to have any effect.  See :ref:`masked_input`.
 
     mask_placeholder
-        The placeholder for required nonliteral elements when a mask
+        The placeholder for required non-literal elements when a mask
         is used.  Default: ``_`` (underscore).
     """
     template = 'checked_input'
@@ -1599,7 +1600,7 @@ class FileUploadWidget(Widget):
     instance of an object that implements the
     :class:`deform.interfaces.FileUploadTempStore` interface.  Such an
     instance will hold on to file upload data during the validation
-    process, so the user doesn't need to reupload files if other parts
+    process, so the user doesn't need to re-upload files if other parts
     of the form rendering fail validation.  See also
     :class:`deform.interfaces.FileUploadTempStore`.
 

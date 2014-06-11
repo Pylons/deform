@@ -18,7 +18,7 @@ implementation (arguably) simpler and smaller.
 
 :mod:`deform` depends only on Peppercorn, Colander, Chameleon and an
 internationalization library named translationstring, so it may be
-used in most web frameworks (or antiframeworks) as a result.
+used in most web frameworks (or anti-frameworks) as a result.
 
 Alternate templating languages may be used, as long as all templates
 are translated from the native Chameleon templates to your templating
@@ -69,7 +69,7 @@ To report bugs, use the `bug tracker
 <https://github.com/Pylons/deform/issues>`_.
 
 If you've got questions that aren't answered by this documentation, contact
-the `Pylons-discuss maillist
+the `Pylons-discuss mailing list
 <http://groups.google.com/group/pylons-discuss>`_ or join the 
 
 .. only:: not latex

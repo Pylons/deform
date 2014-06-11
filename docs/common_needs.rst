@@ -127,7 +127,7 @@ widget.
 .. note::
 
   Widget associations done in a schema are always overridden by
-  explicit widget assigments performed via
+  explicit widget assignments performed via
   :meth:`deform.Field.__setitem__` and
   :meth:`deform.Field.set_widgets`.
 
@@ -274,13 +274,13 @@ Using the AutocompleteInputWidget
 ---------------------------------
 
 The :class:`deform.widget.AutocompleteInputWidget` widget allows for
-client side autocompletion from provided choices in a text input
+client side auto-completion from provided choices in a text input
 field. To use this you **MUST** ensure that :term:`jQuery` and the
 :term:`JQuery UI` plugin are available to the page where the
 :class:`deform.widget.AutocompleteInputWidget` widget is rendered.
 
 For convenience a version of the :term:`JQuery UI` (which includes the
-``autocomplete`` sublibrary) is included in the :mod:`deform` static
+``autocomplete`` sub-library) is included in the :mod:`deform` static
 directory. Additionally, the :term:`JQuery UI` styles for the
 selection box are also included in the :mod:`deform` ``static``
 directory. See :ref:`serving_up_the_rendered_form` and
@@ -316,8 +316,8 @@ application.  Something like either of these structures in JSON are suitable::
         {'value': 'item-three', 'label': 'Item Three'}
     ]
 
-The autocomplete plugin will add a query string to the request URL with the
-variable ``term`` which contains the user's input at that momement.  The server
+The auto-complete plugin will add a query string to the request URL with the
+variable ``term`` which contains the user's input at that moment.  The server
 may use this to filter the returned results.  
 
 For more information, see http://api.jqueryui.com/autocomplete/#option-source

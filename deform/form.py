@@ -66,7 +66,7 @@ class Form(field.Field):
        exists in the ``static`` directory of the ``deform`` package.
 
     ajax_options
-       A *string* which must represent a JavaScript obejct
+       A *string* which must represent a JavaScript object
        (dictionary) of extra AJAX options as per
        `http://jquery.malsup.com/form/#options-object
        <http://jquery.malsup.com/form/#options-object>`_.  For
@@ -80,7 +80,7 @@ class Form(field.Field):
        By default, ``target`` points at the DOM node representing the
        form and and ``replaceTarget`` is ``true``.
 
-       A successhandler calls the ``deform.processCallbacks`` method
+       A success handler calls the ``deform.processCallbacks`` method
        that will ajaxify the newly written form again.  If you pass
        these values in ``ajax_options``, the defaults will be
        overridden.  If you want to override the success handler, don't

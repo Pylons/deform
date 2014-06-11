@@ -31,7 +31,7 @@ Glossary
 
    Peppercorn
      A `package <http://docs.pylonsproject.org/projects/peppercorn/dev/>`_
-     used by Deform for strutured form submission value deserialization.
+     used by Deform for structured form submission value deserialization.
 
    schema
      A nested collection of :term:`schema node` objects representing
@@ -155,6 +155,6 @@ Glossary
       <http://jqueryui.com/>`_.
 
    jquery.ui.autocomplete
-      A :term:`JQuery UI` sublibrary for autocompletion of text
+      A :term:`JQuery UI` sub-library for auto-completion of text
       fields.  See `http://docs.jquery.com/UI/Autocomplete
       <http://docs.jquery.com/UI/Autocomplete>`_.

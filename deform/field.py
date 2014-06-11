@@ -125,7 +125,7 @@ class Field(object):
       If any of these values is not passed, a suitable default values is used
       in its place.
 
-      The ``appstruct`` constructor argument is used to prepopulate field
+      The ``appstruct`` constructor argument is used to pre-populate field
       values related to this form's schema.  If an appstruct is not supplied,
       the form's fields will be rendered with default values unless an
       appstruct is supplied to the ``render`` method explicitly.
@@ -188,7 +188,7 @@ class Field(object):
         return self._parent()
 
     def get_root(self):
-        """ Return the root field in the field herarchy (the form field) """
+        """ Return the root field in the field hierarchy (the form field) """
         node = self
         while True:
             parent = node.parent
@@ -277,7 +277,7 @@ class Field(object):
         information.  Return the cloned field.  The ``order``
         attribute of the node is not cloned; instead the field
         receives a new order attribute; it will be a number larger
-        than the last renderered field of this set.  The parent of the cloned
+        than the last rendered field of this set.  The parent of the cloned
         node will become ``None`` unconditionally."""
         cloned = self.__class__(self.schema)
         cloned.__dict__.update(self.__dict__)
@@ -337,7 +337,7 @@ class Field(object):
         the form rendering in order for some widget on the page to
         function properly.
 
-        The second element in each two-tuple is the reqested version
+        The second element in each two-tuple is the requested version
         of the library resource.  It may be ``None``, in which case
         the version is unspecified.
 

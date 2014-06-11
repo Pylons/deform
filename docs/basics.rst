@@ -18,7 +18,7 @@ subsequently be ready to accept form submission input are:
 Once the form is rendered, a user will interact with the form in his
 browser, and some point, he will submit it.  When the user submits the
 form, the data provided by the user will either validate properly, or
-the form will need to be rerendered with error markers which help to
+the form will need to be re-rendered with error markers which help to
 inform the user of which parts need to be filled in "properly" (as
 defined by the schema).  We allow the user to continue filling in the
 form, submitting, and revalidating indefinitely.
@@ -459,7 +459,7 @@ use to deal with the form validation must do a few things:
   of form controls.
 
 - It must be willing to catch a :exc:`deform.ValidationFailure`
-  exception and rerender the form if there were validation errors.
+  exception and re-render the form if there were validation errors.
 
 For example, using the :term:`WebOb` API for the above tasks, and the
 ``form`` object we created earlier, such a dance might look like this:
@@ -483,7 +483,7 @@ The above set of statements is the sort of logic every web app that
 uses Deform must do.  If the validation stage does not fail, a
 variable named ``appstruct`` will exist with the data serialized from
 the form to be used in your application.  Otherwise the form will be
-rerendered.
+re-rendered.
 
 Note that by default, when any form submit button is clicked, the form
 will send a post request to the same URL which rendered the form.
