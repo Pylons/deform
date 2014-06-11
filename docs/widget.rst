@@ -463,7 +463,7 @@ that the default value for the schema node should be used if it
 exists.
 
 The only other real constraint of the deserialize method is that the
-``serialize`` method must be able to re-serialize the return value of
+``serialize`` method must be able to reserialize the return value of
 ``deserialize``.
 
 The ``handle_error`` Method

@@ -18,7 +18,7 @@ implementation (arguably) simpler and smaller.
 
 :mod:`deform` depends only on Peppercorn, Colander, Chameleon and an
 internationalization library named translationstring, so it may be
-used in most web frameworks (or anti-frameworks) as a result.
+used in most web frameworks (or antiframeworks) as a result.
 
 Alternate templating languages may be used, as long as all templates
 are translated from the native Chameleon templates to your templating

@@ -268,7 +268,7 @@ class TextInputWidget(Widget):
         mask argument to have any effect.  See :ref:`masked_input`.
 
     mask_placeholder
-        The placeholder for required non-literal elements when a mask
+        The placeholder for required nonliteral elements when a mask
         is used.  Default: ``_`` (underscore).
 
     """
@@ -1227,7 +1227,7 @@ class CheckedInputWidget(Widget):
         mask argument to have any effect.  See :ref:`masked_input`.
 
     mask_placeholder
-        The placeholder for required non-literal elements when a mask
+        The placeholder for required nonliteral elements when a mask
         is used.  Default: ``_`` (underscore).
     """
     template = 'checked_input'

@@ -28,7 +28,7 @@ class ValidationFailure(Exception):
 
     def render(self):
         """
-        Used to re-serialize the form in such a way that the user will
+        Used to reserialize the form in such a way that the user will
         see error markers in the form HTML.  This method accepts no
         arguments and returns text representing the HTML of a form
         rendering.

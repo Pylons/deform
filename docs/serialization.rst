@@ -125,7 +125,7 @@ data resulting from a form submission to application data) works:
 - Deform passes the resulting :term:`cstruct` to the root schema
   node's ``deserialize`` method to generate an :term:`appstruct`.
   This may result in a validation error.  If a validation error
-  occurs, the form may be re-rendered with error markers in place.
+  occurs, the form may be rerendered with error markers in place.
 
 If you were to attempt to produce a high-level overview diagram this
 process, it might look like this:
@@ -232,8 +232,8 @@ The schema type associated with this widget is expecting a single
 string as its cstruct.  The ``value`` passed to the exception
 constructor raised during the ``deserialize`` when ``value !=
 confirm`` is used as that ``cstruct`` value when the form is
-re-rendered with error markers.  The ``confirm`` value is picked off
-the field value when the form is re-rendered at this time.
+rerendered with error markers.  The ``confirm`` value is picked off
+the field value when the form is rerendered at this time.
 
 Say What?
 ---------

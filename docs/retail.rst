@@ -103,7 +103,7 @@ form object.
        try:
            appstruct = form.validate(controls)  # call validate
        except ValidationFailure as e: # catch the exception
-            # .. re-render the form .. its field's .error attributes
+            # .. rerender the form .. its field's .error attributes
             # will be set
 
 It is also possible to pass an ``appstruct`` argument to the
