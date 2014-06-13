@@ -3,13 +3,15 @@ Example App
 
 An example is worth a thousand words.  Here's an example `Pyramid
 <http://pylonsproject.org>`_ application demonstrating how one might use
-:mod:`deform` to render a form.
+:mod:`deform` to render a form.  For it to work you'll need to have
+``deform``, ``pyramid``, and ``pyramid_chameleon`` installed in your
+python environment.
 
 .. warning::
 
-   :mod:`deform` is not dependent on :mod:`pyramid` at all; we use Pyramid in
-   the examples below only to facilitate demonstration of an actual
-   end-to-end working application that uses Deform.
+   :mod:`deform` is not dependent on :mod:`pyramid` at all; we use
+   Pyramid in the examples below only to facilitate demonstration of
+   an actual end-to-end working application that uses Deform.
 
 Here's the Python code:
 
@@ -40,7 +42,7 @@ Here's the Python code:
 
 
    here = os.path.dirname(os.path.abspath(__file__))
-   
+
    colors = (('red', 'Red'), ('green', 'Green'), ('blue', 'Blue'))
 
    class DateSchema(MappingSchema):
@@ -71,16 +73,21 @@ Here's the Python code:
    def form_view(request):
        schema = MySchema()
        myform = Form(schema, buttons=('submit',))
+       template_values = {}
+       template_values.update(myform.get_widget_resources())
 
        if 'submit' in request.POST:
            controls = request.POST.items()
            try:
                myform.validate(controls)
            except ValidationFailure as e:
-               return {'form':e.render()}
-           return {'form':'OK'}
-               
-       return {'form':myform.render()}
+               template_values['form'] = e.render()
+           else:
+               template_values['form'] = 'OK'
+           return template_values
+
+       template_values['form'] = myform.render()
+       return template_values
 
    if __name__ == '__main__':
        settings = dict(reload_templates=True)
@@ -107,11 +114,19 @@ same directory:
 
        <!-- JavaScript -->
        <script src="static/scripts/jquery-2.0.3.min.js"></script>
-       <script src="static/scripts/deform.js"></script>
        <script src="static/scripts/bootstrap.min.js"></script>
+       <tal:loop tal:repeat="js_resource js">
+         <script src="${request.static_path(js_resource)}"></script>
+       </tal:loop>
+
        <!-- CSS -->
+       <link rel="stylesheet" href="static/css/bootstrap.min.css"
+             type="text/css">
        <link rel="stylesheet" href="static/css/form.css" type="text/css">
-       <link rel="stylesheet" href="static/css/bootstrap.min.css" type="text/css">
+       <tal:loop tal:repeat="css_resource css">
+         <link rel="stylesheet" href="${request.static_path(css_resource)}"
+               type="text/css">
+       </tal:loop>
 
      </head>
      <body>
