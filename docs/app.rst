@@ -21,18 +21,22 @@ Here's the Python code:
    from paste.httpserver import serve
    from pyramid.config import Configurator
 
-   from colander import MappingSchema
-   from colander import SequenceSchema
-   from colander import SchemaNode
-   from colander import String
-   from colander import Boolean
-   from colander import Integer
-   from colander import Length
-   from colander import OneOf
+   from colander import (
+       Boolean,
+       Integer,
+       Length,
+       MappingSchema,
+       OneOf,
+       SchemaNode,
+       SequenceSchema,
+       String
+   )
 
-   from deform import ValidationFailure
-   from deform import Form
-   from deform import widget
+   from deform import (
+       Form,
+       ValidationFailure,
+       widget
+   )
 
 
    here = os.path.dirname(os.path.abspath(__file__))
