@@ -18,7 +18,7 @@ Here's the Python code:
 
    import os
 
-   from paste.httpserver import serve
+   from wsgiref.simple_server import make_server
    from pyramid.config import Configurator
 
    from colander import (
@@ -76,7 +76,7 @@ Here's the Python code:
            controls = request.POST.items()
            try:
                myform.validate(controls)
-           except ValidationFailure, e:
+           except ValidationFailure as e:
                return {'form':e.render()}
            return {'form':'OK'}
                
@@ -85,10 +85,12 @@ Here's the Python code:
    if __name__ == '__main__':
        settings = dict(reload_templates=True)
        config = Configurator(settings=settings)
+       config.include('pyramid_chameleon')
        config.add_view(form_view, renderer=os.path.join(here, 'form.pt'))
        config.add_static_view('static', 'deform:static')
        app = config.make_wsgi_app()
-       serve(app)
+       server = make_server('0.0.0.0', 8080, app)
+       server.serve_forever()
 
 Here's the Chameleon ZPT template named ``form.pt``, placed in the
 same directory:
