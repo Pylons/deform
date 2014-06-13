@@ -95,7 +95,7 @@ Here's the Python code:
 Here's the Chameleon ZPT template named ``form.pt``, placed in the
 same directory:
 
-.. code-block:: xml
+.. code-block:: html
    :linenos:
 
    <!doctype html>
