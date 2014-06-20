@@ -71,7 +71,7 @@
      function(oid) {
        $('#' + oid).select2({
          containerCssClass: 'form-control',
-         placeholder: "${field.widget.placeholder|""}",
+         placeholder: "${str(field.widget.placeholder).replace('"','\\"')|""}",
          allowClear: true
        });
      }
