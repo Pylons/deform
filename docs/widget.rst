@@ -379,7 +379,8 @@ get defined as so:
             if cstruct is null:
                 cstruct = u''
             quoted = cgi.escape(cstruct, quote='"')
-            return u'<input type="text" value="%s">' % quoted
+            return ('<input type="text" name="%s" value="%s">' %
+                    (field.name, quoted))
 
 Note that every ``serialize`` method is responsible for returning a
 serialization, no matter whether it is provided data by its caller or
@@ -451,7 +452,8 @@ attached.
         def serialize(self, field, cstruct, readonly=False):
             if cstruct is null:
                 cstruct = u''
-            return '<input type="text" value="%s">' % cgi.escape(cstruct)
+            return ('<input type="text" name="%s" value="%s">' %
+                    (field.name, cgi.escape(cstruct, quote='"')))
 
         def deserialize(self, field, pstruct):
             if pstruct is null:
@@ -494,7 +496,8 @@ class:
         def serialize(self, field, cstruct, readonly=False):
             if cstruct is null:
                 cstruct = u''
-            return '<input type="text" value="%s">' % cgi.escape(cstruct)
+            return ('<input type="text" name="%s" value="%s">' %
+                    (field.name, cgi.escape(cstruct, quote='"')))
 
         def deserialize(self, field, pstruct):
             if pstruct is null:
