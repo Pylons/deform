@@ -120,3 +120,4 @@ Contributors
 - Charlie Clark, 2013/09/03
 - Calvin Hendryx-Parker, 2013/09/03
 - Cédric Messiant, 2014/06/27
+- Tim Tisdall, 2014/06/27
