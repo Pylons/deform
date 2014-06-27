@@ -387,7 +387,7 @@ Some of the more important files in the set of JavaScript, CSS files,
 and images present in the ``static`` directory of the :mod:`deform`
 package are the following:
 
-``static/scripts/jquery-1.4.2.min.js``
+``static/scripts/jquery-2.0.3.min.js``
   A local copy of the JQuery javascript library, used by widgets and
   other JavaScript files.
 
@@ -414,7 +414,7 @@ page which renders a Deform form, e.g.:
      <link rel="stylesheet" href="/static/css/form.css" type="text/css" />
      <!-- JavaScript -->
      <script type="text/javascript"
-             src="/static/scripts/jquery-1.4.2.min.js"></script> 
+             src="/static/scripts/jquery-2.0.3.min.js"></script> 
      <script type="text/javascript"
              src="/static/scripts/deform.js"></script>
    </head>
