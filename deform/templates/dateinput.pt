@@ -1,5 +1,4 @@
 <div tal:define="css_class css_class|field.widget.css_class;
-                 name name|field.name;
                  oid oid|field.oid;
                  style style|field.widget.style;
                  type_name type_name|field.widget.type_name;"
