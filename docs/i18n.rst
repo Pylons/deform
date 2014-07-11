@@ -33,7 +33,7 @@ Following should get you started with `i18n` in :mod:`pyramid`::
 
 
 See the `Internationalization demo
-<http://deformdemo.repoze.org/i18n/>`_ for an example of how deform
+<http://deform2demo.repoze.org/i18n/>`_ for an example of how deform
 error and status messages can be localized.  This demonstration uses
 the `internationalization and localization features of Pyramid
 <http://docs.pylonsproject.org/projects/pyramid/1.0/narr/i18n.html>`_
