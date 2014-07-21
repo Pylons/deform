@@ -65,7 +65,7 @@ master_doc = 'index'
 
 # General substitutions.
 project = 'deform'
-copyright = '2013, Agendaless Consulting <pylons-discuss@googlegroups.com>'
+copyright = '2014, Agendaless Consulting <pylons-discuss@googlegroups.com>'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
