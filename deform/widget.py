@@ -1462,6 +1462,7 @@ class SequenceWidget(Widget):
     min_len = None
     max_len = None
     orderable = False
+    category = 'structural'
     requirements = (('deform', None), ('sortable', None))
 
     def prototype(self, field):
