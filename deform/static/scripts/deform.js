@@ -147,13 +147,13 @@ var deform  = {
                                      orderable) {
         orderable = !!orderable; // convert to bool
         var has_multiple = now_len > 1;
-        var $ul = oid_node.find('.deform-seq-container');
-        var $lis = $ul.find('.deform-seq-item');
+        var $ul = oid_node.find('.deform-seq-container').not(oid_node.find('.deform-seq-container .deform-seq-container'));
+        var $lis = $ul.find('.deform-seq-item').not($ul.find('.deform-seq-container .deform-seq-item'));
         var show_closebutton = now_len > min_len;
         var show_addbutton = now_len < max_len;
-        $lis.find('.deform-close-button').toggle(show_closebutton);
-        oid_node.find('.deform-seq-add').toggle(show_addbutton);
-        $lis.find('.deform-order-button').toggle(orderable && has_multiple);
+        $lis.find('.deform-close-button').not($lis.find('.deform-seq-container .deform-close-button')).toggle(show_closebutton);
+        oid_node.find('.deform-seq-add').not(oid_node.find('.deform-seq-container .deform-seq-add')).toggle(show_addbutton);
+        $lis.find('.deform-order-button').not($lis.find('.deform-seq-container .deform-order-button')).toggle(orderable && has_multiple);
      },
 
     focusFirstInput: function (el) {
