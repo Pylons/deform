@@ -132,7 +132,7 @@ class Field(object):
 
       The :class:`deform.Field` constructor also accepts *arbitrary*
       keyword arguments.  When an 'unknown' keyword argument is
-      passed, it is attached unmolested to the form field as an
+      passed, it is attached unmodified to the form field as an
       attribute.
 
       All keyword arguments (explicit and unknown) are also attached to
