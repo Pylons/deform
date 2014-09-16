@@ -1,8 +1,7 @@
 Next release
 ------------
 
-- Fix ISO8601_REGEX import (import it from iso8601)
-  Broken since https://github.com/Pylons/colander/commit/9af195
+- Changed ISO8601_REGEX import to match change in colander
 
 - Raise ``Invalid`` rather than other errors when deserializing broken
   or malicious pstructs with invalid types.  See
