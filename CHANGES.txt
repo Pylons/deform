@@ -5,6 +5,9 @@ Next release
   or malicious pstructs with invalid types.  See
   https://github.com/Pylons/deform/pull/203
 
+- Field.validate() now raises ``ValidationFailure`` upon peppercorn parse
+  failure.
+
 - Readd a time widget.
 
 - Fix a bug in the DateInputWidget.  See
