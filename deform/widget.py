@@ -777,10 +777,15 @@ class RichTextWidget(TextInputWidget):
         ``True``, and the richtext editor will only be loaded upon
         the user clicking the field. Default: ``False``.
 
-        **NOTE**: If ``delayed_load`` is enabled, any existing value
-        for the field will be rendered without any HTML escaping.  If
-        that value comes from an untrusted source, this may result in
-        CSRF vulnerabilities.
+        **Security Note**: Enabling ``delayed_load`` can create an
+        HTML injection vulnerability. When enabled, any existing value
+        for the field will be rendered without HTML escaping. Also,
+        on form re-display, any user-submitted value which passes
+        validation will be rendered unescaped.  (If the field has a
+        validation error, ``delayed_load`` will be disabled during
+        re-display.) You should not enable ``delayed_load`` unless you
+        trust both existing and valid user-submitted values for the field
+        to be 'safe HTML'.
 
     strip
         If true, during deserialization, strip the value of leading
