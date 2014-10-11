@@ -158,22 +158,32 @@ var deform  = {
 
     focusFirstInput: function (el) {
         el = el || document.body;
-        var input = $(el).find(':input')
-          .filter('[id ^= deformField]')
-          .filter('[type != hidden]')
-          .first();
-        if (input) {
-            var raw = input.get(0);
-            if (raw) {
-                if (raw.type === 'text' || raw.type === 'file' || 
-                    raw.type == 'password' || raw.type == 'text' || 
-                    raw.type == 'textarea') { 
-                    if (!input.hasClass("hasDatepicker")) {
-                        input.focus();
+        /* Select all child forms which do not have autofocus=off */
+        var forms = $(el).find('form').filter('[data-autofocus != off]');
+        
+        if(forms.length>0) {
+            /* Select appropriate input candidates from first form */
+            var input = $(forms[0]).find(':input')
+                                   .filter('[id ^= deformField]')
+                                   .filter('[type != hidden]')
+                                   .first();
+          
+            if (input) {
+                /* input.focus() on allowed input type */
+                var raw = input.get(0);
+                if (raw) {
+                    if (raw.type === 'text' || raw.type === 'file' || 
+                        raw.type == 'password' || raw.type == 'text' || 
+                        raw.type == 'textarea') { 
+                        if (!input.hasClass("hasDatepicker")) {
+                            input.focus();
+                        }
                     }
                 }
             }
+
         }
+
     },
 
     randomString: function (length) {
