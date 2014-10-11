@@ -118,6 +118,8 @@ class Form(field.Field):
         self.autocomplete = autocomplete
         if autofocus == False:
           autofocus = 'off'
+        else:
+          autofocus = None
         self.autofocus = autofocus
         field.Field.__init__(self, schema, **kw)
         _buttons = []
