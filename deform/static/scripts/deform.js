@@ -158,8 +158,8 @@ var deform  = {
 
     focusFirstInput: function (el) {
         el = el || document.body;
-        /* Select all child forms which do not have autofocus=off */
-        var forms = $(el).find('form').filter('[data-autofocus != off]');
+        /* Select all child forms which do not have firstfocus=off */
+        var forms = $(el).find('form').filter('[data-firstfocus != off]');
         
         if(forms.length>0) {
             /* Select appropriate input candidates from first form */

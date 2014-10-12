@@ -53,14 +53,14 @@ class Form(field.Field):
         false value, an ``autocomplete='off'`` attribute will be added to the
         form tag.  Default: ``None``.
 
-    autofocus
+    firstfocus
         Determines if this form's first input will be focused on page load. 
         If a form is below the fold on a web page, default behaviour will 
         cause the first input to be focused and the browser will scroll down 
         to it. This can be a problem with responsive layouts which may push 
         forms below the fold on small devices. 
-        Set ``autofocus=False`` to prevent automatic focusing of this form 
-        on page load. If ``autofocus`` is any other value or non existant 
+        Set ``firstfocus=False`` to prevent automatic focusing of this form 
+        on page load. If ``firstfocus`` is any other value or non existant 
         the form will have its first element focused on page load.
 
     use_ajax
@@ -110,17 +110,17 @@ class Form(field.Field):
     css_class = 'deform' # bw compat only; pass a widget to override
     def __init__(self, schema, action='', method='POST', buttons=(),
                  formid='deform', use_ajax=False, ajax_options='{}',
-                 autocomplete=None, autofocus=None, **kw):
+                 autocomplete=None, firstfocus=None, **kw):
         if autocomplete:
             autocomplete = 'on'
         elif autocomplete is not None:
             autocomplete = 'off'
         self.autocomplete = autocomplete
-        if autofocus == False:
-          autofocus = 'off'
+        if firstfocus == False:
+          firstfocus = 'off'
         else:
-          autofocus = None
-        self.autofocus = autofocus
+          firstfocus = None
+        self.firstfocus = firstfocus
         field.Field.__init__(self, schema, **kw)
         _buttons = []
         for button in buttons:
