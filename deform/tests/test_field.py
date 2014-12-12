@@ -679,15 +679,28 @@ class TestField(unittest.TestCase):
         self.assertEqual(
             result,
             '<input type="hidden" name="__end__" value="name:rename"/>'
-            )
+             )
+
+    def test_autofocus_not_set(self):
+        schema = DummySchema()
+        field = self._makeOne(schema, autofocus=None)
+        self.assertEqual(field.autofocus, None)
+        self.assertNotIn('autofocus', field.render())
+
+    def test_autofocus_set(self):
+        schema = DummySchema()
+        field = self._makeOne(schema, autofocus=True)
+        self.assertEqual(field.autofocus, True)
+        self.assertIn('autofocus', field.render())
 
 class DummyField(object):
     oid = 'oid'
     requirements = ( ('abc', '123'), ('def', '456'))
-    def __init__(self, schema=None, renderer=None, name='name'):
+    def __init__(self, schema=None, renderer=None, name='name', autofocus=None):
         self.schema = schema
         self.renderer = renderer
         self.name = name
+        self.autofocus = autofocus
 
     def clone(self):
         self.cloned = True
