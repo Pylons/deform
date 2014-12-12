@@ -147,7 +147,7 @@ class Field(object):
 
     def __init__(self, schema, renderer=None, counter=None,
                  resource_registry=None, appstruct=colander.null,
-                 parent=None, **kw):
+                 parent=None, autofocus=None, **kw):
         self.counter = counter or itertools.count()
         self.order = next(self.counter)
         self.oid = getattr(schema, 'oid', 'deformField%s' % self.order)
@@ -167,15 +167,21 @@ class Field(object):
         if parent is not None:
             parent = weakref.ref(parent)
         self._parent = parent
+        self.autofocus = autofocus
         self.__dict__.update(kw)
         for child in schema.children:
+            try:
+                autofocus = getattr(child, 'autofocus')
+            else:
+                autofocus = None
             self.children.append(
                 Field(
                     child,
                     renderer=renderer,
                     counter=self.counter,
                     resource_registry=resource_registry,
-                    parent=self,
+                    parent=self, 
+                    autofocus=autofocus, 
                     **kw
                     )
                 )
