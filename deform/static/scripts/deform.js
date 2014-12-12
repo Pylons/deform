@@ -26,7 +26,6 @@ var deform  = {
       $(function() {
         if (!deform_loaded) {
             deform.processCallbacks();
-            deform.focusFirstInput();
             deform_loaded = true;
       }});
     },
@@ -155,26 +154,6 @@ var deform  = {
         oid_node.find('.deform-seq-add').not(oid_node.find('.deform-seq-container .deform-seq-add')).toggle(show_addbutton);
         $lis.find('.deform-order-button').not($lis.find('.deform-seq-container .deform-order-button')).toggle(orderable && has_multiple);
      },
-
-    focusFirstInput: function (el) {
-        el = el || document.body;
-        var input = $(el).find(':input')
-          .filter('[id ^= deformField]')
-          .filter('[type != hidden]')
-          .first();
-        if (input) {
-            var raw = input.get(0);
-            if (raw) {
-                if (raw.type === 'text' || raw.type === 'file' || 
-                    raw.type == 'password' || raw.type == 'text' || 
-                    raw.type == 'textarea') { 
-                    if (!input.hasClass("hasDatepicker")) {
-                        input.focus();
-                    }
-                }
-            }
-        }
-    },
 
     randomString: function (length) {
         var chr='0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';
