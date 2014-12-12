@@ -177,7 +177,7 @@ class Field(object):
         for child in schema.children:
             try:
                 autofocus = getattr(child, 'autofocus')
-            else:
+            except:
                 autofocus = None
             self.children.append(
                 Field(
