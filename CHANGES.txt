@@ -1,6 +1,8 @@
 Next release
 ------------
 
+- Changed ISO8601_REGEX import to match change in colander
+
 - Add support for Python 3.4, PyPy3.
 
 - Raise ``Invalid`` rather than other errors when deserializing broken

@@ -13,7 +13,7 @@ from colander import (
     String,
     null,
     )
-from colander.iso8601 import ISO8601_REGEX
+from iso8601.iso8601 import ISO8601_REGEX
 
 from translationstring import TranslationString
 
