@@ -4,7 +4,8 @@
      oid oid|field.oid;
      css_class css_class|field.widget.css_class;
      optgroup_class optgroup_class|field.widget.optgroup_class;
-     multiple multiple|field.widget.multiple;"
+     multiple multiple|field.widget.multiple; 
+     autofocus autofocus|field.autofocus;"
      tal:omit-tag="">
 
    <style>
@@ -45,7 +46,8 @@
           class string: form-control ${css_class or ''};
           data-placeholder field.widget.placeholder|None;
           multiple multiple;
-          style style;">
+          style style; 
+          autofocus autofocus">
     <tal:loop tal:repeat="item values">
       <optgroup tal:condition="isinstance(item, optgroup_class)"
                 tal:attributes="label item.label">

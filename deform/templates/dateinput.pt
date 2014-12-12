@@ -2,7 +2,8 @@
                  name name|field.name;
                  oid oid|field.oid;
                  style style|field.widget.style;
-                 type_name type_name|field.widget.type_name;"
+                 type_name type_name|field.widget.type_name; 
+                 autofocus autofocus|field.autofocus;"
       tal:omit-tag="">
   ${field.start_mapping()}
   <input type="${type_name}"
@@ -10,7 +11,8 @@
          value="${cstruct}"
          
          tal:attributes="class string: ${css_class or ''} form-control hasDatepicker;
-                         style style"
+                         style style; 
+                         autofocus autofocus"
          id="${oid}"/>
   ${field.end_mapping()}
   <script type="text/javascript">

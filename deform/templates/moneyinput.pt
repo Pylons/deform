@@ -3,11 +3,13 @@
                   mask_options mask_options|'{}';
                   style style|field.widget.style;
                   css_class css_class|field.widget.css_class;
-                  style style|field.widget.style|False"
+                  style style|field.widget.style|False; 
+                  autofocus autofocus|field.autofocus;"
       tal:omit-tag="">
     <input type="text" name="${name}" value="${cstruct}" 
            tal:attributes="style style;
-                           class string: form-control ${css_class or ''}"
+                           class string: form-control ${css_class or ''}; 
+                           autofocus autofocus"
            id="${oid}"/>
     <script type="text/javascript">
       deform.addCallback(

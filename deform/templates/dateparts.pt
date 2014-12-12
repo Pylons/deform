@@ -3,14 +3,15 @@
       tal:define="oid oid|field.oid;
                   name name|field.name;
                   css_class css_class|field.widget.css_class;
-                  style style|field.widget.style;">
+                  style style|field.widget.style; 
+                  autofocus autofocus|field.autofocus;">
   ${field.start_mapping()}
   <div class="row">
     <div class="input-group col-xs-4">
       <span class="input-group-addon" i18n:translate="">Year</span>
       <input type="text" name="year" value="${year}"
              class="span2 form-control ${css_class or ''}"
-             tal:attributes="style style"
+             tal:attributes="style style; autofocus autofocus"
              maxlength="4"
              id="${oid}"/>
     </div>
