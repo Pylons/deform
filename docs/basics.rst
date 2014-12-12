@@ -129,10 +129,10 @@ the class :class:`colander.SchemaNode`, usually in a nested arrangement.
 Each schema node object has a required *type*, an optional *preparer*
 for adjusting data after deserialization, an optional
 *validator* for deserialized prepared data, an optional *default*, an
-optional *missing*, an optional *title*, an optional *description*,
-and a slightly less optional *name*.  It also accepts *arbitrary*
-keyword arguments, which are attached directly as attributes to the
-node instance.
+optional *missing*, an optional *title*, an optional *description*, a 
+slightly less optional *name* and an optional *autofocus*.  It also accepts 
+*arbitrary* keyword arguments, which are attached directly as attributes to 
+the node instance.
 
 The *type* of a schema node indicates its data type (such as
 :class:`colander.Int` or :class:`colander.String`).
@@ -171,6 +171,10 @@ node.  By default, it is a capitalization of the *name*.
 The *description* of a schema node is metadata about a schema node.
 It shows up as a tooltip when someone hovers over the form control(s)
 related to a :term:`field`.  By default, it is empty.
+
+The *autofocus* of a schema node is used to set the autofocus HTML 
+attribute for an input :term:`field`. If *autofocus* is None, False or 
+omitted, the HTML attribute will not be set. 
 
 The name of a schema node that is introduced as a class-level
 attribute of a :class:`colander.MappingSchema`,
