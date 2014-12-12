@@ -1,6 +1,8 @@
 Next release
 ------------
 
+- Add support for Python 3.4, PyPy3.
+
 - Raise ``Invalid`` rather than other errors when deserializing broken
   or malicious pstructs with invalid types.  See
   https://github.com/Pylons/deform/pull/203
