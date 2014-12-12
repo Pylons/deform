@@ -109,6 +109,11 @@ class Field(object):
         resource_registry
             The :term:`resource registry` associated with this field.
 
+        autofocus
+            Determines if an input element should have the autofocus html 
+            attribute set. If ``autofocus`` is None, False or omitted, the 
+            autofocus attribute is not set. 
+
     *Constructor Arguments*
 
       ``renderer``, ``counter``, ``resource_registry`` and ``appstruct`` are
