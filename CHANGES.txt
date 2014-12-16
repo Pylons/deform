@@ -54,6 +54,10 @@ Next release
 
 - Select widget handles the mixture of strings and ints https://github.com/Pylons/deform/pull/300/ and https://github.com/Pylons/deform/pull/299
 
+- Have the button css_class override the default button class. This is
+  backwards-incompatible and will require users of css_class to add a
+  btn-default/btn-primary class to the css_class.
+
 2.0a2 (2013-10-18)
 ------------------
 
