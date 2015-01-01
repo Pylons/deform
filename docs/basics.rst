@@ -312,7 +312,7 @@ data might look like this:
    :linenos:
 
     appstruct = {
-        'people' = [
+        'people': [
         {
             'name':'keith',
             'age':20,
