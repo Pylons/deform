@@ -1,7 +1,10 @@
 Next release
 ------------
 
-- Changed ISO8601_REGEX import to match change in colander
+- Make ``dateinput`` work again by using the fixed name "date" as expected
+  by the pstruct schema.  See https://github.com/Pylons/deform/pull/221.
+
+- Changed ``ISO8601_REGEX`` import to match change in colander
 
 - Add support for Python 3.4, PyPy3.
 
