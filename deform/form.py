@@ -66,7 +66,7 @@ class Form(field.Field):
        exists in the ``static`` directory of the ``deform`` package.
 
     ajax_options
-       A *string* which must represent a JavaScript obejct
+       A *string* which must represent a JavaScript object
        (dictionary) of extra AJAX options as per
        `http://jquery.malsup.com/form/#options-object
        <http://jquery.malsup.com/form/#options-object>`_.  For
