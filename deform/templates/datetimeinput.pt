@@ -1,7 +1,6 @@
 <div i18n:domain="deform"
       tal:omit-tag=""
       tal:define="oid oid|field.oid;
-                  name name|field.name;
                   css_class css_class|field.widget.css_class;
                   style style|field.widget.style;">
   ${field.start_mapping()}
