@@ -127,7 +127,7 @@ widget.
 .. note::
 
   Widget associations done in a schema are always overridden by
-  explicit widget assigments performed via
+  explicit widget assignments performed via
   :meth:`deform.Field.__setitem__` and
   :meth:`deform.Field.set_widgets`.
 
@@ -317,7 +317,7 @@ application.  Something like either of these structures in JSON are suitable::
     ]
 
 The autocomplete plugin will add a query string to the request URL with the
-variable ``term`` which contains the user's input at that momement.  The server
+variable ``term`` which contains the user's input at that moment.  The server
 may use this to filter the returned results.  
 
 For more information, see http://api.jqueryui.com/autocomplete/#option-source
