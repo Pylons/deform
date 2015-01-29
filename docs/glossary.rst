@@ -31,7 +31,7 @@ Glossary
 
    Peppercorn
      A `package <http://docs.pylonsproject.org/projects/peppercorn/dev/>`_
-     used by Deform for strutured form submission value deserialization.
+     used by Deform for structured form submission value deserialization.
 
    schema
      A nested collection of :term:`schema node` objects representing
