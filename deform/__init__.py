@@ -10,3 +10,6 @@ from .schema import FileData # API
 
 from .template import ZPTRendererFactory # API
 from .template import default_renderer # API
+
+def includeme(config):
+    config.scan()
