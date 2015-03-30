@@ -128,10 +128,10 @@ var deform  = {
     },
 
     removeSequenceItem: function(clicked) {
-        var $item_node = $(clicked).closest('.deformSeqItem');
+        var $item_node = $(clicked).closest('.deform-seq-item');
         var form = $($item_node.parents('form.deform').first());
-        var sequence = $($item_node.parents('.deformSeqContainer').first());
-        var $oid_node = $item_node.closest('.deformSeq');
+        var sequence = $($item_node.parents('.deform-seq-container').first());
+        var $oid_node = $item_node.closest('.deform-seq');
         var $before_node = $oid_node.find('.deform-insert-before').last();
         var min_len = parseInt($before_node.attr('min_len')||'0', 10);
         var max_len = parseInt($before_node.attr('max_len')||'9999', 10);
