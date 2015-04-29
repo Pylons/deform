@@ -799,7 +799,7 @@ class RichTextWidget(TextInputWidget):
 
         The ``language`` option is passed to TinyMCE within the default
         template, using i18n machinery to determine the language to use.
-        This option can be overriden if it is specified here in ``options``.
+        This option can be overridden if it is specified here in ``options``.
 
         *Note*: the ``elements`` option for TinyMCE is set automatically
         according to the given field's ``oid``.
