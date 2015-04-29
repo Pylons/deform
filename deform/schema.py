@@ -57,7 +57,7 @@ class FileData(object):
             Unique string id for this file.  Needs to be unique enough to
             disambiguate it from other files that may use the same
             temporary storage mechanism before a successful validation,
-            and must be adequate for the calling code to reidentify it
+            and must be adequate for the calling code to re-identify it
             after deserialization.
 
         A fully populated dictionary *may* also include the following

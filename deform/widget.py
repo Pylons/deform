@@ -799,7 +799,8 @@ class RichTextWidget(TextInputWidget):
 
         The ``language`` option is passed to TinyMCE within the default
         template, using i18n machinery to determine the language to use.
-        This option can be overriden if it is specified here in ``options``.
+        This option can be overridden if it is specified here in 
+        ``options``.
 
         *Note*: the ``elements`` option for TinyMCE is set automatically
         according to the given field's ``oid``.
@@ -1599,7 +1600,7 @@ class FileUploadWidget(Widget):
     instance of an object that implements the
     :class:`deform.interfaces.FileUploadTempStore` interface.  Such an
     instance will hold on to file upload data during the validation
-    process, so the user doesn't need to reupload files if other parts
+    process, so the user doesn't need to re-upload files if other parts
     of the form rendering fail validation.  See also
     :class:`deform.interfaces.FileUploadTempStore`.
 

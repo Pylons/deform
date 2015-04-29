@@ -69,7 +69,7 @@ To report bugs, use the `bug tracker
 <https://github.com/Pylons/deform/issues>`_.
 
 If you've got questions that aren't answered by this documentation, contact
-the `Pylons-discuss maillist
+the `Pylons-discuss mailing list
 <http://groups.google.com/group/pylons-discuss>`_ or join the 
 
 .. only:: not latex
