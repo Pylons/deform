@@ -33,6 +33,7 @@ class TestField(unittest.TestCase):
         self.assertEqual(field.children, [])
         self.assertEqual(field.typ, schema.typ)
         self.assertEqual(field.parent, None)
+        self.assertEqual(field.manual_focus, None)
 
     def test_ctor_custom_oid(self):
         schema = DummySchema()

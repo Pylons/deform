@@ -5,7 +5,7 @@
                        css_class css_class|field.widget.css_class;
                        style style|field.widget.style;
                        oid oid|field.oid;
-                       manual_focus manual_focus|field.manual_focus"
+                       manual_focus manual_focus|field.manual_focus|None"
            type="checkbox"
            name="${name}" value="${true_val}"
            id="${oid}"
