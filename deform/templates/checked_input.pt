@@ -3,7 +3,8 @@
                  css_class css_class|field.widget.css_class;
                  style style|field.widget.style;
                  mask mask|field.widget.mask;
-                 mask_placeholder mask_placeholder|field.widget.mask_placeholder;"
+                 mask_placeholder mask_placeholder|field.widget.mask_placeholder;
+                 autofocus autofocus|field.autofocus"
      i18n:domain="deform"
      tal:omit-tag="">
   ${field.start_mapping()}
@@ -12,6 +13,7 @@
            tal:attributes="style style;
                            class string: form-control ${css_class or ''};
                            placeholder subject;
+                           autofocus autofocus;
                            attributes|field.widget.attributes|{};"
            id="${oid}"/>
   </div>

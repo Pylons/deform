@@ -4,18 +4,19 @@
                   mask mask|field.widget.mask;
                   mask_placeholder mask_placeholder|field.widget.mask_placeholder;
                   style style|field.widget.style;
-"
+                  autofocus autofocus|field.autofocus"
       tal:omit-tag="">
-    <input type="text" name="${name}" value="${cstruct}" 
+    <input type="text" name="${name}" value="${cstruct}"
            tal:attributes="class string: form-control ${css_class or ''};
                            style style;
+                           autofocus autofocus;
                            attributes|field.widget.attributes|{};"
            id="${oid}"/>
     <script tal:condition="mask" type="text/javascript">
       deform.addCallback(
          '${oid}',
          function (oid) {
-            $("#" + oid).mask("${mask}", 
+            $("#" + oid).mask("${mask}",
                  {placeholder:"${mask_placeholder}"});
          });
     </script>

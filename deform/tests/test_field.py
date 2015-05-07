@@ -45,6 +45,7 @@ class TestField(unittest.TestCase):
         self.assertEqual(field.children, [])
         self.assertEqual(field.typ, schema.typ)
         self.assertEqual(field.parent, None)
+        self.assertEqual(field.autofocus, None)
 
     def test_ctor_custom_oid(self):
         schema = DummySchema()
@@ -721,6 +722,20 @@ class TestField(unittest.TestCase):
             result, '<input type="hidden" name="__end__" value="name:rename"/>'
         )
 
+
+    def test_found_first(self):
+        from deform.field import Field
+        schema = DummySchema()
+        root = self._makeOne(schema, renderer='abc')
+        child1 = Field(schema,name='child1', parent=root)
+        root.children = [child1]
+        
+        self.assertNotEqual(root.children[0].have_first_input, True)
+        self.assertNotEqual(root.have_first_input, True)
+        
+        root.children[0].found_first()
+        self.assertEqual(root.children[0].have_first_input, True)
+        self.assertEqual(root.have_first_input, True)
 
 class DummyField(object):
     oid = "oid"

@@ -9,6 +9,7 @@ import weakref
 import colander
 from chameleon.utils import Markup
 import peppercorn
+from deform.widget import HiddenWidget
 
 from . import compat
 from . import decorator
@@ -117,6 +118,12 @@ class Field(object):
         resource_registry
             The :term:`resource registry` associated with this field.
 
+        autofocus
+            If the field's parent form has its ``focus`` argument set to
+            ``on``, the first field with ``autofocus`` set to a trueish value
+            (``on``, ``True``, ``autofocus``) will receive focus on page load.
+            Default: ``None``
+
     *Constructor Arguments*
 
       ``renderer``, ``counter``, ``resource_registry`` and ``appstruct`` are
@@ -151,6 +158,16 @@ class Field(object):
     _cstruct = colander.null
     default_renderer = template.default_renderer
     default_resource_registry = widget.default_resource_registry
+    # Allowable input types for automatic focusing
+    focusable_input_types = (
+                type(colander.String()),
+                type(colander.Integer()),
+                type(colander.Decimal()),
+                type(colander.Float()),
+                type(colander.Date()),
+                type(colander.Time()),
+                type(colander.Boolean()))
+    hidden_type = type(HiddenWidget())
 
     def __init__(
         self,
@@ -160,6 +177,7 @@ class Field(object):
         resource_registry=None,
         appstruct=colander.null,
         parent=None,
+        autofocus=None,
         **kw
     ):
         self.counter = counter or itertools.count()
@@ -176,13 +194,56 @@ class Field(object):
         if resource_registry is None:
             resource_registry = self.default_resource_registry
         self.renderer = renderer
+
+        # Parameters passed from parent field to child
+        if "focus" in kw:
+            focus = kw["focus"]
+        else:
+            focus = "on"
+        if "have_first_input" in kw:
+            self.have_first_input = kw["have_first_input"]
+        else:
+            self.have_first_input = False
+
+        if (
+                focus == "off" or
+                autofocus is None or
+                autofocus == False or
+                autofocus.lower() == "off"
+           ):
+            self.autofocus = None
+        else:
+            self.autofocus = "autofocus"
+
         self.resource_registry = resource_registry
         self.children = []
         if parent is not None:
             parent = weakref.ref(parent)
         self._parent = parent
         self.__dict__.update(kw)
+
+        first_input_index = -1
+        child_count = 0
+        focused = False
         for child in schema.children:
+            if (
+                    focus == "on" and
+                    not focused and
+                    type(child.typ) in Field.focusable_input_types and
+                    type(child.widget) != Field.hidden_type and
+                    not self.have_first_input
+               ):
+                first_input_index = child_count
+                self.found_first() # Notify ancestors
+            try:
+                autofocus = getattr(child, "autofocus")
+            except:
+                autofocus = None
+
+            if autofocus is not None:
+                focused = True
+
+            kw["have_first_input"] = self.have_first_input
             self.children.append(
                 Field(
                     child,
@@ -190,10 +251,26 @@ class Field(object):
                     counter=self.counter,
                     resource_registry=resource_registry,
                     parent=self,
+                    autofocus=autofocus,
                     **kw
                 )
             )
+        child_count += 1
+        if (
+                focus == "on" and
+                not focused and
+                first_input_index != -1 and
+                self.have_first_input
+        ):
+            # User did not set autofocus. Focus on 1st valid input.
+            self.children[first_input_index].autofocus = "autofocus"
         self.set_appstruct(appstruct)
+
+    def found_first(self):
+        """ Set have_first_input of ancestors """
+        self.have_first_input = True
+        if self.parent is not None:
+            self.parent.found_first()
 
     @property
     def parent(self):
