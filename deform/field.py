@@ -109,6 +109,13 @@ class Field(object):
         resource_registry
             The :term:`resource registry` associated with this field.
 
+        manual_focus
+            If the field's parent form has its ``focus_form`` argument set to 
+            ``manual``, the first field with ``manual_focus`` set will receive 
+            focus on page load. Any non-None value will set ``manual_focus`` to 
+            ``on``.
+            Default: ``None``
+
     *Constructor Arguments*
 
       ``renderer``, ``counter``, ``resource_registry`` and ``appstruct`` are
@@ -147,7 +154,7 @@ class Field(object):
 
     def __init__(self, schema, renderer=None, counter=None,
                  resource_registry=None, appstruct=colander.null,
-                 parent=None, **kw):
+                 parent=None, manual_focus=None, **kw):
         self.counter = counter or itertools.count()
         self.order = next(self.counter)
         self.oid = getattr(schema, 'oid', 'deformField%s' % self.order)
@@ -162,6 +169,10 @@ class Field(object):
         if resource_registry is None:
             resource_registry = self.default_resource_registry
         self.renderer = renderer
+        if manual_focus is not None:
+            self.manual_focus = 'on'
+        else:
+            self.manual_focus = None
         self.resource_registry = resource_registry
         self.children = []
         if parent is not None:
@@ -169,6 +180,10 @@ class Field(object):
         self._parent = parent
         self.__dict__.update(kw)
         for child in schema.children:
+            try:
+                manual_focus = getattr(child, 'manual_focus')
+            except:
+                manual_focus = None
             self.children.append(
                 Field(
                     child,
@@ -176,6 +191,7 @@ class Field(object):
                     counter=self.counter,
                     resource_registry=resource_registry,
                     parent=self,
+                    manual_focus=manual_focus,
                     **kw
                     )
                 )

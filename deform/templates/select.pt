@@ -5,7 +5,8 @@
      size size|field.widget.size;
      css_class css_class|field.widget.css_class;
      optgroup_class optgroup_class|field.widget.optgroup_class;
-     multiple multiple|field.widget.multiple;"
+     multiple multiple|field.widget.multiple;
+     manual_focus manual_focus|field.manual_focus"
      tal:omit-tag="">
   <input type="hidden" name="__start__" value="${name}:sequence"
          tal:condition="multiple" />
@@ -15,7 +16,8 @@
           class string: form-control ${css_class or ''};
           multiple multiple;
           size size;
-          style style;">
+          style style;
+          data-deform-manual-focus manual_focus">
     <tal:loop tal:repeat="item values">
       <optgroup tal:condition="isinstance(item, optgroup_class)"
                 tal:attributes="label item.label">

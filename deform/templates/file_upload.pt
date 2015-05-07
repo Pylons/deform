@@ -1,7 +1,8 @@
 <div class="deform-file-upload"
      tal:define="oid oid|field.oid;
                  css_class css_class|field.widget.css_class;
-                 style style|field.widget.style">
+                 style style|field.widget.style;
+                 manual_focus manual_focus|field.manual_focus">
 
   ${field.start_mapping()}
 
@@ -16,7 +17,8 @@
 
   <input type="file" name="upload" 
          tal:attributes="class css_class;
-                         style style;"
+                         style style;
+                         data-deform-manual-focus manual_focus"
          id="${oid}"/>
 
   ${field.end_mapping()}

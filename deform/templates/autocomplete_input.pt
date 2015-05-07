@@ -1,14 +1,16 @@
 <span tal:define="name name|field.name;
                   css_class css_class|field.widget.css_class;
                   oid oid|field.oid;
-                  style style|field.widget.style"
+                  style style|field.widget.style;
+                  manual_focus manual_focus|field.manual_focus"
       tal:omit-tag="">
     <input type="text"
            name="${name}"
            value="${cstruct}"
            data-provide="typeahead"
            tal:attributes="class string: form-control ${css_class or ''};
-                           style style"
+                           style style;
+                           data-deform-manual-focus manual_focus"
            id="${oid}"/>
     <script tal:condition="field.widget.values" type="text/javascript">
         deform.addCallback(

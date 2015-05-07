@@ -53,6 +53,14 @@ class Form(field.Field):
         false value, an ``autocomplete='off'`` attribute will be added to the
         form tag.  Default: ``None``.
 
+    focus_form
+        Determines this form's input focus. If ``focus_form`` is ``auto`` or 
+        omitted, the first input of the first form on the page will receive 
+        focus on page load. If ``focus_form`` is ``manual``, the first field 
+        with its ``manual_focus`` schema attribute set will receive focus. If 
+        ``focus_form`` is ``off``, no focusing will be done.
+        Default: ``auto``.
+
     use_ajax
        If this option is ``True``, the form will use AJAX (actually
        AJAH); when any submit button is clicked, the DOM node related
@@ -100,12 +108,18 @@ class Form(field.Field):
     css_class = 'deform' # bw compat only; pass a widget to override
     def __init__(self, schema, action='', method='POST', buttons=(),
                  formid='deform', use_ajax=False, ajax_options='{}',
-                 autocomplete=None, **kw):
+                 autocomplete=None, focus_form='auto', **kw):
         if autocomplete:
             autocomplete = 'on'
         elif autocomplete is not None:
             autocomplete = 'off'
         self.autocomplete = autocomplete
+        if focus_form.lower() == 'off':
+            self.focus_form = 'off'
+        elif focus_form.lower() == 'manual':
+            self.focus_form = 'manual'
+        else:
+            self.focus_form = 'auto'
         field.Field.__init__(self, schema, **kw)
         _buttons = []
         for button in buttons:

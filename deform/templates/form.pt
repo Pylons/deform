@@ -3,6 +3,7 @@
               css_class css_class|string:${field.widget.css_class or field.css_class or ''};
               item_template item_template|field.widget.item_template;
               autocomplete autocomplete|field.autocomplete;
+              focus_form focus_form|field.focus_form;
               title title|field.title;
               errormsg errormsg|field.errormsg;
               description description|field.description;
@@ -15,7 +16,8 @@
   tal:attributes="autocomplete autocomplete;
                   style style;
                   class css_class;
-                  action action;"
+                  action action;
+                  data-deform-focus-form focus_form;"
   id="${formid}"
   method="${method}"
   enctype="multipart/form-data"

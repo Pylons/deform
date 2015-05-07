@@ -4,13 +4,15 @@
                        true_val true_val|field.widget.true_val;
                        css_class css_class|field.widget.css_class;
                        style style|field.widget.style;
-                       oid oid|field.oid"
+                       oid oid|field.oid;
+                       manual_focus manual_focus|field.manual_focus"
            type="checkbox"
            name="${name}" value="${true_val}"
            id="${oid}"
            tal:attributes="checked cstruct == true_val;
                            class css_class;
-                           style style;" />
+                           style style;
+                           data-deform-manual-focus manual_focus" />
 
     <span tal:condition="hasattr(field, 'schema') and hasattr(field.schema, 'label')"
           tal:replace="field.schema.label" class="checkbox-label" >
