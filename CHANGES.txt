@@ -1,6 +1,15 @@
 Next release
 ------------
 
+- Changed deform.js:focusFirstInput() to perform selectable input focusing on 
+  page load. 
+  Forms have an optional focus_form parameter ('auto'|'manual'|'off'|omitted)
+  'auto' means the first form's first input field will receive focus.
+  'manual' means the first form's first input field with the manual_focus 
+           parameter set will receive focus.
+  'off' disables focusing for that form.
+  Default behaviour is 'auto' (unchanged).
+
 - Make ``dateinput`` work again by using the fixed name "date" as expected
   by the pstruct schema.  See https://github.com/Pylons/deform/pull/221.
 
