@@ -6,7 +6,8 @@
      css_class css_class|field.widget.css_class;
      unicode unicode|str;
      optgroup_class optgroup_class|field.widget.optgroup_class;
-     multiple multiple|field.widget.multiple;"
+     multiple multiple|field.widget.multiple;
+     autofocus autofocus|field.autofocus"
      tal:omit-tag="">
 
   <input type="hidden" name="__start__" value="${name}:sequence"
@@ -18,6 +19,7 @@
           multiple multiple;
           size size;
           style style;
+          autofocus autofocus;
           attributes|field.widget.attributes|{};">
     <tal:loop tal:repeat="item values">
       <optgroup tal:condition="isinstance(item, optgroup_class)"

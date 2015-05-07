@@ -54,6 +54,14 @@ class Form(field.Field):
         false value, an ``autocomplete='off'`` attribute will be added to the
         form tag.  Default: ``None``.
 
+    focus
+        Determines this form's input focus. If ``focus`` is ``on`` or
+        omitted, the first input of the first form on the page will receive
+        focus on page load. If ``focus`` is ``on``, the first field
+        with its ``autofocus`` schema parameter set to ``on`` will receive
+        focus. If `focus`` is ``off``, no focusing will be done.
+        Default: ``on``.
+
     use_ajax
        If this option is ``True``, the form will use AJAX (actually
        AJAH); when any submit button is clicked, the DOM node related
@@ -111,6 +119,7 @@ class Form(field.Field):
         use_ajax=False,
         ajax_options="{}",
         autocomplete=None,
+        focus="on",
         **kw
     ):
         if autocomplete:
@@ -118,6 +127,13 @@ class Form(field.Field):
         elif autocomplete is not None:
             autocomplete = "off"
         self.autocomplete = autocomplete
+        if focus.lower() == "off" or focus is False:
+            self.focus = "off"
+        else:
+            self.focus = "on"
+        # Use kwargs to pass flags to descendant fields; saves cluttering
+        # the constructor
+        kw["focus"] = self.focus
         field.Field.__init__(self, schema, **kw)
         _buttons = []
         for button in buttons:

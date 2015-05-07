@@ -161,6 +161,8 @@ var deform  = {
         var input = $(el).find(':input')
           .filter('[id ^= deformField]')
           .filter('[type != hidden]')
+          .filter('[autofocus != hidden]')
+          .filter(function() {return $(this).prop('autofocus');})
           .first();
         if (input) {
             var raw = input.get(0);
