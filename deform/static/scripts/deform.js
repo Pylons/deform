@@ -157,23 +157,59 @@ var deform  = {
      },
 
     focusFirstInput: function (el) {
+        /* If the first form on the page has its data-deform-focus-form 
+         * attribute set to 'auto', the first child input will be focused. If 
+         * the attribute is set to 'manual', the first child input with its 
+         * data-deform-manual-focus attribute set will be focused. Otherwise, no 
+         * focusing will be performed. */
         el = el || document.body;
-        var input = $(el).find(':input')
-          .filter('[id ^= deformField]')
-          .filter('[type != hidden]')
-          .first();
-        if (input) {
-            var raw = input.get(0);
-            if (raw) {
-                if (raw.type === 'text' || raw.type === 'file' || 
-                    raw.type == 'password' || raw.type == 'text' || 
-                    raw.type == 'textarea') { 
-                    if (!input.hasClass("hasDatepicker")) {
-                        input.focus();
+
+        /* Select the first form which does not have data-deform-focus-form=off */
+        var form = $(el).find('form').filter('[data-deform-focus-form != off]').first();
+
+        if(form) {
+            if($(form).attr('data-deform-focus-form') == 'manual') {
+                /* Focus on the first input with data-deform-manual-focus set */
+                var input = $(form).find(':input')
+                    .filter('[id ^= deformField]')
+                    .filter('[type != hidden]')
+                    .filter('[data-deform-manual-focus = "on"]')
+                    .first();
+                if (input) {
+                    var raw = input.get(0);
+                    if (raw) {
+                        if (raw.type === 'text' || raw.type === 'file' || 
+                            raw.type == 'password' || raw.type == 'text' || 
+                            raw.type == 'textarea') { 
+                                if (!input.hasClass("hasDatepicker")) {
+                                    input.focus();
+                                    return;
+                                }
+                        }
+                    }
+                }
+            } else {
+                /* Focus on the first element of this form (i.e. data-deform-focus-form=='auto') */
+                var input = $(form).find(':input')
+                    .filter('[id ^= deformField]')
+                    .filter('[type != hidden]')
+                    .first();
+                if (input) {
+                    var raw = input.get(0);
+                    if (raw) {
+                        if (raw.type === 'text' || raw.type === 'file' || 
+                            raw.type == 'password' || raw.type == 'text' || 
+                            raw.type == 'textarea') { 
+                                if (!input.hasClass("hasDatepicker")) {
+                                    input.focus();
+                                    return;
+                                }
+                        }
                     }
                 }
             }
         }
+
     },
 
     randomString: function (length) {
