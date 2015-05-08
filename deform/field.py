@@ -111,9 +111,8 @@ class Field(object):
 
         manual_focus
             If the field's parent form has its ``focus_form`` argument set to 
-            ``manual``, the first field with ``manual_focus`` set will receive 
-            focus on page load. Any non-None value will set ``manual_focus`` to 
-            ``on``.
+            ``manual``, the first field with ``manual_focus`` set to ``on`` 
+            will receive focus on page load.
             Default: ``None``
 
     *Constructor Arguments*
@@ -169,7 +168,11 @@ class Field(object):
         if resource_registry is None:
             resource_registry = self.default_resource_registry
         self.renderer = renderer
-        if manual_focus is not None:
+        if (manual_focus is None 
+            or manual_focus == False 
+            or manual_focus.lower() == 'off'):
+            self.manual_focus = None
+        elif manual_focus == True or manual_focus.lower() == 'on':
             self.manual_focus = 'on'
         else:
             self.manual_focus = None
