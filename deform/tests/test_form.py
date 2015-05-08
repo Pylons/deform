@@ -80,18 +80,18 @@ class TestForm(unittest.TestCase):
         form = self._makeOne(schema)
         self.assertEqual(form.focus_form, 'auto')
 
-    def test_ctor_focus_form_auto(self):
+    def test_ctor_focus_form_default(self):
         schema = DummySchema()
         schema.children = [DummySchema()]
-        form = self._makeOne(schema, focus_form='auto')
-        self.assertEqual(form.focus_form, 'auto')
+        form = self._makeOne(schema)
+        self.assertEqual(form.focus_form, 'on')
     
-    def test_ctor_focus_form_manual(self):
+    def test_ctor_focus_form_on(self):
         schema = DummySchema()
         schema.children = [DummySchema()]
-        form = self._makeOne(schema, focus_form='manual')
-        self.assertEqual(form.focus_form, 'manual')
-
+        form = self._makeOne(schema, focus_form='on')
+        self.assertEqual(form.focus_form, 'on')
+    
     def test_ctor_focus_form_off(self):
         schema = DummySchema()
         schema.children = [DummySchema()]
