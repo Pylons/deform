@@ -111,7 +111,7 @@ class Field(object):
 
         manual_focus
             If the field's parent form has its ``focus_form`` argument set to 
-            ``manual``, the first field with ``manual_focus`` set to ``on`` 
+            ``on``, the first field with ``manual_focus`` set to ``on`` 
             will receive focus on page load.
             Default: ``None``
 
