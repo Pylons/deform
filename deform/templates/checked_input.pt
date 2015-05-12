@@ -4,7 +4,7 @@
                  style style|field.widget.style;
                  mask mask|field.widget.mask;
                  mask_placeholder mask_placeholder|field.widget.mask_placeholder;
-                 manual_focus manual_focus|field.manual_focus"
+                 autofocus autofocus|field.autofocus"
      i18n:domain="deform"
      tal:omit-tag="">
   ${field.start_mapping()}
@@ -13,7 +13,7 @@
            tal:attributes="style style;
                            class string: form-control ${css_class or ''};
                            placeholder subject;
-                           data-deform-manual-focus manual_focus"
+                           data-deform-autofocus autofocus"
            id="${oid}"/>
   </div>
   <div>

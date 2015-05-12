@@ -109,9 +109,9 @@ class Field(object):
         resource_registry
             The :term:`resource registry` associated with this field.
 
-        manual_focus
-            If the field's parent form has its ``focus_form`` argument set to 
-            ``on``, the first field with ``manual_focus`` set to ``on`` 
+        autofocus
+            If the field's parent form has its ``focus`` argument set to 
+            ``on``, the first field with ``autofocus`` set to ``on`` 
             will receive focus on page load.
             Default: ``None``
 
@@ -153,7 +153,7 @@ class Field(object):
 
     def __init__(self, schema, renderer=None, counter=None,
                  resource_registry=None, appstruct=colander.null,
-                 parent=None, manual_focus=None, **kw):
+                 parent=None, autofocus=None, **kw):
         self.counter = counter or itertools.count()
         self.order = next(self.counter)
         self.oid = getattr(schema, 'oid', 'deformField%s' % self.order)
@@ -168,14 +168,14 @@ class Field(object):
         if resource_registry is None:
             resource_registry = self.default_resource_registry
         self.renderer = renderer
-        if (manual_focus is None 
-            or manual_focus == False 
-            or manual_focus.lower() == 'off'):
-            self.manual_focus = None
-        elif manual_focus == True or manual_focus.lower() == 'on':
-            self.manual_focus = 'on'
+        if (autofocus is None 
+            or autofocus == False 
+            or autofocus.lower() == 'off'):
+            self.autofocus = None
+        elif autofocus == True or autofocus.lower() == 'on':
+            self.autofocus = 'on'
         else:
-            self.manual_focus = None
+            self.autofocus = None
         self.resource_registry = resource_registry
         self.children = []
         if parent is not None:
@@ -184,9 +184,9 @@ class Field(object):
         self.__dict__.update(kw)
         for child in schema.children:
             try:
-                manual_focus = getattr(child, 'manual_focus')
+                autofocus = getattr(child, 'autofocus')
             except:
-                manual_focus = None
+                autofocus = None
             self.children.append(
                 Field(
                     child,
@@ -194,7 +194,7 @@ class Field(object):
                     counter=self.counter,
                     resource_registry=resource_registry,
                     parent=self,
-                    manual_focus=manual_focus,
+                    autofocus=autofocus,
                     **kw
                     )
                 )

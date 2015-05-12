@@ -2,7 +2,7 @@
                  css_class css_class|field.widget.css_class;
                  style style|field.widget.style;
                  inline getattr(field.widget, 'inline', False);
-                 manual_focus manual_focus|field.manual_focus"
+                 autofocus autofocus|field.autofocus"
      tal:omit-tag="not inline">
   ${field.start_rename()}
   <div tal:repeat="choice values | field.widget.values"
@@ -14,7 +14,7 @@
       <input tal:attributes="checked value == cstruct;
                              class css_class;
                              style style;
-                             data-deform-manual-focus manual_focus"
+                             data-deform-autofocus autofocus"
              type="radio"
              name="${oid}"
              value="${value}"

@@ -3,10 +3,10 @@ Next release
 
 - Changed deform.js:focusFirstInput() to perform selectable input focusing on 
   page load. 
-  Forms have an optional focus_form parameter ('on'|'off')
-  'on': if the form contains an input with manual_focus='on', that input field 
+  Forms have an optional focus parameter ('on'|'off')
+  'on': if the form contains an input with autofocus='on', that input field 
         will receive focus.
-  'on': if the form does not contain an input with manual_focus='on', the first 
+  'on': if the form does not contain an input with autofocus='on', the first 
         input field of the form will receive focus.
   'off' disables focusing for that form.
   Default behaviour is 'on' (unchanged).

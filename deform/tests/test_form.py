@@ -74,29 +74,23 @@ class TestForm(unittest.TestCase):
         form = self._makeOne(schema, autocomplete=False)
         self.assertEqual(form.autocomplete, 'off')
 
-    def test_ctor_focus_form_default(self):
+    def test_ctor_focus_default(self):
         schema = DummySchema()
         schema.children = [DummySchema()]
         form = self._makeOne(schema)
-        self.assertEqual(form.focus_form, 'auto')
+        self.assertEqual(form.focus, 'on')
 
-    def test_ctor_focus_form_default(self):
+    def test_ctor_focus_on(self):
         schema = DummySchema()
         schema.children = [DummySchema()]
-        form = self._makeOne(schema)
-        self.assertEqual(form.focus_form, 'on')
+        form = self._makeOne(schema, focus='on')
+        self.assertEqual(form.focus, 'on')
     
-    def test_ctor_focus_form_on(self):
+    def test_ctor_focus_off(self):
         schema = DummySchema()
         schema.children = [DummySchema()]
-        form = self._makeOne(schema, focus_form='on')
-        self.assertEqual(form.focus_form, 'on')
-    
-    def test_ctor_focus_form_off(self):
-        schema = DummySchema()
-        schema.children = [DummySchema()]
-        form = self._makeOne(schema, focus_form='off')
-        self.assertEqual(form.focus_form, 'off')
+        form = self._makeOne(schema, focus='off')
+        self.assertEqual(form.focus, 'off')
 
 class TestIssues(unittest.TestCase):
 

@@ -158,38 +158,38 @@ var deform  = {
 
     focusFirstInput: function (el) {
         /*
-         * If a form's data-deform-focus-form attribute is 'off', no focusing 
+         * If a form's data-deform-focus attribute is 'off', no focusing 
          * will be done on that form.
          *
-         * If a form's data-deform-focus-form attribute is 'on' AND a child 
-         * input has its data-deform-manual-focus attribute set to 'on', that 
+         * If a form's data-deform-focus attribute is 'on' AND a child 
+         * input has its data-deform-autofocus attribute set to 'on', that 
          * input will be focused.
          *
-         * If a form's data-deform-focus-form attribute is 'on' AND no child has 
-         * its data-deform-manual-focus attribute set to 'on', the first input 
+         * If a form's data-deform-focus attribute is 'on' AND no child has 
+         * its data-deform-autofocus attribute set to 'on', the first input 
          * of the form will be focused.
          */
         el = el || document.body;
 
-        /* Select the first form which does not have data-deform-focus-form=off */
-        var form = $(el).find('form').filter('[data-deform-focus-form = on]').first();
+        /* Select the first form which does not have data-deform-focus=off */
+        var form = $(el).find('form').filter('[data-deform-focus = on]').first();
 
-        if(form) {
-            /* Focus on the first input with data-deform-manual-focus='on' */
-            var manual_input = $(form).find(':input')
+        if(form.length==1) {
+            /* Focus on the first input with data-deform-autofocus='on' */
+            var autofocus_input = $(form).find(':input')
                 .filter('[id ^= deformField]')
                 .filter('[type != hidden]')
-                .filter('[data-deform-manual-focus = "on"]')
+                .filter('[data-deform-autofocus = "on"]')
                 .first();
             
-            if(manual_input.length==1) {
-                var raw = manual_input.get(0);
+            if(autofocus_input.length==1) {
+                var raw = autofocus_input.get(0);
                 if (raw) {
                     if (raw.type === 'text' || raw.type === 'file' || 
                         raw.type == 'password' || raw.type == 'text' || 
                         raw.type == 'textarea') { 
-                            if (!manual_input.hasClass("hasDatepicker")) {
-                                manual_input.focus();
+                            if (!autofocus_input.hasClass("hasDatepicker")) {
+                                autofocus_input.focus();
                                 return;
                             }
                     }

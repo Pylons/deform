@@ -2,7 +2,7 @@
                  style style|field.widget.style;
                  oid oid|field.oid;
                  inline getattr(field.widget, 'inline', False);
-                 manual_focus manual_focus|field.manual_focus"
+                 autofocus autofocus|field.autofocus"
      tal:omit-tag="not inline">
   ${field.start_sequence()}
   <div tal:repeat="choice values | field.widget.values"
@@ -14,7 +14,7 @@
       <input tal:attributes="checked value in cstruct;
                              class css_class;
                              style style;
-                             data-deform-manual-focus manual_focus"
+                             data-deform-autofocus autofocus"
              type="checkbox"
              name="checkbox"
              value="${value}"

@@ -4,11 +4,11 @@
                       oid oid|field.oid;
                       name name|field.name;
                       style style|field.widget.style;
-                      manual_focus manual_focus|field.manual_focus"
+                      autofocus autofocus|field.autofocus"
           tal:attributes="rows rows;
                           cols cols;
                           class string: form-control ${css_class or ''};
                           style style;
-                          data-deform-manual-focus manual_focus"
+                          data-deform-autofocus autofocus"
           id="${oid}"
           name="${name}">${cstruct}</textarea>

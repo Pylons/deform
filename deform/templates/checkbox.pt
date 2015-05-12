@@ -5,14 +5,14 @@
                        css_class css_class|field.widget.css_class;
                        style style|field.widget.style;
                        oid oid|field.oid;
-                       manual_focus manual_focus|field.manual_focus|None"
+                       autofocus autofocus|field.autofocus|None"
            type="checkbox"
            name="${name}" value="${true_val}"
            id="${oid}"
            tal:attributes="checked cstruct == true_val;
                            class css_class;
                            style style;
-                           data-deform-manual-focus manual_focus" />
+                           data-deform-autofocus autofocus" />
 
     <span tal:condition="hasattr(field, 'schema') and hasattr(field.schema, 'label')"
           tal:replace="field.schema.label" class="checkbox-label" >
