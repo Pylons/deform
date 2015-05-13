@@ -12,7 +12,7 @@
            tal:attributes="checked cstruct == true_val;
                            class css_class;
                            style style;
-                           data-deform-autofocus autofocus" />
+                           autofocus autofocus" />
 
     <span tal:condition="hasattr(field, 'schema') and hasattr(field.schema, 'label')"
           tal:replace="field.schema.label" class="checkbox-label" >

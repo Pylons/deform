@@ -13,7 +13,7 @@
            tal:attributes="style style;
                            class string: form-control ${css_class or ''};
                            placeholder subject;
-                           data-deform-autofocus autofocus"
+                           autofocus autofocus"
            id="${oid}"/>
   </div>
   <div>

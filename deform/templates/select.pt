@@ -17,7 +17,7 @@
           multiple multiple;
           size size;
           style style;
-          data-deform-autofocus autofocus">
+          autofocus autofocus">
     <tal:loop tal:repeat="item values">
       <optgroup tal:condition="isinstance(item, optgroup_class)"
                 tal:attributes="label item.label">

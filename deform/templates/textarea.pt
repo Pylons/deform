@@ -9,6 +9,6 @@
                           cols cols;
                           class string: form-control ${css_class or ''};
                           style style;
-                          data-deform-autofocus autofocus"
+                          autofocus autofocus"
           id="${oid}"
           name="${name}">${cstruct}</textarea>

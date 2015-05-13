@@ -12,7 +12,7 @@
       <input type="text" name="year" value="${year}"
              class="span2 form-control ${css_class or ''}"
              tal:attributes="style style;
-                             data-deform-autofocus autofocus"
+                             autofocus autofocus"
              maxlength="4"
              id="${oid}"/>
     </div>

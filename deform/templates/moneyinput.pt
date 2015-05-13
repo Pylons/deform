@@ -9,7 +9,7 @@
     <input type="text" name="${name}" value="${cstruct}" 
            tal:attributes="style style;
                            class string: form-control ${css_class or ''};
-                           data-deform-autofocus autofocus"
+                           autofocus autofocus"
            id="${oid}"/>
     <script type="text/javascript">
       deform.addCallback(

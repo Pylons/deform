@@ -231,6 +231,21 @@ class IntSchema(colander.Schema):
         widget=deform.widget.RadioChoiceWidget(values=((0, 'zero'), (1, 'one')))
     )
 
+class AutofocusDefaultSchema(colander.Schema):
+    input1 = colander.SchemaNode(
+            colander.String(),
+            )
+
+class AutofocusSchema(colander.Schema):
+    input1 = colander.SchemaNode(
+            colander.String(),
+            )
+
+    input2 = colander.SchemaNode(
+            colander.String(),
+            autofocus='on'
+            )
+
 def remove_date(node, kw):
     if kw.get('nodates'): del node['date']
 
@@ -246,6 +261,24 @@ class TestSchemas(unittest.TestCase):
         value_index = result_with_checked.index('value="1"')
         checked_index = result_with_checked.index('checked="True"', value_index)
         self.assertTrue(checked_index > 0)
+
+    def test_autofocus_off(self):
+        schema = AutofocusSchema()
+        form = deform.Form(schema, buttons=('submit',), focus='off')
+        rendered = form.render()
+        self.assertFalse('autofocus="autofocus"' in rendered)
+
+    def test_autofocus_on(self):
+        schema = AutofocusSchema()
+        form = deform.Form(schema, buttons=('submit',), focus='on')
+        rendered = form.render()
+        self.assertTrue('autofocus="autofocus"' in rendered)
+
+    def test_autofocus_default(self):
+        schema = AutofocusDefaultSchema()
+        form = deform.Form(schema, buttons=('submit',))
+        rendered = form.render()
+        self.assertTrue('autofocus="autofocus"' in rendered)
 
 class TestDeferredFunction(unittest.TestCase):
     def test_it(self):

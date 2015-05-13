@@ -12,7 +12,7 @@
          tal:attributes="size size;
                          class string: ${css_class or ''} form-control hasDatepicker;
                          style style;
-                         data-deform-autofocus autofocus"
+                         autofocus autofocus"
          id="${oid}"/>
   ${field.end_mapping()}
   <script type="text/javascript">

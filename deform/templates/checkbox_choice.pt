@@ -14,7 +14,7 @@
       <input tal:attributes="checked value in cstruct;
                              class css_class;
                              style style;
-                             data-deform-autofocus autofocus"
+                             autofocus autofocus"
              type="checkbox"
              name="checkbox"
              value="${value}"

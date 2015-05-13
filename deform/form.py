@@ -57,7 +57,7 @@ class Form(field.Field):
         Determines this form's input focus. If ``focus`` is ``on`` or 
         omitted, the first input of the first form on the page will receive 
         focus on page load. If ``focus`` is ``on``, the first field 
-        with its ``autofocus`` schema attribute set to ``on`` will receive 
+        with its ``autofocus`` schema parameter set to ``on`` will receive 
         focus. If `focus`` is ``off``, no focusing will be done.
         Default: ``on``.
 
@@ -118,6 +118,9 @@ class Form(field.Field):
             self.focus = 'off'
         else:
             self.focus = 'on'
+        # Use kwargs to pass flags to decendant fields; saves cluttering 
+        # the constructor
+        kw['focus'] = self.focus
         field.Field.__init__(self, schema, **kw)
         _buttons = []
         for button in buttons:

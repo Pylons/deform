@@ -10,7 +10,7 @@
            data-provide="typeahead"
            tal:attributes="class string: form-control ${css_class or ''};
                            style style;
-                           data-deform-autofocus autofocus"
+                           autofocus autofocus"
            id="${oid}"/>
     <script tal:condition="field.widget.values" type="text/javascript">
         deform.addCallback(

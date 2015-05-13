@@ -17,7 +17,7 @@
     </style>  
   <textarea id="${oid}" name="${name}" 
             class='tinymce form-control' tal:content="structure cstruct" 
-            tal:attributes="data-deform-autofocus autofocus"/>
+            tal:attributes="autofocus autofocus"/>
   <span id="${oid}-preload" class="tinymce-preload" 
         tal:content="structure cstruct" />
   <script type="text/javascript">

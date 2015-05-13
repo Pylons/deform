@@ -11,7 +11,7 @@
       <input type="text" name="date" value="${date}"
              class="span2 form-control ${css_class or ''} hasDatepicker"
              tal:attributes="style style;
-                             data-deform-autofocus autofocus"
+                             autofocus autofocus"
              id="${oid}-date"/>
     </div>
     <div class="input-group col-xs-6">

@@ -4,10 +4,9 @@
  * to include the call at the end of the page.
  */
 
-$(document).ready(function(){
+$(document).ready(function() {
     deform.load();
 });
-
 
 var deform_loaded = false;
 
@@ -26,7 +25,6 @@ var deform  = {
       $(function() {
         if (!deform_loaded) {
             deform.processCallbacks();
-            deform.focusFirstInput();
             deform_loaded = true;
       }});
     },
@@ -155,68 +153,6 @@ var deform  = {
         oid_node.find('.deform-seq-add').not(oid_node.find('.deform-seq-container .deform-seq-add')).toggle(show_addbutton);
         $lis.find('.deform-order-button').not($lis.find('.deform-seq-container .deform-order-button')).toggle(orderable && has_multiple);
      },
-
-    focusFirstInput: function (el) {
-        /*
-         * If a form's data-deform-focus attribute is 'off', no focusing 
-         * will be done on that form.
-         *
-         * If a form's data-deform-focus attribute is 'on' AND a child 
-         * input has its data-deform-autofocus attribute set to 'on', that 
-         * input will be focused.
-         *
-         * If a form's data-deform-focus attribute is 'on' AND no child has 
-         * its data-deform-autofocus attribute set to 'on', the first input 
-         * of the form will be focused.
-         */
-        el = el || document.body;
-
-        /* Select the first form which does not have data-deform-focus=off */
-        var form = $(el).find('form').filter('[data-deform-focus = on]').first();
-
-        if(form.length==1) {
-            /* Focus on the first input with data-deform-autofocus='on' */
-            var autofocus_input = $(form).find(':input')
-                .filter('[id ^= deformField]')
-                .filter('[type != hidden]')
-                .filter('[data-deform-autofocus = "on"]')
-                .first();
-            
-            if(autofocus_input.length==1) {
-                var raw = autofocus_input.get(0);
-                if (raw) {
-                    if (raw.type === 'text' || raw.type === 'file' || 
-                        raw.type == 'password' || raw.type == 'text' || 
-                        raw.type == 'textarea') { 
-                            if (!autofocus_input.hasClass("hasDatepicker")) {
-                                autofocus_input.focus();
-                                return;
-                            }
-                    }
-                }
-            } else {
-                /* Focus on the first element of this form */
-                var input = $(form).find(':input')
-                    .filter('[id ^= deformField]')
-                    .filter('[type != hidden]')
-                    .first();
-                
-                if(input.length==1) {
-                    var raw = input.get(0);
-                    if (raw) {
-                        if (raw.type === 'text' || raw.type === 'file' || 
-                            raw.type == 'password' || raw.type == 'text' || 
-                            raw.type == 'textarea') { 
-                                if (!input.hasClass("hasDatepicker")) {
-                                    input.focus();
-                                    return;
-                                }
-                        }
-                    }
-                }
-            }
-        }
-    },
 
     randomString: function (length) {
         var chr='0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';

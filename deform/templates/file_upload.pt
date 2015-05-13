@@ -18,7 +18,7 @@
   <input type="file" name="upload" 
          tal:attributes="class css_class;
                          style style;
-                         data-deform-autofocus autofocus"
+                         autofocus autofocus"
          id="${oid}"/>
 
   ${field.end_mapping()}
