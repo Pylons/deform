@@ -167,7 +167,7 @@ var deform  = {
 
     focusFirstInput: function (el) {
         el = el || document.body;
-        var input = $(el).find(':input')
+        var input = $(el).find(':input:not(.deform-dont-focus)')
           .filter('[id ^= deformField]')
           .filter('[type != hidden]')
           .first();
