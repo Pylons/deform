@@ -151,6 +151,16 @@ class Field(object):
     _cstruct = colander.null
     default_renderer = template.default_renderer
     default_resource_registry = widget.default_resource_registry
+    # Allowable input types for automatic focusing
+    focusable_input_types = (
+                type(colander.String()),
+                type(colander.Integer()),
+                type(colander.Decimal()),
+                type(colander.Float()),
+                type(colander.Date()),
+                type(colander.Time()),
+                type(colander.Boolean()))
+    hidden_type = type(HiddenWidget())
 
     def __init__(self, schema, renderer=None, counter=None,
                  resource_registry=None, appstruct=colander.null,
@@ -197,16 +207,6 @@ class Field(object):
         self._parent = parent
         self.__dict__.update(kw)
 
-        # Allowable input types for automatic focusing
-        focusable_input_types = (
-                type(colander.String()),
-                type(colander.Integer()),
-                type(colander.Decimal()),
-                type(colander.Float()),
-                type(colander.Date()),
-                type(colander.Time()),
-                type(colander.Boolean()))
-        hidden_type = type(HiddenWidget())
         first_input_index = -1
         child_count = 0
         focused = False
@@ -214,8 +214,8 @@ class Field(object):
             if (
                     focus == 'on' and 
                     not focused and
-                    type(child.typ) in focusable_input_types and
-                    type(child.widget) != hidden_type and
+                    type(child.typ) in Field.focusable_input_types and
+                    type(child.widget) != Field.hidden_type and
                     not self.have_first_input
                ):
                 first_input_index = child_count
