@@ -474,7 +474,7 @@ For example, using the :term:`WebOb` API for the above tasks, and the
 
        try:
            appstruct = myform.validate(controls)  # call validate
-       except ValidationFailure, e: # catch the exception
+       except ValidationFailure as e: # catch the exception
            return {'form':e.render()} # re-render the form with an exception
 
        # the form submission succeeded, we have the data
