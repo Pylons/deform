@@ -69,7 +69,11 @@
    deform.addCallback(
      '${field.oid}',
      function(oid) {
-       $('#' + oid).select2({containerCssClass: 'form-control'});
+       $('#' + oid).select2({
+         containerCssClass: 'form-control',
+         placeholder: "${str(field.widget.placeholder).replace('"','\\"')|""}",
+         allowClear: true
+       });
      }
    );
   </script>
