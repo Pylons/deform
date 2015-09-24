@@ -81,6 +81,9 @@ Widget-Related
 .. autoclass:: RichTextWidget
    :members:
 
+.. autoclass:: PasswordWidget
+   :members:
+
 .. autoclass:: CheckboxWidget
    :members:
 
@@ -119,6 +122,9 @@ Widget-Related
    :members:
 
 .. autoclass:: FileUploadWidget
+   :members:
+
+.. autoclass:: TimeInputWidget
    :members:
 
 .. autoclass:: DateInputWidget
