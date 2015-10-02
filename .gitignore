@@ -7,13 +7,11 @@
 *~
 .*.swp
 .coverage
+.eggs/
 .tox/
 nosetests.xml
 coverage.xml
-env26/
-env25/
-env24/
-env27/
+env*/
 jyenv/
 pypyenv/
 2xenv/
