@@ -82,6 +82,9 @@ Widget-Related
 .. autoclass:: RichTextWidget
    :members:
 
+.. autoclass:: PasswordWidget
+   :members:
+
 .. autoclass:: CheckboxWidget
    :members:
 
