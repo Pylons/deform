@@ -5,7 +5,8 @@
                  hidden hidden|field.widget.hidden;
                  category category|field.widget.category;
                  structural hidden or category == 'structural';
-                 required required|field.required;"
+                 required required|field.required;
+                 description_top getattr(field.schema, 'description_top', False)"
      class="form-group ${field.error and 'has-error' or ''} ${field.widget.item_css_class or ''}"
      title="${description}"
      id="item-${oid}"
@@ -19,7 +20,10 @@
          >
     ${title}
   </label>
-
+  <p tal:condition="description_top and field.description and not field.widget.hidden"
+     class="help-block" >
+    ${field.description}
+  </p>
   <div tal:define="input_prepend field.widget.input_prepend | None;
                    input_append field.widget.input_append  | None"
        tal:omit-tag="not (input_prepend or input_append)"
@@ -41,8 +45,9 @@
     ${msg}
   </p>
 
-  <p tal:condition="field.description and not field.widget.hidden"
+  <p tal:condition="not description_top and field.description and not field.widget.hidden"
      class="help-block" >
     ${field.description}
   </p>
 </div>
+
