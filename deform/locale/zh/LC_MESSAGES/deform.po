@@ -28,7 +28,7 @@ msgstr "${value}没有${key}密钥"
 
 #: deform/schema.py:146
 msgid "${value} is not iterable"
-msgstr "${value}不是可迭代的"
+msgstr "${value}不可遍历"
 
 #: deform/schema.py:150
 msgid "Required"
