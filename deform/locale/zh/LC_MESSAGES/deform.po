@@ -31,7 +31,7 @@ msgstr "${value}不可遍历"
 
 #: deform/schema.py:150
 msgid "Required"
-msgstr "必须"
+msgstr "必需"
 
 #: deform/widget.py:779
 msgid "Fields did not match"
