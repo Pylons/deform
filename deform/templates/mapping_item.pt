@@ -6,7 +6,7 @@
                  category category|field.widget.category;
                  structural hidden or category == 'structural';
                  required required|field.required;
-                 description_top getattr(field.schema, 'description_top', False)"
+                 description_bottom getattr(field.schema, 'description_bottom', False)"
      class="form-group ${field.error and 'has-error' or ''} ${field.widget.item_css_class or ''}"
      title="${description}"
      id="item-${oid}"
@@ -20,7 +20,7 @@
          >
     ${title}
   </label>
-  <p tal:condition="description_top and field.description and not field.widget.hidden"
+  <p tal:condition="not description_bottom and field.description and not field.widget.hidden"
      class="help-block" >
     ${field.description}
   </p>
@@ -45,7 +45,7 @@
     ${msg}
   </p>
 
-  <p tal:condition="not description_top and field.description and not field.widget.hidden"
+  <p tal:condition="description_bottom and field.description and not field.widget.hidden"
      class="help-block" >
     ${field.description}
   </p>
