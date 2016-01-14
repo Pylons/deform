@@ -1,0 +1,54 @@
+Distributing a new release
+==========================
+
+- Do any necessary branch merges (e.g. master to branch, branch to master).
+
+- On release branch:
+
+  $ git pull
+
+- Do platform test via tox:
+
+- Make sure your Python has ``setuptools-git``, ``twine`` and ``wheel`` installed:
+
+    $ $VENV/bin/easy_install setuptools-git twine wheel
+
+- Do a platform test:
+
+    $ tox -r
+
+- Ensure all features of the release are documented (audit CHANGES.txt or communicate with contributors).
+
+- Change setup.py version to the new version number.
+
+- Change CHANGES.txt heading to reflect the new version number.
+
+- Make sure PyPI long description renders (requires ``collective.dist``
+  installed into your Python):
+
+    $ $VENV/bin/python setup.py check -r
+
+- Build an sdist and a wheel:
+
+    $ $VENV/bin/python setup.py sdist bdist_wheel
+
+- Release the wheels to PyPI:
+
+    $ $VENV/bin/twine upload dist/deform-X.Y*
+
+- Upload a git tag for the release:
+
+    $ git tag X.Y
+    $ git push origin X.Y
+
+- Update RTD to render a new version of the docs at that tag X.Y and set X.Y
+  as the default branch such that /latest/ points to it.
+
+- Publish new version of docs.
+
+- Update deform demo site
+
+- Announce the release on the mailing list.
+
+- Announce the release on twitter.
+
