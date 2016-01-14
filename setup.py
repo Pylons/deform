@@ -74,6 +74,10 @@ setupkw = dict(
         },
     )
 
+# if a git repo then add setuptools-git as a setup_requires
+if os.path.isdir(os.path.join(here, '.git')):
+    setupkw['setup_requires'] = ['setuptools_git']
+
 # to update catalogs, use babel and lingua !
 try:
     import babel
