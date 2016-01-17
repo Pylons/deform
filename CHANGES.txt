@@ -1,6 +1,15 @@
 Next release
 ------------
 
+- Removed deform.js:focusFirstInput()
+  Forms have an optional focus parameter ('on'|'off')
+  'on': if the form contains an input with autofocus='on', that input field 
+        will receive focus.
+  'on': if the form does not contain an input with autofocus='on', the first 
+        input field of the form will receive focus.
+  'off' disables focusing for that form.
+  Default behaviour is 'on' (unchanged).
+
 - Make ``dateinput`` work again by using the fixed name "date" as expected
   by the pstruct schema.  See https://github.com/Pylons/deform/pull/221.
 
