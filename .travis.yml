@@ -7,10 +7,15 @@ env:
   - TOXENV=py27
   - TOXENV=py33
   - TOXENV=py34
-  - TOXENV=py35
   - TOXENV=pypy
   - TOXENV=pypy3
   - TOXENV=cover
+
+matrix:
+  include:  
+    - python 3.5
+      env:
+        - TOXENV=py35
 
 install:
   - travis_retry pip install tox
