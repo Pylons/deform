@@ -102,8 +102,12 @@ var deform  = {
         var old_len = parseInt(before.attr('now_len')||'0', 10);
         before.attr('now_len', old_len + 1);
         // we added something to the dom, trigger a change event
-        var e = jQuery.Event("change");
-        $('#deform').trigger(e);
+       var e = jQuery.Event("change");
+       var item_added = jQuery.Event("item_added");
+       item_added.element = $htmlnode;
+       var form = $($htmlnode.parents('form.deform').first());
+       form.trigger(e);
+       form.trigger(item_added);
     },
 
     appendSequenceItem: function(node) {
@@ -125,6 +129,8 @@ var deform  = {
 
     removeSequenceItem: function(clicked) {
         var $item_node = $(clicked).closest('.deform-seq-item');
+        var form = $($item_node.parents('form.deform').first());
+        var sequence = $($item_node.parents('.deform-seq-container').first());
         var $oid_node = $item_node.closest('.deform-seq');
         var $before_node = $oid_node.find('.deform-insert-before').last();
         var min_len = parseInt($before_node.attr('min_len')||'0', 10);
@@ -138,9 +144,12 @@ var deform  = {
                                           now_len-1, orderable);
         }
         // we removed something from the dom, trigger a change event
-        var e = jQuery.Event("change");
-        $('#deform').trigger(e);
-        return false;
+       var e = jQuery.Event("change");
+       var item_removed = jQuery.Event("item_removed");
+       item_removed.sequence = sequence;
+       form.trigger(e);
+       form.trigger(item_removed);
+       return false;
     },
 
     processSequenceButtons: function(oid_node, min_len, max_len, now_len,
@@ -158,7 +167,7 @@ var deform  = {
 
     focusFirstInput: function (el) {
         el = el || document.body;
-        var input = $(el).find(':input')
+        var input = $(el).find(':input:not(.deform-dont-focus)')
           .filter('[id ^= deformField]')
           .filter('[type != hidden]')
           .first();

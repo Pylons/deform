@@ -58,7 +58,7 @@ class _StrippedString(_PossiblyEmptyString):
 
 class _FieldStorage(SchemaType):
     def deserialize(self, node, cstruct):
-        if cstruct in (null, None, ''):
+        if cstruct in (null, None, '', b''):
             return null
         # weak attempt at duck-typing
         if not hasattr(cstruct, 'file'):
@@ -592,7 +592,7 @@ class DateInputWidget(Widget):
         options = dict(
             kw.get('options') or self.options or self.default_options
             )
-        options['submitFormat'] = 'yyyy-mm-dd'
+        options['formatSubmit'] = 'yyyy-mm-dd'
         kw.setdefault('options_json', json.dumps(options))
         values = self.get_template_values(field, cstruct, kw)
         return field.renderer(template, **values)
