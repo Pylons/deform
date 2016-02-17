@@ -121,3 +121,4 @@ Contributors
 - Calvin Hendryx-Parker, 2013/09/03
 - Cédric Messiant, 2014/06/27
 - Josip Delić, 2016/02/16
+- Bert JW Regeer, 2016/02/16

@@ -20,7 +20,7 @@ from setuptools import find_packages
 here = os.path.abspath(os.path.dirname(__file__))
 
 try:
-    with open(os.path.join(here, 'README.txt')) as f:
+    with open(os.path.join(here, 'README.rst')) as f:
         README = f.read()
     with open(os.path.join(here, 'CHANGES.txt')) as f:
         CHANGES = f.read()
@@ -37,8 +37,18 @@ requires = [
     'zope.deprecation',
     ]
 
-testing_extras = ['nose', 'coverage', 'beautifulsoup4']
-docs_extras = ['Sphinx']
+testing_extras = [
+    'nose',
+    'coverage',
+    'beautifulsoup4'
+    ]
+
+docs_extras = [
+    'Sphinx >= 1.3.4',
+    'repoze.sphinx.autointerface',
+    'pylons_sphinx_latesturl',
+    'pylons-sphinx-themes',
+    ]
 
 setupkw = dict(
     name='deform',
@@ -68,9 +78,9 @@ setupkw = dict(
     tests_require=testing_extras,
     install_requires=requires,
     test_suite="deform.tests",
-    extras_require = {
-        'testing':testing_extras,
-        'docs':docs_extras,
+    extras_require={
+        'testing': testing_extras,
+        'docs': docs_extras,
         },
     )
 
@@ -81,9 +91,10 @@ try:
     # if babel is installed, advertise message extractors (if we pass
     # this to setup() unconditionally, and babel isn't installed,
     # distutils warns pointlessly)
-    setupkw['message_extractors'] = { "deform": [
-        ("**.py",     "lingua_python", None ),
-        ("**.pt", "lingua_xml", None ),
+    setupkw['message_extractors'] = {
+        "deform": [
+            ("**.py", "lingua_python", None),
+            ("**.pt", "lingua_xml", None),
         ]}
 except ImportError:
     pass
