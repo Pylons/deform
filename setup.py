@@ -40,6 +40,13 @@ requires = [
 testing_extras = ['nose', 'coverage', 'beautifulsoup4']
 docs_extras = ['Sphinx']
 
+docs_extras = [
+    'Sphinx >= 1.3.4',
+    'repoze.sphinx.autointerface',
+    'pylons_sphinx_latesturl',
+    'pylons-sphinx-themes',
+    ]
+
 setupkw = dict(
     name='deform',
     version='2.0a3.dev0',
