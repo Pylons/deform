@@ -37,8 +37,11 @@ requires = [
     'zope.deprecation',
     ]
 
-testing_extras = ['nose', 'coverage', 'beautifulsoup4']
-docs_extras = ['Sphinx']
+testing_extras = [
+    'nose',
+    'coverage',
+    'beautifulsoup4'
+    ]
 
 docs_extras = [
     'Sphinx >= 1.3.4',
