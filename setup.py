@@ -20,7 +20,7 @@ from setuptools import find_packages
 here = os.path.abspath(os.path.dirname(__file__))
 
 try:
-    with open(os.path.join(here, 'README.txt')) as f:
+    with open(os.path.join(here, 'README.rst')) as f:
         README = f.read()
     with open(os.path.join(here, 'CHANGES.txt')) as f:
         CHANGES = f.read()
@@ -63,6 +63,7 @@ setupkw = dict(
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.3",
         "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
         ],

@@ -6,30 +6,30 @@
                   style style|field.widget.style;">
   ${field.start_mapping()}
   <div class="row">
-    <div class="input-group col-xs-4">
+    <div class="col-xs-4"><div class="input-group">
       <span class="input-group-addon" i18n:translate="">Year</span>
       <input type="text" name="year" value="${year}"
              class="span2 form-control ${css_class or ''}"
              tal:attributes="style style"
              maxlength="4"
              id="${oid}"/>
-    </div>
-    <div class="input-group col-xs-4">
+    </div></div>
+    <div class="col-xs-4"><div class="input-group">
       <span class="input-group-addon" i18n:translate="">Month</span>
       <input type="text" name="month" value="${month}"
              class="span2 form-control ${css_class or ''}"
              tal:attributes="style style"
              maxlength="2"
              id="${oid}-month"/>
-    </div>
-    <div class="input-group col-xs-4">
+    </div></div>
+    <div class="col-xs-4"><div class="input-group">
       <span class="input-group-addon" i18n:translate="">Day</span>
       <input type="text" name="day" value="${day}"
              class="span2 form-control ${css_class or ''}"
              tal:attributes="style style"
              maxlength="2"
              id="${oid}-day"/>
-    </div>
+    </div></div>
   </div>
   ${field.end_mapping()}
 </div>
