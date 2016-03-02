@@ -7,12 +7,11 @@
                  structural hidden or category == 'structural';
                  required required|field.required;
                  description_bottom getattr(field.schema, 'description_bottom', False)"
-     class="form-group ${field.error and 'has-error' or ''} ${field.widget.item_css_class or ''}"
+     class="form-group ${field.error and (field.name in field.error.asdict()) and 'has-error' or ''} ${field.widget.item_css_class or ''}"
      title="${description}"
      id="item-${oid}"
      tal:omit-tag="structural"
      i18n:domain="deform">
-
   <label for="${oid}"
          class="control-label ${required and 'required' or ''}"
          tal:condition="not structural"
