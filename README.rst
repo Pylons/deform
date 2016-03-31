@@ -18,3 +18,10 @@ Please see http://docs.pylonsproject.org/projects/deform/en/latest/ for the
 documentation.
 
 See https://github.com/Pylons/deform for in-development version.
+
+Status
+------
+
+This library is no longer actively developed or maintained. No new versions
+will be made available. If you'd like to continue with this code base, please
+fork it.
