@@ -22,6 +22,14 @@ See https://github.com/Pylons/deform for in-development version.
 Status
 ------
 
-This library is no longer actively developed or maintained. No new versions
-will be made available. If you'd like to continue with this code base, please
-fork it.
+This library is no longer actively developed or maintained.
+
+No new versions or releases to PyPI will be made under the name "deform".
+
+Both new and existing issues and pull requests made in this repository may not
+receive a response from the Pylons Project core developers.
+
+Further development may be done by forking this project. You may release your
+forked project using a different name to PyPI. You are welcome to use the
+`GitHub developer API <https://developer.github.com/>`_ to migrate existing
+issues and pull requests to your fork.
