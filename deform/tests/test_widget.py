@@ -698,8 +698,8 @@ class TestDateTimeInputWidget(unittest.TestCase):
         pstruct = {
             'date':'2011-12-13',
             'date_submit':'2011-12-12',
-            'time':'14:15:16',
-            'time_submit': {},
+            'time': {},
+            'time_submit':'14:15:16',
             }
         self.assertRaises(colander.Invalid,
                           widget.deserialize, field, pstruct)
