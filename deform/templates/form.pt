@@ -54,7 +54,7 @@
               id="${formid+button.name}"
               name="${button.name}"
               type="${button.type}"
-              class="btn ${btn_disposition} ${button.css_class}"
+              class="btn ${button.css_class or btn_disposition}"
               value="${button.value}">
           <i tal:condition="btn_icon" class="${btn_icon}"> </i>
           ${button.title}
