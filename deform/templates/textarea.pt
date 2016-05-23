@@ -3,10 +3,12 @@
                       css_class css_class|field.widget.css_class;
                       oid oid|field.oid;
                       name name|field.name;
-                      style style|field.widget.style"
+                      style style|field.widget.style;
+                      placeholder placeholder|getattr(field.widget, 'placeholder', '');"
           tal:attributes="rows rows;
                           cols cols;
                           class string: form-control ${css_class or ''};
-                          style style"
+                          style style;
+                          placeholder placeholder"
           id="${oid}"
           name="${name}">${cstruct}</textarea>
