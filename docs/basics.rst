@@ -16,7 +16,7 @@ subsequently be ready to accept form submission input are:
 - Render the form.
 
 Once the form is rendered, a user will interact with the form in his
-browser, and some point, he will submit it.  When the user submits the
+browser, and some point, they will submit it.  When the user submits the
 form, the data provided by the user will either validate properly, or
 the form will need to be rerendered with error markers which help to
 inform the user of which parts need to be filled in "properly" (as
@@ -448,7 +448,7 @@ Validating a Form Submission
 ----------------------------
 
 Once the user seen the form and has chewed on its inputs a bit, he
-will eventually submit the form.  When he submits it, the logic you
+will eventually submit the form.  When they submit it, the logic you
 use to deal with the form validation must do a few things:
 
 - It must detect that a submit button was clicked.
