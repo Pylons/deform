@@ -58,6 +58,12 @@ Next release
   backwards-incompatible and will require users of css_class to add a
   btn-default/btn-primary class to the css_class.
 
+- Simplified Chinese translation https://github.com/Pylons/deform/pull/274
+
+- Don't cause unnecessary JavaScript calls on page load https://github.com/Pylons/deform/pull/267/
+
+- Allow override Button Bootstap CSS styles https://github.com/Pylons/deform/pull/251
+
 2.0a2 (2013-10-18)
 ------------------
 
