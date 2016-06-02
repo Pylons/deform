@@ -401,7 +401,7 @@ package are the following:
 Each of these libraries should be included in the ``<head>`` tag of a
 page which renders a Deform form, e.g.:
 
-.. code-block:: xml
+.. code-block:: html
    :linenos:
 
    <head>
@@ -419,29 +419,21 @@ page which renders a Deform form, e.g.:
              src="/static/scripts/deform.js"></script>
    </head>
 
-The :meth:`deform.field.get_widget_resources` method can be used to
+Please note the order of loading the two JavaScript files does matter.
+The ``deform.js`` file makes an immediate call to jquery that will fail
+if jquery is not loaded first.
+
+After loading ``deform.js`` and jquery, there may be additional static
+resources needed to render the form elements.  The
+:meth:`deform.field.get_widget_resources` method can be used to
 tell you which ``static`` directory-relative files are required by a
 particular form rendering, so that you can inject only the ones
-necessary into the page rendering.
+necessary into the page rendering.  See :ref:`widget_requirements` for
+how to do this.
 
-The JavaScript function ``deform.load()`` *must* be called by the HTML
-page (usually in a script tag near the end of the page, ala
-``<script..>deform.load()</script>``) which renders a Deform form in
-order for widgets which use JavaScript to do proper event and behavior
-binding.  If this function is not called, built-in widgets which use
-JavaScript will not function properly.  For example, you might include
-this within the body of the rendered page near its end:
-
-.. code-block:: xml
-   :linenos:
-
-   <script type="text/javascript">
-      deform.load()
-   </script>
-
-As above, the head should also contain a ``<meta>`` tag which names a
-``utf-8`` charset in a ``Content-Type`` http-equiv.  This is a sane
-setting for most systems.
+As in the example above, the head should also contain a ``<meta>`` tag
+which names a ``utf-8`` charset in a ``Content-Type`` http-equiv.  This is
+a sane setting for most systems.
 
 Validating a Form Submission
 ----------------------------
@@ -473,7 +465,7 @@ For example, using the :term:`WebOb` API for the above tasks, and the
 
        try:
            appstruct = myform.validate(controls)  # call validate
-       except ValidationFailure, e: # catch the exception
+       except ValidationFailure as e: # catch the exception
            return {'form':e.render()} # re-render the form with an exception
 
        # the form submission succeeded, we have the data
