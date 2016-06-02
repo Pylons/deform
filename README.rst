@@ -12,7 +12,9 @@ Deform
         :target: http://docs.pylonsproject.org/projects/deform/en/latest/
         :alt: Latest Documentation Status
 
-A Python HTML form library.  It runs under Python 2.6, 2.7, 3.3, 3.4 and 3.5.
+Deform is a Python HTML form library. You can easily create forms for your application. Deform can do complex forms with JavaScript integration, like nested forms where you need add and remove subform items. Date and time picking widgets and other rich widgets are supported out of the box.
+
+Deform comes with default `Chameleon templates <https://chameleon.readthedocs.io/en/latest/>`_ for `Bootstrap <http://getbootstrap.com>`_ based widgets. It uses `Colander <https://github.com/Pylons/colander>`_ as for form schema and validation definitions. Deform integrates well with `Pyramid web framework <https://trypyramid.com/>`_  and several other web frameworks.
 
 Please see http://docs.pylonsproject.org/projects/deform/en/latest/ for the
 documentation.
@@ -22,14 +24,9 @@ See https://github.com/Pylons/deform for in-development version.
 Status
 ------
 
-This library is no longer actively developed or maintained.
+This library is actively developed and maintained.
 
-No new versions or releases to PyPI will be made under the name "deform".
+Community
+---------
 
-Both new and existing issues and pull requests made in this repository may not
-receive a response from the Pylons Project core developers.
-
-Further development may be done by forking this project. You may release your
-forked project using a different name to PyPI. You are welcome to use the
-`GitHub developer API <https://developer.github.com/>`_ to migrate existing
-issues and pull requests to your fork.
+To get in touch with the community join to `Pyramid IRC channel or Pylons mailing list <http://docs.pylonsproject.org/projects/pyramid/en/latest/#support-and-development>`_ .
