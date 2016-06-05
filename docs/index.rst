@@ -27,10 +27,10 @@ system of choice and a suitable :term:`renderer` is supplied to
 
 .. warning::
 
-   Despite the version number at the top, this documentation has not been 
-   updated for the 2.X release line of Deform.  Most of the documentation 
-   will still apply, but where it does not, see the :ref:`changelog` for 
-   an overview of changes between 0.9.9 and this release.  
+   Despite the version number at the top, this documentation has not been
+   updated for the 2.X release line of Deform.  Most of the documentation
+   will still apply, but where it does not, see the :ref:`changelog` for
+   an overview of changes between 0.9.9 and this release.
    Also, please see http://deform2demo.repoze.org .
 
 Topics
@@ -49,6 +49,8 @@ Topics
    app.rst
    ajax.rst
    i18n.rst
+   contributing.rst
+   community.rst
    api.rst
    interfaces.rst
    glossary.rst
@@ -61,35 +63,6 @@ Visit `deform2demo.repoze.org <http://deform2demo.repoze.org>`_ to view an
 application which demonstrates most of Deform's features.  The source code
 for this application is also available in the `deform package on GitHub
 <https://github.com/Pylons/deform>`_.
-
-Support and Development
-=======================
-
-To report bugs, use the `bug tracker
-<https://github.com/Pylons/deform/issues>`_.
-
-If you've got questions that aren't answered by this documentation, contact
-the `Pylons-discuss mailing list
-<http://groups.google.com/group/pylons-discuss>`_ or join the 
-
-.. only:: not latex
-
-  `#pylons IRC channel <irc://irc.freenode.net/#pylons>`_.
-
-.. only:: latex
-    
-  #pylons IRC channel ``irc://irc.freenode.net/#pylons``.
-
-
-Browse and check out tagged and trunk versions of :mod:`deform` via the
-`deform package on GitHub <https://github.com/Pylons/deform>`_.  To check out
-the trunk, use this command::
-
-   git clone git://github.com/Pylons/deform.git
-
-To find out how to become a contributor to :mod:`deform`, please see the
-`Pylons Project contributor documentation
-<http://docs.pylonsproject.org/#contributing/>`_.
 
 Index and Glossary
 ==================
