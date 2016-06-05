@@ -14,7 +14,7 @@ Deform
 
 Deform is a Python HTML form library. You can easily create forms for your application. Deform can do complex forms with JavaScript integration, like nested forms where you need add and remove subform items. Date and time picking widgets and other rich widgets are supported out of the box.
 
-Deform comes with default `Chameleon templates <https://chameleon.readthedocs.io/en/latest/>`_ for `Bootstrap <http://getbootstrap.com>`_ based widgets. It uses `Colander <https://github.com/Pylons/colander>`_ as for form schema and validation definitions. Deform integrates well with `Pyramid web framework <https://trypyramid.com/>`_  and several other web frameworks.
+Deform comes with default `Chameleon templates <https://chameleon.readthedocs.io/en/latest/>`_ for `Bootstrap <http://getbootstrap.com>`_ based widgets. It uses `Colander <https://github.com/Pylons/colander>`_ as for form schema and validation definitions. Deform integrates well with `Pyramid web framework <https://trypyramid.com/>`_  and several other web frameworks. Peppercorn library is used to convert flat HTML name value mapping form submissions to stream of name value mappings submissions, allowing building complex and nested form structure.
 
 Please see http://docs.pylonsproject.org/projects/deform/en/latest/ for the
 documentation.

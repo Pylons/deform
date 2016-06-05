@@ -7,17 +7,16 @@
   <input type="${type_name}"
          name="date"
          value="${cstruct}"
-         
+
          tal:attributes="class string: ${css_class or ''} form-control hasDatepicker;
                          style style"
          id="${oid}"/>
   ${field.end_mapping()}
   <script type="text/javascript">
    deform.addCallback(
-     '${oid}',
-     function(oid) {
-       if (!Modernizr.inputtypes['date'] ||
-           "${type_name}" != "date"){
+    '${oid}',
+     function deform_cb(oid) {
+       if (!Modernizr.inputtypes['date'] ||"${type_name}" != "date" || window.forceDateTimePolyfill){
          $('#' + oid).pickadate(${options_json});
        }
      }
