@@ -11,8 +11,8 @@ set -u
 set -e
 set -x
 
-if [ ! -e deformdemo ] ; then
-    git clone https://github.com/Pylons/deformdemo.git
+if [ ! -d deformdemo_functional_tests ] ; then
+    git clone https://github.com/Pylons/deformdemo.git deformdemo_functional_tests
 fi
 
 # Locales are needed form deformdemo tests
@@ -22,7 +22,7 @@ fi
 pip install -e .
 
 # Let's go for the demo
-cd deformdemo
+cd deformdemo_functional_tests
 pip install -e .
 
 # Run test server
