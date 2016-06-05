@@ -9,6 +9,7 @@
 
 set -u
 set -e
+set -x
 
 if [ ! -e deformdemo ] ; then
     git clone https://github.com/Pylons/deformdemo.git
@@ -24,12 +25,17 @@ pip install -e .
 cd deformdemo
 pip install -e .
 
+# Run test server
 pserve demo.ini &
-# http://unix.stackexchange.com/a/30371/14115
+
 SERVER_PID=$!
 
 # Even if tests crash make sure we quit pserve
-set +e
-nosetests -x
+trap "kill $SERVER_PID" EXIT
 
-kill $SERVER_PID
+# Run functional test suite against test server
+nosetests
+
+exit 0
+
+
