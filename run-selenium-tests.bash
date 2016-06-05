@@ -8,9 +8,10 @@
 #
 
 set -u
+set -e
 
 if [ ! -e deformdemo ] ; then
-    git clone git@github.com:Pylons/deformdemo.git
+    git clone https://github.com/Pylons/deformdemo.git
 fi
 
 # Locales are needed form deformdemo tests
@@ -27,6 +28,8 @@ pserve demo.ini &
 # http://unix.stackexchange.com/a/30371/14115
 SERVER_PID=$!
 
+# Even if tests crash make sure we quit pserve
+set +e
 nosetests -x
 
 kill $SERVER_PID
