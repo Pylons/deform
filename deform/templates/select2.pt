@@ -59,7 +59,7 @@
       </optgroup>
       <option tal:condition="not isinstance(item, optgroup_class)"
               tal:attributes="
-              selected (multiple and item[0] in list(map(unicode, cstruct)) or item[0] == list(map(unicode, cstruct))) and 'selected';
+              selected (multiple and item[0] in list(map(unicode, cstruct)) or item[0] == unicode(cstruct)) and 'selected';
               class css_class;
               value item[0]">${item[1]}</option>
     </tal:loop>
