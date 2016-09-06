@@ -51,7 +51,7 @@
                 tal:attributes="label item.label">
         <option tal:repeat="(value, description) item.options"
                 tal:attributes="
-                selected (multiple and value in list(map(unicode, cstruct)) or value == list(map(unicode, cstruct))) and 'selected';
+                selected (multiple and value in list(map(unicode, cstruct)) or value == unicode(cstruct)) and 'selected';
                 class css_class;
                 label field.widget.long_label_generator and description;
                 value value"
