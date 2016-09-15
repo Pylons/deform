@@ -124,3 +124,4 @@ Contributors
 - Bert JW Regeer, 2016/02/16
 - Steve Piercy, 2016/02/19
 - Mikko Ohtamaa 2016/06/01
+- Gasper Vozel, 2016/09/15

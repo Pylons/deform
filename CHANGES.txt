@@ -64,6 +64,8 @@ Next release
 
 - Allow override Button Bootstap CSS styles https://github.com/Pylons/deform/pull/251
 
+- Add csv options to `TextAreaCSVWidget`.
+
 2.0a2 (2013-10-18)
 ------------------
 
