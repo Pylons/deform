@@ -51,6 +51,10 @@ Stop on error::
 
     tox -e functional -- -x
 
+Rerun single test::
+
+    tox -e functional -- deformdemo.test:CheckedInputWidgetWithMaskTests
+
 To run/edit/fix functional tests::
 
     source .tox/functional/bin/activate
