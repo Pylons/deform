@@ -19,6 +19,12 @@ default_widget_makers = {
     colander.Set: widget.CheckboxChoiceWidget,
 }
 
+
+@colander.deferred
+def deferred_csrf_value(node, kw):
+    return kw['request'].session.get_csrf_token()
+
+
 class FileData(object):
     """
     A type representing file data; used to shuttle data back and forth
@@ -122,3 +128,37 @@ class FileData(object):
 
     def cstruct_children(self, node, cstruct): # pragma: no cover
         return []
+
+
+class CSRFSchema(colander.Schema):
+    """CSRF protected form schema.
+
+    Example:
+
+    .. code-block:: python
+
+      import colander
+      from deform.schema import CSRFSchema
+
+      class MySchema(CSRFSchema):
+          my_field = colander.SchemaNode(colander.String())
+
+      And in your application code, *bind* the schema, passing the request as a keyword argument:
+
+  .. code-block:: python
+
+    def view(request):
+        schema = MySchema().bind(request=request)
+
+    When using Pyramid 1.7+, the CSRF token is validated by CSRF view deriver.
+
+    More information
+
+    * http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/sessions.html?highlight=csrf#checking-csrf-tokens-automatically
+    """
+    csrf_token = colander.SchemaNode(
+        colander.String(),
+        widget=widget.HiddenWidget(),
+        default=deferred_csrf_value,
+        )
+
