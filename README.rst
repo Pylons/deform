@@ -111,9 +111,11 @@ This library is actively developed and maintained.
 Community
 ---------
 
-`Issue tracker <http://github.com/Pylons/deform>`_.
+* `Issue tracker <http://github.com/Pylons/deform>`_.
 
-To get in touch with the community join to `Pyramid IRC channel or Pylons mailing list <http://docs.pylonsproject.org/projects/pyramid/en/latest/#support-and-development>`_ .
+* `Documentation <http://docs.pylonsproject.org/projects/deform/en/latest/>`_
 
-`Documentation <http://docs.pylonsproject.org/projects/deform/en/latest/>`_
+* `Chat and mailing list <http://docs.pylonsproject.org/projects/pyramid/en/latest/#support-and-development>`_
+
+
 
