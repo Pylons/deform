@@ -62,7 +62,7 @@ docs_extras = [
 setupkw = dict(
     name='deform',
     version='2.0a3.dev0',
-    description='Another form generation library',
+    description='Form library with advanced features like nested forms',
     long_description=README + '\n\n' + CHANGES,
     classifiers=[
         "Intended Audience :: Developers",
@@ -76,7 +76,7 @@ setupkw = dict(
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
         ],
-    keywords='web forms form generation schema validation',
+    keywords='web forms form generation schema validation pyramid',
     author="Chris McDonough, Agendaless Consulting",
     author_email="pylons-discuss@googlegroups.com",
     url="http://docs.pylonsproject.org/projects/deform/en/latest/",
