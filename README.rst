@@ -108,10 +108,12 @@ Status
 
 This library is actively developed and maintained.
 
-Community
----------
+Community and links
+-------------------
 
 * `Issue tracker <http://github.com/Pylons/deform>`_.
+
+* `Demo project <https://github.com/Pylons/deformdemo/>`_.
 
 * `Documentation <http://docs.pylonsproject.org/projects/deform/en/latest/>`_
 
