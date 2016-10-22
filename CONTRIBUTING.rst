@@ -24,11 +24,34 @@ This will run tests for Python 2.x, Python 3.x, PyPy, functional, coverage, docu
 Functional tests
 ----------------
 
-All features must be covered by functional tests and have example use. To run functional tests only::
+All features must be covered by functional tests and have example use.
+
+Preparing compatible browser
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Functional tests run on Firefox 43 and Selenium 2.56. Below are instructions for OSX:
+
+* `Download Firefox 45 ESR <https://ftp.mozilla.org/pub/firefox/releases/45.0.2esr/>`_ (`OSX <https://ftp.mozilla.org/pub/firefox/releases/45.0.2esr/mac/en-US/>`_)
+
+* Rename ``Firefox.app`` to ``Firefox-45.app``
+
+* Copy ``Firefox-45.app`` to ``Applications``
+
+* Prepare your test run ``export FIREFOX_PATH=/Applications/Firefox-45.app/Contents/MacOS/firefox``
+
+
+Running test suite
+~~~~~~~~~~~~~~~~~~
+
+To run functional tests::
 
     tox -e functional
 
-.. to edit functional tests::
+Stop on error::
+
+    tox -e functional -- -x
+
+To run/edit/fix functional tests::
 
     source .tox/functional/bin/activate
     cd deformdefom  # Checked out by tox functional
