@@ -23,7 +23,7 @@ Example
 
 Example of Deform form using `Pyramid <http://trypyramid.com/>`_ web framework.
 
-..image:: https://github.com/Pylons/deform/raw/master/docs/example.png
+.. image:: https://github.com/Pylons/deform/raw/master/docs/example.png
     :width: 600px
 
 Example code::
