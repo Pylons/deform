@@ -34,7 +34,7 @@ SERVER_PID=$!
 trap "kill $SERVER_PID" EXIT
 
 # Run functional test suite against test server
-nosetests
+nosetests "$@"
 
 exit 0
 
