@@ -1,8 +1,7 @@
-2.0b3 (unreleased)
+2.0b3 (2016-10-22)
 ------------------
 
-- Nothing changed yet.
-
+- Update demos and add standalone mini example
 
 2.0b2 (2016-10-22)
 ------------------
