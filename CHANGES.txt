@@ -26,6 +26,12 @@ Next release
 - Ensured that ``None`` would not show up as a css class name in rendered
   template output.  See https://github.com/Pylons/deform/pull/191
 
+2.0b2 (unreleased)
+                  
+
+- Nothing changed yet.
+
+
 2.0b1 (2016-10-22)
   we now use dashed-names (e.g. ``deform-seq``).  A full list of changes is
   below::
