@@ -12,6 +12,11 @@ Deform
         :target: http://docs.pylonsproject.org/projects/deform/en/latest/
         :alt: Latest Documentation Status
 
+.. contents:: :local:
+
+Introduction
+============
+
 Deform is a Python HTML form library independent of underlying web framework. Deform is ideal for complex server-side generated forms with JavaScript integration. More complex examples include nested forms where one can dynamically add and remove subform items. Date and time picking widgets and other rich widgets are supported out of the box.
 
 Deform comes with `Chameleon templates <https://chameleon.readthedocs.io/en/latest/>`_ for `Bootstrap <http://getbootstrap.com>`_ based widgets. It uses `Colander <https://github.com/Pylons/colander>`_ as for form schema and validation definitions. Deform integrates well with `Pyramid web framework <https://trypyramid.com/>`_  and several other web frameworks. Peppercorn library is used to convert flat HTML name value mapping form submissions to stream of name value mappings submissions, allowing building complex and nested form structure.
@@ -21,10 +26,10 @@ Even if Deform uses Chameleon templates internally, you can embed rendered Defor
 Example
 -------
 
-Example of Deform form using `Pyramid <http://trypyramid.com/>`_ web framework.
+* `See all widget examples <http://deformdemo.repoze.org>`_. Below is a sample form loop using `Pyramid <http://trypyramid.com/>`_ web framework.
 
 .. image:: https://github.com/Pylons/deform/raw/master/docs/example.png
-    :width: 600px
+    :width: 400px
 
 Example code::
 
@@ -111,9 +116,11 @@ This library is actively developed and maintained.
 Community and links
 -------------------
 
-* `Issue tracker <http://github.com/Pylons/deform>`_.
+* `Widget examples <http://deformdemo.repoze.org>`_
 
-* `Demo project <https://github.com/Pylons/deformdemo/>`_.
+* `Issue tracker <http://github.com/Pylons/deform>`_
+
+* `Demo project <https://github.com/Pylons/deformdemo/>`_
 
 * `Documentation <http://docs.pylonsproject.org/projects/deform/en/latest/>`_
 
