@@ -23,7 +23,8 @@ Example
 
 Example of Deform form using `Pyramid <http://trypyramid.com/>`_ web framework::
 
-TODO
+.. image:: https://github.com/Pylons/deform/raw/master/docs/example.png
+    :width: 600px
 
 Example code::
 
@@ -85,7 +86,9 @@ Example code::
             # Render a form with initial default values
             rendered_form = form.render()
 
-        return locals()
+        return {
+            "rendered_form": rendered_form,
+        }
 
 
     def main(global_config, **settings):
@@ -98,6 +101,7 @@ Example code::
         config.add_route('mini_example', path='/')
         config.add_view(mini_example, route_name="mini_example", renderer="templates/mini.pt")
         return config.make_wsgi_app()
+
 
 Status
 ------
