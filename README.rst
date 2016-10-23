@@ -15,18 +15,29 @@ Deform
 .. contents:: :local:
 
 Introduction
-============
+------------
 
-Deform is a Python HTML form library independent of underlying web framework. Deform is ideal for complex server-side generated forms with JavaScript integration. More complex examples include nested forms where one can dynamically add and remove subform items. Date and time picking widgets and other rich widgets are supported out of the box.
+Deform is a Python form library for generating HTML forms on the server-side. `Date and time picking widgets <http://deformdemo.repoze.org/datetimeinput/>`_, `rich text editors <http://deformdemo.repoze.org/richtext/>`_, `forms with dynamically added and removed items <http://deformdemo.repoze.org/sequence_of_mappings/>`_ and `few other complex use cases <http://deformdemo.repoze.org/>`_ are supported out of the box.
 
-Deform comes with `Chameleon templates <https://chameleon.readthedocs.io/en/latest/>`_ for `Bootstrap <http://getbootstrap.com>`_ based widgets. It uses `Colander <https://github.com/Pylons/colander>`_ as for form schema and validation definitions. Deform integrates well with `Pyramid web framework <https://trypyramid.com/>`_  and several other web frameworks. Peppercorn library is used to convert flat HTML name value mapping form submissions to stream of name value mappings submissions, allowing building complex and nested form structure.
+Deform integrates with `Pyramid web framework <https://trypyramid.com/>`_  and several other web frameworks. Deform comes with `Chameleon templates <https://chameleon.readthedocs.io/en/latest/>`_ with `Bootstrap 3 <http://getbootstrap.com>`_ styling. Under the hood `Colander schemas <https://github.com/Pylons/colander>`_ are used serialization and validation. `Peppercorn <https://github.com/Pylons/peppercorn>`_ library maps HTTP form submissions to nested structure.
 
 Even if Deform uses Chameleon templates internally, you can embed rendered Deform forms into any template language.
+
+Use cases
+---------
+
+Deform is ideal for complex server-side generated forms. Potential use cases include
+
+* Complex data entry forms
+
+* Administrative interfaces
+
+* Websites where additional front end framework is not needed
 
 Example
 -------
 
-* `See all widget examples <http://deformdemo.repoze.org>`_. Below is a sample form loop using `Pyramid <http://trypyramid.com/>`_ web framework.
+`See all widget examples <http://deformdemo.repoze.org>`_. Below is a sample form loop using `Pyramid <http://trypyramid.com/>`_ web framework.
 
 .. image:: https://github.com/Pylons/deform/raw/master/docs/example.png
     :width: 400px
@@ -92,6 +103,8 @@ Example code::
             rendered_form = form.render()
 
         return {
+            # This is just rendered HTML in a string
+            # and can be embedded in any template language
             "rendered_form": rendered_form,
         }
 
@@ -117,6 +130,8 @@ Community and links
 -------------------
 
 * `Widget examples <http://deformdemo.repoze.org>`_
+
+* `PyPi <https://pypi.python.org/pypi/deform>`_
 
 * `Issue tracker <http://github.com/Pylons/deform>`_
 
