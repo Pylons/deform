@@ -46,6 +46,8 @@ include:
 
 * Administrative interfaces
 
+* Python based websites with high amount of data manipulation forms
+
 * Websites where additional front end framework is not needed
 
 Installation
