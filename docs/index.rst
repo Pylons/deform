@@ -28,7 +28,7 @@ Topics
 ======
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    basics.rst
    retail.rst
@@ -62,7 +62,6 @@ Community and links
 
 * `Support <http://www.pylonsproject.org/community/get-support>`_
 
-
 Demonstration Site
 ==================
 
@@ -82,7 +81,7 @@ implementation (arguably) simpler and smaller.
 
 Without these people, this software would not exist:
 
-- The Formish guys (http://ish.io)
+- The Formish guys
 
 - Tres Seaver
 
