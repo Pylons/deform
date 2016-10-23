@@ -1,6 +1,8 @@
 API Documentation
 =================
 
+.. contents:: :local:
+
 Form-Related
 ------------
 
