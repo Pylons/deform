@@ -29,15 +29,25 @@ except:
     CHANGES = ''
 
 requires = [
-    'Chameleon>=2.5.1', # Markup class
-    'colander>=1.0a1', # cstruct_children/appstruct_children, Set
-    'peppercorn>=0.3', # rename operation type
-    'translationstring>=1.0', # add format mapping with %
+    'Chameleon>=2.5.1',  # Markup class
+    'colander>=1.0a1',  # cstruct_children/appstruct_children, Set
+    'peppercorn>=0.3',  # rename operation type
+    'translationstring>=1.0',  # add format mapping with %
     'zope.deprecation',
     ]
 
-testing_extras = ['nose', 'coverage', 'beautifulsoup4']
-docs_extras = ['Sphinx']
+testing_extras = [
+    'nose',
+    'coverage',
+    'beautifulsoup4'
+    ]
+
+docs_extras = [
+    'Sphinx >= 1.3.4',
+    'repoze.sphinx.autointerface',
+    'pylons_sphinx_latesturl',
+    'pylons-sphinx-themes',
+    ]
 
 setupkw = dict(
     name='deform',
@@ -66,9 +76,9 @@ setupkw = dict(
     tests_require=testing_extras,
     install_requires=requires,
     test_suite="deform.tests",
-    extras_require = {
-        'testing':testing_extras,
-        'docs':docs_extras,
+    extras_require={
+        'testing': testing_extras,
+        'docs': docs_extras,
         },
     )
 

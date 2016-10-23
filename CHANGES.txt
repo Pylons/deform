@@ -1,3 +1,7 @@
+Unreleased
+------------------
+- backport docs `conf.py` from master, use sphinx_latest_url
+
 0.9.9 (2013-09-23)
 ------------------
 
