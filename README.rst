@@ -19,7 +19,7 @@ Introduction
 
 Deform is a Python form library for generating HTML forms on the server-side. `Date and time picking widgets <http://deformdemo.repoze.org/datetimeinput/>`_, `rich text editors <http://deformdemo.repoze.org/richtext/>`_, `forms with dynamically added and removed items <http://deformdemo.repoze.org/sequence_of_mappings/>`_ and `few other complex use cases <http://deformdemo.repoze.org/>`_ are supported out of the box.
 
-Deform integrates with `Pyramid web framework <https://trypyramid.com/>`_  and several other web frameworks. Deform comes with `Chameleon templates <https://chameleon.readthedocs.io/en/latest/>`_ with `Bootstrap 3 <http://getbootstrap.com>`_ styling. Under the hood `Colander schemas <https://github.com/Pylons/colander>`_ are used serialization and validation. `Peppercorn <https://github.com/Pylons/peppercorn>`_ library maps HTTP form submissions to nested structure.
+Deform integrates with `Pyramid web framework <https://trypyramid.com/>`_  and several other web frameworks. Deform comes with `Chameleon templates <https://chameleon.readthedocs.io/en/latest/>`_ and `Bootstrap 3 <http://getbootstrap.com>`_ styling. Under the hood `Colander schemas <https://github.com/Pylons/colander>`_ are used serialization and validation. `Peppercorn <https://github.com/Pylons/peppercorn>`_ library maps HTTP form submissions to nested structure.
 
 Even if Deform uses Chameleon templates internally, you can embed rendered Deform forms into any template language.
 
