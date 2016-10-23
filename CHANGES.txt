@@ -1,7 +1,7 @@
-2.0b4 (unreleased)
-------------------
+2.0 (2016-10-23)
+----------------
 
-- Nothing changed yet.
+- Release polish
 
 
 2.0b3 (2016-10-22)
