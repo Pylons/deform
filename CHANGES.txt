@@ -3,6 +3,9 @@
 
 - Nothing changed yet.
 
+- Documentation reorganization and clean up to conform with Pylons Project
+  projects.
+
 
 2.0 (2016-10-23)
 ----------------
