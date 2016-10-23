@@ -36,7 +36,6 @@ maps HTTP form submissions to nested structure.
 Although Deform uses Chameleon templates internally, you can embed rendered
 Deform forms into any template language.
 
-
 Use cases
 ---------
 
@@ -49,6 +48,12 @@ include:
 
 * Websites where additional front end framework is not needed
 
+Installation
+------------
+
+Install using `pip and Python package installation best practices <https://packaging.python.org/en/latest/installing/>`_::
+
+    pip install deform
 
 Example
 -------
@@ -84,7 +89,7 @@ Example code:
             colander.Int(),
             default=18,
             title="Age",
-            help_text="Your age in years")
+            description="Your age in years")
 
 
     def mini_example(request):
@@ -139,6 +144,9 @@ Example code:
         config.add_view(mini_example, route_name="mini_example", renderer="templates/mini.pt")
         return config.make_wsgi_app()
 
+This example is in `deformdemo repository <http://github.com/Pylons/deformdemo/>`_. Run the example with pserve::
+
+     pserve mini.ini --reload
 
 Status
 ------
