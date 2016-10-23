@@ -151,7 +151,7 @@ This example is in `deformdemo repository <http://github.com/Pylons/deformdemo/>
 Status
 ------
 
-This library is actively developed and maintained.
+This library is actively developed and maintained. Deform 2.x branch has been used in production on several sites for more than two years. Automatic test suite has 100% Python code coverage and 500+ tests.
 
 
 Community and links
