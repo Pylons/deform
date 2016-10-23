@@ -40,8 +40,6 @@ Topics
    app.rst
    ajax.rst
    i18n.rst
-   contributing.rst
-   community.rst
    api.rst
    interfaces.rst
    glossary.rst
