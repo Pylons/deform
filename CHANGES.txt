@@ -6,6 +6,7 @@
 - Documentation reorganization and clean up to conform with Pylons Project
   projects.
 
+- Fix select and select2 widget templates failing on Python 3.x
 
 2.0 (2016-10-23)
 ----------------
