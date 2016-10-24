@@ -1,7 +1,7 @@
 2.1 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Drop support for Python 2.6.
 
 - Documentation reorganization and clean up to conform with Pylons Project
   projects.
