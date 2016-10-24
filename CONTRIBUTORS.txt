@@ -119,6 +119,7 @@ Contributors
 - Sebastian Wehrmann, 2013/04/03
 - Charlie Clark, 2013/09/03
 - Calvin Hendryx-Parker, 2013/09/03
+- Tim Tisdall, 2014/06/04
 - Cédric Messiant, 2014/06/27
 - Josip Delić, 2016/02/16
 - Bert JW Regeer, 2016/02/16
