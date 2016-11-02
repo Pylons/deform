@@ -9,33 +9,16 @@
      tal:omit-tag="">
 
    <style>
-    .form-control .select2-choice {
-        border: 0;
-        border-radius: 2px;
-    }
 
-    .form-control .select2-choice .select2-arrow {
-        border-radius: 0 2px 2px 0;
-    }
+     .select2-selection.form-control {
+       padding: 0px 0px;
+     }
 
-    .form-control.select2-container {
-        height: auto !important;
-        padding: 0px;
-    }
+     .select2-container--default .select2-selection--multiple,
+     .select2-container--default .select2-selection--single {
+       border: 1px solid #ccc;
+     }
 
-    .form-control.select2-container.select2-dropdown-open {
-        border-color: #5897FB;
-        border-radius: 3px 3px 0 0;
-    }
-
-    .form-control .select2-container.select2-dropdown-open .select2-choices {
-        border-radius: 3px 3px 0 0;
-    }
-
-    .form-control.select2-container .select2-choices {
-        border: 0 !important;
-        border-radius: 3px;
-    }
    </style>
   <input type="hidden" name="__start__" value="${name}:sequence"
          tal:condition="multiple" />
@@ -72,8 +55,8 @@
      function(oid) {
        $('#' + oid).select2({
          containerCssClass: 'form-control',
-         placeholder: "${str(field.widget.placeholder).replace('"','\\"')|""}",
-         allowClear: true
+         placeholder: "${str(field.widget.placeholder).replace('"','\\"')|""}" || undefined,
+         allowClear: "${hasattr(field.widget, 'placeholder')}"
        });
      }
    );
