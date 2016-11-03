@@ -1,7 +1,8 @@
 <tal:def tal:define="title title|field.title;
                      description description|field.description;
                      errormsg errormsg|field.errormsg;
-                     item_template item_template|field.widget.item_template"
+                     item_template item_template|field.widget.item_template;
+                     column_classes column_classes|field.widget.column_classes;"
          i18n:domain="deform">
   
   <div class="panel panel-default" title="${description}">
@@ -22,7 +23,7 @@
 
       ${field.start_mapping()}
       <div tal:repeat="child field.children"
-           tal:replace="structure child.render_template(item_template)" >
+           tal:replace="structure child.render_template(item_template, column_classes=column_classes)" >
       </div>     
       ${field.end_mapping()}
 

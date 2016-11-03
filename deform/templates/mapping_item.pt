@@ -1,48 +1,60 @@
 <div tal:define="error_class error_class|field.widget.error_class;
-                 description description|field.description;
-                 title title|field.title;
-                 oid oid|field.oid;
-                 hidden hidden|field.widget.hidden;
-                 category category|field.widget.category;
-                 structural hidden or category == 'structural';
-                 required required|field.required;"
+     description description|field.description;
+     title title|field.title;
+     oid oid|field.oid;
+     hidden hidden|field.widget.hidden;
+     category category|field.widget.category;
+     structural category == 'structural';
+     required required|field.required;
+
+     form field.get_root();
+     form_class form_class|string:${form.widget.css_class or form.css_class or ''};
+     horizontal form_class == 'form-horizontal';
+     inline form_class == 'form-inline';
+     column_classes column_classes|field.parent.widget.column_classes;
+     left_column_class column_classes[0]|'col-xs-12';
+     right_column_class column_classes[1]|'col-xs-12';
+     label_class (not horizontal or column_classes) and 'control-label' or '';
+     label_class inline and 'sr-only' or label_class;"
      class="form-group ${field.error and 'has-error' or ''} ${field.widget.item_css_class or ''}"
-     title="${description}"
      id="item-${oid}"
-     tal:omit-tag="structural"
+     tal:attributes="title inline and description or None"
+     tal:omit-tag="hidden or (structural and not horizontal)"
      i18n:domain="deform">
 
   <label for="${oid}"
-         class="control-label ${required and 'required' or ''}"
-         tal:condition="not structural"
+         class="${label_class} ${horizontal and left_column_class or ''} ${required and not structural and 'required' or ''}"
+         tal:condition="not (hidden or (structural and not horizontal))"
          id="req-${oid}"
          >
-    ${title}
+    <tal:span tal:condition="not structural">${title}</tal:span>
   </label>
 
-  <div tal:define="input_prepend field.widget.input_prepend | None;
-                   input_append field.widget.input_append  | None"
-       tal:omit-tag="not (input_prepend or input_append)"
-       class="input-group">
-    <span class="input-group-addon"
-          tal:condition="input_prepend">${input_prepend}</span
-    ><span tal:replace="structure field.serialize(cstruct).strip()"
-    /><span class="input-group-addon"
-            tal:condition="input_append">${input_append}</span>
+  <div class="${right_column_class}" tal:omit-tag="hidden or not horizontal">
+    <div tal:define="input_prepend field.widget.input_prepend | None;
+         input_append field.widget.input_append  | None"
+         tal:omit-tag="not (input_prepend or input_append)"
+         class="input-group">
+      <span class="input-group-addon"
+            tal:condition="input_prepend">${input_prepend}</span
+      ><span tal:replace="structure field.serialize(cstruct).strip()"
+      /><span class="input-group-addon"
+              tal:condition="input_append">${input_append}</span>
+    </div>
+
+    <p class="help-block"
+       tal:define="errstr 'error-%s' % field.oid"
+       tal:repeat="msg field.error.messages()"
+       i18n:translate=""
+       tal:attributes="id repeat.msg.index==0 and errstr or
+       ('%s-%s' % (errstr, repeat.msg.index))"
+       tal:condition="field.error and not hidden and not field.typ.__class__.__name__=='Mapping' and not inline">
+      ${msg}
+    </p>
+   
+    <p tal:condition="field.description and not hidden and not inline"
+       class="help-block" >
+      ${field.description}
+    </p>
   </div>
-
-  <p class="help-block"
-     tal:define="errstr 'error-%s' % field.oid"
-     tal:repeat="msg field.error.messages()"
-     i18n:translate=""
-     tal:attributes="id repeat.msg.index==0 and errstr or
-     ('%s-%s' % (errstr, repeat.msg.index))"
-     tal:condition="field.error and not field.widget.hidden and not field.typ.__class__.__name__=='Mapping'">
-    ${msg}
-  </p>
-
-  <p tal:condition="field.description and not field.widget.hidden"
-     class="help-block" >
-    ${field.description}
-  </p>
 </div>
