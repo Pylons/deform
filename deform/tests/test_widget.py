@@ -917,6 +917,7 @@ class TestRadioChoiceWidget(unittest.TestCase):
         self.assertRaises(colander.Invalid, widget.deserialize, field, {})
 
 class TestSelectWidget(unittest.TestCase):
+
     def _makeOne(self, **kw):
         from deform.widget import SelectWidget
         return SelectWidget(**kw)
@@ -1021,6 +1022,19 @@ class TestSelectWidget(unittest.TestCase):
         field = DummyField()
         pstruct = ['foo', {}]
         self.assertRaises(colander.Invalid, widget.deserialize, field, pstruct)
+
+    def test_selected_tag(self):
+        """See we correctly procude 'selected'"""
+        widget = self._makeOne(multiple=False)
+        widget.get_select_value('foo', 'foo') == "selected"
+        widget.get_select_value('foo', 'bar') is None
+
+    def test_selected_tag_multiple(self):
+        """See we correctly procude 'selected' in multiple values situations."""
+        widget = self._makeOne(multiple=True)
+        widget.get_select_value(['foo', 'bar'], 'foo') == "selected"
+        widget.get_select_value(['foo', 'bar'], 'moo') is None
+
 
 class TestCheckboxChoiceWidget(unittest.TestCase):
     def _makeOne(self, **kw):
