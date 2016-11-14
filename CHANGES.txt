@@ -1,8 +1,9 @@
 2.0.2 (unreleased)
 ------------------
 
-- Updated Select2 widget JavaScript
+- Fix regression of ``<select>`` widget default values not honoured
 
+- Updated Select2 widget JavaScript
 
 2.0.1 (2016-10-25)
 ------------------

@@ -24,6 +24,7 @@ from .compat import (
     StringIO,
     string,
     text_,
+    text_type,
     url_quote,
     uppercase,
     )
@@ -1062,6 +1063,22 @@ class SelectWidget(Widget):
     optgroup_class = OptGroup
     long_label_generator = None
 
+    def get_select_value(self, cstruct, value):
+        """Choose whether <opt> is selected or not.
+
+        Incoming value is always string, as it has been passed through HTML.
+        However, our values might be given as integer, UUID.
+        """
+
+        if self.multiple:
+            if value in map(text_type, cstruct):
+                return "selected"
+        else:
+            if value == text_type(cstruct):
+                return "selected"
+
+        return None
+
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
             cstruct = self.null_value
@@ -1085,10 +1102,12 @@ class SelectWidget(Widget):
                 raise Invalid(field.schema, "Pstruct is not a string")
             return pstruct
 
+
 class Select2Widget(SelectWidget):
     template = 'select2'
     requirements = (('deform', None), ('select2', None))
-    
+
+
 class RadioChoiceWidget(SelectWidget):
     """
     Renders a sequence of ``<input type="radio"/>`` buttons based on a
