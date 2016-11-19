@@ -49,6 +49,9 @@ Functional tests
 
 All features must be covered by functional tests and have example use.
 
+.. warning::
+
+    Fun fact: Functional tests behave differently depending on if you are looking the browser window or not.
 
 Preparing compatible browser
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~

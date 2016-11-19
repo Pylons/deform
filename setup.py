@@ -40,7 +40,8 @@ requires = [
 testing_extras = [
     'nose',
     'coverage',
-    'beautifulsoup4'
+    'beautifulsoup4',
+    'flaky'
     ]
 
 # Needed to run deformdemo tests
