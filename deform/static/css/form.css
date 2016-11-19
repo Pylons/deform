@@ -53,7 +53,7 @@ form .deform-readonly-text {
 
 }
 
-.deform-collapse-heading > a[aria-expanded]:after {
+.deform-collapse-heading > a[aria-expanded="true"]:after {
     /* symbol for "collapsed" panels */
     content: "\e114";
 }
