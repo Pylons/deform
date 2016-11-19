@@ -3,6 +3,7 @@
 
 - Added accordions to MappingWidget: http://deformdemo.repoze.org/mapping_accordion/
 
+- Added CSS class ``deform-form-buttons`` to style form button group
 
 2.0.2 (2016-11-14)
 ------------------
