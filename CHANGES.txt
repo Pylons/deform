@@ -9,6 +9,8 @@
 
 - Always render an item with a default CSS class: https://github.com/Pylons/deform/pull/306
 
+- Updated pickdate.js library used for the date picker: https://github.com/Pylons/deform/pull/248
+
 2.0.2 (2016-11-14)
 ------------------
 
