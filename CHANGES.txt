@@ -1,19 +1,17 @@
-2.0.3 (unreleased)
+2.0.3 (2016-11-19)
 ------------------
 
 - Added accordions to MappingWidget: http://deformdemo.repoze.org/mapping_accordion/
 
-- Added CSS class ``deform-form-buttons`` to style form button group
+- Added CSS class ``deform-form-buttons`` to style form button group: https://github.com/Pylons/deform/pull/308
 
-- Add CSV options to ``TextAreaCSVWidget``
+- Add more options to ``TextAreaCSVWidget``: https://github.com/Pylons/deform/pull/309
 
 - Always render an item with a default CSS class: https://github.com/Pylons/deform/pull/306
 
 - Updated pickdate.js library used for the date picker: https://github.com/Pylons/deform/pull/248
 
-- Functional test suite runnable under Python 3
-
-- Lots of Selenium testing headache fixed with some implicit wait support
+- Widget Selenium test suite runs both under Python 2 and 3. Lots of Selenium testing headache fixed with some implicit wait support.
 
 .. note ::
 
