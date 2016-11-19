@@ -64,13 +64,18 @@ for OSX:
 
 * Copy ``Firefox-45.app`` to ``Applications``
 
-* Prepare your test run ``export
-  FIREFOX_PATH=/Applications/Firefox-45.app/Contents/MacOS/firefox``
+* Prepare your test run::
+
+    export FIREFOX_PATH=/Applications/Firefox-45.app/Contents/MacOS/firefox
 
 .. note ::
 
-    As the writing of this Marionette geckodriver for Firefox is incomplete and cannot
+    Selenium 3: As the writing of this Marionette geckodriver for Firefox is incomplete and cannot
     run all the tests.
+
+.. note ::
+
+    Chrome: Tests do not run correctly on Chrome due to various timing issues. Some effort was put forth to fix this, but it's never ending swamp.
 
 Running test suite
 ~~~~~~~~~~~~~~~~~~

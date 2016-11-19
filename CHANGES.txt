@@ -11,6 +11,14 @@
 
 - Updated pickdate.js library used for the date picker: https://github.com/Pylons/deform/pull/248
 
+- Functional test suite runnable under Python 3
+
+- Lots of Selenium testing headache fixed with some implicit wait support
+
+.. note ::
+
+    Currently Python 3 file upload widget may have compatibility issues Please see deformdemo/test.py for details.
+
 2.0.2 (2016-11-14)
 ------------------
 

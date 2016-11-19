@@ -23,6 +23,8 @@ matrix:
           env: TOXENV=docs
         - python: 2.7
           env: TOXENV=functional
+        - python: 3.5
+          env: TOXENV=functional3
 #        - python: pypy3
 #          env: TOXENV=pypy3
 
