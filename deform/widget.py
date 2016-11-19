@@ -1329,7 +1329,8 @@ class MappingWidget(Widget):
 
     template
         The template name used to render the widget.  Default:
-        ``mapping``.
+        ``mapping``. See also ``mapping_accordion`` template for hideable
+        user experience.
 
     readonly_template
         The template name used to render the widget in read-only mode.
@@ -1342,6 +1343,10 @@ class MappingWidget(Widget):
     readonly_item_template
         The template name used to render each item in the form.
         Default: ``readonly/mapping_item``.
+
+    open: bool
+        Used with ``mapping_accordion`` template to define if the
+        mapping subform accordion is open or closed by default.
 
     Note that the MappingWidget template does not honor the ``css_class``
     or ``style`` attributes of the widget.
