@@ -5,7 +5,7 @@
                  title title|field.title;
                  oid oid|field.oid"
      title="${description}"
-     class="form-group row deform-seq-item ${field.error and error_class or ''} ${field.widget.item_css_class or ''}"
+     class="form-group row deform-seq-item ${field.error and error_class or ''} ${field.widget.item_css_class or ''} ${field.default_item_css_class()}"
      i18n:domain="deform">
   <div class="col-xs-11">
     <span tal:replace="structure field.serialize(cstruct)"/>
