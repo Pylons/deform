@@ -7,7 +7,7 @@
 
 - Add CSV options to ``TextAreaCSVWidget``
 
-- Always render mapping/sequence item with a CSS class: https://github.com/Pylons/deform/pull/306
+- Always render an item with a default CSS class: https://github.com/Pylons/deform/pull/306
 
 2.0.2 (2016-11-14)
 ------------------
