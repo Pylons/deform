@@ -1801,6 +1801,7 @@ class DatePartsWidget(Widget):
 
             return result
 
+
 class TextAreaCSVWidget(Widget):
     """
     Widget used for a sequence of tuples of scalars; allows for
@@ -1826,11 +1827,26 @@ class TextAreaCSVWidget(Widget):
     readonly_template
         The template name used to render the widget in read-only mode.
         Default: ``readonly/textarea``.
+
+    delimiter
+        The csv module delimiter character.
+        Default: ``,``.
+
+    quotechar
+        The csv module quoting character.
+        Default: ``"``.
+
+    quoting
+        The csv module quoting dialect.
+        Default: ``csv.QUOTE_MINIMAL``.
     """
     template = 'textarea'
     readonly_template = 'readonly/textarea'
     cols = None
     rows = None
+    delimiter = ','
+    quotechar = '"'
+    quoting = csv.QUOTE_MINIMAL
 
     def serialize(self, field, cstruct, **kw):
         # XXX make cols and rows overrideable
@@ -1839,7 +1855,12 @@ class TextAreaCSVWidget(Widget):
         textrows = getattr(field, 'unparseable', None)
         if textrows is None:
             outfile = StringIO()
-            writer = csv.writer(outfile)
+            writer = csv.writer(
+                outfile,
+                delimiter=self.delimiter,
+                quotechar=self.quotechar,
+                quoting=self.quoting,
+            )
             writer.writerows(cstruct)
             textrows = outfile.getvalue()
         readonly = kw.get('readonly', self.readonly)
@@ -1859,7 +1880,12 @@ class TextAreaCSVWidget(Widget):
             return null
         try:
             infile = StringIO(pstruct)
-            reader = csv.reader(infile)
+            reader = csv.reader(
+                infile,
+                delimiter=self.delimiter,
+                quotechar=self.quotechar,
+                quoting=self.quoting,
+            )
             rows = list(reader)
         except Exception as e:
             field.unparseable = pstruct

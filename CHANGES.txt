@@ -5,6 +5,8 @@
 
 - Added CSS class ``deform-form-buttons`` to style form button group
 
+- Add CSV options to ``TextAreaCSVWidget``
+
 2.0.2 (2016-11-14)
 ------------------
 
