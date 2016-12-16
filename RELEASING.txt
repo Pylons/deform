@@ -124,5 +124,5 @@ https://github.com/Pylons/deform/issues
 
 Thanks!
 
-- Deform core developers
+- Deform developers
 ```
