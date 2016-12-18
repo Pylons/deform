@@ -98,7 +98,7 @@ schema:
    import colander
 
    from deform import Form
-   from deform.widget import TextInputWidget
+   from deform.widget import TextAreaWidget
 
    class Person(colander.MappingSchema):
        name = colander.SchemaNode(colander.String(),
@@ -169,7 +169,7 @@ the same pattern.  For example:
    :linenos:
 
    from deform import Form
-   from deform.widget import TextInputWidget
+   from deform.widget import TextAreaWidget
 
    myform = Form(schema, buttons=('submit',))
    myform['people']['person']['name'].widget = TextAreaWidget()
@@ -191,7 +191,7 @@ For example:
    :linenos:
 
    from deform import Form
-   from deform.widget import TextInputWidget
+   from deform.widget import TextAreaWidget
 
    myform = Form(schema, buttons=('submit',))
    myform.set_widgets({'people.person.name':TextAreaWidget(),
