@@ -7,28 +7,28 @@ Validation
 Introduction
 ============
 
-Deform uses Colander form validation.
+Deform uses Colander for form validation.
 
-`More information in Colander documentation <http://docs.pylonsproject.org/projects/colander/en/latest/basics.html#schema-node-objects>`_
+See `Schema Node objects <http://docs.pylonsproject.org/projects/colander/en/latest/basics.html#schema-node-objects>`_ in Colander's documentation for more information.
 
-Colandar stock validators
+Colander stock validators
 =========================
 
-You can use default Colandar validators in Deform forms:
+You can use default Colander validators in Deform forms:
 
-* :py:class:`colandar.Email`
+* :py:class:`colander.Email`
 
-* :py:class:`colandar.Length`
+* :py:class:`colander.Length`
 
-* :py:class:`colandar.Range`
+* :py:class:`colander.Range`
 
-* :py:class:`colandar.Any`
+* :py:class:`colander.Any`
 
-* :py:class:`colandar.Function`
+* :py:class:`colander.Function`
 
-* :py:class:`colandar.OneOf`
+* :py:class:`colander.OneOf`
 
-* :py:class:`colandar.NoneOf`
+* :py:class:`colander.NoneOf`
 
 Example:
 
@@ -46,7 +46,7 @@ Example:
 Custom validator functions
 ==========================
 
-Here is an example for data-driven validator, that validates the form submission against SQLAlchemy query.
+Here is an example of a data-driven validator that validates the form submission against an SQLAlchemy query.
 
 .. code-block:: python
 
@@ -54,7 +54,7 @@ Here is an example for data-driven validator, that validates the form submission
 
 
     def validate_unique_user_email(node, value, **kwargs):
-    """Make sure we cannot enter the same username twice."""
+    """Prevent duplicate usernames."""
 
         request = node.bindings["request"]
         dbsession = request.dbsession
@@ -69,12 +69,12 @@ Here is an example for data-driven validator, that validates the form submission
 Form level validation
 =====================
 
-Sometimes you might need to do complex validation where :py:func:`colander.deferred` pattern complicates thing too much. You might just want to do the validation within your view. Here is an example how to do it.
+Sometimes you might need to do complex validation where a :py:func:`colander.deferred` pattern complicates things too much. You might just want to do the validation within your view. Here is an example of how to do it.
 
 .. code-block:: python
 
     class NewsletterSend(CSRFSchema):
-        """Send a news letter."""
+        """Send a newsletter."""
 
         preview = colander.SchemaNode(colander.Boolean(), description="Is this a preview send.", default=True)
 
@@ -84,7 +84,7 @@ Sometimes you might need to do complex validation where :py:func:`colander.defer
             """Custom schema level validation code."""
 
             # appstruct is Colander appstruct after all other validations have passed
-            # Note that this method may not be never reached
+            # Note that this method might not ever be reached
             if appstruct["preview"] and appstruct["email"] == colander.null:
                 # This error message appears at the top of the form
                 raise colander.Invalid(node["email"], "Please fill in email field if you want to send a preview email.")
@@ -92,7 +92,7 @@ Sometimes you might need to do complex validation where :py:func:`colander.defer
 Setting errors after validation
 ===============================
 
-Sometimes you want to react an error that causes after the form validation happens e.g. when you call a third party API service. You can convert exceptions to form validation errors.
+Sometimes you want to react to an error that arises after the form validation happens, for example, when you call a third party API service. You can convert exceptions to form validation errors.
 
 Use ``form.widget.set_error()`` to set a form level error.
 
