@@ -37,6 +37,7 @@ Topics
    serialization.rst
    templates.rst
    widget.rst
+   validation.rst
    app.rst
    ajax.rst
    i18n.rst
