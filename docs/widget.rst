@@ -3,7 +3,7 @@
 Widgets
 =======
 
-.. contents:: local
+.. contents:: :local:
 
 Introduction
 ------------

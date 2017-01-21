@@ -2,7 +2,7 @@
 Validation
 ==========
 
-.. contents:: local
+.. contents:: :local:
 
 Introduction
 ============
