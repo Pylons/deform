@@ -88,3 +88,72 @@ Sometimes you might need to do complex validation where :py:func:`colander.defer
             if appstruct["preview"] and appstruct["email"] == colander.null:
                 # This error message appears at the top of the form
                 raise colander.Invalid(node["email"], "Please fill in email field if you want to send a preview email.")
+
+Setting errors after validation
+===============================
+
+Sometimes you want to react an error that causes after the form validation happens e.g. when you call a third party API service. You can convert exceptions to form validation errors.
+
+Use ``form.widget.set_error()`` to set a form level error.
+
+.. code-block:: python
+
+    @view_config(context=Admin,
+        name="newsletter",
+        route_name="admin",
+        permission="edit",
+        renderer="newsletter/admin.html")
+    def newsletter(context: Admin, request: Request):
+        """Newsletter admin form."""
+        schema = NewsletterSend().bind(request=request)
+
+        # Create a styled button with some extra Bootstrap 3 CSS classes
+        b = deform.Button(name='process', title="Send", css_class="btn-block btn-lg")
+        form = deform.Form(schema, buttons=(b, ), resource_registry=ResourceRegistry(request))
+
+        rendered_form = None
+
+        # User submitted this form
+        if request.method == "POST":
+            if 'process' in request.POST:
+
+                try:
+                    appstruct = form.validate(request.POST.items())
+
+                    if appstruct["preview"]:
+                        send_newsletter(request, appstruct["subject"], preview_email=appstruct["email"])
+                        messages.add(request, "Preview email sent.")
+                    else:
+                        send_newsletter(request, appstruct["subject"])
+                        messages.add(request, "Newsletter sent.")
+
+                    return httpexceptions.HTTPFound(request.url)
+
+                except MailgunError as e:
+                    # API call failed
+                    # Do a form level error message
+                    exc = colander.Invalid(form.widget, "Could not sent newsletter:" + str(e))
+                    form.widget.handle_error(form, exc)
+
+                except deform.ValidationFailure as e:
+                    # Render a form version where errors are visible next to the fields,
+                    # and the submitted values are posted back
+                    rendered_form = e.render()
+            else:
+                # We don't know which control caused form submission
+                return httpexceptions.HTTPBadRequest("Unknown form button pressed")
+
+        # Render initial form
+        # Default values for read only fields
+        if rendered_form is None:
+            rendered_form = form.render({
+                "api_key": api_key,
+                "domain": domain,
+                "mailing_list": mailing_list,
+            })
+
+        # This loads widgets specific CSS/JavaScript in HTML code,
+        # if form widgets specify any static assets.
+        form.resource_registry.pull_in_resources(request, form)
+
+        return locals()
