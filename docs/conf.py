@@ -93,7 +93,7 @@ unused_docs = ['_themes/README','todo']
 #show_authors = False
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'bw'
+#pygments_style = 'bw'
 
 
 # Options for HTML output
