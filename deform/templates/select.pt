@@ -4,9 +4,11 @@
      style style|field.widget.style;
      size size|field.widget.size;
      css_class css_class|field.widget.css_class;
+     unicode unicode|str;
      optgroup_class optgroup_class|field.widget.optgroup_class;
      multiple multiple|field.widget.multiple;"
      tal:omit-tag="">
+
   <input type="hidden" name="__start__" value="${name}:sequence"
          tal:condition="multiple" />
   <select tal:attributes="
@@ -21,7 +23,7 @@
                 tal:attributes="label item.label">
         <option tal:repeat="(value, description) item.options"
                 tal:attributes="
-                selected (multiple and value in list(map(unicode, cstruct)) or value == list(map(unicode, cstruct))) and 'selected';
+                selected python:field.widget.get_select_value(cstruct, value);
                 class css_class;
                 label field.widget.long_label_generator and description;
                 value value"
@@ -29,7 +31,7 @@
       </optgroup>
       <option tal:condition="not isinstance(item, optgroup_class)"
               tal:attributes="
-              selected (multiple and item[0] in list(map(unicode, cstruct)) or item[0] == list(map(unicode, cstruct))) and 'selected';
+              selected python:field.widget.get_select_value(cstruct, item[0]);
               class css_class;
               value item[0]">${item[1]}</option>
     </tal:loop>

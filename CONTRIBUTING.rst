@@ -49,11 +49,14 @@ Functional tests
 
 All features must be covered by functional tests and have example use.
 
+.. warning::
+
+    Fun fact: Functional tests behave differently depending on if you are looking the browser window or not.
 
 Preparing compatible browser
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Functional tests run on Firefox 43 and Selenium 2.56. Below are instructions
+Functional tests run on Firefox 45 and Selenium 2.56. Below are instructions
 for OSX:
 
 * `Download Firefox 45 ESR
@@ -64,9 +67,18 @@ for OSX:
 
 * Copy ``Firefox-45.app`` to ``Applications``
 
-* Prepare your test run ``export
-  FIREFOX_PATH=/Applications/Firefox-45.app/Contents/MacOS/firefox``
+* Prepare your test run::
 
+    export FIREFOX_PATH=/Applications/Firefox-45.app/Contents/MacOS/firefox
+
+.. note ::
+
+    Selenium 3: As the writing of this Marionette geckodriver for Firefox is incomplete and cannot
+    run all the tests.
+
+.. note ::
+
+    Chrome: Tests do not run correctly on Chrome due to various timing issues. Some effort was put forth to fix this, but it's never ending swamp.
 
 Running test suite
 ~~~~~~~~~~~~~~~~~~

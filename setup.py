@@ -40,7 +40,8 @@ requires = [
 testing_extras = [
     'nose',
     'coverage',
-    'beautifulsoup4'
+    'beautifulsoup4',
+    'flaky'
     ]
 
 # Needed to run deformdemo tests
@@ -61,13 +62,12 @@ docs_extras = [
 
 setupkw = dict(
     name='deform',
-    version='2.1.dev0',
+    version='2.0.4.dev0',
     description='Form library with advanced features like nested forms',
     long_description=README + '\n\n' + CHANGES,
     classifiers=[
         "Intended Audience :: Developers",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 2.6",
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.3",

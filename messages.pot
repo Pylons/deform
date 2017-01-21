@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 1.0\n"
-"POT-Creation-Date: 2016-06-02 16:32-0700\n"
+"POT-Creation-Date: 2016-11-19 13:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,43 +14,43 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: \n"
-"Generated-By: Lingua 4.9\n"
+"Generated-By: Lingua 4.11\n"
 
-#: ./deform/schema.py:103
+#: ./deform/schema.py:109
 #, python-format
 msgid "${value} is not a dictionary"
 msgstr ""
 
-#: ./deform/schema.py:110
+#: ./deform/schema.py:116
 #, python-format
 msgid "${value} has no ${key} key"
 msgstr ""
 
-#: ./deform/widget.py:717 ./deform/widget.py:1776
+#: ./deform/widget.py:718 ./deform/widget.py:1800
 msgid "Incomplete date"
 msgstr ""
 
-#: ./deform/widget.py:720
+#: ./deform/widget.py:721
 msgid "Incomplete time"
 msgstr ""
 
-#: ./deform/widget.py:1234
+#: ./deform/widget.py:1253
 msgid "Fields did not match"
 msgstr ""
 
-#: ./deform/widget.py:1235
+#: ./deform/widget.py:1254
 msgid "Value"
 msgstr ""
 
-#: ./deform/widget.py:1236
+#: ./deform/widget.py:1255
 msgid "Confirm Value"
 msgstr ""
 
-#: ./deform/widget.py:1302
+#: ./deform/widget.py:1321
 msgid "Password did not match confirm"
 msgstr ""
 
-#: ./deform/widget.py:1461
+#: ./deform/widget.py:1485
 #, python-format
 msgid "Add ${subitem_title}"
 msgstr ""
@@ -91,7 +91,7 @@ msgstr ""
 msgid "Errors have been highlighted below"
 msgstr ""
 
-#: ./deform/templates/mapping.pt:13
+#: ./deform/templates/mapping.pt:13 ./deform/templates/mapping_accordion.pt:29
 msgid "There was a problem with this section"
 msgstr ""
 
@@ -120,7 +120,7 @@ msgstr ""
 msgid "Password not displayed."
 msgstr ""
 
-#: ./deform/tests/test_widget.py:1738
+#: ./deform/tests/test_widget.py:1752
 #, python-format
 msgid "Yo ${subitem_title}"
 msgstr ""

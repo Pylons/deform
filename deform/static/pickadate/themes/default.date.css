@@ -1,42 +1,6 @@
 /* ==========================================================================
    $BASE-DATE-PICKER
    ========================================================================== */
-/* ==========================================================================
-   $VARIABLES
-   ========================================================================== */
-/**
- * Base colors
- */
-/**
- * Backgrounds
- */
-/**
- * Borders
- */
-/**
- * Buttons
- */
-/**
- * Picker base
- */
-/**
- * Date picker options
- */
-/**
- * Theme configurations
- */
-/* ==========================================================================
-   $MIXINS
-   ========================================================================== */
-/**
- * Common picker item states
- */
-/**
- * Opacity
- */
-/**
- * Vendor prefixes
- */
 /**
  * The picker box.
  */
@@ -71,13 +35,17 @@
  */
 .picker__select--month,
 .picker__select--year {
-  font-size: .8em;
   border: 1px solid #b7b7b7;
-  height: 2.5em;
-  padding: .66em .25em;
+  height: 2em;
+  padding: .5em;
   margin-left: .25em;
   margin-right: .25em;
-  margin-top: -0.5em;
+}
+@media (min-width: 24.5em) {
+  .picker__select--month,
+  .picker__select--year {
+    margin-top: -0.5em;
+  }
 }
 .picker__select--month {
   width: 35%;
@@ -95,18 +63,35 @@
 .picker__nav--prev,
 .picker__nav--next {
   position: absolute;
-  top: -0.33em;
-  padding: .5em 1.33em;
+  padding: .5em 1.25em;
   width: 1em;
   height: 1em;
+  box-sizing: content-box;
+  top: -0.25em;
+}
+@media (min-width: 24.5em) {
+  .picker__nav--prev,
+  .picker__nav--next {
+    top: -0.33em;
+  }
 }
 .picker__nav--prev {
   left: -1em;
-  padding-right: 1.5em;
+  padding-right: 1.25em;
+}
+@media (min-width: 24.5em) {
+  .picker__nav--prev {
+    padding-right: 1.5em;
+  }
 }
 .picker__nav--next {
   right: -1em;
-  padding-left: 1.5em;
+  padding-left: 1.25em;
+}
+@media (min-width: 24.5em) {
+  .picker__nav--next {
+    padding-left: 1.5em;
+  }
 }
 .picker__nav--prev:before,
 .picker__nav--next:before {
@@ -170,7 +155,6 @@
   color: #999999;
   font-weight: 500;
   /* Increase the spacing a tad */
-
 }
 @media (min-height: 33.875em) {
   .picker__weekday {
@@ -186,7 +170,6 @@
   border: 1px solid transparent;
 }
 .picker__day--today {
-  color: #0089ec;
   position: relative;
 }
 .picker__day--today:before {
@@ -199,22 +182,11 @@
   border-top: 0.5em solid #0059bc;
   border-left: .5em solid transparent;
 }
-.picker__day--selected,
-.picker__day--selected:hover {
-  border-color: #0089ec;
-}
-.picker__day--highlighted {
-  background: #b1dcfb;
-}
 .picker__day--disabled:before {
   border-top-color: #aaaaaa;
 }
 .picker__day--outfocus {
   color: #dddddd;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=66)";
-  filter: alpha(opacity=66);
-  -moz-opacity: 0.66;
-  opacity: 0.66;
 }
 .picker__day--infocus:hover,
 .picker__day--outfocus:hover {
@@ -222,13 +194,24 @@
   color: #000000;
   background: #b1dcfb;
 }
+.picker__day--highlighted {
+  border-color: #0089ec;
+}
 .picker__day--highlighted:hover,
 .picker--focused .picker__day--highlighted {
+  cursor: pointer;
+  color: #000000;
+  background: #b1dcfb;
+}
+.picker__day--selected,
+.picker__day--selected:hover,
+.picker--focused .picker__day--selected {
   background: #0089ec;
   color: #ffffff;
 }
 .picker__day--disabled,
-.picker__day--disabled:hover {
+.picker__day--disabled:hover,
+.picker--focused .picker__day--disabled {
   background: #f5f5f5;
   border-color: #f5f5f5;
   color: #dddddd;
@@ -239,94 +222,80 @@
   background: #bbbbbb;
 }
 /**
- * The footer containing the "today" and "clear" buttons.
+ * The footer containing the "today", "clear", and "close" buttons.
  */
 .picker__footer {
   text-align: center;
 }
 .picker__button--today,
-.picker__button--clear {
+.picker__button--clear,
+.picker__button--close {
   border: 1px solid #ffffff;
   background: #ffffff;
   font-size: .8em;
   padding: .66em 0;
   font-weight: bold;
-  width: 50%;
+  width: 33%;
   display: inline-block;
   vertical-align: bottom;
 }
 .picker__button--today:hover,
-.picker__button--clear:hover {
+.picker__button--clear:hover,
+.picker__button--close:hover {
   cursor: pointer;
   color: #000000;
   background: #b1dcfb;
   border-bottom-color: #b1dcfb;
 }
 .picker__button--today:focus,
-.picker__button--clear:focus {
+.picker__button--clear:focus,
+.picker__button--close:focus {
   background: #b1dcfb;
   border-color: #0089ec;
   outline: none;
 }
 .picker__button--today:before,
-.picker__button--clear:before {
+.picker__button--clear:before,
+.picker__button--close:before {
   position: relative;
   display: inline-block;
   height: 0;
 }
-.picker__button--today:before {
+.picker__button--today:before,
+.picker__button--clear:before {
   content: " ";
   margin-right: .45em;
+}
+.picker__button--today:before {
   top: -0.05em;
   width: 0;
   border-top: 0.66em solid #0059bc;
   border-left: .66em solid transparent;
 }
 .picker__button--clear:before {
+  top: -0.25em;
+  width: .66em;
+  border-top: 3px solid #ee2200;
+}
+.picker__button--close:before {
   content: "\D7";
-  margin-right: .35em;
   top: -0.1em;
-  color: #ee2200;
   vertical-align: top;
   font-size: 1.1em;
+  margin-right: .35em;
+  color: #777777;
+}
+.picker__button--today[disabled],
+.picker__button--today[disabled]:hover {
+  background: #f5f5f5;
+  border-color: #f5f5f5;
+  color: #dddddd;
+  cursor: default;
+}
+.picker__button--today[disabled]:before {
+  border-top-color: #aaaaaa;
 }
 
 /* ==========================================================================
    $DEFAULT-DATE-PICKER
    ========================================================================== */
-/* ==========================================================================
-   $VARIABLES
-   ========================================================================== */
-/**
- * Base colors
- */
-/**
- * Backgrounds
- */
-/**
- * Borders
- */
-/**
- * Buttons
- */
-/**
- * Picker base
- */
-/**
- * Date picker options
- */
-/**
- * Theme configurations
- */
-/* ==========================================================================
-   $MIXINS
-   ========================================================================== */
-/**
- * Common picker item states
- */
-/**
- * Opacity
- */
-/**
- * Vendor prefixes
- */

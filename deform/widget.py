@@ -24,6 +24,7 @@ from .compat import (
     StringIO,
     string,
     text_,
+    text_type,
     url_quote,
     uppercase,
     )
@@ -592,7 +593,7 @@ class DateInputWidget(Widget):
         options = dict(
             kw.get('options') or self.options or self.default_options
             )
-        options['submitFormat'] = 'yyyy-mm-dd'
+        options['formatSubmit'] = 'yyyy-mm-dd'
         kw.setdefault('options_json', json.dumps(options))
         values = self.get_template_values(field, cstruct, kw)
         return field.renderer(template, **values)
@@ -1062,6 +1063,22 @@ class SelectWidget(Widget):
     optgroup_class = OptGroup
     long_label_generator = None
 
+    def get_select_value(self, cstruct, value):
+        """Choose whether <opt> is selected or not.
+
+        Incoming value is always string, as it has been passed through HTML.
+        However, our values might be given as integer, UUID.
+        """
+
+        if self.multiple:
+            if value in map(text_type, cstruct):
+                return "selected"
+        else:
+            if value == text_type(cstruct):
+                return "selected"
+
+        return None
+
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
             cstruct = self.null_value
@@ -1085,10 +1102,12 @@ class SelectWidget(Widget):
                 raise Invalid(field.schema, "Pstruct is not a string")
             return pstruct
 
+
 class Select2Widget(SelectWidget):
     template = 'select2'
     requirements = (('deform', None), ('select2', None))
-    
+
+
 class RadioChoiceWidget(SelectWidget):
     """
     Renders a sequence of ``<input type="radio"/>`` buttons based on a
@@ -1310,7 +1329,8 @@ class MappingWidget(Widget):
 
     template
         The template name used to render the widget.  Default:
-        ``mapping``.
+        ``mapping``. See also ``mapping_accordion`` template for hideable
+        user experience.
 
     readonly_template
         The template name used to render the widget in read-only mode.
@@ -1323,6 +1343,10 @@ class MappingWidget(Widget):
     readonly_item_template
         The template name used to render each item in the form.
         Default: ``readonly/mapping_item``.
+
+    open: bool
+        Used with ``mapping_accordion`` template to define if the
+        mapping subform accordion is open or closed by default.
 
     Note that the MappingWidget template does not honor the ``css_class``
     or ``style`` attributes of the widget.
@@ -1777,6 +1801,7 @@ class DatePartsWidget(Widget):
 
             return result
 
+
 class TextAreaCSVWidget(Widget):
     """
     Widget used for a sequence of tuples of scalars; allows for
@@ -1802,11 +1827,26 @@ class TextAreaCSVWidget(Widget):
     readonly_template
         The template name used to render the widget in read-only mode.
         Default: ``readonly/textarea``.
+
+    delimiter
+        The csv module delimiter character.
+        Default: ``,``.
+
+    quotechar
+        The csv module quoting character.
+        Default: ``"``.
+
+    quoting
+        The csv module quoting dialect.
+        Default: ``csv.QUOTE_MINIMAL``.
     """
     template = 'textarea'
     readonly_template = 'readonly/textarea'
     cols = None
     rows = None
+    delimiter = ','
+    quotechar = '"'
+    quoting = csv.QUOTE_MINIMAL
 
     def serialize(self, field, cstruct, **kw):
         # XXX make cols and rows overrideable
@@ -1815,7 +1855,12 @@ class TextAreaCSVWidget(Widget):
         textrows = getattr(field, 'unparseable', None)
         if textrows is None:
             outfile = StringIO()
-            writer = csv.writer(outfile)
+            writer = csv.writer(
+                outfile,
+                delimiter=self.delimiter,
+                quotechar=self.quotechar,
+                quoting=self.quoting,
+            )
             writer.writerows(cstruct)
             textrows = outfile.getvalue()
         readonly = kw.get('readonly', self.readonly)
@@ -1835,7 +1880,12 @@ class TextAreaCSVWidget(Widget):
             return null
         try:
             infile = StringIO(pstruct)
-            reader = csv.reader(infile)
+            reader = csv.reader(
+                infile,
+                delimiter=self.delimiter,
+                quotechar=self.quotechar,
+                quoting=self.quoting,
+            )
             rows = list(reader)
         except Exception as e:
             field.unparseable = pstruct

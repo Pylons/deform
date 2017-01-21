@@ -37,6 +37,7 @@ Topics
    serialization.rst
    templates.rst
    widget.rst
+   validation.rst
    app.rst
    ajax.rst
    i18n.rst
@@ -83,9 +84,9 @@ Without these people, this software would not exist:
 
 - Tres Seaver
 
-- Fear Factory (http://fearfactory.com)
+- `Fear Factory <http://fearfactory.com>`_
 
-- Midlake (http://midlake.net)
+- `Midlake <http://midlake.net>`_
 
 Index and Glossary
 ==================

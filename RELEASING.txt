@@ -109,21 +109,20 @@ Here are the changes:
 
 <<changes>>
 
-What's New In Deform 2.X:
-http://docs.pylonsproject.org/projects/deform/en/1.X-branch/whatsnew-2.X.html
+Links
 
-2.X release documentation (across all alphas and betas, as well as when it gets
-to final release):
-http://docs.pylonsproject.org/projects/deform/en/2.X-branch/
+- Widget demos http://deformdemo.repoze.org/
 
-You can install it via PyPI:
+- Documentation http://docs.pylonsproject.org/projects/deform/en/master/
 
-  pip install deform==1.X
+- Github https://github.com/pylons/deform
+
+- PyPi https://pypi.python.org/pypi/deform/
 
 Enjoy, and please report any issues you find to the issue tracker at
 https://github.com/Pylons/deform/issues
 
 Thanks!
 
-- Deform core developers
+- Deform developers
 ```

@@ -45,7 +45,7 @@
     <div tal:repeat="child field"
          tal:replace="structure child.render_template(item_template)"/>
 
-    <div class="form-group">
+    <div class="form-group deform-form-buttons">
       <tal:loop tal:repeat="button buttons">
         <button
               tal:define="btn_disposition repeat.button.start and 'btn-primary' or 'btn-default';
