@@ -69,24 +69,22 @@ Here is an example for data-driven validator, that validates the form submission
 Form level validation
 =====================
 
-Sometimes you might need to do complex validation where :py:func:`colander.deferred` pattern complicates thing too much. You might just want to do the validation within your view. Here is an example how to do it:
+Sometimes you might need to do complex validation where :py:func:`colander.deferred` pattern complicates thing too much. You might just want to do the validation within your view. Here is an example how to do it.
 
 .. code-block:: python
 
     class NewsletterSend(CSRFSchema):
+        """Send a news letter."""
 
         preview = colander.SchemaNode(colander.Boolean(), description="Is this a preview send.", default=True)
 
-        email = colander.SchemaNode(colander.String(), title="Preview email", description="Send preview email to this email address", validator=colander.Email)
+        email = colander.SchemaNode(colander.String(), title="Preview email", description="Send preview email to this email address", validator=colander.Email(), missing=colander.null)
 
-        def deserialize(self, cstruct: dict):
-            """Override form deserialization to add custom validation steps.
+        def validator(self, node: "NewsletterSend", appstruct: dict):
+            """Custom schema level validation code."""
 
-            :param cstruct: Colander unvalidated structure of incoming data
-            """
-
-            if cstruct["preview"] and cstruct["email"] == colander.null:
-                # The messag will appear at the top of the form
-                raise colander.Invalid(self, "Please fill in email field if you want to send a preview email.")
-
-            return super(NewsletterSend, self).deserialize()
+            # appstruct is Colander appstruct after all other validations have passed
+            # Note that this method may not be never reached
+            if appstruct["preview"] and appstruct["email"] == colander.null:
+                # This error message appears at the top of the form
+                raise colander.Invalid(node["email"], "Please fill in email field if you want to send a preview email.")
