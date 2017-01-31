@@ -102,8 +102,7 @@ var deform  = {
         var old_len = parseInt(before.attr('now_len')||'0', 10);
         before.attr('now_len', old_len + 1);
         // we added something to the dom, trigger a change event
-        var e = jQuery.Event("change");
-        $('#deform').trigger(e);
+        $htmlnode.trigger('change');
     },
 
     appendSequenceItem: function(node) {
@@ -134,12 +133,11 @@ var deform  = {
         if (now_len > min_len) {
             $before_node.attr('now_len', now_len - 1);
             $item_node.remove();
+            // we removed something from the dom, trigger a change event
+            $oid_node.trigger('change');
             deform.processSequenceButtons($oid_node, min_len, max_len, 
                                           now_len-1, orderable);
         }
-        // we removed something from the dom, trigger a change event
-        var e = jQuery.Event("change");
-        $('#deform').trigger(e);
         return false;
     },
 
