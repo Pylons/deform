@@ -7,8 +7,8 @@
 
 # configuration
 DOMAIN="deform"
-SEARCH_PATH="deform/"
-LOCALES_PATH="deform/locale"
+SEARCH_PATH="$DOMAIN/"
+LOCALES_PATH="$DOMAIN/locale"
 # end configuration
 
 # create locales folder if not exists
