@@ -1,4 +1,4 @@
-2.0.4 (unreleased)
+2.0.4 (2017-02-11)
 ------------------
 
 - Added ability to pass a translator function to `deform.renderer.configure_zpt_renderer`
