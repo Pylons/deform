@@ -14,6 +14,8 @@ def configure_zpt_renderer(search_path=(), translator=None):
 
     .. code-block:: python
 
+        from pyramid.threadlocal import get_current_request
+
         #
         # Set up Chameleon templates (ZTP) rendering paths
         #
