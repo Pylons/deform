@@ -1,0 +1,126 @@
+#
+# SOME DESCRIPTIVE TITLE
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE 1.0\n"
+"POT-Creation-Date: 2016-11-19 13:28+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
+"Generated-By: Lingua 4.11\n"
+
+#: ./deform/schema.py:109
+#, python-format
+msgid "${value} is not a dictionary"
+msgstr ""
+
+#: ./deform/schema.py:116
+#, python-format
+msgid "${value} has no ${key} key"
+msgstr ""
+
+#: ./deform/widget.py:718 ./deform/widget.py:1800
+msgid "Incomplete date"
+msgstr ""
+
+#: ./deform/widget.py:721
+msgid "Incomplete time"
+msgstr ""
+
+#: ./deform/widget.py:1253
+msgid "Fields did not match"
+msgstr ""
+
+#: ./deform/widget.py:1254
+msgid "Value"
+msgstr ""
+
+#: ./deform/widget.py:1255
+msgid "Confirm Value"
+msgstr ""
+
+#: ./deform/widget.py:1321
+msgid "Password did not match confirm"
+msgstr ""
+
+#: ./deform/widget.py:1485
+#, python-format
+msgid "Add ${subitem_title}"
+msgstr ""
+
+#: ./deform/templates/checked_password.pt:15
+msgid "Password"
+msgstr ""
+
+#: ./deform/templates/checked_password.pt:25
+msgid "Confirm Password"
+msgstr ""
+
+#: ./deform/templates/dateparts.pt:10
+msgid "Year"
+msgstr ""
+
+#: ./deform/templates/dateparts.pt:18
+msgid "Month"
+msgstr ""
+
+#: ./deform/templates/dateparts.pt:26
+msgid "Day"
+msgstr ""
+
+#: ./deform/templates/datetimeinput.pt:9
+msgid "Date"
+msgstr ""
+
+#: ./deform/templates/datetimeinput.pt:16
+msgid "Time"
+msgstr ""
+
+#: ./deform/templates/form.pt:35
+msgid "There was a problem with your submission"
+msgstr ""
+
+#: ./deform/templates/form.pt:37
+msgid "Errors have been highlighted below"
+msgstr ""
+
+#: ./deform/templates/mapping.pt:13 ./deform/templates/mapping_accordion.pt:29
+msgid "There was a problem with this section"
+msgstr ""
+
+#. Default: en
+#: ./deform/templates/richtext.pt:30
+msgid "language-code"
+msgstr ""
+
+#: ./deform/templates/sequence_item.pt:26
+msgid "Reorder (via drag and drop)"
+msgstr ""
+
+#: ./deform/templates/sequence_item.pt:31
+msgid "Remove"
+msgstr ""
+
+#: ./deform/templates/readonly/checkbox.pt:8
+msgid "True"
+msgstr ""
+
+#: ./deform/templates/readonly/checkbox.pt:12
+msgid "False"
+msgstr ""
+
+#: ./deform/templates/readonly/checked_password.pt:4
+msgid "Password not displayed."
+msgstr ""
+
+#: ./deform/tests/test_widget.py:1752
+#, python-format
+msgid "Yo ${subitem_title}"
+msgstr ""
