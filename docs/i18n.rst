@@ -2,7 +2,7 @@ Internationalization
 ====================
 
 Deform is fully internationalizable and localizable.  :term:`gettext`
-``.mo.`` files exist in the :mod:`deform` and :mod:`colander` packages
+``.mo`` files exist in the :mod:`deform` and :mod:`colander` packages
 which contain (currently incomplete) translations to various languages
 for the purpose of rendering localized error messages.
 
@@ -28,15 +28,16 @@ Following should get you started with `i18n` in :mod:`pyramid`::
         deform_template_dir = resource_filename('deform', 'templates/')
         zpt_renderer = deform.ZPTRendererFactory(
             [deform_template_dir],
-            translator=translator)
+            translator=translator,
+        )
         deform.Form.set_default_renderer(zpt_renderer)
 
 
 See the `Internationalization demo
-<http://deform2demo.repoze.org/i18n/>`_ for an example of how deform
+<http://deformdemo.repoze.org/i18n/>`_ for an example of how deform
 error and status messages can be localized.  This demonstration uses
 the `internationalization and localization features of Pyramid
-<http://docs.pylonsproject.org/projects/pyramid/en/1.0-branch/narr/i18n.html>`_
+<http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/i18n.html>`_
 to render Deform error messages into :term:`Chameleon` form renderings.
 
 

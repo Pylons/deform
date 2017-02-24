@@ -34,7 +34,7 @@ class TestFunctional(unittest.TestCase):
 
     def _soupify(self, html):
         from bs4 import BeautifulSoup
-        return BeautifulSoup(html)
+        return BeautifulSoup(html, 'html.parser')
 
     def test_render_empty(self):
         schema = self._makeSchema()

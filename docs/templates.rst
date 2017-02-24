@@ -3,9 +3,36 @@
 Templates
 =========
 
+.. contents:: :local:
+
+Introduction
+------------
+
 A set of :term:`Chameleon` templates is used by the default widget set
 present in :mod:`deform` to make it easier to customize the look and
 feel of form renderings.
+
+Alternative template engines
+----------------------------
+
+Deform is compatible with any template engine.
+
+Even though Deform widgets themselves are rendered in Chameleon, you can place the forms on pages in any template language. For example, `Websauna <https://websauna.org>`_ places Deform forms inside Jinja 2 page templates.
+
+The rendered forms are simply Python strings.
+
+Adding more widget templates
+----------------------------
+
+If your application is supplying it own templates for Deform forms, you need to add those template paths to Chameleon lookup. Chameleon template paths are stored in a in-process global variable.
+
+.. code-block:: python
+
+   from deform.renderer import configure_zpt_renderer
+
+   # Make Deform widgets aware of our widget template paths
+   configure_zpt_renderer(["websauna.system.form:templates/deform"])
+
 
 Overriding the default templates
 --------------------------------

@@ -4,40 +4,31 @@ Deform
 ======
 
 :mod:`deform` is a Python HTML form generation library.  It runs under Python
-2.6, 2.7, 3.2 and 3.3.
+2.x, 3.x and PyPy.
 
-The design of :mod:`deform` is heavily influenced by the `formish
-<http://ish.io/projects/show/formish>`_ form generation library.  Some
-might even say it's a shameless rip-off; this would not be completely
-inaccurate.  It differs from formish mostly in ways that make the
-implementation (arguably) simpler and smaller.
+Deform is a Python form library for generating HTML forms on the server side.
+`Date and time picking widgets <http://deformdemo.repoze.org/datetimeinput/>`_,
+`rich text editors <http://deformdemo.repoze.org/richtext/>`_, `forms with
+dynamically added and removed items
+<http://deformdemo.repoze.org/sequence_of_mappings/>`_ and a few other `complex
+use cases <http://deformdemo.repoze.org/>`_ are supported out of the box.
 
-:mod:`deform` uses :term:`Colander` as a schema library,
-:term:`Peppercorn` as a form control deserialization library, and
-:term:`Chameleon` to perform HTML templating.
+Deform integrates with the `Pyramid web framework <https://trypyramid.com/>`_
+and several other web frameworks. Deform comes with `Chameleon templates
+<https://chameleon.readthedocs.io/en/latest/>`_ and `Bootstrap 3
+<http://getbootstrap.com>`_ styling. Under the hood, `Colander schemas
+<https://github.com/Pylons/colander>`_ are used for serialization and
+validation. The `Peppercorn <https://github.com/Pylons/peppercorn>`_ library
+maps HTTP form submissions to nested structure.
 
-:mod:`deform` depends only on Peppercorn, Colander, Chameleon and an
-internationalization library named translationstring, so it may be
-used in most web frameworks (or antiframeworks) as a result.
-
-Alternate templating languages may be used, as long as all templates
-are translated from the native Chameleon templates to your templating
-system of choice and a suitable :term:`renderer` is supplied to
-:mod:`deform`.
-
-.. warning::
-
-   Despite the version number at the top, this documentation has not been 
-   updated for the 2.X release line of Deform.  Most of the documentation 
-   will still apply, but where it does not, see the :ref:`changelog` for 
-   an overview of changes between 0.9.9 and this release.  
-   Also, please see http://deform2demo.repoze.org .
+Although Deform uses Chameleon templates internally, you can embed rendered
+Deform forms into any template language.
 
 Topics
 ======
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    basics.rst
    retail.rst
@@ -46,6 +37,7 @@ Topics
    serialization.rst
    templates.rst
    widget.rst
+   validation.rst
    app.rst
    ajax.rst
    i18n.rst
@@ -54,42 +46,47 @@ Topics
    glossary.rst
    changes.rst
 
+Community and links
+===================
+
+* `Widget examples <http://deformdemo.repoze.org>`_
+
+* `PyPi <https://pypi.python.org/pypi/deform>`_
+
+* `Issue tracker <http://github.com/Pylons/deform/issues>`_
+
+* `Widget examples repo <https://github.com/Pylons/deformdemo/>`_
+
+* `Documentation <http://docs.pylonsproject.org/projects/deform/en/latest/>`_
+
+* `Support <http://www.pylonsproject.org/community/get-support>`_
+
 Demonstration Site
 ==================
 
-Visit `deform2demo.repoze.org <http://deform2demo.repoze.org>`_ to view an
+Visit `deformdemo.repoze.org <http://deformdemo.repoze.org>`_ to view an
 application which demonstrates most of Deform's features.  The source code
-for this application is also available in the `deform package on GitHub
-<https://github.com/Pylons/deform>`_.
+for this application is also available in the `deformdemo package on GitHub
+<https://github.com/Pylons/deformdemo>`_.
 
-Support and Development
-=======================
+Thanks
+======
 
-To report bugs, use the `bug tracker
-<https://github.com/Pylons/deform/issues>`_.
+The design of :mod:`deform` is heavily influenced by the `formish
+<http://ish.io/projects/show/formish>`_ form generation library.  Some
+might even say it's a shameless rip-off; this would not be completely
+inaccurate.  It differs from formish mostly in ways that make the
+implementation (arguably) simpler and smaller.
 
-If you've got questions that aren't answered by this documentation, contact
-the `Pylons-discuss mailing list
-<http://groups.google.com/group/pylons-discuss>`_ or join the 
+Without these people, this software would not exist:
 
-.. only:: not latex
+- The Formish guys
 
-  `#pylons IRC channel <irc://irc.freenode.net/#pylons>`_.
+- Tres Seaver
 
-.. only:: latex
-    
-  #pylons IRC channel ``irc://irc.freenode.net/#pylons``.
+- `Fear Factory <http://fearfactory.com>`_
 
-
-Browse and check out tagged and trunk versions of :mod:`deform` via the
-`deform package on GitHub <https://github.com/Pylons/deform>`_.  To check out
-the trunk, use this command::
-
-   git clone git://github.com/Pylons/deform.git
-
-To find out how to become a contributor to :mod:`deform`, please see the
-`Pylons Project contributor documentation
-<http://docs.pylonsproject.org/#contributing/>`_.
+- `Midlake <http://midlake.net>`_
 
 Index and Glossary
 ==================
@@ -97,17 +94,3 @@ Index and Glossary
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
-Thanks
-======
-
-Without these people, this software would not exist:
-
-- The Formish guys (http://ish.io)
-
-- Tres Seaver
-
-- Fear Factory (http://fearfactory.com)
-
-- Midlake (http://midlake.net)
-

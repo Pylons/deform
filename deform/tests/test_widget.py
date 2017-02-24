@@ -917,6 +917,7 @@ class TestRadioChoiceWidget(unittest.TestCase):
         self.assertRaises(colander.Invalid, widget.deserialize, field, {})
 
 class TestSelectWidget(unittest.TestCase):
+
     def _makeOne(self, **kw):
         from deform.widget import SelectWidget
         return SelectWidget(**kw)
@@ -1021,6 +1022,19 @@ class TestSelectWidget(unittest.TestCase):
         field = DummyField()
         pstruct = ['foo', {}]
         self.assertRaises(colander.Invalid, widget.deserialize, field, pstruct)
+
+    def test_selected_tag(self):
+        """See we correctly procude 'selected'"""
+        widget = self._makeOne(multiple=False)
+        widget.get_select_value('foo', 'foo') == "selected"
+        widget.get_select_value('foo', 'bar') is None
+
+    def test_selected_tag_multiple(self):
+        """See we correctly procude 'selected' in multiple values situations."""
+        widget = self._makeOne(multiple=True)
+        widget.get_select_value(['foo', 'bar'], 'foo') == "selected"
+        widget.get_select_value(['foo', 'bar'], 'moo') is None
+
 
 class TestCheckboxChoiceWidget(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -1927,6 +1941,17 @@ class TestTextAreaCSVWidget(unittest.TestCase):
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], 'a,1\r\n')
 
+    def test_serialize_csv_delimiter(self):
+        widget = self._makeOne(delimiter=';')
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer=renderer)
+        cstruct = [('a', '1')]
+        widget.serialize(field, cstruct)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], 'a;1\r\n')
+
     def test_deserialize(self):
         widget = self._makeOne(strip=False)
         field = DummyField()
@@ -1985,6 +2010,14 @@ class TestTextAreaCSVWidget(unittest.TestCase):
         field.schema = None
         widget.handle_error(field, error)
         self.assertEqual(field.error.msg, 'line 1: Invalid\nline 2: Invalid')
+
+    def test_deserialize_csv_delimiter(self):
+        widget = self._makeOne(delimiter=';')
+        field = DummyField()
+        pstruct = 'a;1\r\n'
+        result = widget.deserialize(field, pstruct)
+        self.assertEqual(result, [['a', '1']])
+
 
 class TestTextInputCSVWidget(unittest.TestCase):
     def _makeOne(self, **kw):

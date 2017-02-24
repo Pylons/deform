@@ -126,7 +126,7 @@ class TestIssues(unittest.TestCase):
         html = form.render(colander.null)
 
         # check that title occurs exactly once in rendered output
-        soup = BeautifulSoup(html)
+        soup = BeautifulSoup(html, 'html.parser')
         self.assertEqual(len([ string for string in soup.strings
                                if schema.title in string
                                ]),

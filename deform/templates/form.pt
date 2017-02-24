@@ -45,7 +45,7 @@
     <div tal:repeat="child field"
          tal:replace="structure child.render_template(item_template)"/>
 
-    <div class="form-group">
+    <div class="form-group deform-form-buttons">
       <tal:loop tal:repeat="button buttons">
         <button
               tal:define="btn_disposition repeat.button.start and 'btn-primary' or 'btn-default';
@@ -54,7 +54,7 @@
               id="${formid+button.name}"
               name="${button.name}"
               type="${button.type}"
-              class="btn ${btn_disposition} ${button.css_class}"
+              class="btn ${button.css_class or btn_disposition}"
               value="${button.value}">
           <i tal:condition="btn_icon" class="${btn_icon}"> </i>
           ${button.title}

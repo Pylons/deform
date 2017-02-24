@@ -51,7 +51,7 @@ class FileUploadTempStore(object):
         This should return `True` if we have a value for the
         name supplied, `False` otherwise.
         """
-        
+
     def preview_url(self, name):
         """
         Return the preview URL for the item previously placed into the
@@ -60,6 +60,3 @@ class FileUploadTempStore(object):
         previewable items).  This item should typically return a URL
         to a thumbnail image.
         """
-        
-
-    

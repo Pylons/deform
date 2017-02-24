@@ -3,6 +3,11 @@
 Retail Form Rendering
 =====================
 
+.. contents:: :local:
+
+Introduction
+------------
+
 In the previous chapter we demonstrated how to use Deform to render a complete
 form, including the input fields, the buttons, and so forth.  We used the
 :meth:`deform.Field.render()` method, and injected the resulting HTML snippet
@@ -15,9 +20,12 @@ Deform forms.  Often it's easier to use Deform slightly differently, where you
 do more work yourself to draw the form within a template, and only use Deform
 for some of its features.  We refer to this as "retail form rendering".
 
-.. note::
+Live example
+------------
 
-   This feature is new as of Deform 0.9.6.
+`See pop-up example on Deform demo site <http://deformdemo.repoze.org/popup/>`_.
+
+`Source code <https://github.com/Pylons/deformdemo/blob/master/deformdemo/__init__.py>`_ (search popup).
 
 A Basic Example
 ---------------

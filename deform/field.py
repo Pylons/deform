@@ -48,6 +48,10 @@ class Field(object):
             The default widget will have a generated item_css_class
             containing the normalized version of the ``name`` attribute
             (with ``item`` prepended, e.g. ``item-username``).
+            NOTE: This behaviour is deprecated and will be removed in
+            the future. Mapping and Sequence Widget templates simply
+            render a css class on an item's container based on Field
+            information.
 
         order
             An integer indicating the relative order of this field's
@@ -390,9 +394,9 @@ class Field(object):
                         break
         if widget_maker is None:
             widget_maker = widget.TextInputWidget
-        return widget_maker(item_css_class=self._default_item_css_class())
+        return widget_maker(item_css_class=self.default_item_css_class())
 
-    def _default_item_css_class(self):
+    def default_item_css_class(self):
         if not self.name:
             return None
 
