@@ -12,6 +12,7 @@ from colander import (
     Sequence,
     String,
     null,
+    drop
     )
 from iso8601.iso8601 import ISO8601_REGEX
 
@@ -653,8 +654,8 @@ class DateTimeInputWidget(Widget):
         Mapping(),
         SchemaNode(_StrippedString(), name='date'),
         SchemaNode(_StrippedString(), name='time'),
-        SchemaNode(_StrippedString(), name='date_submit'),
-        SchemaNode(_StrippedString(), name='time_submit'))
+        SchemaNode(_StrippedString(), name='date_submit', missing=drop),
+        SchemaNode(_StrippedString(), name='time_submit', missing=drop))
 
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
@@ -706,8 +707,8 @@ class DateTimeInputWidget(Widget):
             except Invalid as exc:
                 raise Invalid(field.schema, "Invalid pstruct: %s" % exc)
             # seriously pickadate?  oh.  right.  i forgot.  you're javascript.
-            date = validated['date_submit'] or validated['date']
-            time = validated['time_submit'] or validated['time']
+            date = validated.get('date_submit', None) or validated['date']
+            time = validated.get('time_submit', None) or validated['time']
 
             if (not time and not date):
                 return null
