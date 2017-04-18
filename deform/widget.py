@@ -1699,9 +1699,19 @@ class FileUploadWidget(Widget):
                     uid = self.random_id()
                     if self.tmpstore.get(uid) is None:
                         data['uid'] = uid
-                        self.tmpstore[uid] = data
-                        preview_url = self.tmpstore.preview_url(uid)
-                        self.tmpstore[uid]['preview_url'] = preview_url
+                        try:
+                            # We can face problems if provided storage
+                            # object is invalid:
+                            # >>> self.tmpstore.__setitem__('abc', '1')
+                            # >>> self.tmpstore.__getitem__('abc') is None
+                            # True
+                            self.tmpstore[uid] = data
+                            preview_url = self.tmpstore.preview_url(uid)
+                            self.tmpstore[uid]['preview_url'] = preview_url
+                        except (KeyError, TypeError) as e:
+                            raise ValueError("Failed to use provided file " \
+                                "storage container. Make sure it implements " \
+                                "all methods of FileUploadTempStore interface")
                         break
             else:
                 # a previous file exists
