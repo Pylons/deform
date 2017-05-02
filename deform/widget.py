@@ -136,7 +136,7 @@ class Widget(object):
         the primary input tag(s) related to the widget.  For example,
         'width:150px;'.  Default: ``None``, meaning no style attribute will
         be added to the input tag.
-        
+
     requirements
         A sequence of two-tuples in the form ``( (requirement_name,
         version_id), ...)`` indicating the logical external
@@ -322,31 +322,31 @@ class MoneyInputWidget(Widget):
 
         symbol
             the symbol to be used before of the user values. default: ``$``
-        
+
         showSymbol
             set if the symbol must be displayed or not. default: ``False``
-            
+
         symbolStay
             set if the symbol will stay in the field after the user exists the
             field. default: ``False``
-            
+
         thousands
             the thousands separator. default: ``,``
-            
+
         decimal
             the decimal separator. default: ``.``
-            
+
         precision
             how many decimal places are allowed. default: 2
 
         defaultZero
             when the user enters the field, it sets a default mask using zero.
             default: ``True``
-            
+
         allowZero
             use this setting to prevent users from inputing zero. default:
             ``False``
-            
+
         allowNegative
             use this setting to prevent users from inputing negative values.
             default: ``False``
@@ -355,7 +355,7 @@ class MoneyInputWidget(Widget):
     readonly_template = 'readonly/textinput'
     requirements = ( ('jquery.maskMoney', None), )
     options = None
-    
+
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
             cstruct = ''
@@ -368,7 +368,7 @@ class MoneyInputWidget(Widget):
         values = self.get_template_values(field, cstruct, kw)
         template = readonly and self.readonly_template or self.template
         return field.renderer(template, **values)
-    
+
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null
@@ -392,7 +392,7 @@ class MoneyInputWidget(Widget):
         return pstruct
 
 class AutocompleteInputWidget(Widget):
-    """ 
+    """
     Renders an ``<input type="text"/>`` widget which provides
     autocompletion via a list of values using bootstrap's typeahead plugin
     http://twitter.github.com/bootstrap/javascript.html#typeahead.
@@ -624,7 +624,7 @@ class DateTimeInputWidget(Widget):
 
     time_options
         A dictionary of time options passed to pickadate.
-        
+
     template
         The template name used to render the widget.  Default:
         ``dateinput``.
@@ -677,8 +677,8 @@ class DateTimeInputWidget(Widget):
             kw['date'], kw['time'] = date, time
         except ValueError: # need more than one item to unpack
             kw['date'] = kw['time'] = ''
-            
-        
+
+
         date_options = dict(
             kw.get('date_options') or self.date_options or
             self.default_date_options
@@ -692,7 +692,7 @@ class DateTimeInputWidget(Widget):
             )
         time_options['formatSubmit'] = 'HH:i'
         kw['time_options_json'] = json.dumps(time_options)
-        
+
         values = self.get_template_values(field, cstruct, kw)
         template = readonly and self.readonly_template or self.template
         return field.renderer(template, **values)
@@ -711,7 +711,7 @@ class DateTimeInputWidget(Widget):
 
             if (not time and not date):
                 return null
-            
+
             result = 'T'.join([date, time])
 
             if not date:
@@ -719,7 +719,7 @@ class DateTimeInputWidget(Widget):
 
             if not time:
                 raise Invalid(field.schema, _('Incomplete time'), result)
-            
+
             return result
 
 class TextAreaWidget(TextInputWidget):
@@ -746,16 +746,20 @@ class TextAreaWidget(TextInputWidget):
         The template name used to render the widget in read-only mode.
         Default: ``readonly/textinput``.
 
-
     strip
         If true, during deserialization, strip the value of leading
         and trailing whitespace (default ``True``).
+
+    placeholder
+        A string that is given as the HTML placeholder attribute.
+        Defaults to ``None``.
     """
     template = 'textarea'
     readonly_template = 'readonly/textinput'
     cols = None
     rows = None
     strip = True
+    placeholder = None
 
 class RichTextWidget(TextInputWidget):
     """
@@ -1309,7 +1313,7 @@ class CheckedPasswordWidget(CheckedInputWidget):
         The string shown in the error message when a validation failure is
         caused by the confirm field value does not match the password
         field value.  Default: ``Password did not match confirm``.
-        
+
     redisplay
         If true, on validation failure involving a field with this widget,
         retain and redisplay the provided values in the password inputs.  If
@@ -1475,7 +1479,7 @@ class SequenceWidget(Widget):
 
     Note that the SequenceWidget template does not honor the ``css_class``
     or ``style`` attributes of the widget.
-        
+
     """
     template = 'sequence'
     readonly_template = 'readonly/sequence'
@@ -1771,7 +1775,7 @@ class DatePartsWidget(Widget):
         kw.setdefault('year', year)
         kw.setdefault('day', day)
         kw.setdefault('month', month)
-        
+
         readonly = kw.get('readonly', self.readonly)
         template = readonly and self.readonly_template or self.template
         values = self.get_template_values(field, cstruct, kw)
@@ -1839,6 +1843,10 @@ class TextAreaCSVWidget(Widget):
     quoting
         The csv module quoting dialect.
         Default: ``csv.QUOTE_MINIMAL``.
+
+    placeholder
+        A string that is given as the HTML placeholder attribute.
+        Defaults to ``None``.
     """
     template = 'textarea'
     readonly_template = 'readonly/textarea'
@@ -1847,6 +1855,7 @@ class TextAreaCSVWidget(Widget):
     delimiter = ','
     quotechar = '"'
     quoting = csv.QUOTE_MINIMAL
+    placeholder = None
 
     def serialize(self, field, cstruct, **kw):
         # XXX make cols and rows overrideable
@@ -2032,7 +2041,7 @@ class ResourceRegistry(object):
                 for source in sources:
                     if not source in result[thing]:
                         result[thing].append(source)
-                        
+
         return result
 
 
