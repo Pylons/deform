@@ -51,7 +51,7 @@ Bug Fixes
   Having the right `<label>` added a wart to mappings where the first item
   doesn't get a counter because the label is already assigned. This may be
   revisited as it seems to affect only mappings.
-  See https://github.com/Pylons/deformdemo/pull/20 for futher context.
+  See https://github.com/Pylons/deformdemo/pull/20 for further context.
 
 0.9.7 (2013-03-06)
 ------------------

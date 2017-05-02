@@ -66,7 +66,7 @@ class Form(field.Field):
        exists in the ``static`` directory of the ``deform`` package.
 
     ajax_options
-       A *string* which must represent a JavaScript obejct
+       A *string* which must represent a JavaScript object
        (dictionary) of extra AJAX options as per
        `http://jquery.malsup.com/form/#options-object
        <http://jquery.malsup.com/form/#options-object>`_.  For
@@ -80,7 +80,7 @@ class Form(field.Field):
        By default, ``target`` points at the DOM node representing the
        form and and ``replaceTarget`` is ``true``.
 
-       A successhandler calls the ``deform.processCallbacks`` method
+       A success handler calls the ``deform.processCallbacks`` method
        that will ajaxify the newly written form again.  If you pass
        these values in ``ajax_options``, the defaults will be
        overridden.  If you want to override the success handler, don't
@@ -167,11 +167,11 @@ class Button(object):
 
     css_class
         The name of a CSS class to attach to the button. In the default
-        form rendering, this string will be appended to ``btnText submit``
-        to become part of the ``class`` attribute of the button. For
-        example, if ``css_class`` was ``foobar`` then the resulting default
-        class becomes ``btnText submit foobar``. Default: ``None`` (no
-        additional class).
+        form rendering, this string will replace the default button type
+        (either ``btn-primary`` or ``btn-default``) on the the ``class``
+        attribute of the button. For example, if ``css_class`` was
+        ``btn-danger`` then the resulting default class becomes
+        ``btn btn-danger``. Default: ``None`` (use default class).
     """
     def __init__(self, name='submit', title=None, type='submit', value=None,
                  disabled=False, css_class=None, icon=None):

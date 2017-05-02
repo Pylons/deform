@@ -1,24 +1,18 @@
-<div class="deform-file-upload"
-     tal:define="oid oid|field.oid;
-                 css_class css_class|field.widget.css_class;
-                 style style|field.widget.style">
-
+<tal:block tal:define="oid oid|field.oid;
+                       css_class css_class|field.widget.css_class;
+                       style style|field.widget.style;">
   ${field.start_mapping()}
-
-  <div class="deform-replaces" tal:condition="cstruct.get('uid')">
-
-    <input type="hidden" name="uid" value="${cstruct['uid']}"
-           id="${oid}-uid"/>
-    <span tal:content="cstruct.get('filename')"
-          id="${oid}-filename"/>
-
-  </div>
-
-  <input type="file" name="upload" 
-         tal:attributes="class css_class;
-                         style style;"
-         id="${oid}"/>
-
+  <input type="file" name="upload" id="${oid}"
+         tal:attributes="style style;
+                         accept accept|field.widget.accept;
+                         data-filename cstruct.get('filename');"/>
+  <input tal:define="uid cstruct.get('uid')"
+         tal:condition="uid"
+         type="hidden" name="uid" value="${uid}"/>
   ${field.end_mapping()}
-
-</div>
+  <script type="text/javascript">
+    deform.addCallback('${oid}', function (oid) {
+      $('#' + oid).upload();
+    });
+  </script>
+</tal:block>

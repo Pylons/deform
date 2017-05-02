@@ -32,8 +32,8 @@ Let's take another look at our familiar schema:
 This schema renders as a *sequence* of *mapping* objects.  Each
 mapping has two leaf nodes in it: a *string* and an *integer*.  If you
 play around with the demo at
-`http://deform2demo.repoze.org/sequence_of_mappings/
-<http://deform2demo.repoze.org/sequence_of_mappings/>`_ you'll notice
+`http://deformdemo.repoze.org/sequence_of_mappings/
+<http://deformdemo.repoze.org/sequence_of_mappings/>`_ you'll notice
 that, although we don't actually specify a particular kind of widget
 for each of these fields, a sensible default widget is used.  This is
 true of each of the default types in :term:`Colander`.  Here is how
@@ -98,7 +98,7 @@ schema:
    import colander
 
    from deform import Form
-   from deform.widget import TextInputWidget
+   from deform.widget import TextAreaWidget
 
    class Person(colander.MappingSchema):
        name = colander.SchemaNode(colander.String(),
@@ -127,7 +127,7 @@ widget.
 .. note::
 
   Widget associations done in a schema are always overridden by
-  explicit widget assigments performed via
+  explicit widget assignments performed via
   :meth:`deform.Field.__setitem__` and
   :meth:`deform.Field.set_widgets`.
 
@@ -169,7 +169,7 @@ the same pattern.  For example:
    :linenos:
 
    from deform import Form
-   from deform.widget import TextInputWidget
+   from deform.widget import TextAreaWidget
 
    myform = Form(schema, buttons=('submit',))
    myform['people']['person']['name'].widget = TextAreaWidget()
@@ -191,7 +191,7 @@ For example:
    :linenos:
 
    from deform import Form
-   from deform.widget import TextInputWidget
+   from deform.widget import TextAreaWidget
 
    myform = Form(schema, buttons=('submit',))
    myform.set_widgets({'people.person.name':TextAreaWidget(),
@@ -258,8 +258,8 @@ be loaded into the page serving the form for the mask argument to have
 any effect.  A copy of this library is available in the
 ``static/scripts`` directory of the :mod:`deform` package itself.
 
-See `http://deform2demo.repoze.org/text_input_masks/
-<http://deform2demo.repoze.org/text_input_masks/>`_ for a working
+See `http://deformdemo.repoze.org/text_input_masks/
+<http://deformdemo.repoze.org/text_input_masks/>`_ for a working
 example.
 
 Use of a text input mask is not a replacement for server-side
@@ -317,7 +317,7 @@ application.  Something like either of these structures in JSON are suitable::
     ]
 
 The autocomplete plugin will add a query string to the request URL with the
-variable ``term`` which contains the user's input at that momement.  The server
+variable ``term`` which contains the user's input at that moment.  The server
 may use this to filter the returned results.  
 
 For more information, see http://api.jqueryui.com/autocomplete/#option-source
@@ -335,14 +335,14 @@ available options. Passing options looks like:
 				values=['spam, 'eggs', 'bar', 'baz'],
                                 min_length=1)
 
-See `http://deform2demo.repoze.org/autocomplete_input/
-<http://deform2demo.repoze.org/autocomplete_input/>`_ and
-`http://deform2demo.repoze.org/autocomplete_remote_input/
-<http://deform2demo.repoze.org/autocomplete_remote_input/>`_ for
+See `http://deformdemo.repoze.org/autocomplete_input/
+<http://deformdemo.repoze.org/autocomplete_input/>`_ and
+`http://deformdemo.repoze.org/autocomplete_remote_input/
+<http://deformdemo.repoze.org/autocomplete_remote_input/>`_ for
 working examples. A working example of a remote URL providing
 completion data can be found at
-`http://deform2demo.repoze.org/autocomplete_input_values/
-<http://deform2demo.repoze.org/autocomplete_input_values/>`_.
+`http://deformdemo.repoze.org/autocomplete_input_values/
+<http://deformdemo.repoze.org/autocomplete_input_values/>`_.
 
 Use of :class:`deform.widget.AutocompleteInputWidget` is not a
 replacement for server-side validation of the field; it is purely a UI

@@ -1,11 +1,90 @@
-Next release
-------------
+2.0.5 (unreleased)
+------------------
+
+- i18n cleanup https://github.com/Pylons/deform/pull/332
+
+- Add ``link`` button type See https://github.com/Pylons/deform/issues/166
+
+
+2.0.4 (2017-02-11)
+------------------
+
+- Added ability to pass a translator function to `deform.renderer.configure_zpt_renderer`
+
+
+2.0.3 (2016-11-19)
+------------------
+
+- Added accordions to MappingWidget: http://deformdemo.repoze.org/mapping_accordion/
+
+- Added CSS class ``deform-form-buttons`` to style form button group: https://github.com/Pylons/deform/pull/308
+
+- Add more options to ``TextAreaCSVWidget``: https://github.com/Pylons/deform/pull/309
+
+- Always render an item with a default CSS class: https://github.com/Pylons/deform/pull/306
+
+- Updated pickdate.js library used for the date picker: https://github.com/Pylons/deform/pull/248
+
+- Widget Selenium test suite runs both under Python 2 and 3. Lots of Selenium testing headache fixed with some implicit wait support.
+
+.. note ::
+
+    Currently Python 3 file upload widget may have compatibility issues Please see deformdemo/test.py for details.
+
+2.0.2 (2016-11-14)
+------------------
+
+- Fix regression of ``<select>`` widget default values not honoured
+
+- Updated Select2 widget JavaScript
+
+2.0.1 (2016-10-25)
+------------------
+
+- Drop support for Python 2.6.
+
+- Documentation reorganization and clean up to conform with Pylons Project
+  projects.
+
+- Fix select and select2 widget templates failing on Python 3.x
+
+2.0 (2016-10-23)
+----------------
+
+- Release polish
+
+
+2.0b3 (2016-10-22)
+------------------
+
+- Update demos and add standalone mini example
+
+2.0b2 (2016-10-22)
+------------------
+
+- Fix README on PyPi
+
+2.0b1 (2016-10-22)
+------------------
+
+- Updated bootstrap to 3.3.6.
+
+- Fix dateparts.pt and datetimeinput.pt for changes in bootstrap v3.0.3.
+  (The culprit is boostrap commit
+  `853b69f <https://github.com/twbs/bootstrap/commit/853b69f2d>`_.)
+
+- Make ``dateinput`` work again by using the fixed name "date" as expected
+  by the pstruct schema.  See https://github.com/Pylons/deform/pull/221.
+
+- Changed ``ISO8601_REGEX`` import to match change in colander
+
+- Add support for Python 3.4, PyPy3.
 
 - Raise ``Invalid`` rather than other errors when deserializing broken
   or malicious pstructs with invalid types.  See
   https://github.com/Pylons/deform/pull/203
 
-- Readd a time widget.
+- Read a time widget.
 
 - Fix a bug in the DateInputWidget.  See
   https://github.com/Pylons/deform/pull/192.
@@ -13,7 +92,6 @@ Next release
 - Ensured that ``None`` would not show up as a css class name in rendered
   template output.  See https://github.com/Pylons/deform/pull/191
 
-- CSS class names normalized.  Instead of camelCase names (e.g. ``deformSeq``),
   we now use dashed-names (e.g. ``deform-seq``).  A full list of changes is
   below::
 
@@ -37,7 +115,19 @@ Next release
 - Fixed handling of buttons in nested sequences.
   See https://github.com/Pylons/deform/issues/197
 
-- Add ``link`` button type See https://github.com/Pylons/deform/issues/166
+- Upload widget is themed like Bootstrap https://github.com/Pylons/deform/pull/280
+
+- Select widget handles the mixture of strings and ints https://github.com/Pylons/deform/pull/300/ and https://github.com/Pylons/deform/pull/299
+
+- Have the button css_class override the default button class. This is
+  backwards-incompatible and will require users of css_class to add a
+  btn-default/btn-primary class to the css_class.
+
+- Simplified Chinese translation https://github.com/Pylons/deform/pull/274
+
+- Don't cause unnecessary JavaScript calls on page load https://github.com/Pylons/deform/pull/267/
+
+- Allow override Button Bootstap CSS styles https://github.com/Pylons/deform/pull/251
 
 2.0a2 (2013-10-18)
 ------------------
@@ -56,10 +146,10 @@ Next release
   ``CheckedPasswordWidget(redisplay=True)`` to make these widgets redisplay
   passwords on validation failures, matching the old behavior.
 
-- When using the default Chameleon template renderer, template names can now 
+- When using the default Chameleon template renderer, template names can now
   be "asset specifications" e.g. ``mypackage:subdir1/subdir2/mytemplate.pt``
   instead of extensionless paths relative to a search path.  When
-  template names are specified as asset specifications, the 
+  template names are specified as asset specifications, the
   ``pkg_resources.resource_filename`` API is used to dereference them
   into an actual file path.
 
@@ -67,10 +157,10 @@ Next release
 ------------------
 
 This is an alpha release of Deform v2.  Deform v2 is backwards incompatible
-with Deform v1.  It requires the use of Twitter Bootstrap v3, whereas 
+with Deform v1.  It requires the use of Twitter Bootstrap v3, whereas
 deform v1 did not require Bootstrap.
 
-A demonstration site that shows Deform 2 in action exists at 
+A demonstration site that shows Deform 2 in action exists at
 http://deform2demo.repoze.org.
 
 Both Deform 1 and Deform 2 will be maintained going forward.  If you wish
@@ -78,12 +168,12 @@ to continue using Deform 1, because you cannot upgrade, or cannot depend on
 Bootstrap 3, please pin your deform distribution requirement to
 something below 2.0a1, e.g. ``deform<=1.999``.
 
-This first alpha release is missing formal documentation updates.  Apologies, 
+This first alpha release is missing formal documentation updates.  Apologies,
 we needed to get a release out onto PyPI, as not having one is holding back
-the development of a number of platforms and applications that depend on the 
-changes in v2+.  Documentation updates will be forthcoming over the lifetime 
-of future alpha/beta releases.  However, below is a list of known issues that 
-need to be addressed to make a final release of Deform 2, as well as 
+the development of a number of platforms and applications that depend on the
+changes in v2+.  Documentation updates will be forthcoming over the lifetime
+of future alpha/beta releases.  However, below is a list of known issues that
+need to be addressed to make a final release of Deform 2, as well as
 information about new features, and migration notes.  You may also be
 able to make use of the demo site at http://deform2demo.repoze.org to divine
 how things have changed, and what CSS and JavaScript resources you'll need
@@ -108,7 +198,7 @@ TODO
   Maybe make these two things separate or at least don't show them both using
   the same value.
 - normalize CSS class names to deform-foo rather than deformFoo
-- sequence_of_sequences: js that processes close/order buttons has to 
+- sequence_of_sequences: js that processes close/order buttons has to
   be less promiscuous (it uses e.g. "find"); symptom: buttons
   appear/disappear, act on the wrong element, etc... ugh 2013/10/05
   cannot replicate, but still believe there may be an issue, but
@@ -116,7 +206,7 @@ TODO
 
 NICE TO HAVE
 
-- structural widget (mapping_item.pt) - do we need that or not or what? + 
+- structural widget (mapping_item.pt) - do we need that or not or what? +
   add a demo
 - prepend/append t.bootstrap stuff
 - https://github.com/Pylons/deform/pull/116#issuecomment-23210460
@@ -133,7 +223,7 @@ NEW FEATURES:
   https://github.com/Pylons/deform/pull/182)
 - http://deform2demo.repoze.org/
 
-MIGRATION NOTES: 
+MIGRATION NOTES:
 
 - removed deprecated `height, width, skin, theme` parameters from RichTextWidget
   (use "options" instead)
@@ -151,7 +241,7 @@ MIGRATION NOTES:
 - It is no longer possible to do DateTimeWidget().options['a'] = 'foo'
   or DateTimeWidget().date_options['a'] = 'foo'.  If you need to change
   options imperatively, set the entire .options/.date_options dictionary.
-- merged TypeaheadInputWidget to AutocompleteInputWidget (removed delay 
+- merged TypeaheadInputWidget to AutocompleteInputWidget (removed delay
   parameter)
 - AutocompleteInputWidget now accepts string type for "values"
 - widgets no longer accepts "size" (instead use style="width: x"), except

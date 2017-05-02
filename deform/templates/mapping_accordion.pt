@@ -1,0 +1,49 @@
+<tal:def tal:define="title title|field.title;
+                     description description|field.description;
+                     errormsg errormsg|field.errormsg;
+                     open python:(field.widget.open or field.error) and True or False;
+                     collapse_link_class python:open and '' or 'collapsed';
+                     collapse_body_class python:open and 'in' or '';
+                     item_template item_template|field.widget.item_template"
+         i18n:domain="deform">
+  
+  <div class="panel panel-default" title="${description}">
+    <div class="panel-heading deform-collapse-heading">
+
+      <a
+          role="button"
+          data-toggle="collapse"
+          href="#collapse-${field.oid}"
+          tal:attributes="aria-expanded python:open and 'true' or None"
+          aria-controls="collapse-${field.oid}">
+          ${title}
+      </a>
+    </div>
+
+    <div id="collapse-${field.oid}" class="panel-collapse deform-collapse-body collapse ${collapse_body_class}" role="tabpanel" aria-labelledby="heading-${field.oid}">
+
+      <div class="panel-body">
+
+        <div tal:condition="errormsg"
+             class="clearfix alert alert-danger">
+          <p i18n:translate="">
+             There was a problem with this section
+          </p>
+          <p>${errormsg}</p>
+        </div>
+
+        <div tal:condition="description">
+          ${description}
+        </div>
+
+        ${field.start_mapping()}
+        <div tal:repeat="child field.children"
+             tal:replace="structure child.render_template(item_template)" >
+        </div>
+        ${field.end_mapping()}
+
+      </div>
+    </div>
+  </div>
+
+</tal:def>

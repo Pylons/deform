@@ -9,7 +9,7 @@
     <div class="panel-body">
 
       <div tal:condition="errormsg" 
-           class="clearfix alert alert-message error">
+           class="clearfix alert alert-danger">
         <p i18n:translate="">
            There was a problem with this section
         </p>

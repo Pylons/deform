@@ -23,22 +23,20 @@ Instead, the form is posted, and the result of the post replaces the
 form element's DOM node.
 
 Examples of using the AJAX facilities in Deform are showcased on the
-`http://deform2demo.repoze.org <http://deform2demo.repoze.org>`_
+`http://deformdemo.repoze.org <http://deformdemo.repoze.org>`_
 demonstration website:
 
 - `Redirection on validation success
-  <http://deform2demo.repoze.org/ajaxform_redirect/>`_
+  <http://deformdemo.repoze.org/ajaxform_redirect/>`_
 
 - `No redirection on validation success
-  <http://deform2demo.repoze.org/ajaxform/>`_
+  <http://deformdemo.repoze.org/ajaxform/>`_
 
-Note that for AJAX forms to work, the ``deform.js`` and
-``jquery.form.js`` libraries must be included in the rendering of the
-page that includes the form itself, and the ``deform.load()``
-JavaScript function must be called by the rendering in order to
-associate the form with AJAX.  This is the responsibility of the
-wrapping page.  Both libraries are present in the ``static`` directory
-of the :mod:`deform` package itself.  See :ref:`widget_requirements`
-for a way to detect which JavaScript libraries are required for a
-particular form rendering.
+.. note::
+
+   As with widgets, you must ensure the required JavaScript
+   files are included for the AJAX functionality to work.  See
+   :ref:`widget_requirements` for a way to detect which JavaScript
+   libraries are required for a particular form rendering.
+
 

@@ -26,14 +26,15 @@ class ValidationFailure(Exception):
         self.cstruct = cstruct
         self.error = error
 
-    def render(self):
+    def render(self, **kw):
         """
         Used to reserialize the form in such a way that the user will
-        see error markers in the form HTML.  This method accepts no
-        arguments and returns text representing the HTML of a form
-        rendering.
+        see error markers in the form HTML.
+
+        The ``**kw`` argument allows a caller to pass named arguments
+        that are passed on to the template.
         """
-        return self.field.widget.serialize(self.field, self.cstruct)
+        return self.field.widget.serialize(self.field, self.cstruct, **kw)
 
 class TemplateError(Exception):
     pass

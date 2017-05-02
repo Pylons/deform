@@ -3,38 +3,22 @@
      style field.widget.style;
      oid oid|field.oid;
      css_class css_class|field.widget.css_class;
+     unicode unicode|str;
      optgroup_class optgroup_class|field.widget.optgroup_class;
      multiple multiple|field.widget.multiple;"
      tal:omit-tag="">
 
    <style>
-    .form-control .select2-choice {
-        border: 0;
-        border-radius: 2px;
-    }
 
-    .form-control .select2-choice .select2-arrow {
-        border-radius: 0 2px 2px 0;   
-    }
+     .select2-selection.form-control {
+       padding: 0px 0px;
+     }
 
-    .form-control.select2-container {
-        height: auto !important;
-        padding: 0px;
-    }
+     .select2-container--default .select2-selection--multiple,
+     .select2-container--default .select2-selection--single {
+       border: 1px solid #ccc;
+     }
 
-    .form-control.select2-container.select2-dropdown-open {
-        border-color: #5897FB;
-        border-radius: 3px 3px 0 0;
-    }
-
-    .form-control .select2-container.select2-dropdown-open .select2-choices {
-        border-radius: 3px 3px 0 0;
-    }
-
-    .form-control.select2-container .select2-choices {
-        border: 0 !important;
-        border-radius: 3px;
-    }
    </style>
   <input type="hidden" name="__start__" value="${name}:sequence"
          tal:condition="multiple" />
@@ -51,7 +35,7 @@
                 tal:attributes="label item.label">
         <option tal:repeat="(value, description) item.options"
                 tal:attributes="
-                selected (multiple and value in cstruct or value == cstruct) and 'selected';
+                selected python:field.widget.get_select_value(cstruct, value);
                 class css_class;
                 label field.widget.long_label_generator and description;
                 value value"
@@ -59,7 +43,7 @@
       </optgroup>
       <option tal:condition="not isinstance(item, optgroup_class)"
               tal:attributes="
-              selected (multiple and item[0] in cstruct or item[0] == cstruct) and 'selected';
+              selected python:field.widget.get_select_value(cstruct, item[0]);
               class css_class;
               value item[0]">${item[1]}</option>
     </tal:loop>
@@ -69,7 +53,11 @@
    deform.addCallback(
      '${field.oid}',
      function(oid) {
-       $('#' + oid).select2({containerCssClass: 'form-control'});
+       $('#' + oid).select2({
+         containerCssClass: 'form-control',
+         placeholder: "${str(field.widget.placeholder).replace('"','\\"')|""}" || undefined,
+         allowClear: "${hasattr(field.widget, 'placeholder')}"
+       });
      }
    );
   </script>

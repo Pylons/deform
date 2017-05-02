@@ -1,0 +1,9 @@
+[run]
+branch = False
+source = codecov
+
+[report]
+# These are being stressed out in deformdemo package
+omit =
+    deform/schema.py
+    deform/renderer.py

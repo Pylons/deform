@@ -3,6 +3,11 @@
 Widgets
 =======
 
+.. contents:: :local:
+
+Introduction
+------------
+
 A widget is a bit of code that is willing to:
 
 - serialize a :term:`cstruct` into HTML for display in a form
