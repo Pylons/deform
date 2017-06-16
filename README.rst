@@ -177,4 +177,4 @@ Community and links
 
 * `Documentation <http://docs.pylonsproject.org/projects/deform/en/latest/>`_
 
-* `Support <http://www.pylonsproject.org/community/get-support>`_
+* `Support <https://pylonsproject.org/community-support.html>`_
