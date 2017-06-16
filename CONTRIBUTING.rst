@@ -4,9 +4,9 @@ Contributing
 
 All projects under the Pylons Projects, including this one, follow the
 guidelines established at [How to
-Contribute](http://www.pylonsproject.org/community/how-to-contribute) and
+Contribute](https://pylonsproject.org/community-how-to-contribute.html) and
 [Coding Style and
-Standards](http://docs.pylonsproject.org/en/latest/community/codestyle.html).
+Standards](https://pylonsproject.org/community-coding-style-standards.html).
 
 You can contribute to this project in several ways.
 
