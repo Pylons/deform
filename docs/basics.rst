@@ -99,7 +99,7 @@ Here's a schema that will help us meet those requirements:
        
 The schemas used by Deform come from a package named :term:`Colander`.  The
 canonical documentation for Colander exists at
-http://docs.pylonsproject.org/projects/colander/ .  To compose complex
+http://docs.pylonsproject.org/projects/colander/en/latest/ .  To compose complex
 schemas, you'll need to read it to get comfy with the documentation of the
 default Colander data types.  But for now, we can play it by ear.
 
@@ -122,7 +122,7 @@ Schema Node Objects
    documentation about schema nodes in order to prevent you from
    needing to switch away from this page to another while trying to
    learn about forms.  But you can also get much the same information
-   at http://docs.pylonsproject.org/projects/colander/
+   at http://docs.pylonsproject.org/projects/colander/en/latest/
 
 A schema is composed of one or more *schema node* objects, each typically of
 the class :class:`colander.SchemaNode`, usually in a nested arrangement.
