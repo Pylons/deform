@@ -39,7 +39,7 @@ Example:
 
         preview = colander.SchemaNode(colander.Boolean())
 
-        # Validate emaik
+        # Validate email
         email = colander.SchemaNode(colander.String(), validator=colander.Email(), missing=colander.Drop)
 
 
