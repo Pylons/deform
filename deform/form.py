@@ -1,13 +1,12 @@
 import re
 
-from deform import widget
-from deform import field
+from chameleon.utils import Markup
 
-from deform.compat import (
-    string_types,
-    text_type,
-)
-
+from . import (
+    compat,
+    field,
+    widget,
+    )
 
 class Form(field.Field):
     """
@@ -67,7 +66,7 @@ class Form(field.Field):
        exists in the ``static`` directory of the ``deform`` package.
 
     ajax_options
-       A *string* which must represent a JavaScript obejct
+       A *string* which must represent a JavaScript object
        (dictionary) of extra AJAX options as per
        `http://jquery.malsup.com/form/#options-object
        <http://jquery.malsup.com/form/#options-object>`_.  For
@@ -81,7 +80,7 @@ class Form(field.Field):
        By default, ``target`` points at the DOM node representing the
        form and and ``replaceTarget`` is ``true``.
 
-       A successhandler calls the ``deform.processCallbacks`` method
+       A success handler calls the ``deform.processCallbacks`` method
        that will ajaxify the newly written form again.  If you pass
        these values in ``ajax_options``, the defaults will be
        overridden.  If you want to override the success handler, don't
@@ -98,14 +97,19 @@ class Form(field.Field):
     keywords mean the same thing in the context of a Form as they do
     in the context of a Field (a Form is just another kind of Field).
     """
-    css_class = 'deform'
+    css_class = 'deform' # bw compat only; pass a widget to override
     def __init__(self, schema, action='', method='POST', buttons=(),
                  formid='deform', use_ajax=False, ajax_options='{}',
                  autocomplete=None, **kw):
+        if autocomplete:
+            autocomplete = 'on'
+        elif autocomplete is not None:
+            autocomplete = 'off'
+        self.autocomplete = autocomplete
         field.Field.__init__(self, schema, **kw)
         _buttons = []
         for button in buttons:
-            if isinstance(button, string_types):
+            if isinstance(button, compat.string_types):
                 button = Button(button)
             _buttons.append(button)
         self.action = action
@@ -113,18 +117,11 @@ class Form(field.Field):
         self.buttons = _buttons
         self.formid = formid
         self.use_ajax = use_ajax
-        if autocomplete is None:
-            self.autocomplete = None
-        elif autocomplete:
-            self.autocomplete = 'on'
-        else:
-            self.autocomplete = 'off'
-        self.ajax_options = Raw(ajax_options.strip())
-        self.widget = widget.FormWidget()
-
-class Raw(text_type):
-    def __html__(self):
-        return self
+        self.ajax_options = Markup(ajax_options.strip())
+        form_widget = getattr(schema, 'widget', None)
+        if form_widget is None:
+            form_widget = widget.FormWidget()
+        self.widget = form_widget
 
 class Button(object):
     """
@@ -158,9 +155,17 @@ class Button(object):
 
     disabled
         Render the button as disabled if True.
+
+    css_class
+        The name of a CSS class to attach to the button. In the default
+        form rendering, this string will replace the default button type
+        (either ``btn-primary`` or ``btn-default``) on the the ``class``
+        attribute of the button. For example, if ``css_class`` was
+        ``btn-danger`` then the resulting default class becomes
+        ``btn btn-danger``. Default: ``None`` (use default class).
     """
     def __init__(self, name='submit', title=None, type='submit', value=None,
-                 disabled=False):
+                 disabled=False, css_class=None):
         if title is None:
             title = name.capitalize()
         name = re.sub(r'\s', '_', name)
@@ -171,4 +176,5 @@ class Button(object):
         self.type = type
         self.value = value
         self.disabled = disabled
+        self.css_class = css_class
         

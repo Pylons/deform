@@ -1,6 +1,6 @@
 import colander
 
-from deform import widget
+from . import widget
 from deform.i18n import _
 
 default_widget_makers = {
@@ -14,10 +14,16 @@ default_widget_makers = {
     colander.Date: widget.DateInputWidget,
     colander.DateTime: widget.DateTimeInputWidget,
     colander.Tuple: widget.TextInputCSVWidget,
+    colander.Time: widget.TimeInputWidget,
+    colander.Money: widget.MoneyInputWidget,
+    colander.Set: widget.CheckboxChoiceWidget,
 }
 
-# XXX when a new colander release rolls around, set colander.Money to
-# widget.MoneyWidget in defaults.
+
+@colander.deferred
+def deferred_csrf_value(node, kw):
+    return kw['request'].session.get_csrf_token()
+
 
 class FileData(object):
     """
@@ -109,9 +115,8 @@ class FileData(object):
                     node,
                     _('${value} has no ${key} key', mapping=mapping)
                     )
-        result = widget.filedict()
-        result['filename'] = value['filename']
-        result['uid'] = value['uid']
+        result = widget.filedict(value)
+        # provide a value for these entries even if None
         result['mimetype'] = value.get('mimetype')
         result['size'] = value.get('size')
         result['fp'] = value.get('fp')
@@ -121,37 +126,39 @@ class FileData(object):
     def deserialize(self, node, value):
         return value
 
-class Set(object):
-    """ A type representing a non-overlapping set of items.
-    Deserializes an iterable to a ``set`` object.
+    def cstruct_children(self, node, cstruct): # pragma: no cover
+        return []
 
-    This type constructor accepts one argument:
 
-    ``allow_empty``
-       Boolean representing whether an empty set input to
-       deserialize will be considered valid.  Default: ``False``.
+class CSRFSchema(colander.Schema):
+    """CSRF protected form schema.
+
+    Example:
+
+    .. code-block:: python
+
+      import colander
+      from deform.schema import CSRFSchema
+
+      class MySchema(CSRFSchema):
+          my_field = colander.SchemaNode(colander.String())
+
+      And in your application code, *bind* the schema, passing the request as a keyword argument:
+
+  .. code-block:: python
+
+    def view(request):
+        schema = MySchema().bind(request=request)
+
+    When using Pyramid 1.7+, the CSRF token is validated by CSRF view deriver.
+
+    More information
+
+    * http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/sessions.html?highlight=csrf#checking-csrf-tokens-automatically
     """
-
-    widget_maker = widget.CheckboxChoiceWidget
-
-    def __init__(self, allow_empty=False):
-        self.allow_empty = allow_empty
-        
-    def serialize(self, node, value):
-        return value
-
-    def deserialize(self, node, value):
-        if value is colander.null:
-            return colander.null
-        if not hasattr(value, '__iter__'):
-            raise colander.Invalid(
-                node,
-                _('${value} is not iterable', mapping={'value':value})
-                )
-        value =  set(value)
-        if not value and not self.allow_empty:
-            raise colander.Invalid(node, _('Required'))
-        return value
-    
-        
+    csrf_token = colander.SchemaNode(
+        colander.String(),
+        widget=widget.HiddenWidget(),
+        default=deferred_csrf_value,
+        )
 

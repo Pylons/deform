@@ -16,7 +16,7 @@ Treatment of Account
 Contributor will not allow anyone other than the Contributor to use his or
 her username or source repository login to submit code to a Pylons Project
 source repository. Should Contributor become aware of any such use,
-Contributor will immediately by notifying Agendaless Consulting.
+Contributor will immediately notify Agendaless Consulting.
 Notification must be performed by sending an email to
 webmaster@agendaless.com.  Until such notice is received, Contributor will be
 presumed to have taken all actions made through Contributor's account. If the
@@ -104,6 +104,7 @@ Contributors
 - Chris McDonough, 2011/02/16
 - Patrick Gerken, 2011/02/22
 - Jonathan Ballet, 2011/03/03
+- Carlos de la Guardia, 2011/04/28
 - Chris Withers, 2011/05/16
 - Wichert Akkerman , 2011/05/19
 - Mathieu Le Marec - Pasquet , 2011/11/08
@@ -111,3 +112,20 @@ Contributors
 - Atsushi Odagiri, 2012/02/05
 - Josh Finnie, 2012/02/16
 - Daniel Nouri, 2012/03/30
+- Sam Brauer, 2012/09/15
+- Domen Kožar, 2012/09/23
+- Patricio Paez, 2013/03/19
+- Lorenzo M. Catucci, 2013/01/29
+- Sebastian Wehrmann, 2013/04/03
+- Charlie Clark, 2013/09/03
+- Calvin Hendryx-Parker, 2013/09/03
+- Tim Tisdall, 2014/06/04
+- Cédric Messiant, 2014/06/27
+- Josip Delić, 2016/02/16
+- Bert JW Regeer, 2016/02/16
+- Steve Piercy, 2016/02/19
+- Mikko Ohtamaa 2016/06/01
+- Martin Peeters 2016/10/22
+- Mikko Kolehmainen 2016/11/02
+- Gasper Vozel, 2016/09/15
+

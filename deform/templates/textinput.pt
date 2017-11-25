@@ -1,21 +1,28 @@
-<span tal:omit-tag="">
-  <input tal:attributes="
-          class field.widget.css_class;
-             id field.oid;
-      maxlength getattr(field.widget, 'maxlength', None);
-           name field.name;
-    placeholder getattr(field.widget, 'placeholder', None);
-       required 'required' if field.required else None;
-           size field.widget.size;
-           type getattr(field.widget, 'type', 'text');
-          value cstruct or None;
-  " />
-  <script tal:condition="field.widget.mask" type="text/javascript">
-    deform.addCallback(
-      '${field.oid}',
-      function (oid) {
-        $("#" + oid).mask("${field.widget.mask}",
-                          {placeholder:"${field.widget.mask_placeholder}"});
-      });
-  </script>
+<span tal:define="name name|field.name;
+                  css_class css_class|field.widget.css_class;
+                  oid oid|field.oid;
+                  mask mask|field.widget.mask;
+                  mask_placeholder mask_placeholder|field.widget.mask_placeholder;
+                  style style|field.widget.style;
+"
+      tal:omit-tag="">
+    <input type="text" name="${name}" value="${cstruct}"
+           tal:attributes="class string: form-control ${css_class or ''};
+                           style style;
+                           maxlength getattr(field.widget, 'maxlength', None);
+                           name field.name;
+                           placeholder getattr(field.widget, 'placeholder', None);
+                           required 'required' if field.required else None;
+                           size field.widget.size;
+                           type getattr(field.widget, 'type', 'text');
+                           value cstruct or None;"
+           id="${oid}"/>
+    <script tal:condition="mask" type="text/javascript">
+      deform.addCallback(
+         '${oid}',
+         function (oid) {
+            $("#" + oid).mask("${mask}",
+                 {placeholder:"${mask_placeholder}"});
+         });
+    </script>
 </span>

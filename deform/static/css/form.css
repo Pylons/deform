@@ -1,80 +1,69 @@
-.deform .req{
-   color: red;
-}
-
-.deform label.desc{
-    display: block;
-    font-weight:bold;
-}
-
-.deform ul {
-    margin: 0;
-    padding: 0;
-}
-
-.deform li {
-    clear: left;
-    display: block;
-    margin: 6px 0px;
-    padding: 3px;
-}
-
-.deform .tinymce-preload{
-    border: 1px solid #CCC;
-    height: 240px;
-    width: 500px;
-    display: block;
-}
-
-/* deform additions*/
-
-.deformClosebuttonActive {
-   border: 0;
-   cursor: pointer;
-   float: left;
-   /* width: 1em; */
-   /* height: 1em; */
-   /* margin: .5em; */
-}
-
-.deformClosebuttonActive:before {
-    content:"✖";
-    color:red;
-    margin-right: 2px;
-}
-
-a.deformSeqAdd:visited {
+.deform-seq-add:visited {
    color: blue;
 }
 
-div.deformReplaces {
+.deform-replaces {
     float: left;
 }
 
-.deformSet-item {
+.deform-set-item {
     padding: 1px;
 }
 
-.deform ul.inline > li{
-    display:inline-block;
+form .required {
+    font-weight: bold;
 }
 
-/* error handling */
-.deform .errorLi {
-    border:1px solid red;
-    text-align: center;
-    -webkit-border-radius:20px;
-    -moz-border-radius:20px;
+form .required:after {
+    color: #e32;
+    content: '*';
+    display:inline;
 }
 
-.deform li.error{
-    background-color: #FFDFDF;
+/* ugh, terrible selector coming up */
+
+.hasDatepicker[readonly] {
+    cursor: pointer !important;
 }
 
-.deform li.error label.desc, .deform p.error, .deform h3.errorMsgLbl{
-    color: #DF0000;
+form .deform-readonly-text {
+    font-style: italic;
 }
 
-.deform p.error{
-    font-size: 70%;
+/* styles for file_upload.js, file_upload.pt */
+.btn-file {
+    background-color: #f2f2f2;
+}
+.btn-file:hover {
+    background-color: #ededed;
+}
+.upload-filename[readonly] {
+    background-color: #fdfdfd;
+}
+
+
+/**
+ * Accordion styling
+ *
+ * http://stackoverflow.com/a/18568997/315168
+ */
+
+
+.deform-collapse-heading > a {
+    display: block; /* Make target area more touch friendly */
+    text-decoration: none;
+}
+
+
+.deform-collapse-heading > a:after {
+    /* symbol for "opening" panels */
+    font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
+    float: right;        /* adjust as needed */
+    content: "\e080";    /* adjust as needed, taken from bootstrap.css */
+
+}
+
+.deform-collapse-heading > a[aria-expanded="true"]:after {
+    /* symbol for "collapsed" panels */
+    content: "\e114";
 }

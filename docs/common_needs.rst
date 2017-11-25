@@ -98,7 +98,7 @@ schema:
    import colander
 
    from deform import Form
-   from deform.widget import TextInputWidget
+   from deform.widget import TextAreaWidget
 
    class Person(colander.MappingSchema):
        name = colander.SchemaNode(colander.String(),
@@ -127,7 +127,7 @@ widget.
 .. note::
 
   Widget associations done in a schema are always overridden by
-  explicit widget assigments performed via
+  explicit widget assignments performed via
   :meth:`deform.Field.__setitem__` and
   :meth:`deform.Field.set_widgets`.
 
@@ -169,7 +169,7 @@ the same pattern.  For example:
    :linenos:
 
    from deform import Form
-   from deform.widget import TextInputWidget
+   from deform.widget import TextAreaWidget
 
    myform = Form(schema, buttons=('submit',))
    myform['people']['person']['name'].widget = TextAreaWidget()
@@ -191,7 +191,7 @@ For example:
    :linenos:
 
    from deform import Form
-   from deform.widget import TextInputWidget
+   from deform.widget import TextAreaWidget
 
    myform = Form(schema, buttons=('submit',))
    myform.set_widgets({'people.person.name':TextAreaWidget(),
@@ -302,13 +302,27 @@ Instead of a list of values a URL can be provided to values:
    form['frobsnozz'].widget = AutocompleteInputWidget(
                                 values='http://example.com/someapi')
 
-In the above case a call to the url should provide results one item
-per line in the response. Something like::
+In the above case a call to the url should provide results in a JSON-compatible
+format or JSONP-compatible response if on a different host than the
+application.  Something like either of these structures in JSON are suitable::
 
-    item-one
-    item-two
-    item-three
+    //Items are used as both value and label
+    ['item-one', 'item-two', 'item-three']
 
+    //Separate values and labels
+    [
+        {'value': 'item-one', 'label': 'Item One'},
+        {'value': 'item-two', 'label': 'Item Two'},
+        {'value': 'item-three', 'label': 'Item Three'}
+    ]
+
+The autocomplete plugin will add a query string to the request URL with the
+variable ``term`` which contains the user's input at that moment.  The server
+may use this to filter the returned results.  
+
+For more information, see http://api.jqueryui.com/autocomplete/#option-source
+- specifically, the section concerning the ``String`` type for the ``source``
+option.
 
 Some options for the :term:`jquery.autocomplete` plugin are mapped and
 can be passed to the widget. See

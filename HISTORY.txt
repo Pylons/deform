@@ -1,0 +1,728 @@
+0.9.9 (2013-09-23)
+------------------
+
+Bug Fixes
+~~~~~~~~~
+
+- rename country specific locales to only include language
+  [iElectric] 
+
+- Un-break single select widget.  See
+  https://github.com/Pylons/deform/issues/181
+
+0.9.8 (2013-09-01)
+------------------
+
+Features
+~~~~~~~~
+
+- ``deform.widget.RichTextWidget`` now accepts a dict/two-tuple ``options`` 
+  for specifying arbitrary options to pass to TinyMCE's ``init`` function.
+  All default options are now part of the class itself (where possible)
+  and can be customised by using ``options``.
+  [davidjb]
+
+- Widgets now accept an ``item_css_class`` argument.  This argument, when
+  provided, sets a class value on the top level element of the item template
+  which surrounds the widget (usually an <li>).
+
+- DateTime widget now handles stripping timezones from ISO-formatted strings
+  that include microseconds.  Previously it would just choke.
+
+Bug Fixes
+~~~~~~~~~
+
+- Trigger a change event when adding/removing sequence items.
+
+- Add optional label to checkbox widget.
+
+- Raise a ValueError exception when the prototype
+  for a field in a sequence has no name. See
+  https://github.com/Pylons/deform/issues/149
+  
+- Worked on the templates to make as many widgets be proper HTML. Deformdemo
+  now includes a validator which can be used for checking. The major changes
+  involve ensuring that only `<li>` can be children of `<ul>` and that labels
+  always refer to distinct fields. Also labels are set around fields to provide
+  better touch targets: you can click on the label as well as the field.
+  Validation still raises some errors about invalid attributes such as
+  `prototype` but these can be safely ignored: browsers will ignore things they
+  don't know about - this is defined in HTML 5 (it used to be guess work).
+  Having the right `<label>` added a wart to mappings where the first item
+  doesn't get a counter because the label is already assigned. This may be
+  revisited as it seems to affect only mappings.
+  See https://github.com/Pylons/deformdemo/pull/20 for further context.
+
+0.9.7 (2013-03-06)
+------------------
+
+Bug Fixes
+~~~~~~~~~
+
+- Readonly checkbox template had a logic error.
+
+Documentation
+~~~~~~~~~~~~~
+
+- Corrected the expected server response when using the Autocomplete widget.
+
+0.9.6 (2013-01-10)
+------------------
+
+Bug Fixes
+~~~~~~~~~
+
+- Fixed remove bug in nested sequences.  See
+  https://github.com/Pylons/deform/pull/89
+
+- Fixed bug wherein items added to a sequence nor the initial items rendered
+  in a sequence would not reflect the correct defaults of the item widget.
+  See https://github.com/Pylons/deform/pull/79
+
+- Fix bug where native datetime/date widget rendering competed with jQuery
+  datetime/date widget rendering.  See
+  https://github.com/Pylons/deform/pull/142
+
+Dependencies
+~~~~~~~~~~~~
+
+- Depend on and use zope.deprecation to deprecate Set class.
+
+- Deform now depends on Colander >= 1.0a1 (previously it depended on >= 0.8).
+  It requires Colander 1.0a1's newer ``cstruct_children`` and
+  ``appstruct_children`` methods of schema objects as well as being able to
+  import objects from Colander that don't exist in earlier versions.
+
+- Deform now depends on Chameleon >= 2.5.1 (previously it depended on
+  >= 1.2.3).  It requires the Markup class supplied by this version or better.
+
+- Deform no longer has a setup_requires dependency on setuptools_git
+  (useless, as the version on PyPI is broken).
+
+- Setup.py now includes all testing requirements in tests_require that are in
+  testing extras and vice versa.
+
+Features
+~~~~~~~~
+
+- Allow SelectWidget to produce <optgroup> HTML tags.  See
+  https://github.com/Pylons/deform/pull/87
+
+- Allow ``deform.form.Form`` constructor to accept an ``autocomplete``
+  keyword argument, which controls the ``autocomplete`` attribute of the form
+  tag.
+
+- Add Python 3.3 Trove classifier.
+
+- Pass through unknown keys in a ``filedict`` FileData serialization (FBO of
+  passing out of band information).
+
+- ``deform.Set`` type deprecated in favor of use of ``colander.Set``.
+
+- Give the preview_url method of the tempstore access to the stored
+  item. [tomster]
+
+- Add ``style`` attribute/arguments to textinput-related widgets allowing you
+  to set the style of the tag by hand.
+
+- Allow ``deform.widget.SequenceWidget`` constructor to accept an ``orderable``
+  keyword argument.  Default is ``False``.  If ``True``, allow drag-and-drop
+  reordering of SequenceWidget items (via jQuery UI Sortable).
+
+- The default widget for the colander.Money type is now
+  deform.widgets.MoneyInputWidget.
+
+- Built-in widgets may have a 'readonly' attribute/constructor-argument, to
+  indicate that a form field associated with the widget should use its
+  readonly template instead of its normal readwrite template.  A ``readonly``
+  keyword argument can still be passed to ``Field.serialize`` to render a
+  field as readonly, like in older versions.
+
+- ``deform.field.Field`` now has a ``__contains__`` method, which returns
+  ``True`` if the named field is a subfield of the field on which it is
+  called.
+
+- ``deform.field.Field`` now has a ``validate_pstruct`` method which works
+  like ``validate`` except it accepts a pstruct directly instead of accepting
+  a list of controls.
+
+- ``deform.field.Field.validate`` now accepts a ``subcontrol`` argument for
+  validating a submapping of a form.
+
+- In support of "retail" form rendering, the ``serialize`` method of widgets
+  now accepts arbitrary keyword arguments.  These are used as top-level value
+  overrides to widget templates.
+
+- In support of "retail" form rendering, the ``serialize`` method of a Field
+  now accepts arbitrary keyword arguments.  These are passed along to it's
+  widget's ``serialize`` method.
+
+- It is now possible to pass an ``appstruct`` argument to the
+  ``deform.Field`` (and by extension, the ``deform.Form``) constructor.  When
+  you do so, you can omit passing an ``appstruct`` argument to the ``render``
+  method of the field/form.  Fields set a cstruct value recursively when
+  supplied with an ``appstruct`` argument to their constructor.  This is in
+  support of "retail" form rendering.
+
+- Form/field objects are now initialized with a cstruct (recursively) when
+  created.  This means that accessing form.cstruct will return the current
+  set of rendering values.  This value is reset during validation, so after a
+  validation is done you can re-render the form to show validation errors.
+  This is in support of "retail" form rendering.
+
+- Form/field objects now have peppercorn-field-outputting methods:
+  ``start_mapping``, ``end_mapping``, ``start_sequence``, ``end_sequence``,
+  ``start_rename``, ``end_rename`` in support of retail form rendering.
+
+- The ``deform.Field`` (and therefore ``deform.Form``) classes now expose a
+  ``render_template`` method, which injects ``field`` and ``cstruct`` into
+  the dictionary passed to the template if they don't already exist in the
+  ``**kw`` passed.  This is in support of retail form rendering.
+
+- Add ``set_appstruct`` and ``set_pstruct`` methods to Field; these accept,
+  respectively, an appstruct or a pstruct and set the cstruct related to the
+  field to the deserialized or serialized value.
+
+Documentation
+~~~~~~~~~~~~~
+
+- Add a (weak) "Retail Form Rendering" chapter to the docs.
+
+0.9.5 (2012-04-27)
+------------------
+
+- Add translations for TinyMCE.  Thanks OCHIAI, Gouji.
+
+- Japanese translation thanks to OCHIAI, Gouji.
+
+- Modified Russian translation thanks to aleksandr.rakov
+
+- Date(Time)Widget supports now options to configure it, thx to gaston
+  tjebbes, kiorky
+
+- FileUploadWidget now sanitizes IE/Windows whole-path filenames before
+  passing them back to the caller during deserialization/validation.
+
+- Add docs and dev setup.py aliases ala Pyramid.
+
+- Add MoneyInputWidget widget type.
+
+- Allow a custom i18n domain to be used for the "Add ${subitem_title}"
+  link of a SequenceWidget.  See
+  https://github.com/Pylons/deform/issues/85 .
+
+- Allow the use of Integer values with SelectWidget.  See
+  https://github.com/Pylons/deform/issues/81 .
+
+- CheckedInputWidget and CheckedPasswordWidget now populate the "confirm"
+  element with the cstruct value (for edit forms).
+
+- Update to JQuery 1.7.2.
+
+- Update to jquery.form 3.09.
+
+0.9.4 (2012-02-14)
+------------------
+
+- No longer Python 2.5 compatible.  Python 2.6+ is required.
+
+- Python 3.2 compatible.
+
+- Translate title attribute for remove button in sequence fields.
+
+- Do not output empty error messages for sequence items. After translation
+  these would insert the PO file metadata.
+
+- Update to lingua for translations, add french translation
+
+- fix multiple i18n issues.
+
+- Fix a bug where displaying error could lead on an error when you have
+  imbricated Mapping objects
+
+- Fix issue #54: form.pt does not show validation errors from the top node of
+  the schema. See https://github.com/Pylons/deform/issues/54 for more
+  information.
+
+- Previously, all CheckedInputWidget and CheckedPasswordWidget fields had
+  hardcoded input[name] attributes of 'value' and 'confirm'.  When
+  deserializing a form, this caused colander.null to be passed to the widget
+  deserialization function since neither submitted value matched the name of
+  the field.  This change simply replaces 'value' with the name of the field
+  and 'confirm' with the name of the field with '-confirm' appended.
+
+- In select widget, add css_class to <select> rather than only <option>.
+
+- Allow RichText fields to load their editor only after clicking on them
+
+- There is no longer a ``deform_ajaxify`` global javascript function.
+  Instead forms are AJAXified directly by the javascript callback for the
+  form.
+
+0.9.3 (2011-08-10)
+------------------
+
+- Update Dutch translations.
+
+- Translate title and description of items for sequence fields.
+
+- Add a new API method to field objects: ``translate``.  This method will use
+  the translator passed to the underlying renderer to translate message ids
+  into text.
+
+0.9.2 (2011-07-22)
+------------------
+
+- Chameleon 2 compatibility.
+
+- Use default widgets for a schema's baseclass if known instead of always
+  falling back to a text widget.
+
+
+- Deform now includes a ``beautify.css`` (contributed by Ergo^) in its static
+  directory, which can be used to make form element styling prettier.
+
+- Moved ``deformdemo`` into its own package and Github repository
+  (https://github.com/Pylons/deformdemo).
+
+0.9.1 (2011-06-23)
+------------------
+
+- Add Dutch translation.
+
+- Add the ``deform.widget.DateTimeWidget`` widget, which uses the jQueryUI
+  Timepicker add-on.
+
+  ``DateTimeWidget`` uses the ISO8601 combined date and time format
+  internally, as expected by ``colander.DateTime``, but converts to
+  the more friendly separate date and time format for display in the
+  widget.
+
+  This widget is now the default for colander.DateTime schema types.
+
+- Upgrade to jquery-ui 1.8.11, as required by the timepicker.
+
+- Compile all ``.po`` files to ``.mo`` in ``deform/locale`` and remove Texan
+  locale (funny, but breaks ``python setup.py compile_catalog`` with an
+  UnknownLocale error.)
+
+- Fix references to repoze.bfg and update obsoletes URLs in the demo application
+
+- Remove unused ``jquery.autocomplete.min.js`` file from static directory.
+
+- SelectWidget now has a ``size`` attribute to support single select widgets
+  that are not dropdowns.
+
+- The value fed to the ``deform.form.Button`` class as ``name`` would
+  generate an invalid HTML id if it contained spaces.  Now it converts spaces
+  to underscores if they exist in the name.  See
+  https://github.com/Pylons/deform/pull/14 .
+
+- Deformdemo application now has a Time field demonstration.
+
+- Deform Chameleon templates now contain i18n:translate tags.
+
+- German translation updated.
+
+- Fixed invalid HTML generated for "select" widget.
+
+- When using an ajax form without a redirect, a submit overwrites the form.
+  In the case of a form validation failure on first submit, no event handlers
+  were registered to submit the form via ajax on the second submit.  This is
+  now fixed.  See https://github.com/Pylons/deform/pull/1 .
+
+0.9 (2011-03-01)
+----------------
+
+- Moved to GitHub (https://github.com/Pylons/deform).
+
+- Added tox.ini for testing purposes.
+
+- Fix select dropdown behavior on Firefox by fixing CSS (closes
+  http://bugs.repoze.org/issue152).
+
+- Removed ``wufoo.css``, minimized ``form.css``.  Changed templates around to
+  deal with CSS changes.
+
+- Sequence widgets now accept a min_len and a max_len argument, which
+  influences its display of close and add buttons.
+
+- Convert demo application from repoze.bfg to Pyramid.
+
+- Depend on Chameleon<1.999 (deform doesn't yet work with Chameleon 2).
+
+0.8.1 (2010-12-17)
+------------------
+
+Features
+~~~~~~~~
+
+- Allow ``deform.form.Button`` class to be passed a ``disabled`` flag (false
+  by default).  If a Button is disabled, its HTML ``disabled`` setting will
+  be set true.
+
+0.8 (2010-12-02)
+----------------
+
+Features
+~~~~~~~~
+
+- Added Polish locale data: thanks to Marcin Lulek.
+
+Bug Fixes
+~~~~~~~~~
+
+- Fix dynamic sequence item adding on Chrome and Firefox 4.  Previously if
+  there was a validation error rendering a set of sequence items, the "add
+  more" link would be rendered outside the form, which would cause it to not
+  work.  Wrapping the sequence item <li> element in a <ul> fixed this.
+
+0.7 (2010-10-10)
+----------------
+
+Features
+~~~~~~~~
+
+- Added Danish locale.
+
+- Added Spanish locale:  thanks to David Cerna for the translations!
+
+- ``DatePartsWidget`` now renders error "Required" if all blank or
+  "Incomplete" if partially blank for consistency with the other widgets.
+
+- Different styling involving <li> and <ul> for checkbox choice,
+  checked input, radio choice, checked password, and dateparts widgets
+  (via Ergo^). See http://bugs.repoze.org/issue165.
+
+Dependencies
+~~~~~~~~~~~~
+
+- Deform now depends on ``colander`` version 0.8 or better (the demo
+  wants to use schema bindings).
+
+- Deform now depends on ``Chameleon`` (uppercase) rather than
+  ``chameleon`` to allow for non-PyPI servers.
+
+Demo
+~~~~
+
+- New addition to the demonstration application: schema binding.
+
+0.6 (2010-09-03)
+----------------
+
+Features
+~~~~~~~~
+
+- Sequence widgets are no longer ``structural`` by default; they now
+  print the label of the sequence above the sequence adder.
+
+- Radio buttons in a radio button choice widget are now spaced closer
+  together and the button is on the left hand side.
+
+- The sequence remove button is no longer an image.
+
+- The sequence widget now puts the sequence adding link *after* any
+  existing items in the sequence (previously the link was always
+  beneath the sequence title).
+
+- It is now possible to associate a widget with a schema node within
+  the schema directly.  For example::
+
+    import colander
+    import deform.widget
+
+    class MySchema(Schema):
+        description = colander.SchemaNode(
+                          colander.String(),
+                          widget=deform.widget.RichTextWidget()
+                          )
+
+  For more information, see "Changing the Default Widget Associated
+  With a Field" in the documentation.
+
+- The constructor of ``deform.Field`` objects (and thus
+  ``deform.Form`` objects) now accept arbitrary keyword arguments,
+  each of which is attached to the field or form object being
+  constructed, as well as being attached to its descendant fields
+  recursively.
+
+- The form object's template now respects the ``css_class`` argument /
+  attribute of the form node.
+
+- CheckboxChoice and RadioChoice widgets now use <ul> and <li> to
+  display individual choice elements (thanks to Ergo^), and both
+  widgets put the label after the element instead of before as
+  previously.
+
+- The ``deform.widget.AutocompleteInputWidget`` widget now uses
+  `JQuery UI's autocomplete sublibrary
+  <http://docs.jquery.com/UI/Autocomplete>` instead of the
+  ``jquery.autocomplete`` library to perform its job in order to
+  reduce the number of libraries needed by Deform.  Some options have
+  been changed as a result, and the set of resources returned by
+  ``form.get_widget_resources`` has changed.
+
+  This change also implies that when a widget which uses a remote URL
+  as a ``values`` input, the remote URL must return a JSON structure
+  instead of a ``\n``-delimited list of values.
+
+Requirements
+~~~~~~~~~~~~
+
+- This Deform version requires ``colander`` version 0.7.3 or better.
+
+Bug Fixes
+~~~~~~~~~
+
+- ``RichTextWidget``, ``AutocompleteInputWidget``, ``TextInputWidget``
+  with input masks, and ``CheckedInputWidget`` with input masks could
+  not be used properly within sequences.  Now they can be.  See also
+  ``Internal`` and ``Backwards Incompatibilities`` within this
+  release's notes.  This necessitated new required ``deform.load()``
+  and ``deform.addCallback()`` JavaScript APIs.
+
+- Radio choice widgets included within a submapping no longer put
+  their selections on separate lines.
+
+- Rich text widgets are now 500 pixels wide by default instead of 640.
+
+- RadioChoiceWidgets did not work when they were used within
+  sequences.  Making them work required some changes to the its
+  template and it added a dependency on ``peppercorn`` >= 0.3.
+
+- To make radio choice widgets work within sequences, the
+  deform.addSequenceItem JavaScript method needed to be changed.  It
+  will now change the value of ``name`` attributes which contain a
+  marker that looks like an field oid (e.g. ``deformField1``), and,
+  like the code which changes ids in the same manner, appends a random
+  component (e.g. ``deformField1-HL6sgP``).  This is to support radio
+  button groupings.
+
+- The mapping and sequence item templates now correctly display errors
+  with ``msg`` values that are lists.  Previously, a repr of a Python
+  list was displayed when a widget had an error with a ``msg`` value
+  that was a list; now multiple <p> nodes are inserted into the
+  rendering, each <p> node containing an individual error message.
+  (Note that this change requires colander 0.7.3).
+
+Backwards Incompatibilities
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- The JavaScript function ``deform.load()`` now *must* be called by
+  the HTML page (usually in a script tag near the end of the page, ala
+  ``<script..>deform.load()</script>``) which renders a Deform form in
+  order for widgets which use JavaScript to do proper event and
+  behavior binding.  If this function is not called, built-in widgets
+  which use JavaScript will no longer function properly.
+
+- The JavaScript function ``deformFocusFirstInput`` was removed.  This
+  is now implied by ``deform.load()``.
+
+- The ``closebutton_url`` argument to the SequenceWidget no longer
+  does anything.  Style the widget template via CSS to add an image.
+
+Internal
+~~~~~~~~
+
+- Provided better instructions for running the demo app and running
+  the tests for the demo app in ``deformdemo/README.txt``.
+
+- Try to prevent false test failures by injecting sleep statements in
+  things that use ``browser.key_press``.
+
+- Moved ``deformdemo/tests/test_demo.py`` to ``deformdemo/test.py`` as
+  well as moving ``deformdemo/tests/selenium.py`` to
+  ``deformdemo/selenium.py``.  Removed the ``deformdemo/tests``
+  subdirectory.
+
+- The date input widget now uses JQueryUI's ``datepicker``
+  functionality rather than relying on JQuery Tools' ``date`` input.
+  The latter was broken for sequences, and the former works fine.
+
+- The various deform* JavaScript functions in ``deform.js`` have now
+  been moved into a top-level namespace.  For example, where it was
+  necessary to call ``deformFocusFirstInput()`` before, it is now
+  necessary to call ``deform.focusFirstInput()``.
+
+- Make the TinyMCE rich text widget use ``mode: 'exact'`` instead of
+  ``mode: 'textareas'``.
+
+- ``richtext``, ``autocomplete_input``, ``textinput``,
+  ``checked_input``, and ``dateinput``, and ``form`` templates now use
+  the new ``deform.addCallback`` indirection instead of each
+  registering their own JQuery callback or performing their own
+  initialization logic, so that each may be used properly within
+  sequences.
+
+- Change sequence adding logic to be slightly simpler.
+
+- The sample app form page now calls ``deform.load()`` rather than
+  ``deformFocusFirstInput()``.
+
+- Added new demo app views for showing a sequence of autocompletes, a
+  sequence of dateinputs, a sequence of richtext fields, a sequence of
+  radio choice widgets and a sequence of text inputs with masks and
+  tests for same.
+
+Documentation
+~~~~~~~~~~~~~
+
+- Added a note about ``get_widget_resources`` to the "Basics"
+  chapter.
+
+- Added a note about ``deform.load()`` JavaScript requiredness to the
+  "Basics" chapter.
+
+- Add new top-level sections named ``Widget Templates`` and ``Widget
+  JavaScript`` to the "Widgets" chapter.
+
+0.5 (2010-08-25)
+----------------
+
+Features
+~~~~~~~~
+
+- Added features which make it possible to inquire about which
+  resources (JavaScript and CSS resources) are required by all the
+  widgets that make up a form rendering.  Also make it possible for a
+  newly created widget to specify its requirements.  See "Widget
+  Requirements and Resources" in the widgets chapter of the
+  documentation.
+
+- Add the ``get_widget_requirements`` method to ``deform.Field``
+  objects.
+
+- Add the ``get_widget_resources`` method to ``deform.Field``
+  objects.
+
+- Allow ``deform.Field`` (and ``deform.Form``) objects to accept a
+  "resource registry" as a constructor argument.
+
+- Add the ``deform.Field.set_widgets`` method, which allows a
+  (potentially nested) set of widgets to be applied to children fields
+  of the field upon which it is called.
+
+- Add the ``deform.widget.TextInputCSV`` widget.  This widget is
+  exactly like the ``deform.widget.TextAreaCSV`` widget except it
+  accepts a single line of input only.
+
+- The default widget for ``colander.Tuple`` schema types is now
+  ``deform.widget.TextInputCSV``.
+
+- The ``deform.widget.FileUploadWidget`` now returns an instance of
+  ``deform.widget.filedict`` instead of a plain dictionary to make it
+  possible (using isinstance) to tell the difference between file
+  upload data and a plain data dictionary for highly generalized
+  persistence code.
+
+0.4 (2010-08-22)
+----------------
+
+Bug Fixes
+~~~~~~~~~
+
+- When the hidden widget is used to deserialize a field, return
+  ``colander.null`` rather than the empty string so that it may be
+  used to represent non-text fields such as ``colander.Integer``.
+  This is isomorphic to the change done previously to
+  ``deform.TextInputWidget`` to support nontextual empty fields.
+
+- Fix typo about overriding templates using set_zpt_renderer in
+  templating chapter.
+
+- Fix link to imperative schema within in Colander docs within "Basics".
+
+- Remove duplicate ``deform.widget.DateInputWidget`` class definition.
+
+Features
+~~~~~~~~
+
+- Add a ``deform.widget.RichTextWidget`` widget, which adds the
+  TinyMCE WYSIWIG javascript editor to a text area.
+
+- Add a ``deform.widget.AutocompleteInputWidget`` widget, which adds
+  a text input that can be supplied a URL or iterable of choices to
+  ease the search and selection of a finite set of choices.
+
+- The ``deform.widget.Widget`` class now accepts an extra keyword
+  argument in its constructor: ``css_class``.
+
+- All widgets now inherit a ``css_class`` attribute from the base
+  ``deform.widget.Widget`` class.  If `css_class`` contains a value,
+  the "primary" element in the rendered widget will get a CSS
+  ``class`` attribute equal to the value ("primary" is defined by the
+  widget template's implementor).
+
+- The ``deform.Field`` class now as an ``__iter__`` method which
+  iterates over the children fields of the field upon which it is
+  called (``for item in field`` == ``for item in field.children``).
+
+0.3 (2010-06-09)
+----------------
+
+Bug Fixes
+~~~~~~~~~
+
+- Change default form action to the empty string (rather than ``.``).
+  Thanks to Kiran.
+
+Features
+~~~~~~~~
+
+- Add ``deform.widget.DateInputWidget`` widget, which is a date picker
+  widget.  This has now become the default widget for the
+  ``colander.Date`` schema type, preferred to the date parts widget.
+
+- Add text input mask capability to ``deform.widget.TextInputWidget``.
+
+- Add text input mask capability to
+  ``deform.widget.CheckedInputWidget``.
+
+Backwards Incompatibilities
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Custom widgets must now check for ``colander.null`` rather than
+  ``None`` as the null sentinel value.
+
+- Dependency on a new (0.7) version of Colander, which has been
+  changed to make using proper defaults possible; if you've used the
+  ``default`` argument to a ``colander.SchemaNode``, or if you've
+  defined a custom Colander type, you'll want to read `the updated
+  Colander documentation <http://docs.repoze.org/colander>`_
+  (particularly the changelist).  Short story: use the ``missing``
+  argument instead.
+
+- If you've created a custom widget, you will need to tweak it
+  slightly to handle the value ``colander.null`` as input to both
+  ``serialize`` and ``deserialize``.  See the Deform docs at
+  `http://docs.repoze.org/deform <http://docs.repoze.org/deform>`_ for
+  more information.
+
+0.2 (2010-05-13)
+----------------
+
+- Every form has a formid now, defaulting to ``deform``.  The formid
+  is used to compute the id of the form tag as well as the button ids
+  in the form.  Previously, if a formid was not passed to the Form
+  constructor, no id would be given to the rendered form and the
+  form's buttons would not be prefixed with any formid.
+
+- The ``deform.Form`` class now accepts two extra keyword arguments in
+  its constructor: ``use_ajax`` and ``ajax_options``.
+
+  If ``use_ajax`` is ``True``, the page is not reloaded when a submit
+  button is pressed.  Instead, the form is posted, and the result
+  replaces the DOM node on the page.
+
+  ``ajax_options`` is a string which allows you to pass extra options
+  to the underlying AJAX form machinery when ``use_ajax`` is True.
+
+- Added a couple Ajax examples to the demo app.
+
+- Add a rudimentary Ajax chapter to the docs.
+
+0.1 (2010-05-09)
+----------------
+
+- Initial release.

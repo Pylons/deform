@@ -1,17 +1,21 @@
-<span tal:omit-tag="">
+<span tal:define="name name|field.name;
+                  css_class css_class|field.widget.css_class;
+                  oid oid|field.oid;
+                  style style|field.widget.style"
+      tal:omit-tag="">
     <input type="text"
-           name="${field.name}"
-           value="${cstruct}" 
-           tal:attributes="size field.widget.size;
-                           class field.widget.css_class"
-           id="${field.oid}"/>
+           name="${name}"
+           value="${cstruct}"
+           data-provide="typeahead"
+           tal:attributes="class string: form-control ${css_class or ''};
+                           style style"
+           id="${oid}"/>
     <script tal:condition="field.widget.values" type="text/javascript">
-      deform.addCallback(
-        '${field.oid}',
-        function (oid) {
-            $('#' + oid).autocomplete({source: ${values}});
-            $('#' + oid).autocomplete("option", ${options});
-        }
-      );
+        deform.addCallback(
+          '${field.oid}',
+          function (oid) {
+              $('#' + oid).typeahead(${options});
+          }
+        );
     </script>
 </span>

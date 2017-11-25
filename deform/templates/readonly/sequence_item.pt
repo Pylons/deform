@@ -1,7 +1,11 @@
-<li title="${field.description}"
-    tal:omit-tag="field.widget.hidden">
-  <!-- sequence_item -->
-  <span tal:replace="structure
-        field.serialize(cstruct, readonly=True)"/>
-  <!-- /sequence_item -->
-</li>
+<div tal:omit-tag="field.widget.hidden"
+     tal:define="
+     hidden hidden|field.widget.hidden;
+     description description|field.description;"
+     title="${description}"
+     class="form-group row deform-seq-item"
+     i18n:domain="deform">
+  <div class="col-xs-12">
+    <span tal:replace="structure field.serialize(cstruct, readonly=True)"/>
+  </div>
+</div>

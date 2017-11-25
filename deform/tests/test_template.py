@@ -1,8 +1,5 @@
 import unittest
-from deform.compat import (
-    string_types,
-    text_type,
-)
+from deform.compat import text_type
 
 class TestZPTTemplateLoader(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -24,6 +21,18 @@ class TestZPTTemplateLoader(unittest.TestCase):
         result = loader.load('test.pt')
         self.assertTrue(result)
 
+    def test_load_exists_asset_spec_with_search_path(self):
+        import os
+        fixtures = os.path.join(os.path.dirname(__file__), 'fixtures')
+        loader = self._makeOne(search_path=[fixtures])
+        result = loader.load('deform.tests:fixtures/test.pt')
+        self.assertTrue(result)
+
+    def test_load_exists_asset_spec_without_search_path(self):
+        loader = self._makeOne()
+        result = loader.load('deform.tests:fixtures/test.pt')
+        self.assertTrue(result)
+        
     def test_load_with_translate(self):
         import os
         fixtures = os.path.join(os.path.dirname(__file__), 'fixtures')
@@ -110,20 +119,25 @@ class Test_default_renderer(unittest.TestCase):
     
     def test_call_defaultdir(self):
         import re
-        result = self._callFUT('checkbox',
-                               **{'cstruct':None, 'field':DummyField()})
+        result = self._callFUT(
+            'checkbox',
+            **{'cstruct':None, 'field':DummyField()})
         result = re.sub('[ \n]+', ' ', result)
         result = re.sub(' />', '/>', result)
         result = result.strip()
-        self.assertEqual(result,
-                         text_type('<input type="checkbox" name="name" value="true" '
-                         'id="oid"/>'))
+        self.assertEqual(
+            result,
+            text_type('<div class="checkbox"> <label for="oid"> '
+                      '<input type="checkbox" '
+                      'name="name" value="true" id="oid"/> </label> </div>')
+            )
 
 class DummyWidget(object):
     name = 'name'
     true_val = 'true'
     false_val = 'false'
     css_class = None
+    style = None
     
 class DummyField(object):
     widget = DummyWidget()

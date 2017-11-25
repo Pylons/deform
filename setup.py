@@ -20,7 +20,7 @@ from setuptools import find_packages
 here = os.path.abspath(os.path.dirname(__file__))
 
 try:
-    with open(os.path.join(here, 'README.txt')) as f:
+    with open(os.path.join(here, 'README.rst')) as f:
         README = f.read()
     with open(os.path.join(here, 'CHANGES.txt')) as f:
         CHANGES = f.read()
@@ -29,31 +29,54 @@ except:
     CHANGES = ''
 
 requires = [
-    'Chameleon>=1.2.3', # debug arg
-    'colander>=0.8', # Bindings-providing
-    'peppercorn>=0.3', # rename operation type
-    'translationstring>=1.0', # add format mapping with %
+    'Chameleon>=2.5.1',  # Markup class
+    'colander>=1.0a1',  # cstruct_children/appstruct_children, Set
+    'iso8601',
+    'peppercorn>=0.3',  # rename operation type
+    'translationstring>=1.0',  # add format mapping with %
+    'zope.deprecation',
     ]
 
-testing_extras = ['nose', 'coverage', 'beautifulsoup4']
-docs_extras = ['Sphinx']
+testing_extras = [
+    'nose',
+    'coverage',
+    'beautifulsoup4',
+    'flaky'
+    ]
+
+# Needed to run deformdemo tests
+functional_testing_extra = [
+    'selenium<3',
+    'pyramid',
+    'pygments',
+    'waitress',
+    'lingua'
+]
+
+docs_extras = [
+    'Sphinx >= 1.3.4',
+    'repoze.sphinx.autointerface',
+    'pylons_sphinx_latesturl',
+    'pylons-sphinx-themes',
+    ]
 
 setupkw = dict(
     name='deform',
-    version='0.9.5',
-    description='Another form generation library',
+    version='2.0.5.dev0',
+    description='Form library with advanced features like nested forms',
     long_description=README + '\n\n' + CHANGES,
     classifiers=[
         "Intended Audience :: Developers",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 2.6",
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.2",
+        "Programming Language :: Python :: 3.3",
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
         ],
-    keywords='web forms form generation schema validation',
+    keywords='web forms form generation schema validation pyramid',
     author="Chris McDonough, Agendaless Consulting",
     author_email="pylons-discuss@googlegroups.com",
     url="http://docs.pylonsproject.org/projects/deform/en/latest/",
@@ -61,28 +84,14 @@ setupkw = dict(
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
-    tests_require=requires + ['beautifulsoup4'],
+    tests_require=testing_extras,
     install_requires=requires,
-    setup_requires=['setuptools_git'],
-    test_suite="deform",
-      extras_require = {
-          'testing':testing_extras,
-          'docs':docs_extras,
-          },
+    test_suite="deform.tests",
+    extras_require={
+        'testing': testing_extras,
+        'docs': docs_extras,
+        'functional': functional_testing_extra,
+        },
     )
-
-# to update catalogs, use babel and lingua !
-try:
-    import babel
-    babel = babel # PyFlakes
-    # if babel is installed, advertise message extractors (if we pass
-    # this to setup() unconditionally, and babel isn't installed,
-    # distutils warns pointlessly)
-    setupkw['message_extractors'] = { "deform": [
-        ("**.py",     "lingua_python", None ),
-        ("**.pt", "lingua_xml", None ),
-        ]}
-except ImportError:
-    pass
 
 setup(**setupkw)

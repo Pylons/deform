@@ -11,7 +11,7 @@ class TestFunctional(unittest.TestCase):
         from colander import String
         from colander import Boolean
         from colander import Date
-    
+
         class DatesSchema(SequenceSchema):
             date = SchemaNode(Date())
 
@@ -34,7 +34,7 @@ class TestFunctional(unittest.TestCase):
 
     def _soupify(self, html):
         from bs4 import BeautifulSoup
-        return BeautifulSoup(html)
+        return BeautifulSoup(html, 'html.parser')
 
     def test_render_empty(self):
         schema = self._makeSchema()
@@ -42,7 +42,7 @@ class TestFunctional(unittest.TestCase):
         html = form.render()
         soup = self._soupify(html)
         form = soup.form
-        self.assertEqual(form['action'], '')
+        self.assertEqual(form.get('action', ''), '')
         inputs = form.findAll('input')
         self.assertEqual(inputs[0]['name'], '_charset_')
         self.assertEqual(inputs[1]['name'], '__formid__')
@@ -76,7 +76,7 @@ class TestFunctional(unittest.TestCase):
         html = form.render(appstruct)
         soup = self._soupify(html)
         form = soup.form
-        self.assertEqual(form['action'], '')
+        self.assertEqual(form.get('action', ''), '')
         inputs = form.findAll('input')
         self.assertEqual(inputs[0]['name'], '_charset_')
         self.assertEqual(inputs[1]['name'], '__formid__')
@@ -93,12 +93,12 @@ class TestFunctional(unittest.TestCase):
         self.assertEqual(inputs[6]['value'], '')
         self.assertEqual(inputs[7]['name'], '__start__')
         self.assertEqual(inputs[7]['value'], 'dates:sequence')
-        self.assertEqual(inputs[8]['name'], 'date')
-        self.assertEqual(inputs[8]['value'], '2010-03-21')
-        self.assertEqual(inputs[9]['name'], '__end__')
-        self.assertEqual(inputs[9]['value'], 'dates:sequence')
-        self.assertEqual(inputs[10]['name'], '__end__')
-        self.assertEqual(inputs[10]['value'], 'series:mapping')
+        self.assertEqual(inputs[9]['name'], 'date')
+        self.assertEqual(inputs[9]['value'], '2010-03-21')
+        self.assertEqual(inputs[11]['name'], '__end__')
+        self.assertEqual(inputs[11]['value'], 'dates:sequence')
+        self.assertEqual(inputs[12]['name'], '__end__')
+        self.assertEqual(inputs[12]['value'], 'series:mapping')
 
     def test_widget_deserialize(self):
         filled = {
@@ -106,7 +106,7 @@ class TestFunctional(unittest.TestCase):
             'title': 'Cool project',
             'series': {
                 'name':'date series 1',
-                'dates': ['2008-10-12', '2009-10-12'],
+                'dates': [{'date': '2008-10-12'}, {'date': '2009-10-12'}],
                 }
             }
         schema = self._makeSchema()
@@ -145,7 +145,7 @@ class TestFunctional(unittest.TestCase):
                 'title': null,
              }
             )
-        
+
 @colander.deferred
 def deferred_date_validator(node, kw):
     max_date = kw.get('max_date')
@@ -268,7 +268,7 @@ class TestDeferredFunction(unittest.TestCase):
         self.assertEqual(schema['category'].validator.choices, ['one', 'two'])
         self.assertEqual(schema['category'].widget.values,
                          [('one', 'One'), ('two', 'Two')])
-        
-        
-        
-        
+
+
+
+

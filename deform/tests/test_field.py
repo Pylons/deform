@@ -1,4 +1,5 @@
 import unittest
+from deform.compat import text_
 
 def validation_failure_exc(func, *arg, **kw):
     from deform.exception import ValidationFailure
@@ -31,19 +32,45 @@ class TestField(unittest.TestCase):
         self.assertEqual(field.oid, 'deformField0')
         self.assertEqual(field.children, [])
         self.assertEqual(field.typ, schema.typ)
+        self.assertEqual(field.parent, None)
+
+    def test_ctor_custom_oid(self):
+        schema = DummySchema()
+        schema.oid = 'customOid'
+        field = self._makeOne(schema)
+        self.assertEqual(field.oid, 'customOid')
 
     def test_ctor_with_children_in_schema(self):
         from deform.field import Field
-        schema = DummySchema()
-        node = DummySchema()
-        schema.children = [node]
-        field = self._makeOne(schema, renderer='abc')
-        self.assertEqual(len(field.children), 1)
-        child_field = field.children[0]
-        self.assertEqual(child_field.__class__, Field)
-        self.assertEqual(child_field.schema, node)
-        self.assertEqual(child_field.renderer, 'abc')
+        grandchild = DummySchema(name='grandchild')
+        child = DummySchema(children=[grandchild], name='child')
+        root = DummySchema(children=[child], name='root')
+        
+        root_field = self._makeOne(root, renderer='abc')
+        self.assertEqual(len(root_field.children), 1)
+        self.assertEqual(root_field.parent, None)
 
+        child_field = root_field.children[0]
+        self.assertEqual(child_field.__class__, Field)
+        self.assertEqual(child_field.schema, child)
+        self.assertEqual(child_field.renderer, 'abc')
+        self.assertEqual(child_field.parent, root_field)
+
+        grandchild_field = child_field.children[0]
+        self.assertEqual(grandchild_field.__class__, Field)
+        self.assertEqual(grandchild_field.schema, grandchild)
+        self.assertEqual(grandchild_field.renderer, 'abc')
+        self.assertEqual(grandchild_field.parent, child_field)
+
+    def test_get_root(self):
+        grandchild = DummySchema(name='grandchild')
+        child = DummySchema(children=[grandchild], name='child')
+        root = DummySchema(children=[child], name='root')
+        field = self._makeOne(root, renderer='abc')
+        grandchild_field = field.children[0].children[0]
+        root = grandchild_field.get_root()
+        self.assertEqual(root.name, 'root')
+        
     def test_ctor_with_resource_registry(self):
         from deform.field import Field
         schema = DummySchema()
@@ -129,12 +156,29 @@ class TestField(unittest.TestCase):
 
     def test_widget_has_maker(self):
         schema = DummySchema()
-        def maker():
+        def maker(**kw):
             return 'a widget'
         schema.typ = DummyType(maker=maker)
         field = self._makeOne(schema)
         widget = field.widget
         self.assertEqual(widget, 'a widget')
+
+    def test_widget_has_generated_item_css_class(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        self.assertEqual(field.widget.item_css_class, 'item-name')
+
+    def test_has_no_css_class_if_no_name(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        field.name = None
+        self.assertEqual(field.widget.item_css_class, None)
+
+    def test_normalizes_css_class(self):
+        schema = DummySchema()
+        schema.name = text_(b'a b\xc3\xb1[] c', 'utf-8')
+        field = self._makeOne(schema)
+        self.assertEqual(field.widget.item_css_class, 'item-a-bn-c')
 
     def test_widget_no_maker_with_default_widget_maker(self):
         from deform.widget import MappingWidget
@@ -291,6 +335,7 @@ class TestField(unittest.TestCase):
         self.assertEqual(result.foo, 1)
         self.assertEqual(result.children, [child])
         self.assertEqual(result.children[0].cloned, True)
+        self.assertEqual(result.children[0]._parent(), result)
 
     def test___iter__(self):
         schema = DummySchema()
@@ -315,6 +360,20 @@ class TestField(unittest.TestCase):
         field.children = [child]
         self.assertRaises(KeyError, field.__getitem__, 'nope')
 
+    def test___contains__success(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        child = DummyField()
+        field.children = [child]
+        self.assertTrue('name' in field)
+        
+    def test___contains__fail(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        child = DummyField()
+        field.children = [child]
+        self.assertFalse('nope' in field)
+
     def test_errormsg_error_None(self):
         schema = DummySchema()
         field = self._makeOne(schema)
@@ -327,35 +386,50 @@ class TestField(unittest.TestCase):
         self.assertEqual(field.errormsg, 'abc')
 
     def test_validate_succeeds(self):
-        fields = [
+        controls = [
             ('name', 'Name'),
             ('title', 'Title'),
             ]
         schema = DummySchema()
         field = self._makeOne(schema)
         field.widget = DummyWidget()
-        result = field.validate(fields)
+        result = field.validate(controls)
+        self.assertEqual(result, {'name':'Name', 'title':'Title'})
+
+    def test_validate_succeeds_subcontrol(self):
+        controls = [
+            ('a', 'one'),
+            ('__start__', 'sub:mapping'),
+            ('name', 'Name'),
+            ('title', 'Title'),
+            ('__end__', 'sub:mapping'),
+            ('b', 'two'),
+            ]
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        field.widget = DummyWidget()
+        result = field.validate(controls, subcontrol='sub')
         self.assertEqual(result, {'name':'Name', 'title':'Title'})
 
     def test_validate_fails_widgeterror(self):
         from colander import Invalid
-        fields = [
+        controls = [
             ('name', 'Name'),
             ('title', 'Title'),
             ]
-        invalid = Invalid(None, None, dict(fields))
+        invalid = Invalid(None, None, dict(controls))
         schema = DummySchema()
         field = self._makeOne(schema)
         field.widget = DummyWidget(exc=invalid)
-        e = validation_failure_exc(field.validate, fields)
+        e = validation_failure_exc(field.validate, controls)
         self.assertEqual(field.widget.error, invalid)
-        self.assertEqual(e.cstruct, dict(fields))
+        self.assertEqual(e.cstruct, dict(controls))
         self.assertEqual(e.field, field)
         self.assertEqual(e.error, invalid)
 
     def test_validate_fails_schemaerror(self):
         from colander import Invalid
-        fields = [
+        controls = [
             ('name', 'Name'),
             ('title', 'Title'),
             ]
@@ -363,7 +437,7 @@ class TestField(unittest.TestCase):
         schema = DummySchema(invalid)
         field = self._makeOne(schema)
         field.widget = DummyWidget()
-        e = validation_failure_exc(field.validate, fields)
+        e = validation_failure_exc(field.validate, controls)
         self.assertEqual(field.widget.error, invalid)
         self.assertEqual(e.cstruct, {'name':'Name', 'title':'Title'})
         self.assertEqual(e.field, field)
@@ -371,18 +445,18 @@ class TestField(unittest.TestCase):
 
     def test_validate_fails_widgeterror_and_schemaerror(self):
         from colander import Invalid
-        fields = [
+        controls = [
             ('name', 'Name'),
             ('title', 'Title'),
             ]
-        widget_invalid = Invalid(None, None, dict(fields))
+        widget_invalid = Invalid(None, None, dict(controls))
         schema_invalid = Invalid(None, None)
         schema = DummySchema(schema_invalid)
         field = self._makeOne(schema)
         field.widget = DummyWidget(exc=widget_invalid)
-        e = validation_failure_exc(field.validate, fields)
+        e = validation_failure_exc(field.validate, controls)
         self.assertEqual(field.widget.error, schema_invalid)
-        self.assertEqual(e.cstruct, dict(fields))
+        self.assertEqual(e.cstruct, dict(controls))
         self.assertEqual(e.field, field)
         self.assertEqual(e.error, schema_invalid)
 
@@ -405,6 +479,14 @@ class TestField(unittest.TestCase):
         field = self._makeOne(schema)
         widget = field.widget = DummyWidget()
         self.assertEqual(field.serialize('abc'), 'abc')
+        self.assertEqual(widget.rendered, 'writable')
+
+    def test_serialize_no_cstruct(self):
+        import colander
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        widget = field.widget = DummyWidget()
+        self.assertEqual(field.serialize(), colander.null)
         self.assertEqual(widget.rendered, 'writable')
 
     def test_serialize_null(self):
@@ -430,6 +512,175 @@ class TestField(unittest.TestCase):
         self.assertTrue(r.startswith('<deform.field.Field object at '))
         self.assertTrue(r.endswith("(schemanode 'name')>"))
 
+    def test_get_cstruct(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        field._cstruct = 'abc'
+        self.assertEqual(field.cstruct, 'abc')
+
+    def test_set_cstruct_child_cstructs_is_SequenceItems(self):
+        from colander import SequenceItems
+        schema = DummySchema()
+        schema.cstruct_children = lambda *arg: SequenceItems(['1'])
+        field = self._makeOne(schema)
+        child = DummyField()
+        child.cstruct = 'foo'
+        field.children = [child]
+        field.cstruct = ['yo']
+        self.assertEqual(field.cstruct, ['yo'])
+        self.assertEqual(child.cstruct, 'foo') # unchanged
+
+    def test_set_cstruct_with_child_cstructs(self):
+        schema = DummySchema()
+        schema.cstruct_children = lambda *arg: ['1']
+        field = self._makeOne(schema)
+        child = DummyField()
+        child.cstruct = 'foo'
+        field.children = [child]
+        field.cstruct = ['yo']
+        self.assertEqual(field.cstruct, ['yo'])
+        self.assertEqual(child.cstruct, '1')
+
+    def test_del_cstruct(self):
+        from colander import null
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        field._cstruct = 'foo'
+        del field.cstruct
+        self.assertEqual(field.cstruct, null)
+
+    def test_set_appstruct(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        field.set_appstruct('a')
+        self.assertEqual(field.cstruct, 'a')
+
+    def test_set_pstruct(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        field.set_pstruct('a')
+        self.assertEqual(field.cstruct, 'a')
+
+    def test_set_pstruct_invalid(self):
+        import colander
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        def deserialize(pstruct):
+            err = colander.Invalid(None)
+            err.value = 'foo'
+            raise err
+        field.deserialize = deserialize
+        field.set_pstruct('a')
+        self.assertEqual(field.cstruct, 'foo')
+
+    def test_start_mapping_withname(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        result = field.start_mapping('foo')
+        self.assertEqual(
+            result,
+            '<input type="hidden" name="__start__" value="foo:mapping"/>'
+            )
+        
+    def test_start_mapping_withoutname(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        result = field.start_mapping()
+        self.assertEqual(
+            result,
+            '<input type="hidden" name="__start__" value="name:mapping"/>'
+            )
+
+    def test_end_mapping_withname(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        result = field.end_mapping('foo')
+        self.assertEqual(
+            result,
+            '<input type="hidden" name="__end__" value="foo:mapping"/>'
+            )
+
+    def test_end_mapping_withoutname(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        result = field.end_mapping()
+        self.assertEqual(
+            result,
+            '<input type="hidden" name="__end__" value="name:mapping"/>'
+            )
+
+    def test_start_sequence_withname(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        result = field.start_sequence('foo')
+        self.assertEqual(
+            result,
+            '<input type="hidden" name="__start__" value="foo:sequence"/>'
+            )
+
+    def test_start_sequence_withoutname(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        result = field.start_sequence()
+        self.assertEqual(
+            result,
+            '<input type="hidden" name="__start__" value="name:sequence"/>'
+            )
+
+    def test_end_sequence_withname(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        result = field.end_sequence('foo')
+        self.assertEqual(
+            result,
+            '<input type="hidden" name="__end__" value="foo:sequence"/>'
+            )
+
+    def test_end_sequence_withoutname(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        result = field.end_sequence()
+        self.assertEqual(
+            result,
+            '<input type="hidden" name="__end__" value="name:sequence"/>'
+            )
+
+    def test_start_rename_withname(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        result = field.start_rename('foo')
+        self.assertEqual(
+            result,
+            '<input type="hidden" name="__start__" value="foo:rename"/>'
+            )
+
+    def test_start_rename_withoutname(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        result = field.start_rename()
+        self.assertEqual(
+            result,
+            '<input type="hidden" name="__start__" value="name:rename"/>'
+            )
+
+    def test_end_rename_withname(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        result = field.end_rename('foo')
+        self.assertEqual(
+            result,
+            '<input type="hidden" name="__end__" value="foo:rename"/>'
+            )
+
+    def test_end_rename_withoutname(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        result = field.end_rename()
+        self.assertEqual(
+            result,
+            '<input type="hidden" name="__end__" value="name:rename"/>'
+            )
+
 class DummyField(object):
     oid = 'oid'
     requirements = ( ('abc', '123'), ('def', '456'))
@@ -447,15 +698,17 @@ class DummyField(object):
 
 class DummySchema(object):
     typ = None
-    name = 'name'
     title = 'title'
     description = 'description'
     required = True
-    children = ()
     default = 'default'
     sdefault = 'sdefault'
-    def __init__(self, exc=None):
+
+    def __init__(self, exc=None, children=(), name='name'):
         self.exc = exc
+        self.children = children
+        self.name = name
+
     def deserialize(self, value):
         if self.exc:
             raise self.exc
@@ -464,13 +717,20 @@ class DummySchema(object):
     def serialize(self, value):
         return value
 
+    def cstruct_children(self, cstruct):
+        import colander
+        children = []
+        for child in self.children:
+            children.append(colander.null)
+        return children
+
 class DummyType(object):
     def __init__(self, maker=None):
         self.widget_maker = maker
         
 class DummyWidget(object):
     rendered = None
-    def __init__(self, exc=None):
+    def __init__(self, exc=None, **kw):
         self.exc = exc
 
     def deserialize(self, field, pstruct):
@@ -478,7 +738,8 @@ class DummyWidget(object):
             raise self.exc
         return pstruct
 
-    def serialize(self, field, cstruct=None, readonly=True):
+    def serialize(self, field, cstruct, **kw):
+        readonly = kw.get('readonly', False)
         self.rendered = readonly and 'readonly' or 'writable'
         return cstruct
 

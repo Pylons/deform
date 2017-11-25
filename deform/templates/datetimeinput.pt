@@ -1,16 +1,33 @@
-<span tal:omit-tag="">
-    <input type="text"
-           name="${field.name}"
-           value="${cstruct}" 
-           tal:attributes="size field.widget.size;
-                           class field.widget.css_class"
-           id="${field.oid}"/>
-    <script type="text/javascript">
-      deform.addCallback(
-        '${field.oid}',
-        function(oid) {
-            $('#' + oid).datetimepicker(${options});
-        }
-      );
-    </script>
-</span>
+<div i18n:domain="deform"
+      tal:omit-tag=""
+      tal:define="oid oid|field.oid;
+                  css_class css_class|field.widget.css_class;
+                  style style|field.widget.style;">
+  ${field.start_mapping()}
+  <div class="row">
+    <div class="col-xs-6"><div class="input-group">
+      <span class="input-group-addon" i18n:translate="">Date</span>
+      <input type="text" name="date" value="${date}"
+             class="span2 form-control ${css_class or ''} hasDatepicker"
+             tal:attributes="style style"
+             id="${oid}-date"/>
+    </div></div>
+    <div class="col-xs-6"><div class="input-group">
+      <span class="input-group-addon" i18n:translate="">Time</span>
+      <input type="text" name="time" value="${time}"
+             class="span2 form-control ${css_class or ''} hasDatepicker"
+             tal:attributes="style style"
+             id="${oid}-time"/>
+    </div></div>
+  </div>
+  ${field.end_mapping()}
+  <script type="text/javascript">
+   deform.addCallback(
+     '${oid}',
+     function(oid) {
+       $('#' + oid + '-date').pickadate(${date_options_json});
+       $('#' + oid + '-time').pickatime(${time_options_json});
+     }
+   );
+  </script>
+</div>

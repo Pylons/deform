@@ -9,56 +9,6 @@ def invalid_exc(func, *arg, **kw):
     else:
         raise AssertionError('Invalid not raised') # pragma: no cover
 
-class TestSet(unittest.TestCase):
-    def _makeOne(self, **kw):
-        from deform.schema import Set
-        return Set(**kw)
-
-    def test_serialize(self):
-        node = DummySchemaNode()
-        typ = self._makeOne()
-        provided = []
-        result = typ.serialize(node, provided)
-        self.assertTrue(result is provided)
-
-    def test_serialize_null(self):
-        from colander import null
-        node = DummySchemaNode()
-        typ = self._makeOne()
-        result = typ.serialize(node, null)
-        self.assertEqual(result, null)
-
-    def test_deserialize_no_iter(self):
-        node = DummySchemaNode()
-        typ = self._makeOne()
-        #e = invalid_exc(typ.deserialize, node, 'str')
-        e = invalid_exc(typ.deserialize, node, 1)
-        self.assertEqual(e.msg, '${value} is not iterable')
-
-    def test_deserialize_null(self):
-        from colander import null
-        node = DummySchemaNode()
-        typ = self._makeOne()
-        result = typ.deserialize(node, null)
-        self.assertEqual(result, null)
-
-    def test_deserialize_valid(self):
-        node = DummySchemaNode()
-        typ = self._makeOne()
-        result = typ.deserialize(node, ('a',))
-        self.assertEqual(result, set(('a',)))
-
-    def test_deserialize_empty_allow_empty_false(self):
-        node = DummySchemaNode()
-        typ = self._makeOne()
-        e = invalid_exc(typ.deserialize, node, ())
-        self.assertEqual(e.msg, 'Required')
-
-    def test_deserialize_empty_allow_empty_true(self):
-        node = DummySchemaNode()
-        typ = self._makeOne(allow_empty=True)
-        result = typ.deserialize(node, ())
-        self.assertEqual(result, set())
 
 class TestFileData(unittest.TestCase):
     def _makeOne(self):
@@ -115,7 +65,28 @@ class TestFileData(unittest.TestCase):
         self.assertEqual(result['size'], 'size')
         self.assertEqual(result['fp'], 'fp')
         self.assertEqual(result['preview_url'], 'preview_url')
-        
+
+    def test_serialize_with_only_required_values(self):
+        typ = self._makeOne()
+        node = DummySchemaNode()
+        result = typ.serialize(node, {'filename':'filename', 'uid':'uid'})
+        self.assertEqual(result['filename'], 'filename')
+        self.assertEqual(result['uid'], 'uid')
+        self.assertEqual(result['mimetype'], None)
+        self.assertEqual(result['size'], None)
+        self.assertEqual(result['fp'], None)
+        self.assertEqual(result['preview_url'], None)
+
+    def test_serialize_with_unexpected_value(self):
+        typ = self._makeOne()
+        node = DummySchemaNode()
+        result = typ.serialize(
+            node,
+            {'filename':'filename', 'uid':'uid', 'morg':'moo'}
+            )
+        self.assertEqual(result['filename'], 'filename')
+        self.assertEqual(result['uid'], 'uid')
+        self.assertEqual(result['morg'], 'moo')
 
 class DummySchemaNode(object):
     def __init__(self, typ=None, name='', exc=None, default=None):

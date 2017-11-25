@@ -1,6 +1,8 @@
 API Documentation
 =================
 
+.. contents:: :local:
+
 Form-Related
 ------------
 
@@ -13,7 +15,11 @@ Form-Related
 
    .. automethod:: __iter__
 
+   .. automethod:: __contains__
+
    .. automethod:: translate
+
+   .. automethod:: get_root
 
 .. autoclass:: Form
    :members:
@@ -23,9 +29,6 @@ Form-Related
 
 Type-Related
 ------------
-
-.. autoclass:: Set
-   :members:
 
 .. autoclass:: FileData
    :members:
@@ -80,6 +83,9 @@ Widget-Related
 .. autoclass:: RichTextWidget
    :members:
 
+.. autoclass:: PasswordWidget
+   :members:
+
 .. autoclass:: CheckboxWidget
    :members:
 
@@ -96,8 +102,17 @@ Widget-Related
    :members:
 
 .. autoclass:: SelectWidget
-.. no ':members:' here if we can avoid it, as it would generate 
-.. a duplicate entry for 'SelectWidget.optgroup_class'.
+   :members:
+   :exclude-members: optgroup_class
+.. exclude optgroup_class to avoid generating
+.. a duplicate entry for OptGroup
+
+.. autoclass:: Select2Widget
+   :members:
+   :inherited-members:
+   :exclude-members: optgroup_class
+.. exclude optgroup_class to avoid generating
+.. a duplicate entry for OptGroup
 
 .. autoclass:: RadioChoiceWidget
    :members:
@@ -109,6 +124,9 @@ Widget-Related
    :members:
 
 .. autoclass:: FileUploadWidget
+   :members:
+
+.. autoclass:: TimeInputWidget
    :members:
 
 .. autoclass:: DateInputWidget

@@ -1,11 +1,17 @@
-<span tal:omit-tag="">
-    <input type="text" name="${field.name}" value="${cstruct}" 
-           tal:attributes="size field.widget.size;
-                           class field.widget.css_class"
-           id="${field.oid}"/>
+<span tal:define="oid oid|field.oid;
+                  name name|field.name;
+                  mask_options mask_options|'{}';
+                  style style|field.widget.style;
+                  css_class css_class|field.widget.css_class;
+                  style style|field.widget.style|False"
+      tal:omit-tag="">
+    <input type="text" name="${name}" value="${cstruct}" 
+           tal:attributes="style style;
+                           class string: form-control ${css_class or ''}"
+           id="${oid}"/>
     <script type="text/javascript">
       deform.addCallback(
-         '${field.oid}',
+         '${oid}',
          function (oid) {
             $("#" + oid).maskMoney(${mask_options});
          });

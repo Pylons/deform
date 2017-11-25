@@ -1,4 +1,13 @@
-<span id="${field.oid}"
-      tal:condition="cstruct == field.widget.true_val">Yes</span>
-<em id="${field.oid}"
-      tal:condition="cstruct != field.widget.true_val">No</em>
+<div tal:define="
+     oid oid|field.oid;
+     true_val true_val|field.widget.true_val;"
+     i18n:domain="deform">
+  <p class="deform-readonly-true form-control-static" 
+       id="${oid}"
+       tal:condition="cstruct == true_val"
+       i18n:translate="">True</p>
+  <p class="deform-readonly-false form-control-static" 
+       id="${oid}"
+       tal:condition="cstruct != true_val"
+       i18n:translate="">False</p>
+</div>

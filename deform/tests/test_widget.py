@@ -1,14 +1,13 @@
 import unittest
 
-from deform.compat import (
-    text_type,
-)
+from deform.compat import text_type
+
+import colander
 
 def invalid_exc(func, *arg, **kw):
-    from colander import Invalid
     try:
         func(*arg, **kw)
-    except Invalid as e:
+    except colander.Invalid as e:
         return e
     else:
         raise AssertionError('Invalid not raised') # pragma: no cover
@@ -59,11 +58,10 @@ class TestTextInputWidget(unittest.TestCase):
         return TextInputWidget(**kw)
 
     def test_serialize_null(self):
-        from colander import null
         widget = self._makeOne()
         renderer = DummyRenderer()
         field = DummyField(None, renderer=renderer)
-        widget.serialize(field, null)
+        widget.serialize(field, colander.null)
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], '')
@@ -114,19 +112,24 @@ class TestTextInputWidget(unittest.TestCase):
         self.assertEqual(result, ' abc ')
 
     def test_deserialize_null(self):
-        from colander import null
         widget = self._makeOne(strip=False)
         field = DummyField()
-        result = widget.deserialize(field, null)
-        self.assertEqual(result, null)
+        result = widget.deserialize(field, colander.null)
+        self.assertEqual(result, colander.null)
 
     def test_deserialize_emptystring(self):
-        from colander import null
         widget = self._makeOne()
         field = DummyField()
         pstruct = ''
         result = widget.deserialize(field, pstruct)
-        self.assertEqual(result, null)
+        self.assertEqual(result, colander.null)
+
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = {}
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, pstruct)
 
 class TestMoneyInputWidget(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -134,11 +137,10 @@ class TestMoneyInputWidget(unittest.TestCase):
         return MoneyInputWidget(**kw)
 
     def test_serialize_null(self):
-        from colander import null
         widget = self._makeOne()
         renderer = DummyRenderer()
         field = DummyField(None, renderer=renderer)
-        widget.serialize(field, null)
+        widget.serialize(field, colander.null)
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], '')
@@ -198,19 +200,17 @@ class TestMoneyInputWidget(unittest.TestCase):
         self.assertEqual(result, 'abc')
 
     def test_deserialize_null(self):
-        from colander import null
         widget = self._makeOne(strip=False)
         field = DummyField()
-        result = widget.deserialize(field, null)
-        self.assertEqual(result, null)
+        result = widget.deserialize(field, colander.null)
+        self.assertEqual(result, colander.null)
 
     def test_deserialize_emptystring(self):
-        from colander import null
         widget = self._makeOne()
         field = DummyField()
         pstruct = ''
         result = widget.deserialize(field, pstruct)
-        self.assertEqual(result, null)
+        self.assertEqual(result, colander.null)
 
     def test_deserialize_with_default_thousands_separator(self):
         widget = self._makeOne()
@@ -227,20 +227,31 @@ class TestMoneyInputWidget(unittest.TestCase):
         result = widget.deserialize(field, pstruct)
         self.assertEqual(result, '1000000.00')
 
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne(strip=False)
+        field = DummyField()
+        self.assertRaises(colander.Invalid, widget.deserialize, field, {})
+
 class TestAutocompleteInputWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import AutocompleteInputWidget
         return AutocompleteInputWidget(**kw)
 
     def test_serialize_null(self):
-        from colander import null
         widget = self._makeOne()
         renderer = DummyRenderer()
         field = DummyField(None, renderer=renderer)
-        widget.serialize(field, null)
+        widget.serialize(field, colander.null)
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], '')
+
+    def test_removed_delay(self):
+        widget = self._makeOne()
+        widget.delay = 300
+        renderer = DummyRenderer()
+        field = DummyField(None, renderer=renderer)
+        self.assertRaises(ValueError, widget.serialize, field, None)
 
     def test_serialize_None(self):
         widget = self._makeOne()
@@ -264,10 +275,10 @@ class TestAutocompleteInputWidget(unittest.TestCase):
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], cstruct)
-        self.assertEqual(renderer.kw['options'],
-                         '{"delay": 400, "minLength": 2}')
-        self.assertEqual(renderer.kw['values'],
-                         json.dumps(url))
+        self.assertEqual(json.loads(renderer.kw['options']),
+                         {"limit": 8,
+                          "minLength": 1,
+                          "remote": "http://example.com?term=%QUERY"})
 
     def test_serialize_iterable(self):
         import json
@@ -282,10 +293,10 @@ class TestAutocompleteInputWidget(unittest.TestCase):
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], cstruct)
-        self.assertEqual(renderer.kw['options'],
-                         '{"delay": 10, "minLength": 2}')
-        self.assertEqual(renderer.kw['values'],
-                         json.dumps(vals))
+        self.assertEqual(json.loads(renderer.kw['options']),
+                         {"local": [1,2,3,4],
+                          "minLength": 1,
+                          "limit": 8})
 
     def test_serialize_not_null_readonly(self):
         widget = self._makeOne()
@@ -313,19 +324,22 @@ class TestAutocompleteInputWidget(unittest.TestCase):
         self.assertEqual(result, ' abc ')
 
     def test_deserialize_null(self):
-        from colander import null
         widget = self._makeOne(strip=False)
         field = DummyField()
-        result = widget.deserialize(field, null)
-        self.assertEqual(result, null)
+        result = widget.deserialize(field, colander.null)
+        self.assertEqual(result, colander.null)
 
     def test_deserialize_emptystring(self):
-        from colander import null
         widget = self._makeOne()
         field = DummyField()
         pstruct = ''
         result = widget.deserialize(field, pstruct)
-        self.assertEqual(result, null)
+        self.assertEqual(result, colander.null)
+
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        self.assertRaises(colander.Invalid, widget.deserialize, field, {})
 
 
 class TestDateInputWidget(unittest.TestCase):
@@ -334,11 +348,10 @@ class TestDateInputWidget(unittest.TestCase):
         return DateInputWidget(**kw)
 
     def test_serialize_null(self):
-        from colander import null
         widget = self._makeOne()
         renderer = DummyRenderer()
         field = DummyField(None, renderer=renderer)
-        widget.serialize(field, null)
+        widget.serialize(field, colander.null)
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], '')
@@ -375,46 +388,158 @@ class TestDateInputWidget(unittest.TestCase):
         self.assertEqual(renderer.kw['cstruct'], cstruct)
 
     def test_deserialize_null(self):
-        from colander import null
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field, null)
-        self.assertEqual(result, null)
+        result = widget.deserialize(field, colander.null)
+        self.assertEqual(result, colander.null)
 
     def test_deserialize_emptystring(self):
-        from colander import null
         widget = self._makeOne()
         field = DummyField()
         result = widget.deserialize(field, '')
-        self.assertEqual(result, null)
+        self.assertEqual(result, colander.null)
 
-    def test_options(self):
+    def test_deserialize_date_submit(self):
         widget = self._makeOne()
-        widget.options['dummy'] = 'dummyvalue'
-        self.assertTrue(('dummy', 'dummyvalue') in widget.options.items())
+        field = DummyField()
+        result = widget.deserialize(field, {'date': 'foo', 'date_submit': 'bar'})
+        self.assertEqual(result, 'bar')
+
+    def test_deserialize_date(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, {'date': 'foo', 'date_submit': ''})
+        self.assertEqual(result, 'foo')
+
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, 'garbage')
+
+    def test_deserialize_missing_fields(self):
+        widget = self._makeOne()
+        field = DummyField()
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, {})
+
+    def test_deserialize_bad_field(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = {'date': {}, 'date_submit': {}}
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, pstruct)
 
     def test_options_changed_and_default(self):
         widget2 = self._makeOne()
-        widget = self._makeOne(options={'dateFormat': 'foo'})
-        self.assertEqual(widget.options['dateFormat'], 'foo')
-        self.assertEqual(widget2.options['dateFormat'], 'yy-mm-dd')
+        widget = self._makeOne(options={'format': 'foo'})
+        self.assertEqual(widget.options['format'], 'foo')
+        self.assertEqual(widget2.options, None)
 
+class TestTimeInputWidget(unittest.TestCase):
+    def _makeOne(self, **kw):
+        from deform.widget import TimeInputWidget
+        return TimeInputWidget(**kw)
 
-class TestDateTimeInputWidget(TestDateInputWidget):
+    def test_serialize_null(self):
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        field = DummyField(None, renderer=renderer)
+        widget.serialize(field, colander.null)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], '')
+
+    def test_serialize_None(self):
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        field = DummyField(None, renderer=renderer)
+        widget.serialize(field, None)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], '')
+
+    def test_serialize_not_null(self):
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer=renderer)
+        cstruct = 'abc'
+        widget.serialize(field, cstruct)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], cstruct)
+
+    def test_serialize_not_null_readonly(self):
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer=renderer)
+        cstruct = 'abc'
+        widget.serialize(field, cstruct, readonly=True)
+        self.assertEqual(renderer.template, widget.readonly_template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], cstruct)
+
+    def test_deserialize_null(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, colander.null)
+        self.assertEqual(result, colander.null)
+
+    def test_deserialize_emptystring(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, '')
+        self.assertEqual(result, colander.null)
+
+    def test_deserialize_success(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, {'time': '14:15:16'})
+        self.assertEqual(result, '14:15:16')
+
+    def test_deserialize_time_submit(self):
+        widget = self._makeOne()
+        field = DummyField()
+        result = widget.deserialize(field, {'time': '14:15:16', 'time_submit': '14:15:17'})
+        self.assertEqual(result, '14:15:17')
+
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, 'garbage')
+
+    def test_deserialize_missing_fields(self):
+        widget = self._makeOne()
+        field = DummyField()
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, {})
+
+    def test_deserialize_bad_field(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = {'time': {}, 'time_submit': '14:15:17'}
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, pstruct)
+
+    def test_options_changed_and_default(self):
+        widget2 = self._makeOne()
+        widget = self._makeOne(options={'format': 'foo'})
+        self.assertEqual(widget.options['format'], 'foo')
+        self.assertEqual(widget2.options['format'], 'HH:i')
+
+class TestDateTimeInputWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import DateTimeInputWidget
         return DateTimeInputWidget(**kw)
 
-    def test_options(self):
-        widget = self._makeOne()
-        widget.options['dummy'] = 'dummyvalue'
-        self.assertTrue(('dummy', 'dummyvalue') in widget.options.items())
-
-    def test_options_changed_and_default(self):
+    def test_date_options_changed_and_default(self):
         widget2 = self._makeOne()
-        widget = self._makeOne(options={'dateFormat': 'foo'})
-        self.assertEqual(widget.options['dateFormat'], 'foo')
-        self.assertEqual(widget2.options['dateFormat'], 'yy-mm-dd')
+        widget = self._makeOne(date_options={'format': 'foo'})
+        self.assertEqual(widget.date_options['format'], 'foo')
+        self.assertEqual(widget2.date_options, None)
 
     def test_serialize_with_timezone(self):
         widget = self._makeOne()
@@ -423,8 +548,20 @@ class TestDateTimeInputWidget(TestDateInputWidget):
         cstruct = '2011-12-13T14:15:16+01:00'
         widget.serialize(field, cstruct)
         self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['date'], '2011-12-13')
+        self.assertEqual(renderer.kw['time'], '14:15:16')
+
+    def test_serialize_with_timezone_and_microseconds(self):
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        field = DummyField(DummySchema(), renderer=renderer)
+        cstruct = '2011-12-13T14:15:16.10932+01:00'
+        widget.serialize(field, cstruct)
+        self.assertEqual(renderer.template, widget.template)
         self.assertNotEqual(renderer.kw['cstruct'], cstruct)
-        self.assertEqual(renderer.kw['cstruct'], cstruct[:-6].replace('T', ' '))
+        self.assertEqual(renderer.kw['date'], '2011-12-13')
+        self.assertEqual(renderer.kw['time'], '14:15:16')
+        self.assertEqual(renderer.kw['cstruct'], '2011-12-13T14:15:16.10932')
 
     def test_serialize_without_timezone(self):
         widget = self._makeOne()
@@ -432,20 +569,140 @@ class TestDateTimeInputWidget(TestDateInputWidget):
         field = DummyField(DummySchema(), renderer=renderer)
         cstruct = '2011-12-13T14:15:16'
         widget.serialize(field, cstruct)
-        self.assertEqual(renderer.template, widget.template)
-        self.assertEqual(renderer.kw['cstruct'], cstruct.replace('T', ' '))
+        self.assertEqual(renderer.kw['date'], '2011-12-13')
+        self.assertEqual(renderer.kw['time'], '14:15:16')
 
-    def test_deserialize_with_timezone(self):
+    def test_serialize_no_separator(self):
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        field = DummyField(DummySchema(), renderer=renderer)
+        cstruct = ''
+        widget.serialize(field, cstruct)
+        self.assertEqual(renderer.kw['date'], '')
+        self.assertEqual(renderer.kw['time'], '')
+
+    def test_serialize_null(self):
+        widget = self._makeOne()
+        renderer = DummyRenderer()
+        field = DummyField(DummySchema(), renderer=renderer)
+        cstruct = colander.null
+        widget.serialize(field, cstruct)
+        self.assertEqual(renderer.kw['date'], '')
+        self.assertEqual(renderer.kw['time'], '')
+
+    def test_deserialize_null(self):
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field, '2011-12-13 14:15:16+01:00')
-        self.assertEqual(result, '2011-12-13T14:15:16+01:00')
-
-    def test_deserialize_without_timezone(self):
+        pstruct = colander.null
+        result = widget.deserialize(field, pstruct)
+        self.assertEqual(result, colander.null)
+        
+    def test_deserialize_nochanges(self):
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field, '2011-12-13 14:15:16')
+        pstruct = {
+            'date':'2011-12-13',
+            'date_submit':'',
+            'time':'14:15:16',
+            'time_submit':''
+            }
+        result = widget.deserialize(field, pstruct)
         self.assertEqual(result, '2011-12-13T14:15:16')
+
+    def test_deserialize_date_changed(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = {
+            'date':'2011-12-13',
+            'date_submit':'2011-12-12',
+            'time':'14:15:16',
+            'time_submit':''
+            }
+        result = widget.deserialize(field, pstruct)
+        self.assertEqual(result, '2011-12-12T14:15:16')
+
+    def test_deserialize_time_changed(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = {
+            'date':'2011-12-13',
+            'date_submit':'',
+            'time':'14:15:16',
+            'time_submit':'14:15:15'
+            }
+        result = widget.deserialize(field, pstruct)
+        self.assertEqual(result, '2011-12-13T14:15:15')
+        
+
+    def test_deserialize_date_and_time_changed(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = {
+            'date':'2011-12-13',
+            'date_submit':'2011-12-12',
+            'time':'14:15:16',
+            'time_submit':'14:15:15'
+            }
+        result = widget.deserialize(field, pstruct)
+        self.assertEqual(result, '2011-12-12T14:15:15')
+
+    def test_deserialize_no_date(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = {
+            'date':'',
+            'date_submit':'',
+            'time':'14:15:16',
+            'time_submit':'14:15:15'
+            }
+        self.assertRaises(colander.Invalid, widget.deserialize, field, pstruct)
+
+    def test_deserialize_no_time(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = {
+            'date':'2011-12-13',
+            'date_submit':'2011-12-12',
+            'time':'',
+            'time_submit':''
+            }
+        self.assertRaises(colander.Invalid, widget.deserialize, field, pstruct)
+
+    def test_deserialize_no_time_no_date(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = {
+            'date':'',
+            'date_submit':'',
+            'time':'',
+            'time_submit':''
+            }
+        result = widget.deserialize(field, pstruct)
+        self.assertEqual(result, colander.null)
+
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, 'garbage')
+
+    def test_deserialize_missing_fields(self):
+        widget = self._makeOne()
+        field = DummyField()
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, {})
+
+    def test_deserialize_bad_field(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = {
+            'date':'2011-12-13',
+            'date_submit':'2011-12-12',
+            'time':'14:15:16',
+            'time_submit': {},
+            }
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, pstruct)
 
 class TestHiddenWidget(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -453,11 +710,10 @@ class TestHiddenWidget(unittest.TestCase):
         return HiddenWidget(**kw)
 
     def test_serialize_null(self):
-        from colander import null
         widget = self._makeOne()
         renderer = DummyRenderer()
         field = DummyField(None, renderer=renderer)
-        widget.serialize(field, null)
+        widget.serialize(field, colander.null)
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], '')
@@ -490,18 +746,22 @@ class TestHiddenWidget(unittest.TestCase):
         self.assertEqual(result, 'abc')
 
     def test_deserialize_null(self):
-        from colander import null
         widget = self._makeOne(strip=False)
         field = DummyField()
-        result = widget.deserialize(field, null)
-        self.assertEqual(result, null)
+        result = widget.deserialize(field, colander.null)
+        self.assertEqual(result, colander.null)
 
     def test_deserialize_emptystring(self):
-        from colander import null
         widget = self._makeOne(strip=False)
         field = DummyField()
         result = widget.deserialize(field, '')
-        self.assertEqual(result, null)
+        self.assertEqual(result, colander.null)
+
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, ['a', 'b'])
 
 class TestPasswordWidget(TestTextInputWidget):
     def _makeOne(self, **kw):
@@ -517,6 +777,29 @@ class TestRichTextWidget(TestTextInputWidget):
     def _makeOne(self, **kw):
         from deform.widget import RichTextWidget
         return RichTextWidget(**kw)
+
+    def test_options(self):
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+        options = {
+            'theme_advanced_buttons1': 'bold,italic,bullist,numlist',
+            'verify_html': True,
+            'element_format': 'html'
+        }
+        widget = self._makeOne(options=options)
+        cstruct = 'abc'
+        widget.serialize(field, cstruct)
+
+        #Default options should be provided
+        result = renderer.kw['tinymce_options']
+        self.assertTrue('"height": 240' in result)
+        self.assertTrue('"width": 0' in result)
+
+        #Custom options should be set
+        self.assertTrue('"theme_advanced_buttons1": "bold,italic,bullist,numlist"' in result)
+        self.assertTrue('"verify_html": true' in result)
+        self.assertTrue('"element_format": "html"' in result)
 
 class TestCheckboxWidget(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -546,10 +829,9 @@ class TestCheckboxWidget(unittest.TestCase):
         self.assertEqual(renderer.kw['cstruct'], cstruct)
 
     def test_deserialize_null(self):
-        from colander import null
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field, null)
+        result = widget.deserialize(field, colander.null)
         self.assertEqual(result, 'false')
 
     def test_deserialize_true_val(self):
@@ -564,30 +846,33 @@ class TestCheckboxWidget(unittest.TestCase):
         result = widget.deserialize(field, 'false')
         self.assertEqual(result, 'false')
 
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        self.assertRaises(colander.Invalid, widget.deserialize, field, {})
+
 class TestRadioChoiceWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import RadioChoiceWidget
         return RadioChoiceWidget(**kw)
 
     def test_serialize_null(self):
-        from colander import null
         renderer = DummyRenderer()
         schema = DummySchema()
         field = DummyField(schema, renderer)
         widget = self._makeOne()
-        widget.serialize(field, null)
+        widget.serialize(field, colander.null)
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], '')
 
     def test_serialize_null_alternate_null_value(self):
-        from colander import null
         renderer = DummyRenderer()
         schema = DummySchema()
         field = DummyField(schema, renderer)
         widget = self._makeOne()
         widget.null_value = 'fred'
-        widget.serialize(field, null)
+        widget.serialize(field, colander.null)
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], 'fred')
@@ -615,11 +900,10 @@ class TestRadioChoiceWidget(unittest.TestCase):
         self.assertEqual(renderer.kw['cstruct'], cstruct)
 
     def test_deserialize_null(self):
-        from colander import null
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field, null)
-        self.assertEqual(result, null)
+        result = widget.deserialize(field, colander.null)
+        self.assertEqual(result, colander.null)
 
     def test_deserialize_other(self):
         widget = self._makeOne()
@@ -627,18 +911,23 @@ class TestRadioChoiceWidget(unittest.TestCase):
         result = widget.deserialize(field, 'true')
         self.assertEqual(result, 'true')
 
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        self.assertRaises(colander.Invalid, widget.deserialize, field, {})
+
 class TestSelectWidget(unittest.TestCase):
+
     def _makeOne(self, **kw):
         from deform.widget import SelectWidget
         return SelectWidget(**kw)
 
     def test_serialize_null(self):
-        from colander import null
         renderer = DummyRenderer()
         schema = DummySchema()
         field = DummyField(schema, renderer)
         widget = self._makeOne()
-        widget.serialize(field, null)
+        widget.serialize(field, colander.null)
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], '')
@@ -654,13 +943,12 @@ class TestSelectWidget(unittest.TestCase):
         self.assertEqual(renderer.kw['cstruct'], '')
 
     def test_serialize_null_alternate_null_value(self):
-        from colander import null
         renderer = DummyRenderer()
         schema = DummySchema()
         field = DummyField(schema, renderer)
         widget = self._makeOne()
         widget.null_value = 'fred'
-        widget.serialize(field, null)
+        widget.serialize(field, colander.null)
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], 'fred')
@@ -696,24 +984,57 @@ class TestSelectWidget(unittest.TestCase):
         self.assertEqual(renderer.kw['values'], [('1', 'one')])
 
     def test_deserialize_null(self):
-        from colander import null
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field, null)
-        self.assertEqual(result, null)
+        result = widget.deserialize(field, colander.null)
+        self.assertEqual(result, colander.null)
 
     def test_deserialize_null_value(self):
-        from colander import null
         widget = self._makeOne()
         field = DummyField()
         result = widget.deserialize(field, '')
-        self.assertEqual(result, null)
+        self.assertEqual(result, colander.null)
 
     def test_deserialize_other(self):
         widget = self._makeOne()
         field = DummyField()
         result = widget.deserialize(field, 'true')
         self.assertEqual(result, 'true')
+
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        self.assertRaises(colander.Invalid, widget.deserialize, field, {})
+
+    def test_deserialize_multiple(self):
+        widget = self._makeOne(multiple=True)
+        field = DummyField()
+        result = widget.deserialize(field, ['foo', 'bar'])
+        self.assertEqual(result, ['foo', 'bar'])
+
+    def test_deserialize_multiple_bad_type(self):
+        widget = self._makeOne(multiple=True)
+        field = DummyField()
+        self.assertRaises(colander.Invalid, widget.deserialize, field, {})
+
+    def test_deserialize_multiple_bad_item(self):
+        widget = self._makeOne(multiple=True)
+        field = DummyField()
+        pstruct = ['foo', {}]
+        self.assertRaises(colander.Invalid, widget.deserialize, field, pstruct)
+
+    def test_selected_tag(self):
+        """See we correctly procude 'selected'"""
+        widget = self._makeOne(multiple=False)
+        widget.get_select_value('foo', 'foo') == "selected"
+        widget.get_select_value('foo', 'bar') is None
+
+    def test_selected_tag_multiple(self):
+        """See we correctly procude 'selected' in multiple values situations."""
+        widget = self._makeOne(multiple=True)
+        widget.get_select_value(['foo', 'bar'], 'foo') == "selected"
+        widget.get_select_value(['foo', 'bar'], 'moo') is None
+
 
 class TestCheckboxChoiceWidget(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -721,12 +1042,11 @@ class TestCheckboxChoiceWidget(unittest.TestCase):
         return CheckboxChoiceWidget(**kw)
 
     def test_serialize_null(self):
-        from colander import null
         renderer = DummyRenderer()
         schema = DummySchema()
         field = DummyField(schema, renderer)
         widget = self._makeOne()
-        widget.serialize(field, null)
+        widget.serialize(field, colander.null)
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], ())
@@ -772,14 +1092,13 @@ class TestCheckboxChoiceWidget(unittest.TestCase):
         self.assertEqual(renderer.kw['values'], [('1', 'one')])
 
     def test_deserialize_null(self):
-        from colander import null
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field, null)
-        self.assertEqual(result, null)
+        result = widget.deserialize(field, colander.null)
+        self.assertEqual(result, colander.null)
 
     def test_deserialize_single_string(self):
-        # If only one checkbox was checked:  DAMN HTTP forms!
+        # If only one checkbox was checked:  DAMN HTML forms!
         widget = self._makeOne()
         field = DummyField()
         result = widget.deserialize(field, 'abc')
@@ -791,18 +1110,29 @@ class TestCheckboxChoiceWidget(unittest.TestCase):
         result = widget.deserialize(field, ['abc'])
         self.assertEqual(result, ('abc',))
 
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        self.assertRaises(colander.Invalid, widget.deserialize, field, {})
+
+    def test_deserialize_bad_field(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = ['abd', []]
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, pstruct)
+
 class TestCheckedInputWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import CheckedInputWidget
         return CheckedInputWidget(**kw)
 
     def test_serialize_null(self):
-        from colander import null
         renderer = DummyRenderer()
         schema = DummySchema()
         field = DummyField(schema, renderer)
         widget = self._makeOne()
-        widget.serialize(field, null)
+        widget.serialize(field, colander.null)
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], '')
@@ -853,19 +1183,17 @@ class TestCheckedInputWidget(unittest.TestCase):
         self.assertEqual(renderer.kw['confirm'], True)
 
     def test_deserialize_null(self):
-        from colander import null
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field, null)
-        self.assertEqual(result, null)
+        result = widget.deserialize(field, colander.null)
+        self.assertEqual(result, colander.null)
 
     def test_deserialize_empty(self):
-        from colander import null
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field, {'value':'',
-                                            'confirm':''})
-        self.assertEqual(result, null)
+        result = widget.deserialize(field, {'name':'',
+                                            'name-confirm':''})
+        self.assertEqual(result, colander.null)
         self.assertEqual(field.error, None)
 
     def test_deserialize_nonmatching(self):
@@ -892,6 +1220,26 @@ class TestCheckedInputWidget(unittest.TestCase):
         self.assertEqual(result, 'password')
         self.assertEqual(field.error, None)
 
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, 'garbage')
+        self.assertEqual(field.error, None)
+
+    def test_deserialize_missing_fields(self):
+        widget = self._makeOne()
+        field = DummyField()
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, {})
+
+    def test_deserialize_bad_field(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = {'name': 'x', 'name-confirm': ['x']}
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, pstruct)
+
 class TestCheckedPasswordWidget(TestCheckedInputWidget):
     def _makeOne(self, **kw):
         from deform.widget import CheckedPasswordWidget
@@ -912,13 +1260,12 @@ class TestFileUploadWidget(unittest.TestCase):
         return FileUploadWidget(tmpstore, **kw)
 
     def test_serialize_null(self):
-        from colander import null
         renderer = DummyRenderer()
         schema = DummySchema()
         field = DummyField(schema, renderer)
         tmpstore = DummyTmpStore()
         widget = self._makeOne(tmpstore)
-        widget.serialize(field, null)
+        widget.serialize(field, colander.null)
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], {})
@@ -970,22 +1317,20 @@ class TestFileUploadWidget(unittest.TestCase):
         self.assertEqual(tmpstore['uid'], existing)
 
     def test_deserialize_null(self):
-        from colander import null
         schema = DummySchema()
         field = DummyField(schema)
         tmpstore = DummyTmpStore()
         widget = self._makeOne(tmpstore)
-        result = widget.deserialize(field, null)
-        self.assertEqual(result, null)
+        result = widget.deserialize(field, colander.null)
+        self.assertEqual(result, colander.null)
 
     def test_deserialize_no_file_selected_no_previous_file(self):
-        from colander import null
         schema = DummySchema()
         field = DummyField(schema)
         tmpstore = DummyTmpStore()
         widget = self._makeOne(tmpstore)
         result = widget.deserialize(field, {})
-        self.assertEqual(result, null)
+        self.assertEqual(result, colander.null)
 
     def test_deserialize_no_file_selected_with_previous_file(self):
         schema = DummySchema()
@@ -997,13 +1342,12 @@ class TestFileUploadWidget(unittest.TestCase):
         self.assertEqual(result, 'abc')
 
     def test_deserialize_no_file_selected_with_previous_file_missing(self):
-        from colander import null
         schema = DummySchema()
         field = DummyField(schema)
         tmpstore = DummyTmpStore()
         widget = self._makeOne(tmpstore)
         result = widget.deserialize(field, {'uid':'uid'})
-        self.assertEqual(result, null)
+        self.assertEqual(result, colander.null)
 
     def test_deserialize_file_selected_no_previous_file(self):
         schema = DummySchema()
@@ -1052,18 +1396,32 @@ class TestFileUploadWidget(unittest.TestCase):
         self.assertEqual(result['preview_url'], 'http://localhost/baz.pt')
         self.assertEqual(tmpstore['uid'], result)
 
+    def test_deserialize_bad_type(self):
+        tmpstore = DummyTmpStore()
+        widget = self._makeOne(tmpstore)
+        field = DummyField()
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, 'garbage')
+
+    def test_deserialize_bad_field(self):
+        tmpstore = DummyTmpStore()
+        widget = self._makeOne(tmpstore)
+        field = DummyField()
+        pstruct = {'upload': 'garbage'}
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, pstruct)
+
 class TestDatePartsWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import DatePartsWidget
         return DatePartsWidget(**kw)
 
     def test_serialize_null(self):
-        from colander import null
         renderer = DummyRenderer()
         schema = DummySchema()
         field = DummyField(schema, renderer)
         widget = self._makeOne()
-        widget.serialize(field, null)
+        widget.serialize(field, colander.null)
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['year'], '')
         self.assertEqual(renderer.kw['month'], '')
@@ -1116,21 +1474,19 @@ class TestDatePartsWidget(unittest.TestCase):
         self.assertEqual(result, '01-2-3')
 
     def test_deserialize_null(self):
-        from colander import null
         schema = DummySchema()
         field = DummyField(schema, None)
         widget = self._makeOne()
-        result = widget.deserialize(field, null)
-        self.assertEqual(result, null)
+        result = widget.deserialize(field, colander.null)
+        self.assertEqual(result, colander.null)
 
     def test_deserialize_emptyfields(self):
-        from colander import null
         schema = DummySchema()
         field = DummyField(schema, None)
         widget = self._makeOne()
         result = widget.deserialize(field,
                                     {'year':'\t', 'month':'', 'day':''})
-        self.assertEqual(result, null)
+        self.assertEqual(result, colander.null)
 
     def test_deserialize_incomplete(self):
         schema = DummySchema()
@@ -1140,6 +1496,24 @@ class TestDatePartsWidget(unittest.TestCase):
                         field, {'year':'1', 'month':'', 'day':''})
         self.assertEqual(e.msg, 'Incomplete date')
 
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, 'garbage')
+
+    def test_deserialize_missing_fields(self):
+        widget = self._makeOne()
+        field = DummyField()
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, {})
+
+    def test_deserialize_bad_field(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = {'year': '1970', 'month': '1', 'day': []}
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, pstruct)
 
 class TestMappingWidget(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -1147,12 +1521,11 @@ class TestMappingWidget(unittest.TestCase):
         return MappingWidget(**kw)
 
     def test_serialize_null(self):
-        from colander import null
         renderer = DummyRenderer()
         schema = DummySchema()
         field = DummyField(schema, renderer)
         widget = self._makeOne()
-        widget.serialize(field, null)
+        widget.serialize(field, colander.null)
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], {})
@@ -1190,10 +1563,9 @@ class TestMappingWidget(unittest.TestCase):
         self.assertEqual(renderer.kw['cstruct'], cstruct)
 
     def test_deserialize_null(self):
-        from colander import null
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field, null)
+        result = widget.deserialize(field, colander.null)
         self.assertEqual(result, {})
 
     def test_deserialize_non_null(self):
@@ -1210,12 +1582,12 @@ class TestMappingWidget(unittest.TestCase):
         self.assertEqual(result, {'a':1})
 
     def test_deserialize_error(self):
-        from colander import Invalid
         widget = self._makeOne()
         field = DummyField()
         inner_field = DummyField()
         inner_field.name = 'a'
-        inner_widget = DummyWidget(exc=Invalid(inner_field, 'wrong', value='a'))
+        inner_widget = DummyWidget(
+            exc=colander.Invalid(inner_field, 'wrong', value='a'))
         inner_widget.name = 'a'
         inner_field.widget = inner_widget
         field.children = [inner_field]
@@ -1223,6 +1595,12 @@ class TestMappingWidget(unittest.TestCase):
         e = invalid_exc(widget.deserialize, field, pstruct)
         self.assertEqual(e.value, {'a':'a'})
         self.assertEqual(e.children[0].value, 'a')
+
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, ['a', 1])
 
 class TestSequenceWidget(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -1235,12 +1613,23 @@ class TestSequenceWidget(unittest.TestCase):
         schema = DummySchema()
         field = DummyField(schema, renderer)
         widget = self._makeOne()
-        protofield = DummyField()
+        protofield = DummyField(None, renderer)
         field.children=[protofield]
         result = widget.prototype(field)
         self.assertEqual(type(result), str)
         self.assertEqual(url_unquote(result), 'abc')
         self.assertEqual(protofield.cloned, True)
+
+    def test_prototype_field_has_no_name(self):
+        from deform.compat import url_unquote
+        renderer = DummyRenderer(text_type('abc'))
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+        widget = self._makeOne()
+        protofield = DummyField(None, renderer)
+        protofield.name = ''
+        field.children=[protofield]
+        self.assertRaises(ValueError, widget.prototype, field)
 
     def test_prototype_str(self):
         from deform.compat import url_unquote
@@ -1248,7 +1637,7 @@ class TestSequenceWidget(unittest.TestCase):
         schema = DummySchema()
         field = DummyField(schema, renderer)
         widget = self._makeOne()
-        protofield = DummyField()
+        protofield = DummyField(None, renderer)
         field.children=[protofield]
         result = widget.prototype(field)
         self.assertEqual(type(result), str)
@@ -1256,14 +1645,13 @@ class TestSequenceWidget(unittest.TestCase):
         self.assertEqual(protofield.cloned, True)
 
     def test_serialize_null(self):
-        from colander import null
         renderer = DummyRenderer('abc')
         schema = DummySchema()
         field = DummyField(schema, renderer)
         inner = DummyField()
         field.children=[inner]
         widget = self._makeOne()
-        result = widget.serialize(field, null)
+        result = widget.serialize(field, colander.null)
         self.assertEqual(result, 'abc')
         self.assertEqual(len(renderer.kw['subfields']), 0)
         self.assertEqual(renderer.kw['field'], field)
@@ -1284,24 +1672,7 @@ class TestSequenceWidget(unittest.TestCase):
         self.assertEqual(renderer.kw['cstruct'], [])
         self.assertEqual(renderer.template, widget.template)
 
-    def test_serialize_null_render_initial_item(self):
-        from colander import null
-        renderer = DummyRenderer('abc')
-        schema = DummySchema()
-        field = DummyField(schema, renderer)
-        inner = DummyField()
-        field.children=[inner]
-        widget = self._makeOne()
-        widget.render_initial_item = True
-        result = widget.serialize(field, null)
-        self.assertEqual(result, 'abc')
-        self.assertEqual(len(renderer.kw['subfields']), 1)
-        self.assertEqual(renderer.kw['field'], field)
-        self.assertEqual(renderer.kw['cstruct'], [null])
-        self.assertEqual(renderer.template, widget.template)
-
     def test_serialize_null_min_len_larger_than_cstruct(self):
-        from colander import null
         renderer = DummyRenderer('abc')
         schema = DummySchema()
         field = DummyField(schema, renderer)
@@ -1313,11 +1684,10 @@ class TestSequenceWidget(unittest.TestCase):
         self.assertEqual(result, 'abc')
         self.assertEqual(len(renderer.kw['subfields']), 2)
         self.assertEqual(renderer.kw['field'], field)
-        self.assertEqual(renderer.kw['cstruct'], ['abc', null])
+        self.assertEqual(renderer.kw['cstruct'], ['abc', colander.null])
         self.assertEqual(renderer.template, widget.template)
 
     def test_serialize_null_min_one(self):
-        from colander import null
         renderer = DummyRenderer('abc')
         schema = DummySchema()
         field = DummyField(schema, renderer)
@@ -1325,15 +1695,14 @@ class TestSequenceWidget(unittest.TestCase):
         field.children=[inner]
         widget = self._makeOne()
         widget.min_len = 1
-        result = widget.serialize(field, null)
+        result = widget.serialize(field, colander.null)
         self.assertEqual(result, 'abc')
         self.assertEqual(len(renderer.kw['subfields']), 1)
         self.assertEqual(renderer.kw['field'], field)
-        self.assertEqual(renderer.kw['cstruct'], [null])
+        self.assertEqual(renderer.kw['cstruct'], [colander.null])
         self.assertEqual(renderer.template, widget.template)
 
     def test_serialize_add_subitem_value(self):
-        from colander import null
         renderer = DummyRenderer('abc')
         schema = DummySchema()
         field = DummyField(schema, renderer)
@@ -1341,12 +1710,11 @@ class TestSequenceWidget(unittest.TestCase):
         field.children=[inner]
         widget = self._makeOne()
         widget.add_subitem_text_template = 'Yo ${subitem_description}'
-        widget.serialize(field, null)
+        widget.serialize(field, colander.null)
         self.assertEqual(renderer.kw['add_subitem_text'].interpolate(),
                          'Yo description')
 
     def test_serialize_add_subitem_translates_title(self):
-        from colander import null
         renderer = DummyRenderer('abc')
         schema = DummySchema()
         field = DummyField(schema, renderer, {'title': 'titel'})
@@ -1354,12 +1722,11 @@ class TestSequenceWidget(unittest.TestCase):
         field.children=[inner]
         widget = self._makeOne()
         widget.add_subitem_text_template = 'Yo ${subitem_title}'
-        widget.serialize(field, null)
+        widget.serialize(field, colander.null)
         self.assertEqual(renderer.kw['add_subitem_text'].interpolate(),
                          'Yo titel')
 
     def test_serialize_add_subitem_translates_title_with_default_domain(self):
-        from colander import null
         # By default, we get a TranslationString whose domain is 'deform'
         renderer = DummyRenderer('abc')
         schema = DummySchema()
@@ -1368,11 +1735,10 @@ class TestSequenceWidget(unittest.TestCase):
         field.children=[inner]
         widget = self._makeOne()
         widget.add_subitem_text_template = 'Yo ${subitem_title}'
-        widget.serialize(field, null)
+        widget.serialize(field, colander.null)
         self.assertEqual(renderer.kw['add_subitem_text'].domain, 'deform')
 
     def test_serialize_add_subitem_translates_title_with_another_domain(self):
-        from colander import null
         from translationstring import TranslationStringFactory
         renderer = DummyRenderer('abc')
         schema = DummySchema()
@@ -1384,12 +1750,11 @@ class TestSequenceWidget(unittest.TestCase):
         custom_domain = 'not_deform'
         _ = TranslationStringFactory(custom_domain)
         widget.add_subitem_text_template = _('Yo ${subitem_title}')
-        widget.serialize(field, null)
+        widget.serialize(field, colander.null)
         self.assertEqual(renderer.kw['add_subitem_text'].domain,
                          custom_domain)
 
     def test_serialize_add_subitem_translates_description(self):
-        from colander import null
         renderer = DummyRenderer('abc')
         schema = DummySchema()
         field = DummyField(schema, renderer, {'description': 'omschrijving'})
@@ -1397,19 +1762,18 @@ class TestSequenceWidget(unittest.TestCase):
         field.children=[inner]
         widget = self._makeOne()
         widget.add_subitem_text_template = 'Yo ${subitem_description}'
-        widget.serialize(field, null)
+        widget.serialize(field, colander.null)
         self.assertEqual(renderer.kw['add_subitem_text'].interpolate(),
                          'Yo omschrijving')
 
     def test_serialize_subitem_value(self):
-        from colander import null
         renderer = DummyRenderer('abc')
         schema = DummySchema()
         field = DummyField(schema, renderer)
         inner = DummyField()
         field.children=[inner]
         widget = self._makeOne()
-        widget.serialize(field, null)
+        widget.serialize(field, colander.null)
         self.assertEqual(renderer.kw['item_field'], inner)
 
     def test_serialize_not_null(self):
@@ -1461,12 +1825,11 @@ class TestSequenceWidget(unittest.TestCase):
         self.assertEqual(renderer.template, widget.template)
 
     def test_deserialize_null(self):
-        from colander import null
         field = DummyField()
         inner_field = DummyField()
         field.children = [inner_field]
         widget = self._makeOne()
-        result = widget.deserialize(field, null)
+        result = widget.deserialize(field, colander.null)
         self.assertEqual(result, [])
         self.assertEqual(field.sequence_fields, [])
 
@@ -1482,10 +1845,10 @@ class TestSequenceWidget(unittest.TestCase):
         self.assertEqual(field.sequence_fields[0], inner_field)
 
     def test_deserialize_error(self):
-        from colander import Invalid
         field = DummyField()
         inner_field = DummyField()
-        inner_field.widget = DummyWidget(exc=Invalid(inner_field, 'wrong', 'a'))
+        inner_field.widget = DummyWidget(
+            exc=colander.Invalid(inner_field, 'wrong', 'a'))
         field.children = [inner_field]
         widget = self._makeOne()
         e = invalid_exc(widget.deserialize, field, ['123'])
@@ -1514,6 +1877,15 @@ class TestSequenceWidget(unittest.TestCase):
         widget.handle_error(field, error)
         self.assertEqual(widget.error, 'abc')
 
+    def test_deserialize_bad_type(self):
+        field = DummyField()
+        inner_field = DummyField()
+        inner_field.widget = DummyWidget()
+        field.children = [inner_field]
+        widget = self._makeOne()
+        self.assertRaises(colander.Invalid,
+                          widget.deserialize, field, {'x': '123'})
+        
 class TestFormWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import FormWidget
@@ -1529,11 +1901,10 @@ class TestTextAreaCSVWidget(unittest.TestCase):
         return TextAreaCSVWidget(**kw)
 
     def test_serialize_null(self):
-        from colander import null
         widget = self._makeOne()
         renderer = DummyRenderer()
         field = DummyField(None, renderer=renderer)
-        widget.serialize(field, null)
+        widget.serialize(field, colander.null)
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], '')
@@ -1570,6 +1941,17 @@ class TestTextAreaCSVWidget(unittest.TestCase):
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], 'a,1\r\n')
 
+    def test_serialize_csv_delimiter(self):
+        widget = self._makeOne(delimiter=';')
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer=renderer)
+        cstruct = [('a', '1')]
+        widget.serialize(field, cstruct)
+        self.assertEqual(renderer.template, widget.template)
+        self.assertEqual(renderer.kw['field'], field)
+        self.assertEqual(renderer.kw['cstruct'], 'a;1\r\n')
+
     def test_deserialize(self):
         widget = self._makeOne(strip=False)
         field = DummyField()
@@ -1578,7 +1960,6 @@ class TestTextAreaCSVWidget(unittest.TestCase):
         self.assertEqual(result, [['a', '1']])
 
     def test_deserialize_bad_csv(self):
-        import colander
         widget = self._makeOne(strip=False)
         field = DummyField()
         pstruct = 'a,1\raa\r\r\n\n'
@@ -1586,22 +1967,25 @@ class TestTextAreaCSVWidget(unittest.TestCase):
         self.assertEqual(field.unparseable, pstruct)
 
     def test_deserialize_null(self):
-        from colander import null
         widget = self._makeOne(strip=False)
         schema = DummySchema()
         schema.required = False
         field = DummyField(schema=schema)
-        result = widget.deserialize(field, null)
-        self.assertEqual(result, null)
+        result = widget.deserialize(field, colander.null)
+        self.assertEqual(result, colander.null)
 
     def test_deserialize_emptystring(self):
-        from colander import null
         widget = self._makeOne(strip=False)
         schema = DummySchema()
         schema.required = False
         field = DummyField(schema=schema)
         result = widget.deserialize(field, '')
-        self.assertEqual(result, null)
+        self.assertEqual(result, colander.null)
+
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        self.assertRaises(colander.Invalid, widget.deserialize, field, [])
 
     def test_handle_error_outermost_has_msg(self):
         widget = self._makeOne()
@@ -1627,17 +2011,24 @@ class TestTextAreaCSVWidget(unittest.TestCase):
         widget.handle_error(field, error)
         self.assertEqual(field.error.msg, 'line 1: Invalid\nline 2: Invalid')
 
+    def test_deserialize_csv_delimiter(self):
+        widget = self._makeOne(delimiter=';')
+        field = DummyField()
+        pstruct = 'a;1\r\n'
+        result = widget.deserialize(field, pstruct)
+        self.assertEqual(result, [['a', '1']])
+
+
 class TestTextInputCSVWidget(unittest.TestCase):
     def _makeOne(self, **kw):
         from deform.widget import TextInputCSVWidget
         return TextInputCSVWidget(**kw)
 
     def test_serialize_null(self):
-        from colander import null
         widget = self._makeOne()
         renderer = DummyRenderer()
         field = DummyField(None, renderer=renderer)
-        widget.serialize(field, null)
+        widget.serialize(field, colander.null)
         self.assertEqual(renderer.template, widget.template)
         self.assertEqual(renderer.kw['field'], field)
         self.assertEqual(renderer.kw['cstruct'], '')
@@ -1682,7 +2073,6 @@ class TestTextInputCSVWidget(unittest.TestCase):
         self.assertEqual(result, ['a', '1'])
 
     def test_deserialize_bad_csv(self):
-        import colander
         widget = self._makeOne(strip=False)
         field = DummyField()
         pstruct = 'a,1\raa\r\r\n\n'
@@ -1690,22 +2080,25 @@ class TestTextInputCSVWidget(unittest.TestCase):
         self.assertEqual(field.unparseable, pstruct)
 
     def test_deserialize_null(self):
-        from colander import null
         widget = self._makeOne(strip=False)
         schema = DummySchema()
         schema.required = False
         field = DummyField(schema=schema)
-        result = widget.deserialize(field, null)
-        self.assertEqual(result, null)
+        result = widget.deserialize(field, colander.null)
+        self.assertEqual(result, colander.null)
 
     def test_deserialize_emptystring(self):
-        from colander import null
         widget = self._makeOne(strip=False)
         schema = DummySchema()
         schema.required = False
         field = DummyField(schema=schema)
         result = widget.deserialize(field, '')
-        self.assertEqual(result, null)
+        self.assertEqual(result, colander.null)
+
+    def test_deserialize_bad_type(self):
+        widget = self._makeOne()
+        field = DummyField()
+        self.assertRaises(colander.Invalid, widget.deserialize, field, [])
 
     def test_handle_error_outermost_has_msg(self):
         widget = self._makeOne()
@@ -1846,6 +2239,8 @@ class DummyField(object):
     name = 'name'
     cloned = False
     oid = 'deformField1'
+    required = True
+    cstruct = colander.null
     def __init__(self, schema=None, renderer=None, translations=None):
         self.schema = schema
         self.renderer = renderer
@@ -1863,6 +2258,9 @@ class DummyField(object):
             return term
         return self.translations.get(term, term)
 
+    def render_template(self, template, **kw):
+        return self.renderer(template, **kw)
+
 class DummyTmpStore(dict):
     def preview_url(self, uid):
         return 'http://localhost/%s' % self[uid]['filename']
@@ -1873,3 +2271,6 @@ class DummyUpload(object):
     type = 'mimetype'
     length = 'size'
 
+    def __nonzero__(self):              # pragma: no cover
+        # cgi.FieldStorage for file uploads are falsey
+        return False

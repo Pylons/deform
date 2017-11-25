@@ -1,0 +1,54 @@
+# Wire up travis
+language: python
+sudo: false
+
+addons:
+  firefox: "43.0"
+
+matrix:
+    include:
+        - python: 2.7
+          env: TOXENV=py27
+        - python: 3.3
+          env: TOXENV=py33
+        - python: 3.4
+          env: TOXENV=py34
+        - python: 3.5
+          env: TOXENV=py35
+        - python: pypy
+          env: TOXENV=pypy
+        - python: 3.5
+          env: TOXENV=py2-cover,py3-cover,coverage
+        - python: 3.5
+          env: TOXENV=docs
+        - python: 2.7
+          env: TOXENV=functional
+        - python: 3.5
+          env: TOXENV=functional3
+#        - python: pypy3
+#          env: TOXENV=pypy3
+
+install:
+  - travis_retry pip install tox
+
+# For Selenium
+# https://docs.travis-ci.com/user/gui-and-headless-browsers/
+# http://stackoverflow.com/a/34703838/315168
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3 # give xvfb some time to start
+  - echo "Extracting firefox and setting PATH variable..."
+  - tar -xjf /tmp/firefox-43.0.tar.bz2 --directory /tmp
+  - export PATH="/tmp/firefox:$PATH"
+  - echo "Using firefox version `firefox --version`"
+
+script:
+  - travis_retry tox
+
+notifications:
+  email:
+    - pyramid-checkins@lists.repoze.org
+  irc:
+    channels:
+      - "chat.freenode.net#pyramid"

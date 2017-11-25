@@ -1,9 +1,3 @@
-<div class="fileupload" i18n:domain="deform">
-
-  <div class="replaces" tal:condition="cstruct.get('uid')">
-    <span tal:content="cstruct.get('filename')"/>
-  </div>
-
-  <p><em i18n:translate=""> Read-only.</em></p>
-
-</div>
+<p id="${oid|field.oid}" class="form-control-static deform-readonly-text"
+   tal:content="cstruct.get('filename') or ''">
+</p>

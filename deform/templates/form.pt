@@ -1,74 +1,97 @@
 <form
-  id="${field.formid}"
-  action="${field.action}"
-  method="${field.method}"
+  tal:define="style style|field.widget.style;
+              css_class css_class|string:${field.widget.css_class or field.css_class or ''};
+              item_template item_template|field.widget.item_template;
+              autocomplete autocomplete|field.autocomplete;
+              title title|field.title;
+              errormsg errormsg|field.errormsg;
+              description description|field.description;
+              buttons buttons|field.buttons;
+              use_ajax use_ajax|field.use_ajax;
+              ajax_options ajax_options|field.ajax_options;
+              formid formid|field.formid;
+              action action|field.action or None;
+              method method|field.method;"
+  tal:attributes="autocomplete autocomplete;
+                  style style;
+                  class css_class;
+                  action action;"
+  id="${formid}"
+  method="${method}"
   enctype="multipart/form-data"
   accept-charset="utf-8"
   i18n:domain="deform"
-  tal:attributes="class field.css_class;
-                  autocomplete field.autocomplete">
+  >
 
-  <fieldset class="deformFormFieldset">
+  <fieldset class="deform-form-fieldset">
 
-    <legend tal:condition="field.title">${field.title}</legend>
+    <legend tal:condition="title">${title}</legend>
 
     <input type="hidden" name="_charset_" />
-    <input type="hidden" name="__formid__" value="${field.formid}"/>
-    <ul>
+    <input type="hidden" name="__formid__" value="${formid}"/>
 
-      <li class="errorLi" tal:condition="field.error">
-        <h3 class="errorMsgLbl" i18n:translate=""
-            >There was a problem with your submission</h3>
-        <p class="errorMsg" i18n:translate="" i18n:domain="deform"
-           >Errors have been highlighted below</p>
-        <p class="errorMsg">${field.errormsg}</p>
-      </li>
+    <div class="alert alert-danger" tal:condition="field.error">
+      <div class="error-msg-lbl" i18n:translate=""
+        >There was a problem with your submission</div>
+      <div class="error-msg-detail" i18n:translate=""
+        >Errors have been highlighted below</div>
+      <p class="error-msg">${field.errormsg}</p>
+    </div>
 
-      <li class="section first" tal:condition="field.description">
-        ${field.description}
-      </li>
+    <p class="section first" tal:condition="description">
+      ${description}
+    </p>
 
-      <div
-          tal:define="rndr field.renderer;
-                      tmpl field.widget.item_template"
-          tal:repeat="f field.children"
-          tal:replace="structure
-                       rndr(tmpl,field=f,cstruct=cstruct.get(f.name, null))"/>
+    <div tal:repeat="child field"
+         tal:replace="structure child.render_template(item_template)"/>
 
-      <li class="buttons">
-        <tal:block repeat="button field.buttons">
-          <button
-              tal:attributes="disabled button.disabled"
-              id="${field.formid+button.name}"
+    <div class="form-group deform-form-buttons">
+      <tal:loop tal:repeat="button buttons">
+        <button
+              tal:define="btn_disposition repeat.button.start and 'btn-primary' or 'btn-default';
+              btn_icon button.icon|None"
+              tal:attributes="disabled button.disabled if button.disabled else None"
+              id="${formid+button.name}"
               name="${button.name}"
               type="${button.type}"
-              class="btnText submit"
+              class="btn ${button.css_class or btn_disposition}"
               value="${button.value}">
-            <span>${button.title}</span>
-          </button>
-        </tal:block>
-      </li>
-
-    </ul>
+          <i tal:condition="btn_icon" class="${btn_icon}"> </i>
+          ${button.title}
+        </button>
+      </tal:loop>
+    </div>
 
   </fieldset>
 
-<script type="text/javascript" tal:condition="field.use_ajax">
-  deform.addCallback(
-     '${field.formid}',
+  <script type="text/javascript" tal:condition="use_ajax">
+   deform.addCallback(
+     '${formid}',
      function(oid) {
+       var target = '#' + oid;
        var options = {
-         target: '#' + oid,
+         target: target,
          replaceTarget: true,
          success: function() {
            deform.processCallbacks();
-           deform.focusFirstInput();
+           deform.focusFirstInput(target);
+         },
+         beforeSerialize: function() { 
+           // See http://bit.ly/1agBs9Z (hack to fix tinymce-related ajax bug)
+           if ('tinymce' in window) {
+             $(tinymce.get()).each(
+               function(i, el) {
+                 var content = el.getContent();
+                 var editor_input = document.getElementById(el.id);
+                 editor_input.value = content;
+             });
+           }
          }
        };
-       var extra_options = ${field.ajax_options} || {};
+       var extra_options = ${ajax_options} || {};
        $('#' + oid).ajaxForm($.extend(options, extra_options));
      }
-  );
-</script>
+   );
+  </script>
 
 </form>

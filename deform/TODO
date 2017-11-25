@@ -1,0 +1,92 @@
+TODO
+
+- docs
+- delete beautify.css?
+- decide how to explain form.css (include in requirements or?)
+- horizontal/inline forms + structural things
+- assets for templates: deform should provide a tool to resolve that?
+- placeholder support for all textual inputs (and required/maxlength
+  see also https://github.com/Pylons/deform/pull/116)
+- display help-blocks for readonly fields?
+- maybe readonly should be a property of the schema, not the widget.
+- consider whether "style"/"css_class" on multi-input widgets should apply to
+  a container or each element.
+- some sort of test for mapping_item input_prepend/input_append
+- Currently description shows up as both tooltip of label and as help-block.
+  Maybe make these two things separate or at least don't show them both using
+  the same value.
+- sequence_of_sequences: js that processes close/order buttons has to 
+  be less promiscuous (it uses e.g. "find"); symptom: buttons
+  appear/disappear, act on the wrong element, etc... ugh 2013/10/05
+  cannot replicate, but still believe there may be an issue, but
+  maybe iElectric fixed it
+
+NEW FEATURES:
+
+- input_prepend/input_append in mapping_item widget.
+- field.parent
+- field.get_root
+- inline attr of checkboxchoice and radiochoice widgets (see
+  https://github.com/Pylons/deform/pull/182)
+- http://deform2demo.repoze.org/
+
+MIGRATION NOTES: 
+
+- removed deprecated `height, width, skin, theme` parameters from RichTextWidget
+  (use "options" instead)
+- removed deprecated `render_initial_item` from SequenceWidget
+- removed deprecated deform.Set (use colander.Set instead)
+- DateInputWidget renamed parameter `dateFormat` to `format` (dateFormat
+  now unsupported).
+- DateTimeInputWidget now renders as two fields: one for a date and one
+  for a time, using pickadate.
+- We no longer bother trying to use the native datetimeinput widget on any
+  browser, because the support is so spotty.
+- DateTimeInputWidget takes two options now: date_options and time_options
+  instead of a single options dictionary.  The options are pickadate
+  date/time options respectively.
+- It is no longer possible to do DateTimeWidget().options['a'] = 'foo'
+  or DateTimeWidget().date_options['a'] = 'foo'.  If you need to change
+  options imperatively, set the entire .options/.date_options dictionary.
+- merged TypeaheadInputWidget to AutocompleteInputWidget (removed delay 
+  parameter)
+- AutocompleteInputWidget now accepts string type for "values"
+- widgets no longer accepts "size" (instead use style="width: x"), except
+  SelectWidget (it means the size of the dropdown)
+- get_widget_resources now returns asset specifications rather than
+  deform-static-relative paths
+- deform 2.0 requires users to manually load TB 3.0 and jquery 2.0
+- required labels no longer insert an asterisk inside a <span class="req">
+  inside themselves.  instead the label element has a required class
+  if the field is required; use form.css to display this as an asterisk.
+- min_length of AutocompleteInputWidget now defaults to 1 (was 2)
+- CSS class names normalized.  Instead of camelCase names (e.g. ``deformSeq``),
+  we now use dashed-names (e.g. ``deform-seq``).  A full list of changes is
+  below::
+
+    Old                               New
+
+    deformClosebutton                 deform-closebutton
+    deformFileupload                  deform-file-upload
+    deformFormFieldset                deform-form-fieldset
+    deformInsertBefore                deform-insert-before
+    deformOrderbutton                 deform-orderbutton
+    deformProto                       deform-proto
+    deformReplaces                    deform-replaces
+    deformSeq                         deform-seq
+    deformSeqAdd                      deform-seq-add
+    deformSeqContainer                deform-seq-container
+    deformSeqItem                     deform-seq-item
+    deformSet-item                    deform-set-item
+    errorMsg                          error-msg
+    errorMsgLbl                       error-msg-lbl
+
+NICE TO HAVE
+
+- structural widget (mapping_item.pt) - do we need that or not or what? + 
+  add a demo
+- prepend/append t.bootstrap stuff
+- https://github.com/Pylons/deform/pull/116#issuecomment-23210460
+- group demos by widget type
+- handle ajax demo more UX friendly
+- Put drag handles in panel headers: https://github.com/Pylons/deform/issues/180

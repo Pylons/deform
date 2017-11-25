@@ -22,6 +22,7 @@ class TestForm(unittest.TestCase):
         self.assertEqual(button.name, 'button')
         self.assertEqual(button.value, 'button')
         self.assertEqual(button.title, 'Button')
+        self.assertEqual(button.css_class, None)
 
     def test_ctor_buttons_notstrings(self):
         from deform.widget import FormWidget
@@ -94,10 +95,8 @@ class TestIssues(unittest.TestCase):
         except deform.ValidationFailure as e:
             rendered = e.render()
             self.assertTrue(
-                '<p class="errorMsg">'
                 'Username does not match password'
-                '</p>' in rendered
-            )
+                in rendered)
 
     def test_issue_71(self):
         import deform
@@ -109,7 +108,7 @@ class TestIssues(unittest.TestCase):
         html = form.render(colander.null)
 
         # check that title occurs exactly once in rendered output
-        soup = BeautifulSoup(html)
+        soup = BeautifulSoup(html, 'html.parser')
         self.assertEqual(len([ string for string in soup.strings
                                if schema.title in string
                                ]),
@@ -139,21 +138,14 @@ class TestButton(unittest.TestCase):
 
     def test_ctor(self):
         button = self._makeOne(name='name', title='title',
-                               type='type', value='value', disabled=True)
+                               type='type', value='value', disabled=True,
+                               css_class='css-class')
         self.assertEqual(button.value, 'value')
         self.assertEqual(button.name, 'name')
         self.assertEqual(button.title, 'title')
         self.assertEqual(button.type, 'type')
         self.assertEqual(button.disabled, True)
-
-class TestRaw(unittest.TestCase):
-    def _makeOne(self, val):
-        from deform.form import Raw
-        return Raw(val)
-
-    def test___html__(self):
-        inst = self._makeOne('abc')
-        self.assertEqual(inst.__html__(), 'abc')
+        self.assertEqual(button.css_class, 'css-class')
 
 class DummySchema(object):
     typ = None
@@ -166,3 +158,14 @@ class DummySchema(object):
     sdefault = 'sdefault'
     def __init__(self, exc=None):
         self.exc = exc
+
+    def serialize(self, appstruct):
+        return appstruct
+
+    def cstruct_children(self, cstruct):
+        import colander
+        children = []
+        for child in self.children:
+            children.append(colander.null)
+        return children
+        

@@ -1,1 +1,2 @@
-<span id="${field.oid}" name="${field.name}" tal:content="structure cstruct" />
+<pre id="${oid|field.oid}" 
+     class="form-control-static pre-scrollable">${cstruct}</pre>

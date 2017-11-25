@@ -1,9 +1,15 @@
-<textarea tal:attributes="
-              id field.oid;
-            name field.name;
-           class field.widget.css_class;
-            cols field.widget.cols;
-           rows field.widget.rows;
-     maxlength getattr(field.widget, 'maxlength', None);
-  placeholder getattr(field.widget, 'placeholder', None);
-    required 'required' if field.required else None;">${cstruct}</textarea>
+<textarea tal:define="rows rows|field.widget.rows;
+                      cols cols|field.widget.cols;
+                      css_class css_class|field.widget.css_class;
+                      oid oid|field.oid;
+                      name name|field.name;
+                      style style|field.widget.style"
+          tal:attributes="rows rows;
+                          cols cols;
+                          class string: form-control ${css_class or ''};
+                          style style;
+                          maxlength getattr(field.widget, 'maxlength', None);
+                          placeholder getattr(field.widget, 'placeholder', None);
+                          required 'required' if field.required else None;"
+          id="${oid}"
+          name="${name}">${cstruct}</textarea>

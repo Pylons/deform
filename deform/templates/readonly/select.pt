@@ -1,16 +1,26 @@
-<tal:loop tal:repeat="item values" i18n:domain="deform">
-  <tal:if tal:condition="isinstance(item, field.widget.optgroup_class)">
-    <p tal:condition="not field.widget.long_label_generator"
-       class="optgroup">${item.label}</p>
-    <p tal:repeat="(value, description) item.options">
-      <span tal:content="field.widget.long_label_generator and field.widget.long_label_generator(item.label, description) or description"/>
-      <em tal:condition="value == cstruct" i18n:translate="">Selected</em>
-      <em tal:condition="value != cstruct" i18n:translate="">Not Selected</em>
-    </p>
+<tal:loop define="
+          optgroup_class optgroup_class|field.widget.optgroup_class;
+          oid oid|field.oid;
+          multiple multiple|field.widget.multiple;"
+          repeat="item values">
+
+  <tal:if condition="isinstance(item, optgroup_class)">
+    <tal:loop repeat="choice item.options">
+      <p class="form-control-static"
+         id="${oid}-${repeat.item.index}-${repeat.choice.index}"
+         tal:define="(value, description) choice"
+         tal:condition="(multiple and value in cstruct or value == cstruct)"
+         >${description}</p>
+    </tal:loop>
   </tal:if>
-  <p tal:condition="not isinstance(item, field.widget.optgroup_class)">
-    <span>${item[1]}</span>
-    <em tal:condition="item[0] == cstruct" i18n:translate="">Selected</em>
-    <em tal:condition="item[0] != cstruct" i18n:translate="">Not Selected</em>
-  </p>
+
+  <tal:if condition="not isinstance(item, optgroup_class)">
+    <tal:block define="(value, description) item">
+      <p class="form-control-static"
+         id="${oid}-${repeat.item.index}"
+         tal:condition="(multiple and value in cstruct or value == cstruct)"
+         >${description}</p>
+    </tal:block>
+  </tal:if>
+  
 </tal:loop>

@@ -1,7 +1,8 @@
-<ul i18n:domain="deform">
-<li tal:repeat="(value, description) field.widget.values">
-  <span>${description}</span>
-  <em tal:condition="value == cstruct" i18n:translate="">Selected</em>
-  <em tal:condition="value != cstruct" i18n:translate="">Not Selected</em>
-</li>
-</ul>
+<div tal:define="oid oid|field.oid;">
+  <tal:loop tal:repeat="choice values | field.widget.values">
+    <p tal:define="(value, description) choice"
+       tal:condition="value == cstruct" 
+       id="${oid}-${repeat.choice.index}" 
+       class="form-control-static">${description}</p>
+  </tal:loop>
+</div>
