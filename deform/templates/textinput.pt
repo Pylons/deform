@@ -13,7 +13,7 @@
                            name field.name;
                            placeholder getattr(field.widget, 'placeholder', None);
                            required 'required' if field.required else None;
-                           size field.widget.size;
+                           size getattr(field.widget, 'size', None);
                            type getattr(field.widget, 'type', 'text');
                            value cstruct or None;"
            id="${oid}"/>
