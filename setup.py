@@ -31,7 +31,7 @@ except:
 requires = [
     'Chameleon>=2.5.1',  # Markup class
     'colander>=1.0a1',  # cstruct_children/appstruct_children, Set
-    'iso8601',
+    'iso8601<=0.1.11',  # 0.1.12 has API changes that break functional3 tests
     'peppercorn>=0.3',  # rename operation type
     'translationstring>=1.0',  # add format mapping with %
     'zope.deprecation',
@@ -73,6 +73,7 @@ setupkw = dict(
         "Programming Language :: Python :: 3.3",
         "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
         ],

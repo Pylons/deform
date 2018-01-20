@@ -3,6 +3,9 @@
 
 - i18n cleanup https://github.com/Pylons/deform/pull/332
 
+- Fix bug in ``_FieldStorage`` under Python 3.x (issues #339 and #357).
+
+- Declare Python 3.6 compatibility and enable tests against Python 3.6 (all tests pass with no changes).
 
 2.0.4 (2017-02-11)
 ------------------

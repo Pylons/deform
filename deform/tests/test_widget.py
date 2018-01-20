@@ -1332,6 +1332,16 @@ class TestFileUploadWidget(unittest.TestCase):
         result = widget.deserialize(field, {})
         self.assertEqual(result, colander.null)
 
+    def test_deserialize_no_file_selected_no_previous_file_with_upload(self):
+        # If no upload is selected the browser sends back the name 'upload'.
+        # In pyramid under python3 we have {'upload': b''} as cstruct
+        schema = DummySchema()
+        field = DummyField(schema)
+        tmpstore = DummyTmpStore()
+        widget = self._makeOne(tmpstore)
+        result = widget.deserialize(field, {'upload': b''})
+        self.assertEqual(result, colander.null)
+
     def test_deserialize_no_file_selected_with_previous_file(self):
         schema = DummySchema()
         field = DummyField(schema)
