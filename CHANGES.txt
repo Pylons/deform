@@ -9,6 +9,8 @@
 
 - Closes #333: MANIFEST.in including docs, licenses and text files.
 
+- Add ``link`` button type See https://github.com/Pylons/deform/issues/166
+
 
 2.0.4 (2017-02-11)
 ------------------
