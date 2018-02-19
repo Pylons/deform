@@ -1,7 +1,7 @@
 2.0.5 (unreleased)
 ------------------
 
-- i18n cleanup https://github.com/Pylons/deform/pull/332
+- i18n cleanup https://github.com/Pylons/deform/pull/332 and https://github.com/Pylons/deform/pull/363
 
 - Fix bug in ``_FieldStorage`` under Python 3.x (issues #339 and #357).
 

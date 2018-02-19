@@ -9,9 +9,9 @@ msgstr ""
 "Report-Msgid-Bugs-To: repoze-dev@repoze.org\n"
 "POT-Creation-Date: 2016-11-19 13:28+0200\n"
 "PO-Revision-Date: 2011-11-08 15:55+0100\n"
-"Last-Translator: Fernando Correa Neto <fcdoth@gmail.com>\n"
+"Last-Translator: Erico Andrei <ericof@gmail.com>\n"
 "Language-Team: pt_BR <LL@li.org>\n"
-"Language: \n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -30,12 +30,12 @@ msgstr "${value} não possue a chave ${key}"
 
 #: deform/widget.py:718 deform/widget.py:1800
 msgid "Incomplete date"
-msgstr "Incompleto"
+msgstr "Data incompleta"
 
 #: deform/widget.py:721
 #, fuzzy
 msgid "Incomplete time"
-msgstr "Incompleto"
+msgstr "Horário incompleto"
 
 #: deform/widget.py:1253
 msgid "Fields did not match"
@@ -56,35 +56,35 @@ msgstr "As senhas não são iguais"
 #: deform/widget.py:1485
 #, python-format
 msgid "Add ${subitem_title}"
-msgstr ""
+msgstr "Adiciona ${subitem_title}"
 
 #: deform/templates/checked_password.pt:15
 msgid "Password"
-msgstr ""
+msgstr "Senha"
 
 #: deform/templates/checked_password.pt:25
 msgid "Confirm Password"
-msgstr ""
+msgstr "Confirmação de Senha"
 
 #: deform/templates/dateparts.pt:10
 msgid "Year"
-msgstr ""
+msgstr "Ano"
 
 #: deform/templates/dateparts.pt:18
 msgid "Month"
-msgstr ""
+msgstr "Mês"
 
 #: deform/templates/dateparts.pt:26
 msgid "Day"
-msgstr ""
+msgstr "Dia"
 
 #: deform/templates/datetimeinput.pt:9
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #: deform/templates/datetimeinput.pt:16
 msgid "Time"
-msgstr ""
+msgstr "Horário"
 
 #: deform/templates/form.pt:35
 msgid "There was a problem with your submission"
@@ -105,28 +105,28 @@ msgstr "pt"
 
 #: deform/templates/sequence_item.pt:26
 msgid "Reorder (via drag and drop)"
-msgstr ""
+msgstr "Reordenar (usando drag and drop)"
 
 #: deform/templates/sequence_item.pt:31
 msgid "Remove"
-msgstr ""
+msgstr "Remover"
 
 #: deform/templates/readonly/checkbox.pt:8
 msgid "True"
-msgstr ""
+msgstr "Verdadeiro"
 
 #: deform/templates/readonly/checkbox.pt:12
 msgid "False"
-msgstr ""
+msgstr "Falso"
 
 #: deform/templates/readonly/checked_password.pt:4
 msgid "Password not displayed."
-msgstr ""
+msgstr "Senha não exibida"
 
 #: deform/tests/test_widget.py:1752
 #, python-format
 msgid "Yo ${subitem_title}"
-msgstr ""
+msgstr Yo ${subitem_title}""
 
 #~ msgid "${value} is not iterable"
 #~ msgstr "Iterações não podem ser feitas em ${value}"
