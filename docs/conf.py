@@ -36,9 +36,9 @@ extensions = [
     ]
 
 intersphinx_mapping = {
-    'colander': ('http://docs.pylonsproject.org/projects/colander/en/latest/', None),
-    'pyramid': ('http://docs.pylonsproject.org/projects/pyramid/en/latest', None),
-    'python': ('http://docs.python.org/dev', None),
+    'colander': ('https://docs.pylonsproject.org/projects/colander/en/latest/', None),
+    'pyramid': ('https://docs.pylonsproject.org/projects/pyramid/en/latest', None),
+    'python': ('https://docs.python.org/dev/', None),
     }
 
 # Add any paths that contain templates here, relative to this directory.
