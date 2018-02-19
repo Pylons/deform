@@ -7,6 +7,9 @@
 
 - Declare Python 3.6 compatibility and enable tests against Python 3.6 (all tests pass with no changes).
 
+- Closes #333: MANIFEST.in including docs, licenses and text files.
+
+
 2.0.4 (2017-02-11)
 ------------------
 
