@@ -1,4 +1,4 @@
-2.0.5 (unreleased)
+2.0.5 (2018-02-20)
 ------------------
 
 - i18n cleanup https://github.com/Pylons/deform/pull/332 and https://github.com/Pylons/deform/pull/363
