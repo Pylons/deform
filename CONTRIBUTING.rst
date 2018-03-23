@@ -71,14 +71,31 @@ for OSX:
 
     export FIREFOX_PATH=/Applications/Firefox-45.app/Contents/MacOS/firefox
 
-.. note ::
+.. note::
 
-    Selenium 3: As the writing of this Marionette geckodriver for Firefox is incomplete and cannot
+    Selenium 3: As of this writing, the Marionette geckodriver for Firefox is incomplete and cannot
     run all the tests.
 
-.. note ::
+.. note::
 
-    Chrome: Tests do not run correctly on Chrome due to various timing issues. Some effort was put forth to fix this, but it's never ending swamp.
+    Chrome: Tests do not run correctly on Chrome due to various timing issues. Some effort was put forth to fix this, but it's a never ending swamp.
+
+
+Preparing system requirements
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The functional tests require the installation of the GNU ``gettext`` utilities, specifically ``msgmerge`` and ``msgfmt``.  Use your package manager to install these requirements.  On macOS using `Homebrew <https://brew.sh/>`_:
+
+.. code-block::
+
+    brew install gettext
+    brew link gettext --force
+
+If you ever have problems building packages, you can always unlink it.
+
+.. code-block::
+
+    brew unlink gettext
+
 
 Running test suite
 ~~~~~~~~~~~~~~~~~~
