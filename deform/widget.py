@@ -653,8 +653,8 @@ class DateTimeInputWidget(Widget):
         Mapping(),
         SchemaNode(_StrippedString(), name='date'),
         SchemaNode(_StrippedString(), name='time'),
-        SchemaNode(_StrippedString(), name='date_submit'),
-        SchemaNode(_StrippedString(), name='time_submit'))
+        SchemaNode(_StrippedString(), name='date_submit', missing=''),
+        SchemaNode(_StrippedString(), name='time_submit', missing=''))
 
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
