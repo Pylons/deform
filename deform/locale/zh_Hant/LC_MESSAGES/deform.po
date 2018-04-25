@@ -1,4 +1,4 @@
-﻿# Chinese (Traditional) translations for deform.
+# Chinese (Traditional) translations for deform.
 # While this is meant to be a traditional chinese translation, since it was done
 # By someone from Taiwan, it might have regional specialites.
 # This file is distributed under the same license as the deform project.
@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: deform 2.0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-19 13:28+0200\n"
+"POT-Creation-Date: 2018-03-22 18:27-0700\n"
 "PO-Revision-Date: 2017-03-21 10:28+0100\n"
 "Last-Translator: \n"
 "Language-Team: zh_Hant\n"
@@ -123,7 +123,7 @@ msgstr "訛"
 msgid "Password not displayed."
 msgstr "密碼不會顯示"
 
-#: deform/tests/test_widget.py:1752
+#: deform/tests/test_widget.py:1762
 #, python-format
 msgid "Yo ${subitem_title}"
 msgstr "Yo ${subitem_title}"
