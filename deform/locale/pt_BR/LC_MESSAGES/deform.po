@@ -126,7 +126,7 @@ msgstr "Senha não exibida"
 #: deform/tests/test_widget.py:1752
 #, python-format
 msgid "Yo ${subitem_title}"
-msgstr Yo ${subitem_title}""
+msgstr "Yo ${subitem_title}"
 
 #~ msgid "${value} is not iterable"
 #~ msgstr "Iterações não podem ser feitas em ${value}"
