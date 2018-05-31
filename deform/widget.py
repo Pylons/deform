@@ -395,7 +395,7 @@ class AutocompleteInputWidget(Widget):
     """ 
     Renders an ``<input type="text"/>`` widget which provides
     autocompletion via a list of values using bootstrap's typeahead plugin
-    http://twitter.github.com/bootstrap/javascript.html#typeahead.
+    https://github.com/twitter/typeahead.js/
 
     **Attributes/Arguments**
 
@@ -795,7 +795,7 @@ class RichTextWidget(TextInputWidget):
         :attr:`default_options`.
 
         You should refer to the `TinyMCE Configuration
-        <http://www.tinymce.com/wiki.php/Configuration>`_ documentation
+        <https://www.tinymce.com/docs/configure/>`_ documentation
         for details regarding all available configuration options.
 
         The ``language`` option is passed to TinyMCE within the default
