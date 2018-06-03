@@ -56,7 +56,8 @@
        $('#' + oid).select2({
          containerCssClass: 'form-control',
          placeholder: "${str(field.widget.placeholder).replace('"','\\"')|""}" || undefined,
-         allowClear: "${hasattr(field.widget, 'placeholder')}"
+         allowClear: "${hasattr(field.widget, 'placeholder')}",
+         tags: ${str(getattr(field.widget, 'tags', 'undefined')).lower()}
        });
      }
    );

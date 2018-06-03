@@ -132,3 +132,4 @@ Contributors
 - Andreas Kaiser, 2018/01/09
 - Hans-Peter Jansen, 2018/02/18
 - Erico Andrei, 2018/02/18
+- Maksym Shalenyi, 2018/06/03

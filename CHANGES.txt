@@ -1,7 +1,7 @@
 2.0.6 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Add `tags` option support to `Select2Widget` #372
 
 
 2.0.5 (2018-02-20)
