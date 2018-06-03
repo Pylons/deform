@@ -68,8 +68,8 @@ class Form(field.Field):
     ajax_options
        A *string* which must represent a JavaScript object
        (dictionary) of extra AJAX options as per
-       `http://jquery.malsup.com/form/#options-object
-       <http://jquery.malsup.com/form/#options-object>`_.  For
+       `http://jquery.malsup.com/form/#tab3
+       <http://jquery.malsup.com/form/#tab3>`_.  For
        example:
 
        .. code-block:: python
