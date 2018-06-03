@@ -28,7 +28,7 @@ use cases <http://deformdemo.repoze.org/>`_ are supported out of the box.
 Deform integrates with the `Pyramid web framework <https://trypyramid.com/>`_
 and several other web frameworks. Deform comes with `Chameleon templates
 <https://chameleon.readthedocs.io/en/latest/>`_ and `Bootstrap 3
-<http://getbootstrap.com>`_ styling. Under the hood, `Colander schemas
+<https://getbootstrap.com/docs/3.3/>`_ styling. Under the hood, `Colander schemas
 <https://github.com/Pylons/colander>`_ are used for serialization and
 validation. The `Peppercorn <https://github.com/Pylons/peppercorn>`_ library
 maps HTTP form submissions to nested structure.
@@ -53,7 +53,7 @@ include:
 Installation
 ------------
 
-Install using `pip and Python package installation best practices <https://packaging.python.org/en/latest/installing/>`_::
+Install using `pip and Python package installation best practices <https://packaging.python.org/tutorials/installing-packages/>`_::
 
     pip install deform
 
@@ -61,7 +61,7 @@ Example
 -------
 
 `See all widget examples <http://deformdemo.repoze.org>`_. Below is a sample
-form loop using the `Pyramid <http://trypyramid.com/>`_ web framework.
+form loop using the `Pyramid <https://trypyramid.com/>`_ web framework.
 
 .. image:: https://github.com/Pylons/deform/raw/master/docs/example.png
     :width: 400px
@@ -146,14 +146,14 @@ Example code:
         config.add_view(mini_example, route_name="mini_example", renderer="templates/mini.pt")
         return config.make_wsgi_app()
 
-This example is in `deformdemo repository <http://github.com/Pylons/deformdemo/>`_. Run the example with pserve::
+This example is in `deformdemo repository <https://github.com/Pylons/deformdemo/>`_. Run the example with pserve::
 
      pserve mini.ini --reload
 
 Status
 ------
 
-This library is actively developed and maintained. Deform 2.x branch has been used in production on several sites for more than two years. Automatic test suite has 100% Python code coverage and 500+ tests.
+This library is actively developed and maintained. Deform 2.x branch has been used in production on several sites since 2014. Automatic test suite has 100% Python code coverage and 500+ tests.
 
 Projects using Deform
 ---------------------
@@ -169,12 +169,12 @@ Community and links
 
 * `Widget examples <http://deformdemo.repoze.org>`_
 
-* `PyPi <https://pypi.python.org/pypi/deform>`_
+* `PyPi <https://pypi.org/project/deform/>`_
 
-* `Issue tracker <http://github.com/Pylons/deform/issues>`_
+* `Issue tracker <https://github.com/Pylons/deform/issues>`_
 
 * `Widget examples repo <https://github.com/Pylons/deformdemo/>`_
 
-* `Documentation <http://docs.pylonsproject.org/projects/deform/en/latest/>`_
+* `Documentation <https://docs.pylonsproject.org/projects/deform/en/latest/>`_
 
 * `Support <https://pylonsproject.org/community-support.html>`_

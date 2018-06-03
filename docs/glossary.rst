@@ -26,11 +26,11 @@ Glossary
 
    Colander
      A `schema package
-     <http://docs.pylonsproject.org/projects/colander/dev/>`_ used by Deform
+     <https://docs.pylonsproject.org/projects/colander/en/latest/>`_ used by Deform
      to provide serialization and validation facilities.
 
    Peppercorn
-     A `package <http://docs.pylonsproject.org/projects/peppercorn/dev/>`_
+     A `package <https://docs.pylonsproject.org/projects/peppercorn/en/latest/>`_
      used by Deform for structured form submission value deserialization.
 
    schema
@@ -58,7 +58,7 @@ Glossary
      documentation.
 
    Chameleon
-     `chameleon <http://chameleon.repoze.org>`_ is an attribute
+     `chameleon <https://chameleon.readthedocs.io/en/latest/>`_ is an attribute
      language template compiler which supports the ZPT (Zope Page
      Templates) templating specification.  It is written and
      maintained by Malthe Borch.
@@ -79,7 +79,7 @@ Glossary
      specified.  It uses the :term:`Chameleon` templating engine.
 
    WebOb
-     `WebOb <http://pythonpaste.org/webob/>`_ is a WSGI request/response
+     `WebOb <https://webob.org/>`_ is a WSGI request/response
      library created by Ian Bicking.
 
    Gettext
@@ -90,8 +90,8 @@ Glossary
      A JQuery plugin library that allows for input masks in text
      inputs.  For example, a mask for a US telephone number might be
      ``(999)-999-9999``.  See also
-     `http://digitalbush.com/projects/masked-input-plugin/
-     <http://digitalbush.com/projects/masked-input-plugin/>`_.  Deform
+     `https://github.com/digitalBush/jquery.maskedinput
+     <https://github.com/digitalBush/jquery.maskedinput>`_.  Deform
      supports input masks in its default
      :class:`deform.widget.TextInputWidget` widget.
 
@@ -103,7 +103,7 @@ Glossary
      meets the requirements of the schema.
 
    TinyMCE Editor
-     `TinyMCE <http://tinymce.moxiecode.com/index.php>`_ is a platform
+     `TinyMCE <https://www.tinymce.com/>`_ is a platform
      independent web based Javascript HTML WYSIWYG editor control
      released as Open Source under `LGPL
      <http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html>`_ by
@@ -116,8 +116,8 @@ Glossary
      A  :term:`jQuery` plugin library that allows for autocompleting a
      value in a text input, making it easier to find and select a
      value from a possibly large list. The data may be local or
-     remote. See also `http://docs.jquery.com/Plugins/Autocomplete
-     <http://docs.jquery.com/Plugins/Autocomplete>`_ for more details.
+     remote. See also `http://jqueryui.com/autocomplete/
+     <http://jqueryui.com/autocomplete/>`_ for more details.
 
    xhr
      ``xhr`` an XMLHTTPRequest. See also
@@ -156,5 +156,5 @@ Glossary
 
    jquery.ui.autocomplete
       A :term:`JQuery UI` sublibrary for autocompletion of text
-      fields.  See `http://docs.jquery.com/UI/Autocomplete
-      <http://docs.jquery.com/UI/Autocomplete>`_.
+      fields.  See `http://api.jqueryui.com/autocomplete/
+      <http://api.jqueryui.com/autocomplete/>`_.

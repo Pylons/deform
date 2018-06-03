@@ -31,7 +31,7 @@ except:
 requires = [
     'Chameleon>=2.5.1',  # Markup class
     'colander>=1.0a1',  # cstruct_children/appstruct_children, Set
-    'iso8601<=0.1.11',  # 0.1.12 has API changes that break functional3 tests
+    'iso8601',
     'peppercorn>=0.3',  # rename operation type
     'translationstring>=1.0',  # add format mapping with %
     'zope.deprecation',
@@ -54,7 +54,7 @@ functional_testing_extra = [
 ]
 
 docs_extras = [
-    'Sphinx >= 1.3.4',
+    'Sphinx >= 1.7.4',
     'repoze.sphinx.autointerface',
     'pylons_sphinx_latesturl',
     'pylons-sphinx-themes',
@@ -70,7 +70,6 @@ setupkw = dict(
         "Programming Language :: Python",
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.3",
         "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
@@ -80,7 +79,7 @@ setupkw = dict(
     keywords='web forms form generation schema validation pyramid',
     author="Chris McDonough, Agendaless Consulting",
     author_email="pylons-discuss@googlegroups.com",
-    url="http://docs.pylonsproject.org/projects/deform/en/latest/",
+    url="https://docs.pylonsproject.org/projects/deform/en/latest/",
     license="BSD-derived (http://www.repoze.org/LICENSE.txt)",
     packages=find_packages(),
     include_package_data=True,

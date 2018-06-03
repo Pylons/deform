@@ -37,7 +37,7 @@ See the `Internationalization demo
 <http://deformdemo.repoze.org/i18n/>`_ for an example of how deform
 error and status messages can be localized.  This demonstration uses
 the `internationalization and localization features of Pyramid
-<http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/i18n.html>`_
+<https://docs.pylonsproject.org/projects/pyramid/en/latest/narr/i18n.html>`_
 to render Deform error messages into :term:`Chameleon` form renderings.
 
 

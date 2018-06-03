@@ -3,6 +3,9 @@
 
 - Add `tags` option support to `Select2Widget` #372
 
+- Drop Python 3.3 support.  Add testing of Python 3.7 with allowed failures.
+  See https://github.com/Pylons/deform/pull/371
+
 
 2.0.5 (2018-02-20)
 ------------------

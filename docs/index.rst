@@ -51,13 +51,13 @@ Community and links
 
 * `Widget examples <http://deformdemo.repoze.org>`_
 
-* `PyPi <https://pypi.python.org/pypi/deform>`_
+* `PyPi <https://pypi.org/project/deform/>`_
 
-* `Issue tracker <http://github.com/Pylons/deform/issues>`_
+* `Issue tracker <https://github.com/Pylons/deform/issues>`_
 
 * `Widget examples repo <https://github.com/Pylons/deformdemo/>`_
 
-* `Documentation <http://docs.pylonsproject.org/projects/deform/en/latest/>`_
+* `Documentation <https://docs.pylonsproject.org/projects/deform/en/latest/>`_
 
 * `Support <https://pylonsproject.org/community-support.html>`_
 
@@ -73,7 +73,7 @@ Thanks
 ======
 
 The design of :mod:`deform` is heavily influenced by the `formish
-<http://ish.io/projects/show/formish>`_ form generation library.  Some
+<https://pypi.org/project/formish/>`_ form generation library.  Some
 might even say it's a shameless rip-off; this would not be completely
 inaccurate.  It differs from formish mostly in ways that make the
 implementation (arguably) simpler and smaller.
@@ -86,7 +86,7 @@ Without these people, this software would not exist:
 
 - `Fear Factory <http://fearfactory.com>`_
 
-- `Midlake <http://midlake.net>`_
+- `Midlake <https://www.midlake.net/>`_
 
 Index and Glossary
 ==================
