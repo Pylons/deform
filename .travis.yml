@@ -15,7 +15,7 @@ matrix:
       env: TOXENV=py35
     - python: "3.6"
       env: TOXENV=py36
-    - python: nightly
+    - python: "3.7-dev"
       env: TOXENV=py37
     - python: "pypy"
       env: TOXENV=pypy
@@ -29,8 +29,6 @@ matrix:
       env: TOXENV=functional
     - python: "3.6"
       env: TOXENV=functional3
-  allow_failures:
-    - env: TOXENV=py37
 
 install:
   - travis_retry pip install tox
