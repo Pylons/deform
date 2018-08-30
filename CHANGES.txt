@@ -12,6 +12,16 @@
 
 - Add support to Python 3.7.
 
+- Make date_submit and time_submit optional in DateTimeInputWidget
+  See https://github.com/Pylons/deform/pull/369
+
+- Remove pinning of iso8601 to 0.1.11
+  See https://github.com/Pylons/deform/pull/364
+
+- Remove pinning of iso8601 to 0.1.11
+  See https://github.com/Pylons/deform/pull/364
+
+- i18n cleanup https://github.com/Pylons/deform/pull/367 and https://github.com/Pylons/deform/pull/368
 
 2.0.5 (2018-02-20)
 ------------------
