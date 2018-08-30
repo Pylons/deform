@@ -9,6 +9,7 @@
 .*.swp
 .coverage
 .coverage.*
+.python-version
 .tox/
 nosetests.xml
 coverage.xml
