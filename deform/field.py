@@ -276,6 +276,47 @@ class Field(object):
                 return True
         return False
 
+    def __setitem__(self, name, new_child):
+        """ Set a field directly by name, this will replace a field if it exists
+        or add it to the end of the children if it doesn't. """
+        new_child = new_child.clone()
+        new_child._parent = weakref.ref(self)
+        new_child.name = name
+
+        found = False
+        new_children = []
+
+        for child in self.children:
+            if child.name == new_child.name:
+                new_children.append(new_child)
+                new_child.order = child.order
+                new_child.oid = 'deformField%s' % child.order
+                found = True
+            else:
+                new_children.append(child)
+
+        if not found:
+            new_children.append(new_child)
+            new_child.order = next(self.counter)
+            new_child.oid = 'deformField%s' % new_child.order
+
+        self.children = new_children
+
+    def __delitem__(self, name):
+        """ Removes a field by name, raises KeyError if field doesn't exist """
+        new_children = []
+        found = False
+        for child in self.children:
+            if child.name == name:
+                found = True
+                continue
+            new_children.append(child)
+
+        if not found:
+            raise KeyError(name)
+
+        self.children = new_children
+
     def clone(self):
         """ Clone the field and its subfields, retaining attribute
         information.  Return the cloned field.  The ``order``
@@ -323,7 +364,7 @@ class Field(object):
     def default_item_css_class(self):
         if not self.name:
             return None
-        
+
         css_class = unicodedata.normalize('NFKD', compat.text_type(self.name)).encode('ascii', 'ignore').decode('ascii')
         css_class = re.sub('[^\w\s-]', '', css_class).strip().lower()
         css_class = re.sub('[-\s]+', '-', css_class)

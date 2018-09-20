@@ -14,7 +14,7 @@ class TestField(unittest.TestCase):
     def _getTargetClass(self):
         from deform.field import Field
         return Field
-        
+
     def _makeOne(self, schema, **kw):
         cls = self._getTargetClass()
         return cls(schema, **kw)
@@ -45,7 +45,7 @@ class TestField(unittest.TestCase):
         grandchild = DummySchema(name='grandchild')
         child = DummySchema(children=[grandchild], name='child')
         root = DummySchema(children=[child], name='root')
-        
+
         root_field = self._makeOne(root, renderer='abc')
         self.assertEqual(len(root_field.children), 1)
         self.assertEqual(root_field.parent, None)
@@ -70,7 +70,7 @@ class TestField(unittest.TestCase):
         grandchild_field = field.children[0].children[0]
         root = grandchild_field.get_root()
         self.assertEqual(root.name, 'root')
-        
+
     def test_ctor_with_resource_registry(self):
         from deform.field import Field
         schema = DummySchema()
@@ -183,7 +183,7 @@ class TestField(unittest.TestCase):
     def test_widget_no_maker_with_default_widget_maker(self):
         from deform.widget import MappingWidget
         from colander import Mapping
-        schema = DummySchema() 
+        schema = DummySchema()
         schema.typ = Mapping()
         field = self._makeOne(schema)
         widget = field.widget
@@ -196,7 +196,7 @@ class TestField(unittest.TestCase):
         class CustomSequence(Sequence):
             pass
 
-        schema = DummySchema() 
+        schema = DummySchema()
         schema.typ = CustomSequence()
         field = self._makeOne(schema)
         widget = field.widget
@@ -352,7 +352,7 @@ class TestField(unittest.TestCase):
         child = DummyField()
         field.children = [child]
         self.assertEqual(field['name'], child)
-        
+
     def test___getitem__fail(self):
         schema = DummySchema()
         field = self._makeOne(schema)
@@ -366,7 +366,51 @@ class TestField(unittest.TestCase):
         child = DummyField()
         field.children = [child]
         self.assertTrue('name' in field)
-        
+
+    def test___contains__fail(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        child = DummyField()
+        field.children = [child]
+        self.assertFalse('nope' in field)
+
+    def test___setitem__empty(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        child = DummyField()
+        field['name'] = child
+        self.assertEqual(field['name'], child)
+        field['name'] = child # should only set it once
+        self.assertEqual(field.children, [child])
+
+    def test___setitem__existing(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        child1 = DummyField(name='child1')
+        child2 = DummyField(name='child2')
+        field.children = [child1, child2]
+        replacer = DummyField(name='replacer')
+        field['child1'] = replacer
+        self.assertEqual(field['child1'], replacer)
+
+    def test___delitem__existing(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        child1 = DummyField(name='child1')
+        child2 = DummyField(name='child2')
+        field.children = [child1, child2]
+        del(field['child1'])
+        self.assertEqual(field.children, [child2])
+        del(field['child2'])
+        self.assertEqual(field.children, [])
+
+    def test___delitem__missing(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        child = DummyField()
+        field.children = [child]
+        self.assertRaises(KeyError, field.__delitem__, 'nope')
+
     def test___contains__fail(self):
         schema = DummySchema()
         field = self._makeOne(schema)
@@ -378,7 +422,7 @@ class TestField(unittest.TestCase):
         schema = DummySchema()
         field = self._makeOne(schema)
         self.assertEqual(field.errormsg, None)
-            
+
     def test_errormsg_error_not_None(self):
         schema = DummySchema()
         field = self._makeOne(schema)
@@ -581,7 +625,7 @@ class TestField(unittest.TestCase):
             result,
             '<input type="hidden" name="__start__" value="foo:mapping"/>'
             )
-        
+
     def test_start_mapping_withoutname(self):
         schema = DummySchema()
         field = self._makeOne(schema)
@@ -688,6 +732,7 @@ class DummyField(object):
         self.schema = schema
         self.renderer = renderer
         self.name = name
+        self.order = 1
 
     def clone(self):
         self.cloned = True
@@ -727,7 +772,7 @@ class DummySchema(object):
 class DummyType(object):
     def __init__(self, maker=None):
         self.widget_maker = maker
-        
+
 class DummyWidget(object):
     rendered = None
     def __init__(self, exc=None, **kw):
