@@ -162,7 +162,7 @@ class Field(object):
         resource_registry=None,
         appstruct=colander.null,
         parent=None,
-        **kw,
+        **kw
     ):
         self.counter = counter or itertools.count()
         self.order = next(self.counter)

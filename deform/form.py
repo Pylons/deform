@@ -111,7 +111,7 @@ class Form(field.Field):
         use_ajax=False,
         ajax_options="{}",
         autocomplete=None,
-        **kw,
+        **kw
     ):
         if autocomplete:
             autocomplete = "on"
