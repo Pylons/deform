@@ -153,41 +153,31 @@ class TestFunctional(unittest.TestCase):
 
 @colander.deferred
 def deferred_date_validator(node, kw):
-    max_date = kw.get("max_date")
-    if max_date is None:
-        max_date = datetime.date.today()
+    max_date = kw.get("max_date", datetime.date.today())
     return colander.Range(min=datetime.date.min, max=max_date)
 
 
 @colander.deferred
 def deferred_date_description(node, kw):
-    max_date = kw.get("max_date")
-    if max_date is None:
-        max_date = datetime.date.today()
+    max_date = kw.get("max_date", datetime.date.today())
     return "Blog post date (no earlier than %s)" % max_date.ctime()
 
 
 @colander.deferred
 def deferred_date_missing(node, kw):
-    default_date = kw.get("default_date")
-    if default_date is None:
-        default_date = datetime.date.today()
+    default_date = kw.get("default_date", datetime.date.today())
     return default_date
 
 
 @colander.deferred
 def deferred_body_validator(node, kw):
-    max_bodylen = kw.get("max_bodylen")
-    if max_bodylen is None:
-        max_bodylen = 1 << 18
+    max_bodylen = kw.get("max_bodylen", 1 << 18)
     return colander.Length(max=max_bodylen)
 
 
 @colander.deferred
 def deferred_body_description(node, kw):
-    max_bodylen = kw.get("max_bodylen")
-    if max_bodylen is None:
-        max_bodylen = 1 << 18
+    max_bodylen = kw.get("max_bodylen", 1 << 18)
     return "Blog post body (no longer than %s bytes)" % max_bodylen
 
 
