@@ -192,7 +192,7 @@ class Field(object):
                     counter=self.counter,
                     resource_registry=resource_registry,
                     parent=self,
-                    **kw,
+                    **kw
                 )
             )
         self.set_appstruct(appstruct)
