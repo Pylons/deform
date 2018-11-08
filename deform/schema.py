@@ -1,7 +1,12 @@
+"""Schema."""
+# Pyramid
 import colander
 
-from . import widget
+# Deform
 from deform.i18n import _
+
+from . import widget
+
 
 default_widget_makers = {
     colander.Mapping: widget.MappingWidget,
@@ -22,7 +27,7 @@ default_widget_makers = {
 
 @colander.deferred
 def deferred_csrf_value(node, kw):
-    return kw['request'].session.get_csrf_token()
+    return kw["request"].session.get_csrf_token()
 
 
 class FileData(object):
@@ -51,7 +56,7 @@ class FileData(object):
         Serialize a dictionary representing partial file information
         to a dictionary containing information expected by a file
         upload widget.
-        
+
         The file data dictionary passed as ``value`` to this
         ``serialize`` method *must* include:
 
@@ -101,32 +106,30 @@ class FileData(object):
         """
         if value is colander.null:
             return colander.null
-        
-        if not hasattr(value, 'get'):
-            mapping = {'value':repr(value)}
+
+        if not hasattr(value, "get"):
+            mapping = {"value": repr(value)}
             raise colander.Invalid(
-                node,
-                _('${value} is not a dictionary', mapping=mapping)
-                )
-        for n in ('filename', 'uid'):
-            if not n in value:
-                mapping = {'value':repr(value), 'key':n}
+                node, _("${value} is not a dictionary", mapping=mapping)
+            )
+        for n in ("filename", "uid"):
+            if n not in value:
+                mapping = {"value": repr(value), "key": n}
                 raise colander.Invalid(
-                    node,
-                    _('${value} has no ${key} key', mapping=mapping)
-                    )
+                    node, _("${value} has no ${key} key", mapping=mapping)
+                )
         result = widget.filedict(value)
         # provide a value for these entries even if None
-        result['mimetype'] = value.get('mimetype')
-        result['size'] = value.get('size')
-        result['fp'] = value.get('fp')
-        result['preview_url'] = value.get('preview_url')
+        result["mimetype"] = value.get("mimetype")
+        result["size"] = value.get("size")
+        result["fp"] = value.get("fp")
+        result["preview_url"] = value.get("preview_url")
         return result
 
     def deserialize(self, node, value):
         return value
 
-    def cstruct_children(self, node, cstruct): # pragma: no cover
+    def cstruct_children(self, node, cstruct):  # pragma: no cover
         return []
 
 
@@ -143,7 +146,8 @@ class CSRFSchema(colander.Schema):
       class MySchema(CSRFSchema):
           my_field = colander.SchemaNode(colander.String())
 
-      And in your application code, *bind* the schema, passing the request as a keyword argument:
+      And in your application code, *bind* the schema, passing the request as a
+      keyword argument:
 
   .. code-block:: python
 
@@ -154,11 +158,9 @@ class CSRFSchema(colander.Schema):
 
     More information
 
-    * http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/sessions.html?highlight=csrf#checking-csrf-tokens-automatically
+    http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/sessions.html?highlight=csrf#checking-csrf-tokens-automatically
     """
-    csrf_token = colander.SchemaNode(
-        colander.String(),
-        widget=widget.HiddenWidget(),
-        default=deferred_csrf_value,
-        )
 
+    csrf_token = colander.SchemaNode(
+        colander.String(), widget=widget.HiddenWidget(), default=deferred_csrf_value
+    )

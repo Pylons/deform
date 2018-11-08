@@ -1,28 +1,33 @@
+"""Field."""
+# Standard Library
 import itertools
-import colander
-import peppercorn
-import unicodedata
 import re
+import unicodedata
 import weakref
 
+# Pyramid
+import colander
+
+import peppercorn
 from chameleon.utils import Markup
 
-from . import (
-    decorator,
-    exception,
-    template,
-    widget,
-    schema,
-    compat,
-    )
+from . import compat
+from . import decorator
+from . import exception
+from . import schema
+from . import template
+from . import widget
+
 
 class _Marker(object):
-    def __repr__(self): # pragma: no cover
-        return '(Default)'
+    def __repr__(self):  # pragma: no cover
+        return "(Default)"
 
     __str__ = __repr__
 
+
 _marker = _Marker()
+
 
 class Field(object):
     """ Represents an individual form field (a visible object in a
@@ -149,14 +154,21 @@ class Field(object):
     default_renderer = template.default_renderer
     default_resource_registry = widget.default_resource_registry
 
-    def __init__(self, schema, renderer=None, counter=None,
-                 resource_registry=None, appstruct=colander.null,
-                 parent=None, **kw):
+    def __init__(
+        self,
+        schema,
+        renderer=None,
+        counter=None,
+        resource_registry=None,
+        appstruct=colander.null,
+        parent=None,
+        **kw,
+    ):
         self.counter = counter or itertools.count()
         self.order = next(self.counter)
-        self.oid = getattr(schema, 'oid', 'deformField%s' % self.order)
+        self.oid = getattr(schema, "oid", "deformField%s" % self.order)
         self.schema = schema
-        self.typ = schema.typ # required by Invalid exception
+        self.typ = schema.typ  # required by Invalid exception
         self.name = schema.name
         self.title = schema.title
         self.description = schema.description
@@ -180,9 +192,9 @@ class Field(object):
                     counter=self.counter,
                     resource_registry=resource_registry,
                     parent=self,
-                    **kw
-                    )
+                    **kw,
                 )
+            )
         self.set_appstruct(appstruct)
 
     @property
@@ -202,9 +214,14 @@ class Field(object):
         return node
 
     @classmethod
-    def set_zpt_renderer(cls, search_path, auto_reload=True,
-                         debug=True, encoding='utf-8',
-                         translator=None):
+    def set_zpt_renderer(
+        cls,
+        search_path,
+        auto_reload=True,
+        debug=True,
+        encoding="utf-8",
+        translator=None,
+    ):
         """ Create a :term:`Chameleon` ZPT renderer that will act as a
         :term:`default renderer` for instances of the associated class
         when no ``renderer`` argument is provided to the class'
@@ -222,7 +239,7 @@ class Field(object):
             debug=debug,
             encoding=encoding,
             translator=translator,
-            )
+        )
 
     @classmethod
     def set_default_renderer(cls, renderer):
@@ -253,7 +270,7 @@ class Field(object):
         """ Use the translator passed to the renderer of this field to
         translate the msgid into a term and return the term.  If the renderer
         does not have a translator, this method will return the msgid."""
-        translate = getattr(self.renderer, 'translate', None)
+        translate = getattr(self.renderer, "translate", None)
         if translate is not None:
             return translate(msgid)
         return msgid
@@ -286,7 +303,7 @@ class Field(object):
         cloned = self.__class__(self.schema)
         cloned.__dict__.update(self.__dict__)
         cloned.order = next(cloned.counter)
-        cloned.oid = 'deformField%s' % cloned.order
+        cloned.oid = "deformField%s" % cloned.order
         cloned._parent = None
         children = []
         for field in self.children:
@@ -304,13 +321,12 @@ class Field(object):
         the ``widget`` attribute of the field for the rest of the
         lifetime of this field. If a widget is assigned to a field
         before form processing, this function will not be called."""
-        wdg = getattr(self.schema, 'widget', None)
+        wdg = getattr(self.schema, "widget", None)
         if wdg is not None:
             return wdg
-        widget_maker = getattr(self.schema.typ, 'widget_maker', None)
+        widget_maker = getattr(self.schema.typ, "widget_maker", None)
         if widget_maker is None:
-            widget_maker = schema.default_widget_makers.get(
-                self.schema.typ.__class__)
+            widget_maker = schema.default_widget_makers.get(self.schema.typ.__class__)
             if widget_maker is None:
                 for (cls, wgt) in schema.default_widget_makers.items():
                     if isinstance(self.schema.typ, cls):
@@ -323,12 +339,15 @@ class Field(object):
     def default_item_css_class(self):
         if not self.name:
             return None
-        
-        css_class = unicodedata.normalize('NFKD', compat.text_type(self.name)).encode('ascii', 'ignore').decode('ascii')
-        css_class = re.sub('[^\w\s-]', '', css_class).strip().lower()
-        css_class = re.sub('[-\s]+', '-', css_class)
-        return "item-%s" % css_class
 
+        css_class = (
+            unicodedata.normalize("NFKD", compat.text_type(self.name))
+            .encode("ascii", "ignore")
+            .decode("ascii")
+        )
+        css_class = re.sub("[^\w\s-]", "", css_class).strip().lower()  # noQA
+        css_class = re.sub("[-\s]+", "-", css_class)  # noQA
+        return "item-%s" % css_class
 
     def get_widget_requirements(self):
         """ Return a sequence of two tuples in the form
@@ -354,12 +373,12 @@ class Field(object):
         if requirements:
             for requirement in requirements:
                 reqt = tuple(requirement)
-                if not reqt in L:
+                if reqt not in L:
                     L.append(reqt)
         for child in self.children:
             for requirement in child.get_widget_requirements():
                 reqt = tuple(requirement)
-                if not reqt in L:
+                if reqt not in L:
                     L.append(reqt)
         return L
 
@@ -389,7 +408,7 @@ class Field(object):
             requirements = self.get_widget_requirements()
         return self.resource_registry(requirements)
 
-    def set_widgets(self, values, separator='.'):
+    def set_widgets(self, values, separator="."):
         """ set widgets of the child fields of this field
         or form element.  ``widgets`` should be a dictionary in the
         form::
@@ -475,7 +494,7 @@ class Field(object):
                 field = self
                 while path:
                     element = path.pop(0)
-                    if element == '*':
+                    if element == "*":
                         field = field.children[0]
                     else:
                         field = field[element]
@@ -486,7 +505,7 @@ class Field(object):
         """ Return the ``msg`` attribute of the ``error`` attached to
         this field.  If the ``error`` attribute is ``None``,
         the return value will be ``None``."""
-        return getattr(self.error, 'msg', None)
+        return getattr(self.error, "msg", None)
 
     def serialize(self, cstruct=_marker, **kw):
         """ Serialize the cstruct into HTML and return the HTML string.  This
@@ -507,7 +526,7 @@ class Field(object):
         """
         if cstruct is _marker:
             cstruct = self.cstruct
-        values = {'field':self, 'cstruct':cstruct}
+        values = {"field": self, "cstruct": cstruct}
         values.update(kw)
         return self.widget.serialize(**values)
 
@@ -547,7 +566,7 @@ class Field(object):
         if appstruct is not _marker:
             self.set_appstruct(appstruct)
         cstruct = self.cstruct
-        kw.pop('cstruct', None) # disallowed
+        kw.pop("cstruct", None)  # disallowed
         html = self.serialize(cstruct, **kw)
         return html
 
@@ -701,19 +720,19 @@ class Field(object):
                 child.cstruct = child_cstructs[n]
 
     def _del_cstruct(self):
-        if '_cstruct' in self.__dict__:
+        if "_cstruct" in self.__dict__:
             # rely on class-scope _cstruct (null)
             del self._cstruct
 
     cstruct = property(_get_cstruct, _set_cstruct, _del_cstruct)
 
     def __repr__(self):
-        return '<%s.%s object at %d (schemanode %r)>' % (
+        return "<%s.%s object at %d (schemanode %r)>" % (
             self.__module__,
             self.__class__.__name__,
             id(self),
             self.schema.name,
-            )
+        )
 
     def set_appstruct(self, appstruct):
         """ Set the cstruct of this node (and its child nodes) using
@@ -736,8 +755,8 @@ class Field(object):
         """ Render the template named ``template`` using ``kw`` as the
         top-level keyword arguments (augmented with ``field`` and ``cstruct``
         if necessary)"""
-        values = {'field':self, 'cstruct':self.cstruct}
-        values.update(kw) # allow caller to override field and cstruct
+        values = {"field": self, "cstruct": self.cstruct}
+        values.update(kw)  # allow caller to override field and cstruct
         return self.renderer(template, **values)
 
     # retail API
@@ -802,4 +821,3 @@ class Field(object):
             name = self.name
         tag = '<input type="hidden" name="__end__" value="%s:rename"/>'
         return Markup(tag % (name,))
-

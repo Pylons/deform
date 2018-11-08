@@ -1,29 +1,32 @@
+"""Template."""
+# Standard Library
 import os.path
-from pkg_resources import resource_filename
-
-from .exception import TemplateError
-from translationstring import ChameleonTranslate
 
 from chameleon.zpt.loader import TemplateLoader
+from pkg_resources import resource_filename
+from translationstring import ChameleonTranslate
+
+from .exception import TemplateError
+
 
 class ZPTTemplateLoader(TemplateLoader):
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault('encoding', 'utf-8')
+        kwargs.setdefault("encoding", "utf-8")
         super(ZPTTemplateLoader, self).__init__(*args, **kwargs)
 
     def load(self, filename, *args, **kwargs):
-        if ':' in filename:
-            pkg_name, fn = filename.split(':', 1)
+        if ":" in filename:
+            pkg_name, fn = filename.split(":", 1)
             filename = resource_filename(pkg_name, fn)
         else:
             path, ext = os.path.splitext(filename)
             if not ext:
-                filename = filename + '.pt'
+                filename = filename + ".pt"
         try:
-            return super(ZPTTemplateLoader, self).load(
-                filename, *args, **kwargs)
+            return super(ZPTTemplateLoader, self).load(filename, *args, **kwargs)
         except ValueError:
             raise TemplateError(filename)
+
 
 class ZPTRendererFactory(object):
     """
@@ -69,16 +72,23 @@ class ZPTRendererFactory(object):
        an interpolated translation.  Default: ``None`` (no translation
        performed).
     """
-    def __init__(self, search_path, auto_reload=True, debug=False,
-                 encoding='utf-8', translator=None):
+
+    def __init__(
+        self,
+        search_path,
+        auto_reload=True,
+        debug=False,
+        encoding="utf-8",
+        translator=None,
+    ):
         self.translate = translator
         loader = ZPTTemplateLoader(
             search_path=search_path,
             auto_reload=auto_reload,
             debug=debug,
             encoding=encoding,
-            translate=ChameleonTranslate(translator)
-            )
+            translate=ChameleonTranslate(translator),
+        )
         self.loader = loader
 
     def __call__(self, template_name, **kw):
@@ -86,6 +96,7 @@ class ZPTRendererFactory(object):
 
     def load(self, template_name):
         return self.loader.load(template_name)
-        
-default_dir = resource_filename('deform', 'templates/')
+
+
+default_dir = resource_filename("deform", "templates/")
 default_renderer = ZPTRendererFactory((default_dir,))

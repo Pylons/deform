@@ -1,12 +1,13 @@
+"""Form."""
+# Standard Library
 import re
 
 from chameleon.utils import Markup
 
-from . import (
-    compat,
-    field,
-    widget,
-    )
+from . import compat
+from . import field
+from . import widget
+
 
 class Form(field.Field):
     """
@@ -97,14 +98,25 @@ class Form(field.Field):
     keywords mean the same thing in the context of a Form as they do
     in the context of a Field (a Form is just another kind of Field).
     """
-    css_class = 'deform' # bw compat only; pass a widget to override
-    def __init__(self, schema, action='', method='POST', buttons=(),
-                 formid='deform', use_ajax=False, ajax_options='{}',
-                 autocomplete=None, **kw):
+
+    css_class = "deform"  # bw compat only; pass a widget to override
+
+    def __init__(
+        self,
+        schema,
+        action="",
+        method="POST",
+        buttons=(),
+        formid="deform",
+        use_ajax=False,
+        ajax_options="{}",
+        autocomplete=None,
+        **kw,
+    ):
         if autocomplete:
-            autocomplete = 'on'
+            autocomplete = "on"
         elif autocomplete is not None:
-            autocomplete = 'off'
+            autocomplete = "off"
         self.autocomplete = autocomplete
         field.Field.__init__(self, schema, **kw)
         _buttons = []
@@ -118,10 +130,11 @@ class Form(field.Field):
         self.formid = formid
         self.use_ajax = use_ajax
         self.ajax_options = Markup(ajax_options.strip())
-        form_widget = getattr(schema, 'widget', None)
+        form_widget = getattr(schema, "widget", None)
         if form_widget is None:
             form_widget = widget.FormWidget()
         self.widget = form_widget
+
 
 class Button(object):
     """
@@ -173,16 +186,25 @@ class Button(object):
         ``btn-danger`` then the resulting default class becomes
         ``btn btn-danger``. Default: ``None`` (use default class).
     """
-    def __init__(self, name='submit', title=None, type='submit', value=None,
-                 disabled=False, css_class=None, icon=None):
+
+    def __init__(
+        self,
+        name="submit",
+        title=None,
+        type="submit",  # noQA
+        value=None,
+        disabled=False,
+        css_class=None,
+        icon=None,
+    ):
         if title is None:
             title = name.capitalize()
-        name = re.sub(r'\s', '_', name)
-        if value is None and type != 'link':
+        name = re.sub(r"\s", "_", name)
+        if value is None and type != "link":
             value = name
         self.name = name
         self.title = title
-        self.type = type
+        self.type = type  # noQA
         self.value = value
         self.disabled = disabled
         self.css_class = css_class

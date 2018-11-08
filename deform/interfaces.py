@@ -1,3 +1,6 @@
+"""Interfaces."""
+
+
 class FileUploadTempStore(object):
     """
     The :class:`deform.FileUploadWidget` requires as its first
