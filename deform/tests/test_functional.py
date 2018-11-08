@@ -282,3 +282,5 @@ class TestDeferredFunction(unittest.TestCase):
         self.assertEqual(
             schema["category"].widget.values, [("one", "One"), ("two", "Two")]
         )
+        new_schema = schema.bind(nodates=True)
+        self.assertNotIn("date", new_schema)
