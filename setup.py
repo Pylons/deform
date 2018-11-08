@@ -48,6 +48,7 @@ lint_extras = [
     "flake8-builtins",
     "flake8-isort",
     "isort",
+    "readme_renderer",
 ]
 
 testing_extras = ["nose", "coverage", "beautifulsoup4", "flaky"]
