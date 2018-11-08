@@ -42,11 +42,11 @@ requires = [
 
 lint_extras = [
     "black",
+    "check-manifest",
     "flake8",
     "flake8-bugbear",
     "flake8-builtins",
     "flake8-isort",
-    # "flake8_docstrings",
     "isort",
 ]
 
