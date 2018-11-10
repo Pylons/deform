@@ -35,11 +35,11 @@ class TestFunctional(unittest.TestCase):
                 String(),
                 widget=deform.widget.TextInputWidget(
                     attributes={
-                        'maxlength': 10,
-                        'placeholder': 'Nickname',
-                        'disabled': 'disabled'
+                        "maxlength": 10,
+                        "placeholder": "Nickname",
+                        "disabled": "disabled",
                     }
-                )
+                ),
             )
 
         schema = MySchema()
@@ -123,34 +123,37 @@ class TestFunctional(unittest.TestCase):
         html = form.render()
         soup = self._soupify(html)
         form = soup.form
-        self.assertEqual(form.get('action', ''), '')
-        inputs = form.findAll('input')
-        self.assertEqual(inputs[10]['name'], 'nickname')
-        self.assertEqual(inputs[10]['value'], '')
-        self.assertEqual(inputs[10]['placeholder'], 'Nickname')
-        self.assertEqual(inputs[10]['disabled'], 'disabled')
-        self.assertEqual(inputs[10]['maxlength'], '10')
+        self.assertEqual(form.get("action", ""), "")
+        inputs = form.findAll("input")
+        self.assertEqual(inputs[10]["name"], "nickname")
+        self.assertEqual(inputs[10]["value"], "")
+        self.assertEqual(inputs[10]["placeholder"], "Nickname")
+        self.assertEqual(inputs[10]["disabled"], "disabled")
+        self.assertEqual(inputs[10]["maxlength"], "10")
 
     def test_widget_deserialize(self):
         filled = {
-            'name': 'project1',
-            'title': 'Cool project',
-            'nickname': 'petproject',
-            'series': {
-                'name':'date series 1',
-                'dates': [{'date': '2008-10-12'}, {'date': '2009-10-12'}],
-                }
-            }
+            "name": "project1",
+            "title": "Cool project",
+            "nickname": "petproject",
+            "series": {
+                "name": "date series 1",
+                "dates": [{"date": "2008-10-12"}, {"date": "2009-10-12"}],
+            },
+        }
         schema = self._makeSchema()
         form = self._makeForm(schema)
         result = form.widget.deserialize(form, filled)
-        expected = {'series':
-                    {'dates': ['2008-10-12', '2009-10-12'],
-                     'name': 'date series 1'},
-                    'cool': 'false',
-                    'nickname': 'petproject',
-                    'name': 'project1',
-                    'title': 'Cool project'}
+        expected = {
+            "series": {
+                "dates": ["2008-10-12", "2009-10-12"],
+                "name": "date series 1",
+            },
+            "cool": "false",
+            "nickname": "petproject",
+            "name": "project1",
+            "title": "Cool project",
+        }
         self.assertEqual(result, expected)
 
     def test_validate(self):
@@ -174,13 +177,13 @@ class TestFunctional(unittest.TestCase):
         self.assertEqual(
             ve.cstruct,
             {
-                'series': {'dates': [], 'name': null},
-                'cool': 'false',
-                'nickname': null,
-                'name': null,
-                'title': null,
-             }
-            )
+                "series": {"dates": [], "name": null},
+                "cool": "false",
+                "nickname": null,
+                "name": null,
+                "title": null,
+            },
+        )
 
 
 @colander.deferred
