@@ -9,4 +9,4 @@ ignore =
 exclude =
     docs
 show-source = True
-max-line-length = 88
+max-line-length = 79
