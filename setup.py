@@ -51,7 +51,12 @@ lint_extras = [
     "readme_renderer",
 ]
 
-testing_extras = ["nose", "coverage", "beautifulsoup4", "flaky"]
+testing_extras = [
+    "beautifulsoup4",
+    "coverage",
+    "flaky",
+    "nose",
+]
 
 # Needed to run deformdemo tests
 functional_testing_extra = [
