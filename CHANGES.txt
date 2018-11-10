@@ -7,7 +7,7 @@
 
 - Update Bootstrap to 3.3.7.
 
-- Add support to HTML attributes (e.g. including placeholder and maxlength)
+- Add support for HTML5 attributes (e.g. including placeholder and maxlength)
   See https://github.com/Pylons/deform/pull/345
 
 2.0.6 (2018-08-29)
