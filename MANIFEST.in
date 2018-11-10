@@ -1,1 +1,11 @@
-recursive-include deform *
+graft deform
+graft docs
+prune docs/_build
+
+include *.rst
+include *.txt
+include contributing.md
+include lingua.ini tox.ini
+include i18n.sh run-selenium-tests.bash
+
+global-exclude __pycache__ *.py[cod]

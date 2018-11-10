@@ -54,7 +54,7 @@ functional_testing_extra = [
 ]
 
 docs_extras = [
-    'Sphinx >= 1.3.4',
+    'Sphinx >= 1.7.4',
     'repoze.sphinx.autointerface',
     'pylons_sphinx_latesturl',
     'pylons-sphinx-themes',
@@ -62,7 +62,7 @@ docs_extras = [
 
 setupkw = dict(
     name='deform',
-    version='2.0.5.dev0',
+    version='2.0.7.dev0',
     description='Form library with advanced features like nested forms',
     long_description=README + '\n\n' + CHANGES,
     classifiers=[
@@ -70,16 +70,17 @@ setupkw = dict(
         "Programming Language :: Python",
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.3",
         "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
         ],
     keywords='web forms form generation schema validation pyramid',
     author="Chris McDonough, Agendaless Consulting",
     author_email="pylons-discuss@googlegroups.com",
-    url="http://docs.pylonsproject.org/projects/deform/en/latest/",
+    url="https://docs.pylonsproject.org/projects/deform/en/latest/",
     license="BSD-derived (http://www.repoze.org/LICENSE.txt)",
     packages=find_packages(),
     include_package_data=True,

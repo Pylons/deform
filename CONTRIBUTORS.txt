@@ -128,5 +128,10 @@ Contributors
 - Martin Peeters 2016/10/22
 - Mikko Kolehmainen 2016/11/02
 - Gasper Vozel, 2016/09/15
+- Martin Häcker, 2017/03/21
 - Guillermo Hernán Acosta, 2017/06/09
-
+- Andreas Kaiser, 2018/01/09
+- Hans-Peter Jansen, 2018/02/18
+- Erico Andrei, 2018/02/18
+- Arnaud Morvan, 2018/04/10
+- Krystian Rosiński, 2018/10/14

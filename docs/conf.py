@@ -36,9 +36,9 @@ extensions = [
     ]
 
 intersphinx_mapping = {
-    'colander': ('http://docs.pylonsproject.org/projects/colander/en/latest/', None),
-    'pyramid': ('http://docs.pylonsproject.org/projects/pyramid/en/latest', None),
-    'python': ('http://docs.python.org/dev', None),
+    'colander': ('https://docs.pylonsproject.org/projects/colander/en/latest/', None),
+    'pyramid': ('https://docs.pylonsproject.org/projects/pyramid/en/latest', None),
+    'python': ('https://docs.python.org/dev/', None),
     }
 
 # Add any paths that contain templates here, relative to this directory.
@@ -141,10 +141,6 @@ html_title = 'Deform Python form library v%s' % release
 # If not '', a 'Last updated on:' timestamp is inserted at every page
 # bottom, using the given strftime format.
 html_last_updated_fmt = '%b %d, %Y'
-
-# If true, SmartyPants will be used to convert quotes and dashes to
-# typographically correct entities.
-html_use_smartypants = False # people use cutnpaste in some places
 
 # Custom sidebar templates, maps document names to template names.
 #html_sidebars = {}

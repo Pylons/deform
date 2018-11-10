@@ -4,9 +4,9 @@ Contributing
 
 All projects under the Pylons Projects, including this one, follow the
 guidelines established at [How to
-Contribute](http://www.pylonsproject.org/community/how-to-contribute) and
+Contribute](https://pylonsproject.org/community-how-to-contribute.html) and
 [Coding Style and
-Standards](http://docs.pylonsproject.org/en/latest/community/codestyle.html).
+Standards](https://pylonsproject.org/community-coding-style-standards.html).
 
 You can contribute to this project in several ways.
 
@@ -47,11 +47,21 @@ and documentation.
 Functional tests
 ----------------
 
-All features must be covered by functional tests and have example use.
+All features must be covered by functional tests and have example use. We use the following for running functional tests:
+
+* Firefox 45 ESR (see :ref:`preparing-compatible-browser`)
+* `gettext <https://www.gnu.org/software/gettext/>`_
+* `tox <https://tox.readthedocs.io/en/latest/>`_
+* `deformdemo <https://github.com/pylons/deformdemo>`_
+
+If you add or change a feature that reduces test coverage or causes a functional test to fail, then you also must submit a pull request to the `deformdemo <https://github.com/pylons/deformdemo>`_ repository to go along with your functional test change to deform.
 
 .. warning::
 
-    Fun fact: Functional tests behave differently depending on if you are looking the browser window or not.
+    Fun fact: Functional tests behave differently depending on if you are looking at the browser window or not.
+
+
+.. _preparing-compatible-browser:
 
 Preparing compatible browser
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -71,17 +81,39 @@ for OSX:
 
     export FIREFOX_PATH=/Applications/Firefox-45.app/Contents/MacOS/firefox
 
-.. note ::
+.. note::
 
-    Selenium 3: As the writing of this Marionette geckodriver for Firefox is incomplete and cannot
+    Selenium 3: As of this writing, the Marionette geckodriver for Firefox is incomplete and cannot
     run all the tests.
 
-.. note ::
+.. note::
 
-    Chrome: Tests do not run correctly on Chrome due to various timing issues. Some effort was put forth to fix this, but it's never ending swamp.
+    Chrome: Tests do not run correctly on Chrome due to various timing issues. Some effort was put forth to fix this, but it's a never ending swamp.
+
+
+Install gettext
+~~~~~~~~~~~~~~~
+
+The functional tests require the installation of the GNU ``gettext`` utilities, specifically ``msgmerge`` and ``msgfmt``.  Use your package manager to install these requirements.  On macOS using `Homebrew <https://brew.sh/>`_:
+
+.. code-block::
+
+    brew install gettext
+    brew link gettext --force
+
+If you ever have problems building packages, you can always unlink it.
+
+.. code-block::
+
+    brew unlink gettext
+
 
 Running test suite
 ~~~~~~~~~~~~~~~~~~
+
+Tox is used to run all tests.  For functional tests, tox run the shell script `run-selenium-tests.bash <https://github.com/Pylons/deform/blob/master/run-selenium-tests.bash>`_, located at the root of the deform repository.  See its comments for a description.
+
+`Install tox <https://tox.readthedocs.io/en/latest/install.html>`_.
 
 To run functional tests::
 

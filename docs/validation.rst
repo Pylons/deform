@@ -9,7 +9,7 @@ Introduction
 
 Deform uses Colander for form validation.
 
-See `Schema Node Objects <http://docs.pylonsproject.org/projects/colander/en/latest/basics.html#schema-node-objects>`_ in Colander's documentation for more information.
+See `Schema Node Objects <https://docs.pylonsproject.org/projects/colander/en/latest/basics.html#schema-node-objects>`_ in Colander's documentation for more information.
 
 Colander stock validators
 =========================
@@ -39,7 +39,7 @@ Example:
 
         preview = colander.SchemaNode(colander.Boolean())
 
-        # Validate emaik
+        # Validate email
         email = colander.SchemaNode(colander.String(), validator=colander.Email(), missing=colander.Drop)
 
 

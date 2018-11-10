@@ -596,7 +596,17 @@ class TestDateTimeInputWidget(unittest.TestCase):
         pstruct = colander.null
         result = widget.deserialize(field, pstruct)
         self.assertEqual(result, colander.null)
-        
+
+    def test_deserialize_success(self):
+        widget = self._makeOne()
+        field = DummyField()
+        pstruct = {
+            'date':'2011-12-13',
+            'time':'14:15:16'
+            }
+        result = widget.deserialize(field, pstruct)
+        self.assertEqual(result, '2011-12-13T14:15:16')
+
     def test_deserialize_nochanges(self):
         widget = self._makeOne()
         field = DummyField()
@@ -698,7 +708,7 @@ class TestDateTimeInputWidget(unittest.TestCase):
         pstruct = {
             'date':'2011-12-13',
             'date_submit':'2011-12-12',
-            'time':'14:15:16',
+            'time': {},
             'time_submit': {},
             }
         self.assertRaises(colander.Invalid,
@@ -1330,6 +1340,16 @@ class TestFileUploadWidget(unittest.TestCase):
         tmpstore = DummyTmpStore()
         widget = self._makeOne(tmpstore)
         result = widget.deserialize(field, {})
+        self.assertEqual(result, colander.null)
+
+    def test_deserialize_no_file_selected_no_previous_file_with_upload(self):
+        # If no upload is selected the browser sends back the name 'upload'.
+        # In pyramid under python3 we have {'upload': b''} as cstruct
+        schema = DummySchema()
+        field = DummyField(schema)
+        tmpstore = DummyTmpStore()
+        widget = self._makeOne(tmpstore)
+        result = widget.deserialize(field, {'upload': b''})
         self.assertEqual(result, colander.null)
 
     def test_deserialize_no_file_selected_with_previous_file(self):

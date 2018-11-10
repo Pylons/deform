@@ -136,16 +136,24 @@ class TestButton(unittest.TestCase):
         self.assertEqual(button.name, 'log_in_as_a_user')
         self.assertEqual(button.value, 'log_in_as_a_user')
 
+    def test_link_button(self):
+        button = self._makeOne(type="link")
+        self.assertIs(button.value, None)
+        button = self._makeOne(type="link", value="http://example.com/")
+        self.assertEqual(button.value, 'http://example.com/')
+
     def test_ctor(self):
         button = self._makeOne(name='name', title='title',
-                               type='type', value='value', disabled=True,
-                               css_class='css-class')
+                               type='type', value='value',
+                               disabled=True, css_class='css-class',
+                               icon='plus')
         self.assertEqual(button.value, 'value')
         self.assertEqual(button.name, 'name')
         self.assertEqual(button.title, 'title')
         self.assertEqual(button.type, 'type')
         self.assertEqual(button.disabled, True)
         self.assertEqual(button.css_class, 'css-class')
+        self.assertEqual(button.icon, 'plus')
 
 class DummySchema(object):
     typ = None
