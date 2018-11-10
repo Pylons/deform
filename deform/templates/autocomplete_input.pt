@@ -8,7 +8,8 @@
            value="${cstruct}"
            data-provide="typeahead"
            tal:attributes="class string: form-control ${css_class or ''};
-                           style style"
+                           style style;
+                           attributes|field.widget.attributes|{};"
            id="${oid}"/>
     <script tal:condition="field.widget.values" type="text/javascript">
         deform.addCallback(

@@ -17,7 +17,8 @@
           class string: form-control ${css_class or ''};
           multiple multiple;
           size size;
-          style style;">
+          style style;
+          attributes|field.widget.attributes|{};">
     <tal:loop tal:repeat="item values">
       <optgroup tal:condition="isinstance(item, optgroup_class)"
                 tal:attributes="label item.label">

@@ -12,7 +12,8 @@
            tal:attributes="class inline and 'radio-inline'">
       <input tal:attributes="checked value == cstruct;
                              class css_class;
-                             style style;"
+                             style style;
+                             attributes|field.widget.attributes|{};"
              type="radio"
              name="${oid}"
              value="${value}"

@@ -10,7 +10,8 @@
       <span class="input-group-addon" i18n:translate="">Year</span>
       <input type="text" name="year" value="${year}"
              class="span2 form-control ${css_class or ''}"
-             tal:attributes="style style"
+             tal:attributes="style style;
+             				 year_attributes|field.widget.year_attributes|{};"
              maxlength="4"
              id="${oid}"/>
     </div></div>
@@ -18,7 +19,8 @@
       <span class="input-group-addon" i18n:translate="">Month</span>
       <input type="text" name="month" value="${month}"
              class="span2 form-control ${css_class or ''}"
-             tal:attributes="style style"
+             tal:attributes="style style;
+             				 month_attributes|field.widget.month_attributes|{};"
              maxlength="2"
              id="${oid}-month"/>
     </div></div>
@@ -26,7 +28,8 @@
       <span class="input-group-addon" i18n:translate="">Day</span>
       <input type="text" name="day" value="${day}"
              class="span2 form-control ${css_class or ''}"
-             tal:attributes="style style"
+             tal:attributes="style style;
+             				 day_attributes|field.widget.day_attributes|{};"
              maxlength="2"
              id="${oid}-day"/>
     </div></div>

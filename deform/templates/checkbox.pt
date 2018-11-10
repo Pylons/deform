@@ -10,7 +10,8 @@
            id="${oid}"
            tal:attributes="checked cstruct == true_val;
                            class css_class;
-                           style style;" />
+                           style style;
+                           attributes|field.widget.attributes|{};" />
 
     <span tal:condition="hasattr(field, 'schema') and hasattr(field.schema, 'label')"
           tal:replace="field.schema.label" class="checkbox-label" >

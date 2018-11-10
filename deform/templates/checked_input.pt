@@ -11,14 +11,16 @@
     <input type="text" name="${name}" value="${cstruct}"
            tal:attributes="style style;
                            class string: form-control ${css_class or ''};
-                           placeholder subject;"
+                           placeholder subject;
+                           attributes|field.widget.attributes|{};"
            id="${oid}"/>
   </div>
   <div>
     <input type="text" name="${name}-confirm" value="${confirm}"
            tal:attributes="class string: form-control ${css_class or ''};
                            style style;
-                           placeholder confirm_subject;"
+                           placeholder confirm_subject;
+                           confirm_attributes|field.widget.confirm_attributes|{};"
            id="${oid}-confirm"/>
   </div>
   <script tal:condition="field.widget.mask" type="text/javascript">
