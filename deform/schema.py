@@ -162,5 +162,7 @@ class CSRFSchema(colander.Schema):
     """
 
     csrf_token = colander.SchemaNode(
-        colander.String(), widget=widget.HiddenWidget(), default=deferred_csrf_value
+        colander.String(),
+        widget=widget.HiddenWidget(),
+        default=deferred_csrf_value,
     )

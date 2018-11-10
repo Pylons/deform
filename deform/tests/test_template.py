@@ -73,7 +73,9 @@ class TestZPTTemplateLoader(unittest.TestCase):
         loader = self._makeOne(search_path=[fixtures])
         self.assertRaises(TemplateError, loader.load, "doesnt")
         if hasattr(loader, "notexists"):  # pragma: no cover (chameleon 1)
-            self.assertTrue(os.path.join(fixtures, "doesnt") in loader.notexists)
+            self.assertTrue(
+                os.path.join(fixtures, "doesnt") in loader.notexists
+            )
 
     def test_load_negative_cache(self):
         import os
@@ -139,7 +141,9 @@ class Test_default_renderer(unittest.TestCase):
     def test_call_defaultdir(self):
         import re
 
-        result = self._callFUT("checkbox", **{"cstruct": None, "field": DummyField()})
+        result = self._callFUT(
+            "checkbox", **{"cstruct": None, "field": DummyField()}
+        )
         result = re.sub("[ \n]+", " ", result)
         result = re.sub(" />", "/>", result)
         result = result.strip()

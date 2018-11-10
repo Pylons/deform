@@ -326,7 +326,9 @@ class Field(object):
             return wdg
         widget_maker = getattr(self.schema.typ, "widget_maker", None)
         if widget_maker is None:
-            widget_maker = schema.default_widget_makers.get(self.schema.typ.__class__)
+            widget_maker = schema.default_widget_makers.get(
+                self.schema.typ.__class__
+            )
             if widget_maker is None:
                 for (cls, wgt) in schema.default_widget_makers.items():
                     if isinstance(self.schema.typ, cls):

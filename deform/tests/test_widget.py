@@ -290,7 +290,11 @@ class TestAutocompleteInputWidget(unittest.TestCase):
         self.assertEqual(renderer.kw["cstruct"], cstruct)
         self.assertEqual(
             json.loads(renderer.kw["options"]),
-            {"limit": 8, "minLength": 1, "remote": "http://example.com?term=%QUERY"},
+            {
+                "limit": 8,
+                "minLength": 1,
+                "remote": "http://example.com?term=%QUERY",
+            },
         )
 
     def test_serialize_iterable(self):
@@ -417,7 +421,9 @@ class TestDateInputWidget(unittest.TestCase):
     def test_deserialize_date_submit(self):
         widget = self._makeOne()
         field = DummyField()
-        result = widget.deserialize(field, {"date": "foo", "date_submit": "bar"})
+        result = widget.deserialize(
+            field, {"date": "foo", "date_submit": "bar"}
+        )
         self.assertEqual(result, "bar")
 
     def test_deserialize_date(self):
@@ -429,7 +435,9 @@ class TestDateInputWidget(unittest.TestCase):
     def test_deserialize_bad_type(self):
         widget = self._makeOne()
         field = DummyField()
-        self.assertRaises(colander.Invalid, widget.deserialize, field, "garbage")
+        self.assertRaises(
+            colander.Invalid, widget.deserialize, field, "garbage"
+        )
 
     def test_deserialize_missing_fields(self):
         widget = self._makeOne()
@@ -524,7 +532,9 @@ class TestTimeInputWidget(unittest.TestCase):
     def test_deserialize_bad_type(self):
         widget = self._makeOne()
         field = DummyField()
-        self.assertRaises(colander.Invalid, widget.deserialize, field, "garbage")
+        self.assertRaises(
+            colander.Invalid, widget.deserialize, field, "garbage"
+        )
 
     def test_deserialize_missing_fields(self):
         widget = self._makeOne()
@@ -692,14 +702,21 @@ class TestDateTimeInputWidget(unittest.TestCase):
     def test_deserialize_no_time_no_date(self):
         widget = self._makeOne()
         field = DummyField()
-        pstruct = {"date": "", "date_submit": "", "time": "", "time_submit": ""}
+        pstruct = {
+            "date": "",
+            "date_submit": "",
+            "time": "",
+            "time_submit": "",
+        }
         result = widget.deserialize(field, pstruct)
         self.assertEqual(result, colander.null)
 
     def test_deserialize_bad_type(self):
         widget = self._makeOne()
         field = DummyField()
-        self.assertRaises(colander.Invalid, widget.deserialize, field, "garbage")
+        self.assertRaises(
+            colander.Invalid, widget.deserialize, field, "garbage"
+        )
 
     def test_deserialize_missing_fields(self):
         widget = self._makeOne()
@@ -775,7 +792,9 @@ class TestHiddenWidget(unittest.TestCase):
     def test_deserialize_bad_type(self):
         widget = self._makeOne()
         field = DummyField()
-        self.assertRaises(colander.Invalid, widget.deserialize, field, ["a", "b"])
+        self.assertRaises(
+            colander.Invalid, widget.deserialize, field, ["a", "b"]
+        )
 
 
 class TestPasswordWidget(TestTextInputWidget):
@@ -818,7 +837,8 @@ class TestRichTextWidget(TestTextInputWidget):
 
         # Custom options should be set
         self.assertTrue(
-            '"theme_advanced_buttons1": "bold,italic,bullist,numlist"' in result
+            '"theme_advanced_buttons1": "bold,italic,bullist,numlist"'
+            in result
         )
         self.assertTrue('"verify_html": true' in result)
         self.assertTrue('"element_format": "html"' in result)
@@ -1051,13 +1071,13 @@ class TestSelectWidget(unittest.TestCase):
         self.assertRaises(colander.Invalid, widget.deserialize, field, pstruct)
 
     def test_selected_tag(self):
-        """See we correctly procude 'selected'"""
+        """Test apply 'selected' to select."""
         widget = self._makeOne(multiple=False)
         widget.get_select_value("foo", "foo") == "selected"
         widget.get_select_value("foo", "bar") is None
 
     def test_selected_tag_multiple(self):
-        """See we correctly procude 'selected' in multiple values situations."""
+        """Test apply 'selected' to multiselect."""
         widget = self._makeOne(multiple=True)
         widget.get_select_value(["foo", "bar"], "foo") == "selected"
         widget.get_select_value(["foo", "bar"], "moo") is None
@@ -1228,7 +1248,9 @@ class TestCheckedInputWidget(unittest.TestCase):
         widget = self._makeOne()
         field = DummyField()
         e = invalid_exc(
-            widget.deserialize, field, {"name": "password", "name-confirm": "not"}
+            widget.deserialize,
+            field,
+            {"name": "password", "name-confirm": "not"},
         )
         self.assertEqual(e.value, "password")
         self.assertEqual(e.msg, "Fields did not match")
@@ -1237,7 +1259,9 @@ class TestCheckedInputWidget(unittest.TestCase):
         widget = self._makeOne()
         field = DummyField()
         e = invalid_exc(
-            widget.deserialize, field, {"name": "password", "name-confirm": "not"}
+            widget.deserialize,
+            field,
+            {"name": "password", "name-confirm": "not"},
         )
         self.assertEqual(e.value, "password")
         self.assertEqual(getattr(field, "name-confirm", ""), "not")
@@ -1254,7 +1278,9 @@ class TestCheckedInputWidget(unittest.TestCase):
     def test_deserialize_bad_type(self):
         widget = self._makeOne()
         field = DummyField()
-        self.assertRaises(colander.Invalid, widget.deserialize, field, "garbage")
+        self.assertRaises(
+            colander.Invalid, widget.deserialize, field, "garbage"
+        )
         self.assertEqual(field.error, None)
 
     def test_deserialize_missing_fields(self):
@@ -1279,7 +1305,9 @@ class TestCheckedPasswordWidget(TestCheckedInputWidget):
         widget = self._makeOne()
         field = DummyField()
         e = invalid_exc(
-            widget.deserialize, field, {"name": "password", "name-confirm": "not"}
+            widget.deserialize,
+            field,
+            {"name": "password", "name-confirm": "not"},
         )
         self.assertEqual(e.value, "password")
         self.assertEqual(e.msg, "Password did not match confirm")
@@ -1442,7 +1470,9 @@ class TestFileUploadWidget(unittest.TestCase):
         tmpstore = DummyTmpStore()
         widget = self._makeOne(tmpstore)
         field = DummyField()
-        self.assertRaises(colander.Invalid, widget.deserialize, field, "garbage")
+        self.assertRaises(
+            colander.Invalid, widget.deserialize, field, "garbage"
+        )
 
     def test_deserialize_bad_field(self):
         tmpstore = DummyTmpStore()
@@ -1495,14 +1525,18 @@ class TestDatePartsWidget(unittest.TestCase):
         schema = DummySchema()
         field = DummyField(schema, None)
         widget = self._makeOne()
-        result = widget.deserialize(field, {"year": "1", "month": "2", "day": "3"})
+        result = widget.deserialize(
+            field, {"year": "1", "month": "2", "day": "3"}
+        )
         self.assertEqual(result, "1-2-3")
 
     def test_deserialize_assume_y2k_2digit(self):
         schema = DummySchema()
         field = DummyField(schema, None)
         widget = self._makeOne()
-        result = widget.deserialize(field, {"year": "01", "month": "2", "day": "3"})
+        result = widget.deserialize(
+            field, {"year": "01", "month": "2", "day": "3"}
+        )
         self.assertEqual(result, "2001-2-3")
 
     def test_deserialize_dont_assume_y2k_2digit(self):
@@ -1510,7 +1544,9 @@ class TestDatePartsWidget(unittest.TestCase):
         field = DummyField(schema, None)
         widget = self._makeOne()
         widget.assume_y2k = False
-        result = widget.deserialize(field, {"year": "01", "month": "2", "day": "3"})
+        result = widget.deserialize(
+            field, {"year": "01", "month": "2", "day": "3"}
+        )
         self.assertEqual(result, "01-2-3")
 
     def test_deserialize_null(self):
@@ -1524,7 +1560,9 @@ class TestDatePartsWidget(unittest.TestCase):
         schema = DummySchema()
         field = DummyField(schema, None)
         widget = self._makeOne()
-        result = widget.deserialize(field, {"year": "\t", "month": "", "day": ""})
+        result = widget.deserialize(
+            field, {"year": "\t", "month": "", "day": ""}
+        )
         self.assertEqual(result, colander.null)
 
     def test_deserialize_incomplete(self):
@@ -1539,7 +1577,9 @@ class TestDatePartsWidget(unittest.TestCase):
     def test_deserialize_bad_type(self):
         widget = self._makeOne()
         field = DummyField()
-        self.assertRaises(colander.Invalid, widget.deserialize, field, "garbage")
+        self.assertRaises(
+            colander.Invalid, widget.deserialize, field, "garbage"
+        )
 
     def test_deserialize_missing_fields(self):
         widget = self._makeOne()
@@ -1639,7 +1679,9 @@ class TestMappingWidget(unittest.TestCase):
     def test_deserialize_bad_type(self):
         widget = self._makeOne()
         field = DummyField()
-        self.assertRaises(colander.Invalid, widget.deserialize, field, ["a", 1])
+        self.assertRaises(
+            colander.Invalid, widget.deserialize, field, ["a", 1]
+        )
 
 
 class TestSequenceWidget(unittest.TestCase):
@@ -1768,7 +1810,9 @@ class TestSequenceWidget(unittest.TestCase):
         widget = self._makeOne()
         widget.add_subitem_text_template = "Yo ${subitem_title}"
         widget.serialize(field, colander.null)
-        self.assertEqual(renderer.kw["add_subitem_text"].interpolate(), "Yo titel")
+        self.assertEqual(
+            renderer.kw["add_subitem_text"].interpolate(), "Yo titel"
+        )
 
     def test_serialize_add_subitem_translates_title_with_default_domain(self):
         # By default, we get a TranslationString whose domain is 'deform'
@@ -1929,7 +1973,9 @@ class TestSequenceWidget(unittest.TestCase):
         inner_field.widget = DummyWidget()
         field.children = [inner_field]
         widget = self._makeOne()
-        self.assertRaises(colander.Invalid, widget.deserialize, field, {"x": "123"})
+        self.assertRaises(
+            colander.Invalid, widget.deserialize, field, {"x": "123"}
+        )
 
 
 class TestFormWidget(unittest.TestCase):
@@ -2244,7 +2290,9 @@ class TestNormalizeChoices(unittest.TestCase):
         )
 
     def test_integer(self):
-        self.assertEqual(self._call(((1, "description"),)), [("1", "description")])
+        self.assertEqual(
+            self._call(((1, "description"),)), [("1", "description")]
+        )
 
     def test_optgroup_and_tuple(self):
         from deform.widget import OptGroup

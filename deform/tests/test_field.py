@@ -157,7 +157,9 @@ class TestField(unittest.TestCase):
         field = Field()
         try:
             cls.set_zpt_renderer(template_dir)
-            self.assertTrue(cls.default_renderer("hidden", field=field, cstruct=None))
+            self.assertTrue(
+                cls.default_renderer("hidden", field=field, cstruct=None)
+            )
         finally:
             cls.set_default_renderer(old)
 
@@ -326,7 +328,9 @@ class TestField(unittest.TestCase):
         child1 = DummyField(name="child1")
         field.children = [child1]
         result = field.get_widget_requirements()
-        self.assertEqual(result, [("abc", "123"), ("ghi", "789"), ("def", "456")])
+        self.assertEqual(
+            result, [("abc", "123"), ("ghi", "789"), ("def", "456")]
+        )
 
     def test_get_widget_resources(self):
         def resource_registry(requirements):
@@ -596,7 +600,8 @@ class TestField(unittest.TestCase):
         field = self._makeOne(schema)
         result = field.start_mapping("foo")
         self.assertEqual(
-            result, '<input type="hidden" name="__start__" value="foo:mapping"/>'
+            result,
+            '<input type="hidden" name="__start__" value="foo:mapping"/>',
         )
 
     def test_start_mapping_withoutname(self):
@@ -604,7 +609,8 @@ class TestField(unittest.TestCase):
         field = self._makeOne(schema)
         result = field.start_mapping()
         self.assertEqual(
-            result, '<input type="hidden" name="__start__" value="name:mapping"/>'
+            result,
+            '<input type="hidden" name="__start__" value="name:mapping"/>',
         )
 
     def test_end_mapping_withname(self):
@@ -620,7 +626,8 @@ class TestField(unittest.TestCase):
         field = self._makeOne(schema)
         result = field.end_mapping()
         self.assertEqual(
-            result, '<input type="hidden" name="__end__" value="name:mapping"/>'
+            result,
+            '<input type="hidden" name="__end__" value="name:mapping"/>',
         )
 
     def test_start_sequence_withname(self):
@@ -628,7 +635,8 @@ class TestField(unittest.TestCase):
         field = self._makeOne(schema)
         result = field.start_sequence("foo")
         self.assertEqual(
-            result, '<input type="hidden" name="__start__" value="foo:sequence"/>'
+            result,
+            '<input type="hidden" name="__start__" value="foo:sequence"/>',
         )
 
     def test_start_sequence_withoutname(self):
@@ -636,7 +644,8 @@ class TestField(unittest.TestCase):
         field = self._makeOne(schema)
         result = field.start_sequence()
         self.assertEqual(
-            result, '<input type="hidden" name="__start__" value="name:sequence"/>'
+            result,
+            '<input type="hidden" name="__start__" value="name:sequence"/>',
         )
 
     def test_end_sequence_withname(self):
@@ -644,7 +653,8 @@ class TestField(unittest.TestCase):
         field = self._makeOne(schema)
         result = field.end_sequence("foo")
         self.assertEqual(
-            result, '<input type="hidden" name="__end__" value="foo:sequence"/>'
+            result,
+            '<input type="hidden" name="__end__" value="foo:sequence"/>',
         )
 
     def test_end_sequence_withoutname(self):
@@ -652,7 +662,8 @@ class TestField(unittest.TestCase):
         field = self._makeOne(schema)
         result = field.end_sequence()
         self.assertEqual(
-            result, '<input type="hidden" name="__end__" value="name:sequence"/>'
+            result,
+            '<input type="hidden" name="__end__" value="name:sequence"/>',
         )
 
     def test_start_rename_withname(self):
@@ -660,7 +671,8 @@ class TestField(unittest.TestCase):
         field = self._makeOne(schema)
         result = field.start_rename("foo")
         self.assertEqual(
-            result, '<input type="hidden" name="__start__" value="foo:rename"/>'
+            result,
+            '<input type="hidden" name="__start__" value="foo:rename"/>',
         )
 
     def test_start_rename_withoutname(self):
@@ -668,7 +680,8 @@ class TestField(unittest.TestCase):
         field = self._makeOne(schema)
         result = field.start_rename()
         self.assertEqual(
-            result, '<input type="hidden" name="__start__" value="name:rename"/>'
+            result,
+            '<input type="hidden" name="__start__" value="name:rename"/>',
         )
 
     def test_end_rename_withname(self):

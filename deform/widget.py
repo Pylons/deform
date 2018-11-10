@@ -69,7 +69,9 @@ class _FieldStorage(SchemaType):
         return cstruct
 
 
-_sequence_of_strings = SchemaNode(Sequence(), SchemaNode(_PossiblyEmptyString()))
+_sequence_of_strings = SchemaNode(
+    Sequence(), SchemaNode(_PossiblyEmptyString())
+)
 
 
 class Widget(object):
@@ -455,7 +457,8 @@ class AutocompleteInputWidget(Widget):
     def serialize(self, field, cstruct, **kw):
         if "delay" in kw or getattr(self, "delay", None):
             raise ValueError(
-                "AutocompleteWidget does not support *delay* parameter " "any longer."
+                "AutocompleteWidget does not support *delay* parameter "
+                "any longer."
             )
         if cstruct in (null, None):
             cstruct = ""
@@ -539,7 +542,9 @@ class TimeInputWidget(Widget):
             cstruct = ""
         readonly = kw.get("readonly", self.readonly)
         template = readonly and self.readonly_template or self.template
-        options = dict(kw.get("options") or self.options or self.default_options)
+        options = dict(
+            kw.get("options") or self.options or self.default_options
+        )
         options["formatSubmit"] = "HH:i"
         kw.setdefault("options_json", json.dumps(options))
         values = self.get_template_values(field, cstruct, kw)
@@ -600,7 +605,9 @@ class DateInputWidget(Widget):
             cstruct = ""
         readonly = kw.get("readonly", self.readonly)
         template = readonly and self.readonly_template or self.template
-        options = dict(kw.get("options") or self.options or self.default_options)
+        options = dict(
+            kw.get("options") or self.options or self.default_options
+        )
         options["formatSubmit"] = "yyyy-mm-dd"
         kw.setdefault("options_json", json.dumps(options))
         values = self.get_template_values(field, cstruct, kw)
@@ -686,13 +693,17 @@ class DateTimeInputWidget(Widget):
             kw["date"] = kw["time"] = ""
 
         date_options = dict(
-            kw.get("date_options") or self.date_options or self.default_date_options
+            kw.get("date_options")
+            or self.date_options
+            or self.default_date_options
         )
         date_options["formatSubmit"] = "yyyy-mm-dd"
         kw["date_options_json"] = json.dumps(date_options)
 
         time_options = dict(
-            kw.get("time_options") or self.time_options or self.default_time_options
+            kw.get("time_options")
+            or self.time_options
+            or self.default_time_options
         )
         time_options["formatSubmit"] = "HH:i"
         kw["time_options_json"] = json.dumps(time_options)
@@ -1574,7 +1585,9 @@ class SequenceWidget(Widget):
         template = readonly and self.readonly_template or self.template
         translate = field.translate
         subitem_title = kw.get("subitem_title", item_field.title)
-        subitem_description = kw.get("subitem_description", item_field.description)
+        subitem_description = kw.get(
+            "subitem_description", item_field.description
+        )
         add_subitem_text_template = kw.get(
             "add_subitem_text_template", self.add_subitem_text_template
         )
@@ -1691,7 +1704,9 @@ class FileUploadWidget(Widget):
         self.tmpstore = tmpstore
 
     def random_id(self):
-        return "".join([random.choice(uppercase + string.digits) for i in range(10)])
+        return "".join(
+            [random.choice(uppercase + string.digits) for i in range(10)]
+        )
 
     def serialize(self, field, cstruct, **kw):
         if cstruct in (null, None):
@@ -2056,7 +2071,9 @@ class ResourceRegistry(object):
         for requirement, version in requirements:
             tmp = self.registry.get(requirement)
             if tmp is None:
-                raise ValueError("Cannot resolve widget requirement %r" % requirement)
+                raise ValueError(
+                    "Cannot resolve widget requirement %r" % requirement
+                )
             versioned = tmp.get(version)
             if versioned is None:
                 raise ValueError(
@@ -2101,7 +2118,9 @@ default_resources = {
         }
     },
     "modernizr": {
-        None: {"js": "deform:static/scripts/modernizr.custom.input-types-and-atts.js"}
+        None: {
+            "js": "deform:static/scripts/modernizr.custom.input-types-and-atts.js"  # noQA
+        }
     },
     "pickadate": {
         None: {

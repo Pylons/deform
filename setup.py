@@ -54,7 +54,13 @@ lint_extras = [
 testing_extras = ["nose", "coverage", "beautifulsoup4", "flaky"]
 
 # Needed to run deformdemo tests
-functional_testing_extra = ["selenium<3", "pyramid", "pygments", "waitress", "lingua"]
+functional_testing_extra = [
+    "selenium<3",
+    "pyramid",
+    "pygments",
+    "waitress",
+    "lingua",
+]
 
 docs_extras = [
     "Sphinx >= 1.7.4",

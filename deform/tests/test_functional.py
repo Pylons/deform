@@ -76,7 +76,10 @@ class TestFunctional(unittest.TestCase):
     def test_render_not_empty(self):
         schema = self._makeSchema()
         form = self._makeForm(schema)
-        appstruct = {"cool": False, "series": {"dates": [datetime.date(2010, 3, 21)]}}
+        appstruct = {
+            "cool": False,
+            "series": {"dates": [datetime.date(2010, 3, 21)]},
+        }
         html = form.render(appstruct)
         soup = self._soupify(html)
         form = soup.form
@@ -117,7 +120,10 @@ class TestFunctional(unittest.TestCase):
         form = self._makeForm(schema)
         result = form.widget.deserialize(form, filled)
         expected = {
-            "series": {"dates": ["2008-10-12", "2009-10-12"], "name": "date series 1"},
+            "series": {
+                "dates": ["2008-10-12", "2009-10-12"],
+                "name": "date series 1",
+            },
             "cool": "false",
             "name": "project1",
             "title": "Cool project",
@@ -139,7 +145,9 @@ class TestFunctional(unittest.TestCase):
         self.assertEqual(form.children[0].error, e.children[0])
         self.assertEqual(form.children[1].error, e.children[1])
         self.assertEqual(form.children[3].error, e.children[2])
-        self.assertEqual(form.children[3].children[0].error, e.children[2].children[0])
+        self.assertEqual(
+            form.children[3].children[0].error, e.children[2].children[0]
+        )
         self.assertEqual(
             ve.cstruct,
             {
@@ -238,7 +246,9 @@ class BlogPostSchema(colander.Schema):
 class IntSchema(colander.Schema):
     int_field = colander.SchemaNode(
         colander.Int(),
-        widget=deform.widget.RadioChoiceWidget(values=((0, "zero"), (1, "one"))),
+        widget=deform.widget.RadioChoiceWidget(
+            values=((0, "zero"), (1, "one"))
+        ),
     )
 
 
@@ -257,7 +267,9 @@ class TestSchemas(unittest.TestCase):
 
         result_with_checked = form.render({"int_field": 1})
         value_index = result_with_checked.index('value="1"')
-        checked_index = result_with_checked.index('checked="True"', value_index)
+        checked_index = result_with_checked.index(
+            'checked="True"', value_index
+        )
         self.assertTrue(checked_index > 0)
 
 
@@ -272,12 +284,17 @@ class TestDeferredFunction(unittest.TestCase):
         )
         self.assertEqual(schema["date"].missing, datetime.date.today())
         self.assertEqual(schema["date"].validator.max, datetime.date.max)
-        self.assertEqual(schema["date"].widget.__class__.__name__, "DateInputWidget")
         self.assertEqual(
-            schema["body"].description, "Blog post body (no longer than 5000 bytes)"
+            schema["date"].widget.__class__.__name__, "DateInputWidget"
+        )
+        self.assertEqual(
+            schema["body"].description,
+            "Blog post body (no longer than 5000 bytes)",
         )
         self.assertEqual(schema["body"].validator.max, 5000)
-        self.assertEqual(schema["body"].widget.__class__.__name__, "RichTextWidget")
+        self.assertEqual(
+            schema["body"].widget.__class__.__name__, "RichTextWidget"
+        )
         self.assertEqual(schema["category"].validator.choices, ["one", "two"])
         self.assertEqual(
             schema["category"].widget.values, [("one", "One"), ("two", "Two")]

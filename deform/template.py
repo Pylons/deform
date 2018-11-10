@@ -23,7 +23,9 @@ class ZPTTemplateLoader(TemplateLoader):
             if not ext:
                 filename = filename + ".pt"
         try:
-            return super(ZPTTemplateLoader, self).load(filename, *args, **kwargs)
+            return super(ZPTTemplateLoader, self).load(
+                filename, *args, **kwargs
+            )
         except ValueError:
             raise TemplateError(filename)
 

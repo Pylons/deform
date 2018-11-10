@@ -107,7 +107,11 @@ class TestIssues(unittest.TestCase):
             raise colander.Invalid(node, "Username does not match password")
 
         loginform = LoginForm(validator=validate_password)
-        data = [("__formid__", "deform"), ("username", "kai"), ("password", "123")]
+        data = [
+            ("__formid__", "deform"),
+            ("username", "kai"),
+            ("password", "123"),
+        ]
         try:
             deform.Form(loginform).validate(data)
         except deform.ValidationFailure as e:
@@ -126,7 +130,8 @@ class TestIssues(unittest.TestCase):
         # check that title occurs exactly once in rendered output
         soup = BeautifulSoup(html, "html.parser")
         self.assertEqual(
-            len([string for string in soup.strings if schema.title in string]), 1
+            len([string for string in soup.strings if schema.title in string]),
+            1,
         )
 
 
