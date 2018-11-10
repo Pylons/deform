@@ -29,7 +29,8 @@
   <input type="hidden" name="__start__"
          value="${field.name}:sequence"
          class="deform-proto"
-         tal:attributes="prototype prototype"/>
+         tal:attributes="prototype prototype;
+         				 attributes|field.widget.attributes|{};"/>
 
   <div class="panel panel-default">
     <div class="panel-heading">${title}</div>
