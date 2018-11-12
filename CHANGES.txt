@@ -1,6 +1,10 @@
 2.0.7 (unreleased)
 ------------------
 
+
+- Add `tags` option support to `Select2Widget`
+  See https://github.com/Pylons/deform/pull/373
+
 - Change Python 3.7 to use stable version, 3.8-dev as allowed failure, in
   Travis.
   See https://github.com/Pylons/deform/pull/377

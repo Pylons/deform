@@ -702,10 +702,10 @@ class DateTimeInputWidget(Widget):
 
         time_options = dict(
             kw.get("time_options")
-            or self.time_options
-            or self.default_time_options
+            or self.time_options or
+            self.default_time_options
         )
-        time_options["formatSubmit"] = "HH:i"
+        time_options['formatSubmit'] = 'HH:i'
         kw["time_options_json"] = json.dumps(time_options)
 
         values = self.get_template_values(field, cstruct, kw)
@@ -1135,8 +1135,23 @@ class SelectWidget(Widget):
 
 
 class Select2Widget(SelectWidget):
+    """
+    Renders ``<select>`` field based on a predefined set of values using
+    `select2 <https://select2.org/>`_ library.
+
+    **Attributes/Arguments**
+
+    Same as :func:`~deform.widget.SelectWidget`, with some extra options
+    listed here.
+
+    tags: *bool*
+        Allow dynamic option creation ( default: ``False`` ).
+        See `select2 docs on tagging <https://select2.org/tagging>`_ for
+        more details.
+    """
     template = "select2"
     requirements = (("deform", None), ("select2", None))
+
 
 
 class RadioChoiceWidget(SelectWidget):
