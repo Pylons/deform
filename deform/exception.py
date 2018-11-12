@@ -1,3 +1,6 @@
+"""Deform exceptions."""
+
+
 class ValidationFailure(Exception):
     """
     The exception raised by :meth:`deform.widget.Widget.validate`
@@ -20,6 +23,7 @@ class ValidationFailure(Exception):
        :meth:`deform.schema.SchemaNode.deserialize` which caused
        this exception to need to be raised.
     """
+
     def __init__(self, field, cstruct, error):
         Exception.__init__(self)
         self.field = field
@@ -36,6 +40,6 @@ class ValidationFailure(Exception):
         """
         return self.field.widget.serialize(self.field, self.cstruct, **kw)
 
+
 class TemplateError(Exception):
     pass
-

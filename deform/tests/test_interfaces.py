@@ -1,8 +1,12 @@
+"""Interfaces tests."""
+# Standard Library
 import unittest
+
 
 class TestFileUploadTempStore(unittest.TestCase):
     def _makeOne(self):
         from deform.interfaces import FileUploadTempStore
+
         return FileUploadTempStore()
 
     def test_all_empty_funcs(self):
