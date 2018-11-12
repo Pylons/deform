@@ -9,14 +9,16 @@
       <span class="input-group-addon" i18n:translate="">Date</span>
       <input type="text" name="date" value="${date}"
              class="span2 form-control ${css_class or ''} hasDatepicker"
-             tal:attributes="style style"
+             tal:attributes="style style;
+             				 date_attributes|field.widget.date_attributes|{}"
              id="${oid}-date"/>
     </div></div>
     <div class="col-xs-6"><div class="input-group">
       <span class="input-group-addon" i18n:translate="">Time</span>
       <input type="text" name="time" value="${time}"
              class="span2 form-control ${css_class or ''} hasDatepicker"
-             tal:attributes="style style"
+             tal:attributes="style style;
+             				 time_attributes|field.widget.time_attributes|{}"
              id="${oid}-time"/>
     </div></div>
   </div>

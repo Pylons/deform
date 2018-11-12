@@ -10,7 +10,8 @@
          value="${cstruct}"
          tal:attributes="size size;
                          class string: ${css_class or ''} form-control hasDatepicker;
-                         style style"
+                         style style;
+                         attributes|field.widget.attributes|{};"
          id="${oid}"/>
   ${field.end_mapping()}
   <script type="text/javascript">

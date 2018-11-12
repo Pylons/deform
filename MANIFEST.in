@@ -4,8 +4,11 @@ prune docs/_build
 
 include *.rst
 include *.txt
-include contributing.md
+include *.md
 include lingua.ini tox.ini
 include i18n.sh run-selenium-tests.bash
+include pyproject.toml
+include .coveragerc .isort.cfg .flake8
+recursive-include *.js
 
 global-exclude __pycache__ *.py[cod]

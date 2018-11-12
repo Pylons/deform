@@ -15,7 +15,8 @@
   tal:attributes="autocomplete autocomplete;
                   style style;
                   class css_class;
-                  action action;"
+                  action action;
+                  attributes|field.widget.attributes|{};"
   id="${formid}"
   method="${method}"
   enctype="multipart/form-data"
