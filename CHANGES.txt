@@ -1,7 +1,6 @@
 2.0.7 (unreleased)
 ------------------
 
-
 - Add `tags` option support to `Select2Widget`
   See https://github.com/Pylons/deform/pull/373
 
@@ -24,9 +23,6 @@
 
 - Make date_submit and time_submit optional in DateTimeInputWidget
   See https://github.com/Pylons/deform/pull/369
-
-- Remove pinning of iso8601 to 0.1.11
-  See https://github.com/Pylons/deform/pull/364
 
 - Remove pinning of iso8601 to 0.1.11
   See https://github.com/Pylons/deform/pull/364
