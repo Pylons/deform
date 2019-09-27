@@ -185,6 +185,12 @@ class Button(object):
         attribute of the button. For example, if ``css_class`` was
         ``btn-danger`` then the resulting default class becomes
         ``btn btn-danger``. Default: ``None`` (use default class).
+
+    attributes
+        HTML5 attributes passed in as a dictionary. This is especially
+        useful for a Cancel button where you do not want the client to
+        validate the form inputs, for example
+        ``attributes={"formnovalidate": "formnovalidate"}``.
     """
 
     def __init__(
@@ -198,6 +204,8 @@ class Button(object):
         icon=None,
         attributes=None,
     ):
+        if attributes is None:
+            attributes = {}
         if title is None:
             title = name.capitalize()
         name = re.sub(r"\s", "_", name)
