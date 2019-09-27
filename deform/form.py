@@ -196,6 +196,7 @@ class Button(object):
         disabled=False,
         css_class=None,
         icon=None,
+        attributes=None,
     ):
         if title is None:
             title = name.capitalize()
@@ -209,3 +210,4 @@ class Button(object):
         self.disabled = disabled
         self.css_class = css_class
         self.icon = icon
+        self.attributes = attributes
