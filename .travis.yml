@@ -5,6 +5,9 @@ sudo: false
 addons:
   firefox: "43.0"
 
+services:
+  - xvfb
+
 matrix:
   include:
     - python: "2.7"
@@ -46,10 +49,9 @@ install:
 # For Selenium
 # https://docs.travis-ci.com/user/gui-and-headless-browsers/
 # http://stackoverflow.com/a/34703838/315168
+# https://benlimmer.com/2019/01/14/travis-ci-xvfb/
 before_script:
   - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - sleep 3 # give xvfb some time to start
   - echo "Extracting firefox and setting PATH variable..."
   - tar -xjf /tmp/firefox-43.0.tar.bz2 --directory /tmp
   - export PATH="/tmp/firefox:$PATH"

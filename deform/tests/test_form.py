@@ -33,6 +33,7 @@ class TestForm(unittest.TestCase):
         self.assertEqual(button.value, "button")
         self.assertEqual(button.title, "Button")
         self.assertEqual(button.css_class, None)
+        self.assertEqual(button.attributes, {})
 
     def test_ctor_buttons_notstrings(self):
         from deform.widget import FormWidget
