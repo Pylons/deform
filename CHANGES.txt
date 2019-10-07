@@ -1,7 +1,8 @@
 2.0.8 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Add HTML5 attributes to buttons.
+  See https://github.com/Pylons/deform/pull/390
 
 
 2.0.7 (2018-11-14)
