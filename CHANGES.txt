@@ -1,4 +1,4 @@
-2.0.8 (unreleased)
+2.0.8 (2019-10-07)
 ------------------
 
 - Add HTML5 attributes to buttons.
