@@ -136,7 +136,7 @@ widget on the page to function properly.
 
 The first element in each two-tuple represents a *requirement name*.
 It represents a logical reference to one *or more* Javascript or CSS
-resources.  The second element in each two-tuple is the reqested
+resources.  The second element in each two-tuple is the requested
 version of the requirement.  It may be ``None``, in which case the
 version required is unspecified.  When the version required is
 unspecified, a default version of the resource set will be chosen.
