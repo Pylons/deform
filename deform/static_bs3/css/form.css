@@ -1,0 +1,69 @@
+.deform-seq-add:visited {
+   color: blue;
+}
+
+.deform-replaces {
+    float: left;
+}
+
+.deform-set-item {
+    padding: 1px;
+}
+
+form .required {
+    font-weight: bold;
+}
+
+form .required:after {
+    color: #e32;
+    content: '*';
+    display:inline;
+}
+
+/* ugh, terrible selector coming up */
+
+.hasDatepicker[readonly] {
+    cursor: pointer !important;
+}
+
+form .deform-readonly-text {
+    font-style: italic;
+}
+
+/* styles for file_upload.js, file_upload.pt */
+.btn-file {
+    background-color: #f2f2f2;
+}
+.btn-file:hover {
+    background-color: #ededed;
+}
+.upload-filename[readonly] {
+    background-color: #fdfdfd;
+}
+
+
+/**
+ * Accordion styling
+ *
+ * http://stackoverflow.com/a/18568997/315168
+ */
+
+
+.deform-collapse-heading > a {
+    display: block; /* Make target area more touch friendly */
+    text-decoration: none;
+}
+
+
+.deform-collapse-heading > a:after {
+    /* symbol for "opening" panels */
+    font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
+    float: right;        /* adjust as needed */
+    content: "\e080";    /* adjust as needed, taken from bootstrap.css */
+
+}
+
+.deform-collapse-heading > a[aria-expanded="true"]:after {
+    /* symbol for "collapsed" panels */
+    content: "\e114";
+}
