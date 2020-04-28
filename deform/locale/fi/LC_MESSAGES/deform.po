@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: deform 2.0a2\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-11-19 13:28+0200\n"
+"POT-Creation-Date: 2020-04-28 17:18-0500\n"
 "PO-Revision-Date: 2015-10-04 09:43+0200\n"
 "Last-Translator: Antti Haapala <antti.haapala@anttipatterns.fi>\n"
 "Language-Team: Finnish\n"
@@ -19,89 +19,73 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.7.5\n"
 
-#: deform/schema.py:109
-#, python-format
-msgid "${value} is not a dictionary"
-msgstr "${value} ei ole tyyppiä sanakirja (dictionary)."
-
-#: deform/schema.py:116
-#, python-format
-msgid "${value} has no ${key} key"
-msgstr "Arvolla ${value} ei ole avainta ${key}"
-
-#: deform/widget.py:718 deform/widget.py:1800
+#: deform/widget.py:733 deform/widget.py:1866
 msgid "Incomplete date"
 msgstr "Virheellinen päivämäärä"
 
-#: deform/widget.py:721
+#: deform/widget.py:736
 msgid "Incomplete time"
 msgstr "Virheellinen aika"
 
-#: deform/widget.py:1253
+#: deform/widget.py:1304
 msgid "Fields did not match"
 msgstr "Kentät eivät vastaa toisiaan"
 
-#: deform/widget.py:1254
+#: deform/widget.py:1305
 msgid "Value"
 msgstr "Arvo"
 
-#: deform/widget.py:1255
+#: deform/widget.py:1306
 msgid "Confirm Value"
 msgstr "Vahvista arvo"
 
-#: deform/widget.py:1321
+#: deform/widget.py:1375
 msgid "Password did not match confirm"
 msgstr "Salasana ei vastannut varmistusta"
 
-#: deform/widget.py:1485
+#: deform/widget.py:1545
 #, python-format
 msgid "Add ${subitem_title}"
 msgstr "Lisää ${subitem_title}"
 
-#: deform/templates/checked_password.pt:15
-msgid "Password"
-msgstr "Salasana"
+#: deform/schema.py:113
+#, python-format
+msgid "${value} is not a dictionary"
+msgstr "${value} ei ole tyyppiä sanakirja (dictionary)."
 
-#: deform/templates/checked_password.pt:25
-msgid "Confirm Password"
-msgstr "Vahvista salasana"
+#: deform/schema.py:119
+#, python-format
+msgid "${value} has no ${key} key"
+msgstr "Arvolla ${value} ei ole avainta ${key}"
+
+#: deform/tests/test_widget.py:1841
+#, python-format
+msgid "Yo ${subitem_title}"
+msgstr "Yo ${subitem_title}"
 
 #: deform/templates/dateparts.pt:10
 msgid "Year"
 msgstr "Vuosi"
 
-#: deform/templates/dateparts.pt:18
+#: deform/templates/dateparts.pt:19
 msgid "Month"
 msgstr "Kuukausi"
 
-#: deform/templates/dateparts.pt:26
+#: deform/templates/dateparts.pt:28
 msgid "Day"
 msgstr "Päivä"
 
-#: deform/templates/datetimeinput.pt:9
-msgid "Date"
-msgstr "Päivämäärä"
-
-#: deform/templates/datetimeinput.pt:16
-msgid "Time"
-msgstr "Kellonaika"
-
-#: deform/templates/form.pt:35
+#: deform/templates/form.pt:36
 msgid "There was a problem with your submission"
 msgstr "Tietoja lähetettäessä tapahtui virhe"
 
-#: deform/templates/form.pt:37
+#: deform/templates/form.pt:38
 msgid "Errors have been highlighted below"
 msgstr ""
 
-#: deform/templates/mapping.pt:13 deform/templates/mapping_accordion.pt:29
+#: deform/templates/mapping_accordion.pt:29 deform/templates/mapping.pt:13
 msgid "There was a problem with this section"
 msgstr "Tässä osiossa oli virhe"
-
-#. Default: en
-#: deform/templates/richtext.pt:30
-msgid "language-code"
-msgstr "fi"
 
 #: deform/templates/sequence_item.pt:26
 msgid "Reorder (via drag and drop)"
@@ -111,6 +95,31 @@ msgstr "Järjestele (raahaa ja pudota)"
 msgid "Remove"
 msgstr "Poista"
 
+#: deform/templates/checked_password.pt:16
+msgid "Password"
+msgstr "Salasana"
+
+#: deform/templates/checked_password.pt:27
+msgid "Confirm Password"
+msgstr "Vahvista salasana"
+
+#: deform/templates/datetimeinput.pt:9
+msgid "Date"
+msgstr "Päivämäärä"
+
+#: deform/templates/datetimeinput.pt:17
+msgid "Time"
+msgstr "Kellonaika"
+
+#. Default: en
+#: deform/templates/richtext.pt:30
+msgid "language-code"
+msgstr "fi"
+
+#: deform/templates/readonly/checked_password.pt:4
+msgid "Password not displayed."
+msgstr "Salasanaa ei näytetä."
+
 #: deform/templates/readonly/checkbox.pt:8
 msgid "True"
 msgstr "Kyllä"
@@ -118,12 +127,3 @@ msgstr "Kyllä"
 #: deform/templates/readonly/checkbox.pt:12
 msgid "False"
 msgstr "Ei"
-
-#: deform/templates/readonly/checked_password.pt:4
-msgid "Password not displayed."
-msgstr "Salasanaa ei näytetä."
-
-#: deform/tests/test_widget.py:1752
-#, python-format
-msgid "Yo ${subitem_title}"
-msgstr "Yo ${subitem_title}"

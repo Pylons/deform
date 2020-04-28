@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: deform 2.0a2\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-11-19 13:28+0200\n"
+"POT-Creation-Date: 2020-04-28 17:18-0500\n"
 "PO-Revision-Date: 2015-03-04 10:46+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: el <LL@li.org>\n"
@@ -18,89 +18,73 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 1.3\n"
 
-#: deform/schema.py:109
-#, python-format
-msgid "${value} is not a dictionary"
-msgstr "${value} δέν είναι dictionary"
-
-#: deform/schema.py:116
-#, python-format
-msgid "${value} has no ${key} key"
-msgstr "Το ${key} δέν είναι στο ${value}"
-
-#: deform/widget.py:718 deform/widget.py:1800
+#: deform/widget.py:733 deform/widget.py:1866
 msgid "Incomplete date"
 msgstr "Μη ολοκληρομένα δεδωμένα"
 
-#: deform/widget.py:721
+#: deform/widget.py:736
 msgid "Incomplete time"
 msgstr "Μη ολοκληρομένη ώρα"
 
-#: deform/widget.py:1253
+#: deform/widget.py:1304
 msgid "Fields did not match"
 msgstr "Τα πεδία δέν ειναι ίδια"
 
-#: deform/widget.py:1254
+#: deform/widget.py:1305
 msgid "Value"
 msgstr "Τιμή"
 
-#: deform/widget.py:1255
+#: deform/widget.py:1306
 msgid "Confirm Value"
 msgstr "Επιβεβαίωση Τιμής"
 
-#: deform/widget.py:1321
+#: deform/widget.py:1375
 msgid "Password did not match confirm"
 msgstr "Το συνθηματικό δέν είναι το ίδιο"
 
-#: deform/widget.py:1485
+#: deform/widget.py:1545
 #, python-format
 msgid "Add ${subitem_title}"
 msgstr "Πρόσθεσε ${subitem_title}"
 
-#: deform/templates/checked_password.pt:15
-msgid "Password"
-msgstr "Συνθηματικό"
+#: deform/schema.py:113
+#, python-format
+msgid "${value} is not a dictionary"
+msgstr "${value} δέν είναι dictionary"
 
-#: deform/templates/checked_password.pt:25
-msgid "Confirm Password"
-msgstr "Επιβεβαιωση συνθηματικού"
+#: deform/schema.py:119
+#, python-format
+msgid "${value} has no ${key} key"
+msgstr "Το ${key} δέν είναι στο ${value}"
+
+#: deform/tests/test_widget.py:1841
+#, python-format
+msgid "Yo ${subitem_title}"
+msgstr "Yo ${subitem_title}"
 
 #: deform/templates/dateparts.pt:10
 msgid "Year"
 msgstr "Χρόνος"
 
-#: deform/templates/dateparts.pt:18
+#: deform/templates/dateparts.pt:19
 msgid "Month"
 msgstr "Μήνας"
 
-#: deform/templates/dateparts.pt:26
+#: deform/templates/dateparts.pt:28
 msgid "Day"
 msgstr "Μέρα"
 
-#: deform/templates/datetimeinput.pt:9
-msgid "Date"
-msgstr "Ημερομηνία"
-
-#: deform/templates/datetimeinput.pt:16
-msgid "Time"
-msgstr "Όρα"
-
-#: deform/templates/form.pt:35
+#: deform/templates/form.pt:36
 msgid "There was a problem with your submission"
 msgstr "Υπήρχουν πρόβλήματα με την δεδομένα"
 
-#: deform/templates/form.pt:37
+#: deform/templates/form.pt:38
 msgid "Errors have been highlighted below"
 msgstr ""
 
-#: deform/templates/mapping.pt:13 deform/templates/mapping_accordion.pt:29
+#: deform/templates/mapping_accordion.pt:29 deform/templates/mapping.pt:13
 msgid "There was a problem with this section"
 msgstr "Υπάρχει πρόβλημα σε αυτό το σημείο"
-
-#. Default: en
-#: deform/templates/richtext.pt:30
-msgid "language-code"
-msgstr ""
 
 #: deform/templates/sequence_item.pt:26
 msgid "Reorder (via drag and drop)"
@@ -110,6 +94,31 @@ msgstr "Αλλάξτε την σειρά (με το ποντίκι)"
 msgid "Remove"
 msgstr "Αφαίρεση"
 
+#: deform/templates/checked_password.pt:16
+msgid "Password"
+msgstr "Συνθηματικό"
+
+#: deform/templates/checked_password.pt:27
+msgid "Confirm Password"
+msgstr "Επιβεβαιωση συνθηματικού"
+
+#: deform/templates/datetimeinput.pt:9
+msgid "Date"
+msgstr "Ημερομηνία"
+
+#: deform/templates/datetimeinput.pt:17
+msgid "Time"
+msgstr "Όρα"
+
+#. Default: en
+#: deform/templates/richtext.pt:30
+msgid "language-code"
+msgstr ""
+
+#: deform/templates/readonly/checked_password.pt:4
+msgid "Password not displayed."
+msgstr "Συνθηματικό δεν εμφανίζεται"
+
 #: deform/templates/readonly/checkbox.pt:8
 msgid "True"
 msgstr "Αλήθες"
@@ -117,12 +126,3 @@ msgstr "Αλήθες"
 #: deform/templates/readonly/checkbox.pt:12
 msgid "False"
 msgstr "Ψευδής"
-
-#: deform/templates/readonly/checked_password.pt:4
-msgid "Password not displayed."
-msgstr "Συνθηματικό δεν εμφανίζεται"
-
-#: deform/tests/test_widget.py:1752
-#, python-format
-msgid "Yo ${subitem_title}"
-msgstr "Yo ${subitem_title}"

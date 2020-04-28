@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: deform 0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-11-19 13:28+0200\n"
+"POT-Creation-Date: 2020-04-28 17:18-0500\n"
 "PO-Revision-Date: 2011-11-08 15:55+0100\n"
 "Last-Translator: Wichert Akkerman <wichert@wiggy.net>\n"
 "Language-Team: nl <LL@li.org>\n"
@@ -18,90 +18,74 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: deform/schema.py:109
-#, python-format
-msgid "${value} is not a dictionary"
-msgstr "${value} is geen mapping"
-
-#: deform/schema.py:116
-#, python-format
-msgid "${value} has no ${key} key"
-msgstr "${value} heeft geen ${key} sleutel"
-
-#: deform/widget.py:718 deform/widget.py:1800
+#: deform/widget.py:733 deform/widget.py:1866
 msgid "Incomplete date"
 msgstr "Vul de hele datum in"
 
-#: deform/widget.py:721
+#: deform/widget.py:736
 #, fuzzy
 msgid "Incomplete time"
 msgstr "Vul de hele datum in"
 
-#: deform/widget.py:1253
+#: deform/widget.py:1304
 msgid "Fields did not match"
 msgstr "Vul twee keer hetzelfde in"
 
-#: deform/widget.py:1254
+#: deform/widget.py:1305
 msgid "Value"
 msgstr "Waarde"
 
-#: deform/widget.py:1255
+#: deform/widget.py:1306
 msgid "Confirm Value"
 msgstr "Nogmaals"
 
-#: deform/widget.py:1321
+#: deform/widget.py:1375
 msgid "Password did not match confirm"
 msgstr "Wachtwoordbevestiging komt niet overeen"
 
-#: deform/widget.py:1485
+#: deform/widget.py:1545
 #, python-format
 msgid "Add ${subitem_title}"
 msgstr "Voeg ${subitem_title} toe"
 
-#: deform/templates/checked_password.pt:15
-msgid "Password"
-msgstr "Wachtwoord"
+#: deform/schema.py:113
+#, python-format
+msgid "${value} is not a dictionary"
+msgstr "${value} is geen mapping"
 
-#: deform/templates/checked_password.pt:25
-msgid "Confirm Password"
-msgstr "Bevestig wachtwoord"
+#: deform/schema.py:119
+#, python-format
+msgid "${value} has no ${key} key"
+msgstr "${value} heeft geen ${key} sleutel"
+
+#: deform/tests/test_widget.py:1841
+#, fuzzy, python-format
+msgid "Yo ${subitem_title}"
+msgstr "Voeg ${subitem_title} toe"
 
 #: deform/templates/dateparts.pt:10
 msgid "Year"
 msgstr "Jaar"
 
-#: deform/templates/dateparts.pt:18
+#: deform/templates/dateparts.pt:19
 msgid "Month"
 msgstr "Maand"
 
-#: deform/templates/dateparts.pt:26
+#: deform/templates/dateparts.pt:28
 msgid "Day"
 msgstr "Dag"
 
-#: deform/templates/datetimeinput.pt:9
-msgid "Date"
-msgstr ""
-
-#: deform/templates/datetimeinput.pt:16
-msgid "Time"
-msgstr ""
-
-#: deform/templates/form.pt:35
+#: deform/templates/form.pt:36
 msgid "There was a problem with your submission"
 msgstr "Er zaten één of meer fouten in uw formulier"
 
-#: deform/templates/form.pt:37
+#: deform/templates/form.pt:38
 msgid "Errors have been highlighted below"
 msgstr "Fouten zijn hier onder aangegeven"
 
-#: deform/templates/mapping.pt:13 deform/templates/mapping_accordion.pt:29
+#: deform/templates/mapping_accordion.pt:29 deform/templates/mapping.pt:13
 msgid "There was a problem with this section"
 msgstr "Er zaten één of meer fouten in deze sectie"
-
-#. Default: en
-#: deform/templates/richtext.pt:30
-msgid "language-code"
-msgstr "nl"
 
 #: deform/templates/sequence_item.pt:26
 msgid "Reorder (via drag and drop)"
@@ -111,6 +95,31 @@ msgstr ""
 msgid "Remove"
 msgstr "Verwijderen"
 
+#: deform/templates/checked_password.pt:16
+msgid "Password"
+msgstr "Wachtwoord"
+
+#: deform/templates/checked_password.pt:27
+msgid "Confirm Password"
+msgstr "Bevestig wachtwoord"
+
+#: deform/templates/datetimeinput.pt:9
+msgid "Date"
+msgstr ""
+
+#: deform/templates/datetimeinput.pt:17
+msgid "Time"
+msgstr ""
+
+#. Default: en
+#: deform/templates/richtext.pt:30
+msgid "language-code"
+msgstr "nl"
+
+#: deform/templates/readonly/checked_password.pt:4
+msgid "Password not displayed."
+msgstr "Wachtwoord wordt niet getoond"
+
 #: deform/templates/readonly/checkbox.pt:8
 msgid "True"
 msgstr ""
@@ -118,15 +127,6 @@ msgstr ""
 #: deform/templates/readonly/checkbox.pt:12
 msgid "False"
 msgstr ""
-
-#: deform/templates/readonly/checked_password.pt:4
-msgid "Password not displayed."
-msgstr "Wachtwoord wordt niet getoond"
-
-#: deform/tests/test_widget.py:1752
-#, fuzzy, python-format
-msgid "Yo ${subitem_title}"
-msgstr "Voeg ${subitem_title} toe"
 
 #~ msgid "${value} is not iterable"
 #~ msgstr "${value} is niet iteraarbaar"

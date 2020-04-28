@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: deform 0.0\n"
 "Report-Msgid-Bugs-To: repoze-dev@repoze.org\n"
-"POT-Creation-Date: 2016-11-19 13:28+0200\n"
+"POT-Creation-Date: 2020-04-28 17:18-0500\n"
 "PO-Revision-Date: 2011-11-08 15:55+0100\n"
 "Last-Translator: Erico Andrei <ericof@gmail.com>\n"
 "Language-Team: pt_BR <LL@li.org>\n"
@@ -18,90 +18,74 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: deform/schema.py:109
-#, python-format
-msgid "${value} is not a dictionary"
-msgstr "${value} não é um dicionário"
-
-#: deform/schema.py:116
-#, python-format
-msgid "${value} has no ${key} key"
-msgstr "${value} não possue a chave ${key}"
-
-#: deform/widget.py:718 deform/widget.py:1800
+#: deform/widget.py:733 deform/widget.py:1866
 msgid "Incomplete date"
 msgstr "Data incompleta"
 
-#: deform/widget.py:721
+#: deform/widget.py:736
 #, fuzzy
 msgid "Incomplete time"
 msgstr "Horário incompleto"
 
-#: deform/widget.py:1253
+#: deform/widget.py:1304
 msgid "Fields did not match"
 msgstr "Os campos não são iguais"
 
-#: deform/widget.py:1254
+#: deform/widget.py:1305
 msgid "Value"
 msgstr "Valor"
 
-#: deform/widget.py:1255
+#: deform/widget.py:1306
 msgid "Confirm Value"
 msgstr "Confirme o valor"
 
-#: deform/widget.py:1321
+#: deform/widget.py:1375
 msgid "Password did not match confirm"
 msgstr "As senhas não são iguais"
 
-#: deform/widget.py:1485
+#: deform/widget.py:1545
 #, python-format
 msgid "Add ${subitem_title}"
 msgstr "Adiciona ${subitem_title}"
 
-#: deform/templates/checked_password.pt:15
-msgid "Password"
-msgstr "Senha"
+#: deform/schema.py:113
+#, python-format
+msgid "${value} is not a dictionary"
+msgstr "${value} não é um dicionário"
 
-#: deform/templates/checked_password.pt:25
-msgid "Confirm Password"
-msgstr "Confirmação de Senha"
+#: deform/schema.py:119
+#, python-format
+msgid "${value} has no ${key} key"
+msgstr "${value} não possue a chave ${key}"
+
+#: deform/tests/test_widget.py:1841
+#, python-format
+msgid "Yo ${subitem_title}"
+msgstr "Yo ${subitem_title}"
 
 #: deform/templates/dateparts.pt:10
 msgid "Year"
 msgstr "Ano"
 
-#: deform/templates/dateparts.pt:18
+#: deform/templates/dateparts.pt:19
 msgid "Month"
 msgstr "Mês"
 
-#: deform/templates/dateparts.pt:26
+#: deform/templates/dateparts.pt:28
 msgid "Day"
 msgstr "Dia"
 
-#: deform/templates/datetimeinput.pt:9
-msgid "Date"
-msgstr "Data"
-
-#: deform/templates/datetimeinput.pt:16
-msgid "Time"
-msgstr "Horário"
-
-#: deform/templates/form.pt:35
+#: deform/templates/form.pt:36
 msgid "There was a problem with your submission"
 msgstr "Houve um problema ao processar o formulário"
 
-#: deform/templates/form.pt:37
+#: deform/templates/form.pt:38
 msgid "Errors have been highlighted below"
 msgstr "Os erros foram destacados abaixo"
 
-#: deform/templates/mapping.pt:13 deform/templates/mapping_accordion.pt:29
+#: deform/templates/mapping_accordion.pt:29 deform/templates/mapping.pt:13
 msgid "There was a problem with this section"
 msgstr "Houve um problema ao processar o formulário"
-
-#. Default: en
-#: deform/templates/richtext.pt:30
-msgid "language-code"
-msgstr "pt"
 
 #: deform/templates/sequence_item.pt:26
 msgid "Reorder (via drag and drop)"
@@ -111,6 +95,31 @@ msgstr "Reordenar (usando drag and drop)"
 msgid "Remove"
 msgstr "Remover"
 
+#: deform/templates/checked_password.pt:16
+msgid "Password"
+msgstr "Senha"
+
+#: deform/templates/checked_password.pt:27
+msgid "Confirm Password"
+msgstr "Confirmação de Senha"
+
+#: deform/templates/datetimeinput.pt:9
+msgid "Date"
+msgstr "Data"
+
+#: deform/templates/datetimeinput.pt:17
+msgid "Time"
+msgstr "Horário"
+
+#. Default: en
+#: deform/templates/richtext.pt:30
+msgid "language-code"
+msgstr "pt"
+
+#: deform/templates/readonly/checked_password.pt:4
+msgid "Password not displayed."
+msgstr "Senha não exibida"
+
 #: deform/templates/readonly/checkbox.pt:8
 msgid "True"
 msgstr "Verdadeiro"
@@ -118,15 +127,6 @@ msgstr "Verdadeiro"
 #: deform/templates/readonly/checkbox.pt:12
 msgid "False"
 msgstr "Falso"
-
-#: deform/templates/readonly/checked_password.pt:4
-msgid "Password not displayed."
-msgstr "Senha não exibida"
-
-#: deform/tests/test_widget.py:1752
-#, python-format
-msgid "Yo ${subitem_title}"
-msgstr "Yo ${subitem_title}"
 
 #~ msgid "${value} is not iterable"
 #~ msgstr "Iterações não podem ser feitas em ${value}"
