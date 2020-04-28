@@ -66,9 +66,11 @@ Glossary
      single HTTP request, so field objects are often used to maintain
      state information during the request.
 
+
    renderer
-     A callable with the signature ``(template_name, **kw)`` which is
-     capable of rendering a template for use in a deform widget.
+     A function which accepts a logical template name and a set of
+     keywords, with the signature ``(template_name, **kw)``, and
+     which returns the rendering of a deform widget template.
 
    default renderer
      The template :term:`renderer` used when no other renderer is

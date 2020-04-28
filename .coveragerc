@@ -1,10 +1,12 @@
 [run]
 branch = False
 source = codecov
+omit =
+    deform/checkbox_*.py
+    deform/dateinput_*.py
 
 [report]
 # These are being stressed out in deformdemo package
 omit =
     deform/schema.py
     deform/renderer.py
-    deform/checkbox_*.py
