@@ -6,10 +6,6 @@ Glossary
 .. glossary::
    :sorted:
 
-   renderer
-     A callable with the signature ``(template_name, **kw)`` which is
-     capable of rendering a template for use in a deform widget.
-
    cstruct
      Data serialized by :term:`Colander` to a representation suitable
      for consumption by the ``serialize`` method of a :mod:`deform`
@@ -71,8 +67,8 @@ Glossary
      state information during the request.
 
    renderer
-     A function which accepts a logical template name and a set of
-     keywords, and which returns the rendering of a widget template.
+     A callable with the signature ``(template_name, **kw)`` which is
+     capable of rendering a template for use in a deform widget.
 
    default renderer
      The template :term:`renderer` used when no other renderer is
