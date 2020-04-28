@@ -7,3 +7,4 @@ source = codecov
 omit =
     deform/schema.py
     deform/renderer.py
+    deform/checkbox_32bb822ccaed554768253405d5135c00.py
