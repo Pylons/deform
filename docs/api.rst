@@ -19,9 +19,6 @@ Form-Related
 
    .. automethod:: translate
 
-   .. automethod:: get_root
-      :noindex:
-
 .. autoclass:: Form
    :members:
 
