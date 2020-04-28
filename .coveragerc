@@ -2,6 +2,7 @@
 branch = False
 source = codecov
 omit =
+    deform/form_*.py
     deform/checkbox_*.py
     deform/dateinput_*.py
 
