@@ -20,7 +20,7 @@ Form-Related
    .. automethod:: translate
 
    .. automethod:: get_root
-       :noindex:
+      :noindex:
 
 .. autoclass:: Form
    :members:

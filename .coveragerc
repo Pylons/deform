@@ -3,6 +3,7 @@ branch = False
 source = codecov
 
 [report]
+ignore_errors = True
 # These are being stressed out in deformdemo package
 omit =
     deform/schema.py
