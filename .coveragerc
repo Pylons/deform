@@ -1,3 +1,11 @@
 [run]
+source =
+    deform
+
+[paths]
+source =
+    deform
 
 [report]
+omit =
+    deform/[a-z]*_[a-z0-9]*.py
