@@ -5,11 +5,11 @@ Deform
         :target: https://travis-ci.org/Pylons/deform
 
 .. image:: https://readthedocs.org/projects/deform/badge/?version=master
-        :target: http://docs.pylonsproject.org/projects/deform/en/master/
+        :target: https://docs.pylonsproject.org/projects/deform/en/master/
         :alt: Master Documentation Status
 
 .. image:: https://readthedocs.org/projects/deform/badge/?version=latest
-        :target: http://docs.pylonsproject.org/projects/deform/en/latest/
+        :target: https://docs.pylonsproject.org/projects/deform/en/latest/
         :alt: Latest Documentation Status
 
 .. contents:: :local:
