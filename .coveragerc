@@ -2,7 +2,7 @@
 source =
     deform
 omit =
-    deform/[a-z]*_[a-z0-9]*.py
+    */site-packages/*
 
 
 [paths]
@@ -14,5 +14,6 @@ omit =
     deform/renderer.py
     deform/schema.py
     deform/compat.py
-    deform/[a-z]*_[a-z0-9]*.py
-    /tmp/[a-z]*_[a-z0-9]*.py
+    deform/*[0-9]*
+    /tmp/*[0-9]*
+    */site-packages/*
