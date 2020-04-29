@@ -13,5 +13,6 @@ source =
 omit =
     deform/renderer.py
     deform/schema.py
+    deform/compat.py
     deform/[a-z]*_[a-z0-9]*.py
     /tmp/[a-z]*_[a-z0-9]*.py
