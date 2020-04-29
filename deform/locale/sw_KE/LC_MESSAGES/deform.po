@@ -1,0 +1,126 @@
+#
+# Swahili translations for PACKAGE package
+# This file is distributed under the same license as the PACKAGE package.
+# antony oduor <aowino@gmail.com>, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE 1.0\n"
+"POT-Creation-Date: 2016-11-19 13:28+0200\n"
+"PO-Revision-Date: 2020-04-28 23:06-0600\n"
+"Last-Translator: antony oduor <aowino@gmail.com>\n"
+"Language-Team: Swahili\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sw_KE\n"
+"Generated-By: Lingua 4.11\n"
+"X-Generator: Poedit 1.8.7.1\n"
+
+#: deform/schema.py:109
+#, python-format
+msgid "${value} is not a dictionary"
+msgstr "${value} sio safu-shirikishi"
+
+#: deform/schema.py:116
+#, python-format
+msgid "${value} has no ${key} key"
+msgstr "${value} haina ${key} kifunguo"
+
+#: deform/widget.py:718 deform/widget.py:1800
+msgid "Incomplete date"
+msgstr "Tarehe isiyo kamili"
+
+#: deform/widget.py:721
+msgid "Incomplete time"
+msgstr "Muda usiyo kamili"
+
+#: deform/widget.py:1253
+msgid "Fields did not match"
+msgstr "Vipembejeo havikulingana"
+
+#: deform/widget.py:1254
+msgid "Value"
+msgstr "Kwa thamani"
+
+#: deform/widget.py:1255
+msgid "Confirm Value"
+msgstr "Thibitisha kwa thamani"
+
+#: deform/widget.py:1321
+msgid "Password did not match confirm"
+msgstr "Nywila haikulingana na thibitisho"
+
+#: deform/widget.py:1485
+#, python-format
+msgid "Add ${subitem_title}"
+msgstr "Ongeza ${subitem_title}"
+
+#: deform/templates/checked_password.pt:15
+msgid "Password"
+msgstr "Nywila"
+
+#: deform/templates/checked_password.pt:25
+msgid "Confirm Password"
+msgstr "Thibitisha Nywila"
+
+#: deform/templates/dateparts.pt:10
+msgid "Year"
+msgstr "Mwaka"
+
+#: deform/templates/dateparts.pt:18
+msgid "Month"
+msgstr "Mwezi"
+
+#: deform/templates/dateparts.pt:26
+msgid "Day"
+msgstr "Siku"
+
+#: deform/templates/datetimeinput.pt:9
+msgid "Date"
+msgstr "Tarehe"
+
+#: deform/templates/datetimeinput.pt:16
+msgid "Time"
+msgstr "Muda"
+
+#: deform/templates/form.pt:35
+msgid "There was a problem with your submission"
+msgstr "Kulikua na tatizo na wasilisho lako"
+
+#: deform/templates/form.pt:37
+msgid "Errors have been highlighted below"
+msgstr "Makosa yameonyeshwa hapo chini"
+
+#: deform/templates/mapping.pt:13 deform/templates/mapping_accordion.pt:29
+msgid "There was a problem with this section"
+msgstr "Kulikuwa na hitilafu na sehemu hii"
+
+#. Default: en
+#: deform/templates/richtext.pt:30
+msgid "language-code"
+msgstr "sw_KE"
+
+#: deform/templates/sequence_item.pt:26
+msgid "Reorder (via drag and drop)"
+msgstr "Panga upya (kwa kukokota na kuachilia)"
+
+#: deform/templates/sequence_item.pt:31
+msgid "Remove"
+msgstr "Ondoa"
+
+#: deform/templates/readonly/checkbox.pt:8
+msgid "True"
+msgstr "Kweli"
+
+#: deform/templates/readonly/checkbox.pt:12
+msgid "False"
+msgstr "Si kweli"
+
+#: deform/templates/readonly/checked_password.pt:4
+msgid "Password not displayed."
+msgstr "Nywila haikuonyeshwa."
+
+#: deform/tests/test_widget.py:1752
+#, python-format
+msgid "Yo ${subitem_title}"
+msgstr "Vipi ${subitem_title}"
