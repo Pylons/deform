@@ -66,7 +66,6 @@ Glossary
      single HTTP request, so field objects are often used to maintain
      state information during the request.
 
-
    renderer
      A function which accepts a logical template name and a set of
      keywords, with the signature ``(template_name, **kw)``, and
