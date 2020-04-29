@@ -7,8 +7,9 @@ Glossary
    :sorted:
 
    renderer
-     A callable with the signature ``(template_name, **kw)`` which is
-     capable of rendering a template for use in a deform widget.
+     A function which accepts a logical template name and a set of
+     keywords, with the signature ``(template_name, **kw)``, and
+     which returns the rendering of a deform widget template.
 
    cstruct
      Data serialized by :term:`Colander` to a representation suitable
@@ -69,10 +70,6 @@ Glossary
      scope of a field object is generally limited to the scope of a
      single HTTP request, so field objects are often used to maintain
      state information during the request.
-
-   renderer
-     A function which accepts a logical template name and a set of
-     keywords, and which returns the rendering of a widget template.
 
    default renderer
      The template :term:`renderer` used when no other renderer is
