@@ -11,9 +11,6 @@ source =
 
 [report]
 omit =
-    deform/renderer.py
-    deform/schema.py
-    deform/compat.py
     deform/*[0-9]*
     /tmp/*[0-9]*
     */site-packages/*
