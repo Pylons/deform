@@ -53,10 +53,10 @@ except ImportError:  # pragma: no cover
     from io import StringIO
 
 
-try:
+try:  # pragma: no cover
     url_quote = urllib.quote
     url_unquote = urllib.unquote
-except AttributeError:  # pragma: no cover
+except AttributeError:
     import urllib.parse
 
     url_quote = urllib.parse.quote
