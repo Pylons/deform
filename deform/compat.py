@@ -15,14 +15,14 @@ except AttributeError:  # pragma: no cover
 # True if we are running on Python 3.
 PY3 = sys.version_info[0] == 3
 
-if PY3:  # pragma: no cover
+if PY3:
     string_types = (str,)
     integer_types = (int,)
     class_types = (type,)
     text_type = str
     binary_type = bytes
     long = int
-else:
+else:  # pragma: no cover
     string_types = (basestring,)
     integer_types = (int, long)
     class_types = (type, types.ClassType)
