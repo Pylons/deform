@@ -2,6 +2,10 @@
 language: python
 sudo: false
 
+env:
+  global:
+    - MOZ_HEADLESS=1
+
 addons:
   firefox: "latest"
 
