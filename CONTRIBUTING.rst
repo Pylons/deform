@@ -40,21 +40,21 @@ To run tests::
     pip install tox  # System wide installation
     tox
 
-This will run tests for Python 2.x, Python 3.x, PyPy, functional, coverage,
+This will run tests for Python 2.x, Python 3.x, PyPy, functional3, coverage,
 and documentation.
 
 
 Functional tests
 ----------------
 
-All features must be covered by functional tests and have example use. We use the following for running functional tests:
+All features must be covered by functional3 tests and have example use. We use the following for running functional3 tests:
 
 * Firefox 45 ESR (see :ref:`preparing-compatible-browser`)
 * `gettext <https://www.gnu.org/software/gettext/>`_
 * `tox <https://tox.readthedocs.io/en/latest/>`_
 * `deformdemo <https://github.com/pylons/deformdemo>`_
 
-If you add or change a feature that reduces test coverage or causes a functional test to fail, then you also must submit a pull request to the `deformdemo <https://github.com/pylons/deformdemo>`_ repository to go along with your functional test change to deform.
+If you add or change a feature that reduces test coverage or causes a functional3 test to fail, then you also must submit a pull request to the `deformdemo <https://github.com/pylons/deformdemo>`_ repository to go along with your functional3 test change to deform.
 
 .. warning::
 
@@ -63,83 +63,112 @@ If you add or change a feature that reduces test coverage or causes a functional
 
 .. _preparing-compatible-browser:
 
-Preparing compatible browser
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Preparing compatible browser on Linux(Debian)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Functional tests run on Firefox 45 and Selenium 2.56. Below are instructions
-for OSX:
+Functional tests run on Firefox and Selenium:
 
-* `Download Firefox 45 ESR
-  <https://ftp.mozilla.org/pub/firefox/releases/45.0.2esr/>`_ (`OSX
-  <https://ftp.mozilla.org/pub/firefox/releases/45.0.2esr/mac/en-US/>`_)
+* `Download latest version of Firefox: 
+    https://ftp.mozilla.org/pub/firefox/releases/
 
-* Rename ``Firefox.app`` to ``Firefox-45.app``
+    In our case it would be:
+    wget https://ftp.mozilla.org/pub/firefox/releases/75.0/linux-x86_64/en-US/firefox-75.0.tar.bz2
+    tar -xjf firefox-75.0.tar.bz2
+ 
+    export PATH=/Full_Path_To_Extracted_Directory/:$PATH
+    export FIREFOX_PATH=/Full_Path_To_Extracted_Directory/firefox
 
-* Copy ``Firefox-45.app`` to ``Applications``
 
-* Prepare your test run::
+    Download the lastes version geckodriver:
+    https://github.com/mozilla/geckodriver/releases
 
-    export FIREFOX_PATH=/Applications/Firefox-45.app/Contents/MacOS/firefox
+    In our case it would be:
+    mkdir ~/geckodriver
+    cd ~/geckodriver
+    wget https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz
+    tar -xzf geckodriver-v0.26.0-linux64.tar.gz
 
-.. note::
+    export PATH=/Full_Path_To_Extracted_Directory/:$PATH
+    export WEBDRIVER=/Full_Path_To_Extracted_Directory/geckodriver
 
-    Selenium 3: As of this writing, the Marionette geckodriver for Firefox is incomplete and cannot
-    run all the tests.
+    Note:
+        To use google-chrome or Chromium, you would have to download the browser and respected webdriver
+        which in this case would be chromiumdriver:
+        https://chromedriver.chromium.org/downloads
+        Then set the WEBDRIVER environment variable to point to new webdriver:
+        
 
-.. note::
 
-    Chrome: Tests do not run correctly on Chrome due to various timing issues. Some effort was put forth to fix this, but it's a never ending swamp.
+    Install latest version of Selenium Python bindings:
+    pip install selenium
+
+    Note:
+        You don't need the Selenium stand alone server, unless your tests are distributed accross multiple servers.
+
+
+    Install Xvfb:
+    apt-get install xvfb
+    
+    Set display and start Xvfb in back ground:
+    export DISPLAY=:99
+    Xvfb :99 &
+    
+    At this point a single test can be run to verify environment has set properly:
+    tox -e functional3 -- deformdemo.test:CheckboxChoiceReadonlyTests
+
+    Note:
+        port is set to 8522 in demo.ini, in case this port is blocked by server firewall
+        port can be changed:
+        vi deformdemo_functional_tests/demo.ini
+        port = NEW_PORT
+        
+        export URL = SERVER_FQDN:NEW_PORT 
+
+`
 
 
 Install gettext
 ~~~~~~~~~~~~~~~
 
-The functional tests require the installation of the GNU ``gettext`` utilities, specifically ``msgmerge`` and ``msgfmt``.  Use your package manager to install these requirements.  On macOS using `Homebrew <https://brew.sh/>`_:
+The functional3 tests require the installation of the GNU ``gettext`` utilities, specifically ``msgmerge`` and ``msgfmt``.  Use your package manager to install these requirements.  On Debian_:
 
 .. code-block::
 
-    brew install gettext
-    brew link gettext --force
-
-If you ever have problems building packages, you can always unlink it.
-
-.. code-block::
-
-    brew unlink gettext
-
+    apt-get install gettext
+    apt-get install gettext-base
 
 Running test suite
 ~~~~~~~~~~~~~~~~~~
 
-Tox is used to run all tests.  For functional tests, tox run the shell script `run-selenium-tests.bash <https://github.com/Pylons/deform/blob/master/run-selenium-tests.bash>`_, located at the root of the deform repository.  See its comments for a description.
+Tox is used to run all tests.  For functional3 tests, tox run the shell script `run-selenium-tests.bash <https://github.com/Pylons/deform/blob/master/run-selenium-tests.bash>`_, located at the root of the deform repository.  See its comments for a description.
 
 `Install tox <https://tox.readthedocs.io/en/latest/install.html>`_.
 
-To run functional tests::
+To run functional3 tests::
 
-    tox -e functional
+    tox -e functional3
 
 Stop on error::
 
-    tox -e functional -- -x
+    tox -e functional3 -- -x
 
 Rerun single test::
 
-    tox -e functional -- deformdemo.test:CheckedInputWidgetWithMaskTests
+    tox -e functional3 -- deformdemo.test:CheckedInputWidgetWithMaskTests
 
-To run/edit/fix functional tests::
+To run/edit/fix functional3 tests::
 
-    source .tox/functional/bin/activate
-    cd deformdefom  # Checked out by tox functional
+    source .tox/functional3/bin/activate
+    cd deformdefom  # Checked out by tox functional3
     pserve demo.ini  # Start web server
 
-    # Run functional test suite using Chrome
+    # Run functional3 test suite using Chrome
     WEBDRIVER="chrome" nosetests -x
 
-    # Run functional test suite using Chrome, stop on pdb on exception
+    # Run functional3 test suite using Chrome, stop on pdb on exception
     WEBDRIVER="chrome" nosetests -x --pdb
 
-    # Run one functional test case using Chrome
+    # Run one functional3 test case using Chrome
     WEBDRIVER="chrome" nosetests -x deformdemo.test:SequenceOfDateInputs
 
 

@@ -55,7 +55,7 @@ testing_extras = ["beautifulsoup4", "coverage", "flaky", "nose"]
 
 # Needed to run deformdemo tests
 functional_testing_extra = [
-    "selenium<3",
+    "selenium>3",
     "pyramid",
     "pygments",
     "waitress",
