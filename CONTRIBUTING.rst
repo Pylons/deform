@@ -49,7 +49,7 @@ Functional tests
 
 All features must be covered by functional3 tests and have example use. We use the following for running functional3 tests:
 
-* Firefox 45 ESR (see :ref:`preparing-compatible-browser`)
+* Firefox 
 * `gettext <https://www.gnu.org/software/gettext/>`_
 * `tox <https://tox.readthedocs.io/en/latest/>`_
 * `deformdemo <https://github.com/pylons/deformdemo>`_
@@ -58,71 +58,69 @@ If you add or change a feature that reduces test coverage or causes a functional
 
 .. warning::
 
-    Fun fact: Functional tests behave differently depending on if you are looking at the browser window or not.
+    Fun fact: Functional tests behave differently depending on if you are looking at the browser window or using Xvfb which is a X virtual framebuffer to run graphics in memory and in server instead of forwarding the display to desktop using X11 forwarding and Xwindows.
 
 
-.. _preparing-compatible-browser:
-
-Preparing compatible browser on Linux(Debian)
+Preparing Selenium And Firefox on Linux(Debian)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Functional tests run on Firefox and Selenium:
 
-* `Download latest version of Firefox: 
-    https://ftp.mozilla.org/pub/firefox/releases/
+* `Download latest version of Firefox:   
+    https://ftp.mozilla.org/pub/firefox/releases/  
 
-    In our case it would be:
-    wget https://ftp.mozilla.org/pub/firefox/releases/75.0/linux-x86_64/en-US/firefox-75.0.tar.bz2
-    tar -xjf firefox-75.0.tar.bz2
+    In our case it would be:   
+    wget https://ftp.mozilla.org/pub/firefox/releases/75.0/linux-x86_64/en-US/firefox-75.0.tar.bz2   
+    tar -xjf firefox-75.0.tar.bz2   
  
-    export PATH=/Full_Path_To_Extracted_Directory/:$PATH
-    export FIREFOX_PATH=/Full_Path_To_Extracted_Directory/firefox
+    export PATH=/Full_Path_To_Extracted_Directory/:$PATH   
+    export FIREFOX_PATH=/Full_Path_To_Extracted_Directory/firefox    
 
 
-    Download the lastes version geckodriver:
-    https://github.com/mozilla/geckodriver/releases
+    Download the lastes version geckodriver:   
+    https://github.com/mozilla/geckodriver/releases    
 
-    In our case it would be:
-    mkdir ~/geckodriver
-    cd ~/geckodriver
-    wget https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz
-    tar -xzf geckodriver-v0.26.0-linux64.tar.gz
+    In our case it would be:   
+    mkdir ~/geckodriver   
+    cd ~/geckodriver   
+    wget https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz   
+    tar -xzf geckodriver-v0.26.0-linux64.tar.gz    
 
-    export PATH=/Full_Path_To_Extracted_Directory/:$PATH
-    export WEBDRIVER=/Full_Path_To_Extracted_Directory/geckodriver
+    export PATH=/Full_Path_To_Extracted_Directory/:$PATH    
+    export WEBDRIVER=/Full_Path_To_Extracted_Directory/geckodriver   
 
-    Note:
-        To use google-chrome or Chromium, you would have to download the browser and respected webdriver
-        which in this case would be chromiumdriver:
-        https://chromedriver.chromium.org/downloads
-        Then set the WEBDRIVER environment variable to point to new webdriver:
+    Note:  
+        To use google-chrome or Chromium, you would have to download the browser and respected webdriver   
+        which in this case would be chromiumdriver:   
+        https://chromedriver.chromium.org/downloads   
+        Then set the WEBDRIVER environment variable to point to new webdriver:   
         
 
 
-    Install latest version of Selenium Python bindings:
-    pip install selenium
+    Install latest version of Selenium Python bindings:   
+    pip install selenium    
 
-    Note:
-        You don't need the Selenium stand alone server, unless your tests are distributed accross multiple servers.
+    Note:   
+        You don't need the Selenium stand alone server, unless your tests are distributed accross multiple servers.   
 
 
-    Install Xvfb:
-    apt-get install xvfb
+    Install Xvfb:   
+    apt-get install xvfb   
     
-    Set display and start Xvfb in back ground:
-    export DISPLAY=:99
-    Xvfb :99 &
+    Set display and start Xvfb in back ground:   
+    export DISPLAY=:99   
+    Xvfb :99 &    
     
-    At this point a single test can be run to verify environment has set properly:
-    tox -e functional3 -- deformdemo.test:CheckboxChoiceReadonlyTests
+    At this point a single test can be run to verify environment has set properly:   
+    tox -e functional3 -- deformdemo.test:CheckboxChoiceReadonlyTests    
 
-    Note:
-        port is set to 8522 in demo.ini, in case this port is blocked by server firewall
-        port can be changed:
-        vi deformdemo_functional_tests/demo.ini
-        port = NEW_PORT
+    Note:  
+        port is set to 8522 in demo.ini, in case this port is blocked by server firewall   
+        port can be changed:   
+        vi deformdemo_functional_tests/demo.ini   
+        port = NEW_PORT   
         
-        export URL = SERVER_FQDN:NEW_PORT 
+        export URL = SERVER_FQDN:NEW_PORT    
 
 `
 
