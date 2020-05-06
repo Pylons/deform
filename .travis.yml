@@ -46,6 +46,7 @@ install:
 # https://benlimmer.com/2019/01/14/travis-ci-xvfb/
 # https://github.com/globaleaks/GlobaLeaks/commit/1788becc5dddb04a3774af63d7c03abbaf84efc9
 before_script:
+  - "export DISPLAY=:99.0"
   - echo "Extracting firefox and setting PATH variable..."
   - tar -xjf /tmp/firefox-latest.tar.bz2 --directory /tmp
   - export PATH="/tmp/firefox:$PATH"
