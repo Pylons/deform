@@ -38,17 +38,6 @@ install:
   - rm /tmp/geckodriver-v0.26.0-linux64.tar.gz
   - sudo mv /tmp/geckodriver /usr/local/bin
 
-# For Selenium
-# https://docs.travis-ci.com/user/gui-and-headless-browsers/
-# http://stackoverflow.com/a/34703838/315168
-# https://benlimmer.com/2019/01/14/travis-ci-xvfb/
-before_script:
-#  - "export DISPLAY=:99.0"
-#  - echo "Extracting firefox and setting PATH variable..."
-#  - tar -xjf /tmp/firefox-latest.tar.bz2 --directory /tmp
-#  - export PATH="/tmp/firefox:$PATH"
-  - echo "Using firefox version `firefox --version`"
-
 script:
   - travis_retry tox
 
