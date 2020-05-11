@@ -2,7 +2,7 @@
 language: python
 
 addons:
-  firefox: "43.0"
+  firefox: latest
 
 services:
   - xvfb
@@ -32,6 +32,13 @@ matrix:
 
 install:
   - travis_retry pip install tox
+  # https://dev.to/erikwhiting88/install-browsers-and-webdrivers-in-travisci-n76
+  - wget -N https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz -P ~/
+  - tar -xzf ~/geckodriver-v0.26.0-linux64.tar.gz -C ~/
+  - rm ~/geckodriver-v0.26.0-linux64.tar.gz
+  - sudo mv -f ~/geckodriver /usr/local/share
+  - sudo chmod +x /usr/local/share/geckodriver
+  - sudo ln -s /usr/local/share/geckodriver /usr/local/bin/geckodriver
 
 # For Selenium
 # https://docs.travis-ci.com/user/gui-and-headless-browsers/
@@ -40,7 +47,7 @@ install:
 before_script:
   - "export DISPLAY=:99.0"
   - echo "Extracting firefox and setting PATH variable..."
-  - tar -xjf /tmp/firefox-43.0.tar.bz2 --directory /tmp
+  - tar -xjf /tmp/firefox-latest.tar.bz2 --directory /tmp
   - export PATH="/tmp/firefox:$PATH"
   - echo "Using firefox version `firefox --version`"
 
