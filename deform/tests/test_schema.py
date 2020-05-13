@@ -23,12 +23,14 @@ class TestFileData(unittest.TestCase):
     def test_deferred_csrf_value(self):
         import colander
         from deform.schema import CSRFSchema
-        from deform.schema import deferred_csrf_value
         from unittest.mock import MagicMock
-        kw = {"request": colander.null}
+        from deform.schema import deferred_csrf_value
+
+        kw = {"request": MagicMock(name="request")}
         kw["request"].session = MagicMock(name="session")
         kw["request"].session.get_csrf_token = MagicMock(
             return_value=colander.null)
+
         node = DummySchemaNode()
         new_schema = CSRFSchema()
         new_schema.default = deferred_csrf_value(node, kw)
