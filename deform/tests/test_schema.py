@@ -24,13 +24,13 @@ class TestFileData(unittest.TestCase):
         import colander
         from deform.schema import CSRFSchema
         from deform.schema import deferred_csrf_value
-        new_schema = CSRFSchema()
         from unittest.mock import MagicMock
         kw = {"request": colander.null}
         kw["request"].session = MagicMock(name="session")
         kw["request"].session.get_csrf_token = MagicMock(
             return_value=colander.null)
         node = DummySchemaNode()
+        new_schema = CSRFSchema()
         new_schema.default = deferred_csrf_value(node, kw)
         self.assertEqual(new_schema.default, colander.null)
 
