@@ -21,20 +21,17 @@ class TestFileData(unittest.TestCase):
         return FileData()
 
     def test_deferred_csrf_value(self):
-        import colander
+        from pyramid import testing
         from deform.schema import CSRFSchema
-        from unittest.mock import MagicMock
         from deform.schema import deferred_csrf_value
 
-        kw = {"request": MagicMock(name="request")}
-        kw["request"].session = MagicMock(name="session")
-        kw["request"].session.get_csrf_token = MagicMock(
-            return_value=colander.null)
-
+        new_request = testing.DummyRequest()
+        kw = {"request": new_request}
         node = DummySchemaNode()
         new_schema = CSRFSchema()
+        token = new_request.session.get_csrf_token()
         new_schema.default = deferred_csrf_value(node, kw)
-        self.assertEqual(new_schema.default, colander.null)
+        self.assertEqual(new_schema.default, token)
 
     def test_deserialize_null(self):
         from colander import null
