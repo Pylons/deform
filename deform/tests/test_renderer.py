@@ -22,3 +22,6 @@ class TestConfigureZPT_Renderer(unittest.TestCase):
         self.assertTrue(
             isinstance(deform.form.Form.default_renderer,
                        deform.template.ZPTRendererFactory))
+
+        self.assertTrue("custom_widgets" in str(
+            deform.form.Form.default_renderer.loader.search_path))
