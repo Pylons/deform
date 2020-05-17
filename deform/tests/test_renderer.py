@@ -17,11 +17,17 @@ class TestConfigureZPT_Renderer(unittest.TestCase):
 
         # Configure renderer
         deform.renderer.configure_zpt_renderer(
-            search_path=["deform:custom_widgets"], translator=translator)
+            search_path=["deform:custom_widgets"], translator=translator
+        )
 
         self.assertTrue(
-            isinstance(deform.form.Form.default_renderer,
-                       deform.template.ZPTRendererFactory))
+            isinstance(
+                deform.form.Form.default_renderer,
+                deform.template.ZPTRendererFactory,
+            )
+        )
 
-        self.assertTrue("custom_widgets" in str(
-            deform.form.Form.default_renderer.loader.search_path))
+        self.assertTrue(
+            "custom_widgets"
+            in str(deform.form.Form.default_renderer.loader.search_path)
+        )
