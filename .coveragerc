@@ -1,8 +1,2 @@
 [run]
 branch = False
-
-;[report]
-# These are being stressed out in deformdemo package
-;omit =
-;    deform/schema.py
-;    deform/renderer.py
