@@ -1,4 +1,5 @@
 import unittest
+
 import deform
 
 
@@ -8,7 +9,7 @@ class TestConfigureZPT_Renderer(unittest.TestCase):
         from pyramid.threadlocal import get_current_request
 
         #
-        # Set up Chameleon templates (ZTP) rendering paths
+        # Set up Chameleon templates (ZPT) rendering paths
         #
 
         def translator(term):
