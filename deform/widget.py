@@ -652,7 +652,7 @@ class DateTimeInputWidget(Widget):
     template = "datetimeinput"
     readonly_template = "readonly/datetimeinput"
     type_name = "datetime"
-    requirements = (("pickadate", None),)
+    requirements = (("modernizr",None),("pickadate", None),)
     default_date_options = (
         ("format", "yyyy-mm-dd"),
         ("selectMonths", True),
