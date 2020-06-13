@@ -2,7 +2,8 @@
       tal:omit-tag=""
       tal:define="oid oid|field.oid;
                   css_class css_class|field.widget.css_class;
-                  style style|field.widget.style;">
+                  style style|field.widget.style;
+		  type_name type_name|field.widget.type_name;">
   ${field.start_mapping()}
   <div class="row">
     <div class="col-xs-6"><div class="input-group">
@@ -27,10 +28,10 @@
    deform.addCallback(
      '${oid}',
      function(oid) {
-       if (!Modernizr.inputtypes['date'] || window.forceDateTimePolyfill){
+       if (!Modernizr.inputtypes['date'] || "${type_name}" != "datetime" || window.forceDateTimePolyfill){
          $('#' + oid + '-date').pickadate(${date_options_json});
        }
-       if (!Modernizr.inputtypes['date'] || window.forceDateTimePolyfill){
+       if (!Modernizr.inputtypes['date'] || "${type_name}" != "datetime" || window.forceDateTimePolyfill){
          $('#' + oid + '-time').pickatime(${time_options_json});
        }
      }
