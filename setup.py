@@ -55,7 +55,7 @@ testing_extras = ["beautifulsoup4", "coverage", "flaky", "nose"]
 
 # Needed to run deformdemo tests
 functional_testing_extra = [
-    "selenium<3",
+    "selenium>=3",
     "pyramid",
     "pygments",
     "waitress",
@@ -78,12 +78,11 @@ setupkw = dict(
         "Intended Audience :: Developers",
         "License :: Repoze Public License",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
     ],

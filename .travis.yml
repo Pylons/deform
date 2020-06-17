@@ -1,61 +1,42 @@
 # Wire up travis
 language: python
-sudo: false
 
 addons:
-  firefox: "43.0"
+  firefox: latest
 
 services:
   - xvfb
 
 matrix:
   include:
-    - python: "2.7"
-      env: TOXENV=py27
-    - python: "3.4"
-      env: TOXENV=py34
-    - python: "3.5"
+    - python: 3.5
       env: TOXENV=py35
-    - python: "3.6"
+    - python: 3.6
       env: TOXENV=py36
     - python: 3.7
       env: TOXENV=py37
       dist: xenial
-      sudo: true
-    - python: 3.8-dev
+    - python: 3.8
       env: TOXENV=py38
       dist: xenial
-      sudo: true
-    - python: "pypy"
-      env: TOXENV=pypy
-    - python: "pypy3"
+    - python: pypy3
       env: TOXENV=pypy3
-    - python: "3.6"
-      env: TOXENV=py2-cover,py3-cover,coverage
-    - python: "3.6"
+    - python: 3.6
+      env: TOXENV=py3-cover,coverage
+    - python: 3.6
       env: TOXENV=docs
-    - python: "3.6"
+    - python: 3.6
       env: TOXENV=lint
-    - python: "2.7"
-      env: TOXENV=functional
-    - python: "3.6"
+    - python: 3.6
       env: TOXENV=functional3
-  allow_failures:
-      - env: TOXENV=py38
 
 install:
   - travis_retry pip install tox
-
-# For Selenium
-# https://docs.travis-ci.com/user/gui-and-headless-browsers/
-# http://stackoverflow.com/a/34703838/315168
-# https://benlimmer.com/2019/01/14/travis-ci-xvfb/
-before_script:
-  - "export DISPLAY=:99.0"
-  - echo "Extracting firefox and setting PATH variable..."
-  - tar -xjf /tmp/firefox-43.0.tar.bz2 --directory /tmp
-  - export PATH="/tmp/firefox:$PATH"
-  - echo "Using firefox version `firefox --version`"
+  # https://dev.to/erikwhiting88/install-browsers-and-webdrivers-in-travisci-n76
+  - wget -N https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz -P /tmp/
+  - tar -xzf /tmp/geckodriver-v0.26.0-linux64.tar.gz -C /tmp/
+  - rm /tmp/geckodriver-v0.26.0-linux64.tar.gz
+  - sudo mv /tmp/geckodriver /usr/local/bin
 
 script:
   - travis_retry tox
