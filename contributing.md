@@ -96,9 +96,13 @@ We will assume that you put your projects in your user directory, although you c
 
     cd ~/projects/deform/
 
-Set an environment variable to add your local checkout of Deform to your PATH.
+Set an environment variable to add your local checkout of Deform to your `PATH`.
+Set a second environment variable `WEBDRIVER` to the executable file itself instead of the directory where it is extracted.
+It must to be set before running tox or nosetest, otherwise Firefox or chorm will not start and will return an error message of "driver not found".
 
     export PATH=~/projects/deform/:$PATH
+    export WEBDRIVER=<full_path_to_geckodriver_file_not_the_directory>
+
 
 
 #### Firefox latest
