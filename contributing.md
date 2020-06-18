@@ -49,8 +49,6 @@ We use the following for running functional tests.
 
 If you add or change a feature that reduces test coverage or causes a functional test to fail, then you also must submit a pull request to the [deformdemo](https://github.com/pylons/deformdemo) repository to go along with your functional test change to Deform.
 
-:warning: Functional tests behave differently depending on whether you are looking at the browser window or using Xvfb.
-
 :information_source: Tests might not run correctly on Chrome due to various timing issues.
 Some effort was put forth to fix this many years ago, but it was a never ending swamp.
 [The situation might have improved recently](https://developers.google.com/web/updates/2017/04/headless-chrome).
@@ -160,20 +158,6 @@ If you ever have problems building packages, you can always unlink it.
 
     apt-get install gettext
     apt-get install gettext-base
-
-#### Xvfb
-
-Xvfb is a X virtual framebuffer to run graphics in memory and on a server instead of forwarding the display to a desktop display using X11 forwarding and Xwindows.
-macOS web browsers do not use X11 and therefore do not need Xvfb.
-However Linux systems require it.
-Install Xvfb on Linux (Debian).
- 
-    apt-get install xvfb
-
-Set display and start Xvfb in the background.
-
-    export DISPLAY=:99
-    Xvfb :99 &
 
 
 #### Selenium
