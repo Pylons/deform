@@ -164,7 +164,7 @@ If you ever have problems building packages, you can always unlink it.
 #### Xvfb
 
 Xvfb is a X virtual framebuffer to run graphics in memory and on a server instead of forwarding the display to a desktop display using X11 forwarding and Xwindows.
-macOS web browsers do not X11 and therefore do not need Xvfb.
+macOS web browsers do not use X11 and therefore do not need Xvfb.
 However Linux systems require it.
 Install Xvfb on Linux (Debian).
  
