@@ -49,12 +49,6 @@ We use the following for running functional tests.
 
 If you add or change a feature that reduces test coverage or causes a functional test to fail, then you also must submit a pull request to the [deformdemo](https://github.com/pylons/deformdemo) repository to go along with your functional test change to Deform.
 
-:information_source: Tests might not run correctly on Chrome due to various timing issues.
-Some effort was put forth to fix this many years ago, but it was a never ending swamp.
-[The situation might have improved recently](https://developers.google.com/web/updates/2017/04/headless-chrome).
-We welcome pull requests to add this functionality.
-To use google-chrome or Chromium, download the browser and respective webdriver, [chromiumdriver](https://chromedriver.chromium.org/downloads).
-
 For functional tests, tox runs the shell script [run-selenium-tests.bash](https://github.com/Pylons/deform/blob/master/run-selenium-tests.bash), located at the root of the Deform repository.
 See its comments for a description.
 
@@ -72,22 +66,6 @@ Run a single test.
 
     tox -e functional3 -- deformdemo.test:SequenceOfMaskedTextInputs.test_submit_one_filled
 
-To run/edit/fix functional tests.
-:note: This section has not worked for years, but could be improved for Firefox.
-
-    source .tox/functional3/bin/activate
-    cd deformdemo  # Checked out by tox functional3
-    pserve demo.ini  # Start web server
-
-    # Run functional test suite using Chrome
-    WEBDRIVER="chrome" nosetests -x
-
-    # Run functional test suite using Chrome, stop on pdb on exception
-    WEBDRIVER="chrome" nosetests -x --pdb
-
-    # Run one functional test case using Chrome
-    WEBDRIVER="chrome" nosetests -x deformdemo.test:SequenceOfDateInputs
-
 
 ### Preparing a functional testing environment
 
@@ -102,7 +80,6 @@ It must to be set before running tox or nosetest, otherwise Firefox or chorm wil
 
     export PATH=~/projects/deform/:$PATH
     export WEBDRIVER=<full_path_to_geckodriver_file_not_the_directory>
-
 
 
 #### Firefox latest
@@ -167,3 +144,18 @@ If you ever have problems building packages, you can always unlink it.
 #### Selenium
 
 Selenium is installed automatically by tox via `pip install -e .["testing"]`.
+
+
+### Testing on Chrome or Chromium
+
+Tests might not run correctly on Chrome due to various timing issues.
+Some effort was put forth to fix this many years ago, but it was a never ending swamp.
+However, [the situation might have improved recently](https://developers.google.com/web/updates/2017/04/headless-chrome).
+
+If you accept the challenge, we welcome pull requests to this contributing guide, along with tests to support testing on Chrome.
+The following are some clues to get you started.
+
+- To use google-chrome or Chromium, download the web browser and respective webdriver, [chromiumdriver](https://chromedriver.chromium.org/downloads).
+  These would be used instead of Firefox and geckodriver.
+- Set the `WEBDRIVER` environment variable to chromiumdriver instead of geckodriver.
+- Profit! Fun! World domination!
