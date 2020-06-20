@@ -69,17 +69,18 @@ Run a single test.
 
 ### Preparing a functional testing environment
 
-To avoid conflicts with other possibly installed versions of applications, we suggest that you install them into your local checkout of Deform.
+To avoid conflicts with other possibly installed versions of applications, we suggest that you install the following applications into your local checkout of Deform.
 We will assume that you put your projects in your user directory, although you can put them anywhere.
 
     cd ~/projects/deform/
 
-Set an environment variable to add your local checkout of Deform to your `PATH`.
-Set a second environment variable `WEBDRIVER` to the executable file itself instead of the directory where it is extracted.
-It must to be set before running tox or nosetest, otherwise Firefox or Chrome will not start and will return an error message of "driver not found".
 
-    export PATH=~/projects/deform/firefox:$PATH
-    export WEBDRIVER=<full_path_to_geckodriver_file_not_the_directory>
+#### Set an environment variable
+
+Set an environment variable to add your local checkout of Deform to your `PATH`.
+It must to be set before running tox or nosetest, otherwise Firefox or Chrome will not start and will return an error message of `'geckodriver' executable needs to be in PATH.`.
+
+    export PATH=~/projects/deform:$PATH
 
 
 #### Firefox latest
