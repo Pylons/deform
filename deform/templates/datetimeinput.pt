@@ -3,7 +3,7 @@
       tal:define="oid oid|field.oid;
                   css_class css_class|field.widget.css_class;
                   style style|field.widget.style;
-		  type_name type_name|field.widget.type_name;">
+		    type_name type_name|field.widget.type_name;">
   ${field.start_mapping()}
   <div class="row">
     <div class="col-xs-6"><div class="input-group">
