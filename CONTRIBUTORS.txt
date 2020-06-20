@@ -138,3 +138,4 @@ Contributors
 - Krystian Rosiński, 2018/10/14
 - Sydo Luciani, 2020/05/16
 - Antony Oduor, 2020/06/18
+- John Haiducek, 2020/06/20

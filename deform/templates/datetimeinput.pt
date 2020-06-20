@@ -2,12 +2,13 @@
       tal:omit-tag=""
       tal:define="oid oid|field.oid;
                   css_class css_class|field.widget.css_class;
-                  style style|field.widget.style;">
+                  style style|field.widget.style;
+		    type_name type_name|field.widget.type_name;">
   ${field.start_mapping()}
   <div class="row">
     <div class="col-xs-6"><div class="input-group">
       <span class="input-group-addon" i18n:translate="">Date</span>
-      <input type="text" name="date" value="${date}"
+      <input type="date" name="date" value="${date}"
              class="span2 form-control ${css_class or ''} hasDatepicker"
              tal:attributes="style style;
              				 date_attributes|field.widget.date_attributes|{}"
@@ -15,7 +16,7 @@
     </div></div>
     <div class="col-xs-6"><div class="input-group">
       <span class="input-group-addon" i18n:translate="">Time</span>
-      <input type="text" name="time" value="${time}"
+      <input type="time" name="time" value="${time}"
              class="span2 form-control ${css_class or ''} hasDatepicker"
              tal:attributes="style style;
              				 time_attributes|field.widget.time_attributes|{}"
@@ -27,8 +28,12 @@
    deform.addCallback(
      '${oid}',
      function(oid) {
-       $('#' + oid + '-date').pickadate(${date_options_json});
-       $('#' + oid + '-time').pickatime(${time_options_json});
+       if (!Modernizr.inputtypes['date'] || "${type_name}" != "datetime" || window.forceDateTimePolyfill){
+         $('#' + oid + '-date').pickadate(${date_options_json});
+       }
+       if (!Modernizr.inputtypes['date'] || "${type_name}" != "datetime" || window.forceDateTimePolyfill){
+         $('#' + oid + '-time').pickatime(${time_options_json});
+       }
      }
    );
   </script>
