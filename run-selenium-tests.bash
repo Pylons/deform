@@ -2,7 +2,7 @@
 #
 # This will run Selenium tests against deformdemo https://github.com/Pylons/deformdemo
 #
-# This script assumes you have checked out deformdemo to folder deformdemo
+# This script assumes you have checked out deformdemo to folder deformdemo_functional_tests
 # If there is no checkout a fresh checkout is is made. This allows you to check out
 # particular PR beforehand to test against it.
 #
@@ -15,7 +15,7 @@ if [ ! -d deformdemo_functional_tests ] ; then
     git clone https://github.com/Pylons/deformdemo.git deformdemo_functional_tests
 fi
 
-# Locales are needed form deformdemo tests
+# Locales are needed for deformdemo tests
 ./i18n.sh
 
 # We need to reinstall deform with translations included
@@ -37,5 +37,3 @@ trap "kill $SERVER_PID" EXIT
 nosetests "$@"
 
 exit 0
-
-
