@@ -60,6 +60,10 @@ Stop on error.
 
     tox -e functional3 -- -x
 
+Run only the last failed tests.
+
+    tox -e functional3 -- --failed
+
 Run a single test.
 
     tox -e functional3 -- deformdemo.test:CheckedInputWidgetWithMaskTests
