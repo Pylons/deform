@@ -29,6 +29,7 @@ You can run tests in a specific environment by specifying it on the command line
 
     tox -e py38,docs
 
+Running the full test suite requires having all the python versions listed in tox.ini installed and in the $PATH. Currently this includes Python 3.5, 3.6, 3.7, 3.8, and pypy3.
 
 ## Unit tests
 
@@ -119,7 +120,7 @@ Install the [latest release of geckodriver](https://github.com/mozilla/geckodriv
     wget https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-macos.tar.gz
     tar -xzf geckodriver-v0.26.0-macos.tar.gz
 
-    # Linux (Debian)
+    # Linux
     wget https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz
     tar -xzf geckodriver-v0.26.0-linux64.tar.gz
 
@@ -144,6 +145,10 @@ If you ever have problems building packages, you can always unlink it.
 
     apt-get install gettext
     apt-get install gettext-base
+
+##### Linux (Fedora)
+
+    dnf install gettext
 
 
 #### Selenium
