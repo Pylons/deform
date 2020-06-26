@@ -103,9 +103,12 @@ setupkw = dict(
         "docs": docs_extras,
         "functional": functional_testing_extra,
         "dev": (
-            lint_extras + testing_extras + docs_extras +
-            functional_testing_extra + ["tox"]
-        )
+            lint_extras
+            + testing_extras
+            + docs_extras
+            + functional_testing_extra
+            + ["tox"]
+        ),
     },
 )
 
