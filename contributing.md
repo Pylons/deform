@@ -20,6 +20,16 @@ Ask the authors' opinion how the issue should be approached, as this will make i
 All features must be documented with code samples in narrative documentation, API documentation, and in [deformdemo](https://github.com/Pylons/deformdemo).
 
 
+## Setting up a development environment
+
+Create a virtual environment.
+Into this virtual environment, install Deform development requirements for unit testing, lint, docs, and functional testing with a single command.
+
+    `pip install -e .["dev"]`
+
+Continue by installing tox and following [Preparing a functional testing environment](#preparing-a-functional-testing-environment) below.
+
+
 ## Using tox
 
 We use [tox](https://tox.readthedocs.io/en/latest/install.html) to manage virtual environments, run both unit and functional tests across all supported versions of Python, build docs, perform lint checks, and perform test coverage.
@@ -86,7 +96,7 @@ We will assume that you put your projects in your user directory, although you c
 #### Set an environment variable
 
 Set an environment variable to add your local checkout of Deform to your `PATH`.
-It must to be set before running tox or nosetest, otherwise Firefox or Chrome will not start and will return an error message of `'geckodriver' executable needs to be in PATH.`.
+It must to be set before running tox or nosetests, otherwise Firefox or Chrome will not start and will return an error message of `'geckodriver' executable needs to be in PATH.`.
 
     export PATH=~/projects/deform:$PATH
 
