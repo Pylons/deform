@@ -54,7 +54,7 @@ lint_extras = [
 testing_extras = ["beautifulsoup4", "coverage", "flaky", "nose"]
 
 # Needed to run deformdemo tests
-functional_testing_extra = [
+functional_testing_extras = [
     "selenium>=3",
     "pyramid",
     "pygments",
@@ -101,13 +101,12 @@ setupkw = dict(
         "lint": lint_extras,
         "testing": testing_extras,
         "docs": docs_extras,
-        "functional": functional_testing_extra,
+        "functional": functional_testing_extras,
         "dev": (
             lint_extras
             + testing_extras
             + docs_extras
-            + functional_testing_extra
-            + ["tox"]
+            + functional_testing_extras
         ),
     },
 )
