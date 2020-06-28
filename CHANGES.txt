@@ -1,7 +1,15 @@
 2.0.9 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Add boolean HTML attributes per Chameleon 3.8.0.
+
+  All checkboxes, radios, and selects that use boolean HTML attributes
+  (selected, checked, etc.) previously used `literal_false` and would drop any
+  `False` value from rendering as an HTML attribute. In Chameleon 3.8.0,
+  `literal_false` is removed and must instead use `boolean_attributes` to set
+  defaults.
+
+  See https://github.com/Pylons/deform/issues/417
 
 
 2.0.8 (2019-10-07)

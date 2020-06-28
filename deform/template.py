@@ -9,9 +9,31 @@ from translationstring import ChameleonTranslate
 from .exception import TemplateError
 
 
+BOOLEAN_HTML_ATTRS = frozenset(
+    [
+        # List of Boolean attributes in HTML that should be rendered in
+        # minimized form (e.g. <img ismap> rather than <img ismap="">)
+        # From http://www.w3.org/TR/xhtml1/#guidelines (C.10)
+        "compact",
+        "nowrap",
+        "ismap",
+        "declare",
+        "noshade",
+        "checked",
+        "disabled",
+        "readonly",
+        "multiple",
+        "selected",
+        "noresize",
+        "defer",
+    ]
+)
+
+
 class ZPTTemplateLoader(TemplateLoader):
     def __init__(self, *args, **kwargs):
         kwargs.setdefault("encoding", "utf-8")
+        kwargs.setdefault("boolean_attributes", BOOLEAN_HTML_ATTRS)
         super(ZPTTemplateLoader, self).__init__(*args, **kwargs)
 
     def load(self, filename, *args, **kwargs):
