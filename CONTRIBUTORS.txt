@@ -139,3 +139,4 @@ Contributors
 - Sydo Luciani, 2020/05/16
 - Antony Oduor, 2020/06/18
 - John Haiducek, 2020/06/20
+- Stanisław Pitucha, 2020/06/30
