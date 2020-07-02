@@ -126,8 +126,7 @@ class Field(object):
       is a template renderer as described in :ref:`creating_a_renderer`.
       ``counter``, if passed, should be an :attr:`itertools.counter` object
       (useful when rendering multiple forms on the same page, see
-      `http://deform2demo.repoze.org/multiple_forms/
-      <http://deform2demo.repoze.org/multiple_forms/>`_.
+      http://deformdemo.repoze.org/multiple_forms/.
       ``resource_registry``, if passed should be a widget resource registry
       (see also :ref:`get_widget_resources`).
 

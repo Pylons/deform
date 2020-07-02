@@ -16,7 +16,7 @@ use cases <http://deformdemo.repoze.org/>`_ are supported out of the box.
 Deform integrates with the `Pyramid web framework <https://trypyramid.com/>`_
 and several other web frameworks. Deform comes with `Chameleon templates
 <https://chameleon.readthedocs.io/en/latest/>`_ and `Bootstrap 3
-<http://getbootstrap.com>`_ styling. Under the hood, `Colander schemas
+<https://getbootstrap.com>`_ styling. Under the hood, `Colander schemas
 <https://github.com/Pylons/colander>`_ are used for serialization and
 validation. The `Peppercorn <https://github.com/Pylons/peppercorn>`_ library
 maps HTTP form submissions to nested structure.
