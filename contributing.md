@@ -25,7 +25,7 @@ All features must be documented with code samples in narrative documentation, AP
 Create a virtual environment using Python's venv module.
 Into this virtual environment, install Deform development requirements for unit testing, lint, docs, and functional testing with the command
 
-    `pip install -e .["dev"]`
+    `pip install -e ".[dev]"`
 
 Continue by installing tox and following [Preparing a functional testing environment](#preparing-a-functional-testing-environment) below.
 
