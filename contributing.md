@@ -22,10 +22,13 @@ All features must be documented with code samples in narrative documentation, AP
 
 ## Setting up a development environment
 
-Create a virtual environment using Python's venv module.
+Create a virtual environment using Python's [venv](https://docs.python.org/3/library/venv.html) module.
+
+    python3 -m venv /path/to/new/virtual/environment
+
 Into this virtual environment, install Deform development requirements for unit testing, lint, docs, and functional testing with the command
 
-    `pip install -e ".[dev]"`
+    pip install -e ".[dev]"
 
 Continue by installing tox and following [Preparing a functional testing environment](#preparing-a-functional-testing-environment) below.
 
@@ -167,7 +170,7 @@ If you ever have problems building packages, you can always unlink it.
 
 #### Selenium
 
-Selenium is installed automatically by tox via `pip install -e .["testing"]`.
+Selenium is installed automatically by tox via `pip install -e ".[dev]"`.
 
 
 ### Testing on Chrome or Chromium
