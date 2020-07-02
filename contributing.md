@@ -20,12 +20,29 @@ Ask the authors' opinion how the issue should be approached, as this will make i
 All features must be documented with code samples in narrative documentation, API documentation, and in [deformdemo](https://github.com/Pylons/deformdemo).
 
 
+## Setting up a development environment
+
+Create a virtual environment using Python's [venv](https://docs.python.org/3/library/venv.html) module.
+
+    python3 -m venv /path/to/new/virtual/environment
+
+Into this virtual environment, install Deform development requirements for unit testing, lint, docs, and functional testing with the command
+
+    pip install -e ".[dev]"
+
+Continue by installing tox and following [Preparing a functional testing environment](#preparing-a-functional-testing-environment) below.
+
+
 ## Using tox
 
-We use [tox](https://tox.readthedocs.io/en/latest/install.html) to manage virtual environments, run tests across all supported versions of Python, build docs, perform lint checks, and perform test coverage.
+We use [tox](https://tox.readthedocs.io/en/latest/install.html) to manage virtual environments, run both unit and functional tests across all supported versions of Python, build docs, perform lint checks, and perform test coverage.
+See `tox.ini` at the root of the repository for currently supported environments.
 
-See `tox.ini` at the root of the repository for current supported environments.
-You can run tests in a specific environment by specifying it on the command line, or multiple environments as comma-separated values.
+We recommend that you install all supported Pythons, prepare a functional testing environment (see [Preparing a functional testing environment](#preparing-a-functional-testing-environment) below), and run the full test suite using tox before submitting a pull request.
+If you are unable to do so, GitHub will run the full test suite across supported environments for you when you open a pull request.
+Pull requests must pass all tests and tox environments before they can be merged.
+
+After you have set up your development environment, you can use tox to run a specific environment by specifying it on the command line, or multiple environments as comma-separated values.
 
     tox -e py38,docs
 
@@ -82,7 +99,7 @@ We will assume that you put your projects in your user directory, although you c
 #### Set an environment variable
 
 Set an environment variable to add your local checkout of Deform to your `PATH`.
-It must to be set before running tox or nosetest, otherwise Firefox or Chrome will not start and will return an error message of `'geckodriver' executable needs to be in PATH.`.
+It must to be set before running tox or nosetests, otherwise Firefox or Chrome will not start and will return an error message of `'geckodriver' executable needs to be in PATH.`.
 
     export PATH=~/projects/deform:$PATH
 
@@ -111,6 +128,7 @@ Decompress the downloaded file.
 
     tar -xjf firefox-latest.tar.bz2
 
+
 #### geckodriver
 
 Install the [latest release of geckodriver](https://github.com/mozilla/geckodriver/releases).
@@ -119,7 +137,7 @@ Install the [latest release of geckodriver](https://github.com/mozilla/geckodriv
     wget https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-macos.tar.gz
     tar -xzf geckodriver-v0.26.0-macos.tar.gz
 
-    # Linux (Debian)
+    # Linux
     wget https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz
     tar -xzf geckodriver-v0.26.0-linux64.tar.gz
 
@@ -145,10 +163,14 @@ If you ever have problems building packages, you can always unlink it.
     apt-get install gettext
     apt-get install gettext-base
 
+##### Linux (Fedora)
+
+    dnf install gettext
+
 
 #### Selenium
 
-Selenium is installed automatically by tox via `pip install -e .["testing"]`.
+Selenium is installed automatically by tox via `pip install -e ".[dev]"`.
 
 
 ### Testing on Chrome or Chromium
