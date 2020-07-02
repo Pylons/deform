@@ -22,8 +22,8 @@ All features must be documented with code samples in narrative documentation, AP
 
 ## Setting up a development environment
 
-Create a virtual environment.
-Into this virtual environment, install Deform development requirements for unit testing, lint, docs, and functional testing with a single command.
+Create a virtual environment using Python's venv module.
+Into this virtual environment, install Deform development requirements for unit testing, lint, docs, and functional testing with the command
 
     `pip install -e .["dev"]`
 
