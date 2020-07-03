@@ -38,7 +38,7 @@ extensions = [
 intersphinx_mapping = {
     'colander': ('https://docs.pylonsproject.org/projects/colander/en/latest/', None),
     'pyramid': ('https://docs.pylonsproject.org/projects/pyramid/en/latest', None),
-    'python': ('https://docs.python.org/dev/', None),
+    'python': ('https://docs.python.org/3/', None),
     }
 
 # Add any paths that contain templates here, relative to this directory.
@@ -226,7 +226,7 @@ epub_scheme = 'URL'
 
 # The unique identifier of the text. This can be a ISBN number
 # or the project homepage.
-epub_identifier = 'https://deform.readthedocs.org/'
+epub_identifier = 'https://docs.pylonsproject.org/projects/deform/en/latest/'
 
 # A unique identification for the text.
 epub_uid = epub_title
