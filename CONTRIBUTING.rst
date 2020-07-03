@@ -2,6 +2,8 @@
 Contributing
 ============
 
+You are working on the `2.0-branch`. This branch is the latest, stable release branch. Development of new features takes place on the `master` branch.
+
 All projects under the Pylons Projects, including this one, follow the
 guidelines established at [How to
 Contribute](https://pylonsproject.org/community-how-to-contribute.html) and

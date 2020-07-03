@@ -1,7 +1,7 @@
 Deform
 ======
 
-.. image:: https://travis-ci.org/Pylons/deform.png?branch=master
+.. image:: https://travis-ci.org/Pylons/deform.png?branch=2.0-branch
         :target: https://travis-ci.org/Pylons/deform
 
 .. image:: https://readthedocs.org/projects/deform/badge/?version=master
