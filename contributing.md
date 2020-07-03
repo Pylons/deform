@@ -1,5 +1,7 @@
 # Contributing
 
+You are working on the `master` branch. Development of new features takes place on the `master` branch. The latest, stable release branch is `2.0-branch`.
+
 All projects under the Pylons Projects, including this one, follow the guidelines established at [How to Contribute](https://pylonsproject.org/community-how-to-contribute.html), [Coding Style and Standards](https://pylonsproject.org/community-coding-style-standards.html), and [Pylons Project Documentation Style Guide](https://docs.pylonsproject.org/projects/docs-style-guide/).
 
 You can contribute to this project in several ways.
