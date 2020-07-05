@@ -230,7 +230,7 @@ with Deform v1.  It requires the use of Twitter Bootstrap v3, whereas
 deform v1 did not require Bootstrap.
 
 A demonstration site that shows Deform 2 in action exists at
-http://deform2demo.repoze.org.
+https://deformdemo.pylonsproject.org.
 
 Both Deform 1 and Deform 2 will be maintained going forward.  If you wish
 to continue using Deform 1, because you cannot upgrade, or cannot depend on
@@ -244,9 +244,9 @@ changes in v2+.  Documentation updates will be forthcoming over the lifetime
 of future alpha/beta releases.  However, below is a list of known issues that
 need to be addressed to make a final release of Deform 2, as well as
 information about new features, and migration notes.  You may also be
-able to make use of the demo site at http://deform2demo.repoze.org to divine
-how things have changed, and what CSS and JavaScript resources you'll need
-to include in your pages to make use of this release.
+able to make use of the demo site at https://deformdemo.pylonsproject.org to
+divine how things have changed, and what CSS and JavaScript resources you'll
+need to include in your pages to make use of this release.
 
 TODO
 
@@ -290,7 +290,7 @@ NEW FEATURES:
 - field.get_root
 - inline attr of checkboxchoice and radiochoice widgets (see
   https://github.com/Pylons/deform/pull/182)
-- http://deform2demo.repoze.org/
+- https://deformdemo.pylonsproject.org/
 
 MIGRATION NOTES:
 

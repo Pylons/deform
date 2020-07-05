@@ -32,8 +32,8 @@ Let's take another look at our familiar schema:
 This schema renders as a *sequence* of *mapping* objects.  Each
 mapping has two leaf nodes in it: a *string* and an *integer*.  If you
 play around with the demo at
-`http://deformdemo.repoze.org/sequence_of_mappings/
-<http://deformdemo.repoze.org/sequence_of_mappings/>`_ you'll notice
+`https://deformdemo.pylonsproject.org/sequence_of_mappings/
+<https://deformdemo.pylonsproject.org/sequence_of_mappings/>`_ you'll notice
 that, although we don't actually specify a particular kind of widget
 for each of these fields, a sensible default widget is used.  This is
 true of each of the default types in :term:`Colander`.  Here is how
@@ -258,8 +258,8 @@ be loaded into the page serving the form for the mask argument to have
 any effect.  A copy of this library is available in the
 ``static/scripts`` directory of the :mod:`deform` package itself.
 
-See `http://deformdemo.repoze.org/text_input_masks/
-<http://deformdemo.repoze.org/text_input_masks/>`_ for a working
+See `https://deformdemo.pylonsproject.org/text_input_masks/
+<https://deformdemo.pylonsproject.org/text_input_masks/>`_ for a working
 example.
 
 Use of a text input mask is not a replacement for server-side
@@ -335,14 +335,14 @@ available options. Passing options looks like:
 				values=['spam, 'eggs', 'bar', 'baz'],
                                 min_length=1)
 
-See `http://deformdemo.repoze.org/autocomplete_input/
-<http://deformdemo.repoze.org/autocomplete_input/>`_ and
-`http://deformdemo.repoze.org/autocomplete_remote_input/
-<http://deformdemo.repoze.org/autocomplete_remote_input/>`_ for
+See `https://deformdemo.pylonsproject.org/autocomplete_input/
+<https://deformdemo.pylonsproject.org/autocomplete_input/>`_ and
+`https://deformdemo.pylonsproject.org/autocomplete_remote_input/
+<https://deformdemo.pylonsproject.org/autocomplete_remote_input/>`_ for
 working examples. A working example of a remote URL providing
 completion data can be found at
-`http://deformdemo.repoze.org/autocomplete_input_values/
-<http://deformdemo.repoze.org/autocomplete_input_values/>`_.
+`https://deformdemo.pylonsproject.org/autocomplete_input_values/
+<https://deformdemo.pylonsproject.org/autocomplete_input_values/>`_.
 
 Use of :class:`deform.widget.AutocompleteInputWidget` is not a
 replacement for server-side validation of the field; it is purely a UI

@@ -19,11 +19,11 @@ Introduction
 ------------
 
 Deform is a Python form library for generating HTML forms on the server side.
-`Date and time picking widgets <http://deformdemo.repoze.org/datetimeinput/>`_,
-`rich text editors <http://deformdemo.repoze.org/richtext/>`_, `forms with
+`Date and time picking widgets <https://deformdemo.pylonsproject.org/datetimeinput/>`_,
+`rich text editors <https://deformdemo.pylonsproject.org/richtext/>`_, `forms with
 dynamically added and removed items
-<http://deformdemo.repoze.org/sequence_of_mappings/>`_ and a few other `complex
-use cases <http://deformdemo.repoze.org/>`_ are supported out of the box.
+<https://deformdemo.pylonsproject.org/sequence_of_mappings/>`_ and a few other `complex
+use cases <https://deformdemo.pylonsproject.org/>`_ are supported out of the box.
 
 Deform integrates with the `Pyramid web framework <https://trypyramid.com/>`_
 and several other web frameworks. Deform comes with `Chameleon templates
@@ -60,7 +60,7 @@ Install using `pip and Python package installation best practices <https://packa
 Example
 -------
 
-`See all widget examples <http://deformdemo.repoze.org>`_. Below is a sample
+`See all widget examples <https://deformdemo.pylonsproject.org>`_. Below is a sample
 form loop using the `Pyramid <https://trypyramid.com/>`_ web framework.
 
 .. image:: https://github.com/Pylons/deform/raw/master/docs/example.png
@@ -167,7 +167,7 @@ Projects using Deform
 Community and links
 -------------------
 
-* `Widget examples <http://deformdemo.repoze.org>`_
+* `Widget examples <https://deformdemo.pylonsproject.org>`_
 
 * `PyPi <https://pypi.org/project/deform/>`_
 
