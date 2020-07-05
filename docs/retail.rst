@@ -23,7 +23,7 @@ for some of its features.  We refer to this as "retail form rendering".
 Live example
 ------------
 
-`See pop-up example on Deform demo site <http://deformdemo.repoze.org/popup/>`_.
+`See pop-up example on Deform demo site <https://deformdemo.pylonsproject.org/popup/>`_.
 
 `Source code <https://github.com/Pylons/deformdemo/blob/master/deformdemo/__init__.py>`_ (search popup).
 

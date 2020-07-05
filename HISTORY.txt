@@ -339,7 +339,7 @@ Documentation
 - Added tox.ini for testing purposes.
 
 - Fix select dropdown behavior on Firefox by fixing CSS (closes
-  http://bugs.repoze.org/issue152).
+  https://web.archive.org/web/20120508023633/http://bugs.repoze.org/issue152).
 
 - Removed ``wufoo.css``, minimized ``form.css``.  Changed templates around to
   deal with CSS changes.
@@ -392,7 +392,8 @@ Features
 
 - Different styling involving <li> and <ul> for checkbox choice,
   checked input, radio choice, checked password, and dateparts widgets
-  (via Ergo^). See http://bugs.repoze.org/issue165.
+  (via Ergo^). See
+  https://web.archive.org/web/20131112040628/http://bugs.repoze.org/issue165.
 
 Dependencies
 ~~~~~~~~~~~~
@@ -689,14 +690,16 @@ Backwards Incompatibilities
   changed to make using proper defaults possible; if you've used the
   ``default`` argument to a ``colander.SchemaNode``, or if you've
   defined a custom Colander type, you'll want to read `the updated
-  Colander documentation <http://docs.repoze.org/colander>`_
+  Colander documentation
+  <https://docs.pylonsproject.org/projects/colander/en/latest/>`_
   (particularly the changelist).  Short story: use the ``missing``
   argument instead.
 
 - If you've created a custom widget, you will need to tweak it
   slightly to handle the value ``colander.null`` as input to both
   ``serialize`` and ``deserialize``.  See the Deform docs at
-  `http://docs.repoze.org/deform <http://docs.repoze.org/deform>`_ for
+  `https://docs.pylonsproject.org/projects/deform/en/latest/
+  <https://docs.pylonsproject.org/projects/deform/en/latest/>`_ for
   more information.
 
 0.2 (2010-05-13)
