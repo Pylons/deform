@@ -7,8 +7,8 @@ import weakref
 
 # Pyramid
 import colander
-from chameleon.utils import Markup
 import peppercorn
+from chameleon.utils import Markup
 from deform.widget import HiddenWidget
 
 from . import compat
@@ -160,13 +160,14 @@ class Field(object):
     default_resource_registry = widget.default_resource_registry
     # Allowable input types for automatic focusing
     focusable_input_types = (
-                type(colander.String()),
-                type(colander.Integer()),
-                type(colander.Decimal()),
-                type(colander.Float()),
-                type(colander.Date()),
-                type(colander.Time()),
-                type(colander.Boolean()))
+        type(colander.String()),
+        type(colander.Integer()),
+        type(colander.Decimal()),
+        type(colander.Float()),
+        type(colander.Date()),
+        type(colander.Time()),
+        type(colander.Boolean()),
+    )
     hidden_type = type(HiddenWidget())
 
     def __init__(
@@ -206,11 +207,11 @@ class Field(object):
             self.have_first_input = False
 
         if (
-                focus == "off" or
-                autofocus is None or
-                autofocus == False or
-                autofocus.lower() == "off"
-           ):
+            focus == "off"
+            or autofocus is None
+            or autofocus is False
+            or autofocus.lower() == "off"
+        ):
             self.autofocus = None
         else:
             self.autofocus = "autofocus"
@@ -227,18 +228,15 @@ class Field(object):
         focused = False
         for child in schema.children:
             if (
-                    focus == "on" and
-                    not focused and
-                    type(child.typ) in Field.focusable_input_types and
-                    type(child.widget) != Field.hidden_type and
-                    not self.have_first_input
-               ):
+                focus == "on"
+                and not focused
+                and type(child.typ) in Field.focusable_input_types
+                and type(child.widget) != Field.hidden_type
+                and not self.have_first_input
+            ):
                 first_input_index = child_count
-                self.found_first() # Notify ancestors
-            try:
-                autofocus = getattr(child, "autofocus")
-            except:
-                autofocus = None
+                self.found_first()  # Notify ancestors
+                autofocus = getattr(child, "autofocus", None)
 
             if autofocus is not None:
                 focused = True
@@ -257,10 +255,10 @@ class Field(object):
             )
         child_count += 1
         if (
-                focus == "on" and
-                not focused and
-                first_input_index != -1 and
-                self.have_first_input
+            focus == "on"
+            and not focused
+            and first_input_index != -1
+            and self.have_first_input
         ):
             # User did not set autofocus. Focus on 1st valid input.
             self.children[first_input_index].autofocus = "autofocus"

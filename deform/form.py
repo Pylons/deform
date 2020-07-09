@@ -127,7 +127,7 @@ class Form(field.Field):
         elif autocomplete is not None:
             autocomplete = "off"
         self.autocomplete = autocomplete
-        if focus.lower() == "off" or focus == False:
+        if focus.lower() == "off" or focus is False:
             self.focus = "off"
         else:
             self.focus = "on"
