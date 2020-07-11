@@ -23,14 +23,14 @@ Instead, the form is posted, and the result of the post replaces the
 form element's DOM node.
 
 Examples of using the AJAX facilities in Deform are showcased on the
-`http://deformdemo.repoze.org <http://deformdemo.repoze.org>`_
+`https://deformdemo.pylonsproject.org <https://deformdemo.pylonsproject.org>`_
 demonstration website:
 
 - `Redirection on validation success
-  <http://deformdemo.repoze.org/ajaxform_redirect/>`_
+  <https://deformdemo.pylonsproject.org/ajaxform_redirect/>`_
 
 - `No redirection on validation success
-  <http://deformdemo.repoze.org/ajaxform/>`_
+  <https://deformdemo.pylonsproject.org/ajaxform/>`_
 
 .. note::
 

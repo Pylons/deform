@@ -486,15 +486,15 @@ Seeing it In Action
 -------------------
 
 To see an "add form" in action that follows the schema in this
-chapter, visit `http://deformdemo.repoze.org/sequence_of_mappings/
-<http://deformdemo.repoze.org/sequence_of_mappings/>`_.
+chapter, visit `https://deformdemo.pylonsproject.org/sequence_of_mappings/
+<https://deformdemo.pylonsproject.org/sequence_of_mappings/>`_.
 
 To see a "readonly edit form" in action that follows the schema in
 this chapter, visit
-`http://deformdemo.repoze.org/readonly_sequence_of_mappings/
-<http://deformdemo.repoze.org/readonly_sequence_of_mappings/>`_
+`https://deformdemo.pylonsproject.org/readonly_sequence_of_mappings/
+<https://deformdemo.pylonsproject.org/readonly_sequence_of_mappings/>`_
 
-The application at http://deformdemo.repoze.org is a :mod:`pyramid`
+The application at https://deformdemo.pylonsproject.org is a :mod:`pyramid`
 application which demonstrates most of the features of Deform,
 including most of the widget and data types available for use within
 an application that uses Deform.  
