@@ -426,9 +426,9 @@ class AutocompleteInputWidget(Widget):
 
         If ``values`` is a string it will be treated as a
         URL. If values is an iterable which can be serialized to a
-        :term:`json` array, it will be treated as local data.
+        :term:`JSON` array, it will be treated as local data.
 
-        If a string is provided to a URL, an :term:`xhr` request will
+        If a string is provided to a URL, an :term:`XHR` request will
         be sent to the URL. The response should be a JSON
         serialization of a list of values.  For example:
 
