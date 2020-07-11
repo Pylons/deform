@@ -149,7 +149,7 @@ requirement name is ``jquery``, and the version id is ``1.4.2``, the
 caller can take that to mean that the JQuery library should be loaded
 within the page header via, for example the inclusion of the HTML
 ``<script type="text/javascript"
-src="http://deformdemo.repoze.org/static/scripts/jquery-1.4.2.min.js"></script>``
+src="https://deformdemo.pylonsproject.org/static/scripts/jquery-1.4.2.min.js"></script>``
 within the HEAD tag of the rendered HTML page.
 
 Users will almost certainly prefer to use the

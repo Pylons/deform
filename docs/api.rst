@@ -17,10 +17,6 @@ Form-Related
 
    .. automethod:: __contains__
 
-   .. automethod:: translate
-
-   .. automethod:: get_root
-
 .. autoclass:: Form
    :members:
 

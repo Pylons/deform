@@ -7,8 +7,9 @@ Glossary
    :sorted:
 
    renderer
-     A callable with the signature ``(template_name, **kw)`` which is
-     capable of rendering a template for use in a deform widget.
+     A function which accepts a logical template name and a set of
+     keywords, with the signature ``(template_name, **kw)``, and
+     which returns the rendering of a deform widget template.
 
    cstruct
      Data serialized by :term:`Colander` to a representation suitable
@@ -70,10 +71,6 @@ Glossary
      single HTTP request, so field objects are often used to maintain
      state information during the request.
 
-   renderer
-     A function which accepts a logical template name and a set of
-     keywords, and which returns the rendering of a widget template.
-
    default renderer
      The template :term:`renderer` used when no other renderer is
      specified.  It uses the :term:`Chameleon` templating engine.
@@ -82,16 +79,15 @@ Glossary
      `WebOb <https://webob.org/>`_ is a WSGI request/response
      library created by Ian Bicking.
 
-   Gettext
-     The GNU `gettext <http://www.gnu.org/software/gettext/>`_
+   gettext
+     The GNU `gettext <https://www.gnu.org/software/gettext/>`_
      library, used by the :mod:`deform` translation machinery.
 
    jquery.maskedinput
      A JQuery plugin library that allows for input masks in text
      inputs.  For example, a mask for a US telephone number might be
      ``(999)-999-9999``.  See also
-     `https://github.com/digitalBush/jquery.maskedinput
-     <https://github.com/digitalBush/jquery.maskedinput>`_.  Deform
+     https://github.com/digitalBush/jquery.maskedinput.  Deform
      supports input masks in its default
      :class:`deform.widget.TextInputWidget` widget.
 
@@ -103,12 +99,12 @@ Glossary
      meets the requirements of the schema.
 
    TinyMCE Editor
-     `TinyMCE <https://www.tinymce.com/>`_ is a platform
+     `TinyMCE <https://www.tiny.cloud/>`_ is a platform
      independent web based Javascript HTML WYSIWYG editor control
      released as Open Source under `LGPL
-     <http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html>`_ by
+     <https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html>`_ by
      `Moxiecode Systems AB <http://www.moxiecode.com/>`_. It
-     has the ability to convert HTML TEXTAREA fields or other HTML
+     has the ability to convert HTML textarea fields or other HTML
      elements to editor instances. TinyMCE is very easy to integrate
      into other Content Management Systems.
 
@@ -116,45 +112,40 @@ Glossary
      A  :term:`jQuery` plugin library that allows for autocompleting a
      value in a text input, making it easier to find and select a
      value from a possibly large list. The data may be local or
-     remote. See also `http://jqueryui.com/autocomplete/
-     <http://jqueryui.com/autocomplete/>`_ for more details.
+     remote. See https://jqueryui.com/autocomplete/ for more details.
 
-   xhr
-     ``xhr`` an XMLHTTPRequest. See also
-     `http://www.w3.org/TR/XMLHttpRequest/ 
-     <http://www.w3.org/TR/XMLHttpRequest/>`_.
+   XHR
+     ``XHR`` an XMLHTTPRequest. See https://www.w3.org/TR/XMLHttpRequest/.
 
    JSON
      ``JSON`` (JavaScript Object Notation) is a lightweight
      data-interchange format. It is easy for humans to read and write.
-     See also `http://www.json.org/ <http://www.json.org/>`_.
+     See also https://www.json.org/.
 
    jQuery
-     `jQuery <http://jquery.com/>`_ is a JavaScript library for making
+     `jQuery <https://jquery.com/>`_ is a JavaScript library for making
      client side changes to HTML.
 
-   Resource registry
+   resource registry
       An attribute of a Deform form which maps :term:`widget
       requirement` declarations made by widgets to relative file
       paths.  Useful to obtain all the CSS and/or Javascript resources
       required by all the widgets in a concrete form rendering.  See
       also :ref:`get_widget_resources`.
 
-   Widget requirement
+   widget requirement
       A sequence of tuples attached to a widget object representing
       the *logical* Javascript and/or CSS requirements of the widget.
       See also :ref:`specifying_widget_requirements`.
 
-   Sequence
+   sequence
       A widget which allows you to add multiple subwidgets, each of
       the same type.  
 
-   JQuery UI
+   jQuery UI
       A library used by Deform for various widget theming, effects and
-      functionality: See `http://jqueryui.com/
-      <http://jqueryui.com/>`_.
+      functionality: See https://jqueryui.com/.
 
    jquery.ui.autocomplete
-      A :term:`JQuery UI` sublibrary for autocompletion of text
-      fields.  See `http://api.jqueryui.com/autocomplete/
-      <http://api.jqueryui.com/autocomplete/>`_.
+      A :term:`jQuery UI` sublibrary for autocompletion of text
+      fields.  See https://api.jqueryui.com/autocomplete/.
