@@ -122,7 +122,7 @@ class Field(object):
             If the field's parent form has its ``focus`` argument set to
             ``on``, the first field with ``autofocus`` set to a trueish value
             (``on``, ``True``, ``autofocus``) will receive focus on page load.
-            Default: ``None``
+            Default: ``None``.
 
     *Constructor Arguments*
 
@@ -236,7 +236,7 @@ class Field(object):
             ):
                 first_input_index = child_count
                 self.found_first()  # Notify ancestors
-                autofocus = getattr(child, "autofocus", None)
+            autofocus = getattr(child, "autofocus", None)
 
             if autofocus is not None:
                 focused = True
@@ -253,7 +253,7 @@ class Field(object):
                     **kw
                 )
             )
-        child_count += 1
+            child_count += 1
         if (
             focus == "on"
             and not focused

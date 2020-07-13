@@ -131,7 +131,7 @@ class Form(field.Field):
             self.focus = "off"
         else:
             self.focus = "on"
-        # Use kwargs to pass flags to decendant fields; saves cluttering
+        # Use kwargs to pass flags to descendant fields; saves cluttering
         # the constructor
         kw["focus"] = self.focus
         field.Field.__init__(self, schema, **kw)
