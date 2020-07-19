@@ -5,6 +5,7 @@ import unittest
 
 class TestFileUploadTempStore(unittest.TestCase):
     def _makeOne(self):
+        # Deform
         from deform.interfaces import FileUploadTempStore
 
         return FileUploadTempStore()

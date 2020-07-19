@@ -5,6 +5,7 @@ import unittest
 
 class TestValidationFailure(unittest.TestCase):
     def _makeOne(self, field, cstruct, error):
+        # Deform
         from deform.exception import ValidationFailure
 
         return ValidationFailure(field, cstruct, error)

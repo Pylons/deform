@@ -4,6 +4,7 @@ import unittest
 
 
 def invalid_exc(func, *arg, **kw):
+    # Pyramid
     from colander import Invalid
 
     try:
@@ -16,12 +17,16 @@ def invalid_exc(func, *arg, **kw):
 
 class TestFileData(unittest.TestCase):
     def _makeOne(self):
+        # Deform
         from deform.schema import FileData
 
         return FileData()
 
     def test_deferred_csrf_value(self):
+        # Pyramid
         from pyramid import testing
+
+        # Deform
         from deform.schema import CSRFSchema
         from deform.schema import deferred_csrf_value
 
@@ -34,6 +39,7 @@ class TestFileData(unittest.TestCase):
         self.assertEqual(new_schema.default, token)
 
     def test_deserialize_null(self):
+        # Pyramid
         from colander import null
 
         typ = self._makeOne()
@@ -48,6 +54,7 @@ class TestFileData(unittest.TestCase):
         self.assertEqual(result, "123")
 
     def test_serialize_null(self):
+        # Pyramid
         from colander import null
 
         typ = self._makeOne()
