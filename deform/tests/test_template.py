@@ -8,6 +8,7 @@ from deform.compat import text_type
 
 class TestZPTTemplateLoader(unittest.TestCase):
     def _makeOne(self, **kw):
+        # Deform
         from deform.template import ZPTTemplateLoader
 
         return ZPTTemplateLoader(**kw)
@@ -21,6 +22,7 @@ class TestZPTTemplateLoader(unittest.TestCase):
         self.assertEqual(loader.search_path, ["path"])
 
     def test_load_exists(self):
+        # Standard Library
         import os
 
         fixtures = os.path.join(os.path.dirname(__file__), "fixtures")
@@ -29,6 +31,7 @@ class TestZPTTemplateLoader(unittest.TestCase):
         self.assertTrue(result)
 
     def test_load_exists_asset_spec_with_search_path(self):
+        # Standard Library
         import os
 
         fixtures = os.path.join(os.path.dirname(__file__), "fixtures")
@@ -42,6 +45,7 @@ class TestZPTTemplateLoader(unittest.TestCase):
         self.assertTrue(result)
 
     def test_load_with_translate(self):
+        # Standard Library
         import os
 
         fixtures = os.path.join(os.path.dirname(__file__), "fixtures")
@@ -50,6 +54,7 @@ class TestZPTTemplateLoader(unittest.TestCase):
         self.assertEqual(result.translate, "abc")
 
     def test_load_with_encoding(self):
+        # Standard Library
         import os
 
         fixtures = os.path.join(os.path.dirname(__file__), "fixtures")
@@ -58,6 +63,7 @@ class TestZPTTemplateLoader(unittest.TestCase):
         self.assertEqual(result.encoding, "utf-16")
 
     def test_load_with_auto_reload(self):
+        # Standard Library
         import os
 
         fixtures = os.path.join(os.path.dirname(__file__), "fixtures")
@@ -66,7 +72,10 @@ class TestZPTTemplateLoader(unittest.TestCase):
         self.assertEqual(result.auto_reload, True)
 
     def test_load_notexists(self):
+        # Standard Library
         import os
+
+        # Deform
         from deform.template import TemplateError
 
         fixtures = os.path.join(os.path.dirname(__file__), "fixtures")
@@ -78,6 +87,7 @@ class TestZPTTemplateLoader(unittest.TestCase):
             )
 
     def test_load_negative_cache(self):
+        # Standard Library
         import os
 
         fixtures = os.path.join(os.path.dirname(__file__), "fixtures")
@@ -89,7 +99,10 @@ class TestZPTTemplateLoader(unittest.TestCase):
             self.assertTrue(result)
 
     def test_load_negative_cache2(self):
+        # Standard Library
         import os
+
+        # Deform
         from deform.template import TemplateError
 
         fixtures = os.path.join(os.path.dirname(__file__), "fixtures")
@@ -102,6 +115,7 @@ class TestZPTTemplateLoader(unittest.TestCase):
 
 class TestZPTRendererFactory(unittest.TestCase):
     def _makeOne(self, dirs, **kw):
+        # Deform
         from deform.template import ZPTRendererFactory
 
         return ZPTRendererFactory(dirs, **kw)
@@ -115,6 +129,7 @@ class TestZPTRendererFactory(unittest.TestCase):
         self.assertEqual(result.strip(), text_type("<div>Test</div>"))
 
     def test_it(self):
+        # Standard Library
         import os
 
         path = os.path.join(os.path.dirname(__file__), "fixtures")
@@ -134,11 +149,13 @@ class TestZPTRendererFactory(unittest.TestCase):
 
 class Test_default_renderer(unittest.TestCase):
     def _callFUT(self, template, **kw):
+        # Deform
         from deform.template import default_renderer
 
         return default_renderer(template, **kw)
 
     def test_call_defaultdir(self):
+        # Standard Library
         import re
 
         result = self._callFUT(

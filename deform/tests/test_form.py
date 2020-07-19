@@ -5,11 +5,13 @@ import unittest
 
 class TestForm(unittest.TestCase):
     def _makeOne(self, schema, **kw):
+        # Deform
         from deform.form import Form
 
         return Form(schema, **kw)
 
     def test_ctor_buttons_strings(self):
+        # Deform
         from deform.widget import FormWidget
 
         schema = DummySchema()
@@ -36,6 +38,7 @@ class TestForm(unittest.TestCase):
         self.assertEqual(button.attributes, {})
 
     def test_ctor_buttons_notstrings(self):
+        # Deform
         from deform.widget import FormWidget
 
         schema = DummySchema()
@@ -95,8 +98,11 @@ class TestForm(unittest.TestCase):
 
 class TestIssues(unittest.TestCase):
     def test_issue_54(self):
-        import deform
+        # Pyramid
         import colander
+
+        # Deform
+        import deform
 
         class LoginForm(colander.Schema):
             username = colander.SchemaNode(colander.String())
@@ -120,9 +126,12 @@ class TestIssues(unittest.TestCase):
             self.assertTrue("Username does not match password" in rendered)
 
     def test_issue_71(self):
-        import deform
+        # Pyramid
         import colander
         from bs4 import BeautifulSoup
+
+        # Deform
+        import deform
 
         schema = colander.MappingSchema(title="SCHEMA_TITLE")
         form = deform.Form(schema)
@@ -138,6 +147,7 @@ class TestIssues(unittest.TestCase):
 
 class TestButton(unittest.TestCase):
     def _makeOne(self, **kw):
+        # Deform
         from deform.form import Button
 
         return Button(**kw)
@@ -201,6 +211,7 @@ class DummySchema(object):
         return appstruct
 
     def cstruct_children(self, cstruct):
+        # Pyramid
         import colander
 
         children = []

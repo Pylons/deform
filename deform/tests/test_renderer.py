@@ -1,10 +1,13 @@
+# Standard Library
 import unittest
 
+# Deform
 import deform
 
 
 class TestConfigureZPT_Renderer(unittest.TestCase):
     def test_configure_zpt_renderer(self):
+        # Pyramid
         from pyramid.i18n import get_localizer
         from pyramid.threadlocal import get_current_request
 
