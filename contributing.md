@@ -37,7 +37,21 @@ Continue by installing tox and following [Preparing a functional testing environ
 
 ## Using tox
 
-We use [tox](https://tox.readthedocs.io/en/latest/install.html) to manage virtual environments, run both unit and functional tests across all supported versions of Python, build docs, perform lint checks, and perform test coverage.
+We use [tox](https://tox.readthedocs.io/en/latest/install.html) to:
+
+- manage virtual environments
+- run both unit and functional tests across all supported versions of Python
+- build docs
+- perform lint checks
+- perform test coverage
+- format code
+
+Install `tox` either in your path or locally.
+The examples below assume that `tox` was installed with:
+
+    pip3 install --user tox
+    export TOX=$(python3 -c 'import site; print(site.USER_BASE + "/bin")')/tox
+
 See `tox.ini` at the root of the repository for currently supported environments.
 
 We recommend that you install all supported Pythons, prepare a functional testing environment (see [Preparing a functional testing environment](#preparing-a-functional-testing-environment) below), and run the full test suite using tox before submitting a pull request.
@@ -46,7 +60,15 @@ Pull requests must pass all tests and tox environments before they can be merged
 
 After you have set up your development environment, you can use tox to run a specific environment by specifying it on the command line, or multiple environments as comma-separated values.
 
-    tox -e py38,docs
+    $TOX -e py38,docs
+
+
+## Coding Style
+
+Deform uses [Black](https://pypi.org/project/black/) and [isort](https://pypi.org/project/isort/) for code formatting style.
+To run formatters:
+
+    $TOX -e format
 
 
 ## Unit tests
@@ -68,26 +90,26 @@ We use the following for running functional tests.
 
 If you add or change a feature that reduces test coverage or causes a functional test to fail, then you also must submit a pull request to the [deformdemo](https://github.com/pylons/deformdemo) repository to go along with your functional test change to Deform.
 
-For functional tests, tox runs the shell script [run-selenium-tests.bash](https://github.com/Pylons/deform/blob/master/run-selenium-tests.bash), located at the root of the Deform repository.
+For functional tests, `tox` runs the shell script [run-selenium-tests.bash](https://github.com/Pylons/deform/blob/master/run-selenium-tests.bash), located at the root of the Deform repository.
 See its comments for a description.
 
 To run functional tests.
 
-    tox -e functional3
+    $TOX -e functional3
 
 Stop on error.
 
-    tox -e functional3 -- -x
+    $TOX -e functional3 -- -x
 
 Run only the last failed tests.
 
-    tox -e functional3 -- --failed
+    $TOX -e functional3 -- --failed
 
 Run a single test.
 
-    tox -e functional3 -- deformdemo.test:CheckedInputWidgetWithMaskTests
+    $TOX -e functional3 -- deformdemo.test:CheckedInputWidgetWithMaskTests
 
-    tox -e functional3 -- deformdemo.test:SequenceOfMaskedTextInputs.test_submit_one_filled
+    $TOX -e functional3 -- deformdemo.test:SequenceOfMaskedTextInputs.test_submit_one_filled
 
 
 ### Preparing a functional testing environment
@@ -98,10 +120,13 @@ We will assume that you put your projects in your user directory, although you c
     cd ~/projects/deform/
 
 
-#### Set an environment variable
+#### Add your checkout location to your `PATH`
 
-Set an environment variable to add your local checkout of Deform to your `PATH`.
-It must to be set before running tox or nosetests, otherwise Firefox or Chrome will not start and will return an error message of `'geckodriver' executable needs to be in PATH.`.
+You must add your local Deform checkout—which is also where you will install geckodriver and your web browser—to your `PATH` to run `tox` or nosetests
+Otherwise Firefox or Chrome will not start and will return an error message of `'geckodriver' executable needs to be in PATH.`.
+
+When you run `$tox -e functional3`, your local checkout is automatically added.
+Otherwise you can set it manually. 
 
     export PATH=~/projects/deform:$PATH
 
