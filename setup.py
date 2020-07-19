@@ -46,8 +46,7 @@ lint_extras = [
     "flake8",
     "flake8-bugbear",
     "flake8-builtins",
-    "flake8-isort",
-    "isort >= 4.3.5, <5",
+    "isort",
     "readme_renderer",
 ]
 
