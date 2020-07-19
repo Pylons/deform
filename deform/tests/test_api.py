@@ -5,7 +5,9 @@ import unittest
 
 class TestAPI(unittest.TestCase):
     def test_it(self):
-        # none of these imports should fail
+        """
+        none of these imports should fail
+        """
         # Deform
         from deform import Button  # noQA
         from deform import Field  # noQA
