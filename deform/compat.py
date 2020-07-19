@@ -50,6 +50,7 @@ def bytes_(s, encoding="latin-1", errors="strict"):
 try:
     from StringIO import StringIO
 except ImportError:  # pragma: no cover
+    # Standard Library
     from io import StringIO
 
 
@@ -57,6 +58,7 @@ try:  # pragma: no cover
     url_quote = urllib.quote
     url_unquote = urllib.unquote
 except AttributeError:
+    # Standard Library
     import urllib.parse
 
     url_quote = urllib.parse.quote

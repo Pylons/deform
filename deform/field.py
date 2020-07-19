@@ -7,9 +7,8 @@ import weakref
 
 # Pyramid
 import colander
-
-import peppercorn
 from chameleon.utils import Markup
+import peppercorn
 
 from . import compat
 from . import decorator
