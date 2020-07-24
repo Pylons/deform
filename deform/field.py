@@ -7,8 +7,10 @@ import weakref
 
 # Pyramid
 import colander
-import peppercorn
 from chameleon.utils import Markup
+import peppercorn
+
+# Deform
 from deform.widget import HiddenWidget
 
 from . import compat
