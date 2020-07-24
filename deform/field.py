@@ -262,7 +262,7 @@ class Field(object):
             and first_input_index != -1
             and self.have_first_input
         ):
-            # User did not set autofocus. Focus on 1st valid input.
+            # User did not set autofocus. Focus on first valid input.
             self.children[first_input_index].autofocus = "autofocus"
         self.set_appstruct(appstruct)
 
