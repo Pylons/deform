@@ -212,7 +212,7 @@ class Field(object):
             focus == "off"
             or autofocus is None
             or autofocus is False
-            or autofocus.lower() == "off"
+            or str(autofocus).lower() == "off"
         ):
             self.autofocus = None
         else:
