@@ -56,7 +56,7 @@
    deform.addCallback(
      '${field.oid}',
      function(oid) {
-       $('#' + oid).select2({
+       $('#' + oid).select2('open').select2('close').select2({
          containerCssClass: 'form-control',
          placeholder: "${str(field.widget.placeholder).replace('"','\\"')|""}" || undefined,
          allowClear: "${hasattr(field.widget, 'placeholder')}",
