@@ -27,7 +27,7 @@ when you ask Deform to do this:
 - Deform passes an :term:`appstruct` to the root schema node's
   ``serialize`` method to obtain a :term:`cstruct`.  The root schema
   node is responsible for consulting its children nodes during this
-  process to serialilize the entirety of the data into a
+  process to serialize the entirety of the data into a
   single :term:`cstruct`.
 
 - Deform passes the resulting :term:`cstruct` to the root widget
