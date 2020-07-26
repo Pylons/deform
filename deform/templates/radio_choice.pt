@@ -14,7 +14,7 @@
       <input tal:attributes="checked value == cstruct;
                              class css_class;
                              style style;
-                             autofocus autofocus;
+                             autofocus not repeat.choice.index;
                              attributes|field.widget.attributes|{};"
              type="radio"
              name="${oid}"
