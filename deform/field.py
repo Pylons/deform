@@ -167,6 +167,7 @@ class Field(object):
         type(colander.Decimal()),
         type(colander.Float()),
         type(colander.Date()),
+        type(colander.DateTime()),
         type(colander.Time()),
         type(colander.Boolean()),
     )
