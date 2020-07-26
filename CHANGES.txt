@@ -1,16 +1,22 @@
 3.0.0 (unreleased)
 ------------------
 
-- Removed deform.js:focusFirstInput()
+- Changed the implementation of input autofocus from JavaScript to an HTML5
+  input attribute.
 
-  Forms have an optional focus parameter ('on'|'off')
-    - 'on': if the form contains an input with autofocus='on', that input field
-          will receive focus.
-    - 'on': if the form does not contain an input with autofocus='on', the first
-          input field of the form will receive focus.
-    - 'off' disables focusing for that form.
+  Forms now have an optional ``focus`` parameter (``on``|``off``) and fields
+  have an optional ``autofocus`` parameter.
 
-  Default behaviour is 'on' (unchanged).
+  -   If ``focus`` is ``on``, and at least one field has an ``autofocus``
+      schema parameter set to ``on``, the first of these fields will
+      receive focus on page load.
+  -   If ``focus`` is ``on`` or omitted, and no field has an
+      ``autofocus`` schema parameter set to ``on``, the first input of
+      the first form on the page will receive focus on page load.
+  -   If ``focus`` is ``off``, no focusing will be done.
+
+  Default: ``on``.
+  (This is unchanged from the JavaScript implementation.)
 
 
 2.0.10 (2020-07-03)

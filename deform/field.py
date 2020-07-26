@@ -122,9 +122,9 @@ class Field(object):
 
         autofocus
             If the field's parent form has its ``focus`` argument set to
-            ``on``, the first field with ``autofocus`` set to a trueish value
-            (``on``, ``True``, ``autofocus``) will receive focus on page load.
-            Default: ``None``.
+            ``on``, the first field out of all fields in this form with
+            ``autofocus`` set to a true-ish value (``on``, ``True``, or
+            ``autofocus``) will receive focus on page load. Default: ``None``.
 
     *Constructor Arguments*
 

@@ -55,11 +55,16 @@ class Form(field.Field):
         form tag.  Default: ``None``.
 
     focus
-        Determines this form's input focus. If ``focus`` is ``on`` or
-        omitted, the first input of the first form on the page will receive
-        focus on page load. If ``focus`` is ``on``, the first field
-        with its ``autofocus`` schema parameter set to ``on`` will receive
-        focus. If `focus`` is ``off``, no focusing will be done.
+        Determines this form's input focus.
+
+        -   If ``focus`` is ``on``, and at least one field has an ``autofocus``
+            schema parameter set to ``on``, the first of these fields will
+            receive focus on page load.
+        -   If ``focus`` is ``on`` or omitted, and no field has an
+            ``autofocus`` schema parameter set to ``on``, the first input of
+            the first form on the page will receive focus on page load.
+        -   If ``focus`` is ``off``, no focusing will be done.
+
         Default: ``on``.
 
     use_ajax
