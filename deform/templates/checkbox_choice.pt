@@ -14,7 +14,7 @@
       <input tal:attributes="checked value in cstruct;
                              class css_class;
                              style style;
-                             autofocus autofocus;
+                             autofocus not repeat.choice.index;
                              attributes|field.widget.attributes|{};"
              type="checkbox"
              name="checkbox"
