@@ -82,10 +82,10 @@ values during deserialization. The dictionary will include the keys
 ``day`` , ``month``, and ``year``, and the values will be the values
 provided by the person interacting with the related form controls.
 
-Other uses of Peppercorn structure markers include: a "confirm
-password" widget can render a peppercorn mapping with two text inputs
-in it, a "mapping widget" can serve as a substructure for a fieldset.
-Basically, Peppercorn makes it more pleasant to deal with form
+Other uses of Peppercorn structure markers include a "confirm
+password" widget that can render a peppercorn mapping with two text inputs
+in it, or a "mapping widget" that can serve as a substructure for a fieldset.
+Basically Peppercorn makes it more pleasant to deal with form
 submission data by pre-converting the data from a flat mapping into a
 set of mappings, sequences, and strings during deserialization.
 
@@ -95,7 +95,7 @@ to use any Peppercorn structure markers in its rendering.
 
 .. note:: See the `Peppercorn documentation
    <https://docs.pylonsproject.org/projects/peppercorn/en/latest/>`_ for more
-   information about using peppercorn structure markers in HTML.
+   information about using Peppercorn structure markers in HTML.
  
 Deserialization
 ---------------
@@ -109,10 +109,10 @@ data resulting from a form submission to application data) works:
   fields is created, mirroring the nodes in the schema.
 
 - Each field object created as a result of the prior step knows about
-  its associated schema node (it has a ``field.schema`` attribute);
-  each field also knows about an associated :term:`widget` object (it
+  its associated schema node (it has a ``field.schema`` attribute).
+  Each field also knows about an associated :term:`widget` object (it
   has a ``field.widget`` attribute).  This widget object may be a
-  default widget based on the schema node type or it might be
+  default widget based on the schema node type, or it might be
   overridden by the application developer for a particular rendering.
 
 - Deform passes a set of :term:`form controls` to the ``parse`` method
@@ -127,8 +127,8 @@ data resulting from a form submission to application data) works:
   This may result in a validation error.  If a validation error
   occurs, the form may be rerendered with error markers in place.
 
-If you were to attempt to produce a high-level overview diagram this
-process, it might look like this:
+If you were to attempt to produce a high-level overview diagram of
+this process, it might look like this:
 
 .. code-block:: text
 
@@ -179,13 +179,13 @@ control data.
 
 The job of the deserialize method of a widget is to convert the
 pstruct it receives into a :term:`cstruct`.  A :term:`cstruct` is a
-shorthand for "Colander structure".  It is often a string, a mapping
+shorthand for "Colander structure".  It is often a string, a mapping,
 or a sequence.
 
 An application eventually wants to deal in types less primitive than
-strings: a model instance or a datetime object.  An :term:`appstruct`
-is the data that an application that uses Deform eventually wants to
-deal in.  Therefore, once a widget has turned a :term:`pstruct` into a
+strings, such as a model instance or a datetime object.  An :term:`appstruct`
+is the data that an application using Deform eventually wants to
+deal in.  Therefore once a widget has turned a :term:`pstruct` into a
 :term:`cstruct`, the :term:`schema node` related to that widget is
 responsible for converting that cstruct to an :term:`appstruct`.  A
 schema node possesses its very own ``deserialize`` method, which is
@@ -238,8 +238,7 @@ the field value when the form is rerendered at this time.
 Say What?
 ---------
 
-Q: "So deform colander and peppercorn are pretty intertwingled?"
+Q: "So Deform, Colander, and Peppercorn are pretty intertwingled?"
 
 A: "Colander and Peppercorn are unrelated; Deform is effectively
-    something that integrates colander and peppercorn together."
-
+    something that integrates Colander and Peppercorn together."
