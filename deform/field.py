@@ -162,14 +162,15 @@ class Field(object):
     default_resource_registry = widget.default_resource_registry
     # Allowable input types for automatic focusing
     focusable_input_types = (
-        type(colander.String()),
-        type(colander.Integer()),
-        type(colander.Decimal()),
-        type(colander.Float()),
+        type(colander.Boolean()),
         type(colander.Date()),
         type(colander.DateTime()),
+        type(colander.Decimal()),
+        type(colander.Float()),
+        type(colander.Integer()),
+        type(colander.Set()),
+        type(colander.String()),
         type(colander.Time()),
-        type(colander.Boolean()),
     )
     hidden_type = type(HiddenWidget())
 
