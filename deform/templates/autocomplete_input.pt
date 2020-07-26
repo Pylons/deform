@@ -18,6 +18,9 @@
           '${field.oid}',
           function (oid) {
               $('#' + oid).typeahead(${options});
+              if("${autofocus}" == "autofocus") {
+                $('#' + oid).focus();
+              }
           }
         );
     </script>
