@@ -1,14 +1,12 @@
 <tal:block tal:define="oid oid|field.oid;
                        css_class css_class|field.widget.css_class;
-                       style style|field.widget.style;
-                       autofocus autofocus|field.autofocus">
+                       style style|field.widget.style;">
   ${field.start_mapping()}
   <input type="file" name="upload" id="${oid}"
          tal:attributes="style style;
                          accept accept|field.widget.accept;
                          data-filename cstruct.get('filename');
-                         attributes|field.widget.attributes|{};
-                         autofocus autofocus"/>
+                         attributes|field.widget.attributes|{};"/>
   <input tal:define="uid cstruct.get('uid')"
          tal:condition="uid"
          type="hidden" name="uid" value="${uid}"/>
