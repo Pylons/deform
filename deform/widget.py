@@ -1,5 +1,4 @@
 """Widget."""
-
 # Standard Library
 import csv
 import json
