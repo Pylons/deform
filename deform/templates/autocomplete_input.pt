@@ -11,11 +11,11 @@
                            style style;
                            attributes|field.widget.attributes|{};"
            id="${oid}"/>
-    <script tal:condition="field.widget.values" type="text/javascript">
+    <script tal:condition="options" type="text/javascript">
         deform.addCallback(
           '${field.oid}',
           function (oid) {
-              $('#' + oid).typeahead(${options});
+              $('#' + oid).typeahead(${structure: options});
           }
         );
     </script>
