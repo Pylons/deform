@@ -1,8 +1,7 @@
 <div tal:define="delayed_load delayed_load|field.widget.delayed_load;
                  tinymce_options tinymce_options|field.widget.tinymce_options;
                  oid oid|field.oid;
-                 name name|field.name;
-                 autofocus autofocus|field.autofocus"
+                 name name|field.name;"
 
     xmlns:i18n="http://xml.zope.org/namespaces/i18n" 
     i18n:domain="deform"
@@ -16,8 +15,7 @@
       }
     </style>  
   <textarea id="${oid}" name="${name}" 
-            class='tinymce form-control' tal:content="structure cstruct" 
-            tal:attributes="autofocus autofocus"/>
+            class='tinymce form-control' tal:content="structure cstruct"/>
   <span id="${oid}-preload" class="tinymce-preload" 
         tal:content="structure cstruct" />
   <script type="text/javascript">
