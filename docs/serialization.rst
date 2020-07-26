@@ -76,9 +76,9 @@ part that looks like so:
   
 The above example shows an example of a pair of peppercorn structure
 markers which begin and end a *mapping*.  The example uses this pair
-to means that a the widget related to the *date* node in the schema
+to mean that the widget related to the *date* node in the schema
 will be be passed a :term:`pstruct` that is a dictionary with multiple
-values during deserialization: the dictionary will include the keys
+values during deserialization. The dictionary will include the keys
 ``day`` , ``month``, and ``year``, and the values will be the values
 provided by the person interacting with the related form controls.
 
