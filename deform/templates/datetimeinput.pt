@@ -3,6 +3,7 @@
       tal:define="oid oid|field.oid;
                   css_class css_class|field.widget.css_class;
                   style style|field.widget.style;
+                  autofocus autofocus|field.autofocus;
                   type_name type_name|field.widget.type_name;">
   ${field.start_mapping()}
   <div class="row">
@@ -11,7 +12,8 @@
       <input type="date" name="date" value="${date}"
              class="span2 form-control ${css_class or ''} hasDatepicker"
              tal:attributes="style style;
-             date_attributes|field.widget.date_attributes|{}"
+                             autofocus autofocus;
+                             date_attributes|field.widget.date_attributes|{}"
              id="${oid}-date"/>
     </div></div>
     <div class="col-xs-6"><div class="input-group">

@@ -3,7 +3,8 @@
       tal:define="oid oid|field.oid;
                   name name|field.name;
                   css_class css_class|field.widget.css_class;
-                  style style|field.widget.style;">
+                  style style|field.widget.style;
+                  autofocus autofocus|field.autofocus">
   ${field.start_mapping()}
   <div class="row">
     <div class="col-xs-4"><div class="input-group">
@@ -11,7 +12,8 @@
       <input type="text" name="year" value="${year}"
              class="span2 form-control ${css_class or ''}"
              tal:attributes="style style;
-             				 year_attributes|field.widget.year_attributes|{};"
+                             autofocus autofocus;
+                             year_attributes|field.widget.year_attributes|{};"
              maxlength="4"
              id="${oid}"/>
     </div></div>
@@ -20,7 +22,7 @@
       <input type="text" name="month" value="${month}"
              class="span2 form-control ${css_class or ''}"
              tal:attributes="style style;
-             				 month_attributes|field.widget.month_attributes|{};"
+                             month_attributes|field.widget.month_attributes|{};"
              maxlength="2"
              id="${oid}-month"/>
     </div></div>
@@ -29,7 +31,7 @@
       <input type="text" name="day" value="${day}"
              class="span2 form-control ${css_class or ''}"
              tal:attributes="style style;
-             				 day_attributes|field.widget.day_attributes|{};"
+                             day_attributes|field.widget.day_attributes|{};"
              maxlength="2"
              id="${oid}-day"/>
     </div></div>

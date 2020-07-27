@@ -1,6 +1,23 @@
 3.0.0 (unreleased)
 ------------------
 
+- Changed the implementation of input autofocus from JavaScript to an HTML5
+  input attribute.
+
+  Forms now have an optional ``focus`` parameter (``on``|``off``) and fields
+  have an optional ``autofocus`` parameter.
+
+  -   If ``focus`` is ``on``, and at least one field has an ``autofocus``
+      schema parameter set to ``on``, the first of these fields will
+      receive focus on page load.
+  -   If ``focus`` is ``on`` or omitted, and no field has an
+      ``autofocus`` schema parameter set to ``on``, the first input of
+      the first form on the page will receive focus on page load.
+  -   If ``focus`` is ``off``, no focusing will be done.
+
+  Default: ``on``.
+  (This is unchanged from the JavaScript implementation.)
+
 
 2.0.10 (2020-07-03)
 -------------------
