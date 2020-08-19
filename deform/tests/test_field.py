@@ -1,8 +1,6 @@
 """Field tests."""
-# Standard Library
 import unittest
 
-# Deform
 from deform.compat import text_
 
 

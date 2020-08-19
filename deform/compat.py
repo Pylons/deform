@@ -1,6 +1,5 @@
 """Python 2/3 compatibility."""
 # flake8: noqa
-# Standard Library
 import string
 import sys
 import types

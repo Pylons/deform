@@ -1,11 +1,9 @@
 """Field."""
-# Standard Library
 import itertools
 import re
 import unicodedata
 import weakref
 
-# Pyramid
 import colander
 
 import peppercorn

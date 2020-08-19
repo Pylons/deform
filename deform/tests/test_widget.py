@@ -1,11 +1,8 @@
 """Widget tests."""
-# Standard Library
 import unittest
 
-# Pyramid
 import colander
 
-# Deform
 from deform.compat import text_type
 
 

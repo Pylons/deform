@@ -1,5 +1,4 @@
 """Exception tests."""
-# Standard Library
 import unittest
 
 

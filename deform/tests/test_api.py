@@ -1,5 +1,4 @@
 """API tests."""
-# Standard Library
 import unittest
 
 

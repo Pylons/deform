@@ -1,5 +1,4 @@
 """Schema tests."""
-# Standard Library
 import unittest
 
 

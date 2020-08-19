@@ -1,11 +1,9 @@
 """Widget."""
 
-# Standard Library
 import csv
 import json
 import random
 
-# Pyramid
 from colander import Invalid
 from colander import Mapping
 from colander import SchemaNode

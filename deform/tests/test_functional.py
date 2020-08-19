@@ -1,12 +1,9 @@
 """Functional tests."""
-# Standard Library
 import datetime
 import unittest
 
-# Pyramid
 import colander
 
-# Deform
 import deform.widget
 
 
