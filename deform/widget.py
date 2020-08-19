@@ -172,7 +172,7 @@ class Widget(object):
     hidden = False
     readonly = False
     category = "default"
-    error_class = "error"
+    error_class = "is-invalid"
     css_class = None
     item_css_class = None
     style = None
@@ -1409,7 +1409,7 @@ class MappingWidget(Widget):
     readonly_template = "readonly/mapping"
     item_template = "mapping_item"
     readonly_item_template = "readonly/mapping_item"
-    error_class = None
+    error_class = "is-invalid"
     category = "structural"
     requirements = (("deform", None),)
 
@@ -1539,7 +1539,7 @@ class SequenceWidget(Widget):
     readonly_template = "readonly/sequence"
     item_template = "sequence_item"
     readonly_item_template = "readonly/sequence_item"
-    error_class = None
+    error_class = "is-invalid"
     add_subitem_text_template = _("Add ${subitem_title}")
     min_len = None
     max_len = None
