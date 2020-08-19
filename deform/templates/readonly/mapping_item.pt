@@ -6,7 +6,7 @@
                  category category|field.widget.category;
                  structural hidden or category == 'structural';
                  required required|field.required;"
-     class="form-group ${field.error and 'has-error' or ''} ${field.widget.item_css_class or ''}"
+     class="form-group ${field.error and error_class or ''} ${field.widget.item_css_class or ''}"
      title="${description}"
      id="item-${oid}"
      tal:omit-tag="structural"
