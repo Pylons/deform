@@ -1,6 +1,8 @@
 """Schema."""
+# Pyramid
 import colander
 
+# Deform
 from deform.i18n import _
 
 from . import widget

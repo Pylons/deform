@@ -1,9 +1,11 @@
 """Widget."""
 
+# Standard Library
 import csv
 import json
 import random
 
+# Pyramid
 from colander import Invalid
 from colander import Mapping
 from colander import SchemaNode
@@ -11,7 +13,6 @@ from colander import SchemaType
 from colander import Sequence
 from colander import String
 from colander import null
-
 from iso8601.iso8601 import ISO8601_REGEX
 from translationstring import TranslationString
 

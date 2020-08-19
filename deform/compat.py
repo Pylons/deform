@@ -1,5 +1,6 @@
 """Python 2/3 compatibility."""
 # flake8: noqa
+# Standard Library
 import string
 import sys
 import types
@@ -49,6 +50,7 @@ def bytes_(s, encoding="latin-1", errors="strict"):
 try:
     from StringIO import StringIO
 except ImportError:  # pragma: no cover
+    # Standard Library
     from io import StringIO
 
 
@@ -56,6 +58,7 @@ try:
     url_quote = urllib.quote
     url_unquote = urllib.unquote
 except AttributeError:  # pragma: no cover
+    # Standard Library
     import urllib.parse
 
     url_quote = urllib.parse.quote

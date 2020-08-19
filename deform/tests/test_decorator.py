@@ -1,9 +1,11 @@
 """Decorator tests."""
+# Standard Library
 import unittest
 
 
 class TestReify(unittest.TestCase):
     def _makeOne(self, wrapped):
+        # Deform
         from deform.decorator import reify
 
         return reify(wrapped)

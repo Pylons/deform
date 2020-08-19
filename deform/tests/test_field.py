@@ -1,10 +1,13 @@
 """Field tests."""
+# Standard Library
 import unittest
 
+# Deform
 from deform.compat import text_
 
 
 def validation_failure_exc(func, *arg, **kw):
+    # Deform
     from deform.exception import ValidationFailure
 
     try:
@@ -17,6 +20,7 @@ def validation_failure_exc(func, *arg, **kw):
 
 class TestField(unittest.TestCase):
     def _getTargetClass(self):
+        # Deform
         from deform.field import Field
 
         return Field
@@ -26,6 +30,7 @@ class TestField(unittest.TestCase):
         return cls(schema, **kw)
 
     def test_ctor_defaults(self):
+        # Deform
         from deform.template import default_renderer
 
         schema = DummySchema()
@@ -48,6 +53,7 @@ class TestField(unittest.TestCase):
         self.assertEqual(field.oid, "customOid")
 
     def test_ctor_with_children_in_schema(self):
+        # Deform
         from deform.field import Field
 
         grandchild = DummySchema(name="grandchild")
@@ -80,6 +86,7 @@ class TestField(unittest.TestCase):
         self.assertEqual(root.name, "root")
 
     def test_ctor_with_resource_registry(self):
+        # Deform
         from deform.field import Field
 
         schema = DummySchema()
@@ -93,6 +100,7 @@ class TestField(unittest.TestCase):
         self.assertEqual(child_field.resource_registry, "abc")
 
     def test_ctor_with_unknown_kwargs(self):
+        # Deform
         from deform.field import Field
 
         schema = DummySchema()
@@ -199,8 +207,11 @@ class TestField(unittest.TestCase):
         self.assertEqual(field.widget.item_css_class, "item-a-bn-c")
 
     def test_widget_no_maker_with_default_widget_maker(self):
-        from deform.widget import MappingWidget
+        # Pyramid
         from colander import Mapping
+
+        # Deform
+        from deform.widget import MappingWidget
 
         schema = DummySchema()
         schema.typ = Mapping()
@@ -209,8 +220,11 @@ class TestField(unittest.TestCase):
         self.assertEqual(widget.__class__, MappingWidget)
 
     def test_widget_no_maker_with_derived_from_default_field(self):
-        from deform.widget import SequenceWidget
+        # Pyramid
         from colander import Sequence
+
+        # Deform
+        from deform.widget import SequenceWidget
 
         class CustomSequence(Sequence):
             pass
@@ -222,6 +236,7 @@ class TestField(unittest.TestCase):
         self.assertEqual(widget.__class__, SequenceWidget)
 
     def test_widget_no_maker_no_default_widget_maker(self):
+        # Deform
         from deform.widget import TextInputWidget
 
         schema = DummySchema()
@@ -431,6 +446,7 @@ class TestField(unittest.TestCase):
         self.assertEqual(result, {"name": "Name", "title": "Title"})
 
     def test_validate_fails_widgeterror(self):
+        # Pyramid
         from colander import Invalid
 
         controls = [("name", "Name"), ("title", "Title")]
@@ -445,6 +461,7 @@ class TestField(unittest.TestCase):
         self.assertEqual(e.error, invalid)
 
     def test_validate_fails_schemaerror(self):
+        # Pyramid
         from colander import Invalid
 
         controls = [("name", "Name"), ("title", "Title")]
@@ -459,6 +476,7 @@ class TestField(unittest.TestCase):
         self.assertEqual(e.error, invalid)
 
     def test_validate_fails_widgeterror_and_schemaerror(self):
+        # Pyramid
         from colander import Invalid
 
         controls = [("name", "Name"), ("title", "Title")]
@@ -495,6 +513,7 @@ class TestField(unittest.TestCase):
         self.assertEqual(widget.rendered, "writable")
 
     def test_serialize_no_cstruct(self):
+        # Pyramid
         import colander
 
         schema = DummySchema()
@@ -504,6 +523,7 @@ class TestField(unittest.TestCase):
         self.assertEqual(widget.rendered, "writable")
 
     def test_serialize_null(self):
+        # Pyramid
         from colander import null
 
         schema = DummySchema()
@@ -534,6 +554,7 @@ class TestField(unittest.TestCase):
         self.assertEqual(field.cstruct, "abc")
 
     def test_set_cstruct_child_cstructs_is_SequenceItems(self):
+        # Pyramid
         from colander import SequenceItems
 
         schema = DummySchema()
@@ -558,6 +579,7 @@ class TestField(unittest.TestCase):
         self.assertEqual(child.cstruct, "1")
 
     def test_del_cstruct(self):
+        # Pyramid
         from colander import null
 
         schema = DummySchema()
@@ -579,6 +601,7 @@ class TestField(unittest.TestCase):
         self.assertEqual(field.cstruct, "a")
 
     def test_set_pstruct_invalid(self):
+        # Pyramid
         import colander
 
         schema = DummySchema()
@@ -738,6 +761,7 @@ class DummySchema(object):
         return value
 
     def cstruct_children(self, cstruct):
+        # Pyramid
         import colander
 
         children = []

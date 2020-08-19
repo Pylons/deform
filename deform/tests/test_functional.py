@@ -1,20 +1,24 @@
 """Functional tests."""
+# Standard Library
 import datetime
 import unittest
 
+# Pyramid
 import colander
 
+# Deform
 import deform.widget
 
 
 class TestFunctional(unittest.TestCase):
     def _makeSchema(self):
-        from colander import MappingSchema
-        from colander import SequenceSchema
-        from colander import SchemaNode
-        from colander import String
+        # Pyramid
         from colander import Boolean
         from colander import Date
+        from colander import MappingSchema
+        from colander import SchemaNode
+        from colander import SequenceSchema
+        from colander import String
 
         class DatesSchema(SequenceSchema):
             date = SchemaNode(Date())
@@ -43,6 +47,7 @@ class TestFunctional(unittest.TestCase):
         return schema
 
     def _makeForm(self, schema):
+        # Deform
         from deform.form import Form
 
         return Form(schema, formid="myform")
@@ -154,7 +159,10 @@ class TestFunctional(unittest.TestCase):
         self.assertEqual(result, expected)
 
     def test_validate(self):
+        # Pyramid
         from colander import null
+
+        # Deform
         from deform.exception import ValidationFailure
 
         schema = self._makeSchema()
