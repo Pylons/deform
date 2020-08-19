@@ -4,6 +4,7 @@ import unittest
 
 
 def invalid_exc(func, *arg, **kw):
+    # Pyramid
     from colander import Invalid
 
     try:
@@ -16,11 +17,13 @@ def invalid_exc(func, *arg, **kw):
 
 class TestFileData(unittest.TestCase):
     def _makeOne(self):
+        # Deform
         from deform.schema import FileData
 
         return FileData()
 
     def test_deserialize_null(self):
+        # Pyramid
         from colander import null
 
         typ = self._makeOne()
@@ -35,6 +38,7 @@ class TestFileData(unittest.TestCase):
         self.assertEqual(result, "123")
 
     def test_serialize_null(self):
+        # Pyramid
         from colander import null
 
         typ = self._makeOne()

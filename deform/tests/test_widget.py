@@ -20,6 +20,7 @@ def invalid_exc(func, *arg, **kw):
 
 class TestWidget(unittest.TestCase):
     def _makeOne(self, **kw):
+        # Deform
         from deform.widget import Widget
 
         return Widget(**kw)
@@ -62,6 +63,7 @@ class TestWidget(unittest.TestCase):
 
 class TestTextInputWidget(unittest.TestCase):
     def _makeOne(self, **kw):
+        # Deform
         from deform.widget import TextInputWidget
 
         return TextInputWidget(**kw)
@@ -142,6 +144,7 @@ class TestTextInputWidget(unittest.TestCase):
 
 class TestMoneyInputWidget(unittest.TestCase):
     def _makeOne(self, **kw):
+        # Deform
         from deform.widget import MoneyInputWidget
 
         return MoneyInputWidget(**kw)
@@ -245,6 +248,7 @@ class TestMoneyInputWidget(unittest.TestCase):
 
 class TestAutocompleteInputWidget(unittest.TestCase):
     def _makeOne(self, **kw):
+        # Deform
         from deform.widget import AutocompleteInputWidget
 
         return AutocompleteInputWidget(**kw)
@@ -275,6 +279,7 @@ class TestAutocompleteInputWidget(unittest.TestCase):
         self.assertEqual(renderer.kw["cstruct"], "")
 
     def test_serialize_url(self):
+        # Standard Library
         import json
 
         widget = self._makeOne()
@@ -298,6 +303,7 @@ class TestAutocompleteInputWidget(unittest.TestCase):
         )
 
     def test_serialize_iterable(self):
+        # Standard Library
         import json
 
         widget = self._makeOne()
@@ -362,6 +368,7 @@ class TestAutocompleteInputWidget(unittest.TestCase):
 
 class TestDateInputWidget(unittest.TestCase):
     def _makeOne(self, **kw):
+        # Deform
         from deform.widget import DateInputWidget
 
         return DateInputWidget(**kw)
@@ -459,6 +466,7 @@ class TestDateInputWidget(unittest.TestCase):
 
 class TestTimeInputWidget(unittest.TestCase):
     def _makeOne(self, **kw):
+        # Deform
         from deform.widget import TimeInputWidget
 
         return TimeInputWidget(**kw)
@@ -556,6 +564,7 @@ class TestTimeInputWidget(unittest.TestCase):
 
 class TestDateTimeInputWidget(unittest.TestCase):
     def _makeOne(self, **kw):
+        # Deform
         from deform.widget import DateTimeInputWidget
 
         return DateTimeInputWidget(**kw)
@@ -737,6 +746,7 @@ class TestDateTimeInputWidget(unittest.TestCase):
 
 class TestHiddenWidget(unittest.TestCase):
     def _makeOne(self, **kw):
+        # Deform
         from deform.widget import HiddenWidget
 
         return HiddenWidget(**kw)
@@ -799,6 +809,7 @@ class TestHiddenWidget(unittest.TestCase):
 
 class TestPasswordWidget(TestTextInputWidget):
     def _makeOne(self, **kw):
+        # Deform
         from deform.widget import PasswordWidget
 
         return PasswordWidget(**kw)
@@ -806,6 +817,7 @@ class TestPasswordWidget(TestTextInputWidget):
 
 class TestTextAreaWidget(TestTextInputWidget):
     def _makeOne(self, **kw):
+        # Deform
         from deform.widget import TextAreaWidget
 
         return TextAreaWidget(**kw)
@@ -813,6 +825,7 @@ class TestTextAreaWidget(TestTextInputWidget):
 
 class TestRichTextWidget(TestTextInputWidget):
     def _makeOne(self, **kw):
+        # Deform
         from deform.widget import RichTextWidget
 
         return RichTextWidget(**kw)
@@ -846,6 +859,7 @@ class TestRichTextWidget(TestTextInputWidget):
 
 class TestCheckboxWidget(unittest.TestCase):
     def _makeOne(self, **kw):
+        # Deform
         from deform.widget import CheckboxWidget
 
         return CheckboxWidget(**kw)
@@ -898,6 +912,7 @@ class TestCheckboxWidget(unittest.TestCase):
 
 class TestRadioChoiceWidget(unittest.TestCase):
     def _makeOne(self, **kw):
+        # Deform
         from deform.widget import RadioChoiceWidget
 
         return RadioChoiceWidget(**kw)
@@ -965,6 +980,7 @@ class TestRadioChoiceWidget(unittest.TestCase):
 
 class TestSelectWidget(unittest.TestCase):
     def _makeOne(self, **kw):
+        # Deform
         from deform.widget import SelectWidget
 
         return SelectWidget(**kw)
@@ -1085,6 +1101,7 @@ class TestSelectWidget(unittest.TestCase):
 
 class TestCheckboxChoiceWidget(unittest.TestCase):
     def _makeOne(self, **kw):
+        # Deform
         from deform.widget import CheckboxChoiceWidget
 
         return CheckboxChoiceWidget(**kw)
@@ -1172,6 +1189,7 @@ class TestCheckboxChoiceWidget(unittest.TestCase):
 
 class TestCheckedInputWidget(unittest.TestCase):
     def _makeOne(self, **kw):
+        # Deform
         from deform.widget import CheckedInputWidget
 
         return CheckedInputWidget(**kw)
@@ -1297,6 +1315,7 @@ class TestCheckedInputWidget(unittest.TestCase):
 
 class TestCheckedPasswordWidget(TestCheckedInputWidget):
     def _makeOne(self, **kw):
+        # Deform
         from deform.widget import CheckedPasswordWidget
 
         return CheckedPasswordWidget(**kw)
@@ -1315,6 +1334,7 @@ class TestCheckedPasswordWidget(TestCheckedInputWidget):
 
 class TestFileUploadWidget(unittest.TestCase):
     def _makeOne(self, tmpstore, **kw):
+        # Deform
         from deform.widget import FileUploadWidget
 
         return FileUploadWidget(tmpstore, **kw)
@@ -1484,6 +1504,7 @@ class TestFileUploadWidget(unittest.TestCase):
 
 class TestDatePartsWidget(unittest.TestCase):
     def _makeOne(self, **kw):
+        # Deform
         from deform.widget import DatePartsWidget
 
         return DatePartsWidget(**kw)
@@ -1595,6 +1616,7 @@ class TestDatePartsWidget(unittest.TestCase):
 
 class TestMappingWidget(unittest.TestCase):
     def _makeOne(self, **kw):
+        # Deform
         from deform.widget import MappingWidget
 
         return MappingWidget(**kw)
@@ -1686,11 +1708,13 @@ class TestMappingWidget(unittest.TestCase):
 
 class TestSequenceWidget(unittest.TestCase):
     def _makeOne(self, **kw):
+        # Deform
         from deform.widget import SequenceWidget
 
         return SequenceWidget(**kw)
 
     def test_prototype_unicode(self):
+        # Deform
         from deform.compat import url_unquote
 
         renderer = DummyRenderer(text_type("abc"))
@@ -1705,6 +1729,7 @@ class TestSequenceWidget(unittest.TestCase):
         self.assertEqual(protofield.cloned, True)
 
     def test_prototype_field_has_no_name(self):
+        # Deform
         from deform.compat import url_unquote  # noQA
 
         renderer = DummyRenderer(text_type("abc"))
@@ -1717,6 +1742,7 @@ class TestSequenceWidget(unittest.TestCase):
         self.assertRaises(ValueError, widget.prototype, field)
 
     def test_prototype_str(self):
+        # Deform
         from deform.compat import url_unquote
 
         renderer = DummyRenderer("abc")
@@ -1980,6 +2006,7 @@ class TestSequenceWidget(unittest.TestCase):
 
 class TestFormWidget(unittest.TestCase):
     def _makeOne(self, **kw):
+        # Deform
         from deform.widget import FormWidget
 
         return FormWidget(**kw)
@@ -1991,6 +2018,7 @@ class TestFormWidget(unittest.TestCase):
 
 class TestTextAreaCSVWidget(unittest.TestCase):
     def _makeOne(self, **kw):
+        # Deform
         from deform.widget import TextAreaCSVWidget
 
         return TextAreaCSVWidget(**kw)
@@ -2116,6 +2144,7 @@ class TestTextAreaCSVWidget(unittest.TestCase):
 
 class TestTextInputCSVWidget(unittest.TestCase):
     def _makeOne(self, **kw):
+        # Deform
         from deform.widget import TextInputCSVWidget
 
         return TextInputCSVWidget(**kw)
@@ -2221,17 +2250,20 @@ class TestTextInputCSVWidget(unittest.TestCase):
 
 class TestResourceRegistry(unittest.TestCase):
     def _makeOne(self, **kw):
+        # Deform
         from deform.widget import ResourceRegistry
 
         return ResourceRegistry(**kw)
 
     def test_use_defaults(self):
+        # Deform
         from deform.widget import default_resources
 
         reg = self._makeOne()
         self.assertEqual(reg.registry, default_resources)
 
     def test_dont_use_defaults(self):
+        # Deform
         from deform.widget import default_resources
 
         reg = self._makeOne(use_defaults=False)
@@ -2271,6 +2303,7 @@ class TestResourceRegistry(unittest.TestCase):
 
 class TestNormalizeChoices(unittest.TestCase):
     def _call(self, values):
+        # Deform
         from deform.widget import _normalize_choices
 
         return _normalize_choices(values)
@@ -2295,6 +2328,7 @@ class TestNormalizeChoices(unittest.TestCase):
         )
 
     def test_optgroup_and_tuple(self):
+        # Deform
         from deform.widget import OptGroup
 
         optgroup = OptGroup("label", (2, "two"))
