@@ -15,7 +15,7 @@
         deform.addCallback(
           '${field.oid}',
           function (oid) {
-              $('#' + oid).typeahead(${options});
+              $('#' + oid).typeahead(${structure:options});
           }
         );
     </script>
