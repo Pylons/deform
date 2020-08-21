@@ -6,7 +6,7 @@
                  category category|field.widget.category;
                  structural hidden or category == 'structural';
                  required required|field.required;"
-     class="form-group ${field.error and 'has-error' or ''} ${field.widget.item_css_class or ''}"
+     class="form-group ${field.error and error_class or ''} ${field.widget.item_css_class or ''}"
      title="${description}"
      id="item-${oid}"
      tal:omit-tag="structural"
@@ -31,7 +31,7 @@
             tal:condition="input_append">${input_append}</span>
   </div>
 
-  <p class="help-block"
+  <p class="form-text text-danger"
      tal:define="errstr 'error-%s' % field.oid"
      tal:repeat="msg field.error.messages()"
      i18n:translate=""
@@ -42,7 +42,7 @@
   </p>
 
   <p tal:condition="field.description and not field.widget.hidden"
-     class="help-block" >
+     class="form-text" >
     ${field.description}
   </p>
 </div>
