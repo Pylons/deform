@@ -1,5 +1,4 @@
 """Widget."""
-
 # Standard Library
 import csv
 import json
@@ -651,7 +650,7 @@ class DateTimeInputWidget(Widget):
     template = "datetimeinput"
     readonly_template = "readonly/datetimeinput"
     type_name = "datetime"
-    requirements = (("pickadate", None),)
+    requirements = (("modernizr", None), ("pickadate", None))
     default_date_options = (
         ("format", "yyyy-mm-dd"),
         ("selectMonths", True),
@@ -812,7 +811,7 @@ class RichTextWidget(TextInputWidget):
         :attr:`default_options`.
 
         You should refer to the `TinyMCE Configuration
-        <https://www.tinymce.com/docs/configure/>`_ documentation
+        <https://www.tiny.cloud/docs/configure/>`_ documentation
         for details regarding all available configuration options.
 
         The ``language`` option is passed to TinyMCE within the default

@@ -17,14 +17,16 @@ Alternative template engines
 
 Deform is compatible with any template engine.
 
-Even though Deform widgets themselves are rendered in Chameleon, you can place the forms on pages in any template language. For example, `Websauna <https://websauna.org>`_ places Deform forms inside Jinja 2 page templates.
+Even though Deform widgets themselves are rendered in Chameleon, you can place the forms on pages in any template language.
+For example, `Websauna <https://websauna.org>`_ places Deform forms inside Jinja2 page templates.
 
 The rendered forms are simply Python strings.
 
 Adding more widget templates
 ----------------------------
 
-If your application is supplying it own templates for Deform forms, you need to add those template paths to Chameleon lookup. Chameleon template paths are stored in a in-process global variable.
+If your application is supplying its own templates for Deform forms, you need to add those template paths to the Chameleon lookup.
+Chameleon template paths are stored in an in-process global variable.
 
 .. code-block:: python
 
@@ -39,8 +41,8 @@ Overriding the default templates
 
 The default widget set uses templates that live in the ``templates``
 directory of the :mod:`deform` package. If you are comfortable using
-the :term:`Chameleon` templating system, but you simply need to
-override some of these templates you can create your own template
+the :term:`Chameleon` templating system, but you need to override
+only some of these templates, you can create your own template
 directory and copy the template you wish to customize into it. You can
 then either configure your new template directory to be used for all
 forms or for specific forms as described below.
@@ -52,7 +54,7 @@ class ``renderer`` argument.
 Overriding for all forms
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-To globally override templates use the
+To globally override templates, use the
 :meth:`deform.Field.set_zpt_renderer` class method to change the
 settings associated with the default ZPT renderer:
 
@@ -66,7 +68,7 @@ settings associated with the default ZPT renderer:
 
    Form.set_zpt_renderer(search_path)
 
-Now, the templates in ``/path/to/my/templates`` will be used in
+Now the templates in ``/path/to/my/templates`` will be used in
 preference to the default templates whenever a form is rendered.
 Any number of template directories can be put into the search path and
 will be searched in the order specified with the first matching
@@ -162,9 +164,9 @@ repository
 within this directory and any of its subdirectories is a Chameleon ZPT
 template that is used by a default Deform widget.
 
-For example, ``textinput.pt`` ZPT template, which is used by the
-:class:`deform.widget.TextInputWidget` widget and which renders a text
-input control looks like this:
+For example, the ZPT template ``textinput.pt``, which is used by the
+:class:`deform.widget.TextInputWidget` widget and renders a text input
+control, looks like this:
 
 .. literalinclude:: ../deform/templates/textinput.pt
    :language: xml

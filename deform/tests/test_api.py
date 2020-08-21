@@ -7,8 +7,6 @@ class TestAPI(unittest.TestCase):
     def test_it(self):
         """
         none of these imports should fail
-        :return:
-        :rtype:
         """
         # Deform
         from deform import Button  # noQA

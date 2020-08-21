@@ -53,7 +53,7 @@ lint_extras = [
 testing_extras = ["beautifulsoup4", "coverage", "flaky", "nose"]
 
 # Needed to run deformdemo tests
-functional_testing_extra = [
+functional_testing_extras = [
     "selenium>=3",
     "pyramid",
     "pygments",
@@ -83,8 +83,10 @@ setupkw = dict(
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
+        "Programming Language :: Python :: Implementation :: PyPy3",
     ],
     keywords="web forms form generation schema validation pyramid",
     author="Chris McDonough, Agendaless Consulting",
@@ -101,7 +103,13 @@ setupkw = dict(
         "lint": lint_extras,
         "testing": testing_extras,
         "docs": docs_extras,
-        "functional": functional_testing_extra,
+        "functional": functional_testing_extras,
+        "dev": (
+            lint_extras
+            + testing_extras
+            + docs_extras
+            + functional_testing_extras
+        ),
     },
 )
 
