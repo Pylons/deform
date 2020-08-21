@@ -1,0 +1,126 @@
+#
+# Swahili translations for PACKAGE package
+# This file is distributed under the same license as the PACKAGE package.
+# antony oduor <aowino@gmail.com>, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE 1.0\n"
+"POT-Creation-Date: 2020-08-21 05:50-0700\n"
+"PO-Revision-Date: 2020-04-28 23:06-0600\n"
+"Last-Translator: antony oduor <aowino@gmail.com>\n"
+"Language-Team: Swahili\n"
+"Language: sw_KE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Lingua 4.11\n"
+"X-Generator: Poedit 1.8.7.1\n"
+
+#: deform/widget.py:731 deform/widget.py:1864
+msgid "Incomplete date"
+msgstr "Tarehe isiyo kamili"
+
+#: deform/widget.py:734
+msgid "Incomplete time"
+msgstr "Muda usiyo kamili"
+
+#: deform/widget.py:1302
+msgid "Fields did not match"
+msgstr "Vipembejeo havikulingana"
+
+#: deform/widget.py:1303
+msgid "Value"
+msgstr "Kwa thamani"
+
+#: deform/widget.py:1304
+msgid "Confirm Value"
+msgstr "Thibitisha kwa thamani"
+
+#: deform/widget.py:1373
+msgid "Password did not match confirm"
+msgstr "Nywila haikulingana na thibitisho"
+
+#: deform/widget.py:1543
+#, python-format
+msgid "Add ${subitem_title}"
+msgstr "Ongeza ${subitem_title}"
+
+#: deform/schema.py:113
+#, python-format
+msgid "${value} is not a dictionary"
+msgstr "${value} sio safu-shirikishi"
+
+#: deform/schema.py:119
+#, python-format
+msgid "${value} has no ${key} key"
+msgstr "${value} haina ${key} kifunguo"
+
+#: deform/tests/test_widget.py:1867
+#, python-format
+msgid "Yo ${subitem_title}"
+msgstr "Vipi ${subitem_title}"
+
+#: deform/templates/form.pt:36
+msgid "There was a problem with your submission"
+msgstr "Kulikua na tatizo na wasilisho lako"
+
+#: deform/templates/form.pt:38
+msgid "Errors have been highlighted below"
+msgstr "Makosa yameonyeshwa hapo chini"
+
+#: deform/templates/dateparts.pt:11
+msgid "Year"
+msgstr "Mwaka"
+
+#: deform/templates/dateparts.pt:21
+msgid "Month"
+msgstr "Mwezi"
+
+#: deform/templates/dateparts.pt:30
+msgid "Day"
+msgstr "Siku"
+
+#: deform/templates/mapping_accordion.pt:29 deform/templates/mapping.pt:13
+msgid "There was a problem with this section"
+msgstr "Kulikuwa na hitilafu na sehemu hii"
+
+#: deform/templates/sequence_item.pt:26
+msgid "Reorder (via drag and drop)"
+msgstr "Panga upya (kwa kukokota na kuachilia)"
+
+#: deform/templates/sequence_item.pt:31
+msgid "Remove"
+msgstr "Ondoa"
+
+#: deform/templates/checked_password.pt:18
+msgid "Password"
+msgstr "Nywila"
+
+#: deform/templates/checked_password.pt:29
+msgid "Confirm Password"
+msgstr "Thibitisha Nywila"
+
+#: deform/templates/datetimeinput.pt:11
+msgid "Date"
+msgstr "Tarehe"
+
+#: deform/templates/datetimeinput.pt:20
+msgid "Time"
+msgstr "Muda"
+
+#. Default: en
+#: deform/templates/richtext.pt:30
+msgid "language-code"
+msgstr "sw_KE"
+
+#: deform/templates/readonly/checked_password.pt:4
+msgid "Password not displayed."
+msgstr "Nywila haikuonyeshwa."
+
+#: deform/templates/readonly/checkbox.pt:8
+msgid "True"
+msgstr "Kweli"
+
+#: deform/templates/readonly/checkbox.pt:12
+msgid "False"
+msgstr "Si kweli"
