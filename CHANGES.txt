@@ -1,7 +1,9 @@
 .. _2.0.11:
 
-2.0.11 (2020-08-20)
+2.0.11 (2020-08-21)
 -------------------
+
+- Drop support of Python 3.4.
 
 - Changed the implementation of input autofocus from JavaScript to an HTML5
   input attribute.
@@ -19,6 +21,15 @@
 
   Default: ``on``.
   (This is unchanged from the JavaScript implementation.)
+
+- Replace the flake8-isort plugin with plain old isort.
+  See https://github.com/Pylons/deform/pull/427
+
+- Improved the script that launches Selenium webdriver to clean up the locale
+  directory after completing a run of functional tests so that its files do not
+  get committed by accident. We also enforce coding style and add a formatter,
+  and improved the contributing documentation.
+  See https://github.com/Pylons/deform/pull/428
 
 - Updated Bootstrap to 3.4.1.
 

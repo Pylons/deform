@@ -19,6 +19,8 @@ Prepare new release branch
 
 - Create a new release branch, incrementing the version number.
 
+- Align the release number with deformdemo.
+
 - Do any necessary branch merges (e.g., master to branch, branch to master).
 
 - On release branch:
