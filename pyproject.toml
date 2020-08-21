@@ -23,7 +23,7 @@ exclude = '''
 '''
 
 # This next section only exists for people that have their editors
-# automatically call isort.
+# automatically call isort. Black already sorts entries on its own when run.
 [tool.isort]
 combine_as_imports = true
 default_section = "THIRDPARTY"

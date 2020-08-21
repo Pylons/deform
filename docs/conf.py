@@ -173,6 +173,7 @@ html_last_updated_fmt = '%b %d, %Y'
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'deform'
 
+smartquotes = False
 
 # Options for LaTeX output
 # ------------------------

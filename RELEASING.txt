@@ -19,6 +19,8 @@ Prepare new release branch
 
 - Create a new release branch, incrementing the version number.
 
+- Align the release number with deformdemo.
+
 - Do any necessary branch merges (e.g., master to branch, branch to master).
 
 - On release branch:
@@ -62,12 +64,15 @@ Prepare new release branch
 
 - Release the wheels to PyPI:
 
-    $VENV/bin/twine upload dist/deform-X.Y.Z*
+    $VENV/bin/twine upload dist/deform-X.Y.Z-*
 
 - Upload a git tag for the release:
 
     git tag X.Y.Z
     git push origin X.Y.Z
+
+- Add a release on Github.
+  https://github.com/Pylons/deform/releases
 
 - Update RTD to render a new version of the docs at that tag X.Y.Z and set
   X.Y.Z as the default branch such that ``/latest/`` points to it.
