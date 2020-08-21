@@ -71,6 +71,9 @@ Prepare new release branch
     git tag X.Y.Z
     git push origin X.Y.Z
 
+- Add a release on Github.
+  https://github.com/Pylons/deform/releases
+
 - Update RTD to render a new version of the docs at that tag X.Y.Z and set
   X.Y.Z as the default branch such that ``/latest/`` points to it.
 
