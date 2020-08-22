@@ -12,23 +12,18 @@
 #
 ##############################################################################
 
-# Standard Library
-import os
-
 from setuptools import find_packages
 from setuptools import setup
 
 
-here = os.path.abspath(os.path.dirname(__file__))
+def readfile(name):
+    with open(name) as f:
+        return f.read()
 
-try:
-    with open(os.path.join(here, "README.rst")) as f:
-        README = f.read()
-    with open(os.path.join(here, "CHANGES.txt")) as f:
-        CHANGES = f.read()
-except Exception:
-    README = ""
-    CHANGES = ""
+
+README = readfile("README.rst")
+CHANGES = readfile("CHANGES.txt")
+VERSION = '3.0.0.dev0'
 
 requires = [
     "Chameleon>=2.5.1",  # Markup class
@@ -38,7 +33,6 @@ requires = [
     "translationstring>=1.0",  # add format mapping with %
     "zope.deprecation",
 ]
-
 
 lint_extras = [
     "black",
@@ -50,7 +44,7 @@ lint_extras = [
     "readme_renderer",
 ]
 
-testing_extras = ["beautifulsoup4", "coverage", "flaky", "nose"]
+testing_extras = ["coverage", "flaky", "nose"]
 
 # Needed to run deformdemo tests
 functional_testing_extras = [
@@ -68,9 +62,15 @@ docs_extras = [
     "pylons-sphinx-themes",
 ]
 
-setupkw = dict(
+branch_version = ".".join(VERSION.split(".")[:2])
+
+# black is refusing to make anything under 80 chars so just splitting it up
+docs_fmt = "https://docs.pylonsproject.org/projects/deform/en/{}-branch/"
+docs_url = docs_fmt.format(branch_version)
+
+setup(
     name="deform",
-    version="3.0.0.dev0",
+    version=VERSION,
     description="Form library with advanced features like nested forms",
     long_description=README + "\n\n" + CHANGES,
     classifiers=[
@@ -89,6 +89,11 @@ setupkw = dict(
     author="Chris McDonough, Agendaless Consulting",
     author_email="pylons-discuss@googlegroups.com",
     url="https://docs.pylonsproject.org/projects/deform/en/latest/",
+    project_urls={
+        'Documentation': docs_url,
+        'Changelog': '{}whatsnew-{}.html'.format(docs_url, branch_version),
+        'Issue Tracker': 'https://github.com/Pylons/deform/issues',
+    },
     license="BSD-derived (http://www.repoze.org/LICENSE.txt)",
     packages=find_packages(),
     include_package_data=True,
@@ -109,5 +114,3 @@ setupkw = dict(
         ),
     },
 )
-
-setup(**setupkw)
