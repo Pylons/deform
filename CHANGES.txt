@@ -1,6 +1,22 @@
 3.0.0 (unreleased)
 ------------------
 
+
+.. _2.0.12:
+
+2.0.12 (2020-08-2_)
+-------------------
+
+- Update select2 widget to version 4.0.13.
+  See https://github.com/Pylons/deform/pull/441
+
+- Add the `structure` keyword to the autocomplete template's options to stop its encoding.
+  See https://github.com/Pylons/deform/pull/445
+
+- Use the local HTML element for change event when removing/adding to DOM.
+  See https://github.com/Pylons/deform/pull/331
+
+
 .. _2.0.11:
 
 2.0.11 (2020-08-21)
