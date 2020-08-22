@@ -53,7 +53,6 @@ var deform  = {
         //   for attribute to the new id.
 
         var fieldmatch = /deformField(\d+)/;
-        var namematch = /(.+)?-[#]{3}/;
         var code = protonode.attr('prototype');
         var html = decodeURIComponent(code);
         var $htmlnode = $(html);
