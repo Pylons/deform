@@ -424,8 +424,8 @@ class Field(object):
             .encode("ascii", "ignore")
             .decode("ascii")
         )
-        css_class = re.sub("[^\w\s-]", "", css_class).strip().lower()  # noQA
-        css_class = re.sub("[-\s]+", "-", css_class)  # noQA
+        css_class = re.sub(r"[^\w\s-]", "", css_class).strip().lower()  # noQA
+        css_class = re.sub(r"[-\s]+", "-", css_class)  # noQA
         return "item-%s" % css_class
 
     def get_widget_requirements(self):
