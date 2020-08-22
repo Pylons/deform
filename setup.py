@@ -70,7 +70,7 @@ docs_extras = [
 
 setupkw = dict(
     name="deform",
-    version="2.0.11",
+    version="2.0.12.dev",
     description="Form library with advanced features like nested forms",
     long_description=README + "\n\n" + CHANGES,
     classifiers=[
