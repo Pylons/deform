@@ -10,16 +10,24 @@
 - Update select2 widget to version 4.0.13.
   See https://github.com/Pylons/deform/pull/441
 
-- Add the `structure` keyword to the autocomplete template's options to stop its encoding.
+- Add the ``structure`` keyword to the autocomplete template's options to stop
+  its encoding.
   See https://github.com/Pylons/deform/pull/445
 
 - Use the local HTML element for change event when removing/adding to DOM.
   See https://github.com/Pylons/deform/pull/331
 
-- Fix deprecation warning when importing the module `field.py` while testing
+- Fix deprecation warning when importing the module ``field.py`` while testing
   with pytest.
   See https://github.com/Pylons/deform/pull/419
 
+- Fix a bug that was introduced in 2.0.11 that made it such that the ``focus``
+  parameter on forms did not honor the ``off`` value for ``checkboxChoice`` and
+  ``radioChoice`` widgets.
+  See https://github.com/Pylons/deform/pull/453
+
+- Remove the unused variable ``namematch`` from deform.js.
+  See https://github.com/Pylons/deform/pull/454
 
 .. _2.0.11:
 
@@ -31,7 +39,7 @@
 - Changed the implementation of input autofocus from JavaScript to an HTML5
   input attribute.
 
-  Forms now have an optional ``focus`` parameter (``on``|``off``) and fields
+  Forms now have an optional ``focus`` parameter (``on`` or ``off``) and fields
   have an optional ``autofocus`` parameter.
 
   -   If ``focus`` is ``on``, and at least one field has an ``autofocus``
@@ -44,6 +52,8 @@
 
   Default: ``on``.
   (This is unchanged from the JavaScript implementation.)
+
+  See https://github.com/Pylons/deform/pull/365/
 
 - Replace the flake8-isort plugin with plain old isort.
   See https://github.com/Pylons/deform/pull/427
