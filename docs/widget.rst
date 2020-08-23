@@ -452,8 +452,9 @@ attached.
         def serialize(self, field, cstruct, readonly=False):
             if cstruct is null:
                 cstruct = u''
+            quoted = cgi.escape(cstruct, quote='"')
             return ('<input type="text" name="%s" value="%s">' %
-                    (field.name, cgi.escape(cstruct, quote='"')))
+                    (field.name, quoted))
 
         def deserialize(self, field, pstruct):
             if pstruct is null:
@@ -496,8 +497,9 @@ class:
         def serialize(self, field, cstruct, readonly=False):
             if cstruct is null:
                 cstruct = u''
+            quoted = cgi.escape(cstruct, quote='"')
             return ('<input type="text" name="%s" value="%s">' %
-                    (field.name, cgi.escape(cstruct, quote='"')))
+                    (field.name, quoted))
 
         def deserialize(self, field, pstruct):
             if pstruct is null:
