@@ -142,3 +142,4 @@ Contributors
 - Antony Oduor, 2020/06/18
 - John Haiducek, 2020/06/20
 - Stanisław Pitucha, 2020/06/30
+- Lele Gaifax, 2020/08/22
