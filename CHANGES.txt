@@ -1,6 +1,6 @@
 .. _2.0.12:
 
-2.0.12 (2020-08-XX)
+2.0.12 (2020-08-23)
 -------------------
 
 - Update select2 widget to version 4.0.13.
@@ -24,6 +24,10 @@
 
 - Remove the unused variable ``namematch`` from deform.js.
   See https://github.com/Pylons/deform/pull/454
+
+- Add i18n domain and Bootstrap styles to template ``readonly/password.pt``.
+  See https://github.com/Pylons/deform/pull/237
+
 
 .. _2.0.11:
 
