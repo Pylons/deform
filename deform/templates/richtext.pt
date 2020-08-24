@@ -14,9 +14,9 @@
       }
     </style>  
   <textarea id="${oid}" name="${name}" 
-            class='tinymce form-control' tal:content="cstruct" />
+            class="tinymce form-control" tal:content="cstruct" />
   <!--!
-    NB: disaable delayed_load on error redisplay of form, since
+    NB: disable delayed_load on error redisplay of form, since
     that might result in non-HTML-escaped interpolation of
     user input.
   -->
