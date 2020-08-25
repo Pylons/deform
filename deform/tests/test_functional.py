@@ -286,8 +286,8 @@ class IntSchema(colander.Schema):
 
 class RichTextSchema(colander.Schema):
     richtext = colander.SchemaNode(
-        colander.String(),
-        widget=deform.widget.RichTextWidget())
+        colander.String(), widget=deform.widget.RichTextWidget()
+    )
 
 
 class AutofocusDefaultSchema(colander.Schema):
