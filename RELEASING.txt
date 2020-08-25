@@ -19,7 +19,7 @@ Prepare new release branch
 
 - Create a new release branch, incrementing the version number.
 
-- Align the release number with deformdemo.
+- Align the release number with deformdemo (setup.py, README.rst, CHANGES.txt).
 
 - Do any necessary branch merges (e.g., master to branch, branch to master).
 
