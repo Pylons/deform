@@ -17,6 +17,9 @@
   containing an error.
   See https://github.com/Pylons/deform/pull/204
 
+- This time, *really* update select2 widget to version 4.0.13.
+  See https://github.com/Pylons/deform/pull/459
+
 
 .. _2.0.12:
 
