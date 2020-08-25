@@ -492,6 +492,23 @@ class TestField(unittest.TestCase):
         self.assertEqual(e.field, field)
         self.assertEqual(e.error, schema_invalid)
 
+    def test_validate_fails_peppercorn_error(self):
+        # Pyramid
+        from colander import Invalid
+        from colander import null
+
+        controls = [
+            ('__start__', 'foo:baroo'),
+        ]
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        field.widget = DummyWidget()
+        e = validation_failure_exc(field.validate, controls)
+        self.assertEqual(e.cstruct, null)
+        self.assertEqual(e.field, field)
+        self.assertTrue(isinstance(e.error, Invalid))
+        self.assertEqual(field.widget.error, e.error)
+
     def test_render(self):
         schema = DummySchema()
         field = self._makeOne(schema)
