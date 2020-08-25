@@ -732,7 +732,15 @@ class Field(object):
         if all of the data in the form post, you might use
         ``form.validate(controls, subcontrol='user')``.
         """
-        pstruct = peppercorn.parse(controls)
+        try:
+            pstruct = peppercorn.parse(controls)
+        except ValueError as e:
+            exc = colander.Invalid(
+                self.schema, "Invalid peppercorn controls: %s" % e
+            )
+            self.widget.handle_error(self, exc)
+            cstruct = colander.null
+            raise exception.ValidationFailure(self, cstruct, exc)
         if subcontrol is not None:
             pstruct = pstruct.get(subcontrol, colander.null)
         return self.validate_pstruct(pstruct)

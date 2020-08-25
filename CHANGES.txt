@@ -1,6 +1,8 @@
 3.0.0 (unreleased)
 ------------------
 
+- Field.validate() now raises ``ValidationFailure`` upon peppercorn parse
+  failure.
 
 
 .. _2.0.13:
