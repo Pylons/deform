@@ -1,6 +1,8 @@
 API Documentation
 =================
 
+.. contents:: :local:
+
 Form-Related
 ------------
 
@@ -14,10 +16,6 @@ Form-Related
    .. automethod:: __iter__
 
    .. automethod:: __contains__
-
-   .. automethod:: translate
-
-   .. automethod:: get_root
 
 .. autoclass:: Form
    :members:
@@ -81,6 +79,9 @@ Widget-Related
 .. autoclass:: RichTextWidget
    :members:
 
+.. autoclass:: PasswordWidget
+   :members:
+
 .. autoclass:: CheckboxWidget
    :members:
 
@@ -119,6 +120,9 @@ Widget-Related
    :members:
 
 .. autoclass:: FileUploadWidget
+   :members:
+
+.. autoclass:: TimeInputWidget
    :members:
 
 .. autoclass:: DateInputWidget

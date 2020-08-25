@@ -7,113 +7,129 @@ msgid ""
 msgstr ""
 "Project-Id-Version: deform 0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2012-03-30 16:17+0200\n"
+"POT-Creation-Date: 2016-11-19 13:28+0200\n"
 "PO-Revision-Date: 2011-11-08 15:51+0100\n"
 "Last-Translator: Douglas Cerna <douglascerna@yahoo.com>\n"
 "Language-Team: es <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: deform/schema.py:100
+#: deform/schema.py:109
+#, python-format
 msgid "${value} is not a dictionary"
 msgstr "${value} no es un diccionario"
 
-#: deform/schema.py:107
+#: deform/schema.py:116
+#, python-format
 msgid "${value} has no ${key} key"
 msgstr "${value} no tiene la clave ${key}"
 
-#: deform/schema.py:146
-msgid "${value} is not iterable"
-msgstr "${value} no es iterable"
-
-#: deform/schema.py:150
-msgid "Required"
-msgstr "Requerido"
-
-#: deform/widget.py:779
-msgid "Fields did not match"
-msgstr "Los campos no coinciden"
-
-#: deform/widget.py:780
-msgid "Value"
-msgstr "Valor"
-
-#: deform/widget.py:781
-msgid "Confirm Value"
-msgstr "Confirmar Valor"
-
-#: deform/widget.py:829
-msgid "Password did not match confirm"
-msgstr "La contraseña no coincide con la confirmación"
-
-#: deform/widget.py:980
-msgid "Add ${subitem_title}"
-msgstr ""
-
-#: deform/widget.py:1239
+#: deform/widget.py:718 deform/widget.py:1800
 msgid "Incomplete date"
 msgstr "Incompleto"
 
-#: deform/templates/checked_password.pt:5
+#: deform/widget.py:721
+#, fuzzy
+msgid "Incomplete time"
+msgstr "Incompleto"
+
+#: deform/widget.py:1253
+msgid "Fields did not match"
+msgstr "Los campos no coinciden"
+
+#: deform/widget.py:1254
+msgid "Value"
+msgstr "Valor"
+
+#: deform/widget.py:1255
+msgid "Confirm Value"
+msgstr "Confirmar Valor"
+
+#: deform/widget.py:1321
+msgid "Password did not match confirm"
+msgstr "La contraseña no coincide con la confirmación"
+
+#: deform/widget.py:1485
+#, python-format
+msgid "Add ${subitem_title}"
+msgstr ""
+
+#: deform/templates/checked_password.pt:15
 msgid "Password"
 msgstr ""
 
-#: deform/templates/checked_password.pt:10
+#: deform/templates/checked_password.pt:25
 msgid "Confirm Password"
 msgstr ""
 
-#: deform/templates/dateparts.pt:5 deform/templates/readonly/dateparts.pt:2
+#: deform/templates/dateparts.pt:10
 msgid "Year"
 msgstr ""
 
-#: deform/templates/dateparts.pt:12 deform/templates/readonly/dateparts.pt:4
+#: deform/templates/dateparts.pt:18
 msgid "Month"
 msgstr ""
 
-#: deform/templates/dateparts.pt:19 deform/templates/readonly/dateparts.pt:6
+#: deform/templates/dateparts.pt:26
 msgid "Day"
 msgstr ""
 
-#: deform/templates/form.pt:19
+#: deform/templates/datetimeinput.pt:9
+msgid "Date"
+msgstr ""
+
+#: deform/templates/datetimeinput.pt:16
+msgid "Time"
+msgstr ""
+
+#: deform/templates/form.pt:35
 msgid "There was a problem with your submission"
 msgstr "Hubo un problema con su envío"
 
-#: deform/templates/form.pt:21
+#: deform/templates/form.pt:37
 msgid "Errors have been highlighted below"
 msgstr "Los errores se han resaltado abajo"
 
-#: deform/templates/mapping.pt:6
+#: deform/templates/mapping.pt:13 deform/templates/mapping_accordion.pt:29
 msgid "There was a problem with this section"
 msgstr "Hubo un problema con su envío"
 
 #. Default: en
-#: deform/templates/richtext.pt:15
+#: deform/templates/richtext.pt:30
 msgid "language-code"
 msgstr "es"
 
-#: deform/templates/sequence_item.pt:6
+#: deform/templates/sequence_item.pt:26
+msgid "Reorder (via drag and drop)"
+msgstr ""
+
+#: deform/templates/sequence_item.pt:31
 msgid "Remove"
 msgstr ""
 
-#: deform/templates/readonly/checked_password.pt:2
-#: deform/templates/readonly/password.pt:2
+#: deform/templates/readonly/checkbox.pt:8
+msgid "True"
+msgstr ""
+
+#: deform/templates/readonly/checkbox.pt:12
+msgid "False"
+msgstr ""
+
+#: deform/templates/readonly/checked_password.pt:4
 msgid "Password not displayed."
 msgstr ""
 
-#: deform/templates/readonly/file_upload.pt:7
-msgid "Read-only."
+#: deform/tests/test_widget.py:1752
+#, python-format
+msgid "Yo ${subitem_title}"
 msgstr ""
 
-#: deform/templates/readonly/radio_choice.pt:4
-#: deform/templates/readonly/select.pt:3
-msgid "Selected"
-msgstr ""
+#~ msgid "${value} is not iterable"
+#~ msgstr "${value} no es iterable"
 
-#: deform/templates/readonly/radio_choice.pt:5
-#: deform/templates/readonly/select.pt:4
-msgid "Not Selected"
-msgstr ""
-
+#~ msgid "Required"
+#~ msgstr "Requerido"

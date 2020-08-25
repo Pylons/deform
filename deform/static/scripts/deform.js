@@ -1,5 +1,5 @@
-/* 
- * Register a top-level callback to the deform.load() function 
+/*
+ * Register a top-level callback to the deform.load() function
  * this will be called when the DOM has finished loading. No need
  * to include the call at the end of the page.
  */
@@ -26,11 +26,9 @@ var deform  = {
       $(function() {
         if (!deform_loaded) {
             deform.processCallbacks();
-            deform.focusFirstInput();
             deform_loaded = true;
       }});
     },
-            
 
     processCallbacks: function () {
         $(deform.callbacks).each(function(num, item) {
@@ -49,13 +47,12 @@ var deform  = {
         // In order to avoid breaking accessibility:
         //
         // - Find each tag within the prototype node with an id
-        //   that has the string ``deformField(\d+)`` within it, and modify 
+        //   that has the string ``deformField(\d+)`` within it, and modify
         //   its id to have a random component.
         // - For each label referencing an change id, change the label's
         //   for attribute to the new id.
 
         var fieldmatch = /deformField(\d+)/;
-        var namematch = /(.+)?-[#]{3}/;
         var code = protonode.attr('prototype');
         var html = decodeURIComponent(code);
         var $htmlnode = $(html);
@@ -64,7 +61,7 @@ var deform  = {
         var genid = deform.randomString(6);
         var idmap = {};
 
-        // replace ids containing ``deformField`` and associated label for= 
+        // replace ids containing ``deformField`` and associated label for=
         // items which point at them
 
         $idnodes.each(function(idx, node) {
@@ -93,7 +90,7 @@ var deform  = {
             var oid = item[0];
             var callback = item[1];
             var newid = idmap[oid];
-            if (newid) { 
+            if (newid) {
                 callback(newid);
                 }
             });
@@ -102,8 +99,7 @@ var deform  = {
         var old_len = parseInt(before.attr('now_len')||'0', 10);
         before.attr('now_len', old_len + 1);
         // we added something to the dom, trigger a change event
-        var e = jQuery.Event("change");
-        $('#deform').trigger(e);
+        $htmlnode.trigger('change');
     },
 
     appendSequenceItem: function(node) {
@@ -114,10 +110,10 @@ var deform  = {
         var max_len = parseInt($before_node.attr('max_len')||'9999', 10);
         var now_len = parseInt($before_node.attr('now_len')||'0', 10);
         var orderable = parseInt($before_node.attr('orderable')||'0', 10);
-  
+
         if (now_len < max_len) {
           deform.addSequenceItem($proto_node, $before_node);
-            deform.processSequenceButtons($oid_node, min_len, max_len, 
+            deform.processSequenceButtons($oid_node, min_len, max_len,
                                           now_len + 1, orderable);
         }
         return false;
@@ -134,12 +130,11 @@ var deform  = {
         if (now_len > min_len) {
             $before_node.attr('now_len', now_len - 1);
             $item_node.remove();
-            deform.processSequenceButtons($oid_node, min_len, max_len, 
+            // we removed something from the dom, trigger a change event
+            $oid_node.trigger('change');
+            deform.processSequenceButtons($oid_node, min_len, max_len,
                                           now_len-1, orderable);
         }
-        // we removed something from the dom, trigger a change event
-        var e = jQuery.Event("change");
-        $('#deform').trigger(e);
         return false;
     },
 
@@ -156,34 +151,14 @@ var deform  = {
         $lis.find('.deform-order-button').not($lis.find('.deform-seq-container .deform-order-button')).toggle(orderable && has_multiple);
      },
 
-    focusFirstInput: function (el) {
-        el = el || document.body;
-        var input = $(el).find(':input')
-          .filter('[id ^= deformField]')
-          .filter('[type != hidden]')
-          .first();
-        if (input) {
-            var raw = input.get(0);
-            if (raw) {
-                if (raw.type === 'text' || raw.type === 'file' || 
-                    raw.type == 'password' || raw.type == 'text' || 
-                    raw.type == 'textarea') { 
-                    if (!input.hasClass("hasDatepicker")) {
-                        input.focus();
-                    }
-                }
-            }
-        }
-    },
-
     randomString: function (length) {
         var chr='0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';
         chr = chr.split('');
-    
+
         if (! length) {
             length = Math.floor(Math.random() * chr.length);
         }
-    
+
         var str = '';
         for (var i = 0; i < length; i++) {
             str += chr[Math.floor(Math.random() * chr.length)];

@@ -7,57 +7,61 @@ msgid ""
 msgstr ""
 "Project-Id-Version: deform 0.9.3\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2013-11-16 15:42+0900\n"
+"POT-Creation-Date: 2016-11-19 13:28+0200\n"
 "PO-Revision-Date: 2013-11-16 15:53+0900\n"
 "Last-Translator: OCHIAI, Gouji <gjo.ext@gmail.com>\n"
 "Language-Team: ja <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0\n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
 "Generated-By: Babel 1.3\n"
 
-#: deform/schema.py:103
+#: deform/schema.py:109
+#, python-format
 msgid "${value} is not a dictionary"
 msgstr "${value} は辞書ではありません"
 
-#: deform/schema.py:110
+#: deform/schema.py:116
+#, python-format
 msgid "${value} has no ${key} key"
 msgstr "${value} にキー ${key} がありません"
 
-#: deform/widget.py:656 deform/widget.py:1662
+#: deform/widget.py:718 deform/widget.py:1800
 msgid "Incomplete date"
 msgstr "日付が未入力です"
 
-#: deform/widget.py:659
+#: deform/widget.py:721
 msgid "Incomplete time"
 msgstr "日付が未入力です"
 
-#: deform/widget.py:1157
+#: deform/widget.py:1253
 msgid "Fields did not match"
 msgstr "フィールドが一致しません"
 
-#: deform/widget.py:1158
+#: deform/widget.py:1254
 msgid "Value"
 msgstr "値"
 
-#: deform/widget.py:1159
+#: deform/widget.py:1255
 msgid "Confirm Value"
 msgstr "値の確認入力"
 
-#: deform/widget.py:1216
+#: deform/widget.py:1321
 msgid "Password did not match confirm"
 msgstr "パスワードが確認入力と一致しません"
 
-#: deform/widget.py:1373
+#: deform/widget.py:1485
+#, python-format
 msgid "Add ${subitem_title}"
 msgstr "${subitem_title} を追加する"
 
-#: deform/templates/checked_password.pt:8
+#: deform/templates/checked_password.pt:15
 msgid "Password"
 msgstr "パスワード"
 
-#: deform/templates/checked_password.pt:18
+#: deform/templates/checked_password.pt:25
 msgid "Confirm Password"
 msgstr "パスワードの確認入力"
 
@@ -73,19 +77,23 @@ msgstr "月"
 msgid "Day"
 msgstr "日"
 
-#: deform/templates/datetimeinput.pt:10
+#: deform/templates/datetimeinput.pt:9
 msgid "Date"
 msgstr "日付"
 
-#: deform/templates/datetimeinput.pt:17
+#: deform/templates/datetimeinput.pt:16
 msgid "Time"
 msgstr "時刻"
 
-#: deform/templates/form.pt:34
+#: deform/templates/form.pt:35
 msgid "There was a problem with your submission"
 msgstr "送信されたデータに問題がありました"
 
-#: deform/templates/mapping.pt:13
+#: deform/templates/form.pt:37
+msgid "Errors have been highlighted below"
+msgstr ""
+
+#: deform/templates/mapping.pt:13 deform/templates/mapping_accordion.pt:29
 msgid "There was a problem with this section"
 msgstr "このセクションで問題がありました"
 
@@ -94,28 +102,27 @@ msgstr "このセクションで問題がありました"
 msgid "language-code"
 msgstr "ja"
 
-#: deform/templates/sequence_item.pt:23
+#: deform/templates/sequence_item.pt:26
 msgid "Reorder (via drag and drop)"
 msgstr "並び替える (ドラッグ・アンド・ドロップ)"
 
-#: deform/templates/sequence_item.pt:28
+#: deform/templates/sequence_item.pt:31
 msgid "Remove"
 msgstr "削除する"
 
-#: deform/templates/readonly/checkbox.pt:5
+#: deform/templates/readonly/checkbox.pt:8
 msgid "True"
 msgstr "はい"
 
-#: deform/templates/readonly/checkbox.pt:9
+#: deform/templates/readonly/checkbox.pt:12
 msgid "False"
 msgstr "いいえ"
 
-#: deform/templates/readonly/checked_password.pt:2
-#: deform/templates/readonly/password.pt:2
+#: deform/templates/readonly/checked_password.pt:4
 msgid "Password not displayed."
 msgstr "パスワードは表示されません。"
 
-#: deform/tests/test_widget.py:1550
+#: deform/tests/test_widget.py:1752
+#, python-format
 msgid "Yo ${subitem_title}"
 msgstr "テスト ${subitem_title}"
-

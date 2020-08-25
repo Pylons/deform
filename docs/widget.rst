@@ -3,6 +3,11 @@
 Widgets
 =======
 
+.. contents:: :local:
+
+Introduction
+------------
+
 A widget is a bit of code that is willing to:
 
 - serialize a :term:`cstruct` into HTML for display in a form
@@ -131,7 +136,7 @@ widget on the page to function properly.
 
 The first element in each two-tuple represents a *requirement name*.
 It represents a logical reference to one *or more* Javascript or CSS
-resources.  The second element in each two-tuple is the reqested
+resources.  The second element in each two-tuple is the requested
 version of the requirement.  It may be ``None``, in which case the
 version required is unspecified.  When the version required is
 unspecified, a default version of the resource set will be chosen.
@@ -144,7 +149,7 @@ requirement name is ``jquery``, and the version id is ``1.4.2``, the
 caller can take that to mean that the JQuery library should be loaded
 within the page header via, for example the inclusion of the HTML
 ``<script type="text/javascript"
-src="http://deformdemo.repoze.org/static/scripts/jquery-1.4.2.min.js"></script>``
+src="https://deformdemo.pylonsproject.org/static/scripts/jquery-1.4.2.min.js"></script>``
 within the HEAD tag of the rendered HTML page.
 
 Users will almost certainly prefer to use the
@@ -374,7 +379,8 @@ get defined as so:
             if cstruct is null:
                 cstruct = u''
             quoted = cgi.escape(cstruct, quote='"')
-            return u'<input type="text" value="%s">' % quoted
+            return ('<input type="text" name="%s" value="%s">' %
+                    (field.name, quoted))
 
 Note that every ``serialize`` method is responsible for returning a
 serialization, no matter whether it is provided data by its caller or
@@ -446,7 +452,9 @@ attached.
         def serialize(self, field, cstruct, readonly=False):
             if cstruct is null:
                 cstruct = u''
-            return '<input type="text" value="%s">' % cgi.escape(cstruct)
+            quoted = cgi.escape(cstruct, quote='"')
+            return ('<input type="text" name="%s" value="%s">' %
+                    (field.name, quoted))
 
         def deserialize(self, field, pstruct):
             if pstruct is null:
@@ -489,7 +497,9 @@ class:
         def serialize(self, field, cstruct, readonly=False):
             if cstruct is null:
                 cstruct = u''
-            return '<input type="text" value="%s">' % cgi.escape(cstruct)
+            quoted = cgi.escape(cstruct, quote='"')
+            return ('<input type="text" name="%s" value="%s">' %
+                    (field.name, quoted))
 
         def deserialize(self, field, pstruct):
             if pstruct is null:

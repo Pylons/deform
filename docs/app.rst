@@ -2,7 +2,7 @@ Example App
 ===========
 
 An example is worth a thousand words.  Here's an example `Pyramid
-<http://pylonsproject.org>`_ application demonstrating how one might use
+<https://trypyramid.com>`_ application demonstrating how one might use
 :mod:`deform` to render a form.  For it to work you'll need to have
 ``deform``, ``pyramid``, and ``pyramid_chameleon`` installed in your
 python environment.

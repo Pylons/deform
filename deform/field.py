@@ -1,28 +1,35 @@
+"""Field."""
+# Standard Library
 import itertools
-import colander
-import peppercorn
-import unicodedata
 import re
+import unicodedata
 import weakref
 
+# Pyramid
+import colander
 from chameleon.utils import Markup
+import peppercorn
 
-from . import (
-    decorator,
-    exception,
-    template,
-    widget,
-    schema,
-    compat,
-    )
+# Deform
+from deform.widget import HiddenWidget
+
+from . import compat
+from . import decorator
+from . import exception
+from . import schema
+from . import template
+from . import widget
+
 
 class _Marker(object):
-    def __repr__(self): # pragma: no cover
-        return '(Default)'
+    def __repr__(self):  # pragma: no cover
+        return "(Default)"
 
     __str__ = __repr__
 
+
 _marker = _Marker()
+
 
 class Field(object):
     """ Represents an individual form field (a visible object in a
@@ -47,6 +54,10 @@ class Field(object):
             The default widget will have a generated item_css_class
             containing the normalized version of the ``name`` attribute
             (with ``item`` prepended, e.g. ``item-username``).
+            NOTE: This behaviour is deprecated and will be removed in
+            the future. Mapping and Sequence Widget templates simply
+            render a css class on an item's container based on Field
+            information.
 
         order
             An integer indicating the relative order of this field's
@@ -109,6 +120,12 @@ class Field(object):
         resource_registry
             The :term:`resource registry` associated with this field.
 
+        autofocus
+            If the field's parent form has its ``focus`` argument set to
+            ``on``, the first field out of all fields in this form with
+            ``autofocus`` set to a true-ish value (``on``, ``True``, or
+            ``autofocus``) will receive focus on page load. Default: ``None``.
+
     *Constructor Arguments*
 
       ``renderer``, ``counter``, ``resource_registry`` and ``appstruct`` are
@@ -117,8 +134,7 @@ class Field(object):
       is a template renderer as described in :ref:`creating_a_renderer`.
       ``counter``, if passed, should be an :attr:`itertools.counter` object
       (useful when rendering multiple forms on the same page, see
-      `http://deform2demo.repoze.org/multiple_forms/
-      <http://deform2demo.repoze.org/multiple_forms/>`_.
+      https://deformdemo.pylonsproject.org/multiple_forms/.
       ``resource_registry``, if passed should be a widget resource registry
       (see also :ref:`get_widget_resources`).
 
@@ -144,15 +160,36 @@ class Field(object):
     _cstruct = colander.null
     default_renderer = template.default_renderer
     default_resource_registry = widget.default_resource_registry
+    # Allowable input types for automatic focusing
+    focusable_input_types = (
+        type(colander.Boolean()),
+        type(colander.Date()),
+        type(colander.DateTime()),
+        type(colander.Decimal()),
+        type(colander.Float()),
+        type(colander.Integer()),
+        type(colander.Set()),
+        type(colander.String()),
+        type(colander.Time()),
+    )
+    hidden_type = type(HiddenWidget())
 
-    def __init__(self, schema, renderer=None, counter=None,
-                 resource_registry=None, appstruct=colander.null,
-                 parent=None, **kw):
+    def __init__(
+        self,
+        schema,
+        renderer=None,
+        counter=None,
+        resource_registry=None,
+        appstruct=colander.null,
+        parent=None,
+        autofocus=None,
+        **kw
+    ):
         self.counter = counter or itertools.count()
         self.order = next(self.counter)
-        self.oid = getattr(schema, 'oid', 'deformField%s' % self.order)
+        self.oid = getattr(schema, "oid", "deformField%s" % self.order)
         self.schema = schema
-        self.typ = schema.typ # required by Invalid exception
+        self.typ = schema.typ  # required by Invalid exception
         self.name = schema.name
         self.title = schema.title
         self.description = schema.description
@@ -162,13 +199,53 @@ class Field(object):
         if resource_registry is None:
             resource_registry = self.default_resource_registry
         self.renderer = renderer
+
+        # Parameters passed from parent field to child
+        if "focus" in kw:
+            focus = kw["focus"]
+        else:
+            focus = "on"
+        if "have_first_input" in kw:
+            self.have_first_input = kw["have_first_input"]
+        else:
+            self.have_first_input = False
+
+        if (
+            focus == "off"
+            or autofocus is None
+            or autofocus is False
+            or str(autofocus).lower() == "off"
+        ):
+            self.autofocus = None
+        else:
+            self.autofocus = "autofocus"
+
         self.resource_registry = resource_registry
         self.children = []
         if parent is not None:
             parent = weakref.ref(parent)
         self._parent = parent
         self.__dict__.update(kw)
+
+        first_input_index = -1
+        child_count = 0
+        focused = False
         for child in schema.children:
+            if (
+                focus == "on"
+                and not focused
+                and type(child.typ) in Field.focusable_input_types
+                and type(child.widget) != Field.hidden_type
+                and not self.have_first_input
+            ):
+                first_input_index = child_count
+                self.found_first()  # Notify ancestors
+            autofocus = getattr(child, "autofocus", None)
+
+            if autofocus is not None:
+                focused = True
+
+            kw["have_first_input"] = self.have_first_input
             self.children.append(
                 Field(
                     child,
@@ -176,10 +253,26 @@ class Field(object):
                     counter=self.counter,
                     resource_registry=resource_registry,
                     parent=self,
+                    autofocus=autofocus,
                     **kw
-                    )
                 )
+            )
+            child_count += 1
+        if (
+            focus == "on"
+            and not focused
+            and first_input_index != -1
+            and self.have_first_input
+        ):
+            # User did not set autofocus. Focus on first valid input.
+            self.children[first_input_index].autofocus = "autofocus"
         self.set_appstruct(appstruct)
+
+    def found_first(self):
+        """ Set have_first_input of ancestors """
+        self.have_first_input = True
+        if self.parent is not None:
+            self.parent.found_first()
 
     @property
     def parent(self):
@@ -188,7 +281,7 @@ class Field(object):
         return self._parent()
 
     def get_root(self):
-        """ Return the root field in the field herarchy (the form field) """
+        """ Return the root field in the field hierarchy (the form field) """
         node = self
         while True:
             parent = node.parent
@@ -198,9 +291,14 @@ class Field(object):
         return node
 
     @classmethod
-    def set_zpt_renderer(cls, search_path, auto_reload=True,
-                         debug=True, encoding='utf-8',
-                         translator=None):
+    def set_zpt_renderer(
+        cls,
+        search_path,
+        auto_reload=True,
+        debug=True,
+        encoding="utf-8",
+        translator=None,
+    ):
         """ Create a :term:`Chameleon` ZPT renderer that will act as a
         :term:`default renderer` for instances of the associated class
         when no ``renderer`` argument is provided to the class'
@@ -218,7 +316,7 @@ class Field(object):
             debug=debug,
             encoding=encoding,
             translator=translator,
-            )
+        )
 
     @classmethod
     def set_default_renderer(cls, renderer):
@@ -249,7 +347,7 @@ class Field(object):
         """ Use the translator passed to the renderer of this field to
         translate the msgid into a term and return the term.  If the renderer
         does not have a translator, this method will return the msgid."""
-        translate = getattr(self.renderer, 'translate', None)
+        translate = getattr(self.renderer, "translate", None)
         if translate is not None:
             return translate(msgid)
         return msgid
@@ -277,12 +375,12 @@ class Field(object):
         information.  Return the cloned field.  The ``order``
         attribute of the node is not cloned; instead the field
         receives a new order attribute; it will be a number larger
-        than the last renderered field of this set.  The parent of the cloned
+        than the last rendered field of this set.  The parent of the cloned
         node will become ``None`` unconditionally."""
         cloned = self.__class__(self.schema)
         cloned.__dict__.update(self.__dict__)
         cloned.order = next(cloned.counter)
-        cloned.oid = 'deformField%s' % cloned.order
+        cloned.oid = "deformField%s" % cloned.order
         cloned._parent = None
         children = []
         for field in self.children:
@@ -300,13 +398,14 @@ class Field(object):
         the ``widget`` attribute of the field for the rest of the
         lifetime of this field. If a widget is assigned to a field
         before form processing, this function will not be called."""
-        wdg = getattr(self.schema, 'widget', None)
+        wdg = getattr(self.schema, "widget", None)
         if wdg is not None:
             return wdg
-        widget_maker = getattr(self.schema.typ, 'widget_maker', None)
+        widget_maker = getattr(self.schema.typ, "widget_maker", None)
         if widget_maker is None:
             widget_maker = schema.default_widget_makers.get(
-                self.schema.typ.__class__)
+                self.schema.typ.__class__
+            )
             if widget_maker is None:
                 for (cls, wgt) in schema.default_widget_makers.items():
                     if isinstance(self.schema.typ, cls):
@@ -314,17 +413,20 @@ class Field(object):
                         break
         if widget_maker is None:
             widget_maker = widget.TextInputWidget
-        return widget_maker(item_css_class=self._default_item_css_class())
+        return widget_maker(item_css_class=self.default_item_css_class())
 
-    def _default_item_css_class(self):
+    def default_item_css_class(self):
         if not self.name:
             return None
-        
-        css_class = unicodedata.normalize('NFKD', compat.text_type(self.name)).encode('ascii', 'ignore').decode('ascii')
-        css_class = re.sub('[^\w\s-]', '', css_class).strip().lower()
-        css_class = re.sub('[-\s]+', '-', css_class)
-        return "item-%s" % css_class
 
+        css_class = (
+            unicodedata.normalize("NFKD", compat.text_type(self.name))
+            .encode("ascii", "ignore")
+            .decode("ascii")
+        )
+        css_class = re.sub(r"[^\w\s-]", "", css_class).strip().lower()  # noQA
+        css_class = re.sub(r"[-\s]+", "-", css_class)  # noQA
+        return "item-%s" % css_class
 
     def get_widget_requirements(self):
         """ Return a sequence of two tuples in the form
@@ -337,7 +439,7 @@ class Field(object):
         the form rendering in order for some widget on the page to
         function properly.
 
-        The second element in each two-tuple is the reqested version
+        The second element in each two-tuple is the requested version
         of the library resource.  It may be ``None``, in which case
         the version is unspecified.
 
@@ -350,12 +452,12 @@ class Field(object):
         if requirements:
             for requirement in requirements:
                 reqt = tuple(requirement)
-                if not reqt in L:
+                if reqt not in L:
                     L.append(reqt)
         for child in self.children:
             for requirement in child.get_widget_requirements():
                 reqt = tuple(requirement)
-                if not reqt in L:
+                if reqt not in L:
                     L.append(reqt)
         return L
 
@@ -385,7 +487,7 @@ class Field(object):
             requirements = self.get_widget_requirements()
         return self.resource_registry(requirements)
 
-    def set_widgets(self, values, separator='.'):
+    def set_widgets(self, values, separator="."):
         """ set widgets of the child fields of this field
         or form element.  ``widgets`` should be a dictionary in the
         form::
@@ -471,7 +573,7 @@ class Field(object):
                 field = self
                 while path:
                     element = path.pop(0)
-                    if element == '*':
+                    if element == "*":
                         field = field.children[0]
                     else:
                         field = field[element]
@@ -482,7 +584,7 @@ class Field(object):
         """ Return the ``msg`` attribute of the ``error`` attached to
         this field.  If the ``error`` attribute is ``None``,
         the return value will be ``None``."""
-        return getattr(self.error, 'msg', None)
+        return getattr(self.error, "msg", None)
 
     def serialize(self, cstruct=_marker, **kw):
         """ Serialize the cstruct into HTML and return the HTML string.  This
@@ -503,7 +605,7 @@ class Field(object):
         """
         if cstruct is _marker:
             cstruct = self.cstruct
-        values = {'field':self, 'cstruct':cstruct}
+        values = {"field": self, "cstruct": cstruct}
         values.update(kw)
         return self.widget.serialize(**values)
 
@@ -543,7 +645,7 @@ class Field(object):
         if appstruct is not _marker:
             self.set_appstruct(appstruct)
         cstruct = self.cstruct
-        kw.pop('cstruct', None) # disallowed
+        kw.pop("cstruct", None)  # disallowed
         html = self.serialize(cstruct, **kw)
         return html
 
@@ -704,19 +806,19 @@ class Field(object):
                 child.cstruct = child_cstructs[n]
 
     def _del_cstruct(self):
-        if '_cstruct' in self.__dict__:
+        if "_cstruct" in self.__dict__:
             # rely on class-scope _cstruct (null)
             del self._cstruct
 
     cstruct = property(_get_cstruct, _set_cstruct, _del_cstruct)
 
     def __repr__(self):
-        return '<%s.%s object at %d (schemanode %r)>' % (
+        return "<%s.%s object at %d (schemanode %r)>" % (
             self.__module__,
             self.__class__.__name__,
             id(self),
             self.schema.name,
-            )
+        )
 
     def set_appstruct(self, appstruct):
         """ Set the cstruct of this node (and its child nodes) using
@@ -739,8 +841,8 @@ class Field(object):
         """ Render the template named ``template`` using ``kw`` as the
         top-level keyword arguments (augmented with ``field`` and ``cstruct``
         if necessary)"""
-        values = {'field':self, 'cstruct':self.cstruct}
-        values.update(kw) # allow caller to override field and cstruct
+        values = {"field": self, "cstruct": self.cstruct}
+        values.update(kw)  # allow caller to override field and cstruct
         return self.renderer(template, **values)
 
     # retail API
@@ -805,4 +907,3 @@ class Field(object):
             name = self.name
         tag = '<input type="hidden" name="__end__" value="%s:rename"/>'
         return Markup(tag % (name,))
-

@@ -1,7 +1,8 @@
 <div tal:define="css_class css_class|field.widget.css_class;
                  style style|field.widget.style;
                  oid oid|field.oid;
-                 inline getattr(field.widget, 'inline', False)"
+                 inline getattr(field.widget, 'inline', False);
+                 autofocus autofocus|field.autofocus"
      tal:omit-tag="not inline">
   ${field.start_sequence()}
   <div tal:repeat="choice values | field.widget.values"
@@ -12,7 +13,9 @@
            tal:attributes="class inline and 'checkbox-inline'">
       <input tal:attributes="checked value in cstruct;
                              class css_class;
-                             style style"
+                             style style;
+                             autofocus not repeat.choice.index and autofocus;
+                             attributes|field.widget.attributes|{};"
              type="checkbox"
              name="checkbox"
              value="${value}"

@@ -1,3 +1,6 @@
+"""Decorator."""
+
+
 class reify(object):
 
     """ Put the result of a method which uses this (non-data)
@@ -13,4 +16,3 @@ class reify(object):
         val = self.wrapped(inst)
         setattr(inst, self.wrapped.__name__, val)
         return val
-

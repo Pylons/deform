@@ -13,6 +13,7 @@
 # out serve to show the default value.
 
 import sys, os, datetime
+import pkg_resources
 
 # If your extensions are in another directory, add it here. If the
 # directory is relative to the documentation root, use os.path.abspath to
@@ -20,24 +21,7 @@ import sys, os, datetime
 #sys.path.append(os.path.abspath('some/directory'))
 
 # Add and use Pylons theme
-if 'sphinx-build' in ' '.join(sys.argv): # protect against dumb importers
-    from subprocess import call, Popen, PIPE
-
-    p = Popen('which git', shell=True, stdout=PIPE)
-    git = p.stdout.read().strip()
-    cwd = os.getcwd()
-    _themes = os.path.join(cwd, '_themes')
-
-    if not os.path.isdir(_themes):
-        call([git, 'clone', 'git://github.com/Pylons/pylons_sphinx_theme.git',
-                '_themes'])
-    else:
-        os.chdir(_themes)
-        call([git, 'checkout', 'master'])
-        call([git, 'pull'])
-        os.chdir(cwd)
-
-    sys.path.append(os.path.abspath('_themes'))
+import pylons_sphinx_themes
 
 # General configuration
 # ---------------------
@@ -47,12 +31,15 @@ if 'sphinx-build' in ' '.join(sys.argv): # protect against dumb importers
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.intersphinx',
+    # enable pylons_sphinx_latesturl when this branch is no longer "latest"
+    # 'pylons_sphinx_latesturl',
     ]
 
-intersphinx_mapping = dict(
-    python=('http://docs.python.org/dev',None),
-    colander=('http://docs.pylonsproject.org/projects/colander/en/latest/',None)
-    )
+intersphinx_mapping = {
+    'colander': ('https://docs.pylonsproject.org/projects/colander/en/latest/', None),
+    'pyramid': ('https://docs.pylonsproject.org/projects/pyramid/en/latest', None),
+    'python': ('https://docs.python.org/3/', None),
+    }
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['.templates']
@@ -65,13 +52,15 @@ master_doc = 'index'
 
 # General substitutions.
 project = 'deform'
-copyright = '2014, Agendaless Consulting <pylons-discuss@googlegroups.com>'
+thisyear = datetime.datetime.now().year
+copyright = '2008-%s, Agendaless Consulting' % thisyear
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
 #
 # The short X.Y version.
-version = '2.0a2'
+version = pkg_resources.get_distribution('deform').version
+
 # The full version, including alpha/beta/rc tags.
 release = version
 
@@ -104,16 +93,22 @@ unused_docs = ['_themes/README','todo']
 #show_authors = False
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
+#pygments_style = 'bw'
 
 
 # Options for HTML output
 # -----------------------
 
-sys.path.append(os.path.abspath('_themes'))
-html_theme_path = ['_themes']
-html_theme = 'pylons'
-html_theme_options = dict(github_url='https://github.com/Pylons/deform')
+html_theme = 'pyramid'
+html_theme_path = pylons_sphinx_themes.get_html_themes_path()
+html_theme_options = dict(
+    github_url='https://github.com/Pylons/deform',
+    # On master branch and new branch still in
+    # pre-release status: true; else: false.
+    in_progress='false',
+    # On branches previous to "latest": true; else: false.
+    outdated='false',
+    )
 
 # The style sheet to use for HTML and HTML Help pages. A file of that name
 # must exist either in Sphinx' static/ path, or in one of the custom paths
@@ -122,7 +117,7 @@ html_theme_options = dict(github_url='https://github.com/Pylons/deform')
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-#html_title = None
+html_title = 'Deform Python form library v%s' % release
 
 # A shorter title for the navigation bar.  Default is the same as
 # html_title.
@@ -146,10 +141,6 @@ html_theme_options = dict(github_url='https://github.com/Pylons/deform')
 # If not '', a 'Last updated on:' timestamp is inserted at every page
 # bottom, using the given strftime format.
 html_last_updated_fmt = '%b %d, %Y'
-
-# If true, SmartyPants will be used to convert quotes and dashes to
-# typographically correct entities.
-#html_use_smartypants = True
 
 # Custom sidebar templates, maps document names to template names.
 #html_sidebars = {}
@@ -180,17 +171,18 @@ html_last_updated_fmt = '%b %d, %Y'
 #html_file_suffix = ''
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'deformdoc'
+htmlhelp_basename = 'deform'
 
+smartquotes = False
 
 # Options for LaTeX output
 # ------------------------
 
 # The paper size ('letter' or 'a4').
-#latex_paper_size = 'letter'
+latex_paper_size = 'letter'
 
 # The font size ('10pt', '11pt' or '12pt').
-#latex_font_size = '10pt'
+latex_font_size = '10pt'
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
@@ -222,7 +214,7 @@ latex_documents = [
 # Bibliographic Dublin Core info.
 epub_title = 'deform, Version %s' \
              % release
-epub_author = 'Pylons Developers'
+epub_author = 'Pylons Project Developers'
 epub_publisher = 'Agendaless Consulting'
 epub_copyright = '2011-%d' % datetime.datetime.now().year
 
@@ -235,7 +227,7 @@ epub_scheme = 'URL'
 
 # The unique identifier of the text. This can be a ISBN number
 # or the project homepage.
-epub_identifier = 'https://deform.readthedocs.org/'
+epub_identifier = 'https://docs.pylonsproject.org/projects/deform/en/latest/'
 
 # A unique identification for the text.
 epub_uid = epub_title

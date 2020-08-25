@@ -7,114 +7,139 @@ msgid ""
 msgstr ""
 "Project-Id-Version: deform 0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2012-03-30 16:17+0200\n"
+"POT-Creation-Date: 2016-11-19 13:28+0200\n"
 "PO-Revision-Date: 2011-11-08 15:55+0100\n"
 "Last-Translator: Ivan Gudym <igudym@gmail.com>\n"
 "Language-Team: ru <LL@li.org>\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: deform/schema.py:100
+#: deform/schema.py:109
+#, python-format
 msgid "${value} is not a dictionary"
 msgstr "${value} is not a dictionary"
 
-#: deform/schema.py:107
+#: deform/schema.py:116
+#, python-format
 msgid "${value} has no ${key} key"
 msgstr "${value} has no ${key} key"
 
-#: deform/schema.py:146
-msgid "${value} is not iterable"
-msgstr "${value} is not iterable"
-
-#: deform/schema.py:150
-msgid "Required"
-msgstr "Требуются"
-
-#: deform/widget.py:779
-msgid "Fields did not match"
-msgstr "Поля не совпадают"
-
-#: deform/widget.py:780
-msgid "Value"
-msgstr "Значение"
-
-#: deform/widget.py:781
-msgid "Confirm Value"
-msgstr "Подтвердите значение"
-
-#: deform/widget.py:829
-msgid "Password did not match confirm"
-msgstr "Пароль не совпадает с подтверждением"
-
-#: deform/widget.py:980
-msgid "Add ${subitem_title}"
-msgstr "Добавить ${subitem_title}"
-
-#: deform/widget.py:1239
+#: deform/widget.py:718 deform/widget.py:1800
 msgid "Incomplete date"
 msgstr "Неполная дата"
 
-#: deform/templates/checked_password.pt:5
+#: deform/widget.py:721
+#, fuzzy
+msgid "Incomplete time"
+msgstr "Неполная дата"
+
+#: deform/widget.py:1253
+msgid "Fields did not match"
+msgstr "Поля не совпадают"
+
+#: deform/widget.py:1254
+msgid "Value"
+msgstr "Значение"
+
+#: deform/widget.py:1255
+msgid "Confirm Value"
+msgstr "Подтвердите значение"
+
+#: deform/widget.py:1321
+msgid "Password did not match confirm"
+msgstr "Пароль не совпадает с подтверждением"
+
+#: deform/widget.py:1485
+#, python-format
+msgid "Add ${subitem_title}"
+msgstr "Добавить ${subitem_title}"
+
+#: deform/templates/checked_password.pt:15
 msgid "Password"
 msgstr "Пароль"
 
-#: deform/templates/checked_password.pt:10
+#: deform/templates/checked_password.pt:25
 msgid "Confirm Password"
 msgstr "Подтверждение пароля"
 
-#: deform/templates/dateparts.pt:5 deform/templates/readonly/dateparts.pt:2
+#: deform/templates/dateparts.pt:10
 msgid "Year"
 msgstr "Год"
 
-#: deform/templates/dateparts.pt:12 deform/templates/readonly/dateparts.pt:4
+#: deform/templates/dateparts.pt:18
 msgid "Month"
 msgstr "Месяц"
 
-#: deform/templates/dateparts.pt:19 deform/templates/readonly/dateparts.pt:6
+#: deform/templates/dateparts.pt:26
 msgid "Day"
 msgstr "День"
 
-#: deform/templates/form.pt:19
+#: deform/templates/datetimeinput.pt:9
+msgid "Date"
+msgstr ""
+
+#: deform/templates/datetimeinput.pt:16
+msgid "Time"
+msgstr ""
+
+#: deform/templates/form.pt:35
 msgid "There was a problem with your submission"
 msgstr "Данные которые вы предоставили содержат ошибку"
 
-#: deform/templates/form.pt:21
+#: deform/templates/form.pt:37
 msgid "Errors have been highlighted below"
 msgstr "Ниже вы найдёте подробное описание ошибок"
 
-#: deform/templates/mapping.pt:6
+#: deform/templates/mapping.pt:13 deform/templates/mapping_accordion.pt:29
 msgid "There was a problem with this section"
 msgstr "Данные которые вы предоставили содержат ошибку"
 
 #. Default: en
-#: deform/templates/richtext.pt:15
+#: deform/templates/richtext.pt:30
 msgid "language-code"
 msgstr "ru"
 
-#: deform/templates/sequence_item.pt:6
+#: deform/templates/sequence_item.pt:26
+msgid "Reorder (via drag and drop)"
+msgstr ""
+
+#: deform/templates/sequence_item.pt:31
 msgid "Remove"
 msgstr "Удалить"
 
-#: deform/templates/readonly/checked_password.pt:2
-#: deform/templates/readonly/password.pt:2
+#: deform/templates/readonly/checkbox.pt:8
+msgid "True"
+msgstr ""
+
+#: deform/templates/readonly/checkbox.pt:12
+msgid "False"
+msgstr ""
+
+#: deform/templates/readonly/checked_password.pt:4
 msgid "Password not displayed."
 msgstr "Пароль не показывается"
 
-#: deform/templates/readonly/file_upload.pt:7
-msgid "Read-only."
-msgstr "Только для чтения"
+#: deform/tests/test_widget.py:1752
+#, fuzzy, python-format
+msgid "Yo ${subitem_title}"
+msgstr "Добавить ${subitem_title}"
 
-#: deform/templates/readonly/radio_choice.pt:4
-#: deform/templates/readonly/select.pt:3
-msgid "Selected"
-msgstr "Выбрано"
+#~ msgid "${value} is not iterable"
+#~ msgstr "${value} is not iterable"
 
-#: deform/templates/readonly/radio_choice.pt:5
-#: deform/templates/readonly/select.pt:4
-msgid "Not Selected"
-msgstr "Не выбрано"
+#~ msgid "Required"
+#~ msgstr "Требуются"
 
+#~ msgid "Read-only."
+#~ msgstr "Только для чтения"
+
+#~ msgid "Selected"
+#~ msgstr "Выбрано"
+
+#~ msgid "Not Selected"
+#~ msgstr "Не выбрано"

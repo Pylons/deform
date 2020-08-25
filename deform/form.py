@@ -1,12 +1,13 @@
+"""Form."""
+# Standard Library
 import re
 
 from chameleon.utils import Markup
 
-from . import (
-    compat,
-    field,
-    widget,
-    )
+from . import compat
+from . import field
+from . import widget
+
 
 class Form(field.Field):
     """
@@ -53,6 +54,19 @@ class Form(field.Field):
         false value, an ``autocomplete='off'`` attribute will be added to the
         form tag.  Default: ``None``.
 
+    focus
+        Determines this form's input focus.
+
+        -   If ``focus`` is ``on``, and at least one field has an ``autofocus``
+            schema parameter set to ``on``, the first of these fields will
+            receive focus on page load.
+        -   If ``focus`` is ``on`` or omitted, and no field has an
+            ``autofocus`` schema parameter set to ``on``, the first input of
+            the first form on the page will receive focus on page load.
+        -   If ``focus`` is ``off``, no focusing will be done.
+
+        Default: ``on``.
+
     use_ajax
        If this option is ``True``, the form will use AJAX (actually
        AJAH); when any submit button is clicked, the DOM node related
@@ -66,10 +80,10 @@ class Form(field.Field):
        exists in the ``static`` directory of the ``deform`` package.
 
     ajax_options
-       A *string* which must represent a JavaScript obejct
+       A *string* which must represent a JavaScript object
        (dictionary) of extra AJAX options as per
-       `http://jquery.malsup.com/form/#options-object
-       <http://jquery.malsup.com/form/#options-object>`_.  For
+       `http://jquery.malsup.com/form/#tab3
+       <http://jquery.malsup.com/form/#tab3>`_.  For
        example:
 
        .. code-block:: python
@@ -80,7 +94,7 @@ class Form(field.Field):
        By default, ``target`` points at the DOM node representing the
        form and and ``replaceTarget`` is ``true``.
 
-       A successhandler calls the ``deform.processCallbacks`` method
+       A success handler calls the ``deform.processCallbacks`` method
        that will ajaxify the newly written form again.  If you pass
        these values in ``ajax_options``, the defaults will be
        overridden.  If you want to override the success handler, don't
@@ -97,15 +111,34 @@ class Form(field.Field):
     keywords mean the same thing in the context of a Form as they do
     in the context of a Field (a Form is just another kind of Field).
     """
-    css_class = 'deform' # bw compat only; pass a widget to override
-    def __init__(self, schema, action='', method='POST', buttons=(),
-                 formid='deform', use_ajax=False, ajax_options='{}',
-                 autocomplete=None, **kw):
+
+    css_class = "deform"  # bw compat only; pass a widget to override
+
+    def __init__(
+        self,
+        schema,
+        action="",
+        method="POST",
+        buttons=(),
+        formid="deform",
+        use_ajax=False,
+        ajax_options="{}",
+        autocomplete=None,
+        focus="on",
+        **kw
+    ):
         if autocomplete:
-            autocomplete = 'on'
+            autocomplete = "on"
         elif autocomplete is not None:
-            autocomplete = 'off'
+            autocomplete = "off"
         self.autocomplete = autocomplete
+        if str(focus).lower() == "off":
+            self.focus = "off"
+        else:
+            self.focus = "on"
+        # Use kwargs to pass flags to descendant fields; saves cluttering
+        # the constructor
+        kw["focus"] = self.focus
         field.Field.__init__(self, schema, **kw)
         _buttons = []
         for button in buttons:
@@ -118,10 +151,11 @@ class Form(field.Field):
         self.formid = formid
         self.use_ajax = use_ajax
         self.ajax_options = Markup(ajax_options.strip())
-        form_widget = getattr(schema, 'widget', None)
+        form_widget = getattr(schema, "widget", None)
         if form_widget is None:
             form_widget = widget.FormWidget()
         self.widget = form_widget
+
 
 class Button(object):
     """
@@ -145,36 +179,64 @@ class Button(object):
         ``submit``, ``title`` will be ``Submit``.
 
     type
-        The value used as the type of button. The HTML spec supports 
-        ``submit``, ``reset`` and ``button``. Default: ``submit``. 
+        The value used as the type of button. The HTML spec supports
+        ``submit``, ``reset`` and ``button``.  A special value of
+        ``link`` will create a regular HTML link that's styled to look
+        like a button.  Default: ``submit``.
 
     value
         The value used as the value of the button when rendered (the
         ``value`` attribute of the button or input tag resulting from
-        a form rendering).  Default: same as ``name`` passed.
+        a form rendering).  If the button ``type`` is ``link`` then
+        this setting is used as the URL for the link button.
+        Default: same as ``name`` passed.
+
+    icon
+        glyph icon name to include as part of button.  (Ex. If you
+        wanted to add the glyphicon-plus to this button then you'd pass
+        in a value of ``plus``)  Default: ``None`` (no icon is added)
 
     disabled
         Render the button as disabled if True.
 
     css_class
         The name of a CSS class to attach to the button. In the default
-        form rendering, this string will be appended to ``btnText submit``
-        to become part of the ``class`` attribute of the button. For
-        example, if ``css_class`` was ``foobar`` then the resulting default
-        class becomes ``btnText submit foobar``. Default: ``None`` (no
-        additional class).
+        form rendering, this string will replace the default button type
+        (either ``btn-primary`` or ``btn-default``) on the the ``class``
+        attribute of the button. For example, if ``css_class`` was
+        ``btn-danger`` then the resulting default class becomes
+        ``btn btn-danger``. Default: ``None`` (use default class).
+
+    attributes
+        HTML5 attributes passed in as a dictionary. This is especially
+        useful for a Cancel button where you do not want the client to
+        validate the form inputs, for example
+        ``attributes={"formnovalidate": "formnovalidate"}``.
     """
-    def __init__(self, name='submit', title=None, type='submit', value=None,
-                 disabled=False, css_class=None):
+
+    def __init__(
+        self,
+        name="submit",
+        title=None,
+        type="submit",  # noQA
+        value=None,
+        disabled=False,
+        css_class=None,
+        icon=None,
+        attributes=None,
+    ):
+        if attributes is None:
+            attributes = {}
         if title is None:
             title = name.capitalize()
-        name = re.sub(r'\s', '_', name)
-        if value is None:
+        name = re.sub(r"\s", "_", name)
+        if value is None and type != "link":
             value = name
         self.name = name
         self.title = title
-        self.type = type
+        self.type = type  # noQA
         self.value = value
         self.disabled = disabled
         self.css_class = css_class
-        
+        self.icon = icon
+        self.attributes = attributes
