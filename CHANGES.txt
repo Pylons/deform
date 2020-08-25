@@ -1,8 +1,15 @@
 3.0.0 (unreleased)
 ------------------
 
+
+.. _2.0.14:
+
+2.0.14 (2020-08-XX)
+-------------------
+
 - Field.validate() now raises ``ValidationFailure`` upon peppercorn parse
   failure.
+  See https://github.com/Pylons/deform/pull/242
 
 
 .. _2.0.13:
