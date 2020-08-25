@@ -32,9 +32,10 @@ Prepare new release branch
 
     $VENV/bin/pip install setuptools-git twine wheel
 
-- Do a platform test:
+- Do a platform test, run a check with black, ensure the PyPI long description
+  renders, and run check-manifest with the following command.
 
-    tox -r
+    $TOX -r
 
 - Ensure all features of the release are documented (audit CHANGES.txt or
   communicate with contributors).
@@ -53,14 +54,9 @@ Prepare new release branch
 
 - Change setup.py version to the release version number.
 
-- Run a check with black, ensure the PyPI long description renders, and run
-  check-manifest with the following command.
-
-    $VENV/bin/tox -e lint
-
 - Build an sdist and a wheel:
 
-    $VENV/bin/tox -e build
+    $TOX -e build
 
 - Release the wheels to PyPI:
 
