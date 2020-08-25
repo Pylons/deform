@@ -493,10 +493,13 @@ class TestField(unittest.TestCase):
         self.assertEqual(e.error, schema_invalid)
 
     def test_validate_fails_peppercorn_error(self):
-        from colander import Invalid, null
+        # Pyramid
+        from colander import Invalid
+        from colander import null
+
         controls = [
             ('__start__', 'foo:baroo'),
-            ]
+        ]
         schema = DummySchema()
         field = self._makeOne(schema)
         field.widget = DummyWidget()

@@ -735,8 +735,9 @@ class Field(object):
         try:
             pstruct = peppercorn.parse(controls)
         except ValueError as e:
-            exc = colander.Invalid(self.schema,
-                                   "Invalid peppercorn controls: %s" % e)
+            exc = colander.Invalid(
+                self.schema, "Invalid peppercorn controls: %s" % e
+            )
             self.widget.handle_error(self, exc)
             cstruct = colander.null
             raise exception.ValidationFailure(self, cstruct, exc)
