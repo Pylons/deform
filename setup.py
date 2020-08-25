@@ -23,7 +23,7 @@ def readfile(name):
 
 README = readfile("README.rst")
 CHANGES = readfile("CHANGES.txt")
-VERSION = '2.0.12'
+VERSION = '2.0.13'
 
 requires = [
     "Chameleon>=2.5.1",  # Markup class
