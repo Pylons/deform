@@ -143,3 +143,4 @@ Contributors
 - John Haiducek, 2020/06/20
 - Stanisław Pitucha, 2020/06/30
 - Lele Gaifax, 2020/08/22
+- Geoffrey T. Dairiki, 2020/08/24
