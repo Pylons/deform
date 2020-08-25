@@ -1,6 +1,13 @@
 3.0.0 (unreleased)
 ------------------
 
+- ``richtext.pt``: The contents of the ``RichTextWidget``'s <textarea>
+  was not HTML-escaped, but now it is.
+  Note that unescaped content is still rendered if ``delayed_load`` is
+  enabled.  Now, however, to avoid rendering unescaped non-validated
+  user input, ``delayed_load`` is ignored when redisplaying a field
+  containing an error.
+  See https://github.com/Pylons/deform/pull/204
 
 .. _2.0.12:
 
@@ -233,14 +240,6 @@
 - Changed ``ISO8601_REGEX`` import to match change in colander
 
 - Add support for Python 3.4, PyPy3.
-
-- ``richtext.pt``: The contents of the ``RichTextWidget``'s <textarea>
-  was not HTML-escaped, but now it is.
-  Note that unescaped content is still rendered if ``delayed_load`` is
-  enabled.  Now, however, to avoid rendering unescaped non-validated
-  user input, ``delayed_load`` is ignored when redisplaying a field
-  containing an error.
-  See https://github.com/Pylons/deform/pull/204
 
 - Raise ``Invalid`` rather than other errors when deserializing broken
   or malicious pstructs with invalid types.  See
