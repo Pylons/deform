@@ -3,10 +3,13 @@
                       css_class css_class|field.widget.css_class;
                       oid oid|field.oid;
                       name name|field.name;
-                      style style|field.widget.style"
+                      style style|field.widget.style;
+                      autofocus autofocus|field.autofocus"
           tal:attributes="rows rows;
                           cols cols;
                           class string: form-control ${css_class or ''};
-                          style style"
+                          style style;
+                          autofocus autofocus;
+                          attributes|field.widget.attributes|{};"
           id="${oid}"
           name="${name}">${cstruct}</textarea>

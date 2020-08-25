@@ -1,0 +1,130 @@
+Distributing a new release
+==========================
+
+- For clarity, we define releases as follows.
+
+  - Alpha, beta, dev and similar statuses do not qualify whether a release is
+    major or minor. The term "pre-release" means alpha, beta, or dev.
+
+  - A release is final when it is no longer pre-release.
+
+  - A *major* release is where the first number either before or after the
+    first dot increases. Examples: 0.9.0 to 2.0.
+
+  - A *minor* or *bug fix* release is where the number after the second dot
+    increases. Example: 2.0 to 2.0.1.
+
+Prepare new release branch
+--------------------------
+
+- Create a new release branch, incrementing the version number.
+
+- Align the release number with deformdemo.
+
+- Do any necessary branch merges (e.g., master to branch, branch to master).
+
+- On release branch:
+
+    git pull
+
+- Make sure your Python has ``setuptools-git``, ``twine``, and ``wheel``
+  installed:
+
+    $VENV/bin/pip install setuptools-git twine wheel
+
+- Do a platform test:
+
+    tox -r
+
+- Ensure all features of the release are documented (audit CHANGES.txt or
+  communicate with contributors).
+
+- Change CHANGES.txt heading to reflect the new version number.
+
+- Update README.rst to use correct versions of badges and URLs according to
+  each branch and context, i.e., RTD "latest" == GitHub/Travis "2.0-branch".
+
+- For major version releases, in contributing.md, update branch descriptions.
+
+- For major version releases, in docs/conf.py, update values under
+  html_theme_options for in_progress and outdated across master, releasing
+  branch, and previously released branch. Also in the previously released
+  branch only, uncomment the sections to enable pylons_sphinx_latesturl.
+
+- Change setup.py version to the release version number.
+
+- Run a check with black, ensure the PyPI long description renders, and run
+  check-manifest with the following command.
+
+    $VENV/bin/tox -e lint
+
+- Build an sdist and a wheel:
+
+    $VENV/bin/tox -e build
+
+- Release the wheels to PyPI:
+
+    $VENV/bin/twine upload dist/deform-X.Y.Z-*
+
+- Upload a git tag for the release:
+
+    git tag X.Y.Z
+    git push origin X.Y.Z
+
+- Add a release on Github.
+  https://github.com/Pylons/deform/releases
+
+- Update RTD to render a new version of the docs at that tag X.Y.Z and set
+  X.Y.Z as the default branch such that ``/latest/`` points to it.
+
+- Publish new version of docs.
+
+- Update deform demo site
+
+- Announce to Twitter.
+
+```
+Deform 2.x released.
+
+PyPI
+https://pypi.org/project/deform/2.X.X
+
+=== One time only for new version, first pre-release ===
+What's New
+https://docs.pylonsproject.org/projects/deform/en/2.x-branch/whatsnew-2.X.html
+=== For all subsequent pre-releases ===
+Changes
+https://docs.pylonsproject.org/projects/deform/en/2.X-branch/changes.html#version-yyyy-mm-dd
+
+Issues
+https://github.com/Pylons/deform/issues
+```
+
+- Announce to maillist.
+
+```
+Deform 2.X.X has been released.
+
+Here are the changes:
+
+<<changes>>
+
+Widget demos
+https://deformdemo.pylonsproject.org/
+
+Documentation
+https://docs.pylonsproject.org/projects/deform/en/latest/
+
+GitHub
+https://github.com/pylons/deform
+
+PyPI
+https://pypi.org/project/deform/2.X.X
+
+Enjoy, and please report any issues you find to the issue tracker at
+https://github.com/Pylons/deform/issues
+
+Thanks!
+
+- Deform developers
+```

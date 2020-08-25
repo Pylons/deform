@@ -1,11 +1,49 @@
+# Wire up travis
 language: python
 
-python:
-  - "2.6"
-  - "2.7"
-  - "3.2"
-  - "3.3"
+addons:
+  firefox: latest
 
-install: pip install tox
+services:
+  - xvfb
 
-script: tox -e py${TRAVIS_PYTHON_VERSION//[.]/}
+matrix:
+  include:
+    - python: 3.5
+      env: TOXENV=py35
+    - python: 3.6
+      env: TOXENV=py36
+    - python: 3.7
+      env: TOXENV=py37
+      dist: xenial
+    - python: 3.8
+      env: TOXENV=py38
+      dist: xenial
+    - python: pypy3
+      env: TOXENV=pypy3
+    - python: 3.6
+      env: TOXENV=py3-cover,coverage
+    - python: 3.6
+      env: TOXENV=docs
+    - python: 3.6
+      env: TOXENV=lint
+    - python: 3.6
+      env: TOXENV=functional3
+
+install:
+  - travis_retry pip install tox
+  # https://dev.to/erikwhiting88/install-browsers-and-webdrivers-in-travisci-n76
+  - wget -N https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz -P /tmp/
+  - tar -xzf /tmp/geckodriver-v0.26.0-linux64.tar.gz -C /tmp/
+  - rm /tmp/geckodriver-v0.26.0-linux64.tar.gz
+  - sudo mv /tmp/geckodriver /usr/local/bin
+
+script:
+  - travis_retry tox
+
+notifications:
+#  email:
+#    - pyramid-checkins@lists.repoze.org
+  irc:
+    channels:
+      - "chat.freenode.net#pyramid"

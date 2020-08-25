@@ -36,7 +36,7 @@ as follows:
 .. note::
 
    The `Colander documentation
-   <http://docs.pylonsproject.org/projects/colander/dev/>`_ is a resource
+   <https://docs.pylonsproject.org/projects/colander/en/latest/>`_ is a resource
    useful to Deform developers.  In particular, it details how a
    :term:`schema` is created and used.  Deform schemas are Colander schemas.
    The Colander documentation about how they work applies to creating Deform

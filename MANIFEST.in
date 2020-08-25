@@ -1,0 +1,14 @@
+graft deform
+graft docs
+prune docs/_build
+
+include *.rst
+include *.txt
+include *.md
+include lingua.ini tox.ini
+include i18n.sh run-selenium-tests.bash
+include pyproject.toml
+include .coveragerc .isort.cfg .flake8
+recursive-include deform/static *.js
+
+global-exclude __pycache__ *.py[cod]

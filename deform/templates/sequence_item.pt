@@ -5,7 +5,7 @@
                  title title|field.title;
                  oid oid|field.oid"
      title="${description}"
-     class="form-group row deform-seq-item ${field.error and error_class or ''} ${field.widget.item_css_class or ''}"
+     class="form-group row deform-seq-item ${field.error and error_class or ''} ${field.widget.item_css_class or ''} ${field.default_item_css_class()}"
      i18n:domain="deform">
   <div class="col-xs-11">
     <span tal:replace="structure field.serialize(cstruct)"/>
@@ -14,7 +14,7 @@
                 repeat="msg field.error.messages()">
       <p tal:condition="msg"
          id="${errstr if repeat.msg.index==0 else '%s-%s' % (errstr, repeat.msg.index)}"
-         class="${error_class} help-block"
+         class="${error_class} form-text text-danger"
          i18n:translate="">${msg}</p>
     </tal:errors>
   </div>
@@ -24,7 +24,7 @@
           id="${oid}-order"
           tal:condition="not hidden"
           title="Reorder (via drag and drop)"
-          i18n:attributes="title title"></span>    
+          i18n:attributes="title"></span>
     <a class="deform-close-button close"
        id="${oid}-close"
        tal:condition="not field.widget.hidden"
