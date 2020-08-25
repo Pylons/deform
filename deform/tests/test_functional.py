@@ -284,6 +284,12 @@ class IntSchema(colander.Schema):
     )
 
 
+class RichTextSchema(colander.Schema):
+    richtext = colander.SchemaNode(
+        colander.String(), widget=deform.widget.RichTextWidget()
+    )
+
+
 class AutofocusDefaultSchema(colander.Schema):
     input1 = colander.SchemaNode(colander.String(),)
 
@@ -312,6 +318,14 @@ class TestSchemas(unittest.TestCase):
             'checked="checked"', value_index
         )
         self.assertTrue(checked_index > 0)
+
+    def test_rich_text_textarea_escaped(self):
+        schema = RichTextSchema()
+        form = deform.Form(schema, buttons=('submit',))
+        unescaped = '<script>boom</script>'
+        result = form.render({'richtext': unescaped})
+        self.assertTrue('boom' in result)
+        self.assertTrue(unescaped not in result)
 
     def test_autofocus_off(self):
         schema = AutofocusSchema()

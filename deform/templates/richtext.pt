@@ -14,28 +14,35 @@
       }
     </style>  
   <textarea id="${oid}" name="${name}" 
-            class='tinymce form-control' tal:content="structure cstruct" />
+            class="tinymce form-control" tal:content="cstruct" />
+  <!--!
+    NB: disable delayed_load on error redisplay of form, since
+    that might result in non-HTML-escaped interpolation of
+    user input.
+  -->
   <span id="${oid}-preload" class="tinymce-preload" 
+        tal:condition="delayed_load and not field.error"
         tal:content="structure cstruct" />
   <script type="text/javascript">
     (function($){
       deform.addCallback('${oid}', function(oid) {
+        var options = {
+          language: '<tal:block i18n:translate="language-code">en</tal:block>',
+          body_class: 'form-control',
+          <tal:block condition="tinymce_options">${tinymce_options},</tal:block>
+          elements: oid
+        };
         var jqoid = $('#' + oid);
         var jqoid_preload = $('#' + oid + '-preload');
-        jqoid.hide();
-        jqoid_preload.click(function(){
-          jqoid.show();
-          jqoid_preload.remove();
-          tinyMCE.init({
-            language: '<tal:block i18n:translate="language-code">en</tal:block>',
-            body_class: 'form-control',
-            <tal:block condition="tinymce_options">${tinymce_options},</tal:block>
-            elements: oid
+        if (jqoid_preload.length == 0) {
+          tinyMCE.init(options);
+        } else {
+          jqoid.hide();
+          jqoid_preload.one('click', function(){
+            jqoid.show();
+            jqoid_preload.remove();
+            tinyMCE.init(options);
           });
-          jqoid_preload.unbind('click');
-        });
-        if (!${str(bool(delayed_load)).lower()}) {
-          jqoid_preload.click();
         }
       });
       $().bind('form.pre.serialize', function(event, $form, options) {
