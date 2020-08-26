@@ -2122,7 +2122,7 @@ default_resources = {
         None: {"js": "deform:static/scripts/jquery.maskedinput-1.3.1.min.js"}
     },
     "jquery.maskMoney": {
-        None: {"js": "deform:static/scripts/jquery.maskMoney-1.4.1.js"}
+        None: {"js": "deform:static/scripts/jquery.maskMoney-3.1.1.min.js"}
     },
     "deform": {
         None: {
