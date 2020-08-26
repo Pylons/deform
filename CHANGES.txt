@@ -1,11 +1,14 @@
 .. _2.0.14:
 
-2.0.14 (2020-08-XX)
+2.0.14 (2020-08-26)
 -------------------
 
 - Field.validate() now raises ``ValidationFailure`` upon peppercorn parse
   failure.
   See https://github.com/Pylons/deform/pull/242
+
+- Bump maskMoney.js to 3.1.1 and use minified version.
+  https://github.com/Pylons/deform/issues/412
 
 
 .. _2.0.13:
