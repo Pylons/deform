@@ -205,6 +205,25 @@ method and dotted name resolution, including special cases which
 involve the "splat" (``*``) character and the empty string as a key
 name.
 
+
+.. _date-time-inputs:
+
+Using Date, DateTime, and Time Inputs
+-------------------------------------
+
+The :class:`deform.widget.DateInputWidget`, :class:`deform.widget.DateTimeInputWidget`, and :class:`deform.widget.TimeInputWidget` inputs all use the jQuery plugin `pickadate <https://amsul.ca/pickadate.js/>`_.
+This plugin is included with Deform in the directory ``static/pickadate``.
+
+Arbitrary options may be passed into the widget as a Python object, which will be automatically converted to a JSON object by the widget.
+These options are named ``date_options`` and ``time_options``.
+This is useful to set a minimum or maximum date or time, and many other options.
+For the complete options, see `date options <https://amsul.ca/pickadate.js/date/#options>`_ or `time options <https://amsul.ca/pickadate.js/time/#options>`_.
+
+Use of these widgets is not a replacement for server-side validation of the field.
+It is purely a UI affordance.
+If the data must be checked at input time, a separate :term:`validator` should be attached to the related schema node.
+
+
 .. _masked_input:
 
 Using Text Input Masks
