@@ -33,8 +33,8 @@ This schema renders as a *sequence* of *mapping* objects.  Each
 mapping has two leaf nodes in it: a *string* and an *integer*.  If you
 play around with the demo at
 `https://deformdemo.pylonsproject.org/sequence_of_mappings/
-<https://deformdemo.pylonsproject.org/sequence_of_mappings/>`_ you'll notice
-that, although we don't actually specify a particular kind of widget
+<https://deformdemo.pylonsproject.org/sequence_of_mappings/>`_ you will notice
+that, although we do not actually specify a particular kind of widget
 for each of these fields, a sensible default widget is used.  This is
 true of each of the default types in :term:`Colander`.  Here is how
 they are mapped by default.  In the following list, the schema type
@@ -80,7 +80,7 @@ which is the header uses the widget underneath it by default.
    a custom widget.
 
 If you are creating a schema that contains a type which is not in this
-list, or if you'd like to use a different widget for a particular
+list, or if you would like to use a different widget for a particular
 field, or you want to change the settings of the default widget
 associated with the type, you need to associate the field with the
 widget "by hand".  There are a number of ways to do so, as outlined in
@@ -121,7 +121,7 @@ node in the ``Person`` class above.  When a schema containing a node
 with a ``widget`` argument to a schema node is rendered by Deform, the
 widget specified in the node constructor is used as the widget which
 should be associated with that node's form rendering.  In this case,
-we'll be using a :class:`deform.widget.TextAreaWidget` as the ``name``
+we will use a :class:`deform.widget.TextAreaWidget` as the ``name``
 widget.
 
 .. note::
@@ -134,7 +134,7 @@ widget.
 Using dictionary access to change the widget
 ++++++++++++++++++++++++++++++++++++++++++++
 
-After the :class:`deform.Form` constructor is called with the schema
+After the :class:`deform.Form` constructor is called with the schema,
 you can change the widget used for a particular field by using
 dictionary access to get to the field in question.  A
 :class:`deform.Form` is just another kind of :class:`deform.Field`, so
@@ -161,7 +161,7 @@ argument to the explicit widget creation, indicating that the size of
 the ``name`` input field should be 10em rather than the default.  
 
 Although in the example above, we associated the ``name`` field with
-the same type of widget as its default we could have just as easily
+the same type of widget as its default, we could have
 associated the ``name`` field with a completely different widget using
 the same pattern.  For example:
 
@@ -175,9 +175,9 @@ the same pattern.  For example:
    myform['people']['person']['name'].widget = TextAreaWidget()
 
 The above renders an HTML ``textarea`` input element for the ``name``
-field instead of an ``input type=text`` field.  This probably doesn't
-make much sense for a field called ``name`` (names aren't usually
-multiline paragraphs); but it does let us demonstrate how different
+field instead of an ``input type=text`` field.  This probably does not
+make much sense for a field called ``name`` (names are not usually
+multiline paragraphs), but it does let us demonstrate how different
 widgets can be used for the same field.
 
 Using the :meth:`deform.Field.set_widgets` method
@@ -218,17 +218,15 @@ the type and length of the characters input into the text field.
 
 For example:
 
-.. code-block: python
+.. code-block:: python
 
-   form['ssn'].widget = TextInputWidget(mask='999-99-9999')
+    form['ssn'].widget = TextInputWidget(mask='999-99-9999')
 
 When using a text input mask:
 
-``a`` represents an alpha character (A-Z,a-z)
-
-``9`` represents a numeric character (0-9)
-
-``*`` represents an alphanumeric character (A-Z,a-z,0-9)
+- ``a`` represents an alpha character (A-Z,a-z).
+- ``9`` represents a numeric character (0-9).
+- ``*`` represents an alphanumeric character (A-Z,a-z,0-9).
 
 All other characters in the mask will be considered mask literals.
 
@@ -247,10 +245,10 @@ Example masks:
 Date
     99/99/9999
 
-US Phone
+North American Phone Number
     (999) 999-9999
 
-US SSN
+United States Social Security Number
     999-99-9999
 
 When this option is used, the :term:`jquery.maskedinput` library must
@@ -263,8 +261,8 @@ See `https://deformdemo.pylonsproject.org/text_input_masks/
 example.
 
 Use of a text input mask is not a replacement for server-side
-validation of the field; it is purely a UI affordance.  If the data
-must be checked at input time a separate :term:`validator` should be
+validation of the field. It is purely a UI affordance.  If the data
+must be checked at input time, a separate :term:`validator` should be
 attached to the related schema node.
 
 
@@ -285,7 +283,7 @@ directory. Additionally, the :term:`jQuery UI` styles for the
 selection box are also included in the :mod:`deform` ``static``
 directory. See :ref:`serving_up_the_rendered_form` and
 :ref:`get_widget_resources` for more information about using the 
-included libraries from your application.
+included libraries for your application.
 
 A very simple example of using
 :class:`deform.widget.AutocompleteInputWidget` follows:
@@ -295,21 +293,23 @@ A very simple example of using
    form['frozznobs'].widget = AutocompleteInputWidget(
                                 values=['spam', 'eggs', 'bar', 'baz'])
 
-Instead of a list of values a URL can be provided to values:
+Instead of a list of values, a URL can be provided to values:
 
 .. code-block:: python
 
    form['frobsnozz'].widget = AutocompleteInputWidget(
                                 values='http://example.com/someapi')
 
-In the above case a call to the url should provide results in a JSON-compatible
+In the above case, a call to the URL should provide results in a JSON-compatible
 format or JSONP-compatible response if on a different host than the
-application.  Something like either of these structures in JSON are suitable::
+application.  Something like either of these structures in JSON are suitable.
 
-    //Items are used as both value and label
+.. code-block:: javascript
+
+    // Items are used as both value and label
     ['item-one', 'item-two', 'item-three']
 
-    //Separate values and labels
+    // Separate values and labels
     [
         {'value': 'item-one', 'label': 'Item One'},
         {'value': 'item-two', 'label': 'Item Two'},
@@ -320,9 +320,7 @@ The autocomplete plugin will add a query string to the request URL with the
 variable ``term`` which contains the user's input at that moment.  The server
 may use this to filter the returned results.  
 
-For more information, see https://api.jqueryui.com/autocomplete/#option-source
-- specifically, the section concerning the ``String`` type for the ``source``
-option.
+For more information, see https://api.jqueryui.com/autocomplete/#option-source — specifically, the section concerning the ``String`` type for the ``source`` option.
 
 Some options for the :term:`jquery.autocomplete` plugin are mapped and
 can be passed to the widget. See
@@ -331,8 +329,8 @@ available options. Passing options looks like:
 
 .. code-block:: python
 
-   form['nobsfrozz'].widget = AutocompleteInputWidget(
-				values=['spam, 'eggs', 'bar', 'baz'],
+    form['nobsfrozz'].widget = AutocompleteInputWidget(
+                                values=['spam, 'eggs', 'bar', 'baz'],
                                 min_length=1)
 
 See `https://deformdemo.pylonsproject.org/autocomplete_input/
@@ -345,8 +343,8 @@ completion data can be found at
 <https://deformdemo.pylonsproject.org/autocomplete_input_values/>`_.
 
 Use of :class:`deform.widget.AutocompleteInputWidget` is not a
-replacement for server-side validation of the field; it is purely a UI
-affordance.  If the data must be checked at input time a separate
+replacement for server-side validation of the field. It is purely a UI
+affordance.  If the data must be checked at input time, a separate
 :term:`validator` should be attached to the related schema node.
 
 Creating a New Schema Type
