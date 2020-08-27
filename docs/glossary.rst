@@ -84,7 +84,7 @@ Glossary
      library, used by the :mod:`deform` translation machinery.
 
    jquery.maskedinput
-     A JQuery plugin library that allows for input masks in text
+     A jQuery plugin library that allows for input masks in text
      inputs.  For example, a mask for a US telephone number might be
      ``(999)-999-9999``.  See also
      https://github.com/digitalBush/jquery.maskedinput.  Deform

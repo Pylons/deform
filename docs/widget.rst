@@ -89,7 +89,7 @@ when this widget is included in a rendering calls a function named
 ``deform.addCallback``, passing it the value of ``field.oid`` and a
 callback function as ``oid`` and ``callback`` respectively.  When it
 is executed, the callback function calls the ``autocomplete`` method
-of the JQuery selector result for ``$('#' + oid)``.
+of the jQuery selector result for ``$('#' + oid)``.
 
 The callback define above will be called under two circumstances:
 
@@ -146,7 +146,7 @@ is not a URL, nor is it a filename or a filename prefix.  The caller
 of :meth:`deform.Field.get_widget_requirements` must use the resource
 names returned as *logical* references.  For example, if the
 requirement name is ``jquery``, and the version id is ``1.4.2``, the
-caller can take that to mean that the JQuery library should be loaded
+caller can take that to mean that the jQuery library should be loaded
 within the page header via, for example the inclusion of the HTML
 ``<script type="text/javascript"
 src="https://deformdemo.pylonsproject.org/static/scripts/jquery-1.4.2.min.js"></script>``
@@ -289,11 +289,11 @@ requirement names mean, and how map to the logical requirement name to
 resource paths within a a :term:`resource registry`.  For example,
 your docstring might have text like this: "This widget uses a library
 name of ``jquery.tools`` in its requirements list.  The name
-``jquery.tools`` implies that the JQuery Tools library must be loaded
+``jquery.tools`` implies that the jQuery Tools library must be loaded
 before rendering the HTML page containing any form which uses this
-widget; JQuery Tools depends on JQuery, so JQuery should also be
-loaded.  The widget expects JQuery Tools version X.X (as specified in
-the version field), which expects JQuery version X.X to be loaded
+widget; jQuery Tools depends on jQuery, so jQuery should also be
+loaded.  The widget expects jQuery Tools version X.X (as specified in
+the version field), which expects jQuery version X.X to be loaded
 previously.".  It might go on to explain that a set of resources need
 to be added to a :term:`resource registry` in order to resolve the
 logical ``jquery.tools`` name to a set of relative resource paths, and
