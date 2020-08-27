@@ -1,3 +1,5 @@
+.. _serialization-deserialization:
+
 Serialization and Deserialization
 =================================
 
