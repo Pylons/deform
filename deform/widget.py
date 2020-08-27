@@ -1376,7 +1376,7 @@ class CheckedPasswordWidget(CheckedInputWidget):
         retain and redisplay the provided values in the password inputs.  If
         false, on validation failure, the fields will be rendered empty.
         Default:: ``False``.
-        """
+    """
 
     template = "checked_password"
     readonly_template = "readonly/checked_password"
@@ -1677,7 +1677,7 @@ class SequenceWidget(Widget):
 
 
 class filedict(dict):
-    """ Use a dict subclass to make it easy to detect file upload
+    """Use a dict subclass to make it easy to detect file upload
     dictionaries in application code before trying to write them to
     persistent objects."""
 
@@ -2046,7 +2046,7 @@ class TextInputCSVWidget(Widget):
 
 
 class ResourceRegistry(object):
-    """ A resource registry maps :term:`widget requirement` name/version
+    """A resource registry maps :term:`widget requirement` name/version
     pairs to one or more relative resources.  A resource registry can
     be passed to a :class:`deform.Form` constructor; if a resource
     registry is *not* passed to the form constructor, a default
@@ -2067,21 +2067,21 @@ class ResourceRegistry(object):
             self.registry = {}
 
     def set_js_resources(self, requirement, version, *resources):
-        """ Set the Javascript resources for the requirement/version
+        """Set the Javascript resources for the requirement/version
         pair, using ``resources`` as the set of relative resource paths."""
         reqt = self.registry.setdefault(requirement, {})
         ver = reqt.setdefault(version, {})
         ver["js"] = resources
 
     def set_css_resources(self, requirement, version, *resources):
-        """ Set the CSS resources for the requirement/version
+        """Set the CSS resources for the requirement/version
         pair, using ``resources`` as the set of relative resource paths."""
         reqt = self.registry.setdefault(requirement, {})
         ver = reqt.setdefault(version, {})
         ver["css"] = resources
 
     def __call__(self, requirements):
-        """ Return a dictionary representing the resources required for a
+        """Return a dictionary representing the resources required for a
         particular set of requirements (as returned by
         :meth:`deform.Field.get_widget_requirements`).  The dictionary will be
         a mapping from resource type (``js`` and ``css`` are both keys in the
