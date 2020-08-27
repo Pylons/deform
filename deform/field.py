@@ -32,7 +32,7 @@ _marker = _Marker()
 
 
 class Field(object):
-    """ Represents an individual form field (a visible object in a
+    """Represents an individual form field (a visible object in a
     form rendering).
 
     A :class:`deform.form.Field` object instance is meant to last for
@@ -299,7 +299,7 @@ class Field(object):
         encoding="utf-8",
         translator=None,
     ):
-        """ Create a :term:`Chameleon` ZPT renderer that will act as a
+        """Create a :term:`Chameleon` ZPT renderer that will act as a
         :term:`default renderer` for instances of the associated class
         when no ``renderer`` argument is provided to the class'
         constructor.  The arguments to this classmethod have the same
@@ -320,7 +320,7 @@ class Field(object):
 
     @classmethod
     def set_default_renderer(cls, renderer):
-        """ Set the callable that will act as a default renderer for
+        """Set the callable that will act as a default renderer for
         instances of the associated class when no ``renderer``
         argument is provided to the class' constructor.  Useful when
         you'd like to use an alternate templating system.
@@ -332,7 +332,7 @@ class Field(object):
     @classmethod
     def set_default_resource_registry(cls, registry):
 
-        """ Set the callable that will act as a default
+        """Set the callable that will act as a default
         :term:`resource registry` for instances of the associated
         class when no ``resource_registry`` argument is provided to
         the class' constructor.  Useful when you'd like to use
@@ -344,7 +344,7 @@ class Field(object):
         cls.default_resource_registry = registry
 
     def translate(self, msgid):
-        """ Use the translator passed to the renderer of this field to
+        """Use the translator passed to the renderer of this field to
         translate the msgid into a term and return the term.  If the renderer
         does not have a translator, this method will return the msgid."""
         translate = getattr(self.renderer, "translate", None)
@@ -357,7 +357,7 @@ class Field(object):
         return iter(self.children)
 
     def __getitem__(self, name):
-        """ Return the subfield of this field named ``name`` or raise
+        """Return the subfield of this field named ``name`` or raise
         a :exc:`KeyError` if a subfield does not exist named ``name``."""
         for child in self.children:
             if child.name == name:
@@ -371,7 +371,7 @@ class Field(object):
         return False
 
     def clone(self):
-        """ Clone the field and its subfields, retaining attribute
+        """Clone the field and its subfields, retaining attribute
         information.  Return the cloned field.  The ``order``
         attribute of the node is not cloned; instead the field
         receives a new order attribute; it will be a number larger
@@ -392,7 +392,7 @@ class Field(object):
 
     @decorator.reify
     def widget(self):
-        """ If a widget is not assigned directly to a field, this
+        """If a widget is not assigned directly to a field, this
         function will be called to generate a default widget (only
         once). The result of this function will then be assigned as
         the ``widget`` attribute of the field for the rest of the
@@ -429,7 +429,7 @@ class Field(object):
         return "item-%s" % css_class
 
     def get_widget_requirements(self):
-        """ Return a sequence of two tuples in the form
+        """Return a sequence of two tuples in the form
         [(``requirement_name``, ``version``), ..].
 
         The first element in each two-tuple represents a requirement
@@ -462,7 +462,7 @@ class Field(object):
         return L
 
     def get_widget_resources(self, requirements=None):
-        """ Return a resources dictionary in the form ``{'js':[seq],
+        """Return a resources dictionary in the form ``{'js':[seq],
         'css':[seq]}``.  ``js`` represents Javascript resources,
         ``css`` represents CSS resources.  ``seq`` represents a
         sequence of resource paths.  Each path in ``seq`` represents a
@@ -488,7 +488,7 @@ class Field(object):
         return self.resource_registry(requirements)
 
     def set_widgets(self, values, separator="."):
-        """ set widgets of the child fields of this field
+        """set widgets of the child fields of this field
         or form element.  ``widgets`` should be a dictionary in the
         form::
 
@@ -581,13 +581,13 @@ class Field(object):
 
     @property
     def errormsg(self):
-        """ Return the ``msg`` attribute of the ``error`` attached to
+        """Return the ``msg`` attribute of the ``error`` attached to
         this field.  If the ``error`` attribute is ``None``,
         the return value will be ``None``."""
         return getattr(self.error, "msg", None)
 
     def serialize(self, cstruct=_marker, **kw):
-        """ Serialize the cstruct into HTML and return the HTML string.  This
+        """Serialize the cstruct into HTML and return the HTML string.  This
         function just turns around and calls ``self.widget.serialize(**kw)``;
         therefore the field widget's ``serialize`` method should be expecting
         any values sent in ``kw``.  If ``cstruct`` is not passed, the cstruct
@@ -614,7 +614,7 @@ class Field(object):
         return self.widget.deserialize(self, pstruct)
 
     def render(self, appstruct=_marker, **kw):
-        """ Render the field (or form) to HTML using ``appstruct`` as a set
+        """Render the field (or form) to HTML using ``appstruct`` as a set
         of default values and returns the HTML string.  ``appstruct`` is
         typically a dictionary of application values matching the schema used
         by this form, or ``colander.null`` to render all defaults.  If it
@@ -822,14 +822,14 @@ class Field(object):
         )
 
     def set_appstruct(self, appstruct):
-        """ Set the cstruct of this node (and its child nodes) using
+        """Set the cstruct of this node (and its child nodes) using
         ``appstruct`` as input."""
         cstruct = self.schema.serialize(appstruct)
         self.cstruct = cstruct
         return cstruct
 
     def set_pstruct(self, pstruct):
-        """ Set the cstruct of this node (and its child nodes) using
+        """Set the cstruct of this node (and its child nodes) using
         ``pstruct`` as input."""
         try:
             cstruct = self.deserialize(pstruct)
@@ -839,7 +839,7 @@ class Field(object):
         self.cstruct = cstruct
 
     def render_template(self, template, **kw):
-        """ Render the template named ``template`` using ``kw`` as the
+        """Render the template named ``template`` using ``kw`` as the
         top-level keyword arguments (augmented with ``field`` and ``cstruct``
         if necessary)"""
         values = {"field": self, "cstruct": self.cstruct}
@@ -849,7 +849,7 @@ class Field(object):
     # retail API
 
     def start_mapping(self, name=None):
-        """ Create a start-mapping tag (a literal).  If ``name`` is ``None``,
+        """Create a start-mapping tag (a literal).  If ``name`` is ``None``,
         the name of this node will be used to generate the name in the tag.
         See the :term:`Peppercorn` documentation for more information.
         """
@@ -859,7 +859,7 @@ class Field(object):
         return Markup(tag % (name,))
 
     def end_mapping(self, name=None):
-        """ Create an end-mapping tag (a literal).  If ``name`` is ``None``,
+        """Create an end-mapping tag (a literal).  If ``name`` is ``None``,
         the name of this node will be used to generate the name in the tag.
         See the :term:`Peppercorn` documentation for more information.
         """
@@ -869,7 +869,7 @@ class Field(object):
         return Markup(tag % (name,))
 
     def start_sequence(self, name=None):
-        """ Create a start-sequence tag (a literal).  If ``name`` is ``None``,
+        """Create a start-sequence tag (a literal).  If ``name`` is ``None``,
         the name of this node will be used to generate the name in the tag.
         See the :term:`Peppercorn` documentation for more information.
         """
@@ -879,7 +879,7 @@ class Field(object):
         return Markup(tag % (name,))
 
     def end_sequence(self, name=None):
-        """ Create an end-sequence tag (a literal).  If ``name`` is ``None``,
+        """Create an end-sequence tag (a literal).  If ``name`` is ``None``,
         the name of this node will be used to generate the name in the tag.
         See the :term:`Peppercorn` documentation for more information.
         """
@@ -890,7 +890,7 @@ class Field(object):
         return Markup(tag % (name,))
 
     def start_rename(self, name=None):
-        """ Create a start-rename tag (a literal).  If ``name`` is ``None``,
+        """Create a start-rename tag (a literal).  If ``name`` is ``None``,
         the name of this node will be used to generate the name in the tag.
         See the :term:`Peppercorn` documentation for more information.
         """
@@ -900,7 +900,7 @@ class Field(object):
         return Markup(tag % (name,))
 
     def end_rename(self, name=None):
-        """ Create a start-rename tag (a literal).  If ``name`` is ``None``,
+        """Create a start-rename tag (a literal).  If ``name`` is ``None``,
         the name of this node will be used to generate the name in the tag.
         See the :term:`Peppercorn` documentation for more information.
         """
