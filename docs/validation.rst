@@ -14,21 +14,21 @@ See `Schema Node Objects <https://docs.pylonsproject.org/projects/colander/en/la
 Colander stock validators
 =========================
 
-You can use default Colander validators in Deform forms:
+You can use default `Colander validators <https://docs.pylonsproject.org/projects/colander/en/latest/api.html#validators>`_ in Deform forms:
 
-* :py:class:`colander.Email`
-
-* :py:class:`colander.Length`
-
-* :py:class:`colander.Range`
-
+* :py:class:`colander.All`
 * :py:class:`colander.Any`
-
+* :py:class:`colander.ContainsOnly`
+* :py:class:`colander.Email`
 * :py:class:`colander.Function`
-
-* :py:class:`colander.OneOf`
-
+* :py:class:`colander.Length`
+* :py:class:`colander.luhnok`
 * :py:class:`colander.NoneOf`
+* :py:class:`colander.OneOf`
+* :py:class:`colander.Range`
+* :py:class:`colander.Regex`
+* :py:class:`colander.url`
+* :py:class:`colander.uuid`
 
 Example:
 
@@ -66,10 +66,13 @@ Here is an example of a data-driven validator that validates the form submission
     class MySchema(CSRFSchema):
         email = colander.SchemaNode(colander.String(), validator=validate_unique_user_email)
 
+
 Form level validation
 =====================
 
-Sometimes you might need to do complex validation where a :py:func:`colander.deferred` pattern complicates things too much. You might just want to do the validation within your view. Here is an example of how to do it.
+Sometimes you might need to do complex validation where a :py:func:`colander.deferred` pattern complicates things too much.
+You might just want to do the validation within your view.
+Here is an example of how to do it.
 
 .. code-block:: python
 
@@ -89,10 +92,12 @@ Sometimes you might need to do complex validation where a :py:func:`colander.def
                 # This error message appears at the top of the form
                 raise colander.Invalid(node["email"], "Please fill in email field if you want to send a preview email.")
 
+
 Setting errors after validation
 ===============================
 
-Sometimes you want to react to an error that arises after the form validation happens, for example, when you call a third party API service. You can convert exceptions to form validation errors.
+Sometimes you want to react to an error that arises after the form validation happens, for example, when you call a third party API service.
+You can convert exceptions to form validation errors.
 
 Use ``form.widget.set_error()`` to set a form level error.
 
