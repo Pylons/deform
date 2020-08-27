@@ -94,7 +94,7 @@ argument to the :class:`deform.Form` constructor, e.g.:
    form = Form(someschema, renderer=renderer)
 
 When the above form is rendered, the templates in
-``/path/to/my/templates`` will be used in  preference to the default
+``/path/to/my/templates`` will be used in preference to the default
 templates. Any number of template directories can be put into the
 search path and will be searched in the order specified with the first
 matching template found being used.
@@ -107,7 +107,7 @@ Using an alternative templating system
 A :term:`renderer` is used by the each widget implementation in
 :mod:`deform` to render HTML from a set of templates. By default, each
 of the default Deform widgets uses a template written in the Chameleon
-ZPT templating language. If you'd rather use a different templating
+ZPT templating language. If you would rather use a different templating
 system for your widgets, you can. To do so, you need to:
 
 - Write an alternate renderer that uses the templating system of your
@@ -135,7 +135,6 @@ engine:
 .. code-block:: python
    :linenos:
 
-
    from mako.template import Template
 
    def mako_renderer(tmpl_name, **kw):
@@ -146,7 +145,7 @@ engine:
    that does some caching, or it might allow the template directory to
    be configured.
 
-Note the ``mako_renderer`` function we've created actually appends a
+Note the ``mako_renderer`` function we have created actually appends a
 ``.mak`` extension to the ``tmpl_name`` it is passed.  This is because
 Deform passes a template name without any extension to allow for
 different templating systems to be used as renderers.
@@ -188,16 +187,16 @@ might look like this:
 Whatever the body of the template looks like, the resulting
 ``textinput.mak`` should be placed in a directory that is meant to
 house other Mako template files which are going to be consumed by
-Deform.  You'll need to convert each of the templates that exist in
+Deform.  You will need to convert each of the templates that exist in
 the Deform ``templates`` directory and its subdirectories, and put all
-of the resulting templates into your private mako ``templates`` dir
-too, retaining any directory structure (e.g., retaining the fact that
+of the resulting templates into your private mako ``templates`` directory
+too, retaining any directory structure (in other words, retaining the fact that
 there is a ``readonly`` directory and converting its contents).
 
 Configuring Your New Renderer as the Default
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Once you've created a new renderer and created templates that match
+Once you have created a new renderer and created templates that match
 all the existing Deform templates, you can now configure your renderer
 to be used by Deform.  In startup code, add something like:
 
@@ -213,9 +212,9 @@ The deform widget system will now use your renderer as the default
 renderer.
 
 Note that calling :meth:`deform.Field.set_default_renderer` will cause this
-renderer to be used by default by all consumers in the process it's invoked
-in.  This is potentially undesirable: you may need the same process to use
-more than one renderer perhaps because that same process houses two different
+renderer to be used by default by all consumers in the process in which it is invoked.
+This is potentially undesirable. You may need the same process to use
+more than one renderer, perhaps because that same process houses two different
 Deform-using systems.  In this case, instead of using the
 ``set_default_renderer`` method, you can write your application in such a way
 that it passes a renderer to the Form constructor:
@@ -226,7 +225,6 @@ that it passes a renderer to the Form constructor:
    from mymakorenderer import mako_renderer
    from deform import Form
 
-   ...
+   # ...
    schema = SomeSchema()
    form = Form(schema, renderer=mako_renderer)
-

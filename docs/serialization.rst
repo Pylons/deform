@@ -1,3 +1,5 @@
+.. _serialization-deserialization:
+
 Serialization and Deserialization
 =================================
 
@@ -33,7 +35,7 @@ when you ask Deform to do this:
 - Deform passes the resulting :term:`cstruct` to the root widget
   object's ``serialize`` method to generate an HTML form rendering.
   The root widget object is responsible for consulting its children
-  nodes during this process to serialilize the entirety of the data
+  nodes during this process to serialize the entirety of the data
   into an HTML form.
 
 If you were to attempt to produce a high-level overview diagram this
@@ -52,7 +54,7 @@ Peppercorn Structure Markers
 You'll see the default deform widget "serializations" (form
 renderings) make use of :term:`Peppercorn` *structure markers*.
 
-Peppercorn is a library that is used by Deform; it allows Deform to
+Peppercorn is a library that is used by Deform. It allows Deform to
 treat the :term:`form controls` in an HTML form submission as a
 *stream* instead of a flat mapping of name to value.  To do so, it
 uses hidden form elements to denote structure.
@@ -74,7 +76,7 @@ part that looks like so:
       ...
      </html>
   
-The above example shows an example of a pair of peppercorn structure
+The above example shows an example of a pair of Peppercorn structure
 markers which begin and end a *mapping*.  The example uses this pair
 to mean that the widget related to the *date* node in the schema
 will be be passed a :term:`pstruct` that is a dictionary with multiple
@@ -83,7 +85,7 @@ values during deserialization. The dictionary will include the keys
 provided by the person interacting with the related form controls.
 
 Other uses of Peppercorn structure markers include a "confirm
-password" widget that can render a peppercorn mapping with two text inputs
+password" widget that can render a Peppercorn mapping with two text inputs
 in it, or a "mapping widget" that can serve as a substructure for a fieldset.
 Basically Peppercorn makes it more pleasant to deal with form
 submission data by pre-converting the data from a flat mapping into a
@@ -100,7 +102,7 @@ to use any Peppercorn structure markers in its rendering.
 Deserialization
 ---------------
 
-High-level overview of how "deserialization" (converting form control
+The following is a high-level overview of how "deserialization" (converting form control
 data resulting from a form submission to application data) works:
 
 - For each :term:`schema node` in the :term:`schema` provided by the
@@ -125,7 +127,7 @@ data resulting from a form submission to application data) works:
 - Deform passes the resulting :term:`cstruct` to the root schema
   node's ``deserialize`` method to generate an :term:`appstruct`.
   This may result in a validation error.  If a validation error
-  occurs, the form may be rerendered with error markers in place.
+  occurs, the form may be re-rendered with error markers in place.
 
 If you were to attempt to produce a high-level overview diagram of
 this process, it might look like this:
@@ -135,7 +137,7 @@ this process, it might look like this:
    formcontrols -> pstruct -> cstruct -> appstruct
                 |          |          |
                 v          v          v
-            peppercorn   widget    schema
+            Peppercorn   widget    schema
 
 When a user presses the submit button on any Deform form, Deform
 itself runs the resulting :term:`form controls` through the
@@ -204,7 +206,7 @@ When it raises this exception, it can use the field object as a
 attribute to the exception constructor.  For example:
 
 .. code-block:: python
-   :linenos:
+    :linenos:
 
     import colander
 
@@ -232,8 +234,8 @@ The schema type associated with this widget is expecting a single
 string as its cstruct.  The ``value`` passed to the exception
 constructor raised during the ``deserialize`` when ``value !=
 confirm`` is used as that ``cstruct`` value when the form is
-rerendered with error markers.  The ``confirm`` value is picked off
-the field value when the form is rerendered at this time.
+re-rendered with error markers.  The ``confirm`` value is picked off
+the field value when the form is re-rendered at this time.
 
 Say What?
 ---------

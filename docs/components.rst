@@ -6,9 +6,7 @@ types of objects and their relationships to one another.  These types
 are:
 
 - schema nodes
-
 - field objects
-
 - widgets
 
 The Relationship Between Widgets, Fields, and Schema Objects
@@ -29,7 +27,7 @@ as follows:
   If the ``widget`` attribute of a field object is not set directly by
   the developer, a property is used to create an instance of the
   default widget type when ``field.widget`` is first requested.  Sane
-  defaults for each schema type typically exist; if a sane default
+  defaults for each schema type typically exist. If a sane default
   cannot be found, the :class:`deform.widget.TextInputWidget` widget
   is used.
 
@@ -53,7 +51,9 @@ type to which the widget is related.
 
 A widget has a relationship to a schema node via a :term:`field`
 object.  A :term:`field` object has a reference to both a widget and a
-:term:`schema node`.  These relationships look like this::
+:term:`schema node`.  These relationships look like the following.
+
+.. code-block:: text
 
    field object (``field``)
         |
@@ -62,4 +62,3 @@ object.  A :term:`field` object has a reference to both a widget and a
         |
         |
         \----- schema node object (``field.schema``)
-

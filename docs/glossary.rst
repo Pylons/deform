@@ -84,7 +84,7 @@ Glossary
      library, used by the :mod:`deform` translation machinery.
 
    jquery.maskedinput
-     A JQuery plugin library that allows for input masks in text
+     A jQuery plugin library that allows for input masks in text
      inputs.  For example, a mask for a US telephone number might be
      ``(999)-999-9999``.  See also
      https://github.com/digitalBush/jquery.maskedinput.  Deform
@@ -100,7 +100,7 @@ Glossary
 
    TinyMCE Editor
      `TinyMCE <https://www.tiny.cloud/>`_ is a platform
-     independent web based Javascript HTML WYSIWYG editor control
+     independent web based JavaScript HTML WYSIWYG editor control
      released as Open Source under `LGPL
      <https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html>`_ by
      `Moxiecode Systems AB <http://www.moxiecode.com/>`_. It
@@ -129,13 +129,13 @@ Glossary
    resource registry
       An attribute of a Deform form which maps :term:`widget
       requirement` declarations made by widgets to relative file
-      paths.  Useful to obtain all the CSS and/or Javascript resources
+      paths.  Useful to obtain all the CSS and/or JavaScript resources
       required by all the widgets in a concrete form rendering.  See
       also :ref:`get_widget_resources`.
 
    widget requirement
       A sequence of tuples attached to a widget object representing
-      the *logical* Javascript and/or CSS requirements of the widget.
+      the *logical* JavaScript and/or CSS requirements of the widget.
       See also :ref:`specifying_widget_requirements`.
 
    sequence
