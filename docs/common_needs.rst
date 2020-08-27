@@ -226,6 +226,69 @@ involve the "splat" (``*``) character and the empty string as a key
 name.
 
 
+.. _using-arbitrary-html5-form-attributes:
+
+Using arbitrary HTML5 form attributes
+-------------------------------------
+
+HTML5 introduced many attributes to HTML forms.
+For the full specification, see https://www.w3.org/TR/2017/REC-html52-20171214/sec-forms.html#sec-forms
+For implementations and demos, the `Mozilla Developer Network <https://developer.mozilla.org/en-US/docs/Learn/Forms/HTML5_input_types>`_ is one useful resource.
+
+Starting with Deform 2.0.7, all of the Deform widgets support arbitrary HTML5 attributes.
+This is useful, for example, when using HTML5 default browser number widgets.
+You can also set some client-side validation requirements without JavaScript.
+The following Python code will generate the subsequent HTML and rendered form input.
+
+.. code-block:: python
+
+    from decimal import Decimal
+
+    total_employee_hours = colander.SchemaNode(
+        colander.Decimal(),
+        widget=widget.TextInputWidget(
+            attributes={
+                "type": "number",
+                "inputmode": "decimal",
+                "step": "0.01",
+                "min": "0",
+                "max": "99.99",
+            }
+        ),
+        validator=colander.Range(min=0, max=Decimal("99.99")),
+        default=30.00,
+        missing=colander.drop,
+    )
+
+.. code-block:: html
+
+    <input
+        name="total_employee_hours"
+        value="30.00"
+        id="total_employee_hours"
+        class=" form-control "
+        type="number"
+        inputmode="decimal"
+        step="0.01"
+        min="0"
+        max="99.99">
+
+**Total employee hours**
+
+.. raw:: html
+
+    <input
+        name="total_employee_hours"
+        value="30.00"
+        id="total_employee_hours"
+        class=" form-control "
+        type="number"
+        inputmode="decimal"
+        step="0.01"
+        min="0"
+        max="99.99">
+
+
 .. _date-time-inputs:
 
 Using Date, DateTime, and Time Inputs
