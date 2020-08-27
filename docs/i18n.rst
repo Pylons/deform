@@ -6,7 +6,9 @@ Deform is fully internationalizable and localizable.  :term:`gettext`
 which contain (currently incomplete) translations to various languages
 for the purpose of rendering localized error messages.
 
-Following should get you started with `i18n` in :mod:`pyramid`::
+The following should get you started with ``i18n`` in :mod:`pyramid`:
+
+.. code-block:: python
 
     import deform
 
@@ -32,13 +34,9 @@ Following should get you started with `i18n` in :mod:`pyramid`::
         )
         deform.Form.set_default_renderer(zpt_renderer)
 
-
 See the `Internationalization demo
-<https://deformdemo.pylonsproject.org/i18n/>`_ for an example of how deform
+<https://deformdemo.pylonsproject.org/i18n/>`_ for an example of how Deform
 error and status messages can be localized.  This demonstration uses
 the `internationalization and localization features of Pyramid
 <https://docs.pylonsproject.org/projects/pyramid/en/latest/narr/i18n.html>`_
 to render Deform error messages into :term:`Chameleon` form renderings.
-
-
-
