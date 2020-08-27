@@ -291,11 +291,15 @@ class RichTextSchema(colander.Schema):
 
 
 class AutofocusDefaultSchema(colander.Schema):
-    input1 = colander.SchemaNode(colander.String(),)
+    input1 = colander.SchemaNode(
+        colander.String(),
+    )
 
 
 class AutofocusSchema(colander.Schema):
-    input1 = colander.SchemaNode(colander.String(),)
+    input1 = colander.SchemaNode(
+        colander.String(),
+    )
     input2 = colander.SchemaNode(colander.String(), autofocus="on")
 
 

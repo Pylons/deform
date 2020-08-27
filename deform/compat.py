@@ -32,7 +32,7 @@ else:
 
 
 def text_(s, encoding="latin-1", errors="strict"):
-    """ If ``s`` is an instance of ``binary_type``, return
+    """If ``s`` is an instance of ``binary_type``, return
     ``s.decode(encoding, errors)``, otherwise return ``s``"""
     if isinstance(s, binary_type):
         return s.decode(encoding, errors)
@@ -40,7 +40,7 @@ def text_(s, encoding="latin-1", errors="strict"):
 
 
 def bytes_(s, encoding="latin-1", errors="strict"):
-    """ If ``s`` is an instance of ``text_type``, return
+    """If ``s`` is an instance of ``text_type``, return
     ``s.encode(encoding, errors)``, otherwise return ``s``"""
     if isinstance(s, text_type):  # pragma: no cover
         return s.encode(encoding, errors)

@@ -14,9 +14,9 @@ form, including the input fields, the buttons, and so forth.  We used the
 into a larger HTML page in our application.  That is an effective and quick way
 to put a form on a page, but sometimes you need more fine-grained control over
 the way form HTML is rendered.  For example, you may need form elements to be
-placed on the page side-by-side or you might need the form's styling to be
+placed on the page side-by-side, or you might need the form's styling to be
 radically different than the form styling used by the default rendering of
-Deform forms.  Often it's easier to use Deform slightly differently, where you
+Deform forms.  Often it is easier to use Deform slightly differently, where you
 do more work yourself to draw the form within a template, and only use Deform
 for some of its features.  We refer to this as "retail form rendering".
 
@@ -25,12 +25,12 @@ Live example
 
 `See pop-up example on Deform demo site <https://deformdemo.pylonsproject.org/popup/>`_.
 
-`Source code <https://github.com/Pylons/deformdemo/blob/master/deformdemo/__init__.py>`_ (search popup).
+`Source code <https://github.com/Pylons/deformdemo/blob/master/deformdemo/__init__.py>`_ (search for "popup").
 
 A Basic Example
 ---------------
 
-Our schema and form object:
+Here are our schema and form objects:
 
 .. code-block:: python
    :linenos:
@@ -100,8 +100,8 @@ Deform widget templates, so if you need to change how a particular widget is
 rendered without doing things completely by hand, you may want to take a look
 at the existing widget template and see if your need has been anticipated.
 
-In the POST handler for the form, just do things like we did in the last
-chapter, except if validation fails, just re-render the template with the same
+In the POST handler for the form, do things like we did in the last
+chapter, except if validation fails, re-render the template with the same
 form object.
 
 .. code-block:: python
@@ -111,12 +111,12 @@ form object.
        try:
            appstruct = form.validate(controls)  # call validate
        except ValidationFailure as e: # catch the exception
-            # .. rerender the form .. its field's .error attributes
-            # will be set
+            # .. re-render the form ..
+            # its field's .error attributes will be set
 
 It is also possible to pass an ``appstruct`` argument to the
 :class:`deform.Form` constructor to create "edit forms".  Form/field objects
-are initialized with this appstruct (recursively) when they're created.  This
+are initialized with this appstruct (recursively) when they are created.  This
 means that accessing ``form.cstruct`` will return the current set of rendering
 values.  This value is reset during validation, so after a validation is done
 you can re-render the form to show validation errors.
@@ -127,26 +127,14 @@ you need examples, you can look at their templates.
 Other methods that might be useful during retail form rendering are:
 
 - :meth:`deform.Field.__contains__`
-
 - :meth:`deform.Field.start_mapping`
-
 - :meth:`deform.Field.end_mapping`
-
 - :meth:`deform.Field.start_sequence`
-
 - :meth:`deform.Field.end_sequence`
-
 - :meth:`deform.Field.start_rename`
-
 - :meth:`deform.Field.end_rename`
-
 - :meth:`deform.Field.set_appstruct`
-
 - :meth:`deform.Field.set_pstruct`
-
 - :meth:`deform.Field.render_template`
-
 - :meth:`deform.Field.validate_pstruct` (and the ``subcontrol`` argument to
   :meth:`deform.Field.validate`)
-
-

@@ -15,10 +15,10 @@ subsequently be ready to accept form submission input are:
 
 - Render the form.
 
-Once the form is rendered, a user will interact with the form in his
-browser, and some point, he will submit it.  When the user submits the
+Once the form is rendered, a user will interact with the form in their
+browser, and some point, they will submit it.  When the user submits the
 form, the data provided by the user will either validate properly, or
-the form will need to be rerendered with error markers which help to
+the form will need to be re-rendered with error markers which help to
 inform the user of which parts need to be filled in "properly" (as
 defined by the schema).  We allow the user to continue filling in the
 form, submitting, and revalidating indefinitely.
@@ -50,15 +50,15 @@ like this:
    ]
 
 In other words, the database query we make returns a sequence of
-*people*; each person is represented by some data.  We need to edit
+*people*. Each person is represented by some data.  We need to edit
 this data.  There won't be many people in this list, so we don't need
-any sort of paging or batching to make our way through the list; we
+any sort of paging or batching to make our way through the list. We
 can display it all on one form page.
 
 Deform designates a structure akin to the example above as an
 :term:`appstruct`.  The term "appstruct" is shorthand for "application
 structure", because it's the kind of high-level structure that an
-application usually cares about: the data present in an appstruct is
+application usually cares about. The data present in an appstruct is
 useful directly to an application itself.
 
 .. note:: An appstruct differs from other structures that Deform uses
@@ -66,14 +66,13 @@ useful directly to an application itself.
    and cstructs are typically only useful during intermediate parts of
    the rendering process.
 
-Usually, given some appstruct, you can divine a :term:`schema` that
+Usually, given some appstruct, you can define a :term:`schema` that
 would allow you to edit the data related to the appstruct.  Let's
 define a schema which will attempt to serialize this particular
 appstruct to a form.  Our application has these requirements of the
 resulting form:
 
 - It must be possible to add and remove a person.
-
 - It must be possible to change any person's name or age after they've
   been added.
 
@@ -99,21 +98,22 @@ Here's a schema that will help us meet those requirements:
        
 The schemas used by Deform come from a package named :term:`Colander`.  The
 canonical documentation for Colander exists at
-https://docs.pylonsproject.org/projects/colander/en/latest/ .  To compose complex
-schemas, you'll need to read it to get comfy with the documentation of the
-default Colander data types.  But for now, we can play it by ear.
+https://docs.pylonsproject.org/projects/colander/en/latest/.
+To compose complex schemas, you will need to read it to get comfortable with the default Colander data types.
+But for now, we can play it by ear.
 
-For ease of reading, we've actually defined *three* schemas above, but
-we coalesce them all into a single schema instance as ``schema`` in
-the last step.  A ``People`` schema is a collection of ``Person``
-schema nodes.  As the result of our definitions, a ``Person``
-represents:
+For ease of reading, we've actually defined *three* schemas above.
+As the result of our definitions, a ``Person`` represents:
 
 - A ``name``, which must be a string.
 
-- An ``age``, which must be deserializable to an integer; after
+- An ``age``, which must be deserializable to an integer. After
   deserialization happens, a validator ensures that the integer is
   between 0 and 200 inclusive.
+
+A ``People`` schema is a collection of ``Person`` schema nodes.
+
+Finally we create a collection of the ``People`` schema nodes into a single schema instance as ``schema``.
 
 Schema Node Objects
 ~~~~~~~~~~~~~~~~~~~
@@ -140,12 +140,12 @@ The *type* of a schema node indicates its data type (such as
 The *preparer* of a schema node is called after
 deserialization but before validation; it prepares a deserialized
 value for validation. Examples would be to prepend schemes that may be
-missing on url values or to filter html provided by a rich text
+missing on url values or to filter HTML provided by a rich text
 editor. A preparer is not called during serialization, only during
 deserialization.
 
 The *validator* of a schema node is called after deserialization and
-preparation ; it makes sure the value matches a constraint.  An example of
+preparation. It makes sure the value matches a constraint.  An example of
 such a validator is provided in the schema above:
 ``validator=colander.Range(0, 200)``.  A validator is not called after
 schema node serialization, only after node deserialization.
@@ -168,10 +168,6 @@ The *title* of a schema node is metadata about a schema node.  It
 shows up in the legend above the form field(s) related to the schema
 node.  By default, it is a capitalization of the *name*.
 
-The *description* of a schema node is metadata about a schema node.
-It shows up as a tooltip when someone hovers over the form control(s)
-related to a :term:`field`.  By default, it is empty.
-
 The name of a schema node that is introduced as a class-level
 attribute of a :class:`colander.MappingSchema`,
 :class:`colander.TupleSchema` or a :class:`colander.SequenceSchema` is
@@ -191,14 +187,19 @@ The name of the schema node defined via ``location =
 colander.SchemaNode(..)`` within the schema above is ``location``.
 The title of the same schema node is ``Location``.
 
+The *description* of a schema node is metadata about a schema node.
+It shows up as help text for the form control related to a :term:`field`.
+By default, it is empty.
+
+
 Schema Objects
 ~~~~~~~~~~~~~~
 
 In the examples above, if you've been paying attention, you'll have
 noticed that we're defining classes which subclass from
-:class:`colander.MappingSchema`, and :class:`colander.SequenceSchema`.
-It's turtles all the way down: the result of creating an instance of
-any of :class:`colander.MappingSchema`, :class:`colander.TupleSchema`
+:class:`colander.MappingSchema` and :class:`colander.SequenceSchema`.
+It's turtles all the way down. The result of creating an instance of
+any of :class:`colander.MappingSchema`, :class:`colander.TupleSchema`,
 or :class:`colander.SequenceSchema` object is *also* a
 :class:`colander.SchemaNode` object.
 
@@ -220,7 +221,7 @@ for information about how to create schemas without using a ``class``
 statement.
 
 Creating a schema with or without ``class`` statements is purely a
-style decision; the outcome of creating a schema without ``class``
+style decision. The outcome of creating a schema without ``class``
 statements is the same as creating one with ``class`` statements.
 
 Rendering a Form
@@ -246,7 +247,7 @@ Earlier we defined a schema:
 
    schema = Schema()
 
-Let's now use this schema to create, render and validate a form.
+Let us now use this schema to create, render, and validate a form.
 
 .. _creating_a_form:
 
@@ -263,7 +264,7 @@ To create a form object, we do this:
 
 We used the ``schema`` object (an instance of
 :class:`colander.MappingSchema`) we created in the previous section as
-the first positional parameter to the :class:`deform.Form` class; we
+the first positional parameter to the :class:`deform.Form` class. We
 passed the value ``('submit',)`` as the value of the ``buttons``
 keyword argument.  This will cause a single ``submit`` input element
 labeled ``Submit`` to be injected at the bottom of the form rendering.
@@ -281,19 +282,19 @@ argument to the :class:`deform.Form` constructor
 Although different kinds of schema nodes can be present in a schema
 used by a Deform :class:`deform.Form` instance, a form instance cannot
 deal with a schema node representing a sequence, a tuple schema, a
-string, an integer, etc. as the value of its ``schema`` parameter;
-only a schema node representing a mapping is permissible.  This
+string, an integer, and so on, as the value of its ``schema`` parameter.
+Only a schema node representing a mapping is permissible.  This
 typically means that the object passed as the ``schema`` argument to a
 :class:`deform.Form` constructor must be obtained as the result of
-using the :class:`colander.MappingSchema` constructor (or the
-equivalent imperative spelling).
+using the :class:`colander.MappingSchema` constructor, or the
+equivalent imperative spelling.
 
 Rendering the Form
 ~~~~~~~~~~~~~~~~~~
 
-Once we've created a Form object, we can render it without issue by
-calling the :meth:`deform.Field.render` method: the
-:class:`deform.Form` class is a subclass of the :class:`deform.Field`
+Once we have created a Form object, we can render it without issue by
+calling the :meth:`deform.Field.render` method.
+The :class:`deform.Form` class is a subclass of the :class:`deform.Field`
 class, so this method is available to a :class:`deform.Form` instance.
 
 If we wanted to render an "add" form (a form without initial
@@ -304,9 +305,9 @@ data), we'd just omit the appstruct while calling
 
    form = myform.render()
 
-If we have some existing data already that we'd like to edit using the
-form (the form is an "edit form" as opposed to an "add form").  That
-data might look like this:
+Suppose we have some existing data already that we would like to edit using the form.
+Here the form is an "edit form" as opposed to an "add form".
+That data might look like this:
 
 .. code-block:: python
    :linenos:
@@ -339,7 +340,7 @@ to the :meth:`deform.Field.render` method.
    form = myform.render(appstruct, readonly=True)
 
 This would cause a page to be rendered in a crude form without any
-form controls, so the user it's presented to cannot edit it.
+form controls, so the user to whom it is presented cannot edit it.
 
 Once any of the above statements runs, the ``form`` variable is now a
 Unicode object containing an HTML rendering of the edit form, useful
@@ -357,18 +358,18 @@ Serving up the Rendered Form
 We now have an HTML rendering of a form as the variable named
 ``form``.  But before we can serve it up successfully to a browser
 user, we have to make sure that static resources used by Deform can be
-resolved properly. Some Deform widgets (including at least one we've
+resolved properly. Some Deform widgets (including at least one we have
 implied in our sample schema) require access to static resources such
 as images via HTTP.
 
-For these widgets to work properly, we'll need to arrange that files
-in the directory named ``static`` within the :mod:`deform` package can
+For these widgets to work properly, we will need to arrange those files
+in the directory named ``static`` within the :mod:`deform` package, which can
 be resolved via a URL which lives at the same hostname and port number
 as the page which serves up the form itself.  For example, the URL
 ``/static/css/form.css`` should be willing to return the
 ``form.css`` CSS file in the ``static/css`` directory in the
-:mod:`deform` package as ``text/css`` content and return 
-``/static/scripts/deform.js`` as``text/javascript`` content.  
+:mod:`deform` package as ``text/css`` content, and return
+``/static/scripts/deform.js`` as``text/javascript`` content.
 How you arrange to do this is dependent on
 your web framework.  It's done in :mod:`pyramid` imperative
 configuration via:
@@ -388,7 +389,7 @@ and images present in the ``static`` directory of the :mod:`deform`
 package are the following:
 
 ``static/scripts/jquery-2.0.3.min.js``
-  A local copy of the JQuery javascript library, used by widgets and
+  A local copy of the jQuery JavaScript library, used by widgets and
   other JavaScript files.
 
 ``static/scripts/deform.js``
@@ -399,7 +400,7 @@ package are the following:
   CSS related to form element renderings.
 
 Each of these libraries should be included in the ``<head>`` tag of a
-page which renders a Deform form, e.g.:
+page which renders a Deform form, for example:
 
 .. code-block:: html
    :linenos:
@@ -420,10 +421,10 @@ page which renders a Deform form, e.g.:
    </head>
 
 Please note the order of loading the two JavaScript files does matter.
-The ``deform.js`` file makes an immediate call to jquery that will fail
-if jquery is not loaded first.
+The ``deform.js`` file makes an immediate call to jQuery that will fail
+if jQuery is not loaded first.
 
-After loading ``deform.js`` and jquery, there may be additional static
+After loading ``deform.js`` and jQuery, there may be additional static
 resources needed to render the form elements.  The
 :meth:`deform.field.get_widget_resources` method can be used to
 tell you which ``static`` directory-relative files are required by a
@@ -438,20 +439,17 @@ a sane setting for most systems.
 Validating a Form Submission
 ----------------------------
 
-Once the user seen the form and has chewed on its inputs a bit, he
-will eventually submit the form.  When he submits it, the logic you
+Once the user sees the form and has chewed on its inputs a bit, they
+will eventually submit the form.  When they submit it, the logic you
 use to deal with the form validation must do a few things:
 
 - It must detect that a submit button was clicked.
-
 - It must obtain the list of :term:`form controls` from the form POST
   data.
-
 - It must call the :meth:`deform.Form.validate` method with the list
   of form controls.
-
 - It must be willing to catch a :exc:`deform.ValidationFailure`
-  exception and rerender the form if there were validation errors.
+  exception and re-render the form if there were validation errors.
 
 For example, using the :term:`WebOb` API for the above tasks, and the
 ``form`` object we created earlier, such a dance might look like this:
@@ -471,18 +469,18 @@ For example, using the :term:`WebOb` API for the above tasks, and the
        # the form submission succeeded, we have the data
        return {'form':None, 'appstruct':appstruct}
 
-The above set of statements is the sort of logic every web app that
+The above set of statements is the sort of logic every web application that
 uses Deform must do.  If the validation stage does not fail, a
 variable named ``appstruct`` will exist with the data serialized from
 the form to be used in your application.  Otherwise the form will be
-rerendered.
+re-rendered.
 
 Note that by default, when any form submit button is clicked, the form
 will send a post request to the same URL which rendered the form.
 This can be changed by passing a different ``action`` to the
 :class:`deform.Form` constructor.
 
-Seeing it In Action
+Seeing it in action
 -------------------
 
 To see an "add form" in action that follows the schema in this
