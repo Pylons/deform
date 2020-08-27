@@ -4,6 +4,17 @@ Common Needs
 This chapter collects solutions for requirements that will often crop
 up once you start using Deform for real world applications.
 
+.. contents:: :local:
+
+
+.. _customizing_widget_templates:
+
+Customizing widget templates
+----------------------------
+
+To override, add, or customize widget templates, see the chapter :doc:`templates`.
+
+
 .. _changing_a_default_widget:
 
 Changing the Default Widget Associated With a Field
