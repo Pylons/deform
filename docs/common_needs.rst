@@ -7,12 +7,21 @@ up once you start using Deform for real world applications.
 .. contents:: :local:
 
 
-.. _customizing_widget_templates:
+.. _customizing-widget-templates:
 
 Customizing widget templates
 ----------------------------
 
 To override, add, or customize widget templates, see the chapter :doc:`templates`.
+
+
+.. _complex-data-loading-changing-widgets-validating:
+
+Complex data loading, changing widgets, or validating
+-----------------------------------------------------
+
+For complex loading of data, changing widgets, or validating beyond the basic declarative schema, you can use Colander's schema binding feature.
+See the chapter in the Colander's documentation `Schema Binding <https://docs.pylonsproject.org/projects/colander/en/latest/binding.html>`_.
 
 
 .. _changing_a_default_widget:
