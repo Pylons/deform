@@ -1181,11 +1181,7 @@ class Select2SortableWidget(SelectWidget):
     long_label_generator = None
 
     style = "font-family: monospace;"
-    requirements = (
-        ("select2_for_select2sortable", None),
-        ("html5sortable_for_select2sortable", None),
-        ("select2sortable", None),
-    )
+    requirements = (("deform", None), ("select2sortable", None))
 
     def serialize(self, field, cstruct, **kw):
         """Guarantee order of readonly view."""
@@ -2209,13 +2205,13 @@ default_resources = {
     "select2sortable": {
         None: {
             "js": (
-                "deform:static/select2sortable/html.sortable.js"
-                "deform:static/select2sortable/select2.js"
-                "deform:static/select2sortable/select2.sortable.js"
+                "deform:static/select2sortable/html.sortable.js",
+                "deform:static/select2sortable/select2.js",
+                "deform:static/select2sortable/select2.sortable.js",
             ),
             "css": (
-                "deform:static/select2sortable/select2.css"
-                "deform:static/select2sortable/select2.sortable.css"
+                "deform:static/select2sortable/select2.css",
+                "deform:static/select2sortable/select2.sortable.css",
             ),
         }
     },
