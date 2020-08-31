@@ -3,6 +3,7 @@
 import csv
 import json
 import random
+import types
 
 # Pyramid
 from colander import Invalid
@@ -30,6 +31,8 @@ _BLANK = text_("")
 
 def _normalize_choices(values):
     result = []
+    if isinstance(values, types.GeneratorType):
+        values = list(values)
     for item in values:
         if isinstance(item, OptGroup):
             normalized_options = _normalize_choices(item.options)

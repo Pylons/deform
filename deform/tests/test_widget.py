@@ -2339,6 +2339,16 @@ class TestNormalizeChoices(unittest.TestCase):
         self.assertEqual(normalized[1].label, "label")
         self.assertEqual(normalized[1].options, (("2", "two"),))
 
+    def test_generator_choices(self):
+        def choices_generator():
+            for value in range(2):
+                yield (value, value)
+
+        choices = choices_generator()
+        normalized = self._call(choices)
+        self.assertEqual(normalized[0], ("0", 0))
+        self.assertEqual(normalized[1], ("1", 1))
+
 
 class DummyRenderer(object):
     def __init__(self, result=""):
