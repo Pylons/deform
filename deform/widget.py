@@ -1176,7 +1176,7 @@ class Select2SortableWidget(SelectWidget):
     """
 
     template = "select2sortable"
-    readonly_template = "select2sortable_readonly"
+    readonly_template = "readonly/select2sortable"
     multiple = True
     long_label_generator = None
 
