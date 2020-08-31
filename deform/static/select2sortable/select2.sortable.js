@@ -42,6 +42,9 @@
       observer.observe($ul.get(0), { subtree: false, childList: true, attributes: false });
     });
 
+    $select.on('select2-close', function (e, ui) {
+      $ul.trigger('sortupdate');
+    });
     initSortableUl($ul, { bindSortEvent: true, $select: $select });
 
     $select.data('hasSelect2Sortable', true);
