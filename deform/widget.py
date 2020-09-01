@@ -31,8 +31,6 @@ _BLANK = text_("")
 
 def _normalize_choices(values):
     result = []
-    if isinstance(values, types.GeneratorType):
-        values = list(values)
     for item in values:
         if isinstance(item, OptGroup):
             normalized_options = _normalize_choices(item.options)
@@ -1126,6 +1124,9 @@ class SelectWidget(Widget):
             cstruct = self.null_value
         readonly = kw.get("readonly", self.readonly)
         values = kw.get("values", self.values)
+        if isinstance(values, types.GeneratorType):
+            e = "Values cannot be a generator. Use list(generator) instead."
+            raise NotImplementedError(e)
         template = readonly and self.readonly_template or self.template
         kw["values"] = _normalize_choices(values)
         tmpl_values = self.get_template_values(field, cstruct, kw)
