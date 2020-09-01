@@ -1,0 +1,17 @@
+<ul class="list-group">
+  <tal:loop define="
+          optgroup_class optgroup_class|field.widget.optgroup_class;
+          oid oid|field.oid;
+          multiple multiple|field.widget.multiple;" repeat="item values">
+    <tal:if condition="isinstance(item, optgroup_class)">
+      <tal:loop repeat="choice item.options">
+        <li class="list-group-item" id="${oid}-${repeat.item.index}-${repeat.choice.index}" tal:define="(value, description) choice" tal:condition="(multiple and value in cstruct or value == cstruct)">${description}</li>
+      </tal:loop>
+    </tal:if>
+    <tal:if condition="not isinstance(item, optgroup_class)">
+      <tal:block define="(value, description) item">
+        <li class="list-group-item" id="${oid}-${repeat.item.index}" tal:condition="(multiple and value in cstruct or value == cstruct)">${description}</li>
+      </tal:block>
+    </tal:if>
+  </tal:loop>
+</ul>

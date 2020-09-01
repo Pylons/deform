@@ -1162,6 +1162,42 @@ class Select2Widget(SelectWidget):
     requirements = (("deform", None), ("select2", None))
 
 
+class Select2SortableWidget(SelectWidget):
+    """
+    Renders ``<select>`` field based on a predefined set of values using
+    `select2sortable <https://finn.heemeyer.net/select2.sortable/>`_ library.
+    Allows drag and drop sorting of the selected options.
+
+    **Attributes/Arguments**
+
+    Same as :func:`~deform.widget.SelectWidget`, with some extra options
+    listed here.
+
+    """
+
+    template = "select2sortable"
+    readonly_template = "readonly/select2sortable"
+    multiple = True
+    long_label_generator = None
+
+    style = "font-family: monospace;"
+    requirements = (("deform", None), ("select2sortable", None))
+
+    def serialize(self, field, cstruct, **kw):
+        """Guarantee order of readonly view."""
+        readonly = kw.get("readonly", self.readonly)
+        if readonly:
+            values = kw.get("values", self.values)
+            tmpl_values = self.get_template_values(field, cstruct, kw)
+            options = {k: v for k, v in values}
+            kw["values"] = [
+                (k, options[k])
+                for k in tmpl_values["cstruct"] or []
+                if k in options
+            ]
+        return super().serialize(field, cstruct, **kw)
+
+
 class RadioChoiceWidget(SelectWidget):
     """
     Renders a sequence of ``<input type="radio"/>`` buttons based on a
@@ -2164,6 +2200,19 @@ default_resources = {
         None: {
             "js": "deform:static/select2/select2.js",
             "css": "deform:static/select2/select2.css",
+        }
+    },
+    "select2sortable": {
+        None: {
+            "js": (
+                "deform:static/select2sortable/html.sortable.js",
+                "deform:static/select2sortable/select2.js",
+                "deform:static/select2sortable/select2.sortable.js",
+            ),
+            "css": (
+                "deform:static/select2sortable/select2.css",
+                "deform:static/select2sortable/select2.sortable.css",
+            ),
         }
     },
     "fileupload": {None: {"js": "deform:static/scripts/file_upload.js"}},
