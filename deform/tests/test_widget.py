@@ -1057,7 +1057,13 @@ class TestSelectWidget(unittest.TestCase):
 
         choices = choices_generator()
         widget = self._makeOne(values=choices)
-        self.assertRaises(NotImplementedError, widget.serialize, None, None)
+        with self.assertRaises(NotImplementedError) as e:
+            widget.serialize(field, None)
+        self.assertTrue(type(e.exception) == NotImplementedError)
+        self.assertEqual(
+            e.exception.args[0],
+            "Values cannot be a generator. Use list(generator) instead.",
+        )
 
     def test_deserialize_null(self):
         widget = self._makeOne()
