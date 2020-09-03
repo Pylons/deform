@@ -1057,12 +1057,12 @@ class TestSelectWidget(unittest.TestCase):
 
         choices = choices_generator()
         widget = self._makeOne(values=choices)
-        with self.assertRaises(NotImplementedError) as e:
+        with self.assertRaises(TypeError) as e:
             widget.serialize(field, None)
-        self.assertTrue(type(e.exception) == NotImplementedError)
+        self.assertTrue(type(e.exception) == TypeError)
         self.assertEqual(
             e.exception.args[0],
-            "Values cannot be a generator. Use list(generator) instead.",
+            "Values must be a sequence type (list, tuple, or range).",
         )
 
     def test_deserialize_null(self):
@@ -1174,6 +1174,25 @@ class TestCheckboxChoiceWidget(unittest.TestCase):
         widget = self._makeOne(values=((1, "one"),))
         widget.serialize(field, None)
         self.assertEqual(renderer.kw["values"], [("1", "one")])
+
+    def test_serialize_generator_values(self):
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+
+        def choices_generator():
+            for value in range(2):
+                yield (value, value)
+
+        choices = choices_generator()
+        widget = self._makeOne(values=choices)
+        with self.assertRaises(TypeError) as e:
+            widget.serialize(field, None)
+        self.assertTrue(type(e.exception) == TypeError)
+        self.assertEqual(
+            e.exception.args[0],
+            "Values must be a sequence type (list, tuple, or range).",
+        )
 
     def test_deserialize_null(self):
         widget = self._makeOne()

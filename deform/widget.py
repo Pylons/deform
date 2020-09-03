@@ -1009,7 +1009,8 @@ class SelectWidget(Widget):
     **Attributes/Arguments**
 
     values
-        A sequence of items where each item must be either:
+        A sequence type (list, tuple, or range) of items where each item must
+        be either:
 
         - a two-tuple (the first value must be of type string, unicode
           or integer, the second value must be string or unicode)
@@ -1124,9 +1125,9 @@ class SelectWidget(Widget):
             cstruct = self.null_value
         readonly = kw.get("readonly", self.readonly)
         values = kw.get("values", self.values)
-        if isinstance(values, types.GeneratorType):
-            e = "Values cannot be a generator. Use list(generator) instead."
-            raise NotImplementedError(e)
+        if not isinstance(values, (list, tuple, range)):
+            e = "Values must be a sequence type (list, tuple, or range)."
+            raise TypeError(e)
         template = readonly and self.readonly_template or self.template
         kw["values"] = _normalize_choices(values)
         tmpl_values = self.get_template_values(field, cstruct, kw)
@@ -1174,9 +1175,9 @@ class RadioChoiceWidget(SelectWidget):
     **Attributes/Arguments**
 
     values
-        A sequence of two-tuples (the first value must be of type
-        string, unicode or integer, the second value must be string or
-        unicode) indicating allowable, displayed values, e.g. ``(
+        A sequence type (list, tuple, or range) of two-tuples (the first value
+        must be of type string, unicode, or integer, the second value must be
+        string or unicode) indicating allowable, displayed values, e.g. ``(
         ('true', 'True'), ('false', 'False') )``.  The first element
         in the tuple is the value that should be returned when the
         form is posted.  The second is the display value.
@@ -1212,9 +1213,9 @@ class CheckboxChoiceWidget(Widget):
     **Attributes/Arguments**
 
     values
-        A sequence of two-tuples (the first value must be of type
-        string, unicode or integer, the second value must be string or
-        unicode) indicating allowable, displayed values, e.g. ``(
+        A sequence type (list, tuple, or range) of two-tuples (the first value
+        must be of type string, unicode or integer, the second value must be
+        string or unicode) indicating allowable, displayed values, e.g. ``(
         ('true', 'True'), ('false', 'False') )``.  The first element
         in the tuple is the value that should be returned when the
         form is posted.  The second is the display value.
@@ -1247,6 +1248,9 @@ class CheckboxChoiceWidget(Widget):
             cstruct = ()
         readonly = kw.get("readonly", self.readonly)
         values = kw.get("values", self.values)
+        if not isinstance(values, (list, tuple, range)):
+            e = "Values must be a sequence type (list, tuple, or range)."
+            raise TypeError(e)
         kw["values"] = _normalize_choices(values)
         template = readonly and self.readonly_template or self.template
         tmpl_values = self.get_template_values(field, cstruct, kw)
