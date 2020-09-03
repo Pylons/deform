@@ -88,7 +88,21 @@ We use the following for running functional tests.
 * [tox](https://tox.readthedocs.io/en/latest/)
 * [deformdemo](https://github.com/pylons/deformdemo)
 
-If you add or change a feature that reduces test coverage or causes a functional test to fail, then you also must submit a pull request to the [deformdemo](https://github.com/pylons/deformdemo) repository to go along with your functional test change to Deform.
+### When to add or edit functional tests
+
+If you add a feature to Deform, or change a feature in Deform that causes any functional test to fail, then you also must submit a pull request that includes sufficient functional tests to the [deformdemo](https://github.com/pylons/deformdemo) repository paired to your pull request in Deform. Before submitting any pull request, all tests must pass using `tox` in your local development environment.
+
+All pull requests automatically run tests. However when there are paired pull requests in both Deform and deformdemo, we have a chicken-and-egg situation. Each repository cannot pull the version of the other referenced in the pull request to run functional tests. Automated testing will fail for both pull requests.
+
+We work around this as follows.
+
+1. Ensure that all of Deform's automated builds pass, except for the functional test build, for that pull request.
+2. Merge the pull request.
+3. Now deformdemo can pull the desired version of Deform. Restart the failing jobs for deformdemo to ensure that functional tests pass.
+4. When all automated builds tests pass, then merge the pull request in deformdemo.
+
+
+### Running functional tests
 
 For functional tests, `tox` runs the shell script [run-selenium-tests.bash](https://github.com/Pylons/deform/blob/master/run-selenium-tests.bash), located at the root of the Deform repository.
 See its comments for a description.
