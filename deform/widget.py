@@ -3,7 +3,6 @@
 import csv
 import json
 import random
-import types
 
 # Pyramid
 from colander import Invalid
