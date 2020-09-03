@@ -161,13 +161,16 @@ Decompress the downloaded file.
 Install the [latest release of geckodriver](https://github.com/mozilla/geckodriver/releases).
 
     # macOS
-    wget https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-macos.tar.gz
-    tar -xzf geckodriver-v0.26.0-macos.tar.gz
+    wget https://github.com/mozilla/geckodriver/releases/download/v0.27.0/geckodriver-v0.27.0-macos.tar.gz
+    tar -xzf geckodriver-v0.27.0-macos.tar.gz
 
     # Linux
-    wget https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz
-    tar -xzf geckodriver-v0.26.0-linux64.tar.gz
+    wget https://github.com/mozilla/geckodriver/releases/download/v0.27.0/geckodriver-v0.27.0-linux64.tar.gz
+    tar -xzf geckodriver-v0.27.0-linux64.tar.gz
 
+On macOS you need to issue a command to remove the webdriver from quarantine whenever you install a new version.
+
+    xattr -r -d com.apple.quarantine geckodriver
 
 #### gettext
 
@@ -200,16 +203,38 @@ If you ever have problems building packages, you can always unlink it.
 Selenium is installed automatically by tox via `pip install -e ".[dev]"`.
 
 
-### Testing on Chrome or Chromium
+### Testing on Chrome
 
+You can also run tests on Chrome.
 Tests might not run correctly on Chrome due to various timing issues.
-Some effort was put forth to fix this many years ago, but it was a never ending swamp.
-However, [the situation might have improved recently](https://developers.google.com/web/updates/2017/04/headless-chrome).
+Pull requests with corrected functional tests are welcome!
 
-If you accept the challenge, we welcome pull requests to this contributing guide, along with tests to support testing on Chrome.
-The following are some clues to get you started.
+Installation and configuration is similar to Firefox, with the following differences.
 
-- To use google-chrome or Chromium, download the web browser and respective webdriver, [chromiumdriver](https://chromedriver.chromium.org/downloads).
-  These would be used instead of Firefox and geckodriver.
-- Set the `WEBDRIVER` environment variable to chromiumdriver instead of geckodriver.
-- Profit! Fun! World domination!
+#### Chrome latest
+
+##### macOS
+
+[Download the latest version of Chrome for your platform](https://www.google.com/chrome/).
+
+Open the `.dmg` (macOS), and drag the Chrome icon to:
+
+    ~/projects/deform/
+
+#### chromedriver
+
+Install the [latest release of chromiumdriver](https://chromedriver.chromium.org/downloads).
+
+Unzip the archive, and move the chromedriver icon to:
+
+    ~/projects/deform/
+
+On macOS you might need to issue a command to remove the webdriver from quarantine whenever you install a new version.
+
+    xattr -r -d com.apple.quarantine chromedriver
+
+#### Set an environment variable for `WEBDRIVER`
+
+In `deformdemo/test.py`, the `setUpModule` reads an environment variable to determine which webdriver to run.
+
+    export WEBDRIVER=chrome
