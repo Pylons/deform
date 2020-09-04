@@ -106,7 +106,13 @@ The following is the recommended procedure.
     Set `origin` to your remote fork, and set `upstream` to point to `Pylons` for both Deform and deformdemo.
     You need to `cd` into each directory, `deformdemo_functional_tests` and `Deform`, and execute the following commands.
     
-        Help?
+        cd deform
+        git remote add upstream https://github.com/Pylons/deform.git
+        git remote set-url origin git@github.com:git_user_id/deform.git
+        
+        cd deformdemo_functional_tests
+        git remote add upstream https://github.com/Pylons/deformdemo.git
+        git remote set-url origin git@github.com:git_user_id/deformdemo.git
 
 6.  Create a new branch on both Deform or Deformdemo with the same name.
 7.  Update your code, and run `$TOX` again locally, making sure all tests pass.
