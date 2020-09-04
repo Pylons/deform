@@ -28,6 +28,10 @@ Create a virtual environment using Python's [venv](https://docs.python.org/3/lib
 
     python3 -m venv /path/to/new/virtual/environment
 
+Activate newly installed virtual environment.
+
+    /path/to/new/virtual/environment/bin/activate
+
 Into this virtual environment, install Deform development requirements for unit testing, lint, docs, and functional testing with the command
 
     pip install -e ".[dev]"
@@ -113,6 +117,60 @@ Run a single test.
 
 
 ### Preparing a functional testing environment
+
+Tests can be run against Selenium docker container or against locally installed driver.
+
+## Selenium Container based driver and browser
+
+Docker Engine must be installed on the system and the user that run the tests on local system must have proper access to manage the docker engine to create, run and stop docker container.
+ 
+follow [installation instruction](https://docs.docker.com/engine/install/), and then follow [post installation](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user) then verify that Docker Engine is installed correctly by running the hello-world image.
+`docker run hello-world`
+
+
+Setting one of the following environment variables are madatory to choose which Selenium docker container tests are going to run against:
+
+Firefox is the main stream which must pass all the tests, but at the moment some tests are failing on Chrome or Opera and we are in process of rewritting tests to overcome the differences in these browsers. you are more than welcome to contribue in rewriting tests in Deformdemo.
+
+`export WEBDRIVER=selenium_container_chrome`
+`export WEBDRIVER=selenium_container_opera`
+`export WEBDRIVER=selenium_container_firefox`
+
+Setting URL environment varaible is mandatory:
+
+`export URL=http://host_name_or_host_ip_address:8522`
+
+Please note localhost and 127.0.0.1 won't work, it has to be either host name or host ip address.
+
+If the system time zone is not US/Eastern please set CONTAINERTZ to host time zone.
+`export CONTAINERTZ="TZ=US/Eastern"`
+
+Currently tests will wait 30 seconds for Selenium docker container to be pulled and started, if local host slow and needs more time to start up the container then increase the time by setting the WAITTOSTART environment variable.
+`export WAITTOSTART=60`
+
+Currently Selenium docker container version with latest tag will be pulled from docker hub, but this can be changed by setting either of following environment variables.
+
+`export OPERADOCKERVERSION="selenium/standalone-opera:4.0.0-alpha-7-prerelease-20200826"`
+`export CHROMEDOCKERVERSION="selenium/standalone-chrome:4.0.0-alpha-7-prerelease-20200826"`
+`export FIREFOXDOCKERVERSION="selenium/standalone-firefox:4.0.0-alpha-7-prerelease-20200826"`
+
+Selenium docker container release can be found here.
+
+https://github.com/SeleniumHQ/docker-selenium/releases
+
+At this point environment is ready to run tox.
+
+
+
+## Local driver and local browser
+
+
+To use locally installed driver and browser one of the following environment variables needs to be set:
+export WEBDRIVER=selenium_local_chrome
+export WEBDRIVER=selenium_local_firefox
+
+Again, Firefox is main stream, and all functional tests shall pass against Firefox.
+
 
 To avoid conflicts with other possibly installed versions of applications, we suggest that you install the following applications into your local checkout of Deform.
 We will assume that you put your projects in your user directory, although you can put them anywhere.
