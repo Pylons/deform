@@ -75,7 +75,6 @@ To run formatters:
 
 All features must be covered by unit tests, so that test coverage stays at 100%.
 
-
 ## Functional tests
 
 All features must be covered by functional tests and have example usage.
@@ -90,11 +89,35 @@ We use the following for running functional tests.
 
 ### When to add or edit functional tests
 
-If you add a feature to Deform, or change a feature in Deform that causes any functional test to fail, then you also must submit a pull request that includes sufficient functional tests to the [deformdemo](https://github.com/pylons/deformdemo) repository paired to your pull request in Deform. Before submitting any pull request, all tests must pass using `tox` in your local development environment.
+If you add a feature to Deform, or change a feature in Deform that causes any functional test to fail, then you also must add sufficient functional tests to the [deformdemo](https://github.com/pylons/deformdemo) repository.
+The following is the recommended procedure.
 
-All pull requests automatically run tests. However when there are paired pull requests in both Deform and deformdemo, we have a chicken-and-egg situation. Each repository cannot pull the version of the other referenced in the pull request to run functional tests. Automated testing will fail for both pull requests.
+1.  Clone the Deform repository.
+2.  Follow the instructions under **Preparing a functional testing environment** below.
+3.  Run `$TOX`.
+    This will run all environments defined in `tox.ini`.
+    It is OK if you do not have all supported Python versions installed.
+    One of those environments will run a script that clones deformdemo into a  directory `deformdemo_functional_tests` inside your Deform checkout, then runs functional tests.
+4.  Change your working directory to `deformdemo_functional_tests` and run tox to make sure functional tests pass in deformdemo as well.
 
-We work around this as follows.
+        cd deformdemo_functional_tests
+        $TOX
+5.  Configure git remote repositories.
+    Set `origin` to your remote fork, and set `upstream` to point to `Pylons` for both Deform and deformdemo.
+    You need to `cd` into each directory, `deformdemo_functional_tests` and `Deform`, and execute the following commands.
+    
+        Help?
+
+6.  Create a new branch on both Deform or Deformdemo with the same name.
+7.  Update your code, and run `$TOX` again locally, making sure all tests pass.
+8.  Only after you complete the previous step, then submit a pull request to both repositories for review.
+
+All pull requests automatically run all tests across all tox environments.
+However when there are paired pull requests in both Deform and deformdemo, we have a chicken-and-egg situation.
+Each repository cannot pull the version of the other referenced in the pull request to run functional tests.
+Automated testing will fail for both pull requests.
+
+The maintainers of both projects work around this as follows.
 
 1. Ensure that all of Deform's automated builds pass, except for the functional test build, for that pull request.
 2. Merge the pull request.
