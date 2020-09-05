@@ -207,12 +207,13 @@ Otherwise you can set it manually.
     export PATH=~/projects/deform:$PATH
 
 
-#### Set an environment variable
+#### Set `WEBDRIVER` environment variable
 
-To use a locally installed web driver and web browser, one of the following environment variables needs to be set, according to the browser in which you want to run tests.
+To use a locally installed web driver and web browser, you must set the `WEBDRIVER` environment variable.
+Choose the browser in which you want to run tests with one of the following command options.
 
-    export WEBDRIVER=selenium_local_chrome
     export WEBDRIVER=selenium_local_firefox
+    export WEBDRIVER=selenium_local_chrome
 
 All functional tests must pass using Firefox.
 At the moment some tests fail on Chrome and Opera.
