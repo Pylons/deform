@@ -28,10 +28,6 @@ Create a virtual environment using Python's [venv](https://docs.python.org/3/lib
 
     python3 -m venv /path/to/new/virtual/environment
 
-Activate newly installed virtual environment.
-
-    /path/to/new/virtual/environment/bin/activate
-
 Into this virtual environment, install Deform development requirements for unit testing, lint, docs, and functional testing with the command
 
     pip install -e ".[dev]"
