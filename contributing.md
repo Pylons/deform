@@ -116,61 +116,83 @@ Run a single test.
     $TOX -e functional3 -- deformdemo.test:SequenceOfMaskedTextInputs.test_submit_one_filled
 
 
-### Preparing a functional testing environment
+## Preparing a functional testing environment
 
-Tests can be run against Selenium docker container or against locally installed driver.
-
-## Selenium Container based driver and browser
-
-Docker Engine must be installed on the system and the user that run the tests on local system must have proper access to manage the docker engine to create, run and stop docker container.
- 
-follow [installation instruction](https://docs.docker.com/engine/install/), and then follow [post installation](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user) then verify that Docker Engine is installed correctly by running the hello-world image.
-`docker run hello-world`
+Tests can be run using either a Docker container with Selenium or locally installed Selenium components.
+Instructions for each procedure follow.
 
 
-Setting one of the following environment variables are madatory to choose which Selenium docker container tests are going to run against:
+### Docker container with Selenium
 
-Firefox is the main stream which must pass all the tests, but at the moment some tests are failing on Chrome or Opera and we are in process of rewritting tests to overcome the differences in these browsers. you are more than welcome to contribue in rewriting tests in Deformdemo.
+#### Install Docker Engine
 
-`export WEBDRIVER=selenium_container_chrome`
-`export WEBDRIVER=selenium_container_opera`
-`export WEBDRIVER=selenium_container_firefox`
+The appropriate version of Docker Engine must be installed on your system.
 
-Setting URL environment varaible is mandatory:
+[Install Docker Engine](https://docs.docker.com/engine/install/) for your platform.
 
-`export URL=http://host_name_or_host_ip_address:8522`
+Additionally the user that runs the tests on your local system must have permissions to manage the docker engine to create, run, and stop docker containers.
+On Windows and macOS, this is handled automatically by the installer, but Linux requires a manual step.
 
-Please note localhost and 127.0.0.1 won't work, it has to be either host name or host ip address.
+For Linux only, follow [Post-installation steps for Linux](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user).
+Optionally verify that Docker Engine is installed correctly by running the `hello-world` image.
 
-If the system time zone is not US/Eastern please set CONTAINERTZ to host time zone.
-`export CONTAINERTZ="TZ=US/Eastern"`
-
-Currently tests will wait 30 seconds for Selenium docker container to be pulled and started, if local host slow and needs more time to start up the container then increase the time by setting the WAITTOSTART environment variable.
-`export WAITTOSTART=60`
-
-Currently Selenium docker container version with latest tag will be pulled from docker hub, but this can be changed by setting either of following environment variables.
-
-`export OPERADOCKERVERSION="selenium/standalone-opera:4.0.0-alpha-7-prerelease-20200826"`
-`export CHROMEDOCKERVERSION="selenium/standalone-chrome:4.0.0-alpha-7-prerelease-20200826"`
-`export FIREFOXDOCKERVERSION="selenium/standalone-firefox:4.0.0-alpha-7-prerelease-20200826"`
-
-Selenium docker container release can be found here.
-
-https://github.com/SeleniumHQ/docker-selenium/releases
-
-At this point environment is ready to run tox.
+    docker run hello-world`
 
 
+#### Set environment variables
 
-## Local driver and local browser
+##### WEBDRIVER
+
+The Selenium docker container can run tests using Firefox, Chrome, or Opera.
+Choose the Selenium docker container on which you want to run tests.
+
+All functional tests must pass using Firefox.
+At the moment some tests fail on Chrome and Opera.
+We are in process of rewriting tests to overcome the differences between browsers.
+We welcome your contribution to rewriting tests in deformdemo for better compatibility across these browsers, with Chrome as a higher priority and need.
+
+Set the `WEBDRIVER` environment variable using one of the following otpions.
+
+    export WEBDRIVER=selenium_container_firefox
+    export WEBDRIVER=selenium_container_chrome
+    export WEBDRIVER=selenium_container_opera
+
+##### URL
+
+Set the `URL` environment variable.
+
+    export URL=http://0.0.0.0:8522
+
+We chose `0.0.0.0`, but you can set whatever works for your host name or IP address.
+
+##### CONTAINERTZ
+
+If your system's time zone is not US/Eastern, set `CONTAINERTZ` to US/Eastern.
+
+    export CONTAINERTZ="TZ=US/Eastern"
+
+##### WAITTOSTART
+
+By default, tests will wait up to 30 seconds for the Selenium Docker container to be pulled and started.
+If your machine needs more time to start up, you can increase the wait time by setting the `WAITTOSTART` environment variable.
+
+    export WAITTOSTART=60
+
+##### *DOCKERVERSION
+
+Currently the Selenium Docker container version with the latest tag will be pulled from Docker Hub.
+This can be changed by setting one of the following appropriate environment variables.
+
+    export FIREFOXDOCKERVERSION="selenium/standalone-firefox:4.0.0-alpha-7-prerelease-20200826"`
+    export CHROMEDOCKERVERSION="selenium/standalone-chrome:4.0.0-alpha-7-prerelease-20200826"
+    export OPERADOCKERVERSION="selenium/standalone-opera:4.0.0-alpha-7-prerelease-20200826"
+
+You can get a [specific Selenium docker container release](https://github.com/SeleniumHQ/docker-selenium/releases).
+
+Now the environment is ready to run tox.
 
 
-To use locally installed driver and browser one of the following environment variables needs to be set:
-export WEBDRIVER=selenium_local_chrome
-export WEBDRIVER=selenium_local_firefox
-
-Again, Firefox is main stream, and all functional tests shall pass against Firefox.
-
+### Locally installed Selenium components
 
 To avoid conflicts with other possibly installed versions of applications, we suggest that you install the following applications into your local checkout of Deform.
 We will assume that you put your projects in your user directory, although you can put them anywhere.
@@ -178,15 +200,28 @@ We will assume that you put your projects in your user directory, although you c
     cd ~/projects/deform/
 
 
-#### Add your checkout location to your `PATH`
+#### Add your checkout location to your `$PATH`
 
-You must add your local Deform checkout—which is also where you will install geckodriver and your web browser—to your `PATH` to run `tox` or nosetests
-Otherwise Firefox or Chrome will not start and will return an error message of `'geckodriver' executable needs to be in PATH.`.
+You must add your local Deform checkout—which is also where you will install your web driver and web browser—to your `$PATH` to run tox or nosetests.
+Otherwise Firefox or Chrome will not start and will return an error message such as `'geckodriver' executable needs to be in PATH.`.
 
-When you run `$tox -e functional3`, your local checkout is automatically added.
+When you run `$tox -e functional3`, your local checkout is automatically added to your `$PATH`.
 Otherwise you can set it manually. 
 
     export PATH=~/projects/deform:$PATH
+
+
+#### Set an environment variable
+
+To use a locally installed web driver and web browser, one of the following environment variables needs to be set, according to the browser in which you want to run tests.
+
+    export WEBDRIVER=selenium_local_chrome
+    export WEBDRIVER=selenium_local_firefox
+
+All functional tests must pass using Firefox.
+At the moment some tests fail on Chrome and Opera.
+We are in process of rewriting tests to overcome the differences between browsers.
+We welcome your contribution to rewriting tests in deformdemo for better compatibility across these browsers, with Chrome as a higher priority and need.
 
 
 #### Firefox latest
