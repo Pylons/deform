@@ -15,6 +15,7 @@ from colander import null
 from iso8601.iso8601 import ISO8601_REGEX
 from translationstring import TranslationString
 
+from .compat import sequence_types
 from .compat import StringIO
 from .compat import string
 from .compat import string_types
@@ -1124,7 +1125,7 @@ class SelectWidget(Widget):
             cstruct = self.null_value
         readonly = kw.get("readonly", self.readonly)
         values = kw.get("values", self.values)
-        if not isinstance(values, (list, tuple, range)):
+        if not isinstance(values, sequence_types):
             e = "Values must be a sequence type (list, tuple, or range)."
             raise TypeError(e)
         template = readonly and self.readonly_template or self.template
@@ -1247,7 +1248,7 @@ class CheckboxChoiceWidget(Widget):
             cstruct = ()
         readonly = kw.get("readonly", self.readonly)
         values = kw.get("values", self.values)
-        if not isinstance(values, (list, tuple, range)):
+        if not isinstance(values, sequence_types):
             e = "Values must be a sequence type (list, tuple, or range)."
             raise TypeError(e)
         kw["values"] = _normalize_choices(values)
