@@ -15,8 +15,8 @@ from colander import null
 from iso8601.iso8601 import ISO8601_REGEX
 from translationstring import TranslationString
 
-from .compat import sequence_types
 from .compat import StringIO
+from .compat import sequence_types
 from .compat import string
 from .compat import string_types
 from .compat import text_
