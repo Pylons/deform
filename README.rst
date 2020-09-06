@@ -4,9 +4,9 @@ Deform
 .. image:: https://travis-ci.org/Pylons/deform.png?branch=2.0-branch
         :target: https://travis-ci.org/Pylons/deform
 
-.. image:: https://readthedocs.org/projects/deform/badge/?version=master
-        :target: https://docs.pylonsproject.org/projects/deform/en/master/
-        :alt: Master Documentation Status
+.. image:: https://readthedocs.org/projects/deform/badge/?version=2.0-branch
+        :target: https://docs.pylonsproject.org/projects/deform/en/2.0-branch/
+        :alt: 2.0-branch Documentation Status
 
 .. image:: https://readthedocs.org/projects/deform/badge/?version=latest
         :target: https://docs.pylonsproject.org/projects/deform/en/latest/
