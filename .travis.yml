@@ -35,15 +35,13 @@ matrix:
       env: TOXENV=functional
     - python: 3.6
       env: TOXENV=functional3
-  allow_failures:
-      - env: TOXENV=py38
 
 install:
   - travis_retry pip install tox
   # https://dev.to/erikwhiting88/install-browsers-and-webdrivers-in-travisci-n76
-  - wget -N https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz -P /tmp/
-  - tar -xzf /tmp/geckodriver-v0.26.0-linux64.tar.gz -C /tmp/
-  - rm /tmp/geckodriver-v0.26.0-linux64.tar.gz
+  - wget -N https://github.com/mozilla/geckodriver/releases/download/v0.27.0/geckodriver-v0.27.0-linux64.tar.gz -P /tmp/
+  - tar -xzf /tmp/geckodriver-v0.27.0-linux64.tar.gz -C /tmp/
+  - rm /tmp/geckodriver-v0.27.0-linux64.tar.gz
   - sudo mv /tmp/geckodriver /usr/local/bin
 
 script:
