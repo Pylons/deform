@@ -22,6 +22,7 @@ if PY3:  # pragma: no cover
     text_type = str
     binary_type = bytes
     long = int
+    sequence_types = (list, tuple, range,)
 else:
     string_types = (basestring,)
     integer_types = (int, long)
@@ -29,6 +30,7 @@ else:
     text_type = unicode
     binary_type = str
     long = long
+    sequence_types = (list, tuple, xrange,)
 
 
 def text_(s, encoding="latin-1", errors="strict"):
