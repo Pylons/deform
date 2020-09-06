@@ -1046,6 +1046,25 @@ class TestSelectWidget(unittest.TestCase):
         widget.serialize(field, None)
         self.assertEqual(renderer.kw["values"], [("1", "one")])
 
+    def test_serialize_generator_values(self):
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+
+        def choices_generator():
+            for value in range(2):
+                yield (value, value)
+
+        choices = choices_generator()
+        widget = self._makeOne(values=choices)
+        with self.assertRaises(TypeError) as e:
+            widget.serialize(field, None)
+        self.assertTrue(type(e.exception) == TypeError)
+        self.assertEqual(
+            e.exception.args[0],
+            "Values must be a sequence type (list, tuple, or range).",
+        )
+
     def test_deserialize_null(self):
         widget = self._makeOne()
         field = DummyField()
@@ -1155,6 +1174,25 @@ class TestCheckboxChoiceWidget(unittest.TestCase):
         widget = self._makeOne(values=((1, "one"),))
         widget.serialize(field, None)
         self.assertEqual(renderer.kw["values"], [("1", "one")])
+
+    def test_serialize_generator_values(self):
+        renderer = DummyRenderer()
+        schema = DummySchema()
+        field = DummyField(schema, renderer)
+
+        def choices_generator():
+            for value in range(2):
+                yield (value, value)
+
+        choices = choices_generator()
+        widget = self._makeOne(values=choices)
+        with self.assertRaises(TypeError) as e:
+            widget.serialize(field, None)
+        self.assertTrue(type(e.exception) == TypeError)
+        self.assertEqual(
+            e.exception.args[0],
+            "Values must be a sequence type (list, tuple, or range).",
+        )
 
     def test_deserialize_null(self):
         widget = self._makeOne()
@@ -2338,16 +2376,6 @@ class TestNormalizeChoices(unittest.TestCase):
         self.assertTrue(isinstance(normalized[1], OptGroup))
         self.assertEqual(normalized[1].label, "label")
         self.assertEqual(normalized[1].options, (("2", "two"),))
-
-    def test_generator_choices(self):
-        def choices_generator():
-            for value in range(2):
-                yield (value, value)
-
-        choices = choices_generator()
-        normalized = self._call(choices)
-        self.assertEqual(normalized[0], ("0", 0))
-        self.assertEqual(normalized[1], ("1", 1))
 
 
 class DummyRenderer(object):
