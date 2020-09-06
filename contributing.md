@@ -222,9 +222,11 @@ Set the `WEBDRIVER` environment variable using one of the following otpions.
 
 Set the `URL` environment variable.
 
-    export URL=http://localhost:8522
+    export URL=http://<lan_ip_address>:8522
 
-We chose `localhost`, but you can set whatever works for your host name or IP address.
+If you do not know your LAN IP address, try the command:
+
+    ipconfig getifaddr en0
 
 ##### CONTAINERTZ
 
