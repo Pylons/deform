@@ -157,9 +157,9 @@ Set the `WEBDRIVER` environment variable using one of the following otpions.
 
 Set the `URL` environment variable.
 
-    export URL=http://0.0.0.0:8522
+    export URL=http://localhost:8522
 
-We chose `0.0.0.0`, but you can set whatever works for your host name or IP address.
+We chose `localhost`, but you can set whatever works for your host name or IP address.
 
 ##### CONTAINERTZ
 
