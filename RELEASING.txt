@@ -58,9 +58,9 @@ Prepare new release branch
 
     $TOX -e build
 
-- Release the wheels to PyPI:
+- Release the sdist and wheel to PyPI:
 
-    $VENV/bin/twine upload dist/deform-X.Y.Z-*
+    $VENV/bin/twine upload dist/deform-X.Y.Z*
 
 - Upload a git tag for the release:
 
