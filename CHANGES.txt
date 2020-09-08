@@ -2,6 +2,26 @@
 ------------------
 
 
+.. _2.0.15:
+
+2.0.15 (unreleased)
+-------------------
+
+- Clarify that a sequence type (list, tuple, or x/range) is required for values
+  passed into a SelectWidget or RadioChoiceWidget.
+  https://github.com/Pylons/deform/issues/385
+
+- Add Docker containerization of Deform and deformdemo as an option for running
+  tests, and improve related documentation.
+
+- Add documentation of arbitrary HTML5 attributes for all widgets.
+  https://github.com/Pylons/deform/issues/430
+
+- Add usage documentation of Date, DateTime, and Time widgets. Add
+  documentation reference to complex data loading, changing widgets, or
+  validating data to Colander.
+
+
 .. _2.0.14:
 
 2.0.14 (2020-08-26)
