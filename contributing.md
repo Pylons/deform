@@ -132,15 +132,18 @@ Run a single test.
 
 If you add a feature to Deform, or change a feature in Deform that causes any functional test to fail, then you also must add sufficient functional tests to the [deformdemo](https://github.com/pylons/deformdemo) repository.
 The following is the recommended procedure.
+If you have any trouble, please ask for assistance via the [issue tracker](https://github.com/pylons/deform/issues/).
 
 1.  Follow the instructions under [Preparing a functional testing environment](#preparing-a-functional-testing-environment) below.
 
-2.  Run `$TOX`.
+2.  Run `$TOX` in Deform.
+    We run tox to establish that code is linted and passing tests before you change anything.
     This will run all environments defined in `tox.ini`.
     It is OK if you do not have all supported Python versions installed.
     One of those environments will run a script that clones deformdemo into a  directory `deformdemo_functional_tests` inside your Deform checkout, then runs functional tests.
 
-3.  Change your working directory to `deformdemo_functional_tests` and run tox to make sure functional tests pass in deformdemo as well.
+3.  Run `$TOX` in deformdemo.
+    Change your working directory to `deformdemo_functional_tests` and run tox to make sure functional tests pass in deformdemo as well.
 
         cd deformdemo_functional_tests
         $TOX
@@ -159,7 +162,7 @@ The following is the recommended procedure.
 
 5.  Create a new branch on both Deform or Deformdemo with the same name.
 
-6.  Update your code, and run `$TOX` again locally, making sure all tests pass.
+6.  Update your code, and run `$TOX` again locally, both in Deform and deformdemo as in Steps 2 and 3, making sure all tests pass.
 
 7.  Only after you complete the previous step, then submit a pull request to both repositories for review.
 
