@@ -123,7 +123,7 @@ class Widget(object):
     error_class
         The name of the CSS class attached to various tags in the form
         renderering indicating an error condition for the field
-        associated with this widget.  Default: ``error``.
+        associated with this widget.  Default: ``is-invalid``.
 
     css_class
         The name of the CSS class attached to various tags in
