@@ -7,6 +7,9 @@
 2.0.15 (unreleased)
 -------------------
 
+- Changed dateparts widget to use ``type="number"`` instead of default `text`.
+  https://github.com/Pylons/deform/issues/442
+
 - Clarify that a sequence type (list, tuple, or x/range) is required for values
   passed into a SelectWidget or RadioChoiceWidget.
   https://github.com/Pylons/deform/issues/385
