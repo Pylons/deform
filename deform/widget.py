@@ -849,7 +849,7 @@ class RichTextWidget(TextInputWidget):
     delayed_load = False
     strip = True
     template = "richtext"
-    requirements = (("tinymce", None),)
+    requirements = ({"js": "deform:static/tinymce/tinymce.min.js"},)
 
     #: Default options passed to TinyMCE. Customise by using :attr:`options`.
     default_options = (
@@ -1170,7 +1170,13 @@ class Select2Widget(SelectWidget):
     """
 
     template = "select2"
-    requirements = (("deform", None), ("select2", None))
+    requirements = (
+        ("deform", None),
+        {
+            "js": "deform:static/select2/select2.js",
+            "css": "deform:static/select2/select2.css",
+        },
+    )
 
 
 class RadioChoiceWidget(SelectWidget):
@@ -1568,7 +1574,10 @@ class SequenceWidget(Widget):
     min_len = None
     max_len = None
     orderable = False
-    requirements = (("deform", None), ("sortable", None))
+    requirements = (
+        ("deform", None),
+        {"js": "deform:static/scripts/jquery-sortable.js"},
+    )
 
     def prototype(self, field):
         # we clone the item field to bump the oid (for easier
@@ -1728,7 +1737,7 @@ class FileUploadWidget(Widget):
     readonly_template = "readonly/file_upload"
     accept = None
 
-    requirements = (("fileupload", None),)
+    requirements = ({"js": "deform:static/scripts/file_upload.js"},)
 
     _pstruct_schema = SchemaNode(
         Mapping(),
@@ -2146,8 +2155,6 @@ default_resources = {
             )
         }
     },
-    "tinymce": {None: {"js": "deform:static/tinymce/tinymce.min.js"}},
-    "sortable": {None: {"js": "deform:static/scripts/jquery-sortable.js"}},
     "typeahead": {
         None: {
             "js": "deform:static/scripts/typeahead.min.js",
@@ -2172,12 +2179,6 @@ default_resources = {
                 "deform:static/pickadate/themes/default.date.css",
                 "deform:static/pickadate/themes/default.time.css",
             ),
-        }
-    },
-    "select2": {
-        None: {
-            "js": "deform:static/select2/select2.js",
-            "css": "deform:static/select2/select2.css",
         }
     },
     "fileupload": {None: {"js": "deform:static/scripts/file_upload.js"}},
