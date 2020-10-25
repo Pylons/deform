@@ -141,6 +141,12 @@ class Widget(object):
         be added to the input tag.
 
     requirements
+
+        The requirements are specified as a a sequence of either:
+          1. two-tuples in the form ``(requirement_name, version_id)``. Using the
+            resource registry the **logical** requirement name identifiers are resolved
+            to concrete files using the resource_registry
+          2. dicts that contcretly point to resources, e.g. ``{"js": "deform:static/tinymce/tinymce.min.js"}``
         A sequence of two-tuples in the form ``( (requirement_name,
         version_id), ...)`` indicating the logical external
         requirements needed to make this widget render properly within

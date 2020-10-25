@@ -451,14 +451,20 @@ class Field(object):
         requirements = self.widget.requirements
         if requirements:
             for requirement in requirements:
-                reqt = tuple(requirement)
-                if reqt not in L:
-                    L.append(reqt)
+                if isinstance(requirement, dict):
+                    L.append(requirement)
+                else:
+                    reqt = tuple(requirement)
+                    if reqt not in L:
+                        L.append(reqt)
         for child in self.children:
             for requirement in child.get_widget_requirements():
-                reqt = tuple(requirement)
-                if reqt not in L:
-                    L.append(reqt)
+                if isinstance(requirement, dict):
+                    L.append(requirement)
+                else:
+                    reqt = tuple(requirement)
+                    if reqt not in L:
+                        L.append(reqt)
         return L
 
     def get_widget_resources(self, requirements=None):
@@ -485,7 +491,17 @@ class Field(object):
         """
         if requirements is None:
             requirements = self.get_widget_requirements()
-        return self.resource_registry(requirements)
+        resources = self.resource_registry(
+            (req for req in requirements if not isinstance(req, dict))
+        )
+        for req in requirements:
+            if not isinstance(req, dict):
+                continue
+            if 'js' in req:
+                resources['js'].append(req['js'])
+            if 'css' in req:
+                resources['css'].append(req['css'])
+        return resources
 
     def set_widgets(self, values, separator="."):
         """set widgets of the child fields of this field
