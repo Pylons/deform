@@ -348,7 +348,7 @@ class TestField(unittest.TestCase):
 
     def test_get_widget_resources(self):
         def resource_registry(requirements):
-            self.assertEqual(requirements, [("abc", "123")])
+            self.assertEqual(list(requirements), [("abc", "123")])
             return "OK"
 
         schema = DummySchema()
