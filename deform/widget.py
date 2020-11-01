@@ -289,8 +289,7 @@ class TextInputWidget(Widget):
         super().__init__(**kw)
         if getattr(self, "mask", False):
             self.requirements = tuple(
-                list(self.requirements)
-                + [("jquery.maskedinput", None)]
+                list(self.requirements) + [("jquery.maskedinput", None)]
             )
 
     def serialize(self, field, cstruct, **kw):
@@ -1336,8 +1335,7 @@ class CheckedInputWidget(Widget):
         super().__init__(**kw)
         if getattr(self, "mask", False):
             self.requirements = tuple(
-                list(self.requirements)
-                + [("jquery.maskedinput", None)]
+                list(self.requirements) + [("jquery.maskedinput", None)]
             )
 
     def serialize(self, field, cstruct, **kw):
