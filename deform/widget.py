@@ -144,11 +144,15 @@ class Widget(object):
 
         The requirements are specified as a sequence of either of the
         following.
-          1. two-tuples in the form ``(requirement_name, version_id)``. Using the
-            resource registry the **logical** requirement name identifiers are resolved
-            to concrete files using the resource_registry
-          2. dicts that contcretly point to resources, e.g. ``{"js": "deform:static/tinymce/tinymce.min.js"}``
-        A sequence of two-tuples in the form ``( (requirement_name,
+
+            1.  Two-tuples in the form ``(requirement_name, version_id)``.
+                Using the resource registry the **logical** requirement name
+                identifiers are resolved to concrete files using the
+                ``resource_registry``.
+            2.  Dicts that concretely point to resources such as ``{"js":
+                "deform:static/tinymce/tinymce.min.js"}``.
+
+        A sequence of two-tuples should be in the form ``( (requirement_name,
         version_id), ...)`` indicating the logical external
         requirements needed to make this widget render properly within
         a form.  The ``requirement_name`` is a string that *logically*
@@ -163,6 +167,10 @@ class Widget(object):
         declare ``requirements = (('tinymce', '3.3.8'),)``.  See also:
         :ref:`specifying_widget_requirements` and
         :ref:`widget_requirements`.
+
+        If concrete resources are supplied as dicts, both ``js``and ``css``
+        keys are accepted. Furthermore the value can be supplied as a string or
+        a list of strings.
 
         Default: ``()`` (the empty tuple, meaning no special
         requirements).

@@ -283,6 +283,25 @@ constructing the form.  The default resource registry
 (:attr:`deform.widget.resource_registry`) does not contain resource
 mappings for your newly-created requirement.
 
+If the required resources are tightly couopled to the new widget, it may
+be easier to supply the direct links to the logical requirements in the form:
+
+.. code-block:: python
+   :linenos:
+
+   from deform.widget import Widget
+
+   class MyWidget(Widget):
+       requirements = ( {
+           'js': ''my:static/path/to/jquery.js',
+           'css': [
+                'my:static/path/to/jquery.css', 
+                'my:static:path/to/bootstrap.css'],
+        } )
+
+The supplied paths sre resolved by ``request.get_path()`` so the requried
+static resources should be included in the pyramid config.
+
 .. _writing_a_widget:
 
 Writing Your Own Widget
