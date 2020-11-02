@@ -142,7 +142,8 @@ class Widget(object):
 
     requirements
 
-        The requirements are specified as a a sequence of either:
+        The requirements are specified as a sequence of either of the
+        following.
           1. two-tuples in the form ``(requirement_name, version_id)``. Using the
             resource registry the **logical** requirement name identifiers are resolved
             to concrete files using the resource_registry
