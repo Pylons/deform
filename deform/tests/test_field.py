@@ -361,9 +361,13 @@ class TestField(unittest.TestCase):
     def test_get_widget_resources_without_registry(self):
         schema = DummySchema()
         field = self._makeOne(schema)
-        field.widget.requirements = ({"js": "123.js"},)
+        field.widget.requirements = (
+            {"js": "123.js", "css": ["123.css"]},
+            {"css": ["1.css", "2.css"]},
+        )
         result = field.get_widget_resources()
         self.assertEqual(result['js'], ['123.js'])
+        self.assertEqual(result['css'], ["123.css", "1.css", "2.css"])
 
     def test_clone(self):
         schema = DummySchema()

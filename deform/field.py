@@ -497,10 +497,12 @@ class Field(object):
         for req in requirements:
             if not isinstance(req, dict):
                 continue
-            if 'js' in req:
-                resources['js'].append(req['js'])
-            if 'css' in req:
-                resources['css'].append(req['css'])
+            for key in {'js', 'css'}.intersection(req):
+                value = req[key]
+                if isinstance(value, str):
+                    resources[key].append(value)
+                else:
+                    resources[key].extend(value)
         return resources
 
     def set_widgets(self, values, separator="."):
