@@ -449,16 +449,11 @@ class Field(object):
         """
         L = []
         requirements = self.widget.requirements
+        for child in self.children:
+            requirements += child.get_widget_requirements()
+
         if requirements:
             for requirement in requirements:
-                if isinstance(requirement, dict):
-                    L.append(requirement)
-                else:
-                    reqt = tuple(requirement)
-                    if reqt not in L:
-                        L.append(reqt)
-        for child in self.children:
-            for requirement in child.get_widget_requirements():
                 if isinstance(requirement, dict):
                     L.append(requirement)
                 else:
