@@ -141,6 +141,13 @@ class TestTextInputWidget(unittest.TestCase):
         pstruct = {}
         self.assertRaises(colander.Invalid, widget.deserialize, field, pstruct)
 
+    def test_deserialize_mask(self):
+        widget = self._makeOne(mask="999-99-9999")
+        field = DummyField()
+        pstruct = "123-45-6789"
+        result = widget.deserialize(field, pstruct)
+        self.assertEqual(result, "123-45-6789")
+
 
 class TestMoneyInputWidget(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -1349,6 +1356,14 @@ class TestCheckedInputWidget(unittest.TestCase):
         field = DummyField()
         pstruct = {"name": "x", "name-confirm": ["x"]}
         self.assertRaises(colander.Invalid, widget.deserialize, field, pstruct)
+
+    def test_deserialize_mask(self):
+        widget = self._makeOne(mask="999-99-9999")
+        field = DummyField()
+        pstruct = {"name": "123-45-6789", "name-confirm": "123-45-6789"}
+        result = widget.deserialize(field, pstruct)
+        self.assertEqual(result, "123-45-6789")
+        self.assertEqual(field.error, None)
 
 
 class TestCheckedPasswordWidget(TestCheckedInputWidget):
