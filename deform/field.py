@@ -449,11 +449,10 @@ class Field(object):
         """
         L = []
 
-        requirements = [
-            *self.widget.requirements,
-            *itertools.chain(
-                *(child.get_widget_requirements() for child in self.children)
-            ),
+        requirements = [req for req in self.widget.requirements] + [
+            req
+            for child in self.children
+            for req in child.get_widget_requirements()
         ]
 
         if requirements:
