@@ -448,9 +448,13 @@ class Field(object):
         requirements in :ref:`get_widget_requirements`.
         """
         L = []
-        requirements = self.widget.requirements
-        for child in self.children:
-            requirements += child.get_widget_requirements()
+
+        requirements = [
+            *self.widget.requirements,
+            *itertools.chain(
+                *(child.get_widget_requirements() for child in self.children)
+            ),
+        ]
 
         if requirements:
             for requirement in requirements:
