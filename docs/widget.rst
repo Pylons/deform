@@ -254,13 +254,13 @@ Specifying Widget Requirements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When instantiating a new widget, you may specify its requirements by using the ``requirements`` attribute.
-There are two acceptable forms for the specification: two-tuples and dicts.
+The requirements are specified as a sequence of two-tuples, dicts, or a combination of both two-tuples and dicts.
 
 The two-tuple form is used by all core Deform widgets and uses the resource registry.
 The two-tuple form takes advantage of Deform's abstraction layer through the resource registry.
 
 The dict form bypasses the resource registry.
-The dict form may be easier to implement than the two-tuple form for custom widgets.
+The dict form may be easier to implement than the two-tuple form for custom widgets because it does not introduce an implicit dependency on the resource registry.
 This is especially true if the required resources are tightly coupled to a custom widget.
 
 
