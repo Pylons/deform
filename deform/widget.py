@@ -146,15 +146,16 @@ class Widget(object):
         following.
 
             1.  Two-tuples in the form ``(requirement_name, version_id)``.
-                Using the resource registry the **logical** requirement name
-                identifiers are resolved to concrete files using the
-                ``resource_registry``.
-            2.  Dicts that concretely point to resources such as ``{"js":
-                "deform:static/tinymce/tinymce.min.js"}``.
+                The **logical** requirement name identifiers are resolved to
+                concrete files using the ``resource_registry``.
+            2.  Dicts in the form ``{requirement_type:
+                requirement_location(s)}``. The ``resource_registry`` is
+                bypassed.  This is useful for creating custom widgets with
+                their own resources.
 
-        A sequence of two-tuples should be in the form ``( (requirement_name,
-        version_id), ...)`` indicating the logical external
-        requirements needed to make this widget render properly within
+        Requirements specified as a sequence of two-tuples should be in the
+        form ``( (requirement_name, version_id), ...)`` indicating the logical
+        external requirements needed to make this widget render properly within
         a form.  The ``requirement_name`` is a string that *logically*
         (not concretely, it is not a filename) identifies *one or
         more* Javascript or CSS resources that must be included in the
@@ -164,13 +165,18 @@ class Widget(object):
         'tinymce' for Tiny MCE).  The ``version_id`` is a string
         indicating the version number (or ``None`` if no particular
         version is required).  For example, a rich text widget might
-        declare ``requirements = (('tinymce', '3.3.8'),)``.  See also:
+        declare ``requirements = (('tinymce', '3.3.8'),)``.
+
+        Requirements specified as a sequence of dicts should be in the form
+        ``({requirement_type: requirement_location(s)}, ...)``.  The
+        ``requirement_type`` key must be either ``js`` or ``css``.  The
+        ``requirement_location(s)`` value must be either a string or a list of
+        strings. Each string must resolve to a concrete resource. For example,
+        a widget might declare ``requirements = ({"js": "deform:static/tinymce/tinymce.min.js"}, {"css": "deform:static/tinymce/tinymce.min.css"}, )``.
+
+        See also:
         :ref:`specifying_widget_requirements` and
         :ref:`widget_requirements`.
-
-        If concrete resources are supplied as dicts, both ``js``and ``css``
-        keys are accepted. Furthermore the value can be supplied as a string or
-        a list of strings.
 
         Default: ``()`` (the empty tuple, meaning no special
         requirements).

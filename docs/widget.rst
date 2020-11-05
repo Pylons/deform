@@ -253,16 +253,25 @@ See also the documentation of the ``resource_registry`` argument in
 Specifying Widget Requirements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When creating a new widget, you may specify its requirements by using
-the ``requirements`` attribute:
+When instantiating a new widget, you may specify its requirements by using the ``requirements`` attribute.
+There are two acceptable forms for the specification: two-tuples and dicts.
+The two-tuple form is used by all core Deform widgets and uses the resource registry, taking advantage of its abstraction layer.
+The dict form bypasses the resource registry.
+The dict form may be easier to implement than the two-tuple form for custom widgets.
+
+
+.. _two-tuple-widget-requirements:
+
+Using two-tuples for specifying widget requirements
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: python
-   :linenos:
+    :linenos:
 
-   from deform.widget import Widget
+    from deform.widget import Widget
 
-   class MyWidget(Widget):
-       requirements = ( ('jquery', '1.4.2'), )
+    class MyWidget(Widget):
+       requirements = ( ("jquery", "1.4.2"), )
 
 There are no hard-and-fast rules about the composition of a
 requirement name.  Your widget's docstring should explain what its
@@ -283,24 +292,47 @@ constructing the form.  The default resource registry
 (:attr:`deform.widget.resource_registry`) does not contain resource
 mappings for your newly-created requirement.
 
-If the required resources are tightly couopled to the new widget, it may
+If the required resources are tightly coupled to the new widget, it may
 be easier to supply the direct links to the logical requirements in the form:
 
 .. code-block:: python
-   :linenos:
+    :linenos:
 
-   from deform.widget import Widget
+    from deform.widget import Widget
 
-   class MyWidget(Widget):
+    class MyWidget(Widget):
        requirements = ( {
-           'js': ''my:static/path/to/jquery.js',
-           'css': [
-                'my:static/path/to/jquery.css', 
-                'my:static:path/to/bootstrap.css'],
+           "js": "my:static/path/to/jquery.js",
+           "css": [
+                "my:static/path/to/jquery.css",
+                "my:static:path/to/bootstrap.css"],
         } )
 
-The supplied paths sre resolved by ``request.get_path()`` so the requried
-static resources should be included in the pyramid config.
+The supplied paths are resolved by ``request.get_path()`` so the required
+static resources should be included in the Pyramid config.
+
+
+.. _dict-widget-requirements:
+
+Using dicts for specifying widget requirements
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Requirements specified as a sequence of dicts should be in the form``({requirement_type: requirement_location(s)}, ...)``.
+The ``requirement_type`` key must be either ``js`` or ``css``.
+The ``requirement_location(s)`` value must be either a string or a list of strings.
+Each string must resolve to a concrete resource.
+
+.. code-block:: python
+    :linenos:
+
+    from deform.widget import Widget
+
+    class MyWidget(Widget):
+        requirements = (
+            {"js": "deform:static/tinymce/tinymce.min.js"},
+            {"css": "deform:static/tinymce/tinymce.min.css"},
+        )
+
 
 .. _writing_a_widget:
 
