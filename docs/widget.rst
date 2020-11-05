@@ -255,9 +255,13 @@ Specifying Widget Requirements
 
 When instantiating a new widget, you may specify its requirements by using the ``requirements`` attribute.
 There are two acceptable forms for the specification: two-tuples and dicts.
-The two-tuple form is used by all core Deform widgets and uses the resource registry, taking advantage of its abstraction layer.
+
+The two-tuple form is used by all core Deform widgets and uses the resource registry.
+The two-tuple form takes advantage of Deform's abstraction layer through the resource registry.
+
 The dict form bypasses the resource registry.
 The dict form may be easier to implement than the two-tuple form for custom widgets.
+This is especially true if the required resources are tightly coupled to a custom widget.
 
 
 .. _two-tuple-widget-requirements:
@@ -292,25 +296,6 @@ constructing the form.  The default resource registry
 (:attr:`deform.widget.resource_registry`) does not contain resource
 mappings for your newly-created requirement.
 
-If the required resources are tightly coupled to the new widget, it may
-be easier to supply the direct links to the logical requirements in the form:
-
-.. code-block:: python
-    :linenos:
-
-    from deform.widget import Widget
-
-    class MyWidget(Widget):
-       requirements = ( {
-           "js": "my:static/path/to/jquery.js",
-           "css": [
-                "my:static/path/to/jquery.css",
-                "my:static:path/to/bootstrap.css"],
-        } )
-
-The supplied paths are resolved by ``request.get_path()`` so the required
-static resources should be included in the Pyramid config.
-
 
 .. _dict-widget-requirements:
 
@@ -328,10 +313,15 @@ Each string must resolve to a concrete resource.
     from deform.widget import Widget
 
     class MyWidget(Widget):
-        requirements = (
-            {"js": "deform:static/tinymce/tinymce.min.js"},
-            {"css": "deform:static/tinymce/tinymce.min.css"},
-        )
+       requirements = ( {
+           "js": "my:static/path/to/jquery.js",
+           "css": [
+                "my:static/path/to/jquery.css",
+                "my:static:path/to/bootstrap.css"],
+        } )
+
+The supplied paths are resolved by ``request.get_path()`` so the required
+static resources should be included in the Pyramid config.
 
 
 .. _writing_a_widget:
