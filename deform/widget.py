@@ -172,7 +172,14 @@ class Widget(object):
         ``requirement_type`` key must be either ``js`` or ``css``.  The
         ``requirement_location(s)`` value must be either a string or a list of
         strings. Each string must resolve to a concrete resource. For example,
-        a widget might declare ``requirements = ({"js": "deform:static/tinymce/tinymce.min.js"}, {"css": "deform:static/tinymce/tinymce.min.css"}, )``.
+        a widget might declare:
+
+        .. code-block:: python
+
+            requirements = (
+                {"js": "deform:static/tinymce/tinymce.min.js"},
+                {"css": "deform:static/tinymce/tinymce.min.css"},
+            )
 
         See also:
         :ref:`specifying_widget_requirements` and
