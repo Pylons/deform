@@ -141,9 +141,21 @@ class Widget(object):
         be added to the input tag.
 
     requirements
-        A sequence of two-tuples in the form ``( (requirement_name,
-        version_id), ...)`` indicating the logical external
-        requirements needed to make this widget render properly within
+
+        The requirements are specified as a sequence of either of the
+        following.
+
+            1.  Two-tuples in the form ``(requirement_name, version_id)``.
+                The **logical** requirement name identifiers are resolved to
+                concrete files using the ``resource_registry``.
+            2.  Dicts in the form ``{requirement_type:
+                requirement_location(s)}``. The ``resource_registry`` is
+                bypassed.  This is useful for creating custom widgets with
+                their own resources.
+
+        Requirements specified as a sequence of two-tuples should be in the
+        form ``( (requirement_name, version_id), ...)`` indicating the logical
+        external requirements needed to make this widget render properly within
         a form.  The ``requirement_name`` is a string that *logically*
         (not concretely, it is not a filename) identifies *one or
         more* Javascript or CSS resources that must be included in the
@@ -153,7 +165,23 @@ class Widget(object):
         'tinymce' for Tiny MCE).  The ``version_id`` is a string
         indicating the version number (or ``None`` if no particular
         version is required).  For example, a rich text widget might
-        declare ``requirements = (('tinymce', '3.3.8'),)``.  See also:
+        declare ``requirements = (('tinymce', '3.3.8'),)``.
+
+        Requirements specified as a sequence of dicts should be in the form
+        ``({requirement_type: requirement_location(s)}, ...)``.  The
+        ``requirement_type`` key must be either ``js`` or ``css``.  The
+        ``requirement_location(s)`` value must be either a string or a list of
+        strings. Each string must resolve to a concrete resource. For example,
+        a widget might declare:
+
+        .. code-block:: python
+
+            requirements = (
+                {"js": "deform:static/tinymce/tinymce.min.js"},
+                {"css": "deform:static/tinymce/tinymce.min.css"},
+            )
+
+        See also:
         :ref:`specifying_widget_requirements` and
         :ref:`widget_requirements`.
 
@@ -843,7 +871,7 @@ class RichTextWidget(TextInputWidget):
     delayed_load = False
     strip = True
     template = "richtext"
-    requirements = (("tinymce", None),)
+    requirements = ({"js": "deform:static/tinymce/tinymce.min.js"},)
 
     #: Default options passed to TinyMCE. Customise by using :attr:`options`.
     default_options = (
@@ -1164,7 +1192,13 @@ class Select2Widget(SelectWidget):
     """
 
     template = "select2"
-    requirements = (("deform", None), ("select2", None))
+    requirements = (
+        ("deform", None),
+        {
+            "js": "deform:static/select2/select2.js",
+            "css": "deform:static/select2/select2.css",
+        },
+    )
 
 
 class RadioChoiceWidget(SelectWidget):
@@ -1562,7 +1596,10 @@ class SequenceWidget(Widget):
     min_len = None
     max_len = None
     orderable = False
-    requirements = (("deform", None), ("sortable", None))
+    requirements = (
+        ("deform", None),
+        {"js": "deform:static/scripts/jquery-sortable.js"},
+    )
 
     def prototype(self, field):
         # we clone the item field to bump the oid (for easier
@@ -1722,7 +1759,7 @@ class FileUploadWidget(Widget):
     readonly_template = "readonly/file_upload"
     accept = None
 
-    requirements = (("fileupload", None),)
+    requirements = ({"js": "deform:static/scripts/file_upload.js"},)
 
     _pstruct_schema = SchemaNode(
         Mapping(),
@@ -2140,8 +2177,6 @@ default_resources = {
             )
         }
     },
-    "tinymce": {None: {"js": "deform:static/tinymce/tinymce.min.js"}},
-    "sortable": {None: {"js": "deform:static/scripts/jquery-sortable.js"}},
     "typeahead": {
         None: {
             "js": "deform:static/scripts/typeahead.min.js",
@@ -2168,13 +2203,6 @@ default_resources = {
             ),
         }
     },
-    "select2": {
-        None: {
-            "js": "deform:static/select2/select2.js",
-            "css": "deform:static/select2/select2.css",
-        }
-    },
-    "fileupload": {None: {"js": "deform:static/scripts/file_upload.js"}},
 }
 
 default_resource_registry = ResourceRegistry()
