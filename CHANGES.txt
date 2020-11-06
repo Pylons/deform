@@ -3,6 +3,15 @@
 2.0.15 (unreleased)
 -------------------
 
+- Optionally bypass the resource registry and specify a resource as a dict
+  where its keys are the type of asset (``"js"`` or ``"css"``) and its values
+  are a string or list of strings of paths to assets on disk. [tdamsma]
+  https://github.com/Pylons/deform/issues/485
+
+- Conditionally load jquery.maskedinput if and only if ``mask`` option is
+  provided. [tisdall, stevepiercy]
+  https://github.com/Pylons/deform/pull/487
+
 - Changed dateparts widget to use ``type="number"`` instead of default `text`.
   https://github.com/Pylons/deform/issues/442
 
