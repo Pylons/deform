@@ -2203,7 +2203,6 @@ default_resources = {
             ),
         }
     },
-    "fileupload": {None: {"js": "deform:static/scripts/file_upload.js"}},
 }
 
 default_resource_registry = ResourceRegistry()
