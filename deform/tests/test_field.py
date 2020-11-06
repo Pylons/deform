@@ -346,9 +346,9 @@ class TestField(unittest.TestCase):
             result, [("abc", "123"), ("ghi", "789"), ("def", "456")]
         )
 
-    def test_get_widget_resources(self):
+    def test_get_widget_resources_with_registry(self):
         def resource_registry(requirements):
-            self.assertEqual(requirements, [("abc", "123")])
+            self.assertEqual(list(requirements), [("abc", "123")])
             return "OK"
 
         schema = DummySchema()
@@ -357,6 +357,17 @@ class TestField(unittest.TestCase):
         field.resource_registry = resource_registry
         result = field.get_widget_resources()
         self.assertEqual(result, "OK")
+
+    def test_get_widget_resources_without_registry(self):
+        schema = DummySchema()
+        field = self._makeOne(schema)
+        field.widget.requirements = (
+            {"js": "123.js", "css": ["123.css"]},
+            {"css": ["1.css", "2.css"]},
+        )
+        result = field.get_widget_resources()
+        self.assertEqual(result['js'], ['123.js'])
+        self.assertEqual(result['css'], ["123.css", "1.css", "2.css"])
 
     def test_clone(self):
         schema = DummySchema()
