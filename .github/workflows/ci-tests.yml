@@ -79,6 +79,4 @@ jobs:
                 DISPLAY: 99
             - run: firefox
             - run: pgrep firefox
-            # - run: tox -e functional3
-            # - run: pip freeze
-            # - run: pip list
+            - run: tox -e functional3
