@@ -76,13 +76,13 @@ jobs:
             - run: sudo mv /tmp/geckodriver /usr/local/bin
             - run: export DISPLAY=:99
             - run: Xvfb :99 &
-            - run: pip install tox
+            - run: pip install tox selenium
             - run: which firefox
             - run: which geckodriver
             - run: pgrep Xvfb
             - run: pip freeze
             - run: pip list
-            # - run: tox -e functional3
+            - run: tox -e functional3
     coverage:
         runs-on: ubuntu-latest
         name: Validate coverage
