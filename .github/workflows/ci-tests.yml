@@ -75,7 +75,7 @@ jobs:
             - run: Xvfb :99 &
             - run: pgrep Xvfb
             - run: pip install tox
-            - run: export DISPLAY=:99
+            - run: export DISPLAY=":99"
             - run: echo $DISPLAY
             - run: firefox
             - run: pgrep firefox
