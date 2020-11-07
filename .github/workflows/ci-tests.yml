@@ -69,6 +69,7 @@ jobs:
               with:
                   python-version: 3.8
                   architecture: x64
+            - run: sudo apt-get install gettext gettext-base
             - run: pip install tox
             - run: tox -e functional3
     coverage:
@@ -81,7 +82,6 @@ jobs:
               with:
                   python-version: 3.8
                   architecture: x64
-            - run: apt-get install gettext gettext-base
             - run: pip install tox
             - run: tox -e py38-cover,coverage
     docs:
