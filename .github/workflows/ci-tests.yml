@@ -67,7 +67,7 @@ jobs:
             - name: Setup python
               uses: actions/setup-python@v1
               with:
-                  python-version: 3.6
+                  python-version: 3.8
                   architecture: x64
             - run: pip install tox
             - run: tox -e py3-cover,coverage
@@ -79,7 +79,7 @@ jobs:
             - name: Setup python
               uses: actions/setup-python@v2
               with:
-                  python-version: 3.6
+                  python-version: 3.8
                   architecture: x64
             - run: pip install tox
             - run: tox -e docs
@@ -91,7 +91,7 @@ jobs:
             - name: Setup python
               uses: actions/setup-python@v2
               with:
-                  python-version: 3.6
+                  python-version: 3.8
                   architecture: x64
             - run: pip install tox
             - run: tox -e lint
