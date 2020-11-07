@@ -70,7 +70,7 @@ jobs:
                   python-version: 3.8
                   architecture: x64
             - run: pip install tox
-            - run: tox -e py3-cover,coverage
+            - run: tox -e py38-cover,coverage
     docs:
         runs-on: ubuntu-latest
         name: Build the documentation
