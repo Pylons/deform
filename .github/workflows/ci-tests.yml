@@ -76,6 +76,8 @@ jobs:
         name: Validate coverage
         steps:
             - uses: actions/checkout@v2
+            - name: Install gettext
+              run: apt-get install gettext gettext-base
             - name: Setup python
               uses: actions/setup-python@v2
               with:
