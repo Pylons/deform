@@ -77,7 +77,10 @@ jobs:
             - run: export DISPLAY=:99
             - run: Xvfb :99 &
             - run: pip install tox
-            - run: tox -e functional3
+            - run: which firefox
+            - run: which geckodriver
+            - run: pgrep Xvfb
+            # - run: tox -e functional3
     coverage:
         runs-on: ubuntu-latest
         name: Validate coverage
