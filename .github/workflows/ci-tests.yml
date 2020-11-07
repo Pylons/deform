@@ -23,8 +23,6 @@ jobs:
                     - "pypy3"
                 os:
                     - "ubuntu-latest"
-                    - "windows-latest"
-                    - "macos-latest"
                 architecture:
                     - x64
                     - x86
@@ -75,11 +73,12 @@ jobs:
             - run: rm /tmp/geckodriver-v0.27.0-linux64.tar.gz
             - run: sudo mv /tmp/geckodriver /usr/local/bin
             - run: Xvfb :99 &
-            - run: export DISPLAY=:99
-            - run: pip install tox
-            - run: firefox
             - run: pgrep Xvfb
+            - run: pip install tox
+            - run: export DISPLAY=:99
+            - run: echo $DISPLAY
+            - run: firefox
             - run: pgrep firefox
-            - run: tox -e functional3
-            - run: pip freeze
-            - run: pip list
+            # - run: tox -e functional3
+            # - run: pip freeze
+            # - run: pip list
