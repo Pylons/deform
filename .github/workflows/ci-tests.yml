@@ -69,9 +69,7 @@ jobs:
               with:
                   python-version: 3.8
                   architecture: x64
-            - name: gabrielbb/xvfb-action
-              uses: GabrielBB/xvfb-action@v1
-            - run: sudo apt-get install gettext gettext-base
+            - run: sudo apt-get install gettext gettext-base xvfb
             - run: wget -N https://github.com/mozilla/geckodriver/releases/download/v0.27.0/geckodriver-v0.27.0-linux64.tar.gz -P /tmp/
             - run: tar -xzf /tmp/geckodriver-v0.27.0-linux64.tar.gz -C /tmp/
             - run: rm /tmp/geckodriver-v0.27.0-linux64.tar.gz
