@@ -80,6 +80,8 @@ jobs:
             - run: which firefox
             - run: which geckodriver
             - run: pgrep Xvfb
+            - run: pip freeze
+            - run: pip list
             # - run: tox -e functional3
     coverage:
         runs-on: ubuntu-latest
