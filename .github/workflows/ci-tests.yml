@@ -32,7 +32,7 @@ jobs:
                 include:
                     # Only run coverage on ubuntu-latest, except on pypy3
                     - os: "ubuntu-latest"
-                      nosetests-args: "--with-xunit --xunit-file=nosetests-{envname}.xml {posargs:}"
+                      nosetests-args: "--with-xunit"
                     - os: "ubuntu-latest"
                       py: "pypy3"
                       nosetests-args: ""
