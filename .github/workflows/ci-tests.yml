@@ -76,7 +76,7 @@ jobs:
             - run: pgrep Xvfb
             - run: pip install tox
             - env: 
-                DISPLAY: 99
+                DISPLAY: ':99'
             - run: firefox
             - run: pgrep firefox
             - run: tox -e functional3
