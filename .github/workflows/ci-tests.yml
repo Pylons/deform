@@ -32,10 +32,10 @@ jobs:
                 include:
                     # Only run coverage on ubuntu-latest, except on pypy3
                     - os: "ubuntu-latest"
-                      pytest-args: "--cov"
+                      nosetests-args: "--with-xunit --xunit-file=nosetests-{envname}.xml {posargs:}"
                     - os: "ubuntu-latest"
                       py: "pypy3"
-                      pytest-args: ""
+                      nosetests-args: ""
 
                 exclude:
                     # Linux and macOS don't have x86 python
@@ -58,7 +58,7 @@ jobs:
                   architecture: ${{ matrix.architecture }}
             - run: pip install tox
             - name: Running tox
-              run: tox -e py -- ${{ matrix.pytest-args }}
+              run: tox -e py -- ${{ matrix.nosetests-args }}
     coverage:
         runs-on: ubuntu-latest
         name: Validate coverage
