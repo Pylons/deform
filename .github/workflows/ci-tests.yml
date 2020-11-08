@@ -11,7 +11,7 @@ on:
     pull_request:
 
 env:
-  DISPLAY: ":99"
+  TOXENV: functional3
 
 jobs:
     test:
