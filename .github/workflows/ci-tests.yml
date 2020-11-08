@@ -69,10 +69,6 @@ jobs:
         with:
           python-version: 3.8
           architecture: x64
-      - name: Set env var
-        env:
-          DISPLAY: :99
-        run: echo "DISPLAY = " $DISPLAY
       - name: Install and verify requirements
         run: |
           sudo apt-get install gettext firefox xvfb
@@ -86,8 +82,11 @@ jobs:
           which firefox
           firefox --version
       - name: Start Xvfb
+        env:
+          DISPLAY: :99
         run: |
-          xvfb-run :99
+          echo "DISPLAY =" $DISPLAY
+          sudo xvfb-run
       - name: Run functional web tests
         run: |
           tox -e functional3
