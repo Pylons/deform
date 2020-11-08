@@ -70,8 +70,6 @@ jobs:
           python-version: 3.8
           architecture: x64
       - name: Install and verify requirements
-        env:
-          DISPLAY: :99
         run: |
           sudo apt-get install gettext firefox xvfb
           wget -N https://github.com/mozilla/geckodriver/releases/download/v0.27.0/geckodriver-v0.27.0-linux64.tar.gz -P /tmp/
@@ -83,15 +81,15 @@ jobs:
           gettext --version
           which firefox
           firefox --version
+      - name: Start Xvfb
+        env:
+          DISPLAY: :99
+        run: |
           echo "DISPLAY =" $DISPLAY
-          sudo xvfb-run "tox -e functional3"
+          sudo xvfb-run
       - name: Run functional web tests
         run: |
           tox -e functional3
-#      - name: Start Xvfb
-#        env:
-#          DISPLAY: :99
-#        run: |
 #    coverage:
 #        runs-on: ubuntu-latest
 #        name: Validate coverage
