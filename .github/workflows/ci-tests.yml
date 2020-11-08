@@ -85,8 +85,6 @@ jobs:
           gettext --version
           which firefox
           firefox --version
-          xvfb --version
-          gettext-base --version
       - name: Start Xvfb
         run: |
           Xvfb :99
