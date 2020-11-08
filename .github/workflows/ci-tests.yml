@@ -77,3 +77,6 @@ jobs:
             - run: |
                 export DISPLAY=":99"
                 tox -e functional3
+                echo $DISPLAY
+                echo $DISPLAY
+                echo $DISPLAY
