@@ -86,7 +86,7 @@ jobs:
           DISPLAY: :99
         run: |
           echo "DISPLAY =" $DISPLAY
-          sudo xvfb-run
+          sudo xvfb-run --auto-servernum run tox -e functional3
       - name: Run functional web tests
         run: |
           tox -e functional3
