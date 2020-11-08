@@ -71,7 +71,7 @@ jobs:
           architecture: x64
       - name: Set env var
         env:
-          DISPLAY=:99
+          DISPLAY: :99
         run: echo "DISPLAY = " $DISPLAY
       - name: Install requirements
         run: |
