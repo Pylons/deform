@@ -83,6 +83,6 @@ jobs:
             - run: |
                 export DISPLAY=":99"
                 echo $DISPLAY
-                firefox
+                firefox &
             - run: pgrep firefox
-            - run: tox -e functional3
+            # - run: tox -e functional3
