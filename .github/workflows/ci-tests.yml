@@ -87,7 +87,7 @@ jobs:
           firefox --version
       - name: Start Xvfb
         run: |
-          Xvfb :99
+          sudo Xvfb :99
       - name: Run functional web tests
         run: |
           tox -e functional3
