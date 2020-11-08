@@ -10,6 +10,9 @@ on:
     # Build pull requests
     pull_request:
 
+env:
+  DISPLAY: ":99"
+
 jobs:
     test:
         strategy:
@@ -74,4 +77,5 @@ jobs:
             - run: sudo mv /tmp/geckodriver /usr/local/bin
             - run: Xvfb :99 &
             - run: pip install tox
+            - run: echo $DISPLAY
             - run: tox -e functional3
