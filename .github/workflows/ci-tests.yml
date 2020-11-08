@@ -74,9 +74,4 @@ jobs:
             - run: sudo mv /tmp/geckodriver /usr/local/bin
             - run: Xvfb :99 &
             - run: pip install tox
-            - run: |
-                export DISPLAY=":99"
-                tox -e functional3
-                echo $DISPLAY
-                echo $DISPLAY
-                echo $DISPLAY
+            - run: tox -e functional3
