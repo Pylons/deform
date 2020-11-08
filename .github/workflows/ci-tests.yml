@@ -70,18 +70,13 @@ jobs:
           python-version: 3.8
           architecture: x64
       - name: Install and verify requirements
-        run: |
-          sudo apt-get install gettext firefox xvfb
-          pip install tox
-      - name: Start Xvfb
         env:
           DISPLAY: :99
         run: |
+          sudo apt-get install gettext firefox xvfb
+          pip install tox
           echo "DISPLAY =" $DISPLAY
-          sudo xvfb-run
-      - name: Run functional web tests
-        run: |
-          tox -e functional3
+          sudo xvfb-run `tox -e functional3`
 #    coverage:
 #        runs-on: ubuntu-latest
 #        name: Validate coverage
