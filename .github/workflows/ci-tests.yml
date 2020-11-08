@@ -72,10 +72,6 @@ jobs:
       - name: Install and verify requirements
         run: |
           sudo apt-get install gettext firefox xvfb
-          wget -N https://github.com/mozilla/geckodriver/releases/download/v0.27.0/geckodriver-v0.27.0-linux64.tar.gz -P /tmp/
-          tar -xzf /tmp/geckodriver-v0.27.0-linux64.tar.gz -C /tmp/
-          rm /tmp/geckodriver-v0.27.0-linux64.tar.gz
-          sudo mv /tmp/geckodriver /usr/local/bin
           pip install tox
           which gettext
           gettext --version
