@@ -65,20 +65,25 @@ jobs:
       steps:
       - uses: actions/checkout@v2
       - name: Setup python
-        env:
-          DISPLAY=:99
         uses: actions/setup-python@v2
         with:
           python-version: 3.8
           architecture: x64
+      - name: Set env var
+        env:
+          DISPLAY=:99
+        run: echo "DISPLAY = " $DISPLAY
+      - name: Install requirements
         run: |
           sudo apt-get install gettext gettext-base firefox xvfb
           wget -N https://github.com/mozilla/geckodriver/releases/download/v0.27.0/geckodriver-v0.27.0-linux64.tar.gz -P /tmp/
           tar -xzf /tmp/geckodriver-v0.27.0-linux64.tar.gz -C /tmp/
           rm /tmp/geckodriver-v0.27.0-linux64.tar.gz
           sudo mv /tmp/geckodriver /usr/local/bin
-          Xvfb :99
           pip install tox
+      - name: Run functional web tests
+        run: |
+          Xvfb :99
           tox -e functional3
 #    coverage:
 #        runs-on: ubuntu-latest
