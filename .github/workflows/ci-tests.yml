@@ -11,6 +11,8 @@ on:
     pull_request:
 
 env:
+  DISPLAY: ":99"
+  TRAVIS: "true"
   TOXENV: functional3
 
 jobs:
@@ -18,12 +20,7 @@ jobs:
         strategy:
             matrix:
                 py:
-                    - "3.5"
-                    - "3.6"
-                    - "3.7"
                     - "3.8"
-                    - "3.9"
-                    - "pypy3"
                 os:
                     - "ubuntu-latest"
                 architecture:
@@ -78,4 +75,5 @@ jobs:
             - run: Xvfb :99 &
             - run: pip install tox
             - run: echo $DISPLAY
+            - run: echo $TRAVIS
             - run: tox -e functional3
