@@ -88,8 +88,8 @@ jobs:
           python-version: 3.8
           architecture: x64
       - run: |
-        pip install tox
-        tox -e py38-cover,coverage
+          pip install tox
+          tox -e py38-cover,coverage
     docs:
       runs-on: ubuntu-latest
       name: Build the documentation
@@ -101,8 +101,8 @@ jobs:
           python-version: 3.9
           architecture: x64
       - run: |
-        pip install tox
-        tox -e docs
+          pip install tox
+          tox -e docs
     lint:
       runs-on: ubuntu-latest
       name: Lint the package
@@ -114,5 +114,5 @@ jobs:
           python-version: 3.9
           architecture: x64
       - run: |
-        pip install tox
-        tox -e lint
+          pip install tox
+          tox -e lint
