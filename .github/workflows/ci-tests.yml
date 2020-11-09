@@ -10,10 +10,6 @@ on:
     # Build pull requests
     pull_request:
 
-env:
-  DISPLAY: ":99"
-  TOXENV: functional3
-
 jobs:
     test:
         strategy:
@@ -66,6 +62,9 @@ jobs:
     functional3:
       runs-on: ubuntu-latest
       name: Functional web tests
+      env:
+        DISPLAY: ":99"
+        TOXENV: functional3
       steps:
       - uses: actions/checkout@v2
       - name: Setup python
