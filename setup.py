@@ -44,12 +44,11 @@ lint_extras = [
     "readme_renderer",
 ]
 
-testing_extras = ["beautifulsoup4", "coverage", "flaky", "nose"]
+testing_extras = ["beautifulsoup4", "coverage", "flaky", "nose", "pyramid"]
 
 # Needed to run deformdemo tests
 functional_testing_extras = [
     "selenium>=3",
-    "pyramid",
     "pygments",
     "waitress",
     "lingua",
@@ -78,10 +77,10 @@ setup(
         "License :: Repoze Public License",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
     ],

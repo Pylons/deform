@@ -1,0 +1,117 @@
+name: Build and test
+
+on:
+  # Build only on pushes to master or one of the release branches
+  push:
+    branches:
+      - master
+      - "[0-9].[0-9]+-branch"
+    tags:
+  # Build pull requests
+  pull_request:
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        py:
+          - "3.6"
+          - "3.7"
+          - "3.8"
+          - "3.9"
+          - "pypy3"
+        os:
+          - "ubuntu-latest"
+          - "windows-latest"
+          - "macos-latest"
+        architecture:
+          - x64
+          - x86
+        include:
+          # Only run coverage on ubuntu-latest, except on pypy3
+          - os: "ubuntu-latest"
+            nosetests-args: "--with-xunit"
+          - os: "ubuntu-latest"
+            py: "pypy3"
+            nosetests-args: ""
+        exclude:
+          # Linux and macOS don't have x86 python
+          - os: "ubuntu-latest"
+            architecture: x86
+          - os: "macos-latest"
+            architecture: x86
+          # PyPy3 on Windows doesn't seem to work
+          - os: "windows-latest"
+            py: "pypy3"
+    name: "Python: ${{ matrix.py }}-${{ matrix.architecture }} on ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup python
+      uses: actions/setup-python@v2
+      with:
+          python-version: ${{ matrix.py }}
+          architecture: ${{ matrix.architecture }}
+    - run: pip install tox
+    - name: Running tox
+      run: tox -e py -- ${{ matrix.nosetests-args }}
+  functional3:
+    runs-on: ubuntu-latest
+    name: Functional web tests
+    env:
+      DISPLAY: ":99"
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+        architecture: x64
+    - name: Install requirements
+      run: |
+        sudo apt-get update
+        sudo apt-get install firefox firefox-geckodriver gettext gettext-base xvfb
+        pip install tox
+    - name: Run functional web tests
+      run: |
+        Xvfb :99 &
+        tox -e functional3
+  coverage:
+    runs-on: ubuntu-latest
+    name: Validate coverage
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+        architecture: x64
+    - run: |
+        pip install tox
+        tox -e py39-cover,coverage
+  docs:
+    runs-on: ubuntu-latest
+    name: Build the documentation
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+        architecture: x64
+    - run: |
+        pip install tox
+        tox -e docs
+  lint:
+    runs-on: ubuntu-latest
+    name: Lint the package
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+        architecture: x64
+    - run: |
+        pip install tox
+        tox -e lint
