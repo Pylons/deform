@@ -10,11 +10,6 @@ on:
     # Build pull requests
     pull_request:
 
-env:
-  DISPLAY: ":99"
-  TRAVIS: "true"
-  TOXENV: functional3
-
 jobs:
     test:
         strategy:
