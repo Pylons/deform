@@ -67,22 +67,20 @@ jobs:
         runs-on: ubuntu-latest
         name: Functional web tests
         steps:
-            - uses: actions/checkout@v2
-            - name: Setup python
-              uses: actions/setup-python@v2
-              with:
-                  python-version: 3.8
-                  architecture: x64
-            - run: sudo apt-get install gettext gettext-base firefox xvfb
-            - run: wget -N https://github.com/mozilla/geckodriver/releases/download/v0.27.0/geckodriver-v0.27.0-linux64.tar.gz -P /tmp/
-            - run: tar -xzf /tmp/geckodriver-v0.27.0-linux64.tar.gz -C /tmp/
-            - run: rm /tmp/geckodriver-v0.27.0-linux64.tar.gz
-            - run: sudo mv /tmp/geckodriver /usr/local/bin
-            - run: Xvfb :99 &
-            - run: pip install tox
-            - run: echo $DISPLAY
-            - run: echo $TRAVIS
-            - run: tox -e functional3
+        - uses: actions/checkout@v2
+        - name: Setup python
+            uses: actions/setup-python@v2
+            with:
+                python-version: 3.8
+                architecture: x64
+        - name: Install and verify requirements
+            run: |
+                sudo apt-get install firefox firefox-geckodriver gettext gettext-base xvfb
+                echo $DISPLAY
+                echo $TRAVIS
+                pip install tox
+                Xvfb :99 &
+                tox -e functional3
 #    coverage:
 #        runs-on: ubuntu-latest
 #        name: Validate coverage
