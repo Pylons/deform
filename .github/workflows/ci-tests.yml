@@ -44,18 +44,18 @@ jobs:
           # PyPy3 on Windows doesn't seem to work
           - os: "windows-latest"
             py: "pypy3"
-        name: "Python: ${{ matrix.py }}-${{ matrix.architecture }} on ${{ matrix.os }}"
-        runs-on: ${{ matrix.os }}
-        steps:
-        - uses: actions/checkout@v2
-        - name: Setup python
-          uses: actions/setup-python@v2
-          with:
-              python-version: ${{ matrix.py }}
-              architecture: ${{ matrix.architecture }}
-        - run: pip install tox
-        - name: Running tox
-          run: tox -e py -- ${{ matrix.nosetests-args }}
+    name: "Python: ${{ matrix.py }}-${{ matrix.architecture }} on ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup python
+      uses: actions/setup-python@v2
+      with:
+          python-version: ${{ matrix.py }}
+          architecture: ${{ matrix.architecture }}
+    - run: pip install tox
+    - name: Running tox
+      run: tox -e py -- ${{ matrix.nosetests-args }}
   functional3:
     runs-on: ubuntu-latest
     name: Functional web tests
