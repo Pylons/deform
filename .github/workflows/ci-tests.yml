@@ -64,23 +64,23 @@ jobs:
             - name: Running tox
               run: tox -e py -- ${{ matrix.nosetests-args }}
     functional3:
-        runs-on: ubuntu-latest
-        name: Functional web tests
-        steps:
-            - uses: actions/checkout@v2
-            - name: Setup python
-                uses: actions/setup-python@v2
-                with:
-                    python-version: 3.8
-                    architecture: x64
-            - name: Install and verify requirements
-                run: |
-                    sudo apt-get install firefox firefox-geckodriver gettext gettext-base xvfb
-                    echo $DISPLAY
-                    echo $TRAVIS
-                    pip install tox
-                    Xvfb :99 &
-                    tox -e functional3
+      runs-on: ubuntu-latest
+      name: Functional web tests
+      steps:
+      - uses: actions/checkout@v2
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+          architecture: x64
+      - name: Install and verify requirements
+        run: |
+          sudo apt-get install firefox firefox-geckodriver gettext gettext-base xvfb
+          echo $DISPLAY
+          echo $TRAVIS
+          pip install tox
+          Xvfb :99 &
+          tox -e functional3
 #    coverage:
 #        runs-on: ubuntu-latest
 #        name: Validate coverage
