@@ -75,6 +75,7 @@ jobs:
           architecture: x64
       - name: Install and verify requirements
         run: |
+          sudo apt-get update
           sudo apt-get install firefox firefox-geckodriver gettext gettext-base xvfb
           echo $DISPLAY
           echo $TRAVIS
