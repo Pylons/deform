@@ -71,11 +71,13 @@ jobs:
         with:
           python-version: 3.8
           architecture: x64
-      - name: Install and verify requirements
+      - name: Install requirements
         run: |
           sudo apt-get update
           sudo apt-get install firefox firefox-geckodriver gettext gettext-base xvfb
           pip install tox
+      - name: Run functional web tests
+        run: |
           Xvfb :99 &
           tox -e functional3
 #    coverage:
