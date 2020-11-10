@@ -58,9 +58,30 @@ jobs:
     - run: pip install tox
     - name: Running tox
       run: tox -e py -- ${{ matrix.nosetests-args }}
+  functional:
+    runs-on: ubuntu-latest
+    name: Functional Python 2 web tests
+    env:
+      DISPLAY: ":99"
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 2.7
+        architecture: x64
+    - name: Install requirements
+      run: |
+        sudo apt-get update
+        sudo apt-get install firefox firefox-geckodriver gettext gettext-base xvfb
+        pip install tox
+    - name: Run functional web tests
+      run: |
+        Xvfb :99 &
+        tox -e functional
   functional3:
     runs-on: ubuntu-latest
-    name: Functional web tests
+    name: Functional Python 3 web tests
     env:
       DISPLAY: ":99"
     steps:
