@@ -30,10 +30,10 @@ jobs:
         include:
           # Only run coverage on ubuntu-latest, except on pypy3
           - os: "ubuntu-latest"
-            nosetests-args: "--with-xunit"
+            pytest-args: "--cov"
           - os: "ubuntu-latest"
             py: "pypy3"
-            nosetests-args: ""
+            pytest-args: ""
         exclude:
           # Linux and macOS don't have x86 python
           - os: "ubuntu-latest"
@@ -54,7 +54,7 @@ jobs:
           architecture: ${{ matrix.architecture }}
     - run: pip install tox
     - name: Running tox
-      run: tox -e py -- ${{ matrix.nosetests-args }}
+      run: tox -e py -- ${{ matrix.pytest-args }}
   functional3:
     runs-on: ubuntu-latest
     name: Functional web tests
