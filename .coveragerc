@@ -2,13 +2,8 @@
 branch = False
 source =
     deform
-    tests
-
-[paths]
-source =
-    deform
-    */deform
-    */site-packages/deform
+omit =
+    deform/tests/*
 
 [report]
 show_missing = true
