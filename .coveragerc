@@ -1,2 +1,15 @@
 [run]
 branch = False
+source =
+    deform
+    tests
+
+[paths]
+source =
+    deform
+    */deform
+    */site-packages/deform
+
+[report]
+show_missing = true
+precision = 2

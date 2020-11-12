@@ -50,6 +50,6 @@ SERVER_PID=$!
 trap cleanup EXIT
 
 # Run functional test suite against test server
-nosetests "$@"
+pytest "$@"
 
 exit 0
