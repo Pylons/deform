@@ -30,7 +30,7 @@ jobs:
         include:
           # Only run coverage on ubuntu-latest, except on pypy3
           - os: "ubuntu-latest"
-            pytest-args: "--with-xunit"
+            pytest-args: "--cov"
           - os: "ubuntu-latest"
             py: "pypy3"
             pytest-args: ""
