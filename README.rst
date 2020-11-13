@@ -1,16 +1,16 @@
 Deform
 ======
 
-.. image:: https://travis-ci.org/Pylons/deform.png?branch=2.0-branch
-        :target: https://travis-ci.org/Pylons/deform
+.. image:: https://github.com/Pylons/deform/workflows/Build%20and%20test/badge.svg?branch=2.0-branch
+    :target: https://github.com/Pylons/deform/actions?query=workflow%3A%22Build+and+test%22+branch%3A2.0-branch
 
 .. image:: https://readthedocs.org/projects/deform/badge/?version=2.0-branch
-        :target: https://docs.pylonsproject.org/projects/deform/en/2.0-branch/
-        :alt: 2.0-branch Documentation Status
+    :target: https://docs.pylonsproject.org/projects/deform/en/2.0-branch/
+    :alt: 2.0-branch Documentation Status
 
 .. image:: https://readthedocs.org/projects/deform/badge/?version=latest
-        :target: https://docs.pylonsproject.org/projects/deform/en/latest/
-        :alt: Latest Documentation Status
+    :target: https://docs.pylonsproject.org/projects/deform/en/latest/
+    :alt: Latest Documentation Status
 
 .. contents:: :local:
 
