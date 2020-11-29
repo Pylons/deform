@@ -80,15 +80,11 @@ Prepare new release branch
 - Announce to Twitter.
 
 ```
-Deform 2.x released.
+Deform 2.X.X released.
 
 PyPI
 https://pypi.org/project/deform/2.X.X
 
-=== One time only for new version, first pre-release ===
-What's New
-https://docs.pylonsproject.org/projects/deform/en/2.x-branch/whatsnew-2.X.html
-=== For all subsequent pre-releases ===
 Changes
 https://docs.pylonsproject.org/projects/deform/en/2.X-branch/changes.html#version-yyyy-mm-dd
 
