@@ -288,6 +288,95 @@ The following Python code will generate the subsequent HTML and rendered form in
         min="0"
         max="99.99">
 
+.. versionadded:: 2.0.7
+
+    Arbitrary form control attributes, providing support for HTML5 forms.
+
+
+.. _using_readonly_in_html_form_control_attributes:
+
+Using ``readonly`` in HTML form control attributes
+--------------------------------------------------
+
+.. note::
+
+    Naming things is hard.
+    In Deform an unfortunate naming decision was made for ``readonly`` when rendering a form without any form controls using a "readonly" template.
+    Oops.
+    Looking back, we ought to have named it ``viewonly``, ``static``, ``immutable``, or ``readable`` to avoid confusion with the HTML attribute `readonly <https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/readonly>`_.
+
+The ``readonly`` HTML form control attribute makes the element not mutable, meaning the user cannot edit the control.
+When ``"readonly": "readonly"`` is one of the items in a dict passed into the ``attributes`` option when creating a widget, the rendered widget both prevents the user from changing the value, and if the form does not pass validation after submitted then the field value will be displayed.
+
+``readonly`` is supported by most form controls, but not all.
+Deform adds some logic to add read-only support for a few of those form controls, as described below.
+
+``CheckboxWidget`` and ``CheckboxChoiceWidget``
+    Due to the nature of how checkbox values are processed, the ``readonly`` attribute has no effect.
+    To achieve a read-only behavior, pass in ``attributes={"onclick": "return false;"}``.
+    This will render as an inline JavaScript ``onclick="return false;"`` for each checkbox item.
+
+``MoneyInputWidget``
+    The provided value will be displayed in the input and be not editable.
+
+``RadioChoiceWidget``
+    For the selected value it will render an attribute in the HTML as ``readonly="readonly"``, and for all other values as ``disabled="disabled"``.
+
+``SelectWidget``
+    For selection of single options only, the selected value will render an attribute in the HTML as ``readonly="readonly"``, and for all other values as ``disabled="disabled"``.
+    Multiple selections, set by the ``multiple=True`` option, do not support the ``readonly`` attribute on the ``<select>`` element.
+    For multiple selections, use the ``SelectizeWidget``.
+
+``SelectizeWidget``
+    For both single and multiple selections, the selected value or values will be rendered as selected, and the others will not be selectable.
+    Selectize uses JavaScript to "lock" the form control.
+
+``TextAreaWidget``
+    The provided value will be displayed in the input and be not editable.
+
+``TextInputWidget``
+    The provided value will be displayed in the input and be not editable.
+
+.. warning::
+
+    Regardless of using ``readonly``, never trust user input or client-side only validation, and validate submitted data on the server side to ensure that values are not altered.
+
+.. versionadded:: 2.0.15
+
+    Enhanced ``readonly`` form control attribute.
+
+
+.. _using_selectize_widget:
+
+Using Selectize Widget
+----------------------
+
+The Selectize widget is based on the jQuery plugin `selectize.js <https://github.com/selectize/selectize.js>`_.
+
+Configuration options of the Selectize widget can be passed in as a dict to the keyword argument ``selectize_options``.
+These options are rendered as inline JavaScript in the HTML widget.
+See the available `configuration options at the selectize.js project <https://github.com/selectize/selectize.js/blob/master/docs/usage.md>`_.
+
+By default, Deform treats any options with a ``""`` value as normal by virtue of setting ``allowEmptyOption`` to ``True``.
+This will render in HTML as ``<option value="">- Select -</option>``.
+You can override this default value as follows.
+
+.. code-block:: python
+
+    widget=deform.widget.SelectizeWidget(
+        values=choices,
+        selectize_options={
+            "allowEmptyOption": False,
+        },
+    )
+
+Using the above pattern, you can configure the Selectize widget for all of its configuration options.
+
+Try a basic `demonstration of the Selectize widget <https://deformdemo.pylonsproject.org/selectize/>_.
+Additional options are also demonstrated.
+
+.. versionadded:: 2.0.15
+
 
 .. _date-time-inputs:
 
