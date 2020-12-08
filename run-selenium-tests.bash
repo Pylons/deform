@@ -46,6 +46,9 @@ pserve demo.ini &
 
 SERVER_PID=$!
 
+# Wait for server to start. GitHub Actions is too fast?
+sleep 3
+
 # Even if tests crash make sure we quit pserve
 trap cleanup EXIT
 
