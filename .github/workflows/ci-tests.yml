@@ -76,6 +76,7 @@ jobs:
       run: |
         sudo apt-get update
         pip install tox
+        sudo apt-get install gettext
     - name: Set URL environment variable
       run: |
         echo "URL=http://`hostname -i`:8522" >> $GITHUB_ENV
