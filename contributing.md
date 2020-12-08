@@ -73,7 +73,7 @@ Pull requests must pass all tests and tox environments before they can be merged
 
 After you have set up your development environment, you can use tox to run a specific environment by specifying it on the command line, or multiple environments as comma-separated values.
 
-    $TOX -e py38,docs
+    $TOX -e py39,docs
 
 
 ## Coding Style
@@ -119,13 +119,15 @@ Stop on error.
 
 Run only the last failed tests.
 
-    $TOX -e functional3 -- --failed
+    $TOX -e functional3 -- --lf
 
-Run a single test.
+Run a single test class.
 
-    $TOX -e functional3 -- deformdemo.test:CheckedInputWidgetWithMaskTests
+    $TOX -e functional3 -- deformdemo/test.py::CheckedInputWidgetWithMaskTests
 
-    $TOX -e functional3 -- deformdemo.test:SequenceOfMaskedTextInputs.test_submit_one_filled
+Run a single test method in a class.
+
+    $TOX -e functional3 -- deformdemo/test.py::SequenceOfMaskedTextInputs::test_submit_one_filled
 
 
 ### When to add or edit functional tests
