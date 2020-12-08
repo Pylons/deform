@@ -11,6 +11,7 @@
 # FITNESS FOR A PARTICULAR PURPOSE
 #
 ##############################################################################
+import sys
 
 from setuptools import find_packages
 from setuptools import setup
@@ -24,6 +25,8 @@ def readfile(name):
 README = readfile("README.rst")
 CHANGES = readfile("CHANGES.txt")
 VERSION = '3.0.0.dev0'
+
+PY37MIN = sys.version_info[0] == 3 and sys.version_info[1] >= 7
 
 requires = [
     "Chameleon>=2.5.1",  # Markup class
@@ -55,7 +58,6 @@ testing_extras = [
 
 # Needed to run deformdemo tests
 functional_testing_extras = [
-    "selenium>=3",
     "pygments",
     "waitress",
     "lingua",
@@ -67,6 +69,12 @@ docs_extras = [
     "pylons_sphinx_latesturl",
     "pylons-sphinx-themes",
 ]
+
+# Selenium 4.0 does not work on Python 3.6.
+if PY37MIN:
+    functional_testing_extras.extend(["selenium >= 4.0a"])
+else:
+    functional_testing_extras.extend(["selenium >= 3.0, < 4.0"])
 
 branch_version = ".".join(VERSION.split(".")[:2])
 
