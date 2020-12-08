@@ -226,19 +226,36 @@ involve the "splat" (``*``) character and the empty string as a key
 name.
 
 
-.. _using-arbitrary-html5-form-attributes:
+.. _using-arbitrary-form-attributes:
 
-Using arbitrary HTML5 form attributes
--------------------------------------
+Using arbitrary form attributes
+-------------------------------
 
-HTML5 introduced many attributes to HTML forms.
+HTML5 introduced many attributes to HTML forms, most of which appear in the HTML ``<input>`` element as a ``type`` attribute.
 For the full specification, see https://www.w3.org/TR/2017/REC-html52-20171214/sec-forms.html#sec-forms
-For implementations and demos, the `Mozilla Developer Network <https://developer.mozilla.org/en-US/docs/Learn/Forms/HTML5_input_types>`_ is one useful resource.
+For implementations and demos, the `Mozilla Developer Network <https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input>`_ is one useful resource.
 
-Starting with Deform 2.0.7, all of the Deform widgets support arbitrary HTML5 attributes.
-This is useful, for example, when using HTML5 default browser number widgets.
-You can also set some client-side validation requirements without JavaScript.
-The following Python code will generate the subsequent HTML and rendered form input.
+Starting with Deform 2.0.7, all of the Deform widgets support arbitrary HTML5 form attributes.
+They also support *any* arbitrary attribute, such as ``readonly`` or ``disabled``.
+This is useful, for example, when you want to use any of the following new HTML5 input types.
+
+- color
+- date
+- datetime
+- datetime-local
+- email
+- month
+- number
+- range
+- search
+- tel
+- time
+- url
+- week
+
+You can also set placeholders, use multiple file uploads, and set some client-side validation requirements without JavaScript.
+
+The following Python code will generate the subsequent HTML and rendered HTML5 number input.
 
 .. code-block:: python
 
