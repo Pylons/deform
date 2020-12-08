@@ -83,7 +83,6 @@ jobs:
         echo "URL: "$URL
     - name: Run functional web tests
       run: |
-        Xvfb :99 &
         tox -e functional3
   coverage:
     runs-on: ubuntu-latest
