@@ -399,7 +399,7 @@ You can override this default value as follows.
 
 Using the above pattern, you can configure the Selectize widget for all of its configuration options.
 
-Try a basic `demonstration of the Selectize widget <https://deformdemo.pylonsproject.org/selectize/>_.
+Try a basic `demonstration of the Selectize widget <https://deformdemo.pylonsproject.org/selectize/>`_.
 Additional options are also demonstrated.
 
 .. versionadded:: 2.0.15
