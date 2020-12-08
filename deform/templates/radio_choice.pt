@@ -15,7 +15,10 @@
                              class css_class;
                              style style;
                              autofocus not repeat.choice.index and autofocus;
-                             attributes|field.widget.attributes|{};"
+                             readonly 'readonly' in getattr(field.widget, 'attributes', {}) and value == cstruct;
+                             disabled 'readonly' in getattr(field.widget, 'attributes', {}) and value != cstruct;
+                             attributes|field.widget.attributes|{};
+                             "
              type="radio"
              name="${oid}"
              value="${value}"

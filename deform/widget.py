@@ -1138,6 +1138,8 @@ class SelectWidget(Widget):
     multiple = False
     optgroup_class = OptGroup
     long_label_generator = None
+    selectize_options = None
+    default_selectize_options = (("allowEmptyOption", True),)
 
     def get_select_value(self, cstruct, value):
         """Choose whether <opt> is selected or not.
@@ -1165,6 +1167,13 @@ class SelectWidget(Widget):
             raise TypeError(e)
         template = readonly and self.readonly_template or self.template
         kw["values"] = _normalize_choices(values)
+
+        selectize_options = dict(
+            kw.get("selectize_options")
+            or self.selectize_options
+            or self.default_selectize_options
+        )
+        kw["selectize_options_json"] = json.dumps(selectize_options)
         tmpl_values = self.get_template_values(field, cstruct, kw)
         return field.renderer(template, **tmpl_values)
 
@@ -1204,6 +1213,33 @@ class Select2Widget(SelectWidget):
         {
             "js": "deform:static/select2/select2.js",
             "css": "deform:static/select2/select2.css",
+        },
+    )
+
+
+class SelectizeWidget(SelectWidget):
+    """
+    Renders ``<select>`` field based on a predefined set of values using
+    `selectize.js <https://github.com/selectize/selectize.js>`_ library.
+
+    **Attributes/Arguments**
+
+    Same as :func:`~deform.widget.SelectWidget`, with some extra options
+    listed here.
+
+    selectize_options: *dict* or *two-tuples*
+        Allows configuration of arbitrary options for Selectize. See
+        `Selectize docs under Usage for configuration options
+        <https://github.com/selectize/selectize.js/blob/master/docs/usage.md#configuration>`
+        for details.
+    """
+
+    template = "selectize"
+    requirements = (
+        ("deform", None),
+        {
+            "js": "deform:static/selectize/selectize.js",
+            "css": "deform:static/selectize/selectize.bootstrap3.css",
         },
     )
 

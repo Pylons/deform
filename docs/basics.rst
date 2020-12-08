@@ -4,7 +4,7 @@ Basic Usage
 In this chapter, we'll walk through basic usage of Deform to render a
 form, and capture and validate input.
 
-The steps a developer must take to cause a form to be renderered and
+The steps a developer must take to cause a form to be rendered and
 subsequently be ready to accept form submission input are:
 
 - Define a schema
