@@ -72,6 +72,10 @@ jobs:
         sudo apt-get update
         sudo apt-get install firefox firefox-geckodriver gettext gettext-base xvfb
         pip install tox
+    - name: Set URL environment variable
+      run: |
+        echo "URL=http://`hostname -i`:8522" >> $GITHUB_ENV
+        echo "URL: "$URL
     - name: Run functional web tests
       run: |
         Xvfb :99 &
