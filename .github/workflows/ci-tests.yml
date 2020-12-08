@@ -57,6 +57,12 @@ jobs:
       run: tox -e py -- ${{ matrix.pytest-args }}
   functional3:
     runs-on: ubuntu-latest
+    services:
+      selenium:
+        image: "selenium/standalone-firefox"
+        ports:
+          - 4444:4444
+          - 5900:5900
     name: Functional web tests
     env:
       DISPLAY: ":99"
@@ -70,7 +76,6 @@ jobs:
     - name: Install requirements
       run: |
         sudo apt-get update
-        sudo apt-get install firefox firefox-geckodriver gettext gettext-base xvfb
         pip install tox
     - name: Set URL environment variable
       run: |
