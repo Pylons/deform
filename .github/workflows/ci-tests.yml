@@ -57,6 +57,8 @@ jobs:
       run: tox -e py -- ${{ matrix.pytest-args }}
   functional3:
     runs-on: ubuntu-latest
+    env:
+      DISPLAY: ":99"
     services:
       selenium:
         image: "selenium/standalone-firefox"
@@ -78,9 +80,6 @@ jobs:
       run: |
         echo "URL=http://`hostname -i`:8522" >> $GITHUB_ENV
         echo "URL: "$URL
-    - name: DISPLAY environment variable
-      env:
-        DISPLAY: ":99"
     - name: Run functional web tests
       run: |
         tox -e functional3
