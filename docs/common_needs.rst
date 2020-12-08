@@ -90,6 +90,16 @@ which is the header uses the widget underneath it by default.
 :class:`colander.Tuple`
     :class:`deform.widget.Widget`
 
+:class:`colander.Time`
+    :class:`deform.widget.TimeInputWidget`
+
+:class:`colander.Money`
+    :class:`deform.widget.MoneyInputWidget`
+
+:class:`colander.Set`
+    :class:`deform.widget.CheckboxChoiceWidget`
+
+
 .. note::
 
    Not just any widget can be used with any schema type; the
@@ -445,8 +455,8 @@ TextInputWidget:
 
 .. code-block:: python
 
-   form['date'].widget = TextInputWidget(mask='99/99/9999', 
-                                         mask_placeholder="-")
+    form['date'].widget = TextInputWidget(mask='99/99/9999',
+        mask_placeholder="-")
 
 Example masks:
 
