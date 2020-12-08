@@ -7,31 +7,122 @@
 2.0.15 (unreleased)
 -------------------
 
+
+Features and Fixes
+^^^^^^^^^^^^^^^^^^
+
+- Add support of Python 3.8 and 3.9.
+
+- Added a new widget ``SelectizeWidget`` based on the jQuery plugin
+  `selectize.js <https://github.com/selectize/selectize.js>`_. [stevepiercy]
+  https://github.com/Pylons/deform/issues/260
+
+- Improved handling of the ``readonly`` HTML attribute in certain widgets. The
+  ``readonly`` HTML form control attribute makes the element not mutable,
+  meaning the user cannot edit the control. When ``"readonly": "readonly"`` is
+  one of the items in a dict passed into the ``attributes`` option when
+  creating a widget, the rendered widget both prevents the user from changing
+  the value, and if the form does not pass validation after submitted then the
+  field value will be displayed.
+
+  ``readonly`` is supported by most form controls, but not all. Deform adds
+  some logic to add read-only support for a few of those form controls, as
+  described below.
+
+  ``CheckboxWidget`` and ``CheckboxChoiceWidget``
+    Due to the nature of how checkbox values are processed, the ``readonly``
+    attribute has no effect.
+    To achieve a read-only behavior, pass in ``attributes={"onclick": "return
+    false;"}``.
+    This will render as an inline JavaScript ``onclick="return false;"`` for
+    each checkbox item.
+
+  ``MoneyInputWidget``
+    The provided value will be displayed in the input and be not editable.
+
+  ``RadioChoiceWidget``
+    For the selected value it will render an attribute in the HTML as
+    ``readonly="readonly"``, and for all other values as
+    ``disabled="disabled"``.
+
+  ``SelectWidget``
+    For selection of single options only, the selected value will render an
+    attribute in the HTML as ``readonly="readonly"``, and for all other values
+    as ``disabled="disabled"``.
+    Multiple selections, set by the ``multiple=True`` option, do not support
+    the ``readonly`` attribute on the ``<select>`` element.
+    For multiple selections, use the ``SelectizeWidget``.
+
+  ``SelectizeWidget``
+    For both single and multiple selections, the selected value or values will
+    be rendered as selected, and the others will not be selectable.
+    Selectize uses JavaScript to "lock" the form control.
+
+  ``TextAreaWidget``
+    The provided value will be displayed in the input and be not editable.
+
+  ``TextInputWidget``
+    The provided value will be displayed in the input and be not editable.
+
+  [stevepiercy]
+  https://github.com/Pylons/deform/issues/260
+
 - Optionally bypass the resource registry and specify a resource as a dict
   where its keys are the type of asset (``"js"`` or ``"css"``) and its values
-  are a string or list of strings of paths to assets on disk. [tdamsma]
+  are either a string or a list of strings of paths to assets on disk.
+  [tdamsma]
   https://github.com/Pylons/deform/issues/485
 
-- Conditionally load jquery.maskedinput if and only if ``mask`` option is
+- Conditionally load ``jquery.maskedinput`` if and only if ``mask`` option is
   provided. [tisdall, stevepiercy]
   https://github.com/Pylons/deform/pull/487
 
-- Changed dateparts widget to use ``type="number"`` instead of default `text`.
+- Changed dateparts widget to use ``type="number"`` instead of default
+  ``text``. [stevepiercy]
   https://github.com/Pylons/deform/issues/442
 
 - Clarify that a sequence type (list, tuple, or x/range) is required for values
-  passed into a SelectWidget or RadioChoiceWidget.
+  passed into a ``SelectWidget`` or ``RadioChoiceWidget``. [stevepiercy]
   https://github.com/Pylons/deform/issues/385
 
+- Switch from using nosetests to pytest as the test runner, as nosetests is no
+  longer maintained. [stevepiercy]
+  https://github.com/Pylons/deform/pull/497
+  https://github.com/Pylons/deform/pull/498
+
+- Switch from Travis-CI and Appveyor to GitHub Actions, due to Travis-CI
+  changing its plans to be ineffective for the Pylons Project. [stevepiercy]
+  https://github.com/Pylons/deform/pull/492
+  https://github.com/Pylons/deform/pull/495
+
 - Add Docker containerization of Deform and deformdemo as an option for running
-  tests, and improve related documentation.
+  tests, and improve related documentation. [sydoluciani]
+  https://github.com/Pylons/deform/pull/493
+  https://github.com/Pylons/deform/pull/494
+
+
+Deprecations
+^^^^^^^^^^^^
+
+- Drop support of Python 3.5.
+
+- ``Select2Widget`` is now deprecated and will be removed in Deform 3.0.0
+  because its jQuery plugin Select2 removed a lock feature in v4.0.0 and its
+  future development is uncertain. [stevepiercy]
+  https://github.com/Pylons/deform/issues/260
+
+
+Documentation
+^^^^^^^^^^^^^
 
 - Add documentation of arbitrary HTML5 attributes for all widgets.
+  [stevepiercy]
   https://github.com/Pylons/deform/issues/430
 
-- Add usage documentation of Date, DateTime, and Time widgets. Add
+- Add usage documentation of ``Date``, ``DateTime``, and ``Time`` widgets. Add
   documentation reference to complex data loading, changing widgets, or
-  validating data to Colander.
+  validating data to Colander. [stevepiercy]
+  https://github.com/Pylons/deform/pull/466
 
 
 .. _2.0.14:
@@ -232,21 +323,28 @@
 2.0.3 (2016-11-19)
 ------------------
 
-- Added accordions to MappingWidget: http://deformdemo.repoze.org/mapping_accordion/
+- Added accordions to MappingWidget:
+  https://deformdemo.pylonsproject.org/mapping_accordion/
 
-- Added CSS class ``deform-form-buttons`` to style form button group: https://github.com/Pylons/deform/pull/308
+- Added CSS class ``deform-form-buttons`` to style form button group:
+  https://github.com/Pylons/deform/pull/308
 
-- Add more options to ``TextAreaCSVWidget``: https://github.com/Pylons/deform/pull/309
+- Add more options to ``TextAreaCSVWidget``:
+  https://github.com/Pylons/deform/pull/309
 
-- Always render an item with a default CSS class: https://github.com/Pylons/deform/pull/306
+- Always render an item with a default CSS class:
+  https://github.com/Pylons/deform/pull/306
 
-- Updated pickdate.js library used for the date picker: https://github.com/Pylons/deform/pull/248
+- Updated pickdate.js library used for the date picker:
+  https://github.com/Pylons/deform/pull/248
 
-- Widget Selenium test suite runs both under Python 2 and 3. Lots of Selenium testing headache fixed with some implicit wait support.
+- Widget Selenium test suite runs both under Python 2 and 3.
+  Lots of Selenium testing headache fixed with some implicit wait support.
 
-.. note ::
+.. note::
 
-    Currently Python 3 file upload widget may have compatibility issues Please see deformdemo/test.py for details.
+    Currently Python 3 file upload widget may have compatibility issues.
+    Please see ``deformdemo/test.py`` for details.
 
 2.0.2 (2016-11-14)
 ------------------
@@ -279,7 +377,7 @@
 2.0b2 (2016-10-22)
 ------------------
 
-- Fix README on PyPi
+- Fix README on PyPI
 
 2.0b1 (2016-10-22)
 ------------------
