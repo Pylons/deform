@@ -169,7 +169,7 @@ Community and links
 
 * `Widget examples <https://deformdemo.pylonsproject.org>`_
 
-* `PyPi <https://pypi.org/project/deform/>`_
+* `PyPI <https://pypi.org/project/deform/>`_
 
 * `Issue tracker <https://github.com/Pylons/deform/issues>`_
 

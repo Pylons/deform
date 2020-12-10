@@ -63,6 +63,12 @@ jobs:
     name: Functional Python 2 web tests
     env:
       DISPLAY: ":99"
+    services:
+      selenium:
+        image: "selenium/standalone-firefox"
+        ports:
+          - 4444:4444
+          - 5900:5900
     steps:
     - uses: actions/checkout@v2
     - name: Setup python
@@ -73,17 +79,26 @@ jobs:
     - name: Install requirements
       run: |
         sudo apt-get update
-        sudo apt-get install firefox firefox-geckodriver gettext gettext-base xvfb
+        sudo apt-get install gettext
         pip install tox
+    - name: Set URL environment variable
+      run: |
+        echo "URL=http://`hostname -i`:8522" >> $GITHUB_ENV
+        echo "URL: "$URL
     - name: Run functional web tests
       run: |
-        Xvfb :99 &
         tox -e functional
   functional3:
     runs-on: ubuntu-latest
     name: Functional Python 3 web tests
     env:
       DISPLAY: ":99"
+    services:
+      selenium:
+        image: "selenium/standalone-firefox"
+        ports:
+          - 4444:4444
+          - 5900:5900
     steps:
     - uses: actions/checkout@v2
     - name: Setup python
@@ -94,11 +109,14 @@ jobs:
     - name: Install requirements
       run: |
         sudo apt-get update
-        sudo apt-get install firefox firefox-geckodriver gettext gettext-base xvfb
+        sudo apt-get install gettext
         pip install tox
-    - name: Run functional web tests
+    - name: Set URL environment variable
       run: |
-        Xvfb :99 &
+        echo "URL=http://`hostname -i`:8522" >> $GITHUB_ENV
+        echo "URL: "$URL
+    - name: Run functional3 web tests
+      run: |
         tox -e functional3
   coverage:
     runs-on: ubuntu-latest

@@ -1115,14 +1115,14 @@ class TestSelectWidget(unittest.TestCase):
     def test_selected_tag(self):
         """Test apply 'selected' to select."""
         widget = self._makeOne(multiple=False)
-        widget.get_select_value("foo", "foo") == "selected"
-        widget.get_select_value("foo", "bar") is None
+        assert widget.get_select_value("foo", "foo") == "selected"
+        assert widget.get_select_value("foo", "bar") is None
 
     def test_selected_tag_multiple(self):
         """Test apply 'selected' to multiselect."""
         widget = self._makeOne(multiple=True)
-        widget.get_select_value(["foo", "bar"], "foo") == "selected"
-        widget.get_select_value(["foo", "bar"], "moo") is None
+        assert widget.get_select_value(["foo", "bar"], "foo") == "selected"
+        assert widget.get_select_value(["foo", "bar"], "moo") is None
 
 
 class TestCheckboxChoiceWidget(unittest.TestCase):

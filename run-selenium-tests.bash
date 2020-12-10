@@ -40,6 +40,7 @@ pip install -e .
 # Let's go for the demo
 cd deformdemo_functional_tests
 pip install -e .
+pip freeze
 
 # Run test server
 pserve demo.ini &
