@@ -25,7 +25,7 @@ def readfile(name):
 
 README = readfile("README.rst")
 CHANGES = readfile("CHANGES.txt")
-VERSION = '2.0.15'
+VERSION = '2.0.16.dev0'
 
 PY37MIN = sys.version_info[0] == 3 and sys.version_info[1] >= 7
 
