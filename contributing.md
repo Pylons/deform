@@ -1,13 +1,13 @@
 # Contributing
 
-You are working on the `master` branch. Development of new features takes place on the `master` branch. The latest, stable release branch is `2.0-branch`.
+You are working on the `main` branch. Development of new features takes place on the `main` branch. The latest, stable release branch is `2.0-branch`.
 
 All projects under the Pylons Projects, including this one, follow the guidelines established at [How to Contribute](https://pylonsproject.org/community-how-to-contribute.html), [Coding Style and Standards](https://pylonsproject.org/community-coding-style-standards.html), and [Pylons Project Documentation Style Guide](https://docs.pylonsproject.org/projects/docs-style-guide/).
 
 You can contribute to this project in several ways.
 
 * [File an Issue on GitHub](https://github.com/Pylons/deform/issues).
-* Fork this project and create a branch with your suggested change. When ready, submit a pull request for consideration. [GitHub Flow](https://guides.github.com/introduction/flow/index.html) describes the workflow process and why it's a good practice. When submitting a pull request, sign [CONTRIBUTORS.txt](https://github.com/Pylons/deform/blob/master/CONTRIBUTORS.txt) if you have not yet done so. Also update [CHANGES.txt](https://github.com/Pylons/deform/blob/master/CHANGES.txt) with a change log entry.
+* Fork this project and create a branch with your suggested change. When ready, submit a pull request for consideration. [GitHub Flow](https://guides.github.com/introduction/flow/index.html) describes the workflow process and why it's a good practice. When submitting a pull request, sign [CONTRIBUTORS.txt](https://github.com/Pylons/deform/blob/main/CONTRIBUTORS.txt) if you have not yet done so. Also update [CHANGES.txt](https://github.com/Pylons/deform/blob/main/CHANGES.txt) with a change log entry.
 * Join the [IRC channel #pyramid on irc.freenode.net](https://webchat.freenode.net/?channels=pyramid).
 * Join the [Pylons team on Keybase](https://keybase.io/team/pylons).
 
@@ -106,7 +106,7 @@ We use the following for running functional tests.
 
 See [Preparing a functional testing environment](#preparing-a-functional-testing-environment) before trying to run functional tests.
 
-For functional tests, `tox` runs the shell script [run-selenium-tests.bash](https://github.com/Pylons/deform/blob/master/run-selenium-tests.bash), located at the root of the Deform repository.
+For functional tests, `tox` runs the shell script [run-selenium-tests.bash](https://github.com/Pylons/deform/blob/main/run-selenium-tests.bash), located at the root of the Deform repository.
 See its comments for a description.
 
 To run functional tests.

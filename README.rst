@@ -1,11 +1,11 @@
 Deform
 ======
 
-.. image:: https://github.com/Pylons/deform/workflows/Build%20and%20test/badge.svg?branch=master
-    :target: https://github.com/Pylons/deform/actions?query=workflow%3A%22Build+and+test%22+branch%3Amaster
+.. image:: https://github.com/Pylons/deform/workflows/Build%20and%20test/badge.svg?branch=main
+    :target: https://github.com/Pylons/deform/actions?query=workflow%3A%22Build+and+test%22+branch%3Amain
 
-.. image:: https://readthedocs.org/projects/deform/badge/?version=master
-    :target: https://docs.pylonsproject.org/projects/deform/en/master/
+.. image:: https://readthedocs.org/projects/deform/badge/?version=main
+    :target: https://docs.pylonsproject.org/projects/deform/en/main/
     :alt: Master Documentation Status
 
 .. image:: https://readthedocs.org/projects/deform/badge/?version=latest
@@ -63,7 +63,7 @@ Example
 `See all widget examples <https://deformdemo.pylonsproject.org>`_. Below is a sample
 form loop using the `Pyramid <https://trypyramid.com/>`_ web framework.
 
-.. image:: https://github.com/Pylons/deform/raw/master/docs/example.png
+.. image:: https://github.com/Pylons/deform/raw/main/docs/example.png
     :width: 400px
 
 Example code:
