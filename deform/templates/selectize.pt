@@ -9,18 +9,6 @@
      autofocus autofocus|field.autofocus"
      tal:omit-tag="">
 
-   <style>
-
-     .select2-selection.form-control {
-       padding: 0px 0px;
-     }
-
-     .select2-container--default .select2-selection--multiple,
-     .select2-container--default .select2-selection--single {
-       border: 1px solid #ccc;
-     }
-
-   </style>
   <input type="hidden" name="__start__" value="${name}:sequence"
          tal:condition="multiple" />
 
