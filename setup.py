@@ -73,7 +73,7 @@ docs_extras = [
 
 # Selenium 4.0 does not work on Python 3.6.
 if PY37MIN:
-    functional_testing_extras.extend(["selenium >= 4.0a"])
+    functional_testing_extras.extend(["selenium >= 4.0a, < 4.0.0.b1"])
 else:
     functional_testing_extras.extend(["selenium >= 3.0, < 4.0"])
 
