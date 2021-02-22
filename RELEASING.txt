@@ -21,7 +21,7 @@ Prepare new release branch
 
 - Align the release number with deformdemo (setup.py, README.rst, CHANGES.txt).
 
-- Do any necessary branch merges (e.g., master to branch, branch to master).
+- Do any necessary branch merges (e.g., main to branch, branch to main).
 
 - On release branch:
 
@@ -48,7 +48,7 @@ Prepare new release branch
 - For major version releases, in contributing.md, update branch descriptions.
 
 - For major version releases, in docs/conf.py, update values under
-  html_theme_options for in_progress and outdated across master, releasing
+  html_theme_options for in_progress and outdated across main, releasing
   branch, and previously released branch. Also in the previously released
   branch only, uncomment the sections to enable pylons_sphinx_latesturl.
 

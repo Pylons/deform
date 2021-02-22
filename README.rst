@@ -67,7 +67,7 @@ Example
 `See all widget examples <https://deformdemo.pylonsproject.org>`_. Below is a sample
 form loop using the `Pyramid <https://trypyramid.com/>`_ web framework.
 
-.. image:: https://github.com/Pylons/deform/raw/master/docs/example.png
+.. image:: https://github.com/Pylons/deform/raw/main/docs/example.png
     :width: 400px
 
 Example code:
