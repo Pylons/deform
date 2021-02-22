@@ -3,14 +3,22 @@ Deform
 
 .. image:: https://github.com/Pylons/deform/workflows/Build%20and%20test/badge.svg?branch=main
     :target: https://github.com/Pylons/deform/actions?query=workflow%3A%22Build+and+test%22+branch%3Amain
+    :alt: Build Status
+
+.. image:: https://img.shields.io/pypi/v/deform
+    :target: https://pypi.org/project/deform/
+    :alt: Current Release
 
 .. image:: https://readthedocs.org/projects/deform/badge/?version=main
     :target: https://docs.pylonsproject.org/projects/deform/en/main/
-    :alt: Master Documentation Status
+    :alt: Main Documentation Status
 
 .. image:: https://readthedocs.org/projects/deform/badge/?version=latest
     :target: https://docs.pylonsproject.org/projects/deform/en/latest/
     :alt: Latest Documentation Status
+
+.. image:: https://img.shields.io/pypi/pyversions/deform
+    :alt: Python Support
 
 .. contents:: :local:
 

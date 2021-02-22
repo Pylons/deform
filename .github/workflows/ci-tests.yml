@@ -57,6 +57,7 @@ jobs:
       run: tox -e py -- ${{ matrix.pytest-args }}
   functional3:
     runs-on: ubuntu-latest
+    name: Functional Python 3 web tests
     env:
       DISPLAY: ":99"
     services:
@@ -75,13 +76,13 @@ jobs:
     - name: Install requirements
       run: |
         sudo apt-get update
-        pip install tox
         sudo apt-get install gettext
+        pip install tox
     - name: Set URL environment variable
       run: |
         echo "URL=http://`hostname -i`:8523" >> $GITHUB_ENV
         echo "URL: "$URL
-    - name: Run functional web tests
+    - name: Run functional3 web tests
       run: |
         tox -e functional3
   coverage:
