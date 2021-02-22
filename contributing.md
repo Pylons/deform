@@ -202,7 +202,7 @@ On Windows and macOS, this is handled automatically by the installer, but Linux 
 For Linux only, follow [Post-installation steps for Linux](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user).
 Optionally verify that Docker Engine is installed correctly by running the `hello-world` image.
 
-    docker run hello-world`
+    docker run hello-world
 
 
 #### Set environment variables
@@ -217,7 +217,7 @@ At the moment some tests fail on Chrome and Opera.
 We are in process of rewriting tests to overcome the differences between browsers.
 We welcome your contribution to rewriting tests in deformdemo for better compatibility across these browsers, with Chrome as a higher priority and need.
 
-Set the `WEBDRIVER` environment variable using one of the following otpions.
+Set the `WEBDRIVER` environment variable using one of the following options.
 
     export WEBDRIVER=selenium_container_firefox
     export WEBDRIVER=selenium_container_chrome
@@ -355,12 +355,12 @@ Decompress the downloaded file.
 Install the [latest release of geckodriver](https://github.com/mozilla/geckodriver/releases).
 
     # macOS
-    wget https://github.com/mozilla/geckodriver/releases/download/v0.27.0/geckodriver-v0.27.0-macos.tar.gz
-    tar -xzf geckodriver-v0.27.0-macos.tar.gz
+    wget https://github.com/mozilla/geckodriver/releases/download/v0.29.0/geckodriver-v0.29.0-macos.tar.gz
+    tar -xzf geckodriver-v0.29.0-macos.tar.gz
 
     # Linux
-    wget https://github.com/mozilla/geckodriver/releases/download/v0.27.0/geckodriver-v0.27.0-linux64.tar.gz
-    tar -xzf geckodriver-v0.27.0-linux64.tar.gz
+    wget https://github.com/mozilla/geckodriver/releases/download/v0.29.0/geckodriver-v0.29.0-linux64.tar.gz
+    tar -xzf geckodriver-v0.29.0-linux64.tar.gz
 
 On macOS you need to issue a command to remove the webdriver from quarantine whenever you install a new version.
 
