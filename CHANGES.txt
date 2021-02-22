@@ -1,6 +1,9 @@
 3.0.0 (unreleased)
 ------------------
 
+- Remove spurious styles definition
+  https://github.com/Pylons/deform/pull/504 [lelit]
+
 
 .. _2.0.15:
 
