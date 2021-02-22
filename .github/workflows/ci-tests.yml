@@ -79,7 +79,7 @@ jobs:
         sudo apt-get install gettext
     - name: Set URL environment variable
       run: |
-        echo "URL=http://`hostname -i`:8522" >> $GITHUB_ENV
+        echo "URL=http://`hostname -i`:8523" >> $GITHUB_ENV
         echo "URL: "$URL
     - name: Run functional web tests
       run: |
