@@ -227,7 +227,7 @@ Set the `WEBDRIVER` environment variable using one of the following options.
 
 Set the `URL` environment variable.
 
-    export URL=http://<lan_ip_address>:8522
+    export URL=http://<lan_ip_address>:8523
 
 If you do not know your LAN IP address, try the command:
 
