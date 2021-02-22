@@ -21,22 +21,22 @@ jobs:
           - "3.9"
           - "pypy3"
         os:
-          - "ubuntu-latest"
+          - "ubuntu-18.04"
           - "windows-latest"
           - "macos-latest"
         architecture:
           - x64
           - x86
         include:
-          # Only run coverage on ubuntu-latest, except on pypy3
-          - os: "ubuntu-latest"
+          # Only run coverage on ubuntu-18.04, except on pypy3
+          - os: "ubuntu-18.04"
             pytest-args: "--cov"
-          - os: "ubuntu-latest"
+          - os: "ubuntu-18.04"
             py: "pypy3"
             pytest-args: ""
         exclude:
           # Linux and macOS don't have x86 python
-          - os: "ubuntu-latest"
+          - os: "ubuntu-18.04"
             architecture: x86
           - os: "macos-latest"
             architecture: x86
@@ -56,7 +56,7 @@ jobs:
     - name: Running tox
       run: tox -e py -- ${{ matrix.pytest-args }}
   functional3:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     env:
       DISPLAY: ":99"
     services:
@@ -85,7 +85,7 @@ jobs:
       run: |
         tox -e functional3
   coverage:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     name: Validate coverage
     steps:
     - uses: actions/checkout@v2
@@ -98,7 +98,7 @@ jobs:
         pip install tox
         tox -e py39-cover,coverage
   docs:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     name: Build the documentation
     steps:
     - uses: actions/checkout@v2
@@ -111,7 +111,7 @@ jobs:
         pip install tox
         tox -e docs
   lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     name: Lint the package
     steps:
     - uses: actions/checkout@v2
