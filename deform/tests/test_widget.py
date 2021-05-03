@@ -2131,7 +2131,7 @@ class TestSequenceWidget(unittest.TestCase):
         parsed_html = BeautifulSoup(html, features="html.parser")
         script_tags = parsed_html.body.find('script')
         style_tags = parsed_html.body.find('style')
-        # Chameleon/Zope/ZPT strips out the tags if the content is blank.
+        # BeautifulSoup strips out the tags if the content is blank.
         # So there will be no "nonce" attr at all.
         # import pdb; pdb.set_trace()
         self.assertFalse(nonce_attr in str(script_tags))

@@ -414,6 +414,8 @@ class Field(object):
         cloned.__dict__.update(self.__dict__)
         cloned.order = next(cloned.counter)
         cloned.oid = "deformField%s" % cloned.order
+        cloned.script_nonce = self.script_nonce_recursive
+        cloned.style_nonce = self.style_nonce_recursive
         cloned._parent = None
         children = []
         for field in self.children:

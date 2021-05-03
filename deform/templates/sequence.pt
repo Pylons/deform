@@ -55,12 +55,18 @@
     <div class="panel-footer">
       <a href="#"
          class="btn deform-seq-add"
-         id="${field.oid}-seqAdd"
-         onclick="javascript: return deform.appendSequenceItem(this);">
+         id="${field.oid}-seqAdd">
         <small id="${field.oid}-addtext">${add_subitem_text}</small>
       </a>
 
       <script type="text/javascript" nonce="${field.script_nonce_recursive}">
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById("${field.oid}-seqAdd")
+                    .addEventListener('click', function () {
+                        return deform.appendSequenceItem(this);
+                    });
+        });
+
        deform.addCallback(
          '${field.oid}',
          function(oid) {
