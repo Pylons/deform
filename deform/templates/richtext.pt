@@ -6,7 +6,7 @@
     i18n:domain="deform"
     tal:omit-tag="">
 
-    <style type="text/css">
+    <style type="text/css" nonce="${field.style_nonce_recursive}">
       .deform .tinymce-preload{
           border: 1px solid #CCC;
           height: 240px;
@@ -23,7 +23,7 @@
   <span id="${oid}-preload" class="tinymce-preload" 
         tal:condition="delayed_load and not field.error"
         tal:content="structure cstruct" />
-  <script type="text/javascript">
+  <script type="text/javascript" nonce="${field.script_nonce_recursive}">
     (function($){
       deform.addCallback('${oid}', function(oid) {
         var options = {

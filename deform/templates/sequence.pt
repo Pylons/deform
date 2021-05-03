@@ -13,7 +13,7 @@
      class="deform-seq"
      id="${oid}">
 
-  <style>
+  <style nonce="${field.style_nonce_recursive}">
     body.dragging, body.dragging * {
       cursor: move !important;
     }
@@ -60,7 +60,7 @@
         <small id="${field.oid}-addtext">${add_subitem_text}</small>
       </a>
 
-      <script type="text/javascript">
+      <script type="text/javascript" nonce="${field.script_nonce_recursive}">
        deform.addCallback(
          '${field.oid}',
          function(oid) {

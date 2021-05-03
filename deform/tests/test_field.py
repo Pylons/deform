@@ -766,6 +766,32 @@ class TestField(unittest.TestCase):
         self.assertEqual(root.children[0].have_first_input, True)
         self.assertEqual(root.have_first_input, True)
 
+    def test_nonces(self) -> None:
+        # Deform
+        from deform.field import Field
+
+        nonce1 = "dummy_nonce_1"
+        nonce2 = "dummy_nonce_2"
+        nonce3 = "dummy_nonce_3"
+        schema = DummySchema()
+
+        root1 = self._makeOne(schema, renderer="abc",
+                              script_nonce=nonce1, style_nonce=nonce2)
+        child1 = Field(schema, name="child1", parent=root1)
+        root1.children = [child1]
+        self.assertEqual(root1.script_nonce_recursive, nonce1)
+        self.assertEqual(root1.style_nonce_recursive, nonce2)
+        self.assertEqual(child1.script_nonce_recursive, nonce1)
+        self.assertEqual(child1.style_nonce_recursive, nonce2)
+
+        root2 = self._makeOne(schema, renderer="abc", nonce=nonce3)
+        child2 = Field(schema, name="child2", parent=root2)
+        root2.children = [child2]
+        self.assertEqual(root2.script_nonce_recursive, nonce3)
+        self.assertEqual(root2.style_nonce_recursive, nonce3)
+        self.assertEqual(child2.script_nonce_recursive, nonce3)
+        self.assertEqual(child2.style_nonce_recursive, nonce3)
+
 
 class DummyField(object):
     oid = "oid"
