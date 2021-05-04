@@ -2061,23 +2061,29 @@ class TestSequenceWidget(unittest.TestCase):
         ``SequenceWidget`` uses both ``<script>`` and ``<style>`` so can be
         used to test HTTP Content-Security-Policy nonces.
         """
+        # BeautifulSoup
+        # Pyramid
+        # colander
+        from colander import MappingSchema
+        from colander import SchemaNode
+        from colander import SequenceSchema
+        from colander import String
         from bs4 import BeautifulSoup
-        from colander import MappingSchema, SchemaNode, SequenceSchema, String
+
+        # Deform
         from deform.form import Form
         from deform.template import default_renderer
-        from deform.widget import SequenceWidget, TextInputWidget
+        from deform.widget import SequenceWidget
+        from deform.widget import TextInputWidget
 
         class TestTextSchema(MappingSchema):
             text_value = SchemaNode(
-                String(),
-                widget=TextInputWidget(),
-                translate=None
+                String(), widget=TextInputWidget(), translate=None
             )
 
         class TestSequenceSchema(SequenceSchema):
             text_sequence = TestTextSchema(
-                widget=SequenceWidget(),
-                translate=None
+                widget=SequenceWidget(), translate=None
             )
 
         test_nonce_script = "dummy_script_nonce_value"
@@ -2089,7 +2095,7 @@ class TestSequenceWidget(unittest.TestCase):
             schema,
             script_nonce=test_nonce_script,
             style_nonce=test_nonce_style,
-            renderer=default_renderer
+            renderer=default_renderer,
         )
         content = form.render()
         html = f"<html><body>{content}</body></html>"
@@ -2104,23 +2110,27 @@ class TestSequenceWidget(unittest.TestCase):
         """
         No CSP nonce used. Nonce attributes should not be emitted.
         """
+        # Pyramid
+        from colander import MappingSchema
+        from colander import SchemaNode
+        from colander import SequenceSchema
+        from colander import String
         from bs4 import BeautifulSoup
-        from colander import MappingSchema, SchemaNode, SequenceSchema, String
+
+        # Deform
         from deform.form import Form
         from deform.template import default_renderer
-        from deform.widget import SequenceWidget, TextInputWidget
+        from deform.widget import SequenceWidget
+        from deform.widget import TextInputWidget
 
         class TestTextSchema(MappingSchema):
             text_value = SchemaNode(
-                String(),
-                widget=TextInputWidget(),
-                translate=None
+                String(), widget=TextInputWidget(), translate=None
             )
 
         class TestSequenceSchema(SequenceSchema):
             text_sequence = TestTextSchema(
-                widget=SequenceWidget(),
-                translate=None
+                widget=SequenceWidget(), translate=None
             )
 
         nonce_attr = 'nonce='

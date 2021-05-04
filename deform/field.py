@@ -302,7 +302,7 @@ class Field(object):
         self.set_appstruct(appstruct)
 
     def found_first(self):
-        """ Set have_first_input of ancestors """
+        """Set have_first_input of ancestors"""
         self.have_first_input = True
         if self.parent is not None:
             self.parent.found_first()
@@ -314,7 +314,7 @@ class Field(object):
         return self._parent()
 
     def get_root(self):
-        """ Return the root field in the field hierarchy (the form field) """
+        """Return the root field in the field hierarchy (the form field)"""
         node = self
         while True:
             parent = node.parent
@@ -386,7 +386,7 @@ class Field(object):
         return msgid
 
     def __iter__(self):
-        """ Iterate over the children fields of this field. """
+        """Iterate over the children fields of this field."""
         return iter(self.children)
 
     def __getitem__(self, name):
@@ -661,7 +661,7 @@ class Field(object):
         return self.widget.serialize(**values)
 
     def deserialize(self, pstruct):
-        """ Deserialize the pstruct into a cstruct and return the cstruct."""
+        """Deserialize the pstruct into a cstruct and return the cstruct."""
         return self.widget.deserialize(self, pstruct)
 
     def render(self, appstruct=_marker, **kw):

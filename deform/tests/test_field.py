@@ -775,8 +775,9 @@ class TestField(unittest.TestCase):
         nonce3 = "dummy_nonce_3"
         schema = DummySchema()
 
-        root1 = self._makeOne(schema, renderer="abc",
-                              script_nonce=nonce1, style_nonce=nonce2)
+        root1 = self._makeOne(
+            schema, renderer="abc", script_nonce=nonce1, style_nonce=nonce2
+        )
         child1 = Field(schema, name="child1", parent=root1)
         root1.children = [child1]
         self.assertEqual(root1.script_nonce_recursive, nonce1)
