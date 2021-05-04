@@ -61,10 +61,10 @@
 
       <script type="text/javascript" nonce="${field.script_nonce_recursive}">
         document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById("${field.oid}-seqAdd")
-                    .addEventListener('click', function () {
-                        return deform.appendSequenceItem(this);
-                    });
+          document.getElementById("${field.oid}-seqAdd")
+                  .addEventListener('click', function () {
+            return deform.appendSequenceItem(this);
+          });
         });
 
        deform.addCallback(
@@ -75,7 +75,7 @@
                                          ${max_len}, ${now_len},
                                          ${orderable});
            }
-         )
+         );
          <tal:block condition="orderable">
              $( "#${oid}-orderable" ).sortable({
                handle: ".deform-order-button, .panel-heading",
@@ -84,22 +84,22 @@
                placeholder: '<span class="glyphicon glyphicon-arrow-right placeholder"></span>',
                onDragStart: function ($item, container, _super) {
                  var offset = $item.offset(),
-                 pointer = container.rootGroup.pointer
+                 pointer = container.rootGroup.pointer;
 
                  adjustment = {
                    left: pointer.left - offset.left,
                    top: pointer.top - offset.top
-                 }
+                 };
 
-                 _super($item, container)
+                 _super($item, container);
                },
                onDrag: function ($item, position) {
-                   $item.css({
-                     left: position.left - adjustment.left,
-                     top: position.top - adjustment.top
-                   })
-                 }
-               });
+                 $item.css({
+                   left: position.left - adjustment.left,
+                   top: position.top - adjustment.top
+                 });
+               }
+             });
          </tal:block>
       </script>
 

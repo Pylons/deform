@@ -30,14 +30,6 @@
        tal:condition="not field.widget.hidden"
        title="Remove"
        i18n:attributes="title">&times;</a>
-    <script nonce="${field.script_nonce_recursive}">
-        document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById("${oid}-close")
-                    .addEventListener('click', function () {
-                        deform.removeSequenceItem(this);
-                    });
-        });
-    </script>
   </div>
   <!-- /sequence_item -->
 </div>
