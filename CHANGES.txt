@@ -70,6 +70,9 @@ Features and Fixes
   [stevepiercy]
   https://github.com/Pylons/deform/issues/260
 
+- Avoid autocompleting passwords on ``CheckedPasswordWidget``
+  [JocelynDelalande]
+
 - Optionally bypass the resource registry and specify a resource as a dict
   where its keys are the type of asset (``"js"`` or ``"css"``) and its values
   are either a string or a list of strings of paths to assets on disk.
