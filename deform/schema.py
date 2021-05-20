@@ -159,7 +159,7 @@ class CSRFSchema(colander.Schema):
 
     More information
 
-    https://docs.pylonsproject.org/projects/pyramid/en/latest/narr/sessions.html#checking-csrf-tokens-automatically
+    https://docs.pylonsproject.org/projects/pyramid/en/latest/narr/security.html#checking-csrf-tokens-automatically
     """
 
     csrf_token = colander.SchemaNode(
