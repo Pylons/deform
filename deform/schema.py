@@ -141,25 +141,25 @@ class CSRFSchema(colander.Schema):
 
     .. code-block:: python
 
-    import colander
-    from deform.schema import CSRFSchema
+        import colander
+        from deform.schema import CSRFSchema
 
-    class MySchema(CSRFSchema):
-        my_field = colander.SchemaNode(colander.String())
+        class MySchema(CSRFSchema):
+            my_field = colander.SchemaNode(colander.String())
 
     And in your application code, *bind* the schema, passing the request as a
     keyword argument:
 
     .. code-block:: python
 
-    def view(request):
-      schema = MySchema().bind(request=request)
+        def view(request):
+          schema = MySchema().bind(request=request)
 
     When using Pyramid 1.7+, the CSRF token is validated by CSRF view deriver.
 
     More information
 
-    https://docs.pylonsproject.org/projects/pyramid/en/latest/narr/sessions.html#checking-csrf-tokens-automatically  # noqa: E501
+    https://docs.pylonsproject.org/projects/pyramid/en/latest/narr/security.html#checking-csrf-tokens-automatically
     """
 
     csrf_token = colander.SchemaNode(
