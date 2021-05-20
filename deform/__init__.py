@@ -8,6 +8,7 @@ from .exception import ValidationFailure  # API
 from .field import Field  # API
 from .form import Button  # API
 from .form import Form  # API
+from .schema import CSRFSchema  # API
 from .schema import FileData  # API
 from .template import ZPTRendererFactory  # API
 from .template import default_renderer  # API
