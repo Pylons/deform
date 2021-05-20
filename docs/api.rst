@@ -29,6 +29,9 @@ Type-Related
 .. autoclass:: FileData
    :members:
 
+.. autoclass:: CSRFSchema
+   :members:
+
 See also the type- and schema-related documentation in :term:`Colander`.
 
 Exception-Related
