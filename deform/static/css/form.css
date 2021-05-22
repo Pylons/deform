@@ -49,21 +49,21 @@ form .deform-readonly-text {
  */
 
 
-.deform-collapse-heading > a {
+.deform-collapse-header > a {
     display: block; /* Make target area more touch friendly */
     text-decoration: none;
 }
 
 
-.deform-collapse-heading > a:after {
-    /* symbol for "opening" panels */
+.deform-collapse-header > a:after {
+    /* symbol for "opening" cards */
     font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
     float: right;        /* adjust as needed */
     content: "\e080";    /* adjust as needed, taken from bootstrap.css */
 
 }
 
-.deform-collapse-heading > a[aria-expanded="true"]:after {
-    /* symbol for "collapsed" panels */
+.deform-collapse-header > a[aria-expanded="true"]:after {
+    /* symbol for "collapsed" cards */
     content: "\e114";
 }
