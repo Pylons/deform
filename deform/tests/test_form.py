@@ -162,6 +162,27 @@ class TestIssues(unittest.TestCase):
             1,
         )
 
+    def test_oid_inherits_formid(
+        self,
+    ):  # https://github.com/Pylons/deform/issues/394
+        # Pyramid
+        import colander
+
+        # Deform
+        import deform
+
+        class FooForm(colander.Schema):
+            foo_field = colander.SchemaNode(colander.String())
+
+        class BarForm(colander.Schema):
+            bar_field = colander.SchemaNode(colander.String())
+
+        foo_form = deform.Form(FooForm(), formid="fooForm")
+        bar_form = deform.Form(BarForm(), formid="barForm")
+        self.assertNotEqual(
+            foo_form["foo_field"].oid, bar_form["bar_field"].oid
+        )
+
 
 class TestButton(unittest.TestCase):
     def _makeOne(self, **kw):

@@ -139,6 +139,7 @@ class Form(field.Field):
         # Use kwargs to pass flags to descendant fields; saves cluttering
         # the constructor
         kw["focus"] = self.focus
+        self.formid = formid
         field.Field.__init__(self, schema, **kw)
         _buttons = []
         for button in buttons:
@@ -148,7 +149,6 @@ class Form(field.Field):
         self.action = action
         self.method = method
         self.buttons = _buttons
-        self.formid = formid
         self.use_ajax = use_ajax
         self.ajax_options = Markup(ajax_options.strip())
         form_widget = getattr(schema, "widget", None)
