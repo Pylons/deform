@@ -187,7 +187,6 @@ class Field(object):
     ):
         self.counter = counter or itertools.count()
         self.order = next(self.counter)
-        self.oid = getattr(schema, "oid", "deformField%s" % self.order)
         self.schema = schema
         self.typ = schema.typ  # required by Invalid exception
         self.name = schema.name
@@ -225,6 +224,8 @@ class Field(object):
         if parent is not None:
             parent = weakref.ref(parent)
         self._parent = parent
+        oid_prefix = getattr(self.get_root(), "formid", "deform")
+        self.oid = getattr(schema, "oid", f"{oid_prefix}Field{self.order}")
         self.__dict__.update(kw)
 
         first_input_index = -1
