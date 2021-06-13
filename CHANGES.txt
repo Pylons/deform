@@ -4,6 +4,8 @@
 - Remove spurious styles definition
   https://github.com/Pylons/deform/pull/504 [lelit]
 
+- Fix sequence widgets
+  https://github.com/Pylons/deform/pull/518 [krysros]
 
 .. _2.0.15:
 
