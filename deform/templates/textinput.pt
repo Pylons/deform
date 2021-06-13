@@ -13,7 +13,7 @@
                            autofocus autofocus;
                            attributes|field.widget.attributes|{};"
            id="${oid}"/>
-    <script tal:condition="mask" type="text/javascript">
+    <script tal:condition="mask" type="text/javascript" nonce="${field.script_nonce_recursive}">
       deform.addCallback(
          '${oid}',
          function (oid) {

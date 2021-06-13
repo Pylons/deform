@@ -2056,6 +2056,97 @@ class TestSequenceWidget(unittest.TestCase):
             colander.Invalid, widget.deserialize, field, {"x": "123"}
         )
 
+    def test_nonce_present_render(self):
+        """
+        ``SequenceWidget`` uses both ``<script>`` and ``<style>`` so can be
+        used to test HTTP Content-Security-Policy nonces.
+        """
+        # BeautifulSoup
+        # Pyramid
+        # colander
+        from colander import MappingSchema
+        from colander import SchemaNode
+        from colander import SequenceSchema
+        from colander import String
+        from bs4 import BeautifulSoup
+
+        # Deform
+        from deform.form import Form
+        from deform.template import default_renderer
+        from deform.widget import SequenceWidget
+        from deform.widget import TextInputWidget
+
+        class TestTextSchema(MappingSchema):
+            text_value = SchemaNode(
+                String(), widget=TextInputWidget(), translate=None
+            )
+
+        class TestSequenceSchema(SequenceSchema):
+            text_sequence = TestTextSchema(
+                widget=SequenceWidget(), translate=None
+            )
+
+        test_nonce_script = "dummy_script_nonce_value"
+        test_nonce_script_tag = f'nonce="{test_nonce_script}"'
+        test_nonce_style = "dummy_style_nonce_value"
+        test_nonce_style_tag = f'nonce="{test_nonce_style}"'
+        schema = TestSequenceSchema()
+        form = Form(
+            schema,
+            script_nonce=test_nonce_script,
+            style_nonce=test_nonce_style,
+            renderer=default_renderer,
+        )
+        content = form.render()
+        html = f"<html><body>{content}</body></html>"
+        parsed_html = BeautifulSoup(html, features="html.parser")
+        script_tags = parsed_html.body.find('script')
+        style_tags = parsed_html.body.find('style')
+        # import pdb; pdb.set_trace()
+        self.assertTrue(test_nonce_script_tag in str(script_tags))
+        self.assertTrue(test_nonce_style_tag in str(style_tags))
+
+    def test_nonce_absent_render(self):
+        """
+        No CSP nonce used. Nonce attributes should not be emitted.
+        """
+        # Pyramid
+        from colander import MappingSchema
+        from colander import SchemaNode
+        from colander import SequenceSchema
+        from colander import String
+        from bs4 import BeautifulSoup
+
+        # Deform
+        from deform.form import Form
+        from deform.template import default_renderer
+        from deform.widget import SequenceWidget
+        from deform.widget import TextInputWidget
+
+        class TestTextSchema(MappingSchema):
+            text_value = SchemaNode(
+                String(), widget=TextInputWidget(), translate=None
+            )
+
+        class TestSequenceSchema(SequenceSchema):
+            text_sequence = TestTextSchema(
+                widget=SequenceWidget(), translate=None
+            )
+
+        nonce_attr = 'nonce='
+        schema = TestSequenceSchema()
+        form = Form(schema, renderer=default_renderer)
+        content = form.render()
+        html = f"<html><body>{content}</body></html>"
+        parsed_html = BeautifulSoup(html, features="html.parser")
+        script_tags = parsed_html.body.find('script')
+        style_tags = parsed_html.body.find('style')
+        # BeautifulSoup strips out the tags if the content is blank.
+        # So there will be no "nonce" attr at all.
+        # import pdb; pdb.set_trace()
+        self.assertFalse(nonce_attr in str(script_tags))
+        self.assertFalse(nonce_attr in str(style_tags))
+
 
 class TestFormWidget(unittest.TestCase):
     def _makeOne(self, **kw):

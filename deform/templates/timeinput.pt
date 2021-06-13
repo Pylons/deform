@@ -16,7 +16,7 @@
                          attributes|field.widget.attributes|{};"
          id="${oid}"/>
   ${field.end_mapping()}
-  <script type="text/javascript">
+  <script type="text/javascript" nonce="${field.script_nonce_recursive}">
     deform.addCallback(
       '${oid}',
       function(oid) {

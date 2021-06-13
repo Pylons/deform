@@ -23,11 +23,12 @@ var deform  = {
     },
 
     load: function() {
-      $(function() {
-        if (!deform_loaded) {
-            deform.processCallbacks();
-            deform_loaded = true;
-      }});
+        $(function() {
+            if (!deform_loaded) {
+                deform.processCallbacks();
+                deform_loaded = true;
+            }
+        });
     },
 
     processCallbacks: function () {
@@ -35,8 +36,7 @@ var deform  = {
             var oid = item[0];
             var callback = item[1];
             callback(oid);
-            }
-            );
+        });
         deform.clearCallbacks();
     },
 
@@ -73,7 +73,7 @@ var deform  = {
             var labelselector = 'label[for=' + oldid + ']';
             var $fornodes = $htmlnode.find(labelselector);
             $fornodes.attr('for', newid);
-            });
+        });
 
         // replace names a containing ```deformField`` like we do for ids
 
@@ -82,7 +82,7 @@ var deform  = {
             var oldname = $node.attr('name');
             var newname = oldname.replace(fieldmatch, "deformField$1-" + genid);
             $node.attr('name', newname);
-            });
+        });
 
         $htmlnode.insertBefore(before);
 
@@ -92,8 +92,8 @@ var deform  = {
             var newid = idmap[oid];
             if (newid) {
                 callback(newid);
-                }
-            });
+            }
+        });
 
         deform.clearCallbacks();
         var old_len = parseInt(before.attr('now_len')||'0', 10);
@@ -112,7 +112,7 @@ var deform  = {
         var orderable = parseInt($before_node.attr('orderable')||'0', 10);
 
         if (now_len < max_len) {
-          deform.addSequenceItem($proto_node, $before_node);
+            deform.addSequenceItem($proto_node, $before_node);
             deform.processSequenceButtons($oid_node, min_len, max_len,
                                           now_len + 1, orderable);
         }
@@ -149,10 +149,21 @@ var deform  = {
         $lis.find('.deform-close-button').not($lis.find('.deform-seq-container .deform-close-button')).toggle(show_closebutton);
         oid_node.find('.deform-seq-add').not(oid_node.find('.deform-seq-container .deform-seq-add')).toggle(show_addbutton);
         $lis.find('.deform-order-button').not($lis.find('.deform-seq-container .deform-order-button')).toggle(orderable && has_multiple);
+        // Since "onclick" isn't OK with restricted content security policy,
+        // we add the click handler here, removing the need for evaluation of
+        // item prototype code that containts Javascript.
+        // - for pre-existing items, the click handler is added at page
+        //   creation via processSequenceButtons(), thanks to a
+        //   deform.addCallback call in sequence.pt;
+        // - for newly created items (added by the user), we get here via
+        //   appendSequenceItem().
+        $lis.find('.deform-close-button').click(function () {
+            deform.removeSequenceItem(this);
+        });
      },
 
     randomString: function (length) {
-        var chr='0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';
+        var chr = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';
         chr = chr.split('');
 
         if (! length) {

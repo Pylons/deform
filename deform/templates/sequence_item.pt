@@ -29,8 +29,7 @@
        id="${oid}-close"
        tal:condition="not field.widget.hidden"
        title="Remove"
-       i18n:attributes="title"
-       onclick="javascript:deform.removeSequenceItem(this);">&times;</a>
+       i18n:attributes="title">&times;</a>
   </div>
   <!-- /sequence_item -->
 </div>
