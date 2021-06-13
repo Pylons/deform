@@ -4,9 +4,11 @@
  * to include the call at the end of the page.
  */
 
-$(document).ready(function(){
-    deform.load();
-});
+if (typeof jQuery !== 'undefined') {
+    $(document).ready(function(){
+        deform.load();
+    });
+}
 
 
 var deform_loaded = false;
