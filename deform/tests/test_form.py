@@ -162,9 +162,9 @@ class TestIssues(unittest.TestCase):
             1,
         )
 
-    def test_oid_inherits_formid(
-        self,
-    ):  # https://github.com/Pylons/deform/issues/394
+    def test_oid_inherits_formid(self):
+        # See https://github.com/Pylons/deform/issues/394
+
         # Pyramid
         import colander
 
