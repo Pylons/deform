@@ -1,6 +1,7 @@
 """Schema."""
 # Pyramid
 import colander
+from pyramid.csrf import get_csrf_token
 
 # Deform
 from deform.i18n import _
@@ -27,7 +28,7 @@ default_widget_makers = {
 
 @colander.deferred
 def deferred_csrf_value(node, kw):
-    return kw["request"].session.get_csrf_token()
+    return get_csrf_token(kw["request"])
 
 
 class FileData(object):
