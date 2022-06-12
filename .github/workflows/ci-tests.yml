@@ -19,7 +19,7 @@ jobs:
           - "3.7"
           - "3.8"
           - "3.9"
-          - "pypy3"
+          - "pypy-3.7"
         os:
           - "ubuntu-latest"
           - "windows-latest"
@@ -32,7 +32,7 @@ jobs:
           - os: "ubuntu-latest"
             pytest-args: "--cov"
           - os: "ubuntu-latest"
-            py: "pypy3"
+            py: "pypy-3.7"
             pytest-args: ""
         exclude:
           # Linux and macOS don't have x86 python
@@ -42,7 +42,7 @@ jobs:
             architecture: x86
           # PyPy3 on Windows doesn't seem to work
           - os: "windows-latest"
-            py: "pypy3"
+            py: "pypy-3.7"
     name: "Python: ${{ matrix.py }}-${{ matrix.architecture }} on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
     steps:
