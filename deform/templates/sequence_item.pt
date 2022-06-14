@@ -20,11 +20,11 @@
   </div>
   <div class="form-group col-1" style="padding:0">
     <!-- sequence_item -->
-    <span class="deform-order-button close glyphicon glyphicon-resize-vertical"
-          id="${oid}-order"
-          tal:condition="not hidden"
-          title="Reorder (via drag and drop)"
-          i18n:attributes="title"></span>
+    <a class="deform-order-button close"
+       id="${oid}-order"
+       tal:condition="not hidden"
+       title="Reorder (via drag and drop)"
+       i18n:attributes="title">&udarr;</a>
     <a class="deform-close-button close"
        id="${oid}-close"
        tal:condition="not field.widget.hidden"
