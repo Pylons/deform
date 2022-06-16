@@ -355,12 +355,12 @@ Decompress the downloaded file.
 Install the [latest release of geckodriver](https://github.com/mozilla/geckodriver/releases).
 
     # macOS
-    wget https://github.com/mozilla/geckodriver/releases/download/v0.29.0/geckodriver-v0.29.0-macos.tar.gz
-    tar -xzf geckodriver-v0.29.0-macos.tar.gz
+    wget https://github.com/mozilla/geckodriver/releases/download/v0.31.0/geckodriver-v0.31.0-macos.tar.gz
+    tar -xzf geckodriver-v0.31.0-macos.tar.gz
 
     # Linux
-    wget https://github.com/mozilla/geckodriver/releases/download/v0.29.0/geckodriver-v0.29.0-linux64.tar.gz
-    tar -xzf geckodriver-v0.29.0-linux64.tar.gz
+    wget https://github.com/mozilla/geckodriver/releases/download/v0.31.0/geckodriver-v0.31.0-linux64.tar.gz
+    tar -xzf geckodriver-v0.31.0-linux64.tar.gz
 
 On macOS you need to issue a command to remove the webdriver from quarantine whenever you install a new version.
 
