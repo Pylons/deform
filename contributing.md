@@ -62,7 +62,7 @@ We use [tox](https://tox.readthedocs.io/en/latest/install.html) to:
 Install `tox` either in your path or locally.
 The examples below assume that `tox` was installed with:
 
-    $VENV/bin/pip3 install --user tox
+    python3 -m pip install --user tox
     export TOX=$(python3 -c 'import site; print(site.USER_BASE + "/bin")')/tox
 
 See `tox.ini` at the root of the repository for currently supported environments.
