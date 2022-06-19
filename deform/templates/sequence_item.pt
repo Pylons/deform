@@ -20,12 +20,12 @@
   </div>
   <div class="form-group col-1" style="padding:0">
     <!-- sequence_item -->
-    <a class="deform-order-button close"
+    <a class="deform-order-button close btn btn-outline-primary btn-sm"
        id="${oid}-order"
        tal:condition="not hidden"
        title="Reorder (via drag and drop)"
        i18n:attributes="title">&#8691;</a>
-    <a class="deform-close-button close"
+    <a class="deform-close-button close btn btn-outline-danger btn-sm"
        id="${oid}-close"
        tal:condition="not field.widget.hidden"
        title="Remove"
