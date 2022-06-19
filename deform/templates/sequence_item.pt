@@ -24,7 +24,7 @@
        id="${oid}-order"
        tal:condition="not hidden"
        title="Reorder (via drag and drop)"
-       i18n:attributes="title">&updownarrow;</a>
+       i18n:attributes="title">&#8691;</a>
     <a class="deform-close-button close"
        id="${oid}-close"
        tal:condition="not field.widget.hidden"

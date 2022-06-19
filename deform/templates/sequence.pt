@@ -75,7 +75,7 @@
                handle: ".deform-order-button, .card-header",
                containerSelector: "#${oid}-orderable",
                itemSelector: ".deform-seq-item",
-               placeholder: '<span class="glyphicon glyphicon-arrow-right placeholder"></span>',
+               placeholder: '<span class="placeholder">&#8680;</span>',
                onDragStart: function ($item, container, _super) {
                  var offset = $item.offset(),
                  pointer = container.rootGroup.pointer
