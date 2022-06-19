@@ -7,7 +7,7 @@
      title="${description}"
      class="form-row deform-seq-item ${field.error and error_class or ''} ${field.widget.item_css_class or ''} ${field.default_item_css_class()}"
      i18n:domain="deform">
-  <div class="form-group col-11">
+  <div class="form-group col-10">
     <span tal:replace="structure field.serialize(cstruct)"/>
     <tal:errors condition="field.error and not hidden"
                 define="errstr 'error-%s' % oid"
@@ -18,7 +18,7 @@
          i18n:translate="">${msg}</p>
     </tal:errors>
   </div>
-  <div class="form-group col-1" style="padding:0">
+  <div class="form-group col-2" style="padding:0">
     <!-- sequence_item -->
     <a class="deform-order-button close btn btn-outline-primary btn-sm"
        id="${oid}-order"
