@@ -2019,7 +2019,7 @@ class TextAreaCSVWidget(Widget):
     quoting = csv.QUOTE_MINIMAL
 
     def serialize(self, field, cstruct, **kw):
-        # XXX make cols and rows overrideable
+        # XXX make cols and rows overridable
         if cstruct is null:
             cstruct = []
         textrows = getattr(field, "unparseable", None)
@@ -2096,7 +2096,7 @@ class TextInputCSVWidget(Widget):
     mask_placeholder = "_"
 
     def serialize(self, field, cstruct, **kw):
-        # XXX make size and mask overrideable
+        # XXX make size and mask overridable
         if cstruct is null:
             cstruct = ""
         textrow = getattr(field, "unparseable", None)
