@@ -7,8 +7,8 @@
                      item_template item_template|field.widget.item_template"
          i18n:domain="deform">
   
-  <div class="panel panel-default" title="${description}">
-    <div class="panel-heading deform-collapse-heading">
+  <div class="card" title="${description}">
+    <div class="card-header deform-collapse-header">
 
       <a
           role="button"
@@ -20,9 +20,9 @@
       </a>
     </div>
 
-    <div id="collapse-${field.oid}" class="panel-collapse deform-collapse-body collapse ${collapse_body_class}" role="tabpanel" aria-labelledby="heading-${field.oid}">
+    <div id="collapse-${field.oid}" class="card-collapse deform-collapse-body collapse ${collapse_body_class}" role="tabpanel" aria-labelledby="header-${field.oid}">
 
-      <div class="panel-body">
+      <div class="card-body">
 
         <div tal:condition="errormsg"
              class="clearfix alert alert-danger">

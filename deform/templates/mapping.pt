@@ -4,9 +4,9 @@
                      item_template item_template|field.widget.item_template"
          i18n:domain="deform">
   
-  <div class="panel panel-default" title="${description}">
-    <div class="panel-heading">${title}</div>
-    <div class="panel-body">
+  <div class="card" title="${description}">
+    <div class="card-header">${title}</div>
+    <div class="card-body">
 
       <div tal:condition="errormsg" 
            class="clearfix alert alert-danger">
