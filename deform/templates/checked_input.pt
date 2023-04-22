@@ -25,7 +25,7 @@
                            confirm_attributes|field.widget.confirm_attributes|{};"
            id="${oid}-confirm"/>
   </div>
-  <script tal:condition="field.widget.mask" type="text/javascript">
+  <script tal:condition="field.widget.mask" type="text/javascript" nonce="${field.script_nonce_recursive}">
    deform.addCallback(
      '${oid}',
      function (oid) {

@@ -2,6 +2,7 @@
 # Standard Library
 import itertools
 import re
+from typing import Optional
 import unicodedata
 import weakref
 
@@ -126,6 +127,29 @@ class Field(object):
             ``autofocus`` set to a true-ish value (``on``, ``True``, or
             ``autofocus``) will receive focus on page load. Default: ``None``.
 
+        script_nonce
+            Nonce (number-used-once) for use with ``<script>`` tags via the
+            HTTP Content-Security-Policy (CSP) header system. If the CSP header
+            requires that inline Javascript is tagged with a relevant nonce,
+            pass it here to apply this nonce to ``<script>`` tags only, or
+            via the ``nonce`` argument (if it should be applied to all tags
+            supporting nonces).
+
+        style_nonce
+            Nonce (number-used-once) for use with ``<style>`` tags via the
+            HTTP Content-Security-Policy (CSP) header system. If the CSP header
+            requires that inline Javascript is tagged with a relevant nonce,
+            pass it here to apply this nonce to ``<style>`` tags only, or
+            via the ``nonce`` argument (if it should be applied to all tags
+            supporting nonces).
+
+        nonce
+            Content-Security-Policy (CSP) nonce to be applied to all tags
+            supporting a ``nonce`` attribute, currently supported for
+            ``<script>`` and ``<style>``. See also ``script_nonce``,
+            ``style_nonce``. Specifying ``nonce`` overrides the more specific
+            options.
+
     *Constructor Arguments*
 
       ``renderer``, ``counter``, ``resource_registry`` and ``appstruct`` are
@@ -183,6 +207,9 @@ class Field(object):
         appstruct=colander.null,
         parent=None,
         autofocus=None,
+        script_nonce: str = None,
+        style_nonce: str = None,
+        nonce: str = None,
         **kw
     ):
         self.counter = counter or itertools.count()
@@ -199,6 +226,12 @@ class Field(object):
         if resource_registry is None:
             resource_registry = self.default_resource_registry
         self.renderer = renderer
+        if nonce:
+            self.script_nonce = nonce
+            self.style_nonce = nonce
+        else:
+            self.script_nonce = script_nonce
+            self.style_nonce = style_nonce
 
         # Parameters passed from parent field to child
         if "focus" in kw:
@@ -275,7 +308,7 @@ class Field(object):
             self.parent.found_first()
 
     @property
-    def parent(self):
+    def parent(self) -> Optional["Field"]:
         if self._parent is None:
             return None
         return self._parent()
@@ -381,6 +414,8 @@ class Field(object):
         cloned.__dict__.update(self.__dict__)
         cloned.order = next(cloned.counter)
         cloned.oid = "deformField%s" % cloned.order
+        cloned.script_nonce = self.script_nonce_recursive
+        cloned.style_nonce = self.style_nonce_recursive
         cloned._parent = None
         children = []
         for field in self.children:
@@ -924,3 +959,29 @@ class Field(object):
             name = self.name
         tag = '<input type="hidden" name="__end__" value="%s:rename"/>'
         return Markup(tag % (name,))
+
+    @property
+    def script_nonce_recursive(self) -> Optional[str]:
+        """
+        Returns the CSP nonce for ``<script>`` tags or, if ``self`` doesn't
+        have one, its parent (until we find one or reach the topmost
+        parent).
+        """
+        if self.script_nonce:
+            return self.script_nonce
+        if self.parent:
+            return self.parent.script_nonce_recursive
+        return None
+
+    @property
+    def style_nonce_recursive(self) -> Optional[str]:
+        """
+        Returns the CSP nonce for ``<style>`` tags or, if ``self`` doesn't
+        have one, its parent (until we find one or reach the topmost
+        parent).
+        """
+        if self.style_nonce:
+            return self.style_nonce
+        if self.parent:
+            return self.parent.style_nonce_recursive
+        return None

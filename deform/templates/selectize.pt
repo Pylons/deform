@@ -44,7 +44,7 @@
     </tal:loop>
   </select>
 
-  <script type="text/javascript">
+  <script type="text/javascript" nonce="${field.script_nonce_recursive}">
     deform.addCallback(
       "${field.oid}",
       function(oid) {

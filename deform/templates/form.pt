@@ -76,7 +76,7 @@
 
   </fieldset>
 
-  <script type="text/javascript" tal:condition="use_ajax">
+  <script type="text/javascript" tal:condition="use_ajax" nonce="${field.script_nonce_recursive}">
    deform.addCallback(
      '${formid}',
      function(oid) {
