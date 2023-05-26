@@ -1693,11 +1693,9 @@ class SequenceWidget(Widget):
             for val in cstruct:
                 cloned = item_field.clone()
                 if val is not null:
-                    # item field has already been set up with a default by
-                    # virtue of its constructor and setting cstruct to null
-                    # here wil overwrite the real default
-                    cloned.cstruct = val
-                subfields.append((cloned.cstruct, cloned))
+                    subfields.append((val, cloned))
+                else:
+                    subfields.append((cloned.cstruct, cloned))
 
         readonly = kw.get("readonly", self.readonly)
         template = readonly and self.readonly_template or self.template
