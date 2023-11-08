@@ -94,11 +94,11 @@ jobs:
     - name: Setup python
       uses: actions/setup-python@v2
       with:
-        python-version: 3.9
+        python-version: 3.11
         architecture: x64
     - run: |
         pip install tox
-        tox -e py39-cover,coverage
+        tox -e py311-cover,coverage
   docs:
     runs-on: ubuntu-latest
     name: Build the documentation
@@ -107,7 +107,7 @@ jobs:
     - name: Setup python
       uses: actions/setup-python@v2
       with:
-        python-version: 3.9
+        python-version: 3.11
         architecture: x64
     - run: |
         pip install tox
@@ -120,7 +120,7 @@ jobs:
     - name: Setup python
       uses: actions/setup-python@v2
       with:
-        python-version: 3.9
+        python-version: 3.11
         architecture: x64
     - run: |
         pip install tox
