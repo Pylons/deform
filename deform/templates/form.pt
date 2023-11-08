@@ -46,7 +46,7 @@
     <div tal:repeat="child field"
          tal:replace="structure child.render_template(item_template)"/>
 
-    <div class="form-group deform-form-buttons">
+    <div class="mb-3 deform-form-buttons">
       <tal:loop tal:repeat="button buttons">
         <button
               tal:define="btn_disposition repeat.button.start and 'btn-primary' or 'btn-default';"
@@ -86,7 +86,6 @@
          replaceTarget: true,
          success: function() {
            deform.processCallbacks();
-           deform.focusFirstInput(target);
          },
          beforeSerialize: function() { 
            // See http://bit.ly/1agBs9Z (hack to fix tinymce-related ajax bug)

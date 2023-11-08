@@ -25,7 +25,7 @@
     border-radius: 4px !important;
 }
 
-.input-group-addon + .twitter-typeahead > .tt-query {
+.input-group-text + .twitter-typeahead > .tt-query {
     border-top-left-radius: 0!important;
     border-bottom-left-radius: 0!important;
 }

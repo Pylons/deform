@@ -4,10 +4,10 @@
  * to include the call at the end of the page.
  */
 
-$(document).ready(function(){
+document.addEventListener("DOMContentLoaded", function() {
+    // Code to be executed when the DOM is ready
     deform.load();
 });
-
 
 var deform_loaded = false;
 
@@ -31,7 +31,7 @@ var deform  = {
     },
 
     processCallbacks: function () {
-        $(deform.callbacks).each(function(num, item) {
+        deform.callbacks.forEach(function(item) {
             var oid = item[0];
             var callback = item[1];
             callback(oid);

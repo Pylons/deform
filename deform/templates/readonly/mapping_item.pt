@@ -6,7 +6,7 @@
                  category category|field.widget.category;
                  structural hidden or category == 'structural';
                  required required|field.required;"
-     class="form-group ${field.error and error_class or ''} ${field.widget.item_css_class or ''}"
+     class="mb-3 ${field.error and error_class or ''} ${field.widget.item_css_class or ''}"
      title="${description}"
      id="item-${oid}"
      tal:omit-tag="structural"
@@ -24,10 +24,10 @@
                    input_append field.widget.input_append  | None"
        tal:omit-tag="not (input_prepend or input_append)"
        class="input-group">
-    <span class="input-group-addon"
+    <span class="input-group-text"
           tal:condition="input_prepend">${input_prepend}</span
     ><span tal:replace="structure field.serialize(cstruct, readonly=True).strip()"
-    /><span class="input-group-addon"
+    /><span class="input-group-text"
             tal:condition="input_append">${input_append}</span>
   </div>
 
