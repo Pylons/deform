@@ -1066,7 +1066,7 @@ class TestSelectWidget(unittest.TestCase):
         widget = self._makeOne(values=choices)
         with self.assertRaises(TypeError) as e:
             widget.serialize(field, None)
-        self.assertTrue(type(e.exception) == TypeError)
+        self.assertEqual(type(e.exception), TypeError)
         self.assertEqual(
             e.exception.args[0],
             "Values must be a sequence type (list, tuple, or range).",
@@ -1195,7 +1195,7 @@ class TestCheckboxChoiceWidget(unittest.TestCase):
         widget = self._makeOne(values=choices)
         with self.assertRaises(TypeError) as e:
             widget.serialize(field, None)
-        self.assertTrue(type(e.exception) == TypeError)
+        self.assertEqual(type(e.exception), TypeError)
         self.assertEqual(
             e.exception.args[0],
             "Values must be a sequence type (list, tuple, or range).",
