@@ -4,7 +4,7 @@ Deform
 ======
 
 :mod:`deform` is a Python HTML form generation library.  It runs under Python
->= 3.8 and PyPy3.
+3.8, 3.9, 3.10, 3.11, and 3.12 and PyPy3.
 
 Deform is a Python form library for generating HTML forms on the server side.
 `Date and time picking widgets <https://deformdemo.pylonsproject.org/datetimeinput/>`_,

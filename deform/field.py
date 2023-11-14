@@ -13,7 +13,6 @@ import peppercorn
 # Deform
 from deform.widget import HiddenWidget
 
-from . import compat
 from . import decorator
 from . import exception
 from . import schema
@@ -419,7 +418,7 @@ class Field(object):
             return None
 
         css_class = (
-            unicodedata.normalize("NFKD", compat.text_type(self.name))
+            unicodedata.normalize("NFKD", str(self.name))
             .encode("ascii", "ignore")
             .decode("ascii")
         )

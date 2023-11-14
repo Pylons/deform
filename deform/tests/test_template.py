@@ -2,9 +2,6 @@
 # Standard Library
 import unittest
 
-# Deform
-from deform.compat import text_type
-
 
 class TestZPTTemplateLoader(unittest.TestCase):
     def _makeOne(self, **kw):
@@ -126,7 +123,7 @@ class TestZPTRendererFactory(unittest.TestCase):
         default_dir = resource_filename("deform", "tests/fixtures/")
         renderer = self._makeOne((default_dir,))
         result = renderer("test")
-        self.assertEqual(result.strip(), text_type("<div>Test</div>"))
+        self.assertEqual(result.strip(), str("<div>Test</div>"))
 
     def test_it(self):
         # Standard Library
@@ -166,7 +163,7 @@ class Test_default_renderer(unittest.TestCase):
         result = result.strip()
         self.assertEqual(
             result,
-            text_type(
+            str(
                 '<div class="checkbox"> <label for="oid"> '
                 '<input type="checkbox" '
                 'name="name" value="true" id="oid"/> </label> </div>'

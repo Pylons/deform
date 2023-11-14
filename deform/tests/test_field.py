@@ -3,7 +3,7 @@
 import unittest
 
 # Deform
-from deform.compat import text_
+from deform.utils import text_
 
 
 def validation_failure_exc(func, *arg, **kw):
