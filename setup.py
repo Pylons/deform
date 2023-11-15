@@ -11,9 +11,6 @@
 # FITNESS FOR A PARTICULAR PURPOSE
 #
 ##############################################################################
-# Standard Library
-import sys
-
 from setuptools import find_packages
 from setuptools import setup
 
@@ -26,8 +23,6 @@ def readfile(name):
 README = readfile("README.rst")
 CHANGES = readfile("CHANGES.txt")
 VERSION = '3.0.0.dev0'
-
-PY37MIN = sys.version_info[0] == 3 and sys.version_info[1] >= 7
 
 requires = [
     "Chameleon>=2.5.1",  # Markup class
@@ -45,6 +40,7 @@ lint_extras = [
     "flake8-bugbear",
     "flake8-builtins",
     "isort",
+    "rstcheck",
     "readme_renderer",
 ]
 
@@ -71,11 +67,7 @@ docs_extras = [
     "pylons-sphinx-themes",
 ]
 
-# Selenium 4.0 does not work on Python 3.6.
-if PY37MIN:
-    functional_testing_extras.extend(["selenium >= 4.0.0.b4"])
-else:
-    functional_testing_extras.extend(["selenium >= 3.0, < 4.0"])
+functional_testing_extras.extend(["selenium >= 4.0.0.b4, < 4.10.0"])
 
 branch_version = ".".join(VERSION.split(".")[:2])
 
@@ -93,10 +85,11 @@ setup(
         "License :: Repoze Public License",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
     ],

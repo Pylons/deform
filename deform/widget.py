@@ -1,8 +1,11 @@
 """Widget."""
 # Standard Library
 import csv
+from io import StringIO
 import json
 import random
+import string
+from urllib.parse import quote
 
 # Pyramid
 from colander import Invalid
@@ -15,15 +18,15 @@ from colander import null
 from iso8601.iso8601 import ISO8601_REGEX
 from translationstring import TranslationString
 
-from .compat import StringIO
-from .compat import sequence_types
-from .compat import string
-from .compat import string_types
-from .compat import text_
-from .compat import text_type
-from .compat import uppercase
-from .compat import url_quote
 from .i18n import _
+from .utils import text_
+
+
+sequence_types = (
+    list,
+    tuple,
+    range,
+)
 
 
 _BLANK = text_("")
@@ -37,7 +40,7 @@ def _normalize_choices(values):
             result.append(OptGroup(item.label, *normalized_options))
         else:
             value, description = item
-            if not isinstance(value, string_types):
+            if not isinstance(value, str):
                 value = str(value)
             result.append((value, description))
     return result
@@ -53,7 +56,7 @@ class _PossiblyEmptyString(String):
 class _StrippedString(_PossiblyEmptyString):
     def deserialize(self, node, cstruct):
         appstruct = super(_StrippedString, self).deserialize(node, cstruct)
-        if isinstance(appstruct, string_types):
+        if isinstance(appstruct, str):
             appstruct = appstruct.strip()
         return appstruct
 
@@ -331,7 +334,7 @@ class TextInputWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null
-        elif not isinstance(pstruct, string_types):
+        elif not isinstance(pstruct, str):
             raise Invalid(field.schema, "Pstruct is not a string")
         if self.strip:
             pstruct = pstruct.strip()
@@ -414,7 +417,7 @@ class MoneyInputWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null
-        elif not isinstance(pstruct, string_types):
+        elif not isinstance(pstruct, str):
             raise Invalid(field.schema, "Pstruct is not a string")
         pstruct = pstruct.strip()
         thousands = ","
@@ -500,7 +503,7 @@ class AutocompleteInputWidget(Widget):
         readonly = kw.get("readonly", self.readonly)
 
         options = {}
-        if isinstance(self.values, string_types):
+        if isinstance(self.values, str):
             options["remote"] = "%s?term=%%QUERY" % self.values
         else:
             options["local"] = self.values
@@ -515,7 +518,7 @@ class AutocompleteInputWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null
-        elif not isinstance(pstruct, string_types):
+        elif not isinstance(pstruct, str):
             raise Invalid(field.schema, "Pstruct is not a string")
         if self.strip:
             pstruct = pstruct.strip()
@@ -965,7 +968,7 @@ class HiddenWidget(Widget):
     def deserialize(self, field, pstruct):
         if not pstruct:
             return null
-        elif not isinstance(pstruct, string_types):
+        elif not isinstance(pstruct, str):
             raise Invalid(field.schema, "Pstruct is not a string")
         return pstruct
 
@@ -1009,7 +1012,7 @@ class CheckboxWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return self.false_val
-        elif not isinstance(pstruct, string_types):
+        elif not isinstance(pstruct, str):
             raise Invalid(field.schema, "Pstruct is not a string")
         return (pstruct == self.true_val) and self.true_val or self.false_val
 
@@ -1149,10 +1152,10 @@ class SelectWidget(Widget):
         """
 
         if self.multiple:
-            if value in map(text_type, cstruct):
+            if value in map(str, cstruct):
                 return "selected"
         else:
-            if value == text_type(cstruct):
+            if value == str(cstruct):
                 return "selected"
 
         return None
@@ -1186,7 +1189,7 @@ class SelectWidget(Widget):
             except Invalid as exc:
                 raise Invalid(field.schema, "Invalid pstruct: %s" % exc)
         else:
-            if not isinstance(pstruct, string_types):
+            if not isinstance(pstruct, str):
                 raise Invalid(field.schema, "Pstruct is not a string")
             return pstruct
 
@@ -1336,7 +1339,7 @@ class CheckboxChoiceWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null
-        if isinstance(pstruct, string_types):
+        if isinstance(pstruct, str):
             return (pstruct,)
         try:
             validated = _sequence_of_strings.deserialize(pstruct)
@@ -1660,9 +1663,9 @@ class SequenceWidget(Widget):
             raise ValueError(info)
         # NB: item_field default should already be set up
         proto = item_field.render_template(self.item_template, parent=field)
-        if isinstance(proto, string_types):
+        if isinstance(proto, str):
             proto = proto.encode("utf-8")
-        proto = url_quote(proto)
+        proto = quote(proto)
         return proto
 
     def serialize(self, field, cstruct, **kw):
@@ -1823,7 +1826,10 @@ class FileUploadWidget(Widget):
 
     def random_id(self):
         return "".join(
-            [random.choice(uppercase + string.digits) for i in range(10)]
+            [
+                random.choice(string.ascii_uppercase + string.digits)
+                for _ in range(10)
+            ]
         )
 
     def serialize(self, field, cstruct, **kw):
@@ -2044,7 +2050,7 @@ class TextAreaCSVWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null
-        elif not isinstance(pstruct, string_types):
+        elif not isinstance(pstruct, str):
             raise Invalid(field.schema, "Pstruct is not a string")
         if not pstruct.strip():
             return null
@@ -2116,7 +2122,7 @@ class TextInputCSVWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null
-        elif not isinstance(pstruct, string_types):
+        elif not isinstance(pstruct, str):
             raise Invalid(field.schema, "Pstruct is not a string")
         if not pstruct.strip():
             return null
@@ -2202,7 +2208,7 @@ class ResourceRegistry(object):
                 sources = versioned.get(thing)
                 if sources is None:
                     continue
-                if isinstance(sources, string_types):
+                if isinstance(sources, str):
                     sources = (sources,)
                 for source in sources:
                     if source not in result[thing]:

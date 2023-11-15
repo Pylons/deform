@@ -7,8 +7,8 @@
                   autofocus autofocus|field.autofocus">
   ${field.start_mapping()}
   <div class="row">
-    <div class="col-xs-4"><div class="input-group">
-      <span class="input-group-addon" i18n:translate="">Year</span>
+    <div class="col-md-4"><div class="input-group">
+      <span class="input-group-text" i18n:translate="">Year</span>
       <input type="number" name="year" value="${year}"
              class="span2 form-control ${css_class or ''}"
              tal:attributes="style style;
@@ -17,8 +17,8 @@
              maxlength="4"
              id="${oid}"/>
     </div></div>
-    <div class="col-xs-4"><div class="input-group">
-      <span class="input-group-addon" i18n:translate="">Month</span>
+    <div class="col-md-4"><div class="input-group">
+      <span class="input-group-text" i18n:translate="">Month</span>
       <input type="number" name="month" value="${month}"
              class="span2 form-control ${css_class or ''}"
              tal:attributes="style style;
@@ -26,8 +26,8 @@
              maxlength="2"
              id="${oid}-month"/>
     </div></div>
-    <div class="col-xs-4"><div class="input-group">
-      <span class="input-group-addon" i18n:translate="">Day</span>
+    <div class="col-md-4"><div class="input-group">
+      <span class="input-group-text" i18n:translate="">Day</span>
       <input type="number" name="day" value="${day}"
              class="span2 form-control ${css_class or ''}"
              tal:attributes="style style;

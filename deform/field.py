@@ -13,7 +13,6 @@ import peppercorn
 # Deform
 from deform.widget import HiddenWidget
 
-from . import compat
 from . import decorator
 from . import exception
 from . import schema
@@ -235,7 +234,7 @@ class Field(object):
                 focus == "on"
                 and not focused
                 and type(child.typ) in Field.focusable_input_types
-                and type(child.widget) != Field.hidden_type
+                and type(child.widget) is not Field.hidden_type
                 and not self.have_first_input
             ):
                 first_input_index = child_count
@@ -331,7 +330,6 @@ class Field(object):
 
     @classmethod
     def set_default_resource_registry(cls, registry):
-
         """Set the callable that will act as a default
         :term:`resource registry` for instances of the associated
         class when no ``resource_registry`` argument is provided to
@@ -407,7 +405,7 @@ class Field(object):
                 self.schema.typ.__class__
             )
             if widget_maker is None:
-                for (cls, wgt) in schema.default_widget_makers.items():
+                for cls, wgt in schema.default_widget_makers.items():
                     if isinstance(self.schema.typ, cls):
                         widget_maker = wgt
                         break
@@ -420,7 +418,7 @@ class Field(object):
             return None
 
         css_class = (
-            unicodedata.normalize("NFKD", compat.text_type(self.name))
+            unicodedata.normalize("NFKD", str(self.name))
             .encode("ascii", "ignore")
             .decode("ascii")
         )

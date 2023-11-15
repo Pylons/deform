@@ -32,9 +32,9 @@
          tal:attributes="prototype prototype;
          				 attributes|field.widget.attributes|{};"/>
 
-  <div class="panel panel-default">
-    <div class="panel-heading">${title}</div>
-    <div class="panel-body">
+  <div class="card mb-3">
+    <div class="card-header">${title}</div>
+    <div class="card-body">
 
       <div class="deform-seq-container"
            id="${oid}-orderable">
@@ -52,7 +52,7 @@
 
     </div>
 
-    <div class="panel-footer">
+    <div class="card-footer">
       <a href="#"
          class="btn deform-seq-add"
          id="${field.oid}-seqAdd"
@@ -72,10 +72,10 @@
          )
          <tal:block condition="orderable">
              $( "#${oid}-orderable" ).sortable({
-               handle: ".deform-order-button, .panel-heading",
+               handle: ".deform-order-button, .card-header",
                containerSelector: "#${oid}-orderable",
                itemSelector: ".deform-seq-item",
-               placeholder: '<span class="glyphicon glyphicon-arrow-right placeholder"></span>',
+               placeholder: '<i class="bi bi-arrow-right"></i>',
                onDragStart: function ($item, container, _super) {
                  var offset = $item.offset(),
                  pointer = container.rootGroup.pointer

@@ -1,12 +1,10 @@
 """Widget tests."""
 # Standard Library
 import unittest
+from urllib.parse import unquote
 
 # Pyramid
 import colander
-
-# Deform
-from deform.compat import text_type
 
 
 def invalid_exc(func, *arg, **kw):
@@ -1066,7 +1064,7 @@ class TestSelectWidget(unittest.TestCase):
         widget = self._makeOne(values=choices)
         with self.assertRaises(TypeError) as e:
             widget.serialize(field, None)
-        self.assertTrue(type(e.exception) == TypeError)
+        self.assertEqual(type(e.exception), TypeError)
         self.assertEqual(
             e.exception.args[0],
             "Values must be a sequence type (list, tuple, or range).",
@@ -1195,7 +1193,7 @@ class TestCheckboxChoiceWidget(unittest.TestCase):
         widget = self._makeOne(values=choices)
         with self.assertRaises(TypeError) as e:
             widget.serialize(field, None)
-        self.assertTrue(type(e.exception) == TypeError)
+        self.assertEqual(type(e.exception), TypeError)
         self.assertEqual(
             e.exception.args[0],
             "Values must be a sequence type (list, tuple, or range).",
@@ -1767,10 +1765,7 @@ class TestSequenceWidget(unittest.TestCase):
         return SequenceWidget(**kw)
 
     def test_prototype_unicode(self):
-        # Deform
-        from deform.compat import url_unquote
-
-        renderer = DummyRenderer(text_type("abc"))
+        renderer = DummyRenderer("abc")
         schema = DummySchema()
         field = DummyField(schema, renderer)
         widget = self._makeOne()
@@ -1778,14 +1773,11 @@ class TestSequenceWidget(unittest.TestCase):
         field.children = [protofield]
         result = widget.prototype(field)
         self.assertEqual(type(result), str)
-        self.assertEqual(url_unquote(result), "abc")
+        self.assertEqual(unquote(result), "abc")
         self.assertEqual(protofield.cloned, True)
 
     def test_prototype_field_has_no_name(self):
-        # Deform
-        from deform.compat import url_unquote  # noQA
-
-        renderer = DummyRenderer(text_type("abc"))
+        renderer = DummyRenderer("abc")
         schema = DummySchema()
         field = DummyField(schema, renderer)
         widget = self._makeOne()
@@ -1795,9 +1787,6 @@ class TestSequenceWidget(unittest.TestCase):
         self.assertRaises(ValueError, widget.prototype, field)
 
     def test_prototype_str(self):
-        # Deform
-        from deform.compat import url_unquote
-
         renderer = DummyRenderer("abc")
         schema = DummySchema()
         field = DummyField(schema, renderer)
@@ -1806,7 +1795,7 @@ class TestSequenceWidget(unittest.TestCase):
         field.children = [protofield]
         result = widget.prototype(field)
         self.assertEqual(type(result), str)
-        self.assertEqual(url_unquote(result), "abc")
+        self.assertEqual(unquote(result), "abc")
         self.assertEqual(protofield.cloned, True)
 
     def test_serialize_null(self):
@@ -2367,12 +2356,6 @@ class TestNormalizeChoices(unittest.TestCase):
     def test_string(self):
         self.assertEqual(
             self._call((("value", "description"),)), [("value", "description")]
-        )
-
-    def test_text_type(self):
-        self.assertEqual(
-            self._call(((text_type("value"), "description"),)),
-            [("value", "description")],
         )
 
     def test_integer(self):

@@ -5,9 +5,9 @@
                  title title|field.title;
                  oid oid|field.oid"
      title="${description}"
-     class="form-group row deform-seq-item ${field.error and error_class or ''} ${field.widget.item_css_class or ''} ${field.default_item_css_class()}"
+     class="mb-3 row deform-seq-item ${field.error and error_class or ''} ${field.widget.item_css_class or ''} ${field.default_item_css_class()}"
      i18n:domain="deform">
-  <div class="col-xs-11">
+  <div class="col-md-10">
     <span tal:replace="structure field.serialize(cstruct)"/>
     <tal:errors condition="field.error and not hidden"
                 define="errstr 'error-%s' % oid"
@@ -18,19 +18,19 @@
          i18n:translate="">${msg}</p>
     </tal:errors>
   </div>
-  <div class="col-xs-1" style="padding:0">
+  <div class="col-md-2" style="padding:0">
     <!-- sequence_item -->
-    <span class="deform-order-button close glyphicon glyphicon-resize-vertical"
+    <button class="deform-order-button btn bi bi-arrows-vertical"
           id="${oid}-order"
           tal:condition="not hidden"
           title="Reorder (via drag and drop)"
-          i18n:attributes="title"></span>
-    <a class="deform-close-button close"
+          i18n:attributes="title"></button>
+    <button class="deform-close-button btn bi bi-x"
        id="${oid}-close"
        tal:condition="not field.widget.hidden"
        title="Remove"
        i18n:attributes="title"
-       onclick="javascript:deform.removeSequenceItem(this);">&times;</a>
+       onclick="javascript:deform.removeSequenceItem(this);"></button>
   </div>
   <!-- /sequence_item -->
 </div>

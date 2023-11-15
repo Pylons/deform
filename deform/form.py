@@ -4,7 +4,6 @@ import re
 
 from chameleon.utils import Markup
 
-from . import compat
 from . import field
 from . import widget
 
@@ -142,7 +141,7 @@ class Form(field.Field):
         field.Field.__init__(self, schema, **kw)
         _buttons = []
         for button in buttons:
-            if isinstance(button, compat.string_types):
+            if isinstance(button, str):
                 button = Button(button)
             _buttons.append(button)
         self.action = action
