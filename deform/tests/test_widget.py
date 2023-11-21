@@ -850,8 +850,7 @@ class TestRichTextWidget(TestTextInputWidget):
 
         # Default options should be provided
         result = renderer.kw["tinymce_options"]
-        self.assertTrue('"height": 240' in result)
-        self.assertTrue('"width": 0' in result)
+        self.assertTrue('"promotion": false' in result)
 
         # Custom options should be set
         self.assertTrue(
