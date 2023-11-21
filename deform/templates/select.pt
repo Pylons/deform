@@ -15,7 +15,7 @@
   <select tal:attributes="
           name name;
           id oid;
-          class string: form-control ${css_class or ''};
+          class string: form-select ${css_class or ''};
           multiple multiple;
           size size;
           style style;

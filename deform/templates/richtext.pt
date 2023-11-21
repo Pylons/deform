@@ -2,7 +2,7 @@
                  tinymce_options tinymce_options|field.widget.tinymce_options;
                  oid oid|field.oid;
                  name name|field.name;"
-    xmlns:i18n="http://xml.zope.org/namespaces/i18n" 
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
     i18n:domain="deform"
     tal:omit-tag="">
 
@@ -12,15 +12,15 @@
           height: 240px;
           display: block;
       }
-    </style>  
-  <textarea id="${oid}" name="${name}" 
+    </style>
+  <textarea id="${oid}" name="${name}"
             class="tinymce form-control" tal:content="cstruct" />
   <!--!
     NB: disable delayed_load on error redisplay of form, since
     that might result in non-HTML-escaped interpolation of
     user input.
   -->
-  <span id="${oid}-preload" class="tinymce-preload" 
+  <span id="${oid}-preload" class="tinymce-preload"
         tal:condition="delayed_load and not field.error"
         tal:content="structure cstruct" />
   <script type="text/javascript">
@@ -30,7 +30,7 @@
           language: '<tal:block i18n:translate="language-code">en</tal:block>',
           body_class: 'form-control',
           <tal:block condition="tinymce_options">${tinymce_options},</tal:block>
-          elements: oid
+          selector: '#' + oid
         };
         var jqoid = $('#' + oid);
         var jqoid_preload = $('#' + oid + '-preload');

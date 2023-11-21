@@ -2,17 +2,13 @@
                  style style|field.widget.style;
                  oid oid|field.oid;
                  inline getattr(field.widget, 'inline', False);
-                 autofocus autofocus|field.autofocus"
-     tal:omit-tag="not inline">
+                 autofocus autofocus|field.autofocus">
   ${field.start_sequence()}
   <div tal:repeat="choice values | field.widget.values"
-       tal:omit-tag="inline"
-       class="checkbox">
-    <label for="${oid}-${repeat.choice.index}"
-           tal:define="(value, title) choice"
-           tal:attributes="class inline and 'checkbox-inline'">
+       tal:attributes="class string:form-check ${inline and 'form-check-inline' or ''}">
+    <tal:choice tal:define="(value, title) choice">
       <input tal:attributes="checked value in cstruct;
-                             class css_class;
+                             class string:form-check-input css_class;
                              style style;
                              autofocus not repeat.choice.index and autofocus;
                              attributes|field.widget.attributes|{};"
@@ -20,8 +16,10 @@
              name="checkbox"
              value="${value}"
              id="${oid}-${repeat.choice.index}"/>
-      ${title}
-    </label>
+      <label class="form-check-label" for="${oid}-${repeat.choice.index}">
+        ${title}
+      </label>
+    </tal:choice>
   </div>
   ${field.end_sequence()}
 </div>

@@ -13,7 +13,7 @@
      i18n:domain="deform">
 
   <label for="${oid}"
-         class="control-label ${required and 'required' or ''}"
+         class="form-label ${required and 'required' or ''}"
          tal:condition="not structural"
          id="req-${oid}"
          >
@@ -31,7 +31,7 @@
             tal:condition="input_append">${input_append}</span>
   </div>
 
-  <p class="form-text text-danger"
+  <p class="invalid-feedback"
      tal:define="errstr 'error-%s' % field.oid"
      tal:repeat="msg field.error.messages()"
      i18n:translate=""
