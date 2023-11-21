@@ -884,9 +884,7 @@ class RichTextWidget(TextInputWidget):
     requirements = ({"js": "deform:static/tinymce/tinymce.min.js"},)
 
     #: Default options passed to TinyMCE. Customise by using :attr:`options`.
-    default_options = (
-        ("promotion", False),
-    )
+    default_options = (("promotion", False),)
     #: Options to pass to TinyMCE that will override :attr:`default_options`.
     options = None
 
