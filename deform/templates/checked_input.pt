@@ -11,6 +11,7 @@
   ${field.start_mapping()}
   <div class="mb-3 ${field.error and 'is-invalid' or None}">
     <input type="text" name="${name}" value="${cstruct}"
+           i18n:attributes="placeholder"
            tal:attributes="style style;
                            class string:form-control ${field.error and error_class or css_class};
                            placeholder subject;
@@ -21,6 +22,7 @@
   </div>
   <div class="mb-3 ${field.error and 'is-invalid' or None}">
     <input type="text" name="${name}-confirm" value="${confirm}"
+           i18n:attributes="placeholder"
            tal:attributes="style style;
                            class string:form-control ${field.error and error_class or css_class};
                            required field.required and 'required' or None;
