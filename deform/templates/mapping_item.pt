@@ -1,12 +1,11 @@
-<div tal:define="error_class error_class|field.widget.error_class;
-                 description description|field.description;
+<div tal:define="description description|field.description;
                  title title|field.title;
                  oid oid|field.oid;
                  hidden hidden|field.widget.hidden;
                  category category|field.widget.category;
                  structural hidden or category == 'structural';
                  required required|field.required;"
-     class="mb-3 ${field.error and error_class or ''} ${field.widget.item_css_class or ''} ${field.default_item_css_class()}"
+     class="mb-3 ${field.widget.item_css_class or ''} ${field.default_item_css_class()}"
      title="${description}"
      id="item-${oid}"
      tal:omit-tag="structural"
