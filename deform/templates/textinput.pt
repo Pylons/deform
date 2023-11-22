@@ -9,6 +9,7 @@
       tal:omit-tag="">
     <input type="text" name="${name}" value="${cstruct}"
            tal:attributes="class string: form-control ${field.error and error_class or css_class or ''};
+                           required field.required and 'required' or None;
                            style style;
                            autofocus autofocus;
                            attributes|field.widget.attributes|{};"

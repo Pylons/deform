@@ -3,8 +3,7 @@
                  oid oid|field.oid;
                  hidden hidden|field.widget.hidden;
                  category category|field.widget.category;
-                 structural hidden or category == 'structural';
-                 required required|field.required;"
+                 structural hidden or category == 'structural';"
      class="mb-3 ${field.widget.item_css_class or ''} ${field.default_item_css_class()}"
      title="${description}"
      id="item-${oid}"
@@ -12,7 +11,7 @@
      i18n:domain="deform">
 
   <label for="${oid}"
-         class="form-label ${required and 'required' or ''}"
+         class="form-label"
          tal:condition="not structural"
          id="req-${oid}"
          >

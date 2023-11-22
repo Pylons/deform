@@ -3,12 +3,12 @@
                      errormsg errormsg|field.errormsg;
                      item_template item_template|field.widget.item_template"
          i18n:domain="deform">
-  
+
   <div class="card mb-3" title="${description}">
     <div class="card-header">${title}</div>
     <div class="card-body">
 
-      <div tal:condition="errormsg" 
+      <div tal:condition="errormsg"
            class="clearfix alert alert-danger">
         <p i18n:translate="">
            There was a problem with this section
@@ -23,7 +23,7 @@
       ${field.start_mapping()}
       <div tal:repeat="child field.children"
            tal:replace="structure child.render_template(item_template)" >
-      </div>     
+      </div>
       ${field.end_mapping()}
 
     </div>
