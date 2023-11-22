@@ -13,6 +13,7 @@
                          class string: ${css_class or ''} form-control hasDatepicker;
                          style style;
                          autofocus autofocus;
+                         required field.required and 'required' or None;
                          attributes|field.widget.attributes|{};"
          id="${oid}"/>
   ${field.end_mapping()}

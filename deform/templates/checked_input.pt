@@ -1,6 +1,7 @@
 <div tal:define="oid oid|field.oid;
                  name name|field.name;
                  css_class css_class|field.widget.css_class;
+                 error_class error_class|field.widget.error_class;
                  style style|field.widget.style;
                  mask mask|field.widget.mask;
                  mask_placeholder mask_placeholder|field.widget.mask_placeholder;
@@ -8,19 +9,21 @@
      i18n:domain="deform"
      tal:omit-tag="">
   ${field.start_mapping()}
-  <div>
+  <div class="mb-3 ${field.error and 'is-invalid' or None}">
     <input type="text" name="${name}" value="${cstruct}"
            tal:attributes="style style;
-                           class string: form-control ${css_class or ''};
+                           class string:form-control ${field.error and error_class or css_class};
                            placeholder subject;
                            autofocus autofocus;
+                           required field.required and 'required' or None;
                            attributes|field.widget.attributes|{};"
            id="${oid}"/>
   </div>
-  <div>
+  <div class="mb-3 ${field.error and 'is-invalid' or None}">
     <input type="text" name="${name}-confirm" value="${confirm}"
-           tal:attributes="class string: form-control ${css_class or ''};
-                           style style;
+           tal:attributes="style style;
+                           class string:form-control ${field.error and error_class or css_class};
+                           required field.required and 'required' or None;
                            placeholder confirm_subject;
                            confirm_attributes|field.widget.confirm_attributes|{};"
            id="${oid}-confirm"/>

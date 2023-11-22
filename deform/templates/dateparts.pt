@@ -11,7 +11,7 @@
     <div class="col-md-4"><div class="input-group">
       <span class="input-group-text" i18n:translate="">Year</span>
       <input type="number" name="year" value="${year}"
-             class="span2 form-control ${field.error and error_class or css_class or ''}"
+             class="span2 form-control ${field.error and error_class or css_class}"
              tal:attributes="style style;
                              autofocus autofocus;
                              required field.required and 'required' or None;
@@ -22,7 +22,7 @@
     <div class="col-md-4"><div class="input-group">
       <span class="input-group-text" i18n:translate="">Month</span>
       <input type="number" name="month" value="${month}"
-             class="span2 form-control ${field.error and error_class or css_class or ''}"
+             class="span2 form-control ${field.error and error_class or css_class}"
              tal:attributes="style style;
                              required field.required and 'required' or None;
                              month_attributes|field.widget.month_attributes|{};"
@@ -32,7 +32,7 @@
     <div class="col-md-4"><div class="input-group">
       <span class="input-group-text" i18n:translate="">Day</span>
       <input type="number" name="day" value="${day}"
-             class="span2 form-control ${field.error and error_class or css_class or ''}"
+             class="span2 form-control ${field.error and error_class or css_class}"
              tal:attributes="style style;
                              required field.required and 'required' or None;
                              day_attributes|field.widget.day_attributes|{};"
