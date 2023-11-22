@@ -14,6 +14,7 @@
              class="span2 form-control ${field.error and error_class or css_class or ''}"
              tal:attributes="style style;
                              autofocus autofocus;
+                             required field.required and 'required' or None;
                              year_attributes|field.widget.year_attributes|{};"
              maxlength="4"
              id="${oid}"/>
@@ -23,6 +24,7 @@
       <input type="number" name="month" value="${month}"
              class="span2 form-control ${field.error and error_class or css_class or ''}"
              tal:attributes="style style;
+                             required field.required and 'required' or None;
                              month_attributes|field.widget.month_attributes|{};"
              maxlength="2"
              id="${oid}-month"/>
@@ -32,6 +34,7 @@
       <input type="number" name="day" value="${day}"
              class="span2 form-control ${field.error and error_class or css_class or ''}"
              tal:attributes="style style;
+                             required field.required and 'required' or None;
                              day_attributes|field.widget.day_attributes|{};"
              maxlength="2"
              id="${oid}-day"/>

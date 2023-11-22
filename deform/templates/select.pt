@@ -19,6 +19,7 @@
           multiple multiple;
           size size;
           style style;
+          required field.required and 'required' or None;
           autofocus autofocus;
           attributes|field.widget.attributes|{};">
     <tal:loop tal:repeat="item values">

@@ -10,6 +10,7 @@
       <input tal:attributes="checked value == cstruct;
                              class string:form-check-input ${css_class};
                              style style;
+                             required field.required and 'required' or None;
                              autofocus not repeat.choice.index and autofocus;
                              readonly 'readonly' in getattr(field.widget, 'attributes', {}) and value == cstruct;
                              disabled 'readonly' in getattr(field.widget, 'attributes', {}) and value != cstruct;

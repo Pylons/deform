@@ -12,6 +12,7 @@
                          class string:form-check-input ${css_class};
                          style style;
                          autofocus autofocus;
+                         required field.required and 'required' or None;
                          attributes|field.widget.attributes|{};" />
 
   <label for="${field.oid}"
