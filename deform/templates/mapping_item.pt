@@ -14,9 +14,7 @@
          class="form-label"
          tal:condition="not structural"
          id="req-${oid}"
-         >
-    ${title}
-  </label>
+         >${title}</label>
 
   <div tal:define="input_prepend field.widget.input_prepend | None;
                    input_append field.widget.input_append  | None"
@@ -24,9 +22,9 @@
        class="input-group">
     <span class="input-group-text"
           tal:condition="input_prepend">${input_prepend}</span
-    ><span tal:replace="structure field.serialize(cstruct).strip()"
-    /><span class="input-group-text"
-            tal:condition="input_append">${input_append}</span>
+          ><span tal:replace="structure field.serialize(cstruct).strip()"
+          /><span class="input-group-text"
+          tal:condition="input_append">${input_append}</span>
   </div>
 
   <p class="invalid-feedback"
@@ -40,6 +38,7 @@
   </p>
 
   <p tal:condition="field.description and not field.widget.hidden"
+     id="help-${oid}"
      class="form-text" >
     ${field.description}
   </p>
