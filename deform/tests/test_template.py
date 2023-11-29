@@ -184,3 +184,4 @@ class DummyField(object):
     widget = DummyWidget()
     name = "name"
     oid = "oid"
+    required = True
