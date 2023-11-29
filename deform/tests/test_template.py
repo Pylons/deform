@@ -166,7 +166,7 @@ class Test_default_renderer(unittest.TestCase):
             str(
                 '<div class="form-check"> '
                 '<input type="checkbox" name="name" value="true" '
-                'id="oid" class="form-check-input "/> '
+                'id="oid" class="form-check-input " required="required"/> '
                 '</div>'
             ),
         )
