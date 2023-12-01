@@ -28,7 +28,7 @@ export PATH="${PWD}:$PATH"
 
 # Checkout deformdemo
 if [ ! -d deformdemo_functional_tests ] ; then
-    git clone https://github.com/pylons/deformdemo.git deformdemo_functional_tests
+    git clone https://github.com/novareto/deformdemo.git deformdemo_functional_tests
 fi
 
 # Locales are needed for deformdemo tests
