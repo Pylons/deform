@@ -9,6 +9,7 @@
                           cols cols;
                           class string: form-control ${css_class or ''};
                           style style;
+                          required field.required and 'required' or None;
                           autofocus autofocus;
                           attributes|field.widget.attributes|{};"
           id="${oid}"
