@@ -7,38 +7,34 @@
                  style style|field.widget.style;
                  autofocus autofocus|field.autofocus">
   ${field.start_mapping()}
-  <div class="row">
-    <div class="col-md-4"><div class="input-group">
-      <span class="input-group-text" i18n:translate="">Year</span>
-      <input type="number" name="year" value="${year}"
-             class="span2 form-control ${field.error and error_class or css_class}"
-             tal:attributes="style style;
-                             autofocus autofocus;
-                             required field.required and 'required' or None;
-                             year_attributes|field.widget.year_attributes|{};"
-             maxlength="4"
-             id="${oid}"/>
-    </div></div>
-    <div class="col-md-4"><div class="input-group">
-      <span class="input-group-text" i18n:translate="">Month</span>
-      <input type="number" name="month" value="${month}"
-             class="span2 form-control ${field.error and error_class or css_class}"
-             tal:attributes="style style;
-                             required field.required and 'required' or None;
-                             month_attributes|field.widget.month_attributes|{};"
-             maxlength="2"
-             id="${oid}-month"/>
-    </div></div>
-    <div class="col-md-4"><div class="input-group">
-      <span class="input-group-text" i18n:translate="">Day</span>
-      <input type="number" name="day" value="${day}"
-             class="span2 form-control ${field.error and error_class or css_class}"
-             tal:attributes="style style;
-                             required field.required and 'required' or None;
-                             day_attributes|field.widget.day_attributes|{};"
-             maxlength="2"
-             id="${oid}-day"/>
-    </div></div>
+  <div class="input-group">
+    <span class="input-group-text" i18n:translate="">Year</span>
+    <input type="number" name="year" value="${year}"
+           class="span2 form-control ${field.error and error_class or css_class}"
+           tal:attributes="style style;
+                           autofocus autofocus;
+                           required field.required and 'required' or None;
+                           year_attributes|field.widget.year_attributes|{};"
+           maxlength="4"
+           id="${oid}"/>
+
+    <span class="input-group-text" i18n:translate="">Month</span>
+    <input type="number" name="month" value="${month}"
+           class="span2 form-control ${field.error and error_class or css_class}"
+           tal:attributes="style style;
+                           required field.required and 'required' or None;
+                           month_attributes|field.widget.month_attributes|{};"
+           maxlength="2"
+           id="${oid}-month"/>
+
+    <span class="input-group-text" i18n:translate="">Day</span>
+    <input type="number" name="day" value="${day}"
+           class="span2 form-control ${field.error and error_class or css_class}"
+           tal:attributes="style style;
+                           required field.required and 'required' or None;
+                           day_attributes|field.widget.day_attributes|{};"
+           maxlength="2"
+           id="${oid}-day"/>
+    ${field.end_mapping()}
   </div>
-  ${field.end_mapping()}
 </div>
