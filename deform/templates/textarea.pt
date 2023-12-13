@@ -1,13 +1,14 @@
 <textarea tal:define="rows rows|field.widget.rows;
                       cols cols|field.widget.cols;
                       css_class css_class|field.widget.css_class;
+                      error_class error_class|field.widget.error_class;
                       oid oid|field.oid;
                       name name|field.name;
                       style style|field.widget.style;
                       autofocus autofocus|field.autofocus"
           tal:attributes="rows rows;
                           cols cols;
-                          class string: form-control ${css_class or ''};
+                          class string:form-control ${field.error and error_class or css_class or ''};
                           style style;
                           required field.required and 'required' or None;
                           autofocus autofocus;

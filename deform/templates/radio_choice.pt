@@ -2,13 +2,15 @@
                  css_class css_class|field.widget.css_class;
                  style style|field.widget.style;
                  inline getattr(field.widget, 'inline', False);
-                 autofocus autofocus|field.autofocus">
+                 error_class error_class|field.widget.error_class;
+                 autofocus autofocus|field.autofocus"
+     tal:attributes="class field.error and error_class or None">
   ${field.start_rename()}
   <div tal:repeat="choice values | field.widget.values"
        tal:attributes="class string:form-check ${inline and 'form-check-inline' or ''}">
     <tal:choice tal:define="(value, title) choice">
       <input tal:attributes="checked value == cstruct;
-                             class string:form-check-input ${css_class};
+                             class string:form-check-input ${field.error and error_class or css_class};
                              style style;
                              required field.required and 'required' or None;
                              autofocus not repeat.choice.index and autofocus;

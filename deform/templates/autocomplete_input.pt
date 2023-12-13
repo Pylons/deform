@@ -1,10 +1,10 @@
-<span tal:define="name name|field.name;
+<div tal:define="name name|field.name;
                   css_class css_class|field.widget.css_class;
                   error_class error_class|field.widget.error_class;
                   oid oid|field.oid;
                   style style|field.widget.style;
                   autofocus autofocus|field.autofocus"
-      tal:omit-tag="">
+     tal:attributes="class field.error and error_class or css_class">
     <input type="text"
            name="${name}"
            value="${cstruct}"
@@ -26,4 +26,4 @@
           }
         );
     </script>
-</span>
+</div>
