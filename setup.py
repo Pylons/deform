@@ -25,11 +25,11 @@ CHANGES = readfile("CHANGES.txt")
 VERSION = '3.0.0.dev0'
 
 requires = [
-    "Chameleon>=3.5",  # Markup class
-    "colander>=2.0",  # cstruct_children/appstruct_children, Set
+    "Chameleon>=2.5.1",  # Markup class
+    "colander>=1.0",  # cstruct_children/appstruct_children, Set
     "iso8601",
-    "peppercorn>=0.6",  # rename operation type
-    "translationstring>=1.4",  # add format mapping with %
+    "peppercorn>=0.3",  # rename operation type
+    "translationstring>=1.0",  # add format mapping with %
     "zope.deprecation",
 ]
 
