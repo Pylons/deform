@@ -1,0 +1,126 @@
+# Turkish translations for deform.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the deform project.
+# Hasan Sezer Taşan <hasansezertasan@gmail.com>, 2024.
+msgid ""
+msgstr ""
+"Project-Id-Version: deform 2.0.15\n"
+"POT-Creation-Date: 2016-11-19 13:28+0200\n"
+"PO-Revision-Date: 2024-02-05 19:35+0300\n"
+"Last-Translator: Hasan Sezer Taşan <hasansezertasan@gmail.com>\n"
+"Language-Team: Turkish\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Lingua 4.11\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: deform/schema.py:109
+#, python-format
+msgid "${value} is not a dictionary"
+msgstr "${value} bir sözlük değil"
+
+#: deform/schema.py:116
+#, python-format
+msgid "${value} has no ${key} key"
+msgstr "${value} değeri ${key} anahtarına sahip değil"
+
+#: deform/widget.py:718 deform/widget.py:1800
+msgid "Incomplete date"
+msgstr "Tarih eksik"
+
+#: deform/widget.py:721
+msgid "Incomplete time"
+msgstr "Zaman eksik"
+
+#: deform/widget.py:1253
+msgid "Fields did not match"
+msgstr "Alanlar eşleşmedi"
+
+#: deform/widget.py:1254
+msgid "Value"
+msgstr "Değer"
+
+#: deform/widget.py:1255
+msgid "Confirm Value"
+msgstr "Değeri Onayla"
+
+#: deform/widget.py:1321
+msgid "Password did not match confirm"
+msgstr "Şifre onayı eşleşmedi"
+
+#: deform/widget.py:1485
+#, python-format
+msgid "Add ${subitem_title}"
+msgstr "${subitem_title} ekle"
+
+#: deform/templates/checked_password.pt:15
+msgid "Password"
+msgstr "Şifre"
+
+#: deform/templates/checked_password.pt:25
+msgid "Confirm Password"
+msgstr "Şifreyi Onayla"
+
+#: deform/templates/dateparts.pt:10
+msgid "Year"
+msgstr "Yıl"
+
+#: deform/templates/dateparts.pt:18
+msgid "Month"
+msgstr "Ay"
+
+#: deform/templates/dateparts.pt:26
+msgid "Day"
+msgstr "Gün"
+
+#: deform/templates/datetimeinput.pt:9
+msgid "Date"
+msgstr "Tarih"
+
+#: deform/templates/datetimeinput.pt:16
+msgid "Time"
+msgstr "Zaman"
+
+#: deform/templates/form.pt:35
+msgid "There was a problem with your submission"
+msgstr "Gönderiminizde bir sorun oluştu"
+
+#: deform/templates/form.pt:37
+msgid "Errors have been highlighted below"
+msgstr "Hatalar aşağıda vurgulanmıştır"
+
+#: deform/templates/mapping.pt:13 deform/templates/mapping_accordion.pt:29
+msgid "There was a problem with this section"
+msgstr "Bu bölümde bir sorun oluştu"
+
+#. Default: en
+#: deform/templates/richtext.pt:30
+msgid "language-code"
+msgstr "tr"
+
+#: deform/templates/sequence_item.pt:26
+msgid "Reorder (via drag and drop)"
+msgstr "Yeniden sırala (sürükle ve bırak)"
+
+#: deform/templates/sequence_item.pt:31
+msgid "Remove"
+msgstr "Kaldır"
+
+#: deform/templates/readonly/checkbox.pt:8
+msgid "True"
+msgstr "Doğru"
+
+#: deform/templates/readonly/checkbox.pt:12
+msgid "False"
+msgstr "Yanlış"
+
+#: deform/templates/readonly/checked_password.pt:4
+msgid "Password not displayed."
+msgstr "Şifre görüntülenmiyor."
+
+#: deform/tests/test_widget.py:1752
+#, python-format
+msgid "Yo ${subitem_title}"
+msgstr ""
