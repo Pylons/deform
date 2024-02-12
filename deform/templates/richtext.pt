@@ -14,19 +14,21 @@
   -->
   <script type="text/javascript">
     (function($){
-        deform.addCallback('${oid}', function(oid) {
+    deform.addCallback('${oid}', function(oid) {
+    console.log(oid);
             var options = {
                 language: '<tal:block i18n:translate="language-code">en</tal:block>',
                 body_class: 'form-control',
                     <tal:block condition="tinymce_options">${tinymce_options},</tal:block>
-                    elements: oid
+                    selector: '#' + oid
             };
             var jqoid = $('#' + oid);
             if ('${delayed_load and not field.error}' == 'True') {
                 jqoid.one('click', function(){
                     tinyMCE.init(options);
                 });
-            } else {
+                } else {
+                console.log('init');
                 tinyMCE.init(options);
             }
         });
