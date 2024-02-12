@@ -1,12 +1,13 @@
 <div tal:define="delayed_load delayed_load|field.widget.delayed_load;
                  tinymce_options tinymce_options|field.widget.tinymce_options;
                  oid oid|field.oid;
+                 error_class error_class|field.widget.error_class;
                  name name|field.name;"
     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
     i18n:domain="deform"
     tal:omit-tag="">
   <textarea id="${oid}" name="${name}"
-            class="tinymce form-control" tal:content="cstruct" />
+            class="tinymce form-control ${field.error and error_class or ''}" tal:content="cstruct" />
   <!--!
     NB: disable delayed_load on error redisplay of form, since
     that might result in non-HTML-escaped interpolation of
@@ -18,7 +19,7 @@
     console.log(oid);
             var options = {
                 language: '<tal:block i18n:translate="language-code">en</tal:block>',
-                body_class: 'form-control',
+                body_class: 'form-control ${field.error and error_class or ""}',
                     <tal:block condition="tinymce_options">${tinymce_options},</tal:block>
                     selector: '#' + oid
             };
