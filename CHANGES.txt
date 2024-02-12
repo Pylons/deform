@@ -10,6 +10,11 @@
 
 - Update to Bootstrap5
 
+Deprecations
+^^^^^^^^^^^^
+
+- Drop support of Python 3.6 and Python 3.7.
+
 
 .. _2.0.15:
 
