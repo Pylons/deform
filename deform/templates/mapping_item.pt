@@ -1,24 +1,20 @@
-<div tal:define="error_class error_class|field.widget.error_class;
-                 description description|field.description;
+<div tal:define="description description|field.description;
                  title title|field.title;
                  oid oid|field.oid;
                  hidden hidden|field.widget.hidden;
                  category category|field.widget.category;
-                 structural hidden or category == 'structural';
-                 required required|field.required;"
-     class="mb-3 ${field.error and error_class or ''} ${field.widget.item_css_class or ''} ${field.default_item_css_class()}"
+                 structural hidden or category == 'structural';"
+     class="mb-3 ${field.widget.item_css_class or ''} ${field.default_item_css_class()}"
      title="${description}"
      id="item-${oid}"
      tal:omit-tag="structural"
      i18n:domain="deform">
 
   <label for="${oid}"
-         class="control-label ${required and 'required' or ''}"
+         class="form-label"
          tal:condition="not structural"
          id="req-${oid}"
-         >
-    ${title}
-  </label>
+         >${title}</label>
 
   <div tal:define="input_prepend field.widget.input_prepend | None;
                    input_append field.widget.input_append  | None"
@@ -26,12 +22,12 @@
        class="input-group">
     <span class="input-group-text"
           tal:condition="input_prepend">${input_prepend}</span
-    ><span tal:replace="structure field.serialize(cstruct).strip()"
-    /><span class="input-group-text"
-            tal:condition="input_append">${input_append}</span>
+          ><span tal:replace="structure field.serialize(cstruct).strip()"
+          /><span class="input-group-text"
+          tal:condition="input_append">${input_append}</span>
   </div>
 
-  <p class="form-text text-danger"
+  <p class="invalid-feedback"
      tal:define="errstr 'error-%s' % field.oid"
      tal:repeat="msg field.error.messages()"
      i18n:translate=""
@@ -42,6 +38,7 @@
   </p>
 
   <p tal:condition="field.description and not field.widget.hidden"
+     id="help-${oid}"
      class="form-text" >
     ${field.description}
   </p>

@@ -74,7 +74,7 @@ TODOs
       the name must be provided, on an edit form the name cannot be
       provided).
 
-- [ ] Make deform.widget.RichText render only on oid specific element
+- [X] Make deform.widget.RichText render only on oid specific element
       in templates.
 
 - [ ] Work out RichTextWidget default height and width and overrides

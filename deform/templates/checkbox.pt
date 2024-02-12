@@ -1,23 +1,22 @@
-<div class="checkbox">
-  <label for="${field.oid}">
-    <input tal:define="name name|field.name;
-                       true_val true_val|field.widget.true_val;
-                       css_class css_class|field.widget.css_class;
-                       style style|field.widget.style;
-                       oid oid|field.oid;
-                       autofocus autofocus|field.autofocus|None"
-           type="checkbox"
-           name="${name}" value="${true_val}"
-           id="${oid}"
-           tal:attributes="checked cstruct == true_val;
-                           class css_class;
-                           style style;
-                           autofocus autofocus;
-                           attributes|field.widget.attributes|{};" />
+<div class="form-check">
+  <input tal:define="name name|field.name;
+                     true_val true_val|field.widget.true_val;
+                     css_class css_class|field.widget.css_class;
+                     style style|field.widget.style;
+                     oid oid|field.oid;
+                     autofocus autofocus|field.autofocus|None"
+         type="checkbox"
+         name="${name}" value="${true_val}"
+         id="${oid}"
+         tal:attributes="checked cstruct == true_val;
+                         class string:form-check-input ${css_class};
+                         style style;
+                         autofocus autofocus;
+                         required field.required and 'required' or None;
+                         attributes|field.widget.attributes|{};" />
 
-    <span tal:condition="hasattr(field, 'schema') and hasattr(field.schema, 'label')"
-          tal:replace="field.schema.label" class="checkbox-label" >
-    </span>
-
-  </label>
+  <label for="${field.oid}"
+         tal:condition="hasattr(field, 'schema') and hasattr(field.schema, 'label')"
+         tal:content="field.schema.label"
+         class="form-check-label"></label>
 </div>

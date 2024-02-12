@@ -1,4 +1,5 @@
 """Field."""
+
 # Standard Library
 import itertools
 import re

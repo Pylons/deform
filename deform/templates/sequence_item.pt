@@ -1,11 +1,10 @@
 <div tal:omit-tag="field.widget.hidden"
      tal:define="hidden hidden|field.widget.hidden;
-                 error_class error_class|field.widget.error_class;
                  description description|field.description;
                  title title|field.title;
                  oid oid|field.oid"
      title="${description}"
-     class="mb-3 row deform-seq-item ${field.error and error_class or ''} ${field.widget.item_css_class or ''} ${field.default_item_css_class()}"
+     class="mb-3 row deform-seq-item ${field.widget.item_css_class or ''} ${field.default_item_css_class()}"
      i18n:domain="deform">
   <div class="col-md-10">
     <span tal:replace="structure field.serialize(cstruct)"/>
@@ -14,7 +13,7 @@
                 repeat="msg field.error.messages()">
       <p tal:condition="msg"
          id="${errstr if repeat.msg.index==0 else '%s-%s' % (errstr, repeat.msg.index)}"
-         class="${error_class} form-text text-danger"
+         class="form-text invalid-feedback"
          i18n:translate="">${msg}</p>
     </tal:errors>
   </div>

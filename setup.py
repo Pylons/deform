@@ -26,7 +26,7 @@ VERSION = '3.0.0.dev0'
 
 requires = [
     "Chameleon>=2.5.1",  # Markup class
-    "colander>=1.0a1",  # cstruct_children/appstruct_children, Set
+    "colander>=1.0",  # cstruct_children/appstruct_children, Set
     "iso8601",
     "peppercorn>=0.3",  # rename operation type
     "translationstring>=1.0",  # add format mapping with %

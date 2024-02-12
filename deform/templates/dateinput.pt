@@ -1,6 +1,7 @@
 <div tal:define="css_class css_class|field.widget.css_class;
                  oid oid|field.oid;
                  style style|field.widget.style;
+                 error_class error_class|field.widget.error_class;
                  type_name type_name|field.widget.type_name;
                  autofocus autofocus|field.autofocus"
       tal:omit-tag="">
@@ -9,9 +10,10 @@
          name="date"
          value="${cstruct}"
 
-         tal:attributes="class string: ${css_class or ''} form-control hasDatepicker;
+         tal:attributes="class string:${field.error and error_class or css_class or ''} form-control hasDatepicker;
                          style style;
                          autofocus autofocus;
+                         required field.required and 'required' or None;
                          attributes|field.widget.attributes|{};"
          id="${oid}"/>
   ${field.end_mapping()}

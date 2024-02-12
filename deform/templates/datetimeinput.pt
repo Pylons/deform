@@ -3,27 +3,27 @@
       tal:define="oid oid|field.oid;
                   css_class css_class|field.widget.css_class;
                   style style|field.widget.style;
+                  error_class error_class|field.widget.error_class;
                   autofocus autofocus|field.autofocus;
                   type_name type_name|field.widget.type_name;">
   ${field.start_mapping()}
-  <div class="row">
-    <div class="col-md-6"><div class="input-group">
-      <span class="input-group-text" i18n:translate="">Date</span>
-      <input type="date" name="date" value="${date}"
-             class="span2 form-control ${css_class or ''} hasDatepicker"
-             tal:attributes="style style;
-                             autofocus autofocus;
-                             date_attributes|field.widget.date_attributes|{}"
-             id="${oid}-date"/>
-    </div></div>
-    <div class="col-md-6"><div class="input-group">
-      <span class="input-group-text" i18n:translate="">Time</span>
-      <input type="time" name="time" value="${time}"
-             class="span2 form-control ${css_class or ''} hasDatepicker"
-             tal:attributes="style style;
-             time_attributes|field.widget.time_attributes|{}"
-             id="${oid}-time"/>
-    </div></div>
+  <div class="input-group ${field.error and error_class or ''}">
+    <span class="input-group-text" i18n:translate="">Date</span>
+    <input type="date" name="date" value="${date}"
+           class="span2 form-control ${field.error and error_class or css_class} hasDatepicker"
+           tal:attributes="style style;
+                           autofocus autofocus;
+                           required field.required and 'required' or None;
+                           date_attributes|field.widget.date_attributes|{}"
+           id="${oid}-date"/>
+    <span class="input-group-text" i18n:translate="">Time</span>
+    <input type="time" name="time" value="${time}"
+           class="span2 form-control ${field.error and error_class or css_class} hasDatepicker"
+           tal:attributes="style style;
+                           required field.required and 'required' or None;
+                           time_attributes|field.widget.time_attributes|{}"
+           id="${oid}-time"/>
+
   </div>
   ${field.end_mapping()}
   <script type="text/javascript">

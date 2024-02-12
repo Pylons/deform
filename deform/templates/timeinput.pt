@@ -1,6 +1,7 @@
 <span tal:define="size size|field.widget.size;
                   css_class css_class|field.widget.css_class;
                   oid oid|field.oid;
+                  error_class error_class|field.widget.error_class;
                   style style|field.widget.style|None;
                   type_name type_name|field.widget.type_name;
                   autofocus autofocus|field.autofocus"
@@ -10,9 +11,10 @@
          name="time"
          value="${cstruct}"
          tal:attributes="size size;
-                         class string: ${css_class or ''} form-control hasDatepicker;
+                         class string:form-control hasDatepicker ${field.error and error_class or css_class or ''};
                          style style;
                          autofocus autofocus;
+                         required field.required and 'required' or None;
                          attributes|field.widget.attributes|{};"
          id="${oid}"/>
   ${field.end_mapping()}

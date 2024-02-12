@@ -4,6 +4,7 @@
      style style|field.widget.style;
      size size|field.widget.size;
      css_class css_class|field.widget.css_class;
+     error_class error_class|field.widget.error_class;
      unicode unicode|str;
      optgroup_class optgroup_class|field.widget.optgroup_class;
      multiple multiple|field.widget.multiple;
@@ -15,10 +16,11 @@
   <select tal:attributes="
           name name;
           id oid;
-          class string: form-control ${css_class or ''};
+          class string:form-select ${field.error and error_class or css_class or ''};
           multiple multiple;
           size size;
           style style;
+          required field.required and 'required' or None;
           autofocus autofocus;
           attributes|field.widget.attributes|{};">
     <tal:loop tal:repeat="item values">

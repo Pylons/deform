@@ -1,4 +1,5 @@
 """Decorator tests."""
+
 # Standard Library
 import unittest
 
