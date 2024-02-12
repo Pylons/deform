@@ -4,6 +4,12 @@
 - Remove spurious styles definition
   https://github.com/Pylons/deform/pull/504 [lelit]
 
+- Adds HTML5 validation
+
+- Update JS libs (TinyMCE)
+
+- Update to Bootstrap5
+
 
 .. _2.0.15:
 
