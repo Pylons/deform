@@ -2,7 +2,6 @@
 
 
 class reify(object):
-
     """Put the result of a method which uses this (non-data)
     descriptor decorator in the instance dict after the first call,
     effectively replacing the decorator with an instance variable."""
