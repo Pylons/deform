@@ -46,8 +46,6 @@ jobs:
             py: "pypy-3.7"
           # See: https://github.com/actions/setup-python/issues/850
           - os: macos-latest
-            py: "3.7"
-          - os: macos-latest
             py: "3.8"
           - os: macos-latest
             py: "3.9"
