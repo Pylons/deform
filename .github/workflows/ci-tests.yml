@@ -22,7 +22,7 @@ jobs:
           - "3.12"
           - "pypy-3.10"
         os:
-          - "ubuntu-latest"
+          - "ubuntu-22.04"
           - "windows-latest"
           - "macos-14" # arm64
           - "macos-13" # x64
@@ -31,10 +31,10 @@ jobs:
           - x86
           - arm64
         include:
-          # Only run coverage on ubuntu-latest, except on pypy3
-          - os: "ubuntu-latest"
+          # Only run coverage on ubuntu-22.04, except on pypy3
+          - os: "ubuntu-22.04"
             pytest-args: "--cov"
-          - os: "ubuntu-latest"
+          - os: "ubuntu-22.04"
             py: "pypy-3.7"
             pytest-args: ""
         exclude:
