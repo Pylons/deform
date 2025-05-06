@@ -1,4 +1,5 @@
 """Template tests."""
+
 # Standard Library
 import unittest
 

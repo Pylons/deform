@@ -1,4 +1,5 @@
 """Widget."""
+
 # Standard Library
 import csv
 from io import StringIO

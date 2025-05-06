@@ -1,4 +1,5 @@
 """Widget tests."""
+
 # Standard Library
 import unittest
 from urllib.parse import unquote
