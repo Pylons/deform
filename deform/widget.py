@@ -1415,18 +1415,20 @@ class CheckedInputWidget(Widget):
         return field.renderer(template, **values)
 
     def deserialize(self, field, pstruct):
-        if pstruct is null or pstruct == {}:
-            return null
+        if pstruct is null:
+             return null
+
         confirm_name = "%s-confirm" % field.name
         schema = SchemaNode(
             Mapping(),
-            SchemaNode(_PossiblyEmptyString(), name=field.name),
-            SchemaNode(_PossiblyEmptyString(), name=confirm_name),
+            SchemaNode(_PossiblyEmptyString(), name=field.name, missing=""),
+            SchemaNode(_PossiblyEmptyString(), name=confirm_name, missing=""),
         )
         try:
             validated = schema.deserialize(pstruct)
         except Invalid as exc:
-            raise Invalid(field.schema, "Invalid pstruct: %s" % exc)
+            raise Invalid(field.schema, f"Invalid pstruct: {pstruct}")
+
         value = validated[field.name]
         confirm = validated[confirm_name]
         setattr(field, confirm_name, confirm)
