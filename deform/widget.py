@@ -1415,7 +1415,7 @@ class CheckedInputWidget(Widget):
         return field.renderer(template, **values)
 
     def deserialize(self, field, pstruct):
-        if pstruct is null:
+        if pstruct is null or pstruct == {}:
             return null
         confirm_name = "%s-confirm" % field.name
         schema = SchemaNode(
