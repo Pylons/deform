@@ -652,7 +652,7 @@ class DateInputWidget(Widget):
         return field.renderer(template, **values)
 
     def deserialize(self, field, pstruct):
-        if pstruct in ("", null):
+        if not pstruct:
             return null
         try:
             validated = self._pstruct_schema.deserialize(pstruct)
