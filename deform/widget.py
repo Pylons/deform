@@ -1416,7 +1416,7 @@ class CheckedInputWidget(Widget):
 
     def deserialize(self, field, pstruct):
         if pstruct is null:
-             return null
+            return null
 
         confirm_name = "%s-confirm" % field.name
         schema = SchemaNode(
@@ -1426,7 +1426,7 @@ class CheckedInputWidget(Widget):
         )
         try:
             validated = schema.deserialize(pstruct)
-        except Invalid as exc:
+        except Invalid:
             raise Invalid(field.schema, f"Invalid pstruct: {pstruct}")
 
         value = validated[field.name]
