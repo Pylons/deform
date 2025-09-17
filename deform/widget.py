@@ -652,7 +652,7 @@ class DateInputWidget(Widget):
         return field.renderer(template, **values)
 
     def deserialize(self, field, pstruct):
-        if not pstruct:
+        if pstruct in ("", null):
             return null
         try:
             validated = self._pstruct_schema.deserialize(pstruct)
@@ -1421,8 +1421,8 @@ class CheckedInputWidget(Widget):
         confirm_name = "%s-confirm" % field.name
         schema = SchemaNode(
             Mapping(),
-            SchemaNode(_PossiblyEmptyString(), name=field.name, missing=""),
-            SchemaNode(_PossiblyEmptyString(), name=confirm_name, missing=""),
+            SchemaNode(_PossiblyEmptyString(), name=field.name),
+            SchemaNode(_PossiblyEmptyString(), name=confirm_name),
         )
         try:
             validated = schema.deserialize(pstruct)
