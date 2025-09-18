@@ -1,4 +1,5 @@
 """Template."""
+
 # Standard Library
 import os.path
 

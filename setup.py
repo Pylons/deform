@@ -26,7 +26,7 @@ VERSION = '3.0.0.dev0'
 
 requires = [
     "Chameleon>=2.5.1",  # Markup class
-    "colander>=1.0a1",  # cstruct_children/appstruct_children, Set
+    "colander>=1.0",  # cstruct_children/appstruct_children, Set
     "iso8601",
     "peppercorn>=0.3",  # rename operation type
     "translationstring>=1.0",  # add format mapping with %
@@ -85,11 +85,10 @@ setup(
         "License :: Repoze Public License",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
     ],

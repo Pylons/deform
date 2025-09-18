@@ -1,4 +1,5 @@
 """Widget."""
+
 # Standard Library
 import csv
 from io import StringIO
@@ -884,17 +885,7 @@ class RichTextWidget(TextInputWidget):
     requirements = ({"js": "deform:static/tinymce/tinymce.min.js"},)
 
     #: Default options passed to TinyMCE. Customise by using :attr:`options`.
-    default_options = (
-        ("height", 240),
-        ("width", 0),
-        ("skin", "lightgray"),
-        ("theme", "modern"),
-        ("mode", "exact"),
-        ("strict_loading_mode", True),
-        ("theme_advanced_resizing", True),
-        ("theme_advanced_toolbar_align", "left"),
-        ("theme_advanced_toolbar_location", "top"),
-    )
+    default_options = (("promotion", False),)
     #: Options to pass to TinyMCE that will override :attr:`default_options`.
     options = None
 
@@ -1426,6 +1417,7 @@ class CheckedInputWidget(Widget):
     def deserialize(self, field, pstruct):
         if pstruct is null:
             return null
+
         confirm_name = "%s-confirm" % field.name
         schema = SchemaNode(
             Mapping(),
@@ -1434,8 +1426,9 @@ class CheckedInputWidget(Widget):
         )
         try:
             validated = schema.deserialize(pstruct)
-        except Invalid as exc:
-            raise Invalid(field.schema, "Invalid pstruct: %s" % exc)
+        except Invalid:
+            raise Invalid(field.schema, f"Invalid pstruct: {pstruct}")
+
         value = validated[field.name]
         confirm = validated[confirm_name]
         setattr(field, confirm_name, confirm)
@@ -1811,8 +1804,6 @@ class FileUploadWidget(Widget):
     template = "file_upload"
     readonly_template = "readonly/file_upload"
     accept = None
-
-    requirements = ({"js": "deform:static/scripts/file_upload.js"},)
 
     _pstruct_schema = SchemaNode(
         Mapping(),

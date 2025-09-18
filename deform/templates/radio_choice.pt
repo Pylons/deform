@@ -2,29 +2,31 @@
                  css_class css_class|field.widget.css_class;
                  style style|field.widget.style;
                  inline getattr(field.widget, 'inline', False);
+                 error_class error_class|field.widget.error_class;
                  autofocus autofocus|field.autofocus"
-     tal:omit-tag="not inline">
+     tal:attributes="class field.error and error_class or None">
   ${field.start_rename()}
   <div tal:repeat="choice values | field.widget.values"
-       tal:omit-tag="inline"
-       class="radio">
-    <label for="${oid}-${repeat.choice.index}"
-           tal:define="(value, title) choice"
-           tal:attributes="class inline and 'radio-inline'">
+       tal:attributes="class string:form-check ${inline and 'form-check-inline' or ''}">
+    <tal:choice tal:define="(value, title) choice">
       <input tal:attributes="checked value == cstruct;
-                             class css_class;
+                             class string:form-check-input ${field.error and error_class or css_class};
                              style style;
+                             required field.required and 'required' or None;
                              autofocus not repeat.choice.index and autofocus;
                              readonly 'readonly' in getattr(field.widget, 'attributes', {}) and value == cstruct;
                              disabled 'readonly' in getattr(field.widget, 'attributes', {}) and value != cstruct;
-                             attributes|field.widget.attributes|{};
-                             "
+                             attributes|field.widget.attributes|{};"
              type="radio"
              name="${oid}"
              value="${value}"
              id="${oid}-${repeat.choice.index}"/>
-      ${title}
-    </label>
+
+      <label for="${oid}-${repeat.choice.index}"
+             class="form-check-label">
+        ${title}
+      </label>
+    </tal:choice>
   </div>
   ${field.end_rename()}
 </div>

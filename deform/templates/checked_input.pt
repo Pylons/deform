@@ -1,6 +1,7 @@
 <div tal:define="oid oid|field.oid;
                  name name|field.name;
                  css_class css_class|field.widget.css_class;
+                 error_class error_class|field.widget.error_class;
                  style style|field.widget.style;
                  mask mask|field.widget.mask;
                  mask_placeholder mask_placeholder|field.widget.mask_placeholder;
@@ -8,22 +9,28 @@
      i18n:domain="deform"
      tal:omit-tag="">
   ${field.start_mapping()}
-  <div>
-    <input type="text" name="${name}" value="${cstruct}"
+  <div class="input-group ${field.error and error_class or ''}">
+    <input type="text"
+           name="${name}"
+           value="${cstruct}"
            tal:attributes="style style;
-                           class string: form-control ${css_class or ''};
-                           placeholder subject;
+                           class string:mb3 form-control ${field.error and error_class or css_class};
                            autofocus autofocus;
+                           required field.required and 'required' or None;
                            attributes|field.widget.attributes|{};"
-           id="${oid}"/>
-  </div>
-  <div>
-    <input type="text" name="${name}-confirm" value="${confirm}"
-           tal:attributes="class string: form-control ${css_class or ''};
-                           style style;
-                           placeholder confirm_subject;
+           id="${oid}"
+           i18n:attributes="placeholder"
+           placeholder="${subject}"/>
+    <input type="text"
+           name="${name}-confirm"
+           value="${confirm}"
+           tal:attributes="style style;
+                           class string:form-control ${field.error and error_class or css_class};
+                           required field.required and 'required' or None;
                            confirm_attributes|field.widget.confirm_attributes|{};"
-           id="${oid}-confirm"/>
+           id="${oid}-confirm"
+           i18n:attributes="placeholder"
+           placeholder="${confirm_subject}" />
   </div>
   <script tal:condition="field.widget.mask" type="text/javascript">
    deform.addCallback(

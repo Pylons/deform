@@ -15,11 +15,10 @@ jobs:
     strategy:
       matrix:
         py:
-          - "3.8"
-          - "3.9"
           - "3.10"
           - "3.11"
           - "3.12"
+          - "3.13"
           - "pypy-3.10"
         os:
           - "ubuntu-latest"
@@ -44,6 +43,9 @@ jobs:
           # PyPy3 on Windows doesn't seem to work
           - os: "windows-latest"
             py: "pypy-3.7"
+          # macOS py3.10 doesn't seem to work.
+          - os: "macos-latest"
+            py: "3.10" 
     name: "Python: ${{ matrix.py }}-${{ matrix.architecture }} on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
     steps:

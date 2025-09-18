@@ -1,4 +1,5 @@
 """Template tests."""
+
 # Standard Library
 import unittest
 
@@ -164,9 +165,10 @@ class Test_default_renderer(unittest.TestCase):
         self.assertEqual(
             result,
             str(
-                '<div class="checkbox"> <label for="oid"> '
-                '<input type="checkbox" '
-                'name="name" value="true" id="oid"/> </label> </div>'
+                '<div class="form-check"> '
+                '<input type="checkbox" name="name" value="true" '
+                'id="oid" class="form-check-input " required="required"/> '
+                '</div>'
             ),
         )
 
@@ -183,3 +185,4 @@ class DummyField(object):
     widget = DummyWidget()
     name = "name"
     oid = "oid"
+    required = True
