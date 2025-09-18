@@ -17,9 +17,6 @@ Deform
     :target: https://docs.pylonsproject.org/projects/deform/en/latest/
     :alt: Latest Documentation Status
 
-.. image:: https://img.shields.io/pypi/pyversions/deform
-    :alt: Python Support
-
 .. contents:: :local:
 
 
