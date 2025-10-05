@@ -163,11 +163,7 @@ This library is actively developed and maintained. Deform 2.x branch has been us
 Projects using Deform
 ---------------------
 
-* `Websauna <https://websauna.org/>`_
-
 * `Kotti <http://kotti.pylonsproject.org/>`_
-
-* `Substance D <http://www.substanced.net/>`_
 
 Community and links
 -------------------

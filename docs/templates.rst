@@ -18,7 +18,7 @@ Alternative template engines
 Deform is compatible with any template engine.
 
 Even though Deform widgets themselves are rendered in Chameleon, you can place the forms on pages in any template language.
-For example, `Websauna <https://websauna.org>`_ places Deform forms inside Jinja2 page templates.
+For example you can place Deform forms inside Jinja2 page templates.
 
 The rendered forms are simply Python strings.
 
@@ -33,7 +33,7 @@ Chameleon template paths are stored in an in-process global variable.
    from deform.renderer import configure_zpt_renderer
 
    # Make Deform widgets aware of our widget template paths
-   configure_zpt_renderer(["websauna.system.form:templates/deform"])
+   configure_zpt_renderer(["YOUAPP.form:templates/deform"])
 
 
 Overriding the default templates
