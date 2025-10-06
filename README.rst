@@ -76,7 +76,6 @@ Example code:
 .. code-block:: python
 
     """Self-contained Deform demo example."""
-    from __future__ import print_function
 
     from pyramid.config import Configurator
     from pyramid.session import UnencryptedCookieSessionFactoryConfig
