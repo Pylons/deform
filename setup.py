@@ -31,6 +31,7 @@ requires = [
     "peppercorn>=0.3",  # rename operation type
     "translationstring>=1.0",  # add format mapping with %
     "zope.deprecation",
+    "setuptools<81.0.0",
 ]
 
 lint_extras = [
