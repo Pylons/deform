@@ -8,7 +8,6 @@ from deform.i18n import _
 
 from . import widget
 
-
 default_widget_makers = {
     colander.Mapping: widget.MappingWidget,
     colander.Sequence: widget.SequenceWidget,

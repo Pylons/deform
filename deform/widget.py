@@ -22,7 +22,6 @@ from translationstring import TranslationString
 from .i18n import _
 from .utils import text_
 
-
 sequence_types = (
     list,
     tuple,
