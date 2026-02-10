@@ -9,7 +9,6 @@ from translationstring import ChameleonTranslate
 
 from .exception import TemplateError
 
-
 BOOLEAN_HTML_ATTRS = frozenset(
     [
         # List of Boolean attributes in HTML that should be rendered in

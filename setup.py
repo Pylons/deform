@@ -31,6 +31,7 @@ requires = [
     "peppercorn>=0.3",  # rename operation type
     "translationstring>=1.0",  # add format mapping with %
     "zope.deprecation",
+    "setuptools<81.0.0",
 ]
 
 lint_extras = [
@@ -82,7 +83,6 @@ setup(
     long_description=README + "\n\n" + CHANGES,
     classifiers=[
         "Intended Audience :: Developers",
-        "License :: Repoze Public License",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.10",

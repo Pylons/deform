@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools<81.0.0", "wheel"]
 
 [tool.black]
 line-length = 79
@@ -37,7 +37,6 @@ include_trailing_comma = true
 known_first_party = "deform"
 known_pyramid = "colander,jinja2,plaster,pyramid,pyramid_layout,venusian,zope,transaction,pyramid_chameleon,Chameleon"
 line_length = 79
-lines_after_imports = 2
 multi_line_output = 3
 no_lines_before = "THIRDPARTY"
 profile = "black"
