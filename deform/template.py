@@ -2,9 +2,9 @@
 
 # Standard Library
 import os.path
+import importlib.resources as resources
 
 from chameleon.zpt.loader import TemplateLoader
-from pkg_resources import resource_filename
 from translationstring import ChameleonTranslate
 
 from .exception import TemplateError
@@ -40,7 +40,15 @@ class ZPTTemplateLoader(TemplateLoader):
     def load(self, filename, *args, **kwargs):
         if ":" in filename:
             pkg_name, fn = filename.split(":", 1)
-            filename = resource_filename(pkg_name, fn)
+            resource = resources.files(pkg_name).joinpath(fn)
+            try:
+                with resources.as_file(resource) as resolved:
+                    filename = os.fspath(resolved)
+                    return super(ZPTTemplateLoader, self).load(
+                        filename, *args, **kwargs
+                    )
+            except ValueError:
+                raise TemplateError(filename)
         else:
             path, ext = os.path.splitext(filename)
             if not ext:
@@ -123,5 +131,5 @@ class ZPTRendererFactory(object):
         return self.loader.load(template_name)
 
 
-default_dir = resource_filename("deform", "templates/")
+default_dir = os.fspath(resources.files("deform").joinpath("templates"))
 default_renderer = ZPTRendererFactory((default_dir,))
