@@ -95,8 +95,8 @@ setup(
     keywords="web forms form generation schema validation pyramid",
     author="Chris McDonough, Agendaless Consulting",
     author_email="pylons-discuss@googlegroups.com",
-    maintainer="Steve Piercy",
-    maintainer_email="web@stevepiercy.com",
+    maintainer="Josip Delić, Stéphane Brunner",
+    maintainer_email="delijati@gmx.net, stephane.brunner@gmail.com",
     url="https://docs.pylonsproject.org/projects/deform/en/latest/",
     project_urls={
         'Documentation': docs_url,

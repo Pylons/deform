@@ -112,7 +112,7 @@ Use ``form.widget.set_error()`` to set a form level error.
         """Newsletter admin form."""
         schema = NewsletterSend().bind(request=request)
 
-        # Create a styled button with some extra Bootstrap 3 CSS classes
+        # Create a styled button with some extra Bootstrap 5 CSS classes
         b = deform.Button(name='process', title="Send", css_class="btn-block btn-lg")
         form = deform.Form(schema, buttons=(b, ), resource_registry=ResourceRegistry(request))
 

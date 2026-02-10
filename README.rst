@@ -76,7 +76,6 @@ Example code:
 .. code-block:: python
 
     """Self-contained Deform demo example."""
-    from __future__ import print_function
 
     from pyramid.config import Configurator
     from pyramid.session import UnencryptedCookieSessionFactoryConfig
@@ -104,7 +103,7 @@ Example code:
 
         schema = ExampleSchema().bind(request=request)
 
-        # Create a styled button with some extra Bootstrap 3 CSS classes
+        # Create a styled button with some extra Bootstrap 5 CSS classes
         process_btn = deform.form.Button(name='process', title="Process")
         form = deform.form.Form(schema, buttons=(process_btn,))
 
@@ -163,11 +162,7 @@ This library is actively developed and maintained. Deform 2.x branch has been us
 Projects using Deform
 ---------------------
 
-* `Websauna <https://websauna.org/>`_
-
 * `Kotti <http://kotti.pylonsproject.org/>`_
-
-* `Substance D <http://www.substanced.net/>`_
 
 Community and links
 -------------------
