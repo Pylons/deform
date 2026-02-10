@@ -1,5 +1,135 @@
-[build-system]
-requires = ["setuptools", "wheel"]
+[project]
+name = "deform"
+version = "3.0.0.dev0"
+description = "Form library with advanced features like nested forms"
+readme = "README.rst"
+requires-python = ">=3.10"
+license = {text = "BSD-derived"}
+authors = [
+    {name = "Chris McDonough, Agendaless Consulting", email = "pylons-discuss@googlegroups.com"},
+]
+maintainers = [
+    {name = "Josip Delić", email = "delijati@gmx.net"},
+    {name = "Stéphane Brunner", email = "stephane.brunner@gmail.com"},
+]
+keywords = ["web", "forms", "form", "generation", "schema", "validation", "pyramid"]
+classifiers = [
+    "Intended Audience :: Developers",
+    "License :: Repoze Public License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = [
+    "Chameleon>=2.5.1",
+    "colander>=1.0",
+    "iso8601",
+    "peppercorn>=0.3",
+    "translationstring>=1.0",
+    "zope.deprecation",
+]
+
+[project.optional-dependencies]
+lint = [
+    "black",
+    "check-manifest",
+    "flake8",
+    "flake8-bugbear",
+    "flake8-builtins",
+    "isort",
+    "rstcheck",
+    "readme_renderer",
+]
+testing = [
+    "beautifulsoup4",
+    "coverage",
+    "flaky",
+    "pyramid",
+    "pytest",
+    "pytest-cov",
+]
+functional = [
+    "beautifulsoup4",
+    "coverage",
+    "flaky",
+    "pyramid",
+    "pytest",
+    "pytest-cov",
+    "pygments",
+    "waitress",
+    "lingua",
+    "selenium>=4.0.0.b4,<4.10.0",
+]
+docs = [
+    "Sphinx>=1.7.4",
+    "repoze.sphinx.autointerface",
+    "pylons_sphinx_latesturl",
+    "pylons-sphinx-themes",
+]
+dev = [
+    "black",
+    "check-manifest",
+    "flake8",
+    "flake8-bugbear",
+    "flake8-builtins",
+    "isort",
+    "rstcheck",
+    "readme_renderer",
+    "beautifulsoup4",
+    "coverage",
+    "flaky",
+    "pyramid",
+    "pytest",
+    "pytest-cov",
+    "pygments",
+    "waitress",
+    "lingua",
+    "selenium>=4.0.0.b4,<4.10.0",
+    "Sphinx>=1.7.4",
+    "repoze.sphinx.autointerface",
+    "pylons_sphinx_latesturl",
+    "pylons-sphinx-themes",
+]
+
+[project.urls]
+Homepage = "https://docs.pylonsproject.org/projects/deform/en/latest/"
+Documentation = "https://docs.pylonsproject.org/projects/deform/en/3.0-branch/"
+Changelog = "https://docs.pylonsproject.org/projects/deform/en/3.0-branch/changes.html"
+"Issue Tracker" = "https://github.com/Pylons/deform/issues"
+
+[tool.pytest.ini_options]
+python_files = ["test_*.py"]
+testpaths = ["deform/tests"]
+addopts = "-W always"
+
+[tool.check-manifest]
+ignore-bad-ideas = ["*.mo"]
+
+[tool.babel.compile_catalog]
+directory = "deform/locale"
+domain = "deform"
+statistics = true
+
+[tool.babel.extract_messages]
+add_comments = "TRANSLATORS:"
+output_file = "deform/locale/deform.pot"
+width = 80
+
+[tool.babel.init_catalog]
+domain = "deform"
+input_file = "deform/locale/deform.pot"
+output_dir = "deform/locale"
+
+[tool.babel.update_catalog]
+domain = "deform"
+input_file = "deform/locale/deform.pot"
+output_dir = "deform/locale"
+previous = true
 
 [tool.black]
 line-length = 79
