@@ -19,7 +19,7 @@ Prepare new release branch
 
 - Create a new release branch, incrementing the version number.
 
-- Align the release number with deformdemo (setup.py, README.rst, CHANGES.txt).
+- Align the release number with deformdemo (pyproject.toml, README.rst, CHANGES.txt).
 
 - Do any necessary branch merges (e.g., main to branch, branch to main).
 
@@ -27,10 +27,10 @@ Prepare new release branch
 
     git pull
 
-- Make sure your Python has ``setuptools-git``, ``twine``, and ``wheel``
+- Make sure your Python has ``twine`` and ``wheel``
   installed:
 
-    $VENV/bin/pip install setuptools-git twine wheel
+    $VENV/bin/pip install twine wheel
 
 - Do a platform test, run a check with black, ensure the PyPI long description
   renders, and run check-manifest with the following command.
@@ -52,7 +52,7 @@ Prepare new release branch
   branch, and previously released branch. Also in the previously released
   branch only, uncomment the sections to enable pylons_sphinx_latesturl.
 
-- Change setup.py version to the release version number.
+- Change pyproject.toml version to the release version number.
 
 - Build an sdist and a wheel:
 
