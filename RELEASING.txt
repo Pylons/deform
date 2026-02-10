@@ -27,7 +27,7 @@ Prepare new release branch
 
     git pull
 
-- Make sure your Python has `twine``, and ``wheel``
+- Make sure your Python has ``twine`` and ``wheel``
   installed:
 
     $VENV/bin/pip install twine wheel

@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "deform"
 version = "3.0.0.dev0"
@@ -15,7 +19,6 @@ maintainers = [
 keywords = ["web", "forms", "form", "generation", "schema", "validation", "pyramid"]
 classifiers = [
     "Intended Audience :: Developers",
-    "License :: Repoze Public License",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
@@ -54,12 +57,6 @@ testing = [
     "pytest-cov",
 ]
 functional = [
-    "beautifulsoup4",
-    "coverage",
-    "flaky",
-    "pyramid",
-    "pytest",
-    "pytest-cov",
     "pygments",
     "waitress",
     "lingua",
