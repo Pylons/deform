@@ -43,7 +43,7 @@ Prepare new release branch
 - Change CHANGES.txt heading to reflect the new version number.
 
 - Update README.rst to use correct versions of badges and URLs according to
-  each branch and context, i.e., RTD "latest" == GitHub/Travis "2.0-branch".
+  each branch and context, i.e., RTD "latest" == GitHub/Travis "3.0-branch".
 
 - For major version releases, in contributing.md, update branch descriptions.
 
@@ -80,13 +80,13 @@ Prepare new release branch
 - Announce to Twitter.
 
 ```
-Deform 2.X.X released.
+Deform 3.X.X released.
 
 PyPI
-https://pypi.org/project/deform/2.X.X
+https://pypi.org/project/deform/3.X.X
 
 Changes
-https://docs.pylonsproject.org/projects/deform/en/2.X-branch/changes.html#version-yyyy-mm-dd
+https://docs.pylonsproject.org/projects/deform/en/3.X-branch/changes.html#version-yyyy-mm-dd
 
 Issues
 https://github.com/Pylons/deform/issues
@@ -95,7 +95,7 @@ https://github.com/Pylons/deform/issues
 - Announce to maillist.
 
 ```
-Deform 2.X.X has been released.
+Deform 3.X.X has been released.
 
 Here are the changes:
 
@@ -111,7 +111,7 @@ GitHub
 https://github.com/pylons/deform
 
 PyPI
-https://pypi.org/project/deform/2.X.X
+https://pypi.org/project/deform/3.X.X
 
 Enjoy, and please report any issues you find to the issue tracker at
 https://github.com/Pylons/deform/issues
