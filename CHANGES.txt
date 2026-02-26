@@ -1,4 +1,6 @@
-3.0.0 (unreleased)
+.. _3.0.0:
+
+3.0.0 (2026-02-26)
 ------------------
 
 - Remove spurious styles definition
