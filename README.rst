@@ -13,8 +13,8 @@ Deform
     :target: https://docs.pylonsproject.org/projects/deform/en/main/
     :alt: Main Documentation Status
 
-.. image:: https://readthedocs.org/projects/deform/badge/?version=latest
-    :target: https://docs.pylonsproject.org/projects/deform/en/latest/
+.. image:: https://readthedocs.org/projects/deform/badge/?version=3.0-branch
+    :target: https://docs.pylonsproject.org/projects/deform/en/3.0-branch/
     :alt: Latest Documentation Status
 
 .. contents:: :local:
@@ -175,6 +175,6 @@ Community and links
 
 * `Widget examples repo <https://github.com/Pylons/deformdemo/>`_
 
-* `Documentation <https://docs.pylonsproject.org/projects/deform/en/latest/>`_
+* `Documentation <https://docs.pylonsproject.org/projects/deform/en/3.0-branch/>`_
 
 * `Support <https://pylonsproject.org/community-support.html>`_
