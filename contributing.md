@@ -1,6 +1,6 @@
 # Contributing
 
-You are working on the `main` branch. Development of new features takes place on the `main` branch. The latest, stable release branch is `2.0-branch`.
+You are working on the `main` branch. Development of new features takes place on the `main` branch. The latest, stable release branch is `3.0-branch`.
 
 All projects under the Pylons Projects, including this one, follow the guidelines established at [How to Contribute](https://pylonsproject.org/community-how-to-contribute.html), [Coding Style and Standards](https://pylonsproject.org/community-coding-style-standards.html), and [Pylons Project Documentation Style Guide](https://docs.pylonsproject.org/projects/docs-style-guide/).
 
@@ -153,11 +153,11 @@ If you have any trouble, please ask for assistance via the [issue tracker](https
 4.  Configure git remote repositories.
     Set `origin` to your remote fork, and set `upstream` to point to `Pylons` for both Deform and deformdemo.
     You need to `cd` into each directory, `deformdemo_functional_tests` and `Deform`, and execute the following commands.
-    
+
         cd deform
         git remote add upstream https://github.com/Pylons/deform.git
         git remote set-url origin git@github.com:git_user_id/deform.git
-        
+
         cd deformdemo_functional_tests
         git remote add upstream https://github.com/Pylons/deformdemo.git
         git remote set-url origin git@github.com:git_user_id/deformdemo.git
@@ -274,7 +274,7 @@ You must add your local Deform checkout—which is also where you will install y
 Otherwise Firefox or Chrome will not start and will return an error message such as `'geckodriver' executable needs to be in PATH.`.
 
 When you run `$tox -e functional3`, your local checkout is automatically added to your `$PATH`.
-Otherwise you can set it manually. 
+Otherwise you can set it manually.
 
     export PATH=~/projects/deform:$PATH
 
@@ -285,7 +285,7 @@ The functional tests require the installation of the GNU `gettext` utilities, sp
 Use your package manager to install these requirements.
 
 ##### macOS
- 
+
 Use [Homebrew](https://brew.sh/):
 
     brew install gettext
