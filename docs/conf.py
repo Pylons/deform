@@ -32,7 +32,7 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.intersphinx',
     # enable pylons_sphinx_latesturl when this branch is no longer "latest"
-    # 'pylons_sphinx_latesturl',
+    'pylons_sphinx_latesturl',
     ]
 
 intersphinx_mapping = {
@@ -107,7 +107,7 @@ html_theme_options = dict(
     # pre-release status: true; else: false.
     in_progress='false',
     # On branches previous to "latest": true; else: false.
-    outdated='false',
+    outdated='true',
     )
 
 # The style sheet to use for HTML and HTML Help pages. A file of that name
