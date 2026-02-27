@@ -9,6 +9,7 @@ include lingua.ini tox.ini
 include i18n.sh run-selenium-tests.bash
 include pyproject.toml
 include .coveragerc .isort.cfg .flake8
+exclude .readthedocs.yaml
 recursive-include deform/static *.js
 
 global-exclude __pycache__ *.py[cod]
