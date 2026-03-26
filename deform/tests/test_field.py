@@ -154,6 +154,7 @@ class TestField(unittest.TestCase):
     def test_set_zpt_renderer(self):
         cls = self._getTargetClass()
         old = cls.default_renderer
+        # Standard Library
         from importlib.resources import files
 
         template_dir = str(files("deform").joinpath("templates"))

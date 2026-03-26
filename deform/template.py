@@ -1,8 +1,8 @@
 """Template."""
 
 # Standard Library
-import os.path
 from importlib.resources import files
+import os.path
 
 from chameleon.zpt.loader import TemplateLoader
 from translationstring import ChameleonTranslate
