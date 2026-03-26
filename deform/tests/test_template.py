@@ -119,9 +119,9 @@ class TestZPTRendererFactory(unittest.TestCase):
         return ZPTRendererFactory(dirs, **kw)
 
     def test_functional(self):
-        from pkg_resources import resource_filename
+        from importlib.resources import files
 
-        default_dir = resource_filename("deform", "tests/fixtures/")
+        default_dir = str(files("deform").joinpath("tests/fixtures"))
         renderer = self._makeOne((default_dir,))
         result = renderer("test")
         self.assertEqual(result.strip(), str("<div>Test</div>"))

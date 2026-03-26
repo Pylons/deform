@@ -154,9 +154,9 @@ class TestField(unittest.TestCase):
     def test_set_zpt_renderer(self):
         cls = self._getTargetClass()
         old = cls.default_renderer
-        from pkg_resources import resource_filename
+        from importlib.resources import files
 
-        template_dir = resource_filename("deform", "templates/")
+        template_dir = str(files("deform").joinpath("templates"))
 
         class Field:
             oid = None
