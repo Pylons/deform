@@ -2,9 +2,9 @@
 
 # Standard Library
 import os.path
+from importlib.resources import files
 
 from chameleon.zpt.loader import TemplateLoader
-from pkg_resources import resource_filename
 from translationstring import ChameleonTranslate
 
 from .exception import TemplateError
@@ -39,7 +39,7 @@ class ZPTTemplateLoader(TemplateLoader):
     def load(self, filename, *args, **kwargs):
         if ":" in filename:
             pkg_name, fn = filename.split(":", 1)
-            filename = resource_filename(pkg_name, fn)
+            filename = str(files(pkg_name).joinpath(fn))
         else:
             path, ext = os.path.splitext(filename)
             if not ext:
@@ -58,7 +58,7 @@ class ZPTRendererFactory(object):
 
     If the template name is an asset spec (has a colon in it, e.g.
     ``mypackage:subdir/subdir2/mytemplate.pt``), use
-    ``pkg_resources.resource_filename`` to resolve it.
+    ``importlib.resources`` to resolve it.
     Otherwise, fall back to search-path-based machinery to resolve it.
 
     Allowing an asset spec allows users to specify templates without the
@@ -122,5 +122,5 @@ class ZPTRendererFactory(object):
         return self.loader.load(template_name)
 
 
-default_dir = resource_filename("deform", "templates/")
+default_dir = str(files("deform").joinpath("templates"))
 default_renderer = ZPTRendererFactory((default_dir,))
