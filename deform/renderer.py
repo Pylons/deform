@@ -1,6 +1,7 @@
 """Renderer."""
 
-from pkg_resources import resource_filename
+# Standard Library
+from importlib.resources import files
 
 # Deform
 import deform
@@ -44,7 +45,7 @@ def configure_zpt_renderer(search_path=(), translator=None):
     paths = []
     for path in search_path:
         pkg, resource_name = path.split(":")
-        paths.append(resource_filename(pkg, resource_name))
+        paths.append(str(files(pkg).joinpath(resource_name)))
 
     deform.form.Form.default_renderer = deform.ZPTRendererFactory(
         tuple(paths) + default_paths, translator=translator
