@@ -19,6 +19,7 @@ jobs:
           - "3.11"
           - "3.12"
           - "3.13"
+          - "3.14"
           - "pypy-3.10"
         os:
           - "ubuntu-latest"
@@ -32,7 +33,7 @@ jobs:
           - os: "ubuntu-latest"
             pytest-args: "--cov"
           - os: "ubuntu-latest"
-            py: "pypy-3.7"
+            py: "pypy-3.10"
             pytest-args: ""
         exclude:
           # Linux and macOS don't have x86 python
@@ -42,7 +43,7 @@ jobs:
             architecture: x86
           # PyPy3 on Windows doesn't seem to work
           - os: "windows-latest"
-            py: "pypy-3.7"
+            py: "pypy-3.10"
           # macOS py3.10 doesn't seem to work.
           - os: "macos-latest"
             py: "3.10" 
