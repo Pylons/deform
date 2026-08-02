@@ -123,7 +123,7 @@ Contributors
 - Cédric Messiant, 2014/06/27
 - Mike Dunne, 2015/05/08
 - Josip Delić, 2016/02/16
-- Bert JW Regeer, 2016/02/16
+- Delta Regeer, 2016/02/16
 - Steve Piercy, 2016/02/19
 - Mikko Ohtamaa 2016/06/01
 - Martin Peeters 2016/10/22
