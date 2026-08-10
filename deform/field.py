@@ -183,11 +183,15 @@ class Field(object):
         appstruct=colander.null,
         parent=None,
         autofocus=None,
-        **kw
+        **kw,
     ):
         self.counter = counter or itertools.count()
         self.order = next(self.counter)
-        self.oid = getattr(schema, "oid", "deformField%s" % self.order)
+        if parent is not None:
+            parent = weakref.ref(parent)
+        self._parent = parent
+        oid_prefix = getattr(self.get_root(), "formid", "deform")
+        self.oid = getattr(schema, "oid", f"{oid_prefix}Field{self.order}")
         self.schema = schema
         self.typ = schema.typ  # required by Invalid exception
         self.name = schema.name
@@ -222,9 +226,6 @@ class Field(object):
 
         self.resource_registry = resource_registry
         self.children = []
-        if parent is not None:
-            parent = weakref.ref(parent)
-        self._parent = parent
         self.__dict__.update(kw)
 
         first_input_index = -1
@@ -254,7 +255,7 @@ class Field(object):
                     resource_registry=resource_registry,
                     parent=self,
                     autofocus=autofocus,
-                    **kw
+                    **kw,
                 )
             )
             child_count += 1
