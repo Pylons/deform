@@ -49,13 +49,9 @@
     deform.addCallback(
       "${field.oid}",
       function(oid) {
-        $("#" + oid).selectize(${selectize_options_json});
-        if($("#" + oid).is("[readonly]")) {
-          $("#" + oid)[0].selectize.lock();
-        }
-        if ($("#" + oid).prop("autofocus")) {
-          $("#" + oid).selectize("focus");
-        }
+        var extra = ${selectize_options_json};
+        extra.multiple = ${str(bool(field.widget.multiple)).lower()};
+        deform.tomselect(oid, extra);
       }
     );
   </script>

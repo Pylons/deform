@@ -1,39 +1,48 @@
 Using Ajax Forms
 ================
 
-To create a form object that uses AJAX, you can do the following.
+To create a form object that uses AJAX, pass ``use_ajax=True`` to the
+:class:`deform.Form` constructor:
 
 .. code-block:: python
 
     from deform import Form
     myform = Form(schema, buttons=('submit',), use_ajax=True)
 
-:ref:`creating_a_form` indicates how to create a Form object based on
-a schema and some buttons.  Creating an AJAX form uses the same
-constructor as creating a non-AJAX form. The only difference between
-the example provided in the :ref:`creating_a_form` section and the
-example above of creating an AJAX form is the additional
-``use_ajax=True`` argument passed to the Form constructor.
+:ref:`creating_a_form` shows how to create a Form based on a schema and some
+buttons. An AJAX form uses the same constructor as a non-AJAX form; the only
+difference is the additional ``use_ajax=True`` argument.
 
-If ``use_ajax`` is passed as ``True`` to the constructor of a
-:class:`deform.Form` object, the form page is rendered in such a way
-that when a submit button is pressed, the page is not reloaded.
-Instead the form is posted, and the result of the post replaces the
-form element's DOM node.
+.. versionchanged:: 4.0
 
-Examples of using the AJAX facilities in Deform are showcased on the
-`https://deformdemo.pylonsproject.org <https://deformdemo.pylonsproject.org>`_
-demonstration website:
+   AJAX form submission now uses vanilla JavaScript (``fetch()``) instead of
+   the old ``jquery.form`` plugin. Deform no longer depends on jQuery.
 
-- `Redirection on validation success
-  <https://deformdemo.pylonsproject.org/ajaxform_redirect/>`_
+How it works
+------------
 
-- `No redirection on validation success
-  <https://deformdemo.pylonsproject.org/ajaxform/>`_
+When ``use_ajax`` is ``True``, the ``<form>`` element is rendered with a
+``data-deform-ajax="true"`` attribute. The ``deform.js`` library intercepts
+the submit event, POSTs the form via ``fetch()``, and swaps the form element
+with the response (``outerHTML``).
+
+The ``deform.js`` library is included in the form's widget resources
+automatically, so make sure your page emits the JavaScript returned by
+:meth:`deform.field.Field.get_widget_resources` (see
+:ref:`widget_requirements`).
+
+Server response contract
+------------------------
+
+Your view should detect the AJAX request (the ``X-Requested-With:
+XMLHttpRequest`` header) and return only the rendered form fragment:
+
+- **Validation failure:** return the re-rendered form with HTTP status **422**.
+- **Success:** return your success markup with status **200**; it replaces the
+  form.
+- **Redirect on success:** send the ``X-Redirect`` response header with the
+  destination URL to trigger a client-side redirect.
 
 .. note::
 
-    As with widgets, you must ensure the required JavaScript
-    files are included for the AJAX functionality to work.  See
-    :ref:`widget_requirements` for a way to detect which JavaScript
-    libraries are required for a particular form rendering.
+   The ``ajax_options`` argument is deprecated as of 4.0 and has no effect.

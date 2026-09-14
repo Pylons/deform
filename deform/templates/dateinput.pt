@@ -21,9 +21,7 @@
    deform.addCallback(
     '${oid}',
      function deform_cb(oid) {
-       if (!Modernizr.inputtypes['date'] ||"${type_name}" != "date" || window.forceDateTimePolyfill){
-         $('#' + oid).pickadate(${options_json});
-       }
+       deform.datepicker(oid, ${options_json}, "date");
      }
    );
   </script>

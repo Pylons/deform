@@ -83,13 +83,12 @@ Glossary
      The GNU `gettext <https://www.gnu.org/software/gettext/>`_
      library, used by the :mod:`deform` translation machinery.
 
-   jquery.maskedinput
-     A jQuery plugin library that allows for input masks in text
-     inputs.  For example, a mask for a US telephone number might be
-     ``(999)-999-9999``.  See also
-     https://github.com/digitalBush/jquery.maskedinput.  Deform
-     supports input masks in its default
-     :class:`deform.widget.TextInputWidget` widget.
+   IMask
+     `IMask <https://imask.js.org/>`_ is a dependency-free JavaScript input
+     mask library. For example, a mask for a US telephone number might be
+     ``(999)-999-9999``. Deform supports input masks in its default
+     :class:`deform.widget.TextInputWidget` widget (as of 4.0, using IMask
+     instead of the former ``jquery.maskedinput`` plugin).
 
    validator
      A :term:`Colander` validator callable.  Accepts a ``node`` object
@@ -108,11 +107,31 @@ Glossary
      elements to editor instances. TinyMCE is very easy to integrate
      into other Content Management Systems.
 
-   jquery.autocomplete
-     A  :term:`jQuery` plugin library that allows for autocompleting a
-     value in a text input, making it easier to find and select a
-     value from a possibly large list. The data may be local or
-     remote. See https://jqueryui.com/autocomplete/ for more details.
+   Tom Select
+     `Tom Select <https://tom-select.js.org/>`_ is a dependency-free,
+     framework-agnostic select / autocomplete / tagging library (a maintained
+     successor to the archived selectize.js). As of 4.0 Deform uses it for the
+     :class:`deform.widget.Select2Widget`,
+     :class:`deform.widget.SelectizeWidget` and
+     :class:`deform.widget.AutocompleteInputWidget` widgets.
+
+   flatpickr
+     `flatpickr <https://flatpickr.js.org/>`_ is a lightweight,
+     dependency-free date/time picker. As of 4.0 Deform uses it for its
+     date, time and datetime input widgets.
+
+   SortableJS
+     `SortableJS <https://sortablejs.github.io/Sortable/>`_ is a
+     dependency-free drag-and-drop reordering library. As of 4.0 Deform uses
+     it to reorder orderable sequences.
+
+   Tom Select
+     `Tom Select <https://tom-select.js.org/>`_ is a dependency-free,
+     framework-agnostic select / autocomplete / tagging library (a maintained
+     successor to the archived selectize.js). As of 4.0 Deform uses it for the
+     :class:`deform.widget.Select2Widget`,
+     :class:`deform.widget.SelectizeWidget` and
+     :class:`deform.widget.AutocompleteInputWidget` widgets.
 
    XHR
      ``XHR`` an XMLHTTPRequest. See https://www.w3.org/TR/XMLHttpRequest/.
@@ -125,6 +144,12 @@ Glossary
    jQuery
      `jQuery <https://jquery.com/>`_ is a JavaScript library for making
      client side changes to HTML.
+
+     .. note::
+
+        Deform no longer uses or bundles jQuery as of version 4.0. All
+        widgets are now jQuery-free. This term is retained for historical
+        reference.
 
    resource registry
       An attribute of a Deform form which maps :term:`widget
@@ -143,9 +168,11 @@ Glossary
       the same type.  
 
    jQuery UI
-      A library used by Deform for various widget theming, effects and
-      functionality: See https://jqueryui.com/.
+      A jQuery-based UI library formerly used by Deform for some widget
+      theming and functionality: See https://jqueryui.com/.
 
-   jquery.ui.autocomplete
-      A :term:`jQuery UI` sublibrary for autocompletion of text
-      fields.  See https://api.jqueryui.com/autocomplete/.
+      .. note::
+
+         Deform no longer uses jQuery UI as of version 4.0. Autocompletion is
+         now provided by :term:`Tom Select`. This term is retained for
+         historical reference.

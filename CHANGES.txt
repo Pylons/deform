@@ -1,3 +1,87 @@
+.. _4.0.0:
+
+4.0.0 (unreleased)
+------------------
+
+**This is a major, breaking release. All jQuery dependencies have been removed
+and replaced with modern, maintained, jQuery-free libraries. AJAX form
+submission now uses vanilla JavaScript (``fetch()``).**
+
+Breaking changes
+^^^^^^^^^^^^^^^^
+
+- **jQuery removed entirely.** ``jquery``, ``jquery.form``, ``jquery-sortable``,
+  ``jquery.maskedinput`` and ``jquery.maskMoney`` are no longer bundled or
+  required. ``deform.js`` is now vanilla JavaScript. Applications that relied on
+  jQuery being loaded by deform must include it themselves if they still need
+  it.
+
+- **AJAX forms now use vanilla JavaScript** instead of the ``jquery.form``
+  ``ajaxForm`` plugin. When ``use_ajax=True``, the form is rendered with a
+  ``data-deform-ajax="true"`` attribute; ``deform.js`` intercepts the submit,
+  POSTs via ``fetch()``, and swaps the form with the response. The server
+  should return the rendered form fragment with **HTTP 422** on validation
+  failure and 200 on success. Use the ``X-Redirect`` response header for a
+  client-side redirect.
+
+- **``Form(ajax_options=...)`` is deprecated and now a no-op.** Passing a
+  non-empty value emits a ``DeprecationWarning``.
+
+- **``Form(boost=True)`` is deprecated and now a no-op.** Passing ``True``
+  emits a ``DeprecationWarning`` and has no effect.
+
+- **Widget requirement resource names changed.** ``default_resources`` /
+  ``ResourceRegistry`` keys are now: ``deform``, ``sortable``,
+  ``tom-select``, ``imask``, ``flatpickr`` (plus the existing ``tinymce``). The
+  removed keys ``jquery.form``, ``jquery.maskedinput``, ``jquery.maskMoney``,
+  ``modernizr``, ``typeahead`` and ``pickadate`` no longer exist. Custom
+  resource registries and widget ``requirements`` tuples referencing the old
+  names must be updated.
+
+- **Rendered widget markup / CSS classes changed** for the select, date/time
+  and autocomplete widgets (see below). Functional tests or CSS that targeted
+  ``select2-*``, ``selectize-*``, ``picker__*``, ``tt-suggestion`` or
+  ``deformField-selectized`` selectors must be updated to the Tom Select
+  (``ts-*``) and flatpickr (``flatpickr-*``) equivalents.
+
+Library replacements
+^^^^^^^^^^^^^^^^^^^^^
+
+- ``SelectWidget`` variants ``Select2Widget`` and ``SelectizeWidget`` now use
+  **Tom Select** (https://tom-select.js.org/, Apache-2.0), a maintained,
+  framework-agnostic successor to the archived selectize.js and to select2.
+
+- ``AutocompleteInputWidget`` now uses **Tom Select** (local values and remote
+  ``load`` via ``fetch``) instead of the Bootstrap/typeahead.js plugin.
+
+- ``TextInputWidget`` / ``CheckedInputWidget`` input masks now use **IMask**
+  (https://imask.js.org/, MIT). The legacy mask syntax (``9`` digit, ``a``
+  letter, ``*`` alphanumeric) is preserved.
+
+- ``MoneyInputWidget`` now uses **IMask**'s Number mask. Note: currency entry is
+  now conventional left-to-right (typing ``100.01`` yields ``100.01``), unlike
+  jquery.maskMoney's right-to-left cents-first behavior.
+
+- ``DateInputWidget`` / ``TimeInputWidget`` / ``DateTimeInputWidget`` now use
+  **flatpickr** (https://flatpickr.js.org/, MIT) instead of pickadate + the
+  Modernizr feature-detection shim. flatpickr writes ISO values (``Y-m-d`` /
+  ``H:i``) directly to the input, so the old ``*_submit`` hidden-field pattern
+  is no longer used.
+
+- Orderable ``SequenceWidget`` drag-and-drop now uses **SortableJS**
+  (https://sortablejs.github.io/Sortable/, MIT) instead of jquery-sortable.
+
+- ``RichTextWidget`` still uses TinyMCE, but the jQuery glue code has been
+  removed. Editor content is flushed to the textarea on ``submit``.
+
+Notes
+^^^^^
+
+- ``deform.js`` re-executes prototype ``<script>`` tags when cloning
+  sequence items so masks/pickers/selects/rich-text initialize inside
+  dynamically added sequence rows.
+
+
 .. _3.0.0:
 
 3.0.0 (2026-02-26)

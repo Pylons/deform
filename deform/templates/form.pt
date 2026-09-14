@@ -16,6 +16,7 @@
                   style style;
                   class css_class;
                   action action;
+                  data-deform-ajax use_ajax and 'true' or None;
                   attributes|field.widget.attributes|{};"
   id="${formid}"
   method="${method}"
@@ -76,33 +77,9 @@
 
   </fieldset>
 
-  <script type="text/javascript" tal:condition="use_ajax">
-   deform.addCallback(
-     '${formid}',
-     function(oid) {
-       var target = '#' + oid;
-       var options = {
-         target: target,
-         replaceTarget: true,
-         success: function() {
-           deform.processCallbacks();
-         },
-         beforeSerialize: function() { 
-           // See http://bit.ly/1agBs9Z (hack to fix tinymce-related ajax bug)
-           if ('tinymce' in window) {
-             $(tinymce.get()).each(
-               function(i, el) {
-                 var content = el.getContent();
-                 var editor_input = document.getElementById(el.id);
-                 editor_input.value = content;
-             });
-           }
-         }
-       };
-       var extra_options = ${ajax_options} || {};
-       $('#' + oid).ajaxForm($.extend(options, extra_options));
-     }
-   );
-  </script>
+  <!--!
+    When use_ajax=True the <form> carries data-deform-ajax="true"; deform.js
+    intercepts the submit, POSTs via fetch(), and swaps the response in place.
+  -->
 
 </form>

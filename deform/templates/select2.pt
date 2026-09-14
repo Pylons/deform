@@ -58,15 +58,12 @@
    deform.addCallback(
      '${field.oid}',
      function(oid) {
-       $('#' + oid).select2({
-         containerCssClass: 'form-control',
-         placeholder: "${str(field.widget.placeholder).replace('"','\\"')|""}" || undefined,
-         allowClear: "${hasattr(field.widget, 'placeholder')}",
-         tags: ${str(getattr(field.widget, 'tags', 'undefined')).lower()}
+       deform.tomselect(oid, {
+         placeholder: "${str(field.widget.placeholder).replace('"','\\"')|""}" || undefined,
+         allowClear: "${hasattr(field.widget, 'placeholder')}" === "True",
+         create: ${str(getattr(field.widget, 'tags', False)).lower()},
+         multiple: ${str(bool(field.widget.multiple)).lower()}
        });
-       if ($('#' + oid).prop("autofocus")) {
-         $('#' + oid).select2('focus');
-       }
      }
    );
   </script>

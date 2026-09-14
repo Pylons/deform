@@ -18,7 +18,7 @@
       deform.addCallback(
          '${oid}',
          function (oid) {
-            $("#" + oid).maskMoney(${mask_options});
+            deform.maskMoney(document.getElementById(oid), ${mask_options});
          });
     </script>
 </span>

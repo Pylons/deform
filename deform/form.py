@@ -2,6 +2,7 @@
 
 # Standard Library
 import re
+import warnings
 
 from chameleon.utils import Markup
 
@@ -71,40 +72,26 @@ class Form(field.Field):
        If this option is ``True``, the form will use AJAX (actually
        AJAH); when any submit button is clicked, the DOM node related
        to this form will be replaced with the result of the form post
-       caused by the submission.  The page will not be reloaded.  This
-       feature uses the ``jquery.form`` library ``ajaxForm`` feature
-       as per `http://jquery.malsup.com/form/
-       <http://jquery.malsup.com/form/>`_.  Default: ``False``.  If
-       this option is ``True``, the ``jquery.form.js`` library must be
-       loaded in the HTML page which embeds the form.  A copy of it
-       exists in the ``static`` directory of the ``deform`` package.
+       caused by the submission.  The page will not be reloaded.
+
+       As of deform 4.0 this feature uses vanilla JavaScript (no jQuery,
+       no external library). When ``use_ajax`` is ``True`` the form is
+       rendered with a ``data-deform-ajax="true"`` attribute; ``deform.js``
+       intercepts the submit, POSTs via ``fetch()``, and swaps the form
+       element with the response (``outerHTML``). The server should return
+       the rendered form fragment, using HTTP status ``422`` on validation
+       failure. Use the ``X-Redirect`` response header to trigger a
+       client-side redirect on success. Default: ``False``.
+
+    boost
+       .. deprecated:: 4.0
+          This option is retained for backwards compatibility but has no
+          effect. Passing ``True`` emits a ``DeprecationWarning``.
 
     ajax_options
-       A *string* which must represent a JavaScript object
-       (dictionary) of extra AJAX options as per
-       `http://jquery.malsup.com/form/#tab3
-       <http://jquery.malsup.com/form/#tab3>`_.  For
-       example:
-
-       .. code-block:: python
-
-           '{"success": function (rText, sText, xhr, form) {alert(sText)};}'
-
-       Default options exist even if ``ajax_options`` is not provided.
-       By default, ``target`` points at the DOM node representing the
-       form and and ``replaceTarget`` is ``true``.
-
-       A success handler calls the ``deform.processCallbacks`` method
-       that will ajaxify the newly written form again.  If you pass
-       these values in ``ajax_options``, the defaults will be
-       overridden.  If you want to override the success handler, don't
-       forget to call ``deform.processCallbacks``, otherwise
-       subsequent form submissions won't be submitted via AJAX.
-
-       This option has no effect when ``use_ajax`` is False.
-
-       The default value of ``ajax_options`` is a string
-       representation of the empty object.
+       .. deprecated:: 4.0
+          This option is retained for backwards compatibility but has no
+          effect. Passing a non-empty value emits a ``DeprecationWarning``.
 
     The :class:`deform.Form` constructor also accepts all the keyword
     arguments accepted by the :class:`deform.Field` class.  These
@@ -122,6 +109,7 @@ class Form(field.Field):
         buttons=(),
         formid="deform",
         use_ajax=False,
+        boost=False,
         ajax_options="{}",
         autocomplete=None,
         focus="on",
@@ -136,8 +124,6 @@ class Form(field.Field):
             self.focus = "off"
         else:
             self.focus = "on"
-        # Use kwargs to pass flags to descendant fields; saves cluttering
-        # the constructor
         kw["focus"] = self.focus
         field.Field.__init__(self, schema, **kw)
         _buttons = []
@@ -150,6 +136,21 @@ class Form(field.Field):
         self.buttons = _buttons
         self.formid = formid
         self.use_ajax = use_ajax
+        if boost:
+            warnings.warn(
+                "The 'boost' argument is deprecated as of deform 4.0 "
+                "and has no effect.",
+                DeprecationWarning,
+                stacklevel=2,
+            )
+        self.boost = False
+        if ajax_options and ajax_options.strip() not in ("{}", ""):
+            warnings.warn(
+                "The 'ajax_options' argument is deprecated as of deform 4.0 "
+                "and has no effect.",
+                DeprecationWarning,
+                stacklevel=2,
+            )
         self.ajax_options = Markup(ajax_options.strip())
         form_widget = getattr(schema, "widget", None)
         if form_widget is None:

@@ -71,8 +71,9 @@ each field widget rendering.  You can see that the script, which runs
 when this widget is included in a rendering, calls a function named
 ``deform.addCallback``, passing it the value of ``field.oid`` and a
 callback function as ``oid`` and ``callback`` respectively.  When it
-is executed, the callback function calls the ``autocomplete`` method
-of the jQuery selector result for ``$('#' + oid)``.
+is executed, the callback function initializes the widget on the input
+element found via ``document.getElementById(oid)`` (as of Deform 4.0 the
+built-in widget JavaScript is jQuery-free).
 
 The callback defined above will be called under two circumstances:
 
@@ -128,11 +129,11 @@ The requirement name/version pair implies a set of resources, but it
 is not a URL, nor is it a filename or a filename prefix.  The caller
 of :meth:`deform.Field.get_widget_requirements` must use the resource
 names returned as *logical* references.  For example, if the
-requirement name is ``jquery``, and the version id is ``2.0.3``, the
-caller can take that to mean that the jQuery library should be loaded
+requirement name is ``tom-select``, and the version id is ``None``, the
+caller can take that to mean that the Tom Select library should be loaded
 within the page header via, for example the inclusion of the HTML
 ``<script type="text/javascript"
-src="https://deformdemo.pylonsproject.org/static/scripts/jquery-2.0.3.min.js"></script>``
+src="https://deformdemo.pylonsproject.org/static/tom-select/tom-select.complete.min.js"></script>``
 within the HEAD tag of the rendered HTML page.
 
 Users will almost certainly prefer to use the
