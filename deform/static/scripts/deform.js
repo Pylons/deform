@@ -386,6 +386,16 @@ var deform = {
             // Keep placeholders visible only if the user entered something.
             imask.updateOptions({ lazy: imask.unmaskedValue === "" });
         });
+        // Some interactions (e.g. Selenium ``send_keys`` without a preceding
+        // click) type into the field without dispatching a ``focus`` event.
+        // Mirror jquery.maskedinput's "placeholders while the field holds
+        // input" behavior by switching to eager mode as soon as the user
+        // types something, regardless of focus.
+        imask.on("accept", function () {
+            if (imask.unmaskedValue !== "") {
+                imask.updateOptions({ lazy: false });
+            }
+        });
         // Persist the raw (unmasked-with-placeholder) value on submit so the
         // server receives what the user typed, matching the old behavior.
         el._imask = imask;
