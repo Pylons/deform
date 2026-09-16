@@ -12,7 +12,7 @@
 # All configuration values have a default value; values that are commented
 # out serve to show the default value.
 
-import sys, os, datetime
+import datetime
 import pkg_resources
 
 # If your extensions are in another directory, add it here. If the
