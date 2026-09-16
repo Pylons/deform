@@ -125,14 +125,6 @@ Glossary
      dependency-free drag-and-drop reordering library. As of 4.0 Deform uses
      it to reorder orderable sequences.
 
-   Tom Select
-     `Tom Select <https://tom-select.js.org/>`_ is a dependency-free,
-     framework-agnostic select / autocomplete / tagging library (a maintained
-     successor to the archived selectize.js). As of 4.0 Deform uses it for the
-     :class:`deform.widget.Select2Widget`,
-     :class:`deform.widget.SelectizeWidget` and
-     :class:`deform.widget.AutocompleteInputWidget` widgets.
-
    XHR
      ``XHR`` an XMLHTTPRequest. See https://www.w3.org/TR/XMLHttpRequest/.
 

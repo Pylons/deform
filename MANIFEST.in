@@ -11,6 +11,7 @@ include pyproject.toml
 include .coveragerc .isort.cfg .flake8
 include .mailmap
 exclude .readthedocs.yaml
+exclude NOBS.md
 recursive-include deform/static *.js
 
 global-exclude __pycache__ *.py[cod]

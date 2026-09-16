@@ -304,7 +304,7 @@ class TestAutocompleteInputWidget(unittest.TestCase):
             {
                 "limit": 8,
                 "minLength": 1,
-                "remote": "http://example.com?term=%QUERY",
+                "remote": "http://example.com",
             },
         )
 

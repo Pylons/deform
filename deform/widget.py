@@ -440,8 +440,9 @@ class MoneyInputWidget(Widget):
 class AutocompleteInputWidget(Widget):
     """
     Renders an ``<input type="text"/>`` widget which provides
-    autocompletion via a list of values using Tom Select (https://tom-select.js.org/), a jQuery-free
-    autocomplete/select library.
+    autocompletion via a list of values using Tom Select
+    (https://tom-select.js.org/), a jQuery-free autocomplete/select
+    library.
 
     **Attributes/Arguments**
 
@@ -2200,16 +2201,10 @@ class ResourceRegistry(object):
 
 default_resources = {
     # Core deform client-side support (vanilla JS, no jQuery).
-    "deform": {
-        None: {
-            "js": ("deform:static/scripts/deform.js",)
-        }
-    },
+    "deform": {None: {"js": ("deform:static/scripts/deform.js",)}},
     # SortableJS provides drag-and-drop reordering for orderable sequences.
-    "sortable": {
-        None: {"js": "deform:static/sortablejs/Sortable.min.js"}
-    },
-    # Tom Select replaces select2, selectize and the old typeahead autocomplete.
+    "sortable": {None: {"js": "deform:static/sortablejs/Sortable.min.js"}},
+    # Tom Select replaces select2, selectize and the typeahead autocomplete.
     "tom-select": {
         None: {
             "js": "deform:static/tom-select/tom-select.complete.min.js",

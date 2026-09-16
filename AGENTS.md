@@ -43,6 +43,14 @@ coverage report --show-missing --fail-under=100
 make -C docs html epub BUILDDIR=<builddir> "SPHINXOPTS=-W -E"   # -W = warnings as errors
 ```
 
+CI reinstalls deform from source (`pip install deform[docs]`) so autodoc reads the current
+source tree. If reusing a pre-existing `docs` tox env, either recreate it or prepend the
+source so autodoc does not read a stale installed copy:
+
+```sh
+PYTHONPATH=<repo-root> python -m sphinx -b html -E -W -d docs/_build/doctrees docs docs/_build/html
+```
+
 ## Functional / Selenium (CI: `tox -e functional3`)
 
 Requires Firefox + geckodriver and a running Selenium standalone-firefox (`DISPLAY=:99`,

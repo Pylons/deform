@@ -24,10 +24,10 @@ Overview of what changed
 - Widget JavaScript libraries were replaced (see
   :ref:`migration_library_table`).
 
+.. _migration_library_table:
+
 Library replacements
 --------------------
-
-.. _migration_library_table:
 
 .. list-table::
    :header-rows: 1
