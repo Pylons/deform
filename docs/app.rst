@@ -111,9 +111,9 @@ Here is the Chameleon ZPT template named ``form.pt``, placed in the same directo
         <title>Deform Sample Form App</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- JavaScript -->
-        <script src="static/scripts/jquery-2.0.3.min.js"></script>
-        <script src="static/scripts/bootstrap.min.js"></script>
+        <!-- JavaScript (jQuery-free as of Deform 4.0) -->
+        <script src="static/scripts/deform.js"></script>
+        <script src="static/scripts/bootstrap.bundle.min.js"></script>
         <tal:loop tal:repeat="js_resource js">
           <script src="${request.static_path(js_resource)}"></script>
         </tal:loop>

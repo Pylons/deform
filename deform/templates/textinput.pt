@@ -18,8 +18,8 @@
       deform.addCallback(
          '${oid}',
          function (oid) {
-            $("#" + oid).mask("${mask}",
-                 {placeholder:"${mask_placeholder}"});
+            deform.maskInput(document.getElementById(oid),
+                             "${mask}", "${mask_placeholder}");
          });
     </script>
 </span>

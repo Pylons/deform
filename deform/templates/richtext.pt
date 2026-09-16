@@ -14,28 +14,40 @@
     user input.
   -->
   <script type="text/javascript">
-    (function($){
     deform.addCallback('${oid}', function(oid) {
-    console.log(oid);
-            var options = {
-                language: '<tal:block i18n:translate="language-code">en</tal:block>',
-                body_class: 'form-control ${field.error and error_class or ""}',
-                    <tal:block condition="tinymce_options">${tinymce_options},</tal:block>
-                    selector: '#' + oid
-            };
-            var jqoid = $('#' + oid);
-            if ('${delayed_load and not field.error}' == 'True') {
-                jqoid.one('click', function(){
-                    tinyMCE.init(options);
-                });
-                } else {
-                console.log('init');
-                tinyMCE.init(options);
+        var options = {
+            body_class: 'form-control ${field.error and error_class or ""}',
+                <tal:block condition="tinymce_options">${tinymce_options},</tal:block>
+                selector: '#' + oid
+        };
+        // English is TinyMCE's built-in default (no langs/en.js ships);
+        // only request a language pack for non-English locales, which
+        // have a matching langs/<code>.js file.
+        var lang = '<tal:block i18n:translate="language-code">en</tal:block>';
+        if (lang && lang !== 'en') {
+            options.language = lang;
+        }
+        var el = document.getElementById(oid);
+        if ('${delayed_load and not field.error}' == 'True') {
+            el.addEventListener('click', function once() {
+                el.removeEventListener('click', once);
+                tinymce.init(options);
+            });
+        } else {
+            tinymce.init(options);
+        }
+    });
+
+    // Flush TinyMCE editor content back into the underlying textareas before
+    // any form is serialized/submitted.
+    if (!window._deformTinymceSyncBound) {
+        window._deformTinymceSyncBound = true;
+        var syncTinymce = function () {
+            if (window.tinymce) {
+                tinymce.triggerSave();
             }
-        });
-        $().bind('form.pre.serialize', function(event, $form, options) {
-            tinyMCE.triggerSave();
-        });
-    })(jQuery);
+        };
+        document.addEventListener('submit', syncTinymce, true);
+    }
   </script>
 </div>

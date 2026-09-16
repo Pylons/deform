@@ -30,12 +30,8 @@
    deform.addCallback(
      '${oid}',
      function(oid) {
-       if (!Modernizr.inputtypes['date'] || "${type_name}" != "datetime" || window.forceDateTimePolyfill){
-         $('#' + oid + '-date').pickadate(${date_options_json});
-       }
-       if (!Modernizr.inputtypes['time'] || "${type_name}" != "datetime" || window.forceDateTimePolyfill){
-         $('#' + oid + '-time').pickatime(${time_options_json});
-       }
+       deform.datepicker(oid + '-date', ${date_options_json}, "date");
+       deform.datepicker(oid + '-time', ${time_options_json}, "time");
      }
    );
   </script>

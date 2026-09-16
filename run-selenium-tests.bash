@@ -28,8 +28,18 @@ export PATH="${PWD}:$PATH"
 
 # Checkout deformdemo
 if [ ! -d deformdemo_functional_tests ] ; then
-    git clone https://github.com/novareto/deformdemo.git deformdemo_functional_tests
+    git clone https://github.com/Pylons/deformdemo.git deformdemo_functional_tests
 fi
+
+# Test against the deformdemo branch that matches the current deform branch
+# (e.g. "byebyejquery"), falling back to the default branch if it does not
+# exist upstream. This keeps the demo tests in sync with the deform branch
+# under test.
+DEFORM_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo main)
+git -C deformdemo_functional_tests fetch origin >/dev/null 2>&1 || true
+git -C deformdemo_functional_tests checkout "$DEFORM_BRANCH" >/dev/null 2>&1 \
+    || git -C deformdemo_functional_tests checkout main >/dev/null 2>&1 \
+    || true
 
 # Locales are needed for deformdemo tests
 ./i18n.sh

@@ -4,7 +4,6 @@ requires = ["setuptools", "wheel"]
 [tool.black]
 line-length = 79
 skip-string-normalization = true
-py36 = false
 include = '\.pyi?$'
 exclude = '''
 (
@@ -42,3 +41,9 @@ no_lines_before = "THIRDPARTY"
 profile = "black"
 sections = "FUTURE,STDLIB,PYRAMID,THIRDPARTY,FIRSTPARTY,LOCALFOLDER"
 skip_glob = ["docs/*"]
+
+[tool.ruff]
+line-length = 79
+extend-exclude = [
+  "docs",
+]

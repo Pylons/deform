@@ -282,7 +282,7 @@ class TextInputWidget(Widget):
         and trailing whitespace (default ``True``).
 
     mask
-        A :term:`jquery.maskedinput` input mask, as a string.
+        A input mask (IMask), as a string.
 
         a - Represents an alpha character (A-Z,a-z)
         9 - Represents a numeric character (0-9)
@@ -299,7 +299,7 @@ class TextInputWidget(Widget):
 
           US SSN: 999-99-9999
 
-        When this option is used, the :term:`jquery.maskedinput`
+        When this option is used, IMask
         library must be loaded into the page serving the form for the
         mask argument to have any effect.  See :ref:`masked_input`.
 
@@ -320,7 +320,7 @@ class TextInputWidget(Widget):
         super().__init__(**kw)
         if getattr(self, "mask", False):
             self.requirements = tuple(
-                list(self.requirements) + [("jquery.maskedinput", None)]
+                list(self.requirements) + [("imask", None)]
             )
 
     def serialize(self, field, cstruct, **kw):
@@ -348,7 +348,7 @@ class MoneyInputWidget(Widget):
     Renders an ``<input type="text"/>`` widget with Javascript which enforces
     a valid currency input.  It should be used along with the
     ``colander.Decimal`` schema type (at least if you care about your money).
-    This widget depends on the ``jquery-maskMoney`` JQuery plugin.
+    This widget uses IMask (https://imask.js.org/) for currency formatting.
 
     **Attributes/Arguments**
 
@@ -361,8 +361,8 @@ class MoneyInputWidget(Widget):
         Default: ``readonly/textinput``.
 
     options
-        A dictionary or sequence of two-tuples containing ``jquery-maskMoney``
-        options.  The valid options are:
+        A dictionary or sequence of two-tuples containing currency-mask
+        options (translated to IMask's Number mask). The valid options are:
 
         symbol
             the symbol to be used before of the user values. default: ``$``
@@ -398,7 +398,7 @@ class MoneyInputWidget(Widget):
 
     template = "moneyinput"
     readonly_template = "readonly/textinput"
-    requirements = (("jquery.maskMoney", None),)
+    requirements = (("deform", None), ("imask", None))
     options = None
 
     def serialize(self, field, cstruct, **kw):
@@ -440,8 +440,9 @@ class MoneyInputWidget(Widget):
 class AutocompleteInputWidget(Widget):
     """
     Renders an ``<input type="text"/>`` widget which provides
-    autocompletion via a list of values using bootstrap's typeahead plugin
-    https://github.com/twitter/typeahead.js/
+    autocompletion via a list of values using Tom Select
+    (https://tom-select.js.org/), a jQuery-free autocomplete/select
+    library.
 
     **Attributes/Arguments**
 
@@ -473,7 +474,7 @@ class AutocompleteInputWidget(Widget):
 
     min_length
         ``min_length`` is an optional argument to
-        :term:`jquery.ui.autocomplete`. The number of characters to
+        Tom Select. The number of characters to
         wait for before activating the autocomplete call.  Defaults to
         ``1``.
 
@@ -489,7 +490,7 @@ class AutocompleteInputWidget(Widget):
     items = 8
     template = "autocomplete_input"
     values = None
-    requirements = (("typeahead", None), ("deform", None))
+    requirements = (("tom-select", None), ("deform", None))
 
     def serialize(self, field, cstruct, **kw):
         if "delay" in kw or getattr(self, "delay", None):
@@ -504,7 +505,9 @@ class AutocompleteInputWidget(Widget):
 
         options = {}
         if isinstance(self.values, str):
-            options["remote"] = "%s?term=%%QUERY" % self.values
+            # Remote data source: Tom Select will fetch suggestions from this
+            # URL (deform.autocomplete wires up the ``load`` callback).
+            options["remote"] = self.values
         else:
             options["local"] = self.values
 
@@ -532,7 +535,7 @@ class TimeInputWidget(Widget):
     Renders a time picker widget.
 
     The default rendering is as a native HTML5 time input widget,
-    falling back to pickadate (https://github.com/amsul/pickadate.js.)
+    falling back to flatpickr (https://flatpickr.js.org/).
 
     Most useful when the schema node is a ``colander.Time`` object.
 
@@ -560,7 +563,7 @@ class TimeInputWidget(Widget):
     type_name = "time"
     size = None
     style = None
-    requirements = (("modernizr", None), ("pickadate", None))
+    requirements = (("deform", None), ("flatpickr", None))
     default_options = (("format", "HH:i"),)
 
     _pstruct_schema = SchemaNode(
@@ -602,7 +605,7 @@ class DateInputWidget(Widget):
     Renders a date picker widget.
 
     The default rendering is as a native HTML5 date input widget,
-    falling back to pickadate (https://github.com/amsul/pickadate.js.)
+    falling back to flatpickr (https://flatpickr.js.org/).
 
     Most useful when the schema node is a ``colander.Date`` object.
 
@@ -623,7 +626,7 @@ class DateInputWidget(Widget):
     template = "dateinput"
     readonly_template = "readonly/textinput"
     type_name = "date"
-    requirements = (("modernizr", None), ("pickadate", None))
+    requirements = (("deform", None), ("flatpickr", None))
     default_options = (
         ("format", "yyyy-mm-dd"),
         ("selectMonths", True),
@@ -665,17 +668,17 @@ class DateTimeInputWidget(Widget):
     Renders a datetime picker widget.
 
     The default rendering is as a pair of inputs (a date and a time) using
-    pickadate.js (https://github.com/amsul/pickadate.js).
+    flatpickr (https://flatpickr.js.org/).
 
     Used for ``colander.DateTime`` schema nodes.
 
     **Attributes/Arguments**
 
     date_options
-        A dictionary of date options passed to pickadate.
+        A dictionary of date options passed to flatpickr.
 
     time_options
-        A dictionary of time options passed to pickadate.
+        A dictionary of time options passed to flatpickr.
 
     template
         The template name used to render the widget.  Default:
@@ -689,7 +692,7 @@ class DateTimeInputWidget(Widget):
     template = "datetimeinput"
     readonly_template = "readonly/datetimeinput"
     type_name = "datetime"
-    requirements = (("modernizr", None), ("pickadate", None))
+    requirements = (("deform", None), ("flatpickr", None))
     default_date_options = (
         ("format", "yyyy-mm-dd"),
         ("selectMonths", True),
@@ -1201,19 +1204,14 @@ class Select2Widget(SelectWidget):
     """
 
     template = "select2"
-    requirements = (
-        ("deform", None),
-        {
-            "js": "deform:static/select2/select2.js",
-            "css": "deform:static/select2/select2.css",
-        },
-    )
+    requirements = (("deform", None), ("tom-select", None))
 
 
 class SelectizeWidget(SelectWidget):
     """
     Renders ``<select>`` field based on a predefined set of values using
-    `selectize.js <https://github.com/selectize/selectize.js>`_ library.
+    `Tom Select <https://tom-select.js.org/>`_ library (a maintained,
+    jQuery-free successor to selectize.js).
 
     **Attributes/Arguments**
 
@@ -1228,13 +1226,7 @@ class SelectizeWidget(SelectWidget):
     """
 
     template = "selectize"
-    requirements = (
-        ("deform", None),
-        {
-            "js": "deform:static/selectize/selectize.js",
-            "css": "deform:static/selectize/selectize.bootstrap4.css",
-        },
-    )
+    requirements = (("deform", None), ("tom-select", None))
 
 
 class RadioChoiceWidget(SelectWidget):
@@ -1358,7 +1350,7 @@ class CheckedInputWidget(Widget):
         field does not match the value in the confirm field.
 
     mask
-        A :term:`jquery.maskedinput` input mask, as a string.  Both
+        A input mask (IMask), as a string.  Both
         input fields will use this mask.
 
         a - Represents an alpha character (A-Z,a-z)
@@ -1376,7 +1368,7 @@ class CheckedInputWidget(Widget):
 
           US SSN: 999-99-9999
 
-        When this option is used, the :term:`jquery.maskedinput`
+        When this option is used, IMask
         library must be loaded into the page serving the form for the
         mask argument to have any effect.  See :ref:`masked_input`.
 
@@ -1398,7 +1390,7 @@ class CheckedInputWidget(Widget):
         super().__init__(**kw)
         if getattr(self, "mask", False):
             self.requirements = tuple(
-                list(self.requirements) + [("jquery.maskedinput", None)]
+                list(self.requirements) + [("imask", None)]
             )
 
     def serialize(self, field, cstruct, **kw):
@@ -1643,7 +1635,7 @@ class SequenceWidget(Widget):
     orderable = False
     requirements = (
         ("deform", None),
-        {"js": "deform:static/scripts/jquery-sortable.js"},
+        ("sortable", None),
     )
 
     def prototype(self, field):
@@ -2208,45 +2200,24 @@ class ResourceRegistry(object):
 
 
 default_resources = {
-    "jquery.form": {None: {"js": "deform:static/scripts/jquery.form-3.09.js"}},
-    "jquery.maskedinput": {
-        None: {"js": "deform:static/scripts/jquery.maskedinput-1.3.1.min.js"}
-    },
-    "jquery.maskMoney": {
-        None: {"js": "deform:static/scripts/jquery.maskMoney-3.1.1.min.js"}
-    },
-    "deform": {
+    # Core deform client-side support (vanilla JS, no jQuery).
+    "deform": {None: {"js": ("deform:static/scripts/deform.js",)}},
+    # SortableJS provides drag-and-drop reordering for orderable sequences.
+    "sortable": {None: {"js": "deform:static/sortablejs/Sortable.min.js"}},
+    # Tom Select replaces select2, selectize and the typeahead autocomplete.
+    "tom-select": {
         None: {
-            "js": (
-                "deform:static/scripts/jquery.form-3.09.js",
-                "deform:static/scripts/deform.js",
-            )
+            "js": "deform:static/tom-select/tom-select.complete.min.js",
+            "css": "deform:static/tom-select/tom-select.bootstrap5.min.css",
         }
     },
-    "typeahead": {
+    # IMask replaces jquery.maskedinput and jquery.maskMoney.
+    "imask": {None: {"js": "deform:static/imask/imask.min.js"}},
+    # flatpickr replaces pickadate (and the Modernizr feature-detect shim).
+    "flatpickr": {
         None: {
-            "js": "deform:static/scripts/typeahead.min.js",
-            "css": "deform:static/css/typeahead.css",
-        }
-    },
-    "modernizr": {
-        None: {
-            "js": "deform:static/scripts/modernizr.custom.input-types-and-atts.js"  # noQA
-        }
-    },
-    "pickadate": {
-        None: {
-            "js": (
-                "deform:static/pickadate/picker.js",
-                "deform:static/pickadate/picker.date.js",
-                "deform:static/pickadate/picker.time.js",
-                "deform:static/pickadate/legacy.js",
-            ),
-            "css": (
-                "deform:static/pickadate/themes/default.css",
-                "deform:static/pickadate/themes/default.date.css",
-                "deform:static/pickadate/themes/default.time.css",
-            ),
+            "js": "deform:static/flatpickr/flatpickr.min.js",
+            "css": "deform:static/flatpickr/flatpickr.min.css",
         }
     },
 }

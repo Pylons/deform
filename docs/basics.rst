@@ -388,19 +388,21 @@ Some of the more important files in the set of JavaScript, CSS files,
 and images present in the ``static`` directory of the :mod:`deform`
 package are the following:
 
-``static/scripts/jquery-2.0.3.min.js``
-  A local copy of the jQuery JavaScript library, used by widgets and
-  other JavaScript files.
-
 ``static/scripts/deform.js``
-  A JavaScript library which should be loaded by any template which
-  injects a rendered Deform form.
+  A dependency-free (no jQuery) JavaScript library which should be loaded by
+  any template which injects a rendered Deform form.
 
 ``static/css/form.css``
   CSS related to form element renderings.
 
-Each of these libraries should be included in the ``<head>`` tag of a
-page which renders a Deform form, for example:
+.. versionchanged:: 4.0
+
+   Deform no longer bundles or requires jQuery. ``deform.js`` is now plain
+   JavaScript with no dependencies. If your own application code still needs
+   jQuery, load it yourself.
+
+Each of these should be included in the ``<head>`` tag of a page which
+renders a Deform form, for example:
 
 .. code-block:: html
    :linenos:
@@ -415,16 +417,10 @@ page which renders a Deform form, for example:
      <link rel="stylesheet" href="/static/css/form.css" type="text/css" />
      <!-- JavaScript -->
      <script type="text/javascript"
-             src="/static/scripts/jquery-2.0.3.min.js"></script> 
-     <script type="text/javascript"
              src="/static/scripts/deform.js"></script>
    </head>
 
-Please note the order of loading the two JavaScript files does matter.
-The ``deform.js`` file makes an immediate call to jQuery that will fail
-if jQuery is not loaded first.
-
-After loading ``deform.js`` and jQuery, there may be additional static
+After loading ``deform.js`` there may be additional static
 resources needed to render the form elements.  The
 :meth:`deform.field.get_widget_resources` method can be used to
 tell you which ``static`` directory-relative files are required by a

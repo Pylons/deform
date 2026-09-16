@@ -2,6 +2,7 @@
 
 # Standard Library
 import unittest
+import warnings
 
 
 class TestForm(unittest.TestCase):
@@ -113,6 +114,45 @@ class TestForm(unittest.TestCase):
         schema.children = [DummySchema()]
         form = self._makeOne(schema, focus="off")
         self.assertEqual(form.focus, "off")
+
+    def test_ctor_boost_deprecated(self):
+        schema = DummySchema()
+        schema.children = [DummySchema()]
+        with warnings.catch_warnings(record=True) as caught:
+            warnings.simplefilter("always")
+            form = self._makeOne(schema, boost=True)
+        self.assertEqual(form.boost, False)
+        deprecations = [
+            w for w in caught if issubclass(w.category, DeprecationWarning)
+        ]
+        self.assertEqual(len(deprecations), 1)
+        self.assertIn("boost", str(deprecations[0].message))
+        self.assertIn("deprecated", str(deprecations[0].message))
+
+    def test_ctor_ajax_options_deprecated(self):
+        schema = DummySchema()
+        schema.children = [DummySchema()]
+        with warnings.catch_warnings(record=True) as caught:
+            warnings.simplefilter("always")
+            self._makeOne(schema, ajax_options='{"a": 1}')
+        deprecations = [
+            w for w in caught if issubclass(w.category, DeprecationWarning)
+        ]
+        self.assertEqual(len(deprecations), 1)
+        self.assertIn("ajax_options", str(deprecations[0].message))
+        self.assertIn("deprecated", str(deprecations[0].message))
+
+    def test_ctor_ajax_options_empty_no_warning(self):
+        schema = DummySchema()
+        schema.children = [DummySchema()]
+        with warnings.catch_warnings(record=True) as caught:
+            warnings.simplefilter("always")
+            self._makeOne(schema, ajax_options="{}")
+            self._makeOne(schema, ajax_options="")
+        deprecations = [
+            w for w in caught if issubclass(w.category, DeprecationWarning)
+        ]
+        self.assertEqual(deprecations, [])
 
 
 class TestIssues(unittest.TestCase):

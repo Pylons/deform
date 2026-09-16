@@ -19,10 +19,8 @@
         deform.addCallback(
           '${field.oid}',
           function (oid) {
-              $('#' + oid).typeahead(${structure:options});
-              if("${autofocus}" == "autofocus") {
-                $('#' + oid).focus();
-              }
+              deform.autocomplete(oid, ${structure:options},
+                                  "${autofocus}" == "autofocus");
           }
         );
     </script>

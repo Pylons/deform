@@ -64,37 +64,22 @@
        deform.addCallback(
          '${field.oid}',
          function(oid) {
-           oid_node = $('#'+ oid);
+           var oid_node = document.getElementById(oid);
            deform.processSequenceButtons(oid_node, ${min_len},
                                          ${max_len}, ${now_len},
                                          ${orderable});
-           }
-         )
-         <tal:block condition="orderable">
-             $( "#${oid}-orderable" ).sortable({
+           <tal:block condition="orderable">
+           var orderable_node = document.getElementById("${oid}-orderable");
+           if (orderable_node && typeof Sortable !== "undefined") {
+             Sortable.create(orderable_node, {
                handle: ".deform-order-button, .card-header",
-               containerSelector: "#${oid}-orderable",
-               itemSelector: ".deform-seq-item",
-               placeholder: '<i class="bi bi-arrow-right"></i>',
-               onDragStart: function ($item, container, _super) {
-                 var offset = $item.offset(),
-                 pointer = container.rootGroup.pointer
-
-                 adjustment = {
-                   left: pointer.left - offset.left,
-                   top: pointer.top - offset.top
-                 }
-
-                 _super($item, container)
-               },
-               onDrag: function ($item, position) {
-                   $item.css({
-                     left: position.left - adjustment.left,
-                     top: position.top - adjustment.top
-                   })
-                 }
-               });
-         </tal:block>
+               draggable: ".deform-seq-item",
+               ghostClass: "deform-seq-item-ghost"
+             });
+           }
+           </tal:block>
+         }
+       );
       </script>
 
       <input type="hidden" name="__end__" value="${field.name}:sequence"/>

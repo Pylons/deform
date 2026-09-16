@@ -378,11 +378,19 @@ Deform adds some logic to add read-only support for a few of those form controls
 Using Selectize Widget
 ----------------------
 
-The Selectize widget is based on the jQuery plugin `selectize.js <https://github.com/selectize/selectize.js>`_.
+.. versionchanged:: 4.0
+
+   The Selectize and Select2 widgets are now based on
+   `Tom Select <https://tom-select.js.org/>`_, a maintained, jQuery-free
+   library (Tom Select is a framework-agnostic successor to the archived
+   selectize.js).
+
+The Selectize widget is based on `Tom Select <https://tom-select.js.org/>`_.
 
 Configuration options of the Selectize widget can be passed in as a dict to the keyword argument ``selectize_options``.
-These options are rendered as inline JavaScript in the HTML widget.
-See the available `configuration options at the selectize.js project <https://github.com/selectize/selectize.js/blob/master/docs/usage.md>`_.
+These options are rendered as inline JavaScript in the HTML widget and passed
+through to Tom Select.
+See the available `Tom Select configuration options <https://tom-select.js.org/docs/>`_.
 
 By default, Deform treats any options with a ``""`` value as normal by virtue of setting ``allowEmptyOption`` to ``True``.
 This will render in HTML as ``<option value="">- Select -</option>``.
@@ -410,13 +418,19 @@ Additional options are also demonstrated.
 Using Date, DateTime, and Time Inputs
 -------------------------------------
 
-The :class:`deform.widget.DateInputWidget`, :class:`deform.widget.DateTimeInputWidget`, and :class:`deform.widget.TimeInputWidget` inputs all use the jQuery plugin `pickadate <https://amsul.ca/pickadate.js/>`_.
-This plugin is included with Deform in the directory ``static/pickadate``.
+.. versionchanged:: 4.0
+
+   These widgets now use `flatpickr <https://flatpickr.js.org/>`_ (a
+   dependency-free date/time picker) instead of pickadate and the Modernizr
+   feature-detection shim.
+
+The :class:`deform.widget.DateInputWidget`, :class:`deform.widget.DateTimeInputWidget`, and :class:`deform.widget.TimeInputWidget` inputs all use `flatpickr <https://flatpickr.js.org/>`_.
+This library is included with Deform in the directory ``static/flatpickr``.
 
 Arbitrary options may be passed into the widget as a Python object, which will be automatically converted to a JSON object by the widget.
 These options are named ``date_options`` and ``time_options``.
 This is useful to set a minimum or maximum date or time, and many other options.
-For the complete options, see `date options <https://amsul.ca/pickadate.js/date/#options>`_ or `time options <https://amsul.ca/pickadate.js/time/#options>`_.
+For the complete options, see the `flatpickr options <https://flatpickr.js.org/options/>`_.
 
 Use of these widgets is not a replacement for server-side validation of the field.
 It is purely a UI affordance.
@@ -469,10 +483,17 @@ North American Phone Number
 United States Social Security Number
     999-99-9999
 
-When this option is used, the :term:`jquery.maskedinput` library must
-be loaded into the page serving the form for the mask argument to have
-any effect.  A copy of this library is available in the
-``static/scripts`` directory of the :mod:`deform` package itself.
+.. versionchanged:: 4.0
+
+   Input masks now use `IMask <https://imask.js.org/>`_ instead of
+   ``jquery.maskedinput``. The legacy mask syntax (``9`` for a digit, ``a`` for
+   a letter, ``*`` for alphanumeric) is preserved.
+
+When this option is used, the IMask library must be loaded into the page
+serving the form for the mask argument to have any effect. It is declared as a
+widget requirement, so emitting the resources from
+:meth:`deform.field.Field.get_widget_resources` loads it automatically; a copy
+is available in the ``static/imask`` directory of the :mod:`deform` package.
 
 See `https://deformdemo.pylonsproject.org/text_input_masks/
 <https://deformdemo.pylonsproject.org/text_input_masks/>`_ for a working
@@ -491,17 +512,17 @@ Using the AutocompleteInputWidget
 
 The :class:`deform.widget.AutocompleteInputWidget` widget allows for
 client side autocompletion from provided choices in a text input
-field. To use this you **MUST** ensure that :term:`jQuery` and the
-:term:`jQuery UI` plugin are available to the page where the
-:class:`deform.widget.AutocompleteInputWidget` widget is rendered.
+field.
 
-For convenience a version of the :term:`jQuery UI` (which includes the
-``autocomplete`` sublibrary) is included in the :mod:`deform` static
-directory. Additionally, the :term:`jQuery UI` styles for the
-selection box are also included in the :mod:`deform` ``static``
-directory. See :ref:`serving_up_the_rendered_form` and
-:ref:`get_widget_resources` for more information about using the 
-included libraries for your application.
+.. versionchanged:: 4.0
+
+   Autocompletion is now provided by `Tom Select
+   <https://tom-select.js.org/>`_ instead of the jQuery/jQuery UI (or
+   typeahead.js) autocomplete plugins. Tom Select is declared as a widget
+   requirement and included in the :mod:`deform` ``static/tom-select``
+   directory, so emitting the resources from
+   :meth:`deform.field.Field.get_widget_resources` loads it automatically. See
+   :ref:`serving_up_the_rendered_form` and :ref:`get_widget_resources`.
 
 A very simple example of using
 :class:`deform.widget.AutocompleteInputWidget` follows:
@@ -534,14 +555,11 @@ application.  Something like either of these structures in JSON are suitable.
         {'value': 'item-three', 'label': 'Item Three'}
     ]
 
-The autocomplete plugin will add a query string to the request URL with the
-variable ``term`` which contains the user's input at that moment.  The server
-may use this to filter the returned results.  
+The widget adds a query string to the request URL with the variable ``term``
+which contains the user's input at that moment. The server may use this to
+filter the returned results.
 
-For more information, see https://api.jqueryui.com/autocomplete/#option-source — specifically, the section concerning the ``String`` type for the ``source`` option.
-
-Some options for the :term:`jquery.autocomplete` plugin are mapped and
-can be passed to the widget. See
+Some options are mapped and can be passed to the widget. See
 :class:`deform.widget.AutocompleteInputWidget` for details regarding the
 available options. Passing options looks like:
 
